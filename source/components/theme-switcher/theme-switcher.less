@@ -45,6 +45,7 @@
 
         .check {
             &::before {
+                font-family: "Segoe UI Symbol", serif;
                 content: attr(data-dark-symbol); // dark
                 display: block;
                 position: absolute;
@@ -142,13 +143,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 16px;
             border-radius: 50%;
             width: 100%;
             height: 100%;
 
             &::before, &::after {
-                
+                font-family: "Segoe UI Symbol", serif;
                 content: attr(data-dark-symbol);
                 position: relative;
                 display: block;
@@ -157,7 +158,7 @@
 
             &::before {
                 color: #ffffff;
-                transform: translate(-1px);
+                transform: translateY(-2px);
             }
 
             &::after {

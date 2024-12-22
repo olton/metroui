@@ -144,6 +144,11 @@
                 .attr("data-value", item.value ? item.value : "");
             a = $("<a>").html(html);
 
+            const optionIcon = option.attr("data-icon")
+            if (optionIcon) {
+                a.prepend($("<span>").addClass("icon").html(optionIcon));
+            }
+            
             if (displayValue) {
                 l.attr("data-display", displayValue);
                 html = displayValue;

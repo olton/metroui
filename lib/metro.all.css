@@ -56728,7 +56728,9 @@ form,
   --table-border-color: #e8e8e8;
   --table-color: #191919;
   --table-background: transparent;
-  --table-sortable-background: #d4e2ff;
+  --table-header-background: #fafafa;
+  --table-header-color: #191919;
+  --table-sortable-background: #e8e8e8;
   --table-sortable-color: #000000;
   --table-selected-background: #d4e2ff;
   --table-selected-color: #000000;
@@ -56743,8 +56745,10 @@ form,
   --table-border-color: #4a4d51;
   --table-color: #dbdfe7;
   --table-background: transparent;
+  --table-header-background: #1b1b1e;
+  --table-header-color: #efefef;
   --table-sortable-background: #26282e;
-  --table-sortable-color: #5a87cb;
+  --table-sortable-color: #ffffff;
   --table-selected-background: #2e436e;
   --table-selected-color: #ffffff;
   --table-striped-background: #26282e;
@@ -56816,6 +56820,8 @@ form,
 .table .thead,
 .table .tfoot {
   border-bottom: 4px solid var(--table-border-color);
+  background: var(--table-header-background);
+  color: var(--table-header-color);
 }
 .table thead th,
 .table tfoot th,
@@ -57484,6 +57490,7 @@ form,
   border: 1px solid var(--border-color);
   margin: 10px 0;
   overflow: hidden;
+  position: relative;
 }
 .table-component .table-container.horizontal-scroll {
   overflow-x: auto;
@@ -57842,6 +57849,16 @@ form,
     text-transform: uppercase;
     font-size: 12px;
   }
+}
+.table-container {
+  scroll-snap-type: y mandatory;
+}
+.table.fixed-header tr {
+  scroll-snap-align: start;
+}
+.table.fixed-header thead {
+  position: sticky;
+  top: 0;
 }
 
 /* source/components/remote-table/remote-table.less */
@@ -60233,8 +60250,8 @@ form,
   --select-option-color: inherit;
   --select-option-background-hover: rgba(29, 29, 29, 0.1);
   --select-option-color-hover: inherit;
-  --select-option-background-selected: #468cff;
-  --select-option-color-selected: #ffffff;
+  --select-option-background-selected: #e8e8e8;
+  --select-option-color-selected: #191919;
   --select-button-background: transparent;
   --select-button-color: #191919;
   --select-button-background-hover: transparent;
@@ -60304,7 +60321,6 @@ form,
 }
 .select .option-list {
   margin: 0;
-  padding: 0;
   list-style: none inside;
   overflow-y: auto;
   position: relative;
@@ -60312,27 +60328,44 @@ form,
   background-color: var(--select-options-background);
   color: var(--select-options-color);
   font-size: 0.875rem;
+  border-radius: var(--select-border-radius);
+  padding: 4px 0;
 }
-.select .option-list li,
-.select .option-list a {
+.select .option-list li {
   display: block;
+  margin: 0 4px;
+  border-radius: var(--select-border-radius);
+  overflow: hidden;
 }
 .select .option-list a {
   min-width: auto;
   height: 32px;
   line-height: 32px;
-  overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0 2rem 0 2.5rem;
+  padding: 0 10px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 .select .option-list .icon {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
-  left: 8px;
   position: absolute;
-  vertical-align: middle;
-  text-align: center;
+  left: 8px;
+  top: 8px;
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  display: flex;
+  object-fit: cover;
+}
+.select .option-list .icon * {
+  object-fit: cover;
+  font-size: 16px;
+  width: 100%;
+  height: 100%;
+}
+.select .option-list a:has(.icon) {
+  padding-left: 32px;
 }
 .select .option-list li:hover {
   background-color: var(--select-option-background-hover);
@@ -60625,6 +60658,12 @@ form,
 .select .tag .remover {
   background-color: var(--select-tag-button-background);
   color: var(--select-tag-button-color);
+}
+.select.no-icons .option-list a {
+  padding: 0 1rem;
+}
+.select.no-icons .option-list .icon {
+  display: none;
 }
 
 /* source/components/shortcut/shortcut.less */
@@ -63620,6 +63659,7 @@ textarea {
   flex-shrink: 0;
 }
 .theme-switcher.mode-switch .check::before {
+  font-family: "Segoe UI Symbol", serif;
   content: attr(data-dark-symbol);
   display: block;
   position: absolute;
@@ -63703,13 +63743,14 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 16px;
   border-radius: 50%;
   width: 100%;
   height: 100%;
 }
 .theme-switcher.mode-button .check::before,
 .theme-switcher.mode-button .check::after {
+  font-family: "Segoe UI Symbol", serif;
   content: attr(data-dark-symbol);
   position: relative;
   display: block;
@@ -63717,7 +63758,7 @@ textarea {
 }
 .theme-switcher.mode-button .check::before {
   color: #ffffff;
-  transform: translate(-1px);
+  transform: translateY(-2px);
 }
 .theme-switcher.mode-button .check::after {
   content: attr(data-light-symbol);

@@ -111,6 +111,7 @@
         label_new: "Нове",
         label_sell: "Продати",
         label_details: "Подробиці",
+        label_sorting: "Сортування",
 
         label_on: "увм",
         label_off: "вим",

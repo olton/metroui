@@ -20,11 +20,11 @@
     <h1>Select test page</h1>
 
     <div class="example">
-        <select data-role="select" multiple  data-clear-button="true" data-clear-button-icon="<span class='mif-cross'></span>">
-            <OPTION value = "arknoid2" data-display = "arknoid2"> Arkanoid - Revenge of DOH (World) </OPTION>
-            <OPTION value = "arkanoid" data-display = "arkanoid"> Arkanoid (World, older) </OPTION>
-            <OPTION value = "astrob" data-display = "astrob"> Astro Blaster (version 3) </OPTION>
-            <OPTION value = "bankp" data-display = "bankp"> Bank Panic </OPTION>
+        <select data-role="select" multiple data-clear-button="true">
+            <OPTION data-icon="<span class='mif-rocket'>" value="arknoid2" data-display="arknoid2"> Arkanoid - Revenge of DOH (World)</OPTION>
+            <OPTION value="arkanoid" data-display="arkanoid"> Arkanoid (World, older)</OPTION>
+            <OPTION value="astrob" data-display="astrob"> Astro Blaster (version 3)</OPTION>
+            <OPTION value="bankp" data-display="bankp"> Bank Panic</OPTION>
         </select>
     </div>
 
@@ -136,10 +136,12 @@
         <div>
             <BUTTON id="SET_2"
                     class="button rounded bg-grayBlue bg-darkGrayBlue-hover text-bold fg-white"
-                    data-id="2">Ball & Paddle</BUTTON>
+                    data-id="2">Ball & Paddle
+            </BUTTON>
             <BUTTON id="SET_6"
                     class="button rounded bg-grayBlue bg-darkGrayBlue-hover text-bold fg-white"
-                    data-id="6">Board Game</BUTTON>
+                    data-id="6">Board Game
+            </BUTTON>
         </div>
         <SELECT id="CATEGORIES" name="categories"
                 class="input-small text-bold"
@@ -179,7 +181,7 @@
     var sel = $("@select");
     var Utils = Metro.utils;
 
-    function fillSelect(){
+    function fillSelect() {
         var select = Metro.getPlugin("#select3", "select");
         var options = {
             "0": "NEW DIPSWITCH",
@@ -193,7 +195,7 @@
         select.val("");
     }
 
-    function fillSelect3_1(){
+    function fillSelect3_1() {
         const select = $("#select3_1")
         select.append($("<option>").attr("value", "value_1").text(`value_1`))
         select.append($("<option>").attr("value", "value_2").attr("selected", "selected").text(`value_2`))
@@ -222,10 +224,10 @@
     //     console.log("up");
     // });
 
-    $(document).on("click", "[id^='SET_']", function(e) {
+    $(document).on("click", "[id^='SET_']", function (e) {
         e.preventDefault();
 
-        var tID=$(this).attr("data-id");
+        var tID = $(this).attr("data-id");
 
         Metro.getPlugin("#CATEGORIES", "select").val(tID);
         $("#CATEGORIES").focus();

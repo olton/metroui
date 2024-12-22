@@ -111,6 +111,7 @@
         label_new: "New",
         label_sell: "Sell",
         label_details: "Details",
+        label_sorting: "Sorting",
 
         label_on: "on",
         label_off: "off",

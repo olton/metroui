@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ua">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -19,7 +19,7 @@
             img {
                 object-fit: cover;
                 height: 100%;
-                mix-blend-mode: darken;
+                /*mix-blend-mode: darken;*/
             }
         }
         
@@ -78,7 +78,6 @@
              data-caption="Products"
              data-offset-key="skip"
              data-data-key="products"
-             data-fields="id, title, price, discountPercentage"
              data-url='https://dummyjson.com/products'
              data-search-url='https://dummyjson.com/products/search'
              data-search-key="q"
@@ -86,6 +85,8 @@
              data-cls-body="row"
              data-cls-item="cell-ld-6 cell-md-4"
              data-cls-pagination="mt-4 d-flex flex-justify-center"
+             data-sort="rating:desc"
+             data-sort-rules="price:asc:From cheap to expensive,price:desc:From expensive to cheap,rating:desc:By rating"
         ></div>
         
     </div>
@@ -96,11 +97,10 @@
     function datasetTemplate(data) {
         return data ? `
         <div class="card p-4 h-100">
-            <div class="product-qrcode d-none"><img src="${data.meta.qrCode}" alt="qrcode"/></div>
             <div class="product-image"><img src="${data.thumbnail}" alt="${data.title}"/></div>
             <div class="product-title">${data.title}</div>
             <div>
-                <span class="product-brand bg-sand">${data.brand}</span>
+                <span class="product-brand bg-sand">${data.brand ? data.brand : 'Noname'}</span>
                 ${data.tags.map(sel => `<span class="mr-1 product-brand bg-light-sand">${sel}</span>`).join('')}
             </div>
             <div><span class="product-desc">${data.description}</span></div>

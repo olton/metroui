@@ -9,7 +9,7 @@
         saveState: true,
         saveStateKey: "THEME:SWITCHER",
         clsDark: "",
-        darkSymbol: "☾",
+        darkSymbol: "🌙",
         lightSymbol: "☀",
         mode: "switch",
         onThemeSwitcherCreate: Metro.noop,
