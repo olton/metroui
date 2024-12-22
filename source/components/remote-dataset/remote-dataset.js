@@ -63,8 +63,8 @@
             this.sortField = field
             this.sortOrder = order
             this.template = Metro.utils.exec(o.template)
-            this.sortRules = o.sortRules.toArray(",").map(rule => rule.toArray(":"))
-
+            this.sortRules = o.sortRules.toArray(",").filter(f => f).map(rule => rule.toArray(":"))
+            console.log(this.sortRules)
             this._createStructure();
             this._createEvents();
 
@@ -93,21 +93,21 @@
             element.append(entries = $("<div>").addClass("dataset-entry"))
 
             entries.html(`
-                <div class="search-block row">
-                    <div class="cell-sm-7 cell-xs-6">
+                <div class="service-block">
+                    <div class="search-block">
                         <input name="search" type="text" data-role="input" 
                             data-prepend="${this.strings.label_search}" 
                             data-search-button="true" 
                             />
                     </div>
                    
-                    <div class="cell-sm-3 cell-xs-3">
+                    <div class="order-block ${this.sortRules.length === 0 ? 'd-none' : ''}">
                         <select name="sort-order" data-role="select" data-filter="false" class="no-icons1">
                             ${this.sortRules.map(rule => `<option value="${rule[0]}:${rule[1]}" ${rule[0] === this.sortField && rule[1] === this.sortOrder ? 'selected' : ''}>${rule[2]}</option>`).join("")}
                         </select>
                     </div>
                    
-                    <div class="cell-sm-2 cell-xs-3">
+                    <div class="count-block">
                         <select name="rows-count" data-role="select" data-prepend="${this.strings.label_rows_count}" data-filter="false">
                             ${this.rowSteps.map(step => `<option value="${step}" ${+step === this.rowsCount ? 'selected' : ''}>${step}</option>`).join("")}
                         </select>

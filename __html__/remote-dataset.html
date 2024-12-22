@@ -9,7 +9,7 @@
     <title>Test Remote Dataset - Metro UI :: Popular HTML, CSS and JS library</title>
     <style>
         body {
-            padding-top: 50px;
+            padding-top: 60px;
         }
         
         .product-image {
@@ -61,7 +61,7 @@
     </style>
 </head>
 <body class="cloak">
-<nav data-role="appbar">
+<nav data-role="appbar" class="border-bottom bd-default">
     <span class="app-bar-item">Any</span>
     <div class="app-bar-item-static no-hover">
         <input type="checkbox" data-role="theme-switcher"/>
@@ -69,11 +69,14 @@
     <div class="app-bar-item-static no-hover">
         <input type="checkbox" data-role="theme-switcher" data-mode="button"/>
     </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Remote Dataset Test</div>
+    </div>
 </nav>
 
 <div class="container-fluid">
     <div class="container">
-        <h1>Remote Dataset Test</h1>
+        
         <div data-role="remote-dataset"
              data-caption="Products"
              data-offset-key="skip"

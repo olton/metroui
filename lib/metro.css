@@ -56716,6 +56716,32 @@ form,
 .remote-dataset .dataset-load-more .icon {
   font-size: 64px;
 }
+.remote-dataset .service-block {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+.remote-dataset .service-block .search-block {
+  flex-basis: 100%;
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+.remote-dataset .service-block .order-block {
+  flex-basis: 200px;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+.remote-dataset .service-block .count-block {
+  flex-basis: 100px;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+.remote-dataset .service-block .count-block .option-list li a {
+  justify-content: flex-end;
+  padding-right: 32px;
+}
 
 /* source/components/table/table.less */
 :root {

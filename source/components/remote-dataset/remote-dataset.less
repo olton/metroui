@@ -27,4 +27,39 @@
             font-size: 64px;
         }
     }
+    
+    .service-block {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        
+        .search-block {
+            flex-basis: 100%;
+            flex-shrink: 1;
+            flex-grow: 1;
+        }
+        
+        .order-block {
+            flex-basis: 200px;
+            flex-shrink: 0;
+            flex-grow: 0;
+        }
+        
+        .count-block {
+            flex-basis: 100px;
+            flex-shrink: 0;
+            flex-grow: 0;
+            
+            .option-list {
+                li {
+                    a {
+                        justify-content: flex-end;
+                        padding-right: 32px;
+                    }
+                }
+            }
+        }
+    }
 }
