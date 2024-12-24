@@ -176,8 +176,10 @@
             }
 
             if (option.is(":selected")) {
+                let g = ""
+                
                 if (o.showGroupName && group) {
-                    html +=
+                    g =
                         "&nbsp;<span class='selected-item__group-name " +
                         o.clsGroupName +
                         "'>" +
@@ -189,8 +191,9 @@
                     l.addClass("d-none");
                     input.append(this._addTag(a.html(), l));
                 } else {
+                    html = a.html() + g
                     element.val(item.value);
-                    input.html(a.html());
+                    input.html(html);
                     element.fire("change", {
                         val: item.value,
                     });
