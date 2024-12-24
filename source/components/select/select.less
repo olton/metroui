@@ -116,6 +116,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
+            white-space: nowrap;
         }
 
         .icon {
@@ -195,6 +196,7 @@
         width: calc(100% - .1rem);
         height: 34px;
         padding-left: 10px;
+        white-space: nowrap;
         .text-ellipsis();
 
         .icon {
@@ -234,7 +236,7 @@
         z-index: @zindex-dropdown;
         background-color: var(--select-options-background);
         color: var(--select-options-color);
-        box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.3);
+        box-shadow: 0 10px 15px -3px var(--shadow-color-medium), 0 4px 6px -4px var(--shadow-color-medium);
 
         .input {
             margin: 4px 2px 6px;
@@ -475,5 +477,11 @@
                 display: none;
             }
         }
+    }
+}
+
+.select {
+    .unselect-option {
+        margin-left: 6px;
     }
 }

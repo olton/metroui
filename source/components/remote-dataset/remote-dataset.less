@@ -31,7 +31,7 @@
     .service-block {
         display: flex;
         flex-flow: row nowrap;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         gap: 6px;
         
@@ -42,7 +42,7 @@
         }
         
         .order-block {
-            flex-basis: 200px;
+            flex-basis: 220px;
             flex-shrink: 0;
             flex-grow: 0;
         }
@@ -61,5 +61,9 @@
                 }
             }
         }
+    }
+    
+    .hide-block {
+        display: none;
     }
 }

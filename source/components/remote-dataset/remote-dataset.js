@@ -20,12 +20,19 @@
         rows: 10,
         rowsSteps: "10,25,50,100",
         sortRules: "",
+        
+        showSearch: true,
+        showOrder: true,
+        showRowsCount: true,
 
         template: "",
 
         clsBody: "",
         clsItem: "",
         clsPagination: "",
+        clsSearchBlock: "",
+        clsOrderBlock: "",
+        clsRowsCountBlock: "",
         
         onLoad: f => f,
         onDrawRow: Metro.noop,
@@ -64,7 +71,6 @@
             this.sortOrder = order
             this.template = Metro.utils.exec(o.template)
             this.sortRules = o.sortRules.toArray(",").filter(f => f).map(rule => rule.toArray(":"))
-            console.log(this.sortRules)
             this._createStructure();
             this._createEvents();
 
@@ -94,28 +100,37 @@
 
             entries.html(`
                 <div class="service-block">
-                    <div class="search-block">
+                    <div class="search-block ${o.clsSearchBlock} ${o.showSearch ? '' : 'hide-block'}">
                         <input name="search" type="text" data-role="input" 
                             data-prepend="${this.strings.label_search}" 
                             data-search-button="true" 
                             />
                     </div>
                    
-                    <div class="order-block ${this.sortRules.length === 0 ? 'd-none' : ''}">
-                        <select name="sort-order" data-role="select" data-filter="false" class="no-icons1">
-                            ${this.sortRules.map(rule => `<option value="${rule[0]}:${rule[1]}" ${rule[0] === this.sortField && rule[1] === this.sortOrder ? 'selected' : ''}>${rule[2]}</option>`).join("")}
+                    <div class="order-block ${o.clsOrderBlock} ${this.sortRules.length === 0 || o.showOrder === false ? 'hide-block' : ''}">
+                        <select name="sort-order" data-role="select" data-filter="false">
+                            ${this.sortRules.map(rule => (`
+                                <option value="${rule[0]}:${rule[1]}" 
+                                        ${rule[0] === this.sortField && rule[1] === this.sortOrder ? 'selected' : ''}
+                                        data-icon="${rule[3] ? rule[3] : ''}"
+                                >
+                                    ${rule[2]}
+                                </option>
+                            `)).join("")}
                         </select>
                     </div>
                    
-                    <div class="count-block">
+                    <div class="count-block ${o.clsRowsCountBlock} ${o.showRowsCount ? '' : 'hide-block'}">
                         <select name="rows-count" data-role="select" data-prepend="${this.strings.label_rows_count}" data-filter="false">
-                            ${this.rowSteps.map(step => `<option value="${step}" ${+step === this.rowsCount ? 'selected' : ''}>${step}</option>`).join("")}
+                            ${this.rowSteps.map(step => (`
+                                <option value="${step}" ${+step === this.rowsCount ? 'selected' : ''}>
+                                    ${step}
+                                </option>
+                            `)).join("")}
                         </select>
                     </div>
                 </div>
-                <div class="dataset-body">
-                    ...
-                </div>
+                <div class="dataset-body"></div>
             `)
             this.body = entries.find(".dataset-body").addClass(o.clsBody)
 

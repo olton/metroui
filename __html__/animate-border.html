@@ -23,12 +23,24 @@
             align-items: center;
             justify-content: center;
         }
+        
+        .inner {
+            width: 100px;
+            height: 100px;
+            background-color: var(--default-background);
+            position: relative;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
 <div>
-<div class="box z-1">
-    <button class="button animated-border">Button</button>
+<div class="box p-4">
+    <button class="button animated-border mr-2">Button</button>
+    <div class="inner rainbow-border">123</div>
 </div>
 </div>
 <script src="../lib/metro.js"></script>

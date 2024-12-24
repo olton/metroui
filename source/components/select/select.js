@@ -22,7 +22,7 @@
         prepend: "",
         append: "",
         filterPlaceholder: "Search...",
-        filter: true,
+        filter: false,
         copyInlineStyles: false,
         dropHeight: 200,
         dropWidth: null,
@@ -104,14 +104,27 @@
             var tag,
                 tagSize,
                 container = element.closest(".select");
+            const group = data.data("group");
+            let html = "<span class='title'>" + val + "</span>"
+            
+            if (o.showGroupName && group) {
+                html +=
+                    "&nbsp;<span class='selected-item__group-name " +
+                    o.clsGroupName +
+                    "'>" +
+                    group +
+                    "</span>";
+            }
+
             tag = $("<div>")
                 .addClass("tag")
                 .addClass(o.shortTag ? "short-tag" : "")
                 .addClass(o.clsSelectedItem)
-                .html("<span class='title'>" + val + "</span>")
+                .html(html)
                 .data("option", data);
+            
             $("<span>")
-                .addClass("action")
+                .addClass("action unselect-option")
                 .addClass(o.clsSelectedItemAction)
                 .html("&times;")
                 .appendTo(tag);
@@ -174,10 +187,10 @@
 
                 if (multiple) {
                     l.addClass("d-none");
-                    input.append(this._addTag(html, l));
+                    input.append(this._addTag(a.html(), l));
                 } else {
                     element.val(item.value);
-                    input.html(html);
+                    input.html(a.html());
                     element.fire("change", {
                         val: item.value,
                     });

@@ -950,7 +950,7 @@ body {
 .border-ridge {
   border-style: ridge !important;
 }
-@property --gradient-angle { syntax: "<angle>"; initial-value: 0deg; inherits: true; }
+@property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: true; }
 :root {
   --animated-border-speed: 3s;
   --animated-border-size: 2px;
@@ -969,17 +969,20 @@ body {
   position: absolute;
   background-image:
     conic-gradient(
-      from var(--gradient-angle),
+      from var(--angle),
       var(--animated-border-color-1),
       var(--animated-border-color-2),
       var(--animated-border-color-3),
       var(--animated-border-color-4),
       var(--animated-border-color-5));
+  top: calc(var(--animated-border-size) * -1);
+  left: calc(var(--animated-border-size) * -1);
   z-index: -1;
-  padding: 3px;
+  padding: 4px;
   border-radius: inherit;
-  inset: -2px;
-  animation: var(--animated-border-speed) spin-gradient linear infinite;
+  width: calc(100% + var(--animated-border-size) * 2);
+  height: calc(100% + var(--animated-border-size) * 2);
+  animation: var(--animated-border-speed) spin-angle linear infinite;
 }
 .rainbow-border::before,
 [class*=rainbow-border-]::before {
@@ -997,7 +1000,7 @@ body {
   opacity: 1;
   background-image:
     conic-gradient(
-      from var(--gradient-angle),
+      from var(--angle),
       #ff4545,
       #00ff99,
       #006aff,
@@ -1012,14 +1015,14 @@ body {
   height: calc(100% + var(--animated-border-size) * 2);
   background:
     repeating-conic-gradient(
-      from var(--gradient-angle),
+      from var(--angle),
       var(--animated-border-color) 0%,
       var(--animated-border-color) 5%,
       transparent 5%,
       transparent 40%,
       var(--animated-border-color) 50%);
   border-radius: inherit;
-  animation: spin-gradient var(--animated-border-speed) linear infinite;
+  animation: spin-angle var(--animated-border-speed) linear infinite;
   inset: calc(-1 * var(--animated-border-size));
   z-index: -1;
 }
@@ -1034,7 +1037,7 @@ body {
   opacity: 1;
   background:
     repeating-conic-gradient(
-      from var(--gradient-angle),
+      from var(--angle),
       var(--animated-border-color) 0%,
       var(--animated-border-color) 5%,
       transparent 5%,
@@ -1169,13 +1172,14 @@ body {
 .animated-border-hover-sand {
   --animated-border-color: #f1e0ae;
 }
-@keyframes spin-gradient {
-  from {
-    --gradient-angle: 0deg;
-  }
+@keyframes spin-angle {
   to {
-    --gradient-angle: 360deg;
+    --angle: 360deg;
   }
+}
+*:has([class*=animated-border-], [class*=rainbow-border]) {
+  position: relative;
+  z-index: 1;
 }
 
 /* source/common-css/cursors.less */
@@ -56719,7 +56723,7 @@ form,
 .remote-dataset .service-block {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   gap: 6px;
 }
@@ -56729,7 +56733,7 @@ form,
   flex-grow: 1;
 }
 .remote-dataset .service-block .order-block {
-  flex-basis: 200px;
+  flex-basis: 220px;
   flex-shrink: 0;
   flex-grow: 0;
 }
@@ -56741,6 +56745,9 @@ form,
 .remote-dataset .service-block .count-block .option-list li a {
   justify-content: flex-end;
   padding-right: 32px;
+}
+.remote-dataset .hide-block {
+  display: none;
 }
 
 /* source/components/table/table.less */
@@ -60373,6 +60380,7 @@ form,
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  white-space: nowrap;
 }
 .select .option-list .icon {
   position: absolute;
@@ -60477,7 +60485,7 @@ form,
   z-index: 1000;
   background-color: var(--select-options-background);
   color: var(--select-options-color);
-  box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 15px -3px var(--shadow-color-medium), 0 4px 6px -4px var(--shadow-color-medium);
 }
 .select .drop-container .input {
   margin: 4px 2px 6px;
@@ -60690,6 +60698,9 @@ form,
 }
 .select.no-icons .option-list .icon {
   display: none;
+}
+.select .unselect-option {
+  margin-left: 6px;
 }
 
 /* source/components/shortcut/shortcut.less */

@@ -51,7 +51,7 @@ each(@media-rules, {
 .border-outset {border-style: outset!important;}
 .border-ridge {border-style: ridge!important;}
 
-@property --gradient-angle {
+@property --angle {
     syntax: "<angle>";
     initial-value: 0deg;
     inherits: true;
@@ -73,18 +73,21 @@ each(@media-rules, {
         content: '';
         position: absolute;
         background-image: conic-gradient(
-                from var(--gradient-angle),
+                from var(--angle),
                 var(--animated-border-color-1),
                 var(--animated-border-color-2),
                 var(--animated-border-color-3),
                 var(--animated-border-color-4),
                 var(--animated-border-color-5)
         );
+        top: calc(var(--animated-border-size) * -1);
+        left: calc(var(--animated-border-size) * -1);
         z-index: -1;
-        padding: 3px;
+        padding: 4px;
         border-radius: inherit;
-        inset: -2px;
-        animation: var(--animated-border-speed) spin-gradient linear infinite;
+        width: calc(100% + var(--animated-border-size) * 2);
+        height: calc(100% + var(--animated-border-size) * 2);
+        animation: var(--animated-border-speed) spin-angle linear infinite;
     }
     &::before {
         filter: blur(.5rem);
@@ -102,7 +105,7 @@ each(@media-rules, {
         &::after, &::before {
             opacity: 1;
             background-image: conic-gradient(
-                    from var(--gradient-angle),
+                    from var(--angle),
                     #ff4545,
                     #00ff99,
                     #006aff,
@@ -120,7 +123,7 @@ each(@media-rules, {
         width: calc(100% + var(--animated-border-size) * 2);
         height: calc(100% + var(--animated-border-size) * 2);
         background: repeating-conic-gradient(
-                from var(--gradient-angle),
+                from var(--angle),
                 var(--animated-border-color) 0%,
                 var(--animated-border-color) 5%,
                 transparent 5%,
@@ -128,7 +131,7 @@ each(@media-rules, {
                 var(--animated-border-color) 50%
         );
         border-radius: inherit;
-        animation: spin-gradient var(--animated-border-speed) linear infinite;
+        animation: spin-angle var(--animated-border-speed) linear infinite;
         inset: calc(-1 * var(--animated-border-size));
         z-index: -1;
     }
@@ -144,7 +147,7 @@ each(@media-rules, {
         &::before {
             opacity: 1;
             background: repeating-conic-gradient(
-                    from var(--gradient-angle),
+                    from var(--angle),
                     var(--animated-border-color) 0%,
                     var(--animated-border-color) 5%,
                     transparent 5%,
@@ -161,11 +164,13 @@ each(@normalColors, {
     }
 })
 
-@keyframes spin-gradient {
-    from{
-        --gradient-angle: 0deg;
-    }
+@keyframes spin-angle {
     to{
-        --gradient-angle: 360deg;
+        --angle: 360deg;
     }
+}
+
+*:has([class*="animated-border-"], [class*="rainbow-border"]) {
+    position: relative;
+    z-index: 1;
 }
