@@ -62642,7 +62642,8 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   --switch-countur-color-on: #191919;
   --switch-color-on: #191919;
   --switch-thumb-color-on: #ffffff;
-  --switch-label-size: 8px;
+  --switch-label-size: 10px;
+  --switch-caption-size: 12px;
 }
 .dark-side {
   --switch-countur-color: #474747;
@@ -62674,12 +62675,12 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
 .switch .check,
 .switch .caption {
   display: block;
-  line-height: 38px;
-  font-size: var(--switch-label-size);
+  font-size: var(--switch-caption-size);
   margin: 0 4px;
   position: relative;
 }
 .switch .check {
+  line-height: 38px;
   position: relative;
   height: 20px;
   width: 48px;
@@ -62760,7 +62761,7 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   color: inherit;
   left: 16px;
   width: 26px;
-  top: -2px;
+  top: -1px;
   line-height: 20px;
   font-size: var(--switch-label-size);
   text-transform: uppercase;
