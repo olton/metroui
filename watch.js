@@ -4,7 +4,7 @@ import autoprefixer from "@olton/esbuild-plugin-autoprefixer";
 import {lessLoader} from "esbuild-plugin-less";
 import {replace} from "esbuild-plugin-replace";
 import unlink from "@olton/esbuild-plugin-unlink";
-import pkg from "./package.json" assert {type: "json"};
+import pkg from "./package.json" with {type: "json"};
 
 const production = process.env.MODE === "production"
 const banner = `

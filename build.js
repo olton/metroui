@@ -4,7 +4,7 @@ import progress from "@olton/esbuild-plugin-progress";
 import autoprefixer from "@olton/esbuild-plugin-autoprefixer";
 import unlink from "@olton/esbuild-plugin-unlink";
 import { replace } from "esbuild-plugin-replace";
-import pkg from "./package.json" assert {type: "json"};
+import pkg from "./package.json" with {type: "json"};
 
 const production = process.env.MODE === "production"
 const version = pkg.version

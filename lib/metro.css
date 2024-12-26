@@ -62761,7 +62761,7 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   color: inherit;
   left: 16px;
   width: 26px;
-  top: -1px;
+  top: -2px;
   line-height: 20px;
   font-size: var(--switch-label-size);
   text-transform: uppercase;
@@ -63796,7 +63796,6 @@ textarea {
 }
 .theme-switcher.mode-button .check::before {
   color: #ffffff;
-  transform: translateY(-2px);
 }
 .theme-switcher.mode-button .check::after {
   content: attr(data-light-symbol);

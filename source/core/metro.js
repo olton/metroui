@@ -44,22 +44,26 @@ import {Props} from "./props.js";
 
         info: function () {
             if (typeof globalThis["METRO_LIB_INFO"] !== "undefined") {
-                console.info(
-                    `%c METRO UI %c v${Metro.version} %c ${Metro.build_time} `,
-                    "color: pink; font-weight: bold; background: #800000",
-                    "color: white; background: darkgreen",
-                    "color: white; background: #0080fe;",
-                );
-
-                if (globalThis.$ && $.info) $.info();
-                if (globalThis.Hooks && Hooks.info) Hooks.info();
-                if (globalThis.html && html.info) html.info();
-                if (globalThis.Animation && Animation.info) Animation.info();
-                if (globalThis.Farbe && Farbe.info) Farbe.info();
-                if (globalThis.Datetime && Datetime.info) Datetime.info();
-                if (globalThis.Str && Str.info) Str.info();
-                if (globalThis.G && G.info) G.info();
+                Metro.welcome()
             }
+        },
+
+        welcome: function () {
+            console.info(
+                `%c METRO UI %c v${Metro.version} %c ${Metro.build_time} `,
+                "color: pink; font-weight: bold; background: #800000",
+                "color: white; background: darkgreen",
+                "color: white; background: #0080fe;",
+            );
+
+            if (globalThis.$ && $.info) $.info();
+            if (globalThis.Hooks && Hooks.info) Hooks.info();
+            if (globalThis.html && html.info) html.info();
+            if (globalThis.Animation && Animation.info) Animation.info();
+            if (globalThis.Farbe && Farbe.info) Farbe.info();
+            if (globalThis.Datetime && Datetime.info) Datetime.info();
+            if (globalThis.Str && Str.info) Str.info();
+            if (globalThis.G && G.info) G.info();
         },
 
         aboutDlg: function () {
