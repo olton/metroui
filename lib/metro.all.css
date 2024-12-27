@@ -51635,12 +51635,21 @@ aside::after {
 }
 
 /* source/components/dropdown-button/dropdown-button.less */
+:root {
+  --dropdown-button-toggle-color: #000;
+}
+.dark-side {
+  --dropdown-button-toggle-color: #fff;
+}
 .dropdown-button {
   display: inline-block;
   position: relative;
   width: auto;
   height: 36px;
   line-height: 1;
+}
+.dropdown-button .dropdown-toggle::before {
+  border-color: var(--dropdown-button-toggle-color);
 }
 
 /* source/components/file/file.less */

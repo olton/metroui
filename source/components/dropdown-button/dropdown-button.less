@@ -1,10 +1,22 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --dropdown-button-toggle-color: #000;
+}
+
+.dark-side {
+    --dropdown-button-toggle-color: #fff;
+}
+
 .dropdown-button {
     display: inline-block;
     position: relative;
     width: auto;
     height: 36px;
     line-height: 1;
+    
+    .dropdown-toggle::before {
+        border-color: var(--dropdown-button-toggle-color);
+    }
 }
