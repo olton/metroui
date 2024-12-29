@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Test i18n - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        body {
+            padding-top: 60px;
+        }
+    </style>
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <div class="app-bar-container container-fluid">
+        <div class="container d-flex flex-row flex-nowrap border bd-default">
+            <div class="app-bar-item-static no-hover">
+                <div class="text-leader" data-i18n="label_welcome"></div>
+            </div>
+            <div class="app-bar-item-static ml-auto border bd-default">
+                <input type="checkbox" data-role="theme-switcher"/>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="container">
+        <h1 data-i18n="label_welcome">Welcome to Metro UI</h1>
+        <div>
+            <select id="lang-select" data-role="select" data-prepend="<span class='mif-language mif-2x'>" onchange="changeLanguage(this.value)">
+                <option value="ua">Українська</option>
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+            </select>
+        </div>        
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.i18n.extend({
+        "en": {
+            "label_welcome": "Welcome to Metro UI"
+        },
+        "ua": {
+            "label_welcome": "Ласкаво просимо до Metro UI"
+        },
+        "de": {
+            "label_welcome": "Willkommen bei Metro UI"
+        }
+    })
+    
+    function changeLanguage(lang) {
+        Metro.i18n.updateUI(document, lang);
+    }
+    
+    $(function (){
+        Metro.i18n.updateUI(document);
+        $("#lang-select").val(Metro.i18n.language);
+    })
+</script>
+</body>
+</html>

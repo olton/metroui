@@ -608,8 +608,11 @@ import {Props} from "./props.js";
         },
 
         i18n: {
+            language: "en",
+            
             load(lang = "en") {
-                Metro.locale = Metro.locales[lang];
+                Metro.i18n.language = Metro.locales[lang] ? lang : "en";
+                Metro.locale = Metro.locales[Metro.i18n.language];                
             },
 
             add(id, data) {
@@ -620,12 +623,22 @@ import {Props} from "./props.js";
                 return Metro.locales[locale][key] || "";
             },
 
-            updateUI(from = document, locale = "en") {
+            updateUI(from = document, lang) {
+                if (!lang) { lang = $.html().attr("lang") || "en"; }
+                if (!Metro.locales[lang]) { return }
+                Metro.i18n.load(lang);
+                $.html().attr("lang", lang);
                 from.querySelectorAll("[data-i18n]").forEach((el) => {
                     const key = el.getAttribute("data-i18n");
-                    el.innerHTML = Metro.i18n.get(key, (locale = "en"));
+                    el.innerHTML = Metro.i18n.get(key, lang);
                 });
             },
+            
+            extend(data){
+                $.each(data, function(key, value){
+                    Metro.locales[key] = Object.assign({}, Metro.locales[key], value);
+                });
+            }
         },
     };
 
