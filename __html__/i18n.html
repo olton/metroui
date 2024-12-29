@@ -16,11 +16,11 @@
 <body class="cloak">
 <nav data-role="appbar" class="border-bottom bd-default">
     <div class="app-bar-container container-fluid">
-        <div class="container d-flex flex-row flex-nowrap border bd-default">
+        <div class="container d-flex flex-row flex-nowrap">
             <div class="app-bar-item-static no-hover">
-                <div class="text-leader" data-i18n="label_welcome"></div>
+                <div class="text-leader" data-i18n="label_title"></div>
             </div>
-            <div class="app-bar-item-static ml-auto border bd-default">
+            <div class="app-bar-item-static ml-auto">
                 <input type="checkbox" data-role="theme-switcher"/>
             </div>
         </div>
@@ -29,14 +29,37 @@
 
 <div class="container-fluid">
     <div class="container">
-        <h1 data-i18n="label_welcome">Welcome to Metro UI</h1>
-        <div>
-            <select id="lang-select" data-role="select" data-prepend="<span class='mif-language mif-2x'>" onchange="changeLanguage(this.value)">
-                <option value="ua">Українська</option>
-                <option value="en">English</option>
-                <option value="de">Deutsch</option>
-            </select>
-        </div>        
+        <div class="row">
+            <div class="cell-md-9">
+                <h1 data-i18n="label_welcome">Welcome to Metro UI</h1>
+            </div>
+            <div class="cell-md-3 d-flex flex-align-center">
+                <select id="lang-select" data-role="select" data-prepend="<span class='mif-language mif-2x'>" onchange="changeLanguage(this.value)">
+                    <option value="ua">Українська</option>
+                    <option value="en">English</option>
+                    <option value="de">Deutsch</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="box">
+            <div class="box-title" data-i18n="label_form_example">Form Example</div>
+            <form>
+                <div class="form-group">
+                    <input type="text" data-role="input" data-label="<span data-i18n='label_user_name'>User Name:</span>" />
+                </div>
+                <div class="form-group">
+                    <input type="text" data-role="input" data-label="<span data-i18n='label_user_email'>User Email:</span>" />
+                </div>
+                <div class="form-group">
+                    <input type="text" data-role="input" data-label="<span data-i18n='label_password'>Password:</span>" />
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="button primary" data-i18n="label_submit">Submit</button>
+                    <button type="reset" class="button" data-i18n="label_reset">Reset</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -44,13 +67,30 @@
 <script>
     Metro.i18n.extend({
         "en": {
-            "label_welcome": "Welcome to Metro UI"
+            "label_title": "i18n  Demo",
+            "label_welcome": "Welcome to Metro UI",
+            "label_user_name": "User Name",
+            "label_user_email": "User Email",
+            "label_password": "Password",
+            "label_form_example": "Form Example",
         },
         "ua": {
-            "label_welcome": "Ласкаво просимо до Metro UI"
+            "label_title": "i18n  Демо",
+            "label_welcome": "Ласкаво просимо до Metro UI",
+            "label_user_name": "Ім'я користувача",
+            "label_user_email": "Email користувача",
+            "label_password": "Пароль",
+            "label_form_example": "Приклад форми",
         },
         "de": {
-            "label_welcome": "Willkommen bei Metro UI"
+            "label_title": "i18n  Demo",
+            "label_welcome": "Willkommen bei Metro UI",
+            "label_user_name": "Benutzername",
+            "label_user_email": "Benutzer-E-Mail",
+            "label_password": "Passwort",
+            "label_form_example": "Formularbeispiel",
+            "label_submit": "Einreichen",
+            "label_reset": "Zurücksetzen"
         }
     })
     
