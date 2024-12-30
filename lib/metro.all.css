@@ -49400,12 +49400,16 @@ input[type=checkbox] {
 }
 input[type=checkbox]::before {
   content: "\2518";
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
   opacity: 0;
   background-color: transparent;
   position: absolute;
-  top: -7px;
-  left: 4px;
+  top: 2px;
+  left: 2px;
   transform: rotate(45deg);
   transition: opacity 0.3s;
   font-family: "Segoe UI Symbol", serif;
@@ -49430,7 +49434,8 @@ input[type=checkbox]:indeterminate::before {
   content: "\2500";
   opacity: 1;
   transform: rotate(0deg);
-  top: -11px;
+  top: -1px;
+  left: 1px;
 }
 .checkbox {
   display: inline-flex;
