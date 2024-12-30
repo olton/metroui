@@ -49416,6 +49416,7 @@ input[type=checkbox]::before {
   font-weight: bold;
   font-size: 20px;
   color: var(--checkbox-color);
+  transform-origin: center;
 }
 input[type=checkbox]:checked::before {
   opacity: 1;
@@ -49652,6 +49653,15 @@ input[type=checkbox].checkbox-sand {
 }
 input[type=checkbox].checkbox-sand::before {
   color: #f1e0ae;
+}
+@media only screen and (max-device-width: 640px) {
+  .checkbox input[type=checkbox]::before {
+    left: 0;
+    top: 0;
+  }
+  .checkbox input[type=checkbox]:indeterminate::before {
+    top: 3px;
+  }
 }
 
 /* source/components/chips/chips.less */

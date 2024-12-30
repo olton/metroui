@@ -45,6 +45,7 @@ input[type=checkbox] {
         font-weight: bold;
         font-size: 20px;
         color: var(--checkbox-color);
+        transform-origin: center;
     }
     
     &:checked {
@@ -113,3 +114,20 @@ each(@normalColors, {
         }
     }
 })
+
+@media only screen and (max-device-width: 640px) {
+    .checkbox {
+        input[type=checkbox] {
+            &::before {
+                left: 0;
+                top: 0;
+            }
+            
+            &:indeterminate {
+                &::before {
+                    top: 3px;
+                }
+            }
+        }
+    }
+}
