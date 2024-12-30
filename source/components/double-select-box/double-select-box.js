@@ -60,9 +60,14 @@
 
             this.list1.clear();
             this.select1.find("option").each(function(i, option){
-                var $op = $(option);
-                var html = $op.attr("data-template") ? $op.attr("data-template").replace(/\$1/g, $op.text()) : $op.text();
-
+                const $op = $(option);
+                const icon = $op.attr("data-icon");
+                let html = $op.attr("data-template") ? $op.attr("data-template").replace(/\$1/g, $op.text()) : $op.text();
+                
+                if (icon) {
+                    html = $("<span>").addClass("icon").append(icon).outerHTML() + html
+                }
+                
                 that.list1.append(
                     $("<li>").html(html).attr("data-value", option.value).data("option", option)
                 )
@@ -70,9 +75,14 @@
 
             this.list2.clear();
             this.select2.find("option").each(function(i, option){
-                var $op = $(option);
-                var html = $op.attr("data-template") ? $op.attr("data-template").replace(/\$1/g, $op.text()) : $op.text();
+                const $op = $(option);
+                const icon = $op.attr("data-icon");
+                let html = $op.attr("data-template") ? $op.attr("data-template").replace(/\$1/g, $op.text()) : $op.text();
 
+                if (icon) {
+                    html = $("<span>").addClass("icon").append(icon).outerHTML() + html
+                }
+                
                 that.list2.append(
                     $("<li>").html(html).attr("data-value", option.value).data("option", option)
                 )
