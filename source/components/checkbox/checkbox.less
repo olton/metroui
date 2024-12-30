@@ -32,15 +32,15 @@ input[type=checkbox] {
         display: block;
         opacity: 0;
         width: 8px;
-        height: 8px;
+        height: 6px;
         background-color: transparent;
+        border-left: 2px solid var(--checkbox-color);
         border-bottom: 2px solid var(--checkbox-color);
-        border-right: 2px solid var(--checkbox-color);
         margin: 0 auto;
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, calc(-50% - 2px)) rotate(45deg);
+        transform: translate(-50%, calc(-50% - 1px)) rotate(-45deg);
         transition: opacity 0.3s;
     }
     
@@ -58,17 +58,18 @@ input[type=checkbox] {
         border-color: var(--checkbox-color-disabled);
         background-color: var(--checkbox-background-disabled);
         &::before {
-            color: var(--checkbox-color-disabled);
+            border-color: var(--checkbox-color-disabled);
         }
     }
     
     &:indeterminate {
         &::before {
-            content: "─";
+            content: "";
             opacity: 1;
             transform: rotate(0deg);
-            top: -1px;
-            left: 1px;
+            border-left: none;
+            top: 4px;
+            left: 5px;
         }
     }
 }
@@ -106,7 +107,7 @@ each(@normalColors, {
     input[type=checkbox].checkbox-@{value} {
         border-color: @@value;
         &::before {
-            color: @@value;
+            border-color: @@value;
         }
     }
 })

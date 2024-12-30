@@ -49403,15 +49403,15 @@ input[type=checkbox]::before {
   display: block;
   opacity: 0;
   width: 8px;
-  height: 8px;
+  height: 6px;
   background-color: transparent;
+  border-left: 2px solid var(--checkbox-color);
   border-bottom: 2px solid var(--checkbox-color);
-  border-right: 2px solid var(--checkbox-color);
   margin: 0 auto;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, calc(-50% - 2px)) rotate(45deg);
+  transform: translate(-50%, calc(-50% - 1px)) rotate(-45deg);
   transition: opacity 0.3s;
 }
 input[type=checkbox]:checked::before {
@@ -49425,14 +49425,15 @@ input[type=checkbox]:disabled {
   background-color: var(--checkbox-background-disabled);
 }
 input[type=checkbox]:disabled::before {
-  color: var(--checkbox-color-disabled);
+  border-color: var(--checkbox-color-disabled);
 }
 input[type=checkbox]:indeterminate::before {
-  content: "\2500";
+  content: "";
   opacity: 1;
   transform: rotate(0deg);
-  top: -1px;
-  left: 1px;
+  border-left: none;
+  top: 4px;
+  left: 5px;
 }
 .checkbox {
   display: inline-flex;
@@ -49462,193 +49463,193 @@ input[type=checkbox].checkbox-lime {
   border-color: #AEFD6C;
 }
 input[type=checkbox].checkbox-lime::before {
-  color: #AEFD6C;
+  border-color: #AEFD6C;
 }
 input[type=checkbox].checkbox-green {
   border-color: #00b500;
 }
 input[type=checkbox].checkbox-green::before {
-  color: #00b500;
+  border-color: #00b500;
 }
 input[type=checkbox].checkbox-emerald {
   border-color: #50c878;
 }
 input[type=checkbox].checkbox-emerald::before {
-  color: #50c878;
+  border-color: #50c878;
 }
 input[type=checkbox].checkbox-blue {
   border-color: #5e87ff;
 }
 input[type=checkbox].checkbox-blue::before {
-  color: #5e87ff;
+  border-color: #5e87ff;
 }
 input[type=checkbox].checkbox-teal {
   border-color: #069494;
 }
 input[type=checkbox].checkbox-teal::before {
-  color: #069494;
+  border-color: #069494;
 }
 input[type=checkbox].checkbox-cyan {
   border-color: #94b6ff;
 }
 input[type=checkbox].checkbox-cyan::before {
-  color: #94b6ff;
+  border-color: #94b6ff;
 }
 input[type=checkbox].checkbox-cobalt {
   border-color: #0047ab;
 }
 input[type=checkbox].checkbox-cobalt::before {
-  color: #0047ab;
+  border-color: #0047ab;
 }
 input[type=checkbox].checkbox-indigo {
   border-color: #4b0082;
 }
 input[type=checkbox].checkbox-indigo::before {
-  color: #4b0082;
+  border-color: #4b0082;
 }
 input[type=checkbox].checkbox-violet {
   border-color: #ee82ee;
 }
 input[type=checkbox].checkbox-violet::before {
-  color: #ee82ee;
+  border-color: #ee82ee;
 }
 input[type=checkbox].checkbox-pink {
   border-color: #ffc0cb;
 }
 input[type=checkbox].checkbox-pink::before {
-  color: #ffc0cb;
+  border-color: #ffc0cb;
 }
 input[type=checkbox].checkbox-magenta {
   border-color: #ff00ff;
 }
 input[type=checkbox].checkbox-magenta::before {
-  color: #ff00ff;
+  border-color: #ff00ff;
 }
 input[type=checkbox].checkbox-crimson {
   border-color: #df0e38;
 }
 input[type=checkbox].checkbox-crimson::before {
-  color: #df0e38;
+  border-color: #df0e38;
 }
 input[type=checkbox].checkbox-red {
   border-color: #ff0000;
 }
 input[type=checkbox].checkbox-red::before {
-  color: #ff0000;
+  border-color: #ff0000;
 }
 input[type=checkbox].checkbox-orange {
   border-color: #ffa500;
 }
 input[type=checkbox].checkbox-orange::before {
-  color: #ffa500;
+  border-color: #ffa500;
 }
 input[type=checkbox].checkbox-amber {
   border-color: #ffca2a;
 }
 input[type=checkbox].checkbox-amber::before {
-  color: #ffca2a;
+  border-color: #ffca2a;
 }
 input[type=checkbox].checkbox-yellow {
   border-color: #ffff00;
 }
 input[type=checkbox].checkbox-yellow::before {
-  color: #ffff00;
+  border-color: #ffff00;
 }
 input[type=checkbox].checkbox-brown {
   border-color: #aa6432;
 }
 input[type=checkbox].checkbox-brown::before {
-  color: #aa6432;
+  border-color: #aa6432;
 }
 input[type=checkbox].checkbox-olive {
   border-color: #a1a100;
 }
 input[type=checkbox].checkbox-olive::before {
-  color: #a1a100;
+  border-color: #a1a100;
 }
 input[type=checkbox].checkbox-steel {
   border-color: #7b91a6;
 }
 input[type=checkbox].checkbox-steel::before {
-  color: #7b91a6;
+  border-color: #7b91a6;
 }
 input[type=checkbox].checkbox-mauve {
   border-color: #e0afff;
 }
 input[type=checkbox].checkbox-mauve::before {
-  color: #e0afff;
+  border-color: #e0afff;
 }
 input[type=checkbox].checkbox-taupe {
   border-color: #7a6654;
 }
 input[type=checkbox].checkbox-taupe::before {
-  color: #7a6654;
+  border-color: #7a6654;
 }
 input[type=checkbox].checkbox-champagne {
   border-color: #f7e6ca;
 }
 input[type=checkbox].checkbox-champagne::before {
-  color: #f7e6ca;
+  border-color: #f7e6ca;
 }
 input[type=checkbox].checkbox-khaki {
   border-color: #d5c58a;
 }
 input[type=checkbox].checkbox-khaki::before {
-  color: #d5c58a;
+  border-color: #d5c58a;
 }
 input[type=checkbox].checkbox-charcoal {
   border-color: #989898;
 }
 input[type=checkbox].checkbox-charcoal::before {
-  color: #989898;
+  border-color: #989898;
 }
 input[type=checkbox].checkbox-bronze {
   border-color: #e48d3e;
 }
 input[type=checkbox].checkbox-bronze::before {
-  color: #e48d3e;
+  border-color: #e48d3e;
 }
 input[type=checkbox].checkbox-windstorm {
   border-color: #799ed6;
 }
 input[type=checkbox].checkbox-windstorm::before {
-  color: #799ed6;
+  border-color: #799ed6;
 }
 input[type=checkbox].checkbox-nude {
   border-color: #f7d9bc;
 }
 input[type=checkbox].checkbox-nude::before {
-  color: #f7d9bc;
+  border-color: #f7d9bc;
 }
 input[type=checkbox].checkbox-terracotta {
   border-color: #e35336;
 }
 input[type=checkbox].checkbox-terracotta::before {
-  color: #e35336;
+  border-color: #e35336;
 }
 input[type=checkbox].checkbox-coral {
   border-color: #ff8559;
 }
 input[type=checkbox].checkbox-coral::before {
-  color: #ff8559;
+  border-color: #ff8559;
 }
 input[type=checkbox].checkbox-army {
   border-color: #5d6532;
 }
 input[type=checkbox].checkbox-army::before {
-  color: #5d6532;
+  border-color: #5d6532;
 }
 input[type=checkbox].checkbox-seashell {
   border-color: #fff1e7;
 }
 input[type=checkbox].checkbox-seashell::before {
-  color: #fff1e7;
+  border-color: #fff1e7;
 }
 input[type=checkbox].checkbox-sand {
   border-color: #f1e0ae;
 }
 input[type=checkbox].checkbox-sand::before {
-  color: #f1e0ae;
+  border-color: #f1e0ae;
 }
 
 /* source/components/chips/chips.less */
