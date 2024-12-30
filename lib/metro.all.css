@@ -54582,7 +54582,7 @@ form,
   --material-input-border-color: var(--border-color);
   --material-input-border-color-hover: #cacaca;
   --material-input-color: #191919;
-  --material-input-placeholder-color: #191919;
+  --material-input-placeholder-color: #bdbdbd;
 }
 .dark-side {
   --material-input-border-color: var(--border-color);
