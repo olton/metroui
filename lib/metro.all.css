@@ -21761,6 +21761,7 @@ h6 {
   color: inherit;
   margin: 1rem 0;
   line-height: 1.1;
+  text-wrap: balance;
 }
 .leader > small,
 .h1 > small,
@@ -21966,6 +21967,9 @@ del {
   color: var(--body-color-secondary);
   text-decoration: line-through;
 }
+p {
+  text-wrap: pretty;
+}
 * + p {
   margin-top: 1rem;
 }
@@ -22079,7 +22083,6 @@ hr.thin {
 hr.fat {
   height: 3px;
 }
-.tally,
 code,
 kbd {
   display: inline-flex;
@@ -22090,7 +22093,6 @@ kbd {
   border-radius: 4px;
   align-items: center;
 }
-a .tally,
 a code,
 a kbd {
   text-decoration: underline;
@@ -22099,9 +22101,6 @@ a kbd {
 kbd {
   background-color: var(--kbd-background);
   color: var(--kbd-color);
-}
-.tally {
-  line-height: 16px;
 }
 pre code {
   background-color: inherit;
@@ -62645,251 +62644,217 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
 
 /* source/components/switch/switch.less */
 :root {
-  --switch-countur-color: #191919;
-  --switch-color: #191919;
-  --switch-thumb-color: #191919;
-  --switch-countur-color-on: #191919;
-  --switch-color-on: #191919;
-  --switch-thumb-color-on: #ffffff;
-  --switch-label-size: 10px;
-  --switch-caption-size: 12px;
+  --switch-background: #e9e9e9;
+  --switch-background-checked: #191919;
+  --switch-toggle-color: #fff;
+  --switch-toggle-disabled: #ccc;
+  --switch-text-color: #000;
+  --switch-text-color-checked: #fff;
 }
 .dark-side {
-  --switch-countur-color: #474747;
-  --switch-color: #fefefe;
-  --switch-thumb-color: #3e3e3e;
-  --switch-countur-color-on: #474747;
-  --switch-color-on: #474747;
-  --switch-thumb-color-on: #ffffff;
+  --switch-background: #232527;
+  --switch-background-checked: #474748;
+  --switch-toggle-color: #fff;
+  --switch-toggle-disabled: #3e4145;
+  --switch-text-color: #efefef;
+  --switch-text-color-checked: #fff;
 }
 .switch {
-  display: inline-flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
-  margin: 0;
-  user-select: none;
-  cursor: pointer;
   height: 36px;
+  padding: 8px 0;
+  margin: 0 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  width: auto;
+  flex-wrap: nowrap;
 }
 .switch input {
-  width: 1px;
-  height: 1px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-}
-.switch .check,
-.switch .caption {
-  display: block;
-  font-size: var(--switch-caption-size);
-  margin: 0 4px;
+  appearance: none;
   position: relative;
-}
-.switch .check {
-  line-height: 38px;
-  position: relative;
+  width: 48px;
   height: 20px;
-  width: 48px;
-  border: 2px var(--switch-countur-color) solid;
-  cursor: pointer;
-  background: transparent;
-  z-index: 1;
-  display: inline-block;
-  vertical-align: middle;
-  border-radius: 0.5625rem;
-  flex-shrink: 0;
-}
-.switch .check::after {
-  position: absolute;
-  left: 3px;
-  display: block;
-  content: "";
-  height: 0.75rem;
-  width: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 2px var(--switch-thumb-color) solid;
-  cursor: pointer;
-  background: var(--switch-thumb-color);
-  z-index: 2;
-  border-radius: 50%;
-}
-.switch input[type=checkbox]:checked ~ .check {
-  background: var(--switch-color-on);
-  border-color: var(--switch-countur-color-on);
-  color: #1d1d1d;
-}
-.switch input[type=checkbox]:checked ~ .check::after {
-  background-color: var(--switch-thumb-color-on);
-  border-color: var(--switch-thumb-color-on);
-  left: auto;
-  transform: translateX(30px) translateY(-50%);
-}
-.switch input[type=checkbox]:disabled ~ .check {
-  cursor: default;
-  background-color: #e9e9e9;
-  border-color: #e9e9e9;
-}
-.switch input[type=checkbox]:disabled ~ .check::after {
-  background-color: #d0d0d0;
-  border-color: #d0d0d0;
-}
-.switch .check {
-  order: 1;
-}
-.switch .caption {
   order: 2;
-}
-.switch.caption-left {
-  flex-flow: row-reverse nowrap;
-}
-.switch.required,
-.switch.invalid,
-.switch.valid {
-  border: none !important;
-}
-.switch.invalid::after {
-  display: none;
-}
-.switch.transition-on .check {
-  transition: all 0.3s ease-in-out;
-}
-.switch.transition-on .check::after {
-  transition: all 0.3s ease-in-out;
-}
-.switch.transition-on input[type=checkbox]:checked ~ .check::after {
-  transition: all 0.3s ease-in-out;
-}
-.switch .check::before {
-  content: attr(data-off);
-  display: block;
-  position: absolute;
-  color: inherit;
-  left: 16px;
-  width: 26px;
-  top: -2px;
-  line-height: 20px;
-  font-size: var(--switch-label-size);
-  text-transform: uppercase;
-  text-align: center;
-}
-.switch input[type=checkbox]:checked ~ .check::before {
-  content: attr(data-on);
-  color: #ffffff;
-  left: 1px;
-}
-.switch input[type=checkbox]:disabled ~ .check::before {
-  display: none;
-}
-.switch-material {
-  display: inline-flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
-  user-select: none;
+  background: var(--switch-background);
+  border-radius: 10px;
   cursor: pointer;
-  height: 36px;
+  transition: 0.3s background-color;
   margin: 0;
+  padding: 0;
 }
-.switch-material input {
-  width: 1px;
-  height: 1px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-}
-.switch-material .check,
-.switch-material .caption {
-  display: inline-block;
-  vertical-align: middle;
-  line-height: 18px;
-  font-size: 14px;
-  margin: 0 4px;
-}
-.switch-material .check {
-  width: 48px;
-  height: 16px;
-  background-color: #929292;
-  border-radius: 8px;
-  overflow: visible;
-  position: relative;
-  margin: 0 4px;
-}
-.switch-material .check::after {
-  position: absolute;
-  display: block;
+.switch input::before {
   content: "";
-  width: 22px;
-  height: 22px;
-  z-index: 2;
-  margin-top: -3px;
-  margin-left: -3px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: var(--switch-toggle-color);
   border-radius: 50%;
-  background-color: #069494;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  transition: 0.3s;
 }
-.switch-material input:checked ~ .check {
-  background-color: rgba(0, 150, 136, 0.5);
+.switch input::after {
+  position: absolute;
+  content: attr(data-off);
+  top: 6px;
+  left: 2px;
+  transform: translateX(20px);
+  color: var(--switch-text-color);
+  text-transform: uppercase;
+  font-size: 8px;
+  font-weight: 400;
+  transition: 0.3s transform;
 }
-.switch-material input:not(:checked) ~ .check::after {
-  background-color: #ffffff;
+.switch input:checked {
+  background: var(--switch-background-checked);
 }
-.switch-material input:checked ~ .check {
-  background-color: rgba(0, 150, 136, 0.5);
+.switch input:checked::before {
+  transform: translateX(28px);
 }
-.switch-material input:checked ~ .check::after {
-  transform: translateX(30px);
+.switch input:checked::after {
+  content: attr(data-on);
+  transform: translateX(6px);
+  color: var(--switch-text-color-checked);
 }
-.switch-material input:disabled ~ .check {
-  background-color: #D5D5D5;
-  cursor: default;
+.switch input:disabled::before {
+  background: var(--switch-toggle-disabled);
 }
-.switch-material input:disabled ~ .check::after {
-  background-color: #BDBDBD;
+.switch .caption-prepend,
+.switch .caption-append {
+  font-size: 12px;
+  margin: 0 4px;
+  position: relative;
+  white-space: nowrap;
 }
-.switch-material .check {
+.switch .caption-prepend {
   order: 1;
 }
-.switch-material .caption {
-  order: 2;
+.switch .caption-append {
+  order: 3;
 }
-.switch-material.caption-left {
-  flex-flow: row-reverse nowrap;
+.switch input:disabled ~ .caption-prepend,
+.switch input:disabled ~ .caption-append {
+  color: var(--switch-toggle-disabled);
 }
-.switch-material.transition-on {
-  transition: all 0.3s ease-in-out;
+.switch.material input {
+  height: 16px;
 }
-.switch-material.transition-on input:not(:checked) ~ .check::after {
-  transition: linear all 0.2s;
+.switch.material input::before {
+  top: -4px;
+  left: -5px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--switch-toggle-color);
+  box-shadow: 0 2px 10px #00000029, 0 2px 5px #00000042;
 }
-.switch-material.transition-on input:checked ~ .check::after {
-  transition: linear all 0.2s;
+.switch.material input:checked::before {
+  transform: translateX(33px);
 }
-.switch-material .check::before {
-  content: attr(data-off);
-  display: block;
-  position: absolute;
-  color: inherit;
-  left: 19px;
-  width: 26px;
-  top: -2px;
-  line-height: 20px;
-  font-size: 10px;
-  text-transform: uppercase;
-  text-align: center;
+.switch.material .caption-prepend {
+  margin-right: 8px;
 }
-.switch-material input[type=checkbox]:checked ~ .check::before {
-  content: attr(data-on);
-  color: #ffffff;
-  left: 1px;
+.switch.material .caption-append {
+  margin-left: 8px;
 }
-.switch-material input[type=checkbox]:disabled ~ .check::before {
-  display: none;
+.switch:has(input:disabled) {
+  cursor: default;
+}
+.switch-lime {
+  --switch-background-checked: #AEFD6C !important;
+}
+.switch-green {
+  --switch-background-checked: #00b500 !important;
+}
+.switch-emerald {
+  --switch-background-checked: #50c878 !important;
+}
+.switch-blue {
+  --switch-background-checked: #5e87ff !important;
+}
+.switch-teal {
+  --switch-background-checked: #069494 !important;
+}
+.switch-cyan {
+  --switch-background-checked: #94b6ff !important;
+}
+.switch-cobalt {
+  --switch-background-checked: #0047ab !important;
+}
+.switch-indigo {
+  --switch-background-checked: #4b0082 !important;
+}
+.switch-violet {
+  --switch-background-checked: #ee82ee !important;
+}
+.switch-pink {
+  --switch-background-checked: #ffc0cb !important;
+}
+.switch-magenta {
+  --switch-background-checked: #ff00ff !important;
+}
+.switch-crimson {
+  --switch-background-checked: #df0e38 !important;
+}
+.switch-red {
+  --switch-background-checked: #ff0000 !important;
+}
+.switch-orange {
+  --switch-background-checked: #ffa500 !important;
+}
+.switch-amber {
+  --switch-background-checked: #ffca2a !important;
+}
+.switch-yellow {
+  --switch-background-checked: #ffff00 !important;
+}
+.switch-brown {
+  --switch-background-checked: #aa6432 !important;
+}
+.switch-olive {
+  --switch-background-checked: #a1a100 !important;
+}
+.switch-steel {
+  --switch-background-checked: #7b91a6 !important;
+}
+.switch-mauve {
+  --switch-background-checked: #e0afff !important;
+}
+.switch-taupe {
+  --switch-background-checked: #7a6654 !important;
+}
+.switch-champagne {
+  --switch-background-checked: #f7e6ca !important;
+}
+.switch-khaki {
+  --switch-background-checked: #d5c58a !important;
+}
+.switch-charcoal {
+  --switch-background-checked: #989898 !important;
+}
+.switch-bronze {
+  --switch-background-checked: #e48d3e !important;
+}
+.switch-windstorm {
+  --switch-background-checked: #799ed6 !important;
+}
+.switch-nude {
+  --switch-background-checked: #f7d9bc !important;
+}
+.switch-terracotta {
+  --switch-background-checked: #e35336 !important;
+}
+.switch-coral {
+  --switch-background-checked: #ff8559 !important;
+}
+.switch-army {
+  --switch-background-checked: #5d6532 !important;
+}
+.switch-seashell {
+  --switch-background-checked: #fff1e7 !important;
+}
+.switch-sand {
+  --switch-background-checked: #f1e0ae !important;
 }
 
 /* source/components/typer/typer.less */

@@ -1,23 +1,17 @@
-/**
- * global Metro, METRO_LOCALE, Cake
- *
- * @format
- */
-
 (function (Metro, $) {
     "use strict";
     var Utils = Metro.utils;
     var SwitchDefaultConfig = {
         switchDeferred: 0,
         material: false,
-        transition: true,
-        caption: "",
-        captionPosition: "right",
+        prepend:"",
+        append: "",
         clsSwitch: "",
         clsCheck: "",
         clsCaption: "",
-        textOn: "",
-        textOff: "",
+        onoff: false,
+        on: "",
+        off: "",
         showOnOff: false,
         onSwitchCreate: Metro.noop,
     };
@@ -38,14 +32,10 @@
         },
 
         _create: function () {
-            var element = this.element,
-                o = this.options;
-
+            const element = this.element, o = this.options;
             const strings = this.strings;
 
-            var container;
-            var check = $("<span>").addClass("check");
-            var caption = $("<span>").addClass("caption").html(o.caption);
+            const container = element.wrap("<label>").addClass("switch").addClass(element[0].className).addClass(o.clsSwitch);
 
             element.attr("type", "checkbox");
 
@@ -55,67 +45,35 @@
                 });
             }
 
-            container = element.wrap($("<label>").addClass((o.material === true ? " switch-material " : " switch ") + element[0].className));
-
             this.component = container;
-
-            check.appendTo(container);
-            caption.appendTo(container);
-
-            if (o.transition === true) {
-                container.addClass("transition-on");
-            }
-
-            if (o.captionPosition === "left") {
-                container.addClass("caption-left");
-            }
 
             element[0].className = "";
 
-            container.addClass(o.clsSwitch);
-            caption.addClass(o.clsCaption);
-            check.addClass(o.clsCheck);
-
-            if (element.is(":disabled")) {
-                this.disable();
+            if (o.prepend) {
+                container.prepend($("<span>").addClass("caption-prepend").addClass(o.clsPrepend).addClass(o.clsCaption).html(o.prepend));
+            }
+            
+            if (o.append) {
+                container.append($("<span>").addClass("caption-append").addClass(o.clsAppend).addClass(o.clsCaption).html(o.append));
+            }
+            
+            if (o.onoff === true) {
+                element.attr("data-on", o.on || strings.label_on);
+                element.attr("data-off", o.off || strings.label_off);
             } else {
-                this.enable();
+                element.removeAttr("data-on");
+                element.removeAttr("data-off");
             }
 
-            if (o.showOnOff) {
-                const on = element.attr("data-on") || o.textOn || strings.label_on;
-                const off = element.attr("data-off") || o.textOff || strings.label_off;
-
-                check.attr("data-on", on);
-                check.attr("data-off", off);
-            } else {
-                check.removeAttr("data-on");
-                check.removeAttr("data-off");
+            if (o.material === true) {
+                container.addClass("material");
             }
-
+            
             this._fireEvent("switch-create");
         },
 
-        disable: function () {
-            this.element.prop("disabled", true);
-        },
-
-        enable: function () {
-            this.element.prop("disabled", false);
-        },
-
-        toggleState: function () {
-            var element = this.element;
-
-            if (!element.is(":disabled")) {
-                this.disable();
-            } else {
-                this.enable();
-            }
-        },
-
         toggle: function (v) {
-            var element = this.element;
+            const element = this.element;
 
             if (element.is(":disabled")) return this;
 

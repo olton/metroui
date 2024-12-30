@@ -6,53 +6,36 @@
     <link href="../lib/metro.css" rel="stylesheet">
 
     <title>Test Switch - Metro UI :: Popular HTML, CSS and JS library</title>
-
+    <style>
+        body {
+            padding-top: 50px;
+        }
+    </style>
 </head>
-<body class="m4-cloak">
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Switch</div>
+    </div>
+</nav>
 <div class="container">
     <h1>Switch test page</h1>
 
-    <div>
-        <input type="checkbox" data-role="switch" data-caption="Switch">
-        <input type="checkbox" data-role="switch" data-caption="Switch" checked>
-        <input type="checkbox" data-role="switch" data-caption="Switch" disabled>
-        <input type="checkbox" data-role="switch" data-caption="Switch" disabled checked>
+    <div class="d-flex" lang="ua">
+        <input type="checkbox" data-role="switch" data-prepend="Switch" data-onoff="true">
+        <input type="checkbox" data-role="switch" data-append="Switch" checked>
+        <input type="checkbox" data-role="switch" data-append="Red" class="switch-red" checked data-onoff="true" data-on="вкл" data-off=" ">
+        <input type="checkbox" data-role="switch" data-append="Switch" disabled>
+        <input type="checkbox" data-role="switch" data-append="Switch" data-material="true">
+        <input type="checkbox" data-role="switch" data-append="Switch" data-material="true" class="switch-teal" checked>
     </div>
 
-    <div>
-        <input type="checkbox" data-role="switch" data-caption="Switch" data-material="true">
-        <input type="checkbox" data-role="switch" data-caption="Switch" checked data-material="true">
-        <input type="checkbox" data-role="switch" data-caption="Switch" disabled data-material="true">
-        <input type="checkbox" data-role="switch" data-caption="Switch" disabled checked data-material="true">
-    </div>
-
-    <div>
-        <input type="checkbox" data-role="switch" data-on="on" data-off="off" data-show-on-off="true">
-        <input type="checkbox" data-role="switch" checked data-show-on-off="true" data-locale="uk-UA">
-        <input type="checkbox" data-role="switch" data-on="вкл" data-off="выкл" data-show-on-off="true">
-        <input type="checkbox" data-role="switch" data-on="вкл" data-off="выкл" checked data-show-on-off="true">
-        <div lang="ua">
-            <input type="checkbox" data-role="switch" data-show-on-off="true">
-        </div>
-        <input type="checkbox" data-role="switch" data-on="вкл" checked data-show-on-off="true">
-        <input type="checkbox" data-role="switch" data-on="on" data-off="off" disabled data-show-on-off="true">
-        <input type="checkbox" data-role="switch" data-on="on" data-off="off" disabled checked data-show-on-off="true">
-    </div>
-
-    <div>
-        <input type="checkbox" data-role="switch" data-on="on" data-off="off" data-material="true">
-        <input type="checkbox" data-role="switch" data-on="on" data-off="off" checked data-material="true">
-        <input type="checkbox" data-role="switch" data-on="вкл" data-off="выкл" data-material="true">
-        <input type="checkbox" data-role="switch" data-on="вкл" data-off="выкл" checked data-material="true">
-        <input type="checkbox" data-role="switch" data-off="выкл" data-material="true">
-        <input type="checkbox" data-role="switch" data-on="вкл" checked data-material="true">
-        <input type="checkbox" data-role="switch" data-on="on" data-off="off" disabled data-material="true">
-        <input type="checkbox" data-role="switch" data-on="on" data-off="off" disabled checked data-material="true">
-    </div>
 </div>
 
 <script src="../lib/metro.js"></script>
-<script>
-</script>
 </body>
 </html>

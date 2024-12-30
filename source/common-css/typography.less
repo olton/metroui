@@ -120,6 +120,7 @@
     color: inherit;
     margin: 1rem 0;
     line-height: 1.1;
+    text-wrap: balance;
 
     & > small, & > .small {
         font-weight: 400;
@@ -252,6 +253,10 @@ mark {
 del {
     color: var(--body-color-secondary);
     text-decoration: line-through;
+}
+
+p {
+    text-wrap: pretty;
 }
 
 * + p {
@@ -389,7 +394,7 @@ hr {
     }
 }
 
-.tally, code, kbd {
+code, kbd {
     display: inline-flex;
     padding: 0 6px;
     font-size: 90%;
@@ -407,10 +412,6 @@ hr {
 kbd {
     background-color: var(--kbd-background);
     color: var(--kbd-color);
-}
-
-.tally {
-    line-height: 16px;
 }
 
 pre code {
