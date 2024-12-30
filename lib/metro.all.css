@@ -49399,24 +49399,20 @@ input[type=checkbox] {
   height: 22px;
 }
 input[type=checkbox]::before {
-  content: "\2518";
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 16px;
-  height: 16px;
+  content: "";
+  display: block;
   opacity: 0;
+  width: 8px;
+  height: 8px;
   background-color: transparent;
+  border-bottom: 2px solid var(--checkbox-color);
+  border-right: 2px solid var(--checkbox-color);
+  margin: 0 auto;
   position: absolute;
-  top: 2px;
-  left: 2px;
-  transform: rotate(45deg);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% - 2px)) rotate(45deg);
   transition: opacity 0.3s;
-  font-family: "Segoe UI Symbol", serif;
-  font-weight: bold;
-  font-size: 20px;
-  color: var(--checkbox-color);
-  transform-origin: center;
 }
 input[type=checkbox]:checked::before {
   opacity: 1;
@@ -49653,15 +49649,6 @@ input[type=checkbox].checkbox-sand {
 }
 input[type=checkbox].checkbox-sand::before {
   color: #f1e0ae;
-}
-@media only screen and (max-device-width: 640px) {
-  .checkbox input[type=checkbox]::before {
-    left: 0;
-    top: 0;
-  }
-  .checkbox input[type=checkbox]:indeterminate::before {
-    top: 3px;
-  }
 }
 
 /* source/components/chips/chips.less */
