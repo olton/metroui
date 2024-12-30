@@ -8,6 +8,7 @@
     --switch-toggle-disabled: #ccc;
     --switch-text-color: #000;
     --switch-text-color-checked: #fff;
+    --switch-focus-color: #e8e8e8;
 }
 
 .dark-side {
@@ -17,6 +18,7 @@
     --switch-toggle-disabled: #3e4145;
     --switch-text-color: #efefef;
     --switch-text-color-checked: #fff;
+    --switch-focus-color: #191919;
 }
 
 .switch {
@@ -30,7 +32,7 @@
     width: auto;
     flex-wrap: nowrap;
     
-    input {
+    & > input {
         appearance: none;
         position: relative;
         width: 48px;
@@ -42,23 +44,25 @@
         transition: 0.3s background-color;
         margin: 0;
         padding: 0;
+        border-color: transparent!important;
         
         &::before {
             content: '';
             position: absolute;
-            top: 2px;
-            left: 2px;
+            top: 0;
+            left: 0;
             width: 16px;
             height: 16px;
             background: var(--switch-toggle-color);
             border-radius: 50%;
             transition: 0.3s;
+            opacity: 1;
         }
         
         &::after {
             position: absolute;
             content: attr(data-off);
-            top: 6px;
+            top: 5px;
             left: 2px;
             transform: translateX(20px);
             color: var(--switch-text-color);
@@ -66,6 +70,7 @@
             font-size: 8px;
             font-weight: 400;
             transition: 0.3s transform;
+            line-height: 1;
         }
         
         &:checked {
@@ -106,19 +111,24 @@
         order: 3;
     }
     
-    input:disabled ~ .caption-prepend, input:disabled ~ .caption-append {
+    & > input[type=checkbox]:disabled ~ .caption-prepend, 
+    & > input[type=checkbox]:disabled ~ .caption-append {
         color: var(--switch-toggle-disabled);
+    }
+    
+    & > input[type=checkbox]:focus {
+        box-shadow: 0 0 0 3px var(--switch-focus-color);
     }
 }
 
 .switch {
     &.material {
-        input {
+        & > input {
             height: 17px;
             
             &::before {
-                top: -4px;
-                left: -2px;
+                top: -6px;
+                left: -4px;
                 width: 24px;
                 height: 24px;
                 border: 1px solid var(--switch-toggle-color);
@@ -127,7 +137,7 @@
             
             &::after {
                 top: 4px;
-                transform: translateX(24px);
+                transform: translateX(22px);
             }
             
             &:checked {

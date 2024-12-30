@@ -1,151 +1,110 @@
-@import (once) "../../include/vars";
-@import (once) "../../include/mixins";
+@import "../../include/vars";
 
 :root {
     --checkbox-height: 36px;
     --checkbox-border-radius: 4px;
-}
-
-:root {
     --checkbox-color: #575757;
-    --checkbox-background: transparent;
-    --checkbox-focus-color: #e8e8e8;
-    --checkbox-background-disabled: #e8e8e8;
     --checkbox-color-disabled: #c3c3c3;
+    --checkbox-background-disabled: #efefef;
+    --checkbox-focus-color: #e8e8e8;
 }
 
 .dark-side {
-    --checkbox-color: rgb(166, 166, 166);
-    --checkbox-background: transparent;
+    --checkbox-color: #a6a8a7;
+    --checkbox-color-disabled: #505050;
+    --checkbox-background-disabled: #323030;
     --checkbox-focus-color: #191919;
-    --checkbox-background-disabled: #353535;
-    --checkbox-color-disabled: #6c6c6c;
+}
+
+
+input[type=checkbox] {
+    appearance: none;
+    line-height: var(--checkbox-height);
+    border-radius: var(--checkbox-border-radius);
+    border: 2px solid var(--checkbox-color);
+    position: relative;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    
+    &::before {
+        content: "┘";
+        display: block;
+        opacity: 0;
+        background-color: transparent;
+        position: absolute;
+        top: -7px;
+        left: 4px;
+        transform: rotate(45deg);
+        transition: opacity 0.3s;
+        font-family: "Segoe UI Symbol", serif;
+        font-weight: bold;
+        font-size: 20px;
+        color: var(--checkbox-color);
+    }
+    
+    &:checked {
+        &::before {
+            opacity: 1;
+        }
+    }
+    
+    &:focus {
+        box-shadow: 0 0 0 3px var(--checkbox-focus-color);
+    }
+    
+    &:disabled {
+        border-color: var(--checkbox-color-disabled);
+        background-color: var(--checkbox-background-disabled);
+        &::before {
+            color: var(--checkbox-color-disabled);
+        }
+    }
+    
+    &:indeterminate {
+        &::before {
+            content: "─";
+            opacity: 1;
+            transform: rotate(0deg);
+            top: -11px;
+        }
+    }
 }
 
 .checkbox {
     display: inline-flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
     align-items: center;
-    position: relative;
-    margin: 0;
-    user-select: none;
-    cursor: pointer;
-    height: 36px;
-
-    .hideElement(input);
-
-    .check, .caption {
-        display: block;
-        line-height: 1;
-        font-size: 14px;
+    
+    input[type=checkbox] {
+        order: 2
+    }
+    
+    .caption-prepend, .caption-append {
+        font-size: 12px;
         margin: 0 4px;
         position: relative;
+        white-space: nowrap;
     }
 
-    .check {
-        border: 2px var(--checkbox-color) solid;
-        border-radius: var(--checkbox-border-radius);
-        .square(21, px);
-        flex-shrink: 0;
-
-        &::before {
-            position: absolute;
-            vertical-align: middle;
-            font-size: 0;
-            content: "";
-            height: 5px;
-            width: 10px;
-            background-color: transparent;
-            color: transparent;
-            border-left: 2px solid;
-            border-bottom: 2px solid;
-            border-color: var(--checkbox-color);
-            left: 50%;
-            top: 50%;
-            margin-left: -5px;
-            margin-top: -3px;
-            display: none;
-            transform: rotate(-45deg);
-        }
+    .caption-prepend {
+        order: 1;
     }
 
-    input[type=checkbox]:checked ~ .check {
-        border-color: var(--checkbox-color);
-        background-color: var(--checkbox-background);
-
-        &::before {
-            display: block;
-        }
+    .caption-append {
+        order: 3;
     }
 
-    input[type=checkbox]:disabled ~ .check {
-        border-color: var(--checkbox-background-disabled);
-        background-color: var(--checkbox-background-disabled);
-        
-        &::before {
-            border-color: var(--checkbox-color-disabled);
-        }
-    }
-
-    input[data-indeterminate=true] ~ .check {
-        border-color: var(--checkbox-color);
-        background-color: var(--checkbox-background);
-
-        &::before {
-            display: block!important;
-            .square(8, px);
-            background-color: var(--checkbox-color);
-            border: 2px solid var(--checkbox-color);
-            left: 50%;
-            top: 50%;
-            margin-left: -4px;
-            margin-top: -4px;
-            .rotate(0);
-        }
-    }
-
-    .check {order: 1;}
-    .caption {order: 2;}
-
-    &.caption-left {
-        flex-flow: row-reverse nowrap;
-    }
-
-    &.required, &.invalid, &.valid {
-        border: none!important;
-    }
-
-    &.invalid {
-        &::after {
-            display: none;
-        }
-    }
-
-    &:focus, &:active {
-        input[type=checkbox]:not(:disabled) {
-            & ~ .check {
-                .halo();
-            }
-        }
-    }
-
-    &.transition-on {
-        .check {
-            transition: @transition-base;
-        }
-
-        input[type=checkbox]:checked ~ .check {
-            transition: @transition-base;
-        }
-
-        input[data-indeterminate=true] ~ .check {
-            transition: @transition-base;
-        }
-    }
-
-    .check.focused {
-        box-shadow: 0 0 0 3px var(--checkbox-focus-color);
+    & > input[type=checkbox]:disabled ~ .caption-prepend,
+    & > input[type=checkbox]:disabled ~ .caption-append {
+        color: var(--switch-toggle-disabled);
     }
 }
 
+each(@normalColors, {
+    input[type=checkbox].checkbox-@{value} {
+        border-color: @@value;
+        &::before {
+            color: @@value;
+        }
+    }
+})
