@@ -56070,6 +56070,11 @@ form,
 .navview.expanded .holder {
   display: none;
 }
+@media screen and (max-width: 640px) {
+  .navview.expanded .navview-content {
+    margin-left: var(--navview-pane-width);
+  }
+}
 
 /* source/components/notify/notify.less */
 .notify-container {

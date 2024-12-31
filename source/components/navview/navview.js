@@ -1,13 +1,6 @@
-/**
- * global Metro
- *
- * @format
- */
-
 (function (Metro, $) {
     "use strict";
-    var Utils = Metro.utils;
-    var NavigationViewDefaultConfig = {
+    let NavigationViewDefaultConfig = {
         navviewDeferred: 0,
         expandPoint: null,
         // compacted: false,
@@ -37,7 +30,7 @@
                 pane: null,
                 content: null,
                 paneToggle: null,
-                id: Utils.elementId("navview"),
+                id: null,
                 menuScrollDistance: 0,
                 menuScrollStep: 0,
             });
@@ -53,10 +46,10 @@
         },
 
         _calcMenuHeight: function () {
-            var element = this.element,
+            let element = this.element,
                 pane,
                 menu_container;
-            var elements_height = 0;
+            let elements_height = 0;
 
             pane = element.children(".navview-pane");
             if (pane.length === 0) {
@@ -82,23 +75,28 @@
             });
 
             this.menuScrollStep = 48;
-            this.menuScrollDistance = Utils.nearest(menu_container[0].scrollHeight - menu_container.height(), 48);
+            this.menuScrollDistance = Metro.utils.nearest(menu_container[0].scrollHeight - menu_container.height(), 48);
         },
 
         _recalc: function () {
-            var that = this,
-                element = this.element;
+            const that = this;
             setTimeout(function () {
                 that._calcMenuHeight();
             }, 200);
         },
 
         _createStructure: function () {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var pane, content, toggle, menu;
+            let pane, content, toggle, menu;
 
             element.addClass("navview");
+            if (element.attr("id") === undefined) {
+                this.id = Metro.utils.elementId("navview");
+                element.attr("id", this.id);
+            } else {
+                this.id = element.attr("id");
+            }
 
             if (o.initialView !== "compact" && Metro.utils.mediaExist(o.expandPoint)) {
                 element.addClass("expanded");
@@ -143,20 +141,20 @@
         },
 
         _createEvents: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var menu_container = element.find(".navview-menu-container");
-            var menu = menu_container.children(".navview-menu");
+            const menu_container = element.find(".navview-menu-container");
+            const menu = menu_container.children(".navview-menu");
 
             menu_container.on(
                 "mousewheel",
                 function (e) {
-                    var pane_width = element.find(".navview-pane").width();
-                    var dir = e.deltaY > 0 ? -1 : 1;
-                    var step = that.menuScrollStep;
-                    var distance = that.menuScrollDistance;
-                    var top = parseInt(menu.css("top"));
+                    const pane_width = element.find(".navview-pane").width();
+                    const dir = e.deltaY > 0 ? -1 : 1;
+                    const step = that.menuScrollStep;
+                    const distance = that.menuScrollDistance;
+                    const top = parseInt(menu.css("top"));
 
                     if (pane_width > 50) {
                         return false;
@@ -248,9 +246,8 @@
         },
 
         _togglePaneMode: function (hand = false) {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var pane = this.pane;
 
             element.toggleClass("expanded");
             element.toggleClass("compacted");
@@ -266,7 +263,7 @@
         },
 
         _pullClick: function (el, sender) {
-            var input,
+            let input,
                 target = $(el);
 
             if (target && target.hasClass("holder")) {
@@ -288,26 +285,28 @@
         },
 
         compact: function () {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
             element.addClass("compacted handmade");
             element.removeClass("expanded");
             this._recalc();
         },
 
         expand: function () {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
             element.addClass("expanded");
             element.removeClass("compacted handmade");
             this._recalc();
         },
 
+        state(){
+            return this.element.hasClass("expanded") ? "expand" : "compact";    
+        },
+        
         /* eslint-disable-next-line */
         changeAttribute: function (attributeName) {},
 
         destroy: function () {
-            var element = this.element;
+            const element = this.element;
 
             element.off(Metro.events.click, ".pull-button, .holder");
             element.off(Metro.events.click, ".navview-menu li");

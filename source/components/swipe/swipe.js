@@ -28,6 +28,9 @@
         },
 
         _create: function(){
+            this.element.css({
+                userSelect: "none"
+            })
             this._createEvents();
             this._fireEvent('swipe-create');
         },
