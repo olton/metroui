@@ -1,27 +1,27 @@
 /** @format */
 
 import {
-    htmljs,
-    addStyle,
-    addCssRule,
-    cssLoader,
-    jsLoader,
-    viewLoader,
-    clearViewStorageHolder,
-    createStyleElement,
-    createStyleSheet,
-    render,
+  addCssRule,
+  addStyle,
+  clearViewStorageHolder,
+  createStyleElement,
+  createStyleSheet,
+  cssLoader,
+  htmljs,
+  jsLoader,
+  render,
+  viewLoader,
 } from "@olton/html";
 
-globalThis.htmljs = {
-    addStyle,
-    addCssRule,
-    cssLoader,
-    jsLoader,
-    viewLoader,
-    clearViewStorageHolder,
-    createStyleElement,
-    createStyleSheet,
-    render,
-    ...htmljs,
+globalThis.Html = {
+  addStyle,
+  addCssRule,
+  cssLoader,
+  jsLoader,
+  viewLoader,
+  clearViewStorageHolder,
+  createStyleElement,
+  createStyleSheet,
+  render,
+  ...htmljs,
 };

@@ -1,10 +1,8 @@
 /** @format */
-import {Props} from "./props.js";
+import { Props } from "./props.js";
 
-(function () {
-    "use strict";
-
-    var $ = m4q;
+(() => {
+    const $ = m4q;
 
     if (typeof m4q === "undefined") {
         throw new Error("Metro UI requires m4q helper!");
@@ -14,20 +12,19 @@ import {Props} from "./props.js";
         throw new Error("Metro UI requires MutationObserver!");
     }
 
-    var isTouch = "ontouchstart" in window || navigator["MaxTouchPoints"] > 0 || navigator["msMaxTouchPoints"] > 0;
+    const isTouch = "ontouchstart" in window || navigator["MaxTouchPoints"] > 0 || navigator["msMaxTouchPoints"] > 0;
 
-    var normalizeComponentName = function (name) {
-        return typeof name !== "string" ? undefined : name.replace(/-/g, "").toLowerCase();
-    };
+    const normalizeComponentName = (name) =>
+        typeof name !== "string" ? undefined : name.replace(/-/g, "").toLowerCase();
 
-    var Metro = {
+    const Metro = {
         version: "__VERSION__",
         build_time: "__BUILD_TIME__",
         buildNumber: 0,
         isTouchable: isTouch,
         fullScreenEnabled: document.fullscreenEnabled,
         sheet: null,
-        
+
         hotkeys: {},
         locales: {},
         utils: {},
@@ -42,13 +39,13 @@ import {Props} from "./props.js";
         template: null,
         defaults: {},
 
-        info: function () {
+        info: () => {
             if (typeof globalThis["METRO_LIB_INFO"] !== "undefined") {
-                Metro.welcome()
+                Metro.welcome();
             }
         },
 
-        welcome: function () {
+        welcome: () => {
             console.info(
                 `%c METRO UI %c v${Metro.version} %c ${Metro.build_time} `,
                 "color: pink; font-weight: bold; background: #800000",
@@ -56,36 +53,36 @@ import {Props} from "./props.js";
                 "color: white; background: #0080fe;",
             );
 
-            if (globalThis.$ && $.info) $.info();
-            if (globalThis.Hooks && Hooks.info) Hooks.info();
-            if (globalThis.html && html.info) html.info();
-            if (globalThis.Animation && Animation.info) Animation.info();
-            if (globalThis.Farbe && Farbe.info) Farbe.info();
-            if (globalThis.Datetime && Datetime.info) Datetime.info();
-            if (globalThis.Str && Str.info) Str.info();
-            if (globalThis.G && G.info) G.info();
+            if (globalThis["$"] && $.info) $.info();
+            if (globalThis["Hooks"] && Hooks.info) Hooks.info();
+            if (globalThis["Html"] && Html.info) Html.info();
+            if (globalThis["Animation"] && Animation.info) Animation.info();
+            if (globalThis["Farbe"] && Farbe.info) Farbe.info();
+            if (globalThis["Datetime"] && Datetime.info) Datetime.info();
+            if (globalThis["Str"] && Str.info) Str.info();
+            if (globalThis["G"] && G.info) G.info();
         },
 
-        aboutDlg: function () {
+        aboutDlg: () => {
             alert("Metro UI - v" + Metro.version);
         },
 
-        observe: function () {
-            var observer, observerCallback;
-            var observerConfig = {
+        observe: () => {
+            let observer, observerCallback;
+            const observerConfig = {
                 childList: true,
                 attributes: true,
                 subtree: true,
             };
-            observerCallback = function (mutations) {
-                mutations.map(function (mutation) {
+            observerCallback = (mutations) => {
+                mutations.map((mutation) => {
                     if (mutation.type === "attributes" && mutation.attributeName !== "data-role") {
                         if (mutation.attributeName === "data-hotkey") {
                             Metro.initHotkeys([mutation.target], true);
                         } else {
-                            var element = $(mutation.target);
-                            var mc = element.data("metroComponent");
-                            var attr = mutation.attributeName,
+                            const element = $(mutation.target);
+                            const mc = element.data("metroComponent");
+                            const attr = mutation.attributeName,
                                 newValue = element.attr(attr),
                                 oldValue = mutation.oldValue;
 
@@ -98,7 +95,7 @@ import {Props} from "./props.js";
                                 });
 
                                 $.each(mc, function () {
-                                    var plug = Metro.getPlugin(element, this);
+                                    const plug = Metro.getPlugin(element, this);
                                     if (plug && typeof plug.changeAttribute === "function") {
                                         plug.changeAttribute(attr, newValue, oldValue);
                                     }
@@ -106,14 +103,13 @@ import {Props} from "./props.js";
                             }
                         }
                     } else if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-                        var i,
-                            widgets = [];
-                        var $node,
-                            node,
-                            nodes = mutation.addedNodes;
+                        let widgets = [],
+                            $node,
+                            node;
+                        const nodes = mutation.addedNodes;
 
                         if (nodes.length) {
-                            for (i = 0; i < nodes.length; i++) {
+                            for (let i = 0; i < nodes.length; i++) {
                                 node = nodes[i];
                                 $node = $(node);
 
@@ -122,11 +118,10 @@ import {Props} from "./props.js";
                                 }
 
                                 $.each($node.find("[data-role]"), function () {
-                                    var o = this;
-                                    if (widgets.indexOf(o) !== -1) {
+                                    if (widgets.indexOf(this) !== -1) {
                                         return;
                                     }
-                                    widgets.push(o);
+                                    widgets.push(this);
                                 });
                             }
 
@@ -141,18 +136,14 @@ import {Props} from "./props.js";
             observer.observe($("html")[0], observerConfig);
         },
 
-        init: function () {
-            var widgets = $("[data-role]");
-            var hotkeys = $("[data-hotkey]");
-            var html = $("html");
+        init: () => {
+            const widgets = $("[data-role]");
+            const hotkeys = $("[data-hotkey]");
+            const html = $("html");
 
             Metro.i18n.load(html.attr("lang"));
 
-            if (globalThis.METRO_BLUR_IMAGE) {
-                html.addClass("use-blur-image");
-            }
-
-            if (globalThis.METRO_SHOW_INFO) {
+            if (globalThis["METRO_SHOW_INFO"]) {
                 Metro.info(true);
             }
 
@@ -164,10 +155,10 @@ import {Props} from "./props.js";
 
             Metro.utils.addCssRule(Metro.sheet, "*, *::before, *::after", "box-sizing: border-box;");
 
-            globalThis.METRO_MEDIA = [];
-            $.each(Metro.media_queries, function (key, query) {
+            globalThis["METRO_MEDIA"] = [];
+            $.each(Metro.media_queries, (key, query) => {
                 if (Metro.utils.media(query)) {
-                    globalThis.METRO_MEDIA.push(Metro.media_mode[key]);
+                    globalThis["METRO_MEDIA"].push(Metro.media_mode[key]);
                 }
             });
 
@@ -176,7 +167,7 @@ import {Props} from "./props.js";
             Metro.initHotkeys(hotkeys);
             Metro.initWidgets(widgets, "init");
 
-            if (globalThis.METRO_CLOAK_REMOVE !== "fade") {
+            if (globalThis["METRO_CLOAK_REMOVE"] !== "fade") {
                 $(".m4-cloak").removeClass("m4-cloak");
                 $(".cloak").removeClass("cloak");
                 $(globalThis).fire("metro-initiated");
@@ -186,7 +177,7 @@ import {Props} from "./props.js";
                         opacity: [0, 1],
                     },
                     dur: 300,
-                    onDone: function () {
+                    onDone: () => {
                         $(".m4-cloak").removeClass("m4-cloak");
                         $(".cloak").removeClass("cloak");
                         $(globalThis).fire("metro-initiated");
@@ -194,7 +185,7 @@ import {Props} from "./props.js";
                 });
             }
 
-            $(document).on("click", "[data-copy-to-clipboard]", function (e) {
+            $(document).on("click", "[data-copy-to-clipboard]", function () {
                 const val = $(this).attr("data-copy-to-clipboard");
                 Metro.utils.copy2clipboard(val);
                 if (Metro.toast) {
@@ -204,8 +195,8 @@ import {Props} from "./props.js";
 
             if (METRO_SMOOTH_SCROLL) {
                 const smoothLinks = document.querySelectorAll('a.smooth-scroll[href^="#"]');
-                for (let smoothLink of smoothLinks) {
-                    smoothLink.addEventListener("click", function (e) {
+                for (const smoothLink of smoothLinks) {
+                    smoothLink.addEventListener("click", (e) => {
                         e.preventDefault();
                         const id = smoothLink.getAttribute("href");
 
@@ -218,11 +209,11 @@ import {Props} from "./props.js";
             }
         },
 
-        initHotkeys: function (hotkeys, redefine) {
+        initHotkeys: (hotkeys, redefine) => {
             $.each(hotkeys, function () {
-                var element = $(this);
-                var hotkey = element.attr("data-hotkey") ? element.attr("data-hotkey").toLowerCase() : false;
-                var fn = element.attr("data-hotkey-func") ? element.attr("data-hotkey-func") : false;
+                const element = $(this);
+                const hotkey = element.attr("data-hotkey") ? element.attr("data-hotkey").toLowerCase() : false;
+                const fn = element.attr("data-hotkey-func") ? element.attr("data-hotkey-func") : false;
 
                 if (hotkey === false) {
                     return;
@@ -242,11 +233,9 @@ import {Props} from "./props.js";
             });
         },
 
-        initWidgets: function (widgets) {
-            var that = this;
-
+        initWidgets: (widgets) => {
             $.each(widgets, function () {
-                var $this = $(this),
+                let $this = $(this),
                     roles;
 
                 if (!this.hasAttribute("data-role")) {
@@ -255,16 +244,16 @@ import {Props} from "./props.js";
 
                 roles = $this.attr("data-role").split(/\s*,\s*/);
 
-                roles.map(function (func) {
-                    var $$ = Metro.utils.$();
-                    var _func = normalizeComponentName(func);
+                roles.map((func) => {
+                    const $$ = Metro.utils.$();
+                    const _func = normalizeComponentName(func);
 
                     if ($$.fn[_func] !== undefined && $this.attr("data-role-" + _func) === undefined) {
                         try {
                             $$.fn[_func].call($this);
                             $this.attr("data-role-" + _func, true);
 
-                            var mc = $this.data("metroComponent");
+                            let mc = $this.data("metroComponent");
 
                             if (mc === undefined) {
                                 mc = [_func];
@@ -292,10 +281,10 @@ import {Props} from "./props.js";
             Metro.i18n.updateUI();
         },
 
-        plugin: function (name, object) {
-            var _name = normalizeComponentName(name);
+        plugin: (name, object) => {
+            const _name = normalizeComponentName(name);
 
-            var register = function ($) {
+            const register = ($) => {
                 $.fn[_name] = function (options) {
                     return this.each(function () {
                         $.data(this, _name, Object.create(object).init(options, this));
@@ -305,20 +294,20 @@ import {Props} from "./props.js";
 
             register(m4q);
 
-            if (globalThis.useJQuery) {
-                register(jQuery);
+            if (globalThis["useJQuery"]) {
+                register(globalThis["jQuery"]);
             }
         },
 
-        pluginExists: function (name) {
-            var $ = globalThis.useJQuery ? jQuery : m4q;
+        pluginExists: (name) => {
+            const $ = globalThis["useJQuery"] ? globalThis["jQuery"] : m4q;
             return typeof $.fn[normalizeComponentName(name)] === "function";
         },
 
-        destroyPlugin: function (element, name) {
-            var p, mc;
-            var el = $(element);
-            var _name = normalizeComponentName(name);
+        destroyPlugin: (element, name) => {
+            let p, mc;
+            const el = $(element);
+            const _name = normalizeComponentName(name);
 
             p = Metro.getPlugin(el, _name);
 
@@ -340,9 +329,9 @@ import {Props} from "./props.js";
             el.removeAttr("data-role-" + _name);
         },
 
-        destroyPluginAll: function (element) {
-            var el = $(element);
-            var mc = el.data("metroComponent");
+        destroyPluginAll: (element) => {
+            const el = $(element);
+            const mc = el.data("metroComponent");
 
             if (mc !== undefined && mc.length > 0)
                 $.each(mc, function () {
@@ -350,18 +339,12 @@ import {Props} from "./props.js";
                 });
         },
 
-        noop: function () {},
-        noop_true: function () {
-            return true;
-        },
-        noop_false: function () {
-            return false;
-        },
-        noop_arg: function (a) {
-            return a;
-        },
+        noop: () => {},
+        noop_true: () => true,
+        noop_false: () => false,
+        noop_arg: (a) => a,
 
-        requestFullScreen: function (element) {
+        requestFullScreen: (element) => {
             if (element["mozRequestFullScreen"]) {
                 element["mozRequestFullScreen"]();
             } else if (element["webkitRequestFullScreen"]) {
@@ -369,13 +352,13 @@ import {Props} from "./props.js";
             } else if (element["msRequestFullscreen"]) {
                 element["msRequestFullscreen"]();
             } else {
-                element.requestFullscreen().catch(function (err) {
+                element.requestFullscreen().catch((err) => {
                     console.warn("Error attempting to enable full-screen mode: " + err.message + " " + err.name);
                 });
             }
         },
 
-        exitFullScreen: function () {
+        exitFullScreen: () => {
             if (document["mozCancelFullScreen"]) {
                 document["mozCancelFullScreen"]();
             } else if (document["webkitCancelFullScreen"]) {
@@ -383,51 +366,47 @@ import {Props} from "./props.js";
             } else if (document["msExitFullscreen"]) {
                 document["msExitFullscreen"]();
             } else {
-                document.exitFullscreen().catch(function (err) {
+                document.exitFullscreen().catch((err) => {
                     console.warn("Error attempting to disable full-screen mode: " + err.message + " " + err.name);
                 });
             }
         },
 
-        inFullScreen: function () {
-            var fsm = document.fullscreenElement || document["webkitFullscreenElement"] || document["mozFullScreenElement"] || document["msFullscreenElement"];
+        inFullScreen: () => {
+            const fsm =
+                document.fullscreenElement ||
+                document["webkitFullscreenElement"] ||
+                document["mozFullScreenElement"] ||
+                document["msFullscreenElement"];
             return fsm !== undefined;
         },
 
-        $: function () {
-            return globalThis.useJQuery ? jQuery : m4q;
-        },
+        $: () => (globalThis["useJQuery"] ? globalThis["jQuery"] : m4q),
 
-        get$el: function (el) {
-            return Metro.$()($(el)[0]);
-        },
+        get$el: (el) => Metro.$()($(el)[0]),
 
-        get$elements: function (el) {
-            return Metro.$()($(el));
-        },
+        get$elements: (el) => Metro.$()($(el)),
 
         // TODO add if name is not defined, return one or array of plugins
-        getPlugin: function (el, name) {
-            var _name = normalizeComponentName(name);
-            var $el = Metro.get$el(el);
+        getPlugin: (el, name) => {
+            const _name = normalizeComponentName(name);
+            const $el = Metro.get$el(el);
             return $el.length ? $el.data(_name) : undefined;
         },
 
-        makePlugin: function (el, name, options) {
-            var _name = normalizeComponentName(name);
-            var $el = Metro.get$elements(el);
+        makePlugin: (el, name, options) => {
+            const _name = normalizeComponentName(name);
+            const $el = Metro.get$elements(el);
             return $el.length && typeof $el[_name] === "function" ? $el[_name](options) : undefined;
         },
 
-        Component: function (nameName, compObj) {
-            var name = normalizeComponentName(nameName);
-            var Utils = Metro.utils;
-            var component = $.extend(
+        Component: (nameName, compObj) => {
+            const name = normalizeComponentName(nameName);
+            const Utils = Metro.utils;
+            const component = $.extend(
                 { name: name },
                 {
                     _super: function (el, options, defaults, setup) {
-                        var self = this;
-
                         this.elem = el;
                         this.element = $(el);
                         this.options = $.extend({}, defaults, options);
@@ -440,8 +419,8 @@ import {Props} from "./props.js";
                         this._setLocale();
 
                         if (setup && typeof setup === "object") {
-                            $.each(setup, function (key, val) {
-                                self[key] = val;
+                            $.each(setup, (key, val) => {
+                                this[key] = val;
                             });
                         }
 
@@ -449,10 +428,10 @@ import {Props} from "./props.js";
                     },
 
                     _setOptionsFromDOM: function () {
-                        var element = this.element,
+                        const element = this.element,
                             o = this.options;
 
-                        $.each(element.data(), function (key, value) {
+                        $.each(element.data(), (key, value) => {
                             if (key in o) {
                                 try {
                                     o[key] = JSON.parse(value);
@@ -464,16 +443,12 @@ import {Props} from "./props.js";
                     },
 
                     _runtime: function () {
-                        var element = this.element,
+                        let element = this.element,
                             mc;
-                        var roles = (element.attr("data-role") || "")
+                        const roles = (element.attr("data-role") || "")
                             .toArray(",")
-                            .map(function (v) {
-                                return normalizeComponentName(v);
-                            })
-                            .filter(function (v) {
-                                return v.trim() !== "";
-                            });
+                            .map((v) => normalizeComponentName(v))
+                            .filter((v) => v.trim() !== "");
 
                         if (!element.attr("data-role-" + this.name)) {
                             element.attr("data-role-" + this.name, true);
@@ -493,23 +468,22 @@ import {Props} from "./props.js";
                     },
 
                     _createExec: function () {
-                        var that = this,
-                            timeout = this.options[this.name + "Deferred"];
+                        const timeout = this.options[this.name + "Deferred"];
 
                         if (timeout) {
-                            setTimeout(function () {
-                                that._create();
+                            setTimeout(() => {
+                                this._create();
                             }, timeout);
                         } else {
-                            that._create();
+                            this._create();
                         }
                     },
 
                     _fireEvent: function (eventName, data, log, noFire, context = null) {
-                        var element = this.element,
+                        const element = this.element,
                             o = this.options;
-                        var _data;
-                        var event = str(eventName).camelCase().capitalize(false).value;
+                        let _data;
+                        const event = str(eventName).camelCase().capitalize(false).value;
 
                         data = $.extend({}, data, { __this: element[0] });
 
@@ -528,7 +502,7 @@ import {Props} from "./props.js";
                     },
 
                     _fireEvents: function (events, data, log, noFire, context) {
-                        var that = this,
+                        let that = this,
                             _events;
 
                         if (arguments.length === 0) {
@@ -537,8 +511,7 @@ import {Props} from "./props.js";
 
                         if (arguments.length === 1) {
                             $.each(events, function () {
-                                var ev = this;
-                                that._fireEvent(ev.name, ev.data, ev.log, ev.noFire, context);
+                                that._fireEvent(this.name, this.data, this.log, this.noFire, context);
                             });
 
                             return Utils.objectLength(events);
@@ -582,37 +555,26 @@ import {Props} from "./props.js";
         },
 
         fetch: {
-            status: function (response) {
-                return response.ok ? Promise.resolve(response) : Promise.reject(new Error(response.statusText));
-            },
+            status: (response) =>
+                response.ok ? Promise.resolve(response) : Promise.reject(new Error(response.statusText)),
 
-            json: function (response) {
-                return response.json();
-            },
+            json: (response) => response.json(),
 
-            text: function (response) {
-                return response.text();
-            },
+            text: (response) => response.text(),
 
-            form: function (response) {
-                return response.formData();
-            },
+            form: (response) => response.formData(),
 
-            blob: function (response) {
-                return response.blob();
-            },
+            blob: (response) => response.blob(),
 
-            buffer: function (response) {
-                return response.arrayBuffer();
-            },
+            buffer: (response) => response.arrayBuffer(),
         },
 
         i18n: {
             language: "en",
-            
+
             load(lang = "en") {
                 Metro.i18n.language = Metro.locales[lang] ? lang : "en";
-                Metro.locale = Metro.locales[Metro.i18n.language];                
+                Metro.locale = Metro.locales[Metro.i18n.language];
             },
 
             add(id, data) {
@@ -624,8 +586,12 @@ import {Props} from "./props.js";
             },
 
             updateUI(from = document, lang) {
-                if (!lang) { lang = $.html().attr("lang") || "en"; }
-                if (!Metro.locales[lang]) { return }
+                if (!lang) {
+                    lang = $.html().attr("lang") || "en";
+                }
+                if (!Metro.locales[lang]) {
+                    return;
+                }
                 Metro.i18n.load(lang);
                 $.html().attr("lang", lang);
                 from.querySelectorAll("[data-i18n]").forEach((el) => {
@@ -633,33 +599,33 @@ import {Props} from "./props.js";
                     el.innerHTML = Metro.i18n.get(key, lang);
                 });
             },
-            
-            extend(data){
-                $.each(data, function(key, value){
+
+            extend(data) {
+                $.each(data, (key, value) => {
                     Metro.locales[key] = Object.assign({}, Metro.locales[key], value);
                 });
-            }
+            },
         },
     };
 
-    Object.assign(Metro,  Props)
+    Object.assign(Metro, Props);
 
-    $(globalThis).on(Metro.events.resize, function () {
-        globalThis.METRO_MEDIA = [];
-        $.each(Metro.media_queries, function (key, query) {
+    $(globalThis).on(Metro.events.resize, () => {
+        globalThis["METRO_MEDIA"] = [];
+        $.each(Metro.media_queries, (key, query) => {
             if (Metro.utils.media(query)) {
-                globalThis.METRO_MEDIA.push(Metro.media_mode[key]);
+                globalThis["METRO_MEDIA"].push(Metro.media_mode[key]);
             }
         });
     });
 
-    globalThis.Metro = Metro;
+    globalThis["Metro"] = Metro;
 
-    if (globalThis.METRO_INIT === true) {
-        $(function () {
+    if (globalThis["METRO_INIT"] === true) {
+        $(() => {
             Metro.init();
         });
     }
-    
+
     return Metro;
 })();
