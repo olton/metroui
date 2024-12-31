@@ -45257,7 +45257,7 @@ input[type=reset].loading .load-caption {
 /* source/components/analog-clock/analog-clock.less */
 :root {
   --analog-clock-size: 300px;
-  --analog-clock-icon-size: 32px;
+  --analog-clock-icon-size: 100px;
   --analog-clock-border-color: #6a6a6a;
   --analog-clock-dash-color: #191919;
   --analog-clock-background: var(--default-background);
@@ -45305,7 +45305,7 @@ input[type=reset].loading .load-caption {
   justify-content: center;
   height: var(--analog-clock-icon-size);
   width: var(--analog-clock-icon-size);
-  top: 50px;
+  top: 30px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 10px;
@@ -45317,6 +45317,10 @@ input[type=reset].loading .load-caption {
   color: var(--analog-clock-color);
   width: 100%;
   height: 100%;
+}
+.analog-clock .moon {
+  width: 32px;
+  height: 32px;
 }
 .analog-clock .day-month {
   position: absolute;
@@ -45459,6 +45463,7 @@ input[type=reset].loading .load-caption {
 .analog-clock .digital-clock .dc-second {
   display: inline-flex;
   padding: 4px 4px;
+  position: relative;
 }
 .analog-clock .digital-clock .dc-minute::before,
 .analog-clock .digital-clock .dc-minute::after {
