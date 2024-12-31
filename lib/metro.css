@@ -54178,6 +54178,7 @@ form,
   font-weight: 400;
   border-radius: var(--image-button-border-radius);
   overflow: hidden;
+  gap: 0;
 }
 .image-button:hover .icon {
   background: var(--image-button-icon-background-hover);
@@ -54536,6 +54537,7 @@ form,
   transition: all 0.3s ease-in-out;
   padding: 0;
   cursor: pointer;
+  gap: 0;
 }
 .info-button .title,
 .info-button .value {
