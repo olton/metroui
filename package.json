@@ -44,6 +44,7 @@
     "last 2 versions"
   ],
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@olton/easytest": "^0.40.0",
     "@olton/esbuild-plugin-autoprefixer": "^0.2.0",
     "@olton/esbuild-plugin-progress": "^0.3.0",
