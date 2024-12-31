@@ -23,11 +23,6 @@
 
     Metro.Component('input-mask', {
         init: function( options, elem ) {
-            if ($.device) {
-                if (elem.setAttribute) elem.setAttribute("placeholder", options.mask);
-                console.warn("The component input-mask can't be initialized, because you run it on a mobile device!");
-                return ;
-            }
             this._super(elem, options, InputMaskDefaultConfig, {
                 // define instance vars here
                 pattern: null,

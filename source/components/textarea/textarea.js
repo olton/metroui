@@ -15,7 +15,7 @@
         append: "",
         copyInlineStyles: false,
         clearButton: true,
-        clearButtonIcon: "&#x274c;",
+        clearButtonIcon: "❌",
         autoSize: true,
         maxHeight: 0,
         clsPrepend: "",

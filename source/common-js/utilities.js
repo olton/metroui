@@ -11,10 +11,10 @@
         },
 
         secondsToTime: function (s) {
-            var days = Math.floor((s % 31536000) / 86400);
-            var hours = Math.floor(((s % 31536000) % 86400) / 3600);
-            var minutes = Math.floor((((s % 31536000) % 86400) % 3600) / 60);
-            var seconds = Math.round((((s % 31536000) % 86400) % 3600) % 60);
+            const days = Math.floor((s % 31536000) / 86400);
+            const hours = Math.floor(((s % 31536000) % 86400) / 3600);
+            const minutes = Math.floor((((s % 31536000) % 86400) % 3600) / 60);
+            const seconds = Math.round((((s % 31536000) % 86400) % 3600) % 60);
 
             return {
                 d: days,
@@ -25,10 +25,10 @@
         },
 
         secondsToFormattedString: function (time) {
-            var sec_num = parseInt(time, 10);
-            var hours = Math.floor(sec_num / 3600);
-            var minutes = Math.floor((sec_num - hours * 3600) / 60);
-            var seconds = sec_num - hours * 3600 - minutes * 60;
+            const sec_num = parseInt(time, 10);
+            const hours = Math.floor(sec_num / 3600);
+            const minutes = Math.floor((sec_num - hours * 3600) / 60);
+            const seconds = sec_num - hours * 3600 - minutes * 60;
 
             return [
                 Str.lpad(hours, "0", 2),
@@ -38,16 +38,15 @@
         },
 
         func: function (f) {
-            /* jshint -W054 */
             return new Function("a", f);
         },
 
         exec: function (f, args, context) {
-            var result;
+            let result;
             if (f === undefined || f === null) {
                 return false;
             }
-            var func = this.isFunc(f);
+            let func = this.isFunc(f);
 
             if (func === false) {
                 func = this.func(f);
@@ -57,7 +56,7 @@
                 result = func.apply(context, args);
             } catch (err) {
                 result = null;
-                if (globalThis.METRO_THROWS === true) {
+                if (globalThis["METRO_THROWS"] === true) {
                     throw err;
                 }
             }
@@ -76,7 +75,7 @@
         },
 
         isVisible: function (element) {
-            var el = $(element)[0];
+            const el = $(element)[0];
             return (
                 this.getStyleOne(el, "display") !== "none" &&
                 this.getStyleOne(el, "visibility") !== "hidden" &&
@@ -85,18 +84,18 @@
         },
 
         isUrl: function (val) {
-            return /^(\.\/|\.\.\/|ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@\-\/]))?/.test(
+            return /^(\.\/|\.\.\/|ftp|http|https):\/\/(\w+:?\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@\-\/]))?/.test(
                 val,
             );
         },
 
         isTag: function (val) {
-            return /^<\/?[\w\s="/.':;#-\/\?]+>/gi.test(val);
+            return /^<\/?[\w\s="\/.':;#-\/?]+>/gi.test(val);
         },
 
         isEmbedObject: function (val) {
-            var embed = ["iframe", "object", "embed", "video"];
-            var result = false;
+            const embed = ["iframe", "object", "embed", "video"];
+            let result = false;
             $.each(embed, function () {
                 if (typeof val === "string" && val.toLowerCase() === this) {
                     result = true;
@@ -115,7 +114,7 @@
         },
 
         isDate: function (val, format, locale = "en-US") {
-            var result;
+            let result;
 
             if (this.isDateObject(val)) {
                 return true;
@@ -196,8 +195,8 @@
                 return false;
             }
 
-            var ns = o.split(".");
-            var i,
+            const ns = o.split(".");
+            let i,
                 context = window;
 
             for (i = 0; i < ns.length; i++) {
@@ -208,11 +207,11 @@
         },
 
         $: function () {
-            return globalThis.useJQuery ? jQuery : m4q;
+            return globalThis["useJQuery"] ? globalThis["jQuery"] : m4q;
         },
 
         isMetroObject: function (el, type) {
-            var $el = $(el),
+            const $el = $(el),
                 el_obj = Metro.getPlugin(el, type);
 
             if ($el.length === 0) {
@@ -236,7 +235,7 @@
         },
 
         isJQuery: function (el) {
-            return typeof jQuery !== "undefined" && el instanceof jQuery;
+            return typeof globalThis["jQuery"] !== "undefined" && el instanceof globalThis["jQuery"];
         },
 
         isM4Q: function (el) {
@@ -248,9 +247,9 @@
         },
 
         isOutsider: function (element) {
-            var el = $(element);
-            var inViewport;
-            var clone = el.clone();
+            const el = $(element);
+            let inViewport;
+            const clone = el.clone();
 
             clone.removeAttr("data-role").css({
                 visibility: "hidden",
@@ -267,7 +266,7 @@
         },
 
         inViewport: function (el) {
-            var rect = this.rect(el);
+            const rect = this.rect(el);
 
             return (
                 rect.top >= 0 &&
@@ -286,7 +285,7 @@
         },
 
         getCursorPosition: function (el, e) {
-            var a = this.rect(el);
+            const a = this.rect(el);
             return {
                 x: this.pageXY(e).x - a.left - globalThis.scrollX,
                 y: this.pageXY(e).y - a.top - globalThis.scrollY,
@@ -309,14 +308,14 @@
             if (total === 0) {
                 return 0;
             }
-            var result = (part * 100) / total;
+            const result = (part * 100) / total;
             return round_value === true
                 ? Math.round(result)
                 : Math.round(result * 100) / 100;
         },
 
         objectShift: function (obj) {
-            var min = 0;
+            let min = 0;
             $.each(obj, function (i) {
                 if (min === 0) {
                     min = i;
@@ -345,7 +344,7 @@
         },
 
         arrayDelete: function (arr, val) {
-            var i = arr.indexOf(val);
+            const i = arr.indexOf(val);
             if (i > -1) arr.splice(i, 1);
         },
 
@@ -358,8 +357,8 @@
         },
 
         objectClone: function (obj) {
-            var copy = {};
-            for (var key in obj) {
+            const copy = {};
+            for (const key in obj) {
                 if ($.hasProp(obj, key)) {
                     copy[key] = obj[key];
                 }
@@ -375,7 +374,7 @@
         },
 
         pageHeight: function () {
-            var body = document.body,
+            const body = document.body,
                 html = document.documentElement;
 
             return Math.max(
@@ -388,13 +387,13 @@
         },
 
         cleanPreCode: function (selector) {
-            var els = Array.prototype.slice.call(
+            const els = Array.prototype.slice.call(
                 document.querySelectorAll(selector),
                 0,
             );
 
             els.forEach(function (el) {
-                var txt = el.textContent
+                const txt = el.textContent
                     .replace(/^[\r\n]+/, "") // strip leading newline
                     .replace(/\s+$/g, "");
 
@@ -403,14 +402,12 @@
                     return;
                 }
 
-                var mat,
+                let mat,
                     str,
                     re = /^[\t ]+/gm,
                     len,
                     min = 1e3;
 
-                /* jshint -W084 */
-                /* eslint-disable-next-line */
                 while ((mat = re.exec(txt))) {
                     len = mat[0].length;
 
@@ -429,8 +426,8 @@
         },
 
         coords: function (element) {
-            var el = $(element)[0];
-            var box = el.getBoundingClientRect();
+            const el = $(element)[0];
+            const box = el.getBoundingClientRect();
 
             return {
                 top: box.top + globalThis.pageYOffset,
@@ -438,14 +435,19 @@
             };
         },
 
-        positionXY: function (e, t) {
+        /**
+        * @param {TouchEvent|Event|MouseEvent} e
+        * @param t where: client, screen, or page
+        * @param s source: touches or changedTouches
+        */
+        positionXY: function (e, t, s) {
             switch (t) {
                 case "client":
-                    return this.clientXY(e);
+                    return this.clientXY(e, s);
                 case "screen":
-                    return this.screenXY(e);
+                    return this.screenXY(e, s);
                 case "page":
-                    return this.pageXY(e);
+                    return this.pageXY(e, s);
                 default:
                     return { x: 0, y: 0 };
             }
@@ -454,36 +456,39 @@
         /**
          *
          * @param {TouchEvent|Event|MouseEvent} e
+         * @param t source: touches or changedTouches
          * @returns {{x: (*), y: (*)}}
          */
-        clientXY: function (e) {
+        clientXY: function (e, t = "touches") {
             return {
-                x: e.changedTouches ? e.changedTouches[0].clientX : e.clientX,
-                y: e.changedTouches ? e.changedTouches[0].clientY : e.clientY,
+                x: e[t] ? e[t][0].clientX : e.clientX,
+                y: e[t] ? e[t][0].clientY : e.clientY,
             };
         },
 
         /**
          *
          * @param {TouchEvent|Event|MouseEvent} e
+         * @param t source: touches or changedTouches
          * @returns {{x: (*), y: (*)}}
          */
-        screenXY: function (e) {
+        screenXY: function (e, t = "touches") {
             return {
-                x: e.changedTouches ? e.changedTouches[0].screenX : e.screenX,
-                y: e.changedTouches ? e.changedTouches[0].screenY : e.screenY,
+                x: e[t] ? e[t][0].screenX : e.screenX,
+                y: e[t] ? e[t][0].screenY : e.screenY,
             };
         },
 
         /**
          *
          * @param {TouchEvent|Event|MouseEvent} e
+         * @param t source: touches or changedTouches
          * @returns {{x: (*), y: (*)}}
          */
-        pageXY: function (e) {
+        pageXY: function (e, t = "touches") {
             return {
-                x: e.changedTouches ? e.changedTouches[0].pageX : e.pageX,
-                y: e.changedTouches ? e.changedTouches[0].pageY : e.pageY,
+                x: e[t] ? e[t][0].pageX : e.pageX,
+                y: e[t] ? e[t][0].pageY : e.pageY,
             };
         },
 
@@ -496,7 +501,7 @@
         },
 
         hiddenElementSize: function (el, includeMargin) {
-            var width,
+            let width,
                 height,
                 clone = $(el).clone(true);
 
@@ -520,9 +525,9 @@
             };
         },
 
-        getStyle: function (element, pseudo) {
-            var el = $(element)[0];
-            return globalThis.getComputedStyle(el, pseudo);
+        getStyle: function (element) {
+            const el = $(element)[0];
+            return globalThis.getComputedStyle(el);
         },
 
         getStyleOne: function (el, property) {
@@ -530,12 +535,12 @@
         },
 
         getInlineStyles: function (element) {
-            var i,
+            let i,
                 l,
                 styles = {},
                 el = $(element)[0];
             for (i = 0, l = el.style.length; i < l; i++) {
-                var s = el.style[i];
+                const s = el.style[i];
                 styles[s] = el.style[s];
             }
 
@@ -547,8 +552,8 @@
         },
 
         updateURIParameter: function (uri, key, value) {
-            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-            var separator = uri.indexOf("?") !== -1 ? "&" : "?";
+            const re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            const separator = uri.indexOf("?") !== -1 ? "&" : "?";
             if (uri.match(re)) {
                 return uri.replace(re, "$1" + key + "=" + value + "$2");
             } else {
@@ -560,7 +565,7 @@
             if (!url) url = globalThis.location.href;
             /* eslint-disable-next-line */
             name = name.replace(/[\[\]]/g, "\\$&");
-            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
                 results = regex.exec(url);
             if (!results) return null;
             if (!results[2]) return "";
@@ -600,7 +605,7 @@
         },
 
         newCssSheet: function (media) {
-            var style = document.createElement("style");
+            const style = document.createElement("style");
 
             if (media !== undefined) {
                 style.setAttribute("media", media);
@@ -622,18 +627,18 @@
         },
 
         mediaModes: function () {
-            return globalThis.METRO_MEDIA;
+            return globalThis["METRO_MEDIA"];
         },
 
         mediaExist: function (media) {
-            return globalThis.METRO_MEDIA.indexOf(media) > -1;
+            return globalThis["METRO_MEDIA"].indexOf(media) > -1;
         },
 
         inMedia: function (media) {
             return (
-                globalThis.METRO_MEDIA.indexOf(media) > -1 &&
-                globalThis.METRO_MEDIA.indexOf(media) ===
-                    globalThis.METRO_MEDIA.length - 1
+                globalThis["METRO_MEDIA"].indexOf(media) > -1 &&
+                globalThis["METRO_MEDIA"].indexOf(media) ===
+                    globalThis["METRO_MEDIA"].length - 1
             );
         },
 
@@ -701,45 +706,6 @@
             }
         },
 
-        copy: function (element) {
-            var body = document.body,
-                range,
-                sel;
-            var el = $(element)[0];
-
-            if (document.createRange && globalThis.getSelection) {
-                range = document.createRange();
-                sel = globalThis.getSelection();
-                sel.removeAllRanges();
-                try {
-                    range.selectNodeContents(el);
-                    sel.addRange(range);
-                } catch (e) {
-                    range.selectNode(el);
-                    sel.addRange(range);
-                }
-            } else if (body["createTextRange"]) {
-                range = body["createTextRange"]();
-                range["moveToElementText"](el);
-                range.select();
-            }
-
-            document.execCommand("Copy");
-
-            if (globalThis.getSelection) {
-                if (globalThis.getSelection().empty) {
-                    // Chrome
-                    globalThis.getSelection().empty();
-                } else if (globalThis.getSelection().removeAllRanges) {
-                    // Firefox
-                    globalThis.getSelection().removeAllRanges();
-                }
-            } else if (document["selection"]) {
-                // IE?
-                document["selection"].empty();
-            }
-        },
-
         decCount: function (v) {
             return v % 1 === 0 ? 0 : v.toString().split(".")[1].length;
         },
@@ -782,8 +748,8 @@
         },
 
         getCssVar: function (v) {
-            var root = document.documentElement;
-            var style = getComputedStyle(root);
+            const root = document.documentElement;
+            const style = getComputedStyle(root);
             return style.getPropertyValue(v);
         },
 
@@ -797,7 +763,7 @@
         },
     };
 
-    if (globalThis.METRO_GLOBAL_COMMON === true) {
-        globalThis.Utils = Metro.utils;
+    if (globalThis["METRO_GLOBAL_COMMON"] === true) {
+        globalThis["Utils"] = Metro.utils;
     }
 })(Metro, m4q);
