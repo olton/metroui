@@ -64,6 +64,10 @@ img {
   border-style: none;
   max-width: 100%;
   object-fit: cover;
+  height: auto;
+}
+img:not([alt]) {
+  filter: blur(2px);
 }
 article > * + * {
   margin-top: 1em;
@@ -4327,9 +4331,6 @@ figure img {
   vertical-align: middle;
   background-color: transparent;
   transition: all 0.3s ease-in-out;
-}
-img:not([alt]) {
-  filter: blur(4px);
 }
 .flip-image-h {
   transform: scaleX(-1);

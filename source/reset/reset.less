@@ -73,10 +73,12 @@ img {
     border-style: none;
     max-width: 100%;
     object-fit: cover;
+    height: auto;
 }
 
-div {
-    //position: relative;
+
+img:not([alt]) {
+    filter: blur(2px);
 }
 
 article > * + * {
