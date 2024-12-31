@@ -31,10 +31,9 @@
 
 .app-bar {
     display: flex;
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
+    width: 100%;
     height: auto;
     min-height: 52px;
     z-index: var(--appbar-z-index);
@@ -46,7 +45,6 @@
 }
 
 .app-bar {
-
     .app-bar-container {
         background-color: inherit;
         color: inherit;
@@ -215,14 +213,8 @@
     }
 }
 
-.p-ab {
-    padding-top: 52px!important;
-}
-
-.m-ab {
-    margin-top: 52px!important;
-}
-
-.h-ab {
-    height: calc(100% - 52px);
+.container-fluid, .container {
+    & > .app-bar {
+        position: relative;
+    }
 }

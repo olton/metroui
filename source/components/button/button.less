@@ -19,7 +19,7 @@
     --button-border-color: #4e5157;
 }
 
-.button, .flat-button {
+button, .button, .flat-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -65,9 +65,7 @@
     &.pill-button {
         border-radius: var(--button-pill-radius);
     }
-}
 
-.button {
     &:active, &.focus, &:focus {
         text-decoration: none;
     }
@@ -87,9 +85,7 @@
             box-shadow: none;
         }
     }
-}
 
-.button {
     &.mini {
         --button-pill-radius: 10px;
         --button-size: 20px;
@@ -105,9 +101,7 @@
         --button-size: 54px;
         --button-font-size: 18px;
     }
-}
 
-.button {
     &.square, &.cycle {
         width: var(--button-size);
         height: var(--button-size);
@@ -128,15 +122,11 @@
             }
         }
     }
-}
 
-.button {
     &.dropdown-toggle.no-marker {
         padding-right: .75rem!important;
     }
-}
 
-.button {
     &.outline {
         background: transparent none;
         border-width: 1px;
@@ -162,7 +152,7 @@ input[type=button], input[type=submit], input[type=reset] {
     .button;
 }
 
-.button {
+button, .button {
     .load-marker {
         transform: scale(0);
         opacity: 0;
@@ -184,7 +174,7 @@ input[type=button], input[type=submit], input[type=reset] {
     }
 }
 
-.button.flat, .flat-button {
+button.flat, .button.flat, .flat-button {
     min-width: 64px;
     background-color: transparent;
     border-color: transparent;
@@ -205,7 +195,7 @@ input[type=button], input[type=submit], input[type=reset] {
 
 each(@media-rules, {
     @container (min-width: @value) {
-        .button {
+        button, .button {
             &.large-@{key} {
                 --button-pill-radius: 27px;
                 --button-size: 54px;
@@ -224,3 +214,38 @@ each(@media-rules, {
         }
     }
 })
+
+each(@normalColors, {
+    @soft-color: "light-@{value}";
+    @soft-text-color: "dark-@{value}";
+    
+    .button-soft-@{value} {
+        background: @@soft-color!important;
+        color: @@soft-text-color!important;
+        border-color: @@value!important;
+
+        &:hover {
+            background: @@value!important;
+            color: @white!important;
+        }
+    }
+
+    @normal-color: "@{value}";
+    @normal-text-color: #ffffff;
+    @normal-hover-color: "sat-@{value}";
+
+    .button-@{value} {
+        background: @@normal-color!important;
+        color: @normal-text-color!important;
+        border-color: @@normal-hover-color!important;
+
+        &:hover {
+            background: @@normal-hover-color!important;
+            color: @white!important;
+        }
+    }
+})
+
+.button-seashell, .button-champagne, .button-yellow, .button-lime {
+    color: #191919!important;
+}
