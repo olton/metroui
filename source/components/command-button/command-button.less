@@ -92,18 +92,18 @@
         border-width: 1px;
         border-color: var(--border-color);
     }
-
-    &:hover {
-        background: var(--command-button-background-hover);
+    
+    @media (hover: hover) {
+        &:hover {
+            background: var(--command-button-background-hover);
+            color: var(--command-button-color-hover);
+        }
     }
-
-    &.disabled {
-        //&::after {
-        //    content: '🗙';
-        //    position: absolute;
-        //    top: 2px;
-        //    right: 4px;
-        //    z-index: 1;
-        //}
+    
+    @media (hover: none) {
+        &:active {
+            background: var(--command-button-background-hover);
+            color: var(--command-button-color-hover);
+        }
     }
 }

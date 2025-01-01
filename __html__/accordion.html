@@ -11,12 +11,16 @@
     </script>
 </head>
 <body class="m4-cloak">
-    <nav data-role="appbar">
-        <span class="app-bar-item">Accordion</span>
-        <div class="app-bar-item no-hover">
-            <input type="checkbox" data-role="theme-switcher"/>
-        </div>
-    </nav>
+<div class="container-fluid pos-sticky border-bottom bd-default">
+    <div class="container">
+        <nav data-role="appbar" data-expand-point="md">
+            <span class="brand">Accordion</span>
+            <div class="app-bar-item-static ml-auto">
+                <input type="checkbox" data-role="theme-switcher"/>
+            </div>
+        </nav>
+    </div>
+</div>
     <div class="container mt-10">
         <h3>Role</h3>
         <div data-role="accordion" id="a1">

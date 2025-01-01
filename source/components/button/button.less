@@ -70,10 +70,18 @@ button, .button, .flat-button {
         text-decoration: none;
     }
 
-    &:hover {
-        background-color: var(--button-background-hover);
+    @media (hover: hover) {
+        &:hover {
+            background-color: var(--button-background-hover);
+        }
     }
-
+    
+    @media (hover: none) {
+        &:active {
+            background-color: var(--button-background-hover);
+        }
+    }
+    
     &.link {
         background-color: transparent;
         border: none;
@@ -131,8 +139,20 @@ button, .button, .flat-button {
         background: transparent none;
         border-width: 1px;
         border-color: var(--button-border-color);
-        &:hover {
-            background-color: var(--button-background);
+        color: var(--button-color);
+        
+        @media (hover: hover) {
+            &:hover {
+                background-color: var(--button-background);
+                color: var(--button-color);
+            }
+        }
+        
+        @media (hover: none) {
+            &:active {
+                background-color: var(--button-background);
+                color: var(--button-color);
+            }
         }
     }
 }
@@ -178,9 +198,19 @@ button.flat, .button.flat, .flat-button {
     min-width: 64px;
     background-color: transparent;
     border-color: transparent;
-    &:hover {
-        background-color: var(--button-background);
-        border-color: var(--button-background);
+    
+    @media (hover: hover) {
+        &:hover {
+            background-color: var(--button-background);
+            color: var(--button-color);
+        }
+    }
+    
+    @media (hover: none) {
+        &:active {
+            background-color: var(--button-background);
+            color: var(--button-color);
+        }
     }
 }
 
@@ -224,9 +254,18 @@ each(@normalColors, {
         color: @@soft-text-color!important;
         border-color: @@value!important;
 
-        &:hover {
-            background: @@value!important;
-            color: @white!important;
+        @media (hover: hover) {
+            &:hover {
+                background: @@value!important;
+                color: @white!important;
+            }
+        }
+        
+        @media (hover: none) {
+            &:active {
+                background: @@value!important;
+                color: @white!important;
+            }
         }
     }
 
@@ -239,9 +278,18 @@ each(@normalColors, {
         color: @normal-text-color!important;
         border-color: @@normal-hover-color!important;
 
-        &:hover {
-            background: @@normal-hover-color!important;
-            color: @white!important;
+        @media (hover: hover) {
+            &:hover {
+                background: @@normal-hover-color!important;
+                color: @white!important;
+            }
+        }
+        
+        @media (hover: none) {
+            &:active {
+                background: @@normal-hover-color!important;
+                color: @white!important;
+            }
         }
     }
 })

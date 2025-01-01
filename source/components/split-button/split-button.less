@@ -25,6 +25,7 @@
     width: auto;
     height: 36px;
     line-height: 1;
+    gap: 4px;
 
     & > *:nth-child(1) {
         order: 1
@@ -32,7 +33,7 @@
 
     & > *:nth-child(2) {
         order: 2;
-        margin-left: 4px;
+        //margin-left: 4px;
     }
 
     .split {
@@ -57,9 +58,18 @@
             &::before {margin-left: -1.25rem;}
         }
 
-        &:hover {
-            background: var(--split-button-background-hover);
-            color: var(--split-button-color-hover);
+        @media (hover: hover) {
+            &:hover {
+                background: var(--split-button-background-hover);
+                color: var(--split-button-color-hover);
+            }
+        }
+        
+        @media (hover: none) {
+            &:active {
+                background: var(--split-button-background-hover);
+                color: var(--split-button-color-hover);
+            }
         }
     }
 
@@ -94,8 +104,15 @@
     }
 
     &.no-gap {
+        gap: 0;
+        
+        button, .button {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        
         .split {
-            margin-left: -2px;
+            border-radius: 0 var(--split-button-border-radius) var(--split-button-border-radius) 0;
         }
     }
 }
