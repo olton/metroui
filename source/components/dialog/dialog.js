@@ -23,7 +23,8 @@
         content: "",
         customButtons: null,
         actionsAlign: "right",
-        defaultAction: true,
+        defaultActions: true,
+        defaultActionButtons: "ok, cancel, help",
         overlay: true,
         overlayColor: "#000000",
         overlayAlpha: 0.5,
@@ -43,6 +44,9 @@
 
         _runtime: false,
 
+        onOk: Metro.noop,
+        onCancel: Metro.noop,
+        onHelp: Metro.noop,
         onShow: Metro.noop,
         onHide: Metro.noop,
         onOpen: Metro.noop,
@@ -93,7 +97,7 @@
                 this.setContent(o.content);
             }
 
-            if (o.defaultAction === true || o.customButtons) {
+            if (o.defaultActions === true || o.customButtons) {
                 var buttons = element.find(".dialog-actions");
                 var button;
 
@@ -104,11 +108,28 @@
                         .appendTo(element);
                 }
 
-                if (o.defaultAction === true && Utils.objectLength(o.actions) === 0 && element.find(".dialog-actions > *").length === 0) {
-                    button = $("<button>").addClass("button js-dialog-close").addClass(o.clsDefaultAction).html(strings["label_ok"]);
-                    button.appendTo(buttons);
+                if (o.defaultActions === true && element.find(".dialog-actions > *").length === 0) {
+                    for (let b of o.defaultActionButtons.toArray(",")) {
+                        button = $("<button>").addClass(b !== "help" ? ".js-dialog-close" : "").addClass(o.clsDefaultAction).html(strings[`label_${b}`]);
+                        button.appendTo(buttons);
+                        if (b === "ok") {
+                            button.on(Metro.events.click, function () {
+                                Utils.exec(o.onOk, [element]);
+                            });
+                        }
+                        if (b === "help") {
+                            button.on(Metro.events.click, function () {
+                                Utils.exec(o.onHelp, [element]);
+                            });
+                        }
+                        if (b === "cancel") {
+                            button.on(Metro.events.click, function () {
+                                Utils.exec(o.onCancel, [element]);
+                            });
+                        }
+                    }
                 }
-
+                
                 const customButtons = Utils.isObject(o.customButtons);
                 if (Array.isArray(customButtons))
                     $.each(customButtons, function () {

@@ -23,7 +23,8 @@
 
 <div class="container">
     <h1>Dialog test page</h1>
-    <button class="button" onclick="OpenDialog()">Load dialog</button>
+    <button class="button" onclick="OpenDialog()">Open dialog</button>
+    <button class="button" onclick="LoadDialog()">Load dialog</button>
     <div  data-role="dialog"
             data-overlay="true"
             data-default-action="false"
@@ -37,21 +38,37 @@
 <script>
     var customButtons = [
         {
-            text: "OK",
-            cls: "alert js-dialog-close",
-            onclick: function(){
-                console.log("OK button clicked");
+            text: "Yes, of course!",
+            cls: "js-dialog-close alert",
+            onclick: async function(){
+                const res = await fetch(postRef, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                window.location.reload()
             }
         },
         {
-            text: "Cancel",
+            text: "No, cancel",
             cls: "js-dialog-close",
             onclick: function(){
-                console.log("Cancel button clicked");
             }
         }
     ]
+    
     function OpenDialog() {
+        Metro.dialog.create({
+            title: "Dialog title",
+            content: "Do you want to continue?",
+            closeButton: true,
+            defaultActions: false,
+            customButtons,
+        })
+    }
+    
+    function LoadDialog() {
         const content = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. A delectus dignissimos dolore error, est excepturi facilis fuga nesciunt nulla quibusdam quisquam reprehenderit, voluptate. Aliquid ea, inventore iste labore necessitatibus nihil?`
         var dialog = Metro.getPlugin('#dialog', 'dialog');
         dialog.setTitle('<span class="mif-calendar icon"></span>My Dialog Title');
