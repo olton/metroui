@@ -1,9 +1,42 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --ribbon-menu-border-color: #dadbdc;
+    --ribbon-menu-background: #ffffff;
+    --ribbon-menu-color: #191919;
+    --ribbon-menu-tab-background: #f5f6f7;
+    --ribbon-menu-tab-color: #191919;
+    --ribbon-menu-tab-background-active: #f5f6f7;
+    --ribbon-menu-tab-color-active: #191919;
+    --ribbon-menu-tab-background-static: #1979ca;
+    --ribbon-menu-tab-color-static: #ffffff;
+    --ribbon-menu-button-background: #f5f6f7;
+    --ribbon-menu-button-color: #191919;
+    --ribbon-menu-button-background-hover: rgba(red(#a4cef9), green(#a4cef9), blue(#a4cef9), .2);
+    --ribbon-menu-button-background-active: rgba(red(#a4cef9), green(#a4cef9), blue(#a4cef9), .8);
+}
+
+.dark-side {
+    --ribbon-menu-border-color: #4a4d51;
+    --ribbon-menu-background: #1e1f22;
+    --ribbon-menu-color: #dbdfe7;
+    --ribbon-menu-tab-background: #343637;
+    --ribbon-menu-tab-color: #ffffff;
+    --ribbon-menu-tab-background-active: #26282e;
+    --ribbon-menu-tab-color-active: #ffffff;
+    --ribbon-menu-tab-background-static: #1979ca;
+    --ribbon-menu-tab-color-static: #ffffff;
+    --ribbon-menu-button-background: #26282e;
+    --ribbon-menu-button-color: #dbdfe7;
+    --ribbon-menu-button-background-hover: rgba(red(#a4cef9), green(#a4cef9), blue(#a4cef9), .2);
+    --ribbon-menu-button-background-active: rgba(red(#a4cef9), green(#a4cef9), blue(#a4cef9), .8);
+}
+
 .ribbon-menu {
     display: block;
     position: relative;
+    background-color: var(--ribbon-menu-background);
 
     div {
         position: relative;
@@ -15,9 +48,12 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        .reset-list();
+        list-style: none inside;
+        margin: 0;
+        padding: 0;
+        position: relative;
         z-index: 1;
-        border-bottom: 1px solid @ribbonMenuBorder;
+        border-bottom: 1px solid var(--ribbon-menu-border-color);
     }
 
     .tabs-holder {
@@ -28,15 +64,15 @@
         }
 
         li {
-            color: @dark;
-            background-color: @ribbonMenuBackground;
+            color: var(--ribbon-menu-color);
+            background-color: var(--ribbon-menu-tab-background);
             border-left: 1px solid transparent;
             border-right: 1px solid transparent;
-            border-bottom: 1px solid @ribbonMenuBorder;
+            border-bottom: 1px solid var(--ribbon-menu-border-color);
 
             &:hover {
-                border-left-color: @ribbonMenuBorder;
-                border-right-color: @ribbonMenuBorder;
+                border-left-color: var(--ribbon-menu-border-color);
+                border-right-color: var(--ribbon-menu-border-color);
             }
         }
 
@@ -53,14 +89,15 @@
         }
 
         .active {
-            background-color: @ribbonMenuActiveBackground;
-            border: 1px solid @ribbonMenuBorder;
+            background-color: var(--ribbon-menu-tab-background-active);
+            color: var(--ribbon-menu-tab-color-active);
+            border: 1px solid var(--ribbon-menu-border-color);
             border-bottom-color: transparent;
         }
 
         .static {
-            background-color: @ribbonMenuStaticBackground;
-            color: @white;
+            background-color: var(--ribbon-menu-tab-background-static);
+            color: var(--ribbon-menu-tab-color-static);
         }
     }
 }
@@ -72,14 +109,14 @@
     }
 
     .content-holder {
-        background-color: @ribbonMenuActiveBackground;
+        background-color: var(--ribbon-menu-tab-background-active);
         border-left: none;
         border-right: none;
 
         .section {
             display: block;
             padding: 4px 4px;
-            border-bottom: 1px solid @ribbonMenuBorder;
+            border-bottom: 1px solid var(--ribbon-menu-border-color);
             justify-content: flex-start;
 
             &.active {
@@ -114,7 +151,7 @@
                 height: 20px;
                 font-size: 11px;
                 text-align: center;
-                border-top: 1px solid @ribbonMenuBorder;
+                border-top: 1px solid var(--ribbon-menu-border-color);
                 white-space: nowrap;
             }
 
@@ -124,7 +161,7 @@
                 height: 100%;
                 margin: 0 4px;
                 width: 1px;
-                background-color: @ribbonMenuBorder;
+                background-color: var(--ribbon-menu-border-color);
             }
 
             & > *:not(.title), & > *:not(.group-divider) {
@@ -133,7 +170,7 @@
         }
 
         .group + .group {
-            border-left: 1px solid @ribbonMenuBorder;
+            border-left: 1px solid var(--ribbon-menu-border-color);
         }
 
     }
@@ -144,9 +181,11 @@
     min-width: 0;
     text-align: center;
     border: 1px solid transparent;
-    background-color: @ribbonMenuActiveBackground;
+    background-color: var(--ribbon-menu-button-background);
+    color: var(--ribbon-menu-button-color);
     outline: none;
     position: relative;
+    border-radius: 2px;
 }
 
 .ribbon-button {
@@ -155,6 +194,9 @@
     width: auto;
     padding: 4px;
     margin: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    border-radius: 4px;
 
     .caption, .icon {
         display: block;
@@ -194,12 +236,10 @@
     display: inline-flex;
     flex-flow: row nowrap;
     align-items: center;
-    padding: 0 4px;
+    justify-content: flex-start;
+    padding: 4px;
     flex-wrap: nowrap;
-
-    .caption, .icon {
-        display: block;
-    }
+    gap: 8px;
 
     .caption {
         font-size: 12px;
@@ -210,17 +250,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        height: 16px;
 
         * {
-            width: 16px;
-            height: 16px;
-            line-height: 16px;
+            width: 100%;
+            height: 100%;
             font-size: 14px;
         }
-    }
-
-    .icon + .caption, .caption + .icon {
-        margin-left: 4px;
     }
 
     [class*=mif-] {
@@ -258,7 +294,7 @@
             height: 0;
             border-style: solid;
             border-width: 0 0 4px 4px;
-            border-color: transparent transparent @dark  transparent;
+            border-color: transparent transparent var(--ribbon-menu-button-color) transparent;
             z-index: 1;
         }
     }
@@ -277,10 +313,10 @@
     margin: 0;
 
     &:not([disabled]):hover, &:not(.disabled):hover {
-        border-color: @ribbonMenuItemBorder;
+        border-color: var(--ribbon-menu-border-color);
 
         .ribbon-split {
-            border-color: @ribbonMenuItemBorder;
+            border-color: var(--ribbon-menu-border-color);
         }
     }
 
@@ -293,7 +329,7 @@
         cursor: pointer;
 
         &:hover {
-            background-color: @ribbonMenuItemHoverBackground;
+            background-color:var(--ribbon-menu-button-background-hover);
         }
     }
 
@@ -321,6 +357,7 @@
         font-size: 12px;
         border-top: 1px solid transparent;
         padding-bottom: 4px;
+        color: var(--ribbon-menu-button-color);
 
         &.dropdown-toggle {
             padding-right: 4px!important;
@@ -339,7 +376,7 @@
                 height: 0;
                 border-style: solid;
                 border-width: 0 0 4px 4px;
-                border-color: transparent transparent @dark  transparent;
+                border-color: transparent transparent var(--ribbon-menu-button-color)  transparent;
                 z-index: 1;
             }
         }
@@ -352,12 +389,12 @@
     float: left;
     display: block;
     position: absolute;
-    background-color: @ribbonDropdownBackground;
-    color: @dark;
+    background-color: var(--ribbon-menu-background);
+    color: var(--ribbon-menu-color);
     padding: 2px;
-    border: 1px solid @ribbonMenuBorder;
+    border: 1px solid var(--ribbon-menu-border-color);
     font-size: 12px;
-    box-shadow: 2px 2px 2px 0 rgba(red(@ribbonDropdownShadow), green(@ribbonDropdownShadow), blue(@ribbonDropdownShadow), .7);
+    box-shadow: 0 10px 15px -3px var(--shadow-color-medium), 0 4px 6px -4px var(--shadow-color-medium);
     z-index: @zindex-dropdown;
     top: 100%;
     left: 0;
@@ -375,8 +412,8 @@
         padding-left: 24px;
 
         &:not([disabled]):hover, &:not(.disabled):hover {
-            border-color: @ribbonMenuItemBorder;
-            background-color: @ribbonMenuItemHoverBackground;
+            border-color: var(--ribbon-menu-border-color);
+            background-color: var(--ribbon-menu-button-background);
         }
     }
 
@@ -384,7 +421,7 @@
         line-height: 24px;
         text-decoration: none;
         padding: 0 8px;
-        border-left: 1px solid @ribbonDropdownDivider;
+        border-left: 1px solid var(--ribbon-menu-border-color);
         white-space: nowrap;
     }
 
@@ -393,7 +430,7 @@
         height: 1px;
         width: 100%;
         position: relative;
-        background-color: @ribbonDropdownDivider;
+        background-color: var(--ribbon-menu-border-color);
     }
 
     .checked, .checked-one {
@@ -406,7 +443,7 @@
 
         &::before {
             background-color: transparent;
-            border-color: @dark;
+            border-color: var(--ribbon-menu-border-color);
             border-left: 2px solid;
             border-bottom: 2px solid;
             height: .325rem;
@@ -429,8 +466,8 @@
 
     .checked {
         &::after {
-            border: 1px solid @ribbonMenuItemBorder;
-            background-color: @ribbonMenuItemHoverBackground;
+            border: 1px solid var(--ribbon-menu-border-color);
+            background-color: var(--ribbon-menu-button-background);
         }
     }
 
@@ -439,7 +476,7 @@
             width: .4rem;
             height: .4rem;
             border-radius: 50%;
-            background-color: @dark;
+            background-color: var(--ribbon-menu-button-color);
         }
     }
 
@@ -462,55 +499,41 @@
 }
 
 .ribbon-toggle-group {
-    background-color: @light;
+    background-color: var(--ribbon-menu-background);
     display: flex;
     flex-flow: column wrap;
     max-height: 80px;
-    border: 1px solid @ribbonMenuBorder;
+    border: 1px solid var(--ribbon-menu-border-color);
     width: auto;
+    justify-content: flex-start;
 
     .ribbon-icon-button {
         height: 20px;
         margin: 1px;
         background-color: inherit;
-
-        & > * {
-            height: 18px;
-        }
     }
 }
 
 .ribbon-button, .ribbon-tool-button, .ribbon-icon-button {
     &:hover:enabled, &:not(.disabled):hover {
-        border-color: @ribbonMenuItemBorder;
-        background-color: @ribbonMenuItemHoverBackground;
+        border-color: var(--ribbon-menu-border-color);
+        background-color: var(--ribbon-menu-button-background-hover);
     }
 }
 
 .ribbon-button, .ribbon-tool-button, .ribbon-split, .ribbon-main, .ribbon-icon-button {
     &:active, &.active {
-        border-color: @ribbonMenuItemActiveBorder;
-        background-color: @ribbonMenuItemActiveBackground!important;
+        border-color: var(--ribbon-menu-button-background-active);
+        background-color: var(--ribbon-menu-button-background-active);
     }
 }
 
 .ribbon-menu {
     .active-container {
         .ribbon-button, .ribbon-tool-button, .ribbon-icon-button {
-            border-color: @ribbonMenuItemActiveBorder;
-            background-color: @ribbonMenuItemActiveBackground!important;
+            border-color: var(--ribbon-menu-button-background-active);
+            background-color: var(--ribbon-menu-button-background-active);
         }
     }
 }
 
-
-// Edge
-@supports (-ms-ime-align:auto) {
-    .ribbon-menu {
-        .content-holder {
-            .section {
-                height: 130px;
-            }
-        }
-    }
-}
