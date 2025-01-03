@@ -56239,6 +56239,7 @@ form,
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 8px;
 }
 .listview.view-list .node > .data {
   line-height: 26px;
@@ -56292,6 +56293,7 @@ form,
   height: 32px;
   line-height: 32px;
   font-size: 28px;
+  margin-left: 16px;
 }
 .listview.view-content .node > .data {
   padding-left: 64px;
@@ -56325,6 +56327,7 @@ form,
   height: 46px;
   line-height: 46px;
   font-size: 42px;
+  margin-left: 16px;
 }
 .listview.view-tiles .node > .data {
   padding-left: 78px;
@@ -56340,20 +56343,23 @@ form,
 .listview.view-icons .node,
 .listview.view-icons-medium .node,
 .listview.view-icons-large .node {
-  width: 74px;
-  height: auto;
+  width: 92px;
+  height: 92px;
   padding: 8px 8px 2px;
+  display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  justify-content: center;
   margin: 2px;
 }
 .listview.view-icons .node > .icon,
 .listview.view-icons-medium .node > .icon,
 .listview.view-icons-large .node > .icon {
-  width: 44px;
-  height: 44px;
-  line-height: 44px;
-  font-size: 42px;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 32px;
+  margin-bottom: 4px;
 }
 .listview.view-icons .node > .data,
 .listview.view-icons-medium .node > .data,
@@ -56366,29 +56372,31 @@ form,
 .listview.view-icons-medium .node .checkbox,
 .listview.view-icons-large .node .checkbox {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 2px;
+  left: 2px;
 }
 .listview.view-icons-medium .node {
-  width: 104px;
+  width: 124px;
+  height: 124px;
   margin: 1px;
 }
 .listview.view-icons-medium .node > .icon {
-  width: 74px;
-  height: 74px;
-  line-height: 74px;
-  font-size: 70px;
+  width: 54px;
+  height: 54px;
+  line-height: 54px;
+  font-size: 54px;
 }
 .listview.view-icons-large .node {
-  width: 270px;
+  width: 200px;
+  height: 200px;
   margin: 2px;
   padding: 30px;
 }
 .listview.view-icons-large .node > .icon {
-  width: 162px;
-  height: 162px;
-  line-height: 162px;
-  font-size: 140px;
+  width: 90px;
+  height: 90px;
+  line-height: 90px;
+  font-size: 90px;
 }
 .listview .node.current-select {
   background-color: var(--listview-item-background-active);

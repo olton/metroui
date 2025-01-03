@@ -26,20 +26,20 @@
     </div>
     <div>
         <div class="p-4 d-flex flex-justify-between border bd-default mt-4">
-            <input type="radio" name="r1" value="list" data-role="radio" data-caption="List" title="">
-            <input type="radio" name="r1" value="table" data-role="radio" data-caption="Table" checked="checked"  title="">
-            <input type="radio" name="r1" value="content" data-role="radio" data-caption="Content" title="">
-            <input type="radio" name="r1" value="tiles" data-role="radio" data-caption="Tiles" title="">
-            <input type="radio" name="r1" value="icons" data-role="radio" data-caption="Icons" title="">
-            <input type="radio" name="r1" value="icons-medium" data-role="radio" data-caption="Medium icons" title="">
-            <input type="radio" name="r1" value="icons-large" data-role="radio" data-caption="Large icons" title="">
+            <label class="d-flex">List <input class="ml-1" type="radio" name="r1" value="list" title=""></label>
+            <label class="d-flex">Table <input class="ml-1" type="radio" name="r1" value="table"  title=""></label>
+            <label class="d-flex">Content <input class="ml-1" type="radio" name="r1" value="content" title=""></label>
+            <label class="d-flex">Tiles <input class="ml-1" type="radio" name="r1" value="tiles" title=""></label>
+            <label class="d-flex">Icons <input class="ml-1" type="radio" name="r1" value="icons" title="" checked></label>
+            <label class="d-flex">Medium Icons <input class="ml-1" type="radio" name="r1" value="icons-medium" title=""></label>
+            <label class="d-flex">Large Icons <input class="ml-1" type="radio" name="r1" value="icons-large" title=""></label>
         </div>
     </div>
 
     <br>
 
     <div>
-        <ul data-role="listview" data-selectable="true" data-view="table" id="listview" data-select-node="true" data-structure='{"date": true, "name": true}'>
+        <ul data-role="listview" data-selectable="true" data-view="icons" id="listview" data-select-node="true" data-structure='{"date": true, "name": true}'>
             <li id="l1" data-icon="<span class='mif-folder fg-orange'>" data-caption="Video" data-content="<div class='mt-1' data-role='progress' data-value='35' data-small='true'>" data-date="12/21/2017" data-name="Video library"></li>
             <li id="l2" data-icon="<span class='mif-folder fg-cyan'>" data-caption="Images" data-content="<div class='mt-1' data-role='progress' data-value='78' data-small='true'>" data-date="12/21/2017" data-name="My images"></li>
             <li id="l3" data-icon="<span class='mif-folder fg-green'>" data-caption="Documents" data-content="<div class='mt-1' data-role='progress' data-value='24' data-small='true'>" data-date="12/21/2017" data-name="My documents"></li>
