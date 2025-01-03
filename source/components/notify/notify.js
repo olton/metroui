@@ -1,20 +1,20 @@
 /* global Metro, METRO_TIMEOUT, METRO_ANIMATION_DURATION */
 (function(Metro, $) {
     'use strict';
-    var Utils = Metro.utils;
-    var NotifyDefaultConfig = {
+
+    let NotifyDefaultConfig = {
         container: null,
         width: 220,
-        timeout: METRO_TIMEOUT,
+        timeout: 3000,
         duration: METRO_ANIMATION_DURATION,
         distance: "max",
         animation: "linear",
+        clsNotify: "",
         onClick: Metro.noop,
         onClose: Metro.noop,
         onShow: Metro.noop,
         onAppend: Metro.noop,
         onNotifyCreate: Metro.noop
-
     };
 
     Metro.notifySetup = function(options){
@@ -25,23 +25,18 @@
         Metro.notifySetup(globalThis["metroNotifySetup"]);
     }
 
-    var Notify = {
-
+    const Notify = {
         container: null,
-
-        options: {
-        },
-
+        options: {},
         notifies: [],
 
         setup: function(options){
             this.options = $.extend({}, NotifyDefaultConfig, options);
-
             return this;
         },
 
         reset: function(){
-            var reset_options = {
+            const reset_options = {
                 width: 220,
                 timeout: METRO_TIMEOUT,
                 duration: METRO_ANIMATION_DURATION,
@@ -52,26 +47,20 @@
         },
 
         _createContainer: function(){
-
-            var container = $("<div>").addClass("notify-container");
+            const container = $("<div>").addClass("notify-container");
             $("body").prepend(container);
-
             return container;
         },
 
-        create: function(message, title, options){
-            var notify, that = this, o = this.options;
-            var m, t, id = Utils.elementId("notify");
+        create: function(message, title, options = {}){
+            const that = this, o = this.options
+            let notify, m, t, id = Metro.utils.elementId("notify");
 
-            if (Utils.isNull(options)) {
-                options = {};
-            }
-
-            if (!Utils.isValue(message)) {
+            if (!message) {
                 return false;
             }
 
-            notify = $("<div>").addClass("notify").attr("id", id);
+            notify = $("<div>").addClass("notify").addClass(o.clsNotify).attr("id", id);
             notify.css({
                 width: o.width
             });
@@ -88,8 +77,8 @@
             * keepOpen, cls, width, callback
             * */
             if (options !== undefined) {
-                if (options.cls !== undefined) {
-                    notify.addClass(options.cls);
+                if (options.clsNotify !== undefined) {
+                    notify.addClass(options.clsNotify);
                 }
                 if (options.width !== undefined) {
                     notify.css({
@@ -99,8 +88,8 @@
             }
 
             notify.on(Metro.events.click, function(){
-                Utils.exec(Utils.isValue(options.onClick) ? options.onClick : o.onClick, null, this);
-                that.kill($(this).closest(".notify"), Utils.isValue(options.onClose) ? options.onClose : o.onClose);
+                Metro.utils.exec(Metro.utils.isValue(options.onClick) ? options.onClick : o.onClick, null, this);
+                that.kill($(this).closest(".notify"), Metro.utils.isValue(options.onClose) ? options.onClose : o.onClose);
             });
 
             // Show
@@ -111,11 +100,11 @@
 
             notify.hide(function(){
 
-                Utils.exec(Utils.isValue(options.onAppend) ? options.onAppend : o.onAppend, null, notify[0]);
+                Metro.utils.exec(Metro.utils.isValue(options.onAppend) ? options.onAppend : o.onAppend, null, notify[0]);
 
-                var duration = Utils.isValue(options.duration) ? options.duration : o.duration;
-                var animation = Utils.isValue(options.animation) ? options.animation : o.animation;
-                var distance = Utils.isValue(options.distance) ? options.distance : o.distance;
+                const duration = Metro.utils.isValue(options.duration) ? options.duration : o.duration;
+                const animation = Metro.utils.isValue(options.animation) ? options.animation : o.animation;
+                let distance = Metro.utils.isValue(options.distance) ? options.distance : o.distance;
 
                 if (distance === "max" || isNaN(distance)) {
                     distance = $(globalThis).height();
@@ -131,18 +120,17 @@
                         dur: duration,
                         ease: animation,
                         onDone: function(){
-                            Utils.exec(o.onNotifyCreate, null, this);
+                            Metro.utils.exec(o.onNotifyCreate, null, this);
 
                             if (options !== undefined && options.keepOpen === true) {
-                                /* eslint-disable-next-line */
-
+                                // do nothing;
                             } else {
                                 setTimeout(function(){
-                                    that.kill(notify, Utils.isValue(options.onClose) ? options.onClose : o.onClose);
+                                    that.kill(notify, Metro.utils.isValue(options.onClose) ? options.onClose : o.onClose);
                                 }, o.timeout);
                             }
 
-                            Utils.exec(Utils.isValue(options.onShow) ? options.onShow : o.onShow, null, notify[0]);
+                            Metro.utils.exec(Metro.utils.isValue(options.onShow) ? options.onShow : o.onShow, null, notify[0]);
                         }
                     });
 
@@ -150,17 +138,17 @@
         },
 
         kill: function(notify, callback){
-            var that = this, o = this.options;
+            const that = this, o = this.options;
             notify.off(Metro.events.click);
-            notify.fadeOut(o.duration, 'linear', function(){
-                Utils.exec(Utils.isValue(callback) ? callback : that.options.onClose, null, notify[0]);
+            notify.zoomOut(10000, 'linear', function(){
+                Metro.utils.exec(callback ? callback : that.options.onClose, null, notify[0]);
                 notify.remove();
             });
         },
 
         killAll: function(){
-            var that = this;
-            var notifies = $(".notify");
+            const that = this;
+            const notifies = $(".notify");
             $.each(notifies, function(){
                 that.kill($(this));
             });
