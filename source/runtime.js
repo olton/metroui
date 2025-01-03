@@ -6,7 +6,6 @@ import "./m4q/index.js";
 import "./hooks/index.js";
 import "./farbe/index.js";
 import "./html/index.js";
-import "./animation/index.js";
 import "./guardian/index.js";
 import "./core/index.js";
 import "./i18n/index.js";

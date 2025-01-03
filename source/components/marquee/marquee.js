@@ -280,12 +280,12 @@
 
             element.on(Metro.events.enter, function(){
                 if (o.stopOnHover)
-                    Animation.pauseAll(that.items);
+                    $.pauseAll(that.items);
             })
 
             element.on(Metro.events.leave, function(){
                 if (o.stopOnHover)
-                    Animation.resumeAll(that.items);
+                    $.resumeAll(that.items);
             })
             
             const resize = Hooks.useDebounce((e) => {
@@ -303,7 +303,7 @@
             
             this.running = true;
 
-            Animation.chain(this.chain, {
+            $.chain(this.chain, {
                 loop: o.loop,
                 onChainItem: Metro.utils.isFunc(o.onMarqueeItem),
                 onChainItemComplete: Metro.utils.isFunc(o.onMarqueeItemComplete),
@@ -315,7 +315,7 @@
 
         stop: function(){
             this.running = false;
-            Animation.stopAll(false);
+            $.stopAll(false);
             return this
         },
 

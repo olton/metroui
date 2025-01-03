@@ -157,7 +157,7 @@
                 next = that.slides[that.currentSlide];
 
                 if (effects.includes(o.effect)) {
-                    Animation.effects[Str.camelCase(o.effect)]($(current)[0], $(next)[0], {duration: o.effectDuration});
+                    Metro.Effects[Str.camelCase(o.effect)]($(current)[0], $(next)[0], {duration: o.effectDuration});
                 }
 
             }, o.effectInterval);

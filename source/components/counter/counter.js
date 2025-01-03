@@ -72,7 +72,7 @@
 
             this._fireEvent("start");
 
-            Animation.animate({
+            $.animate({
                 el: elem,
                 draw: {
                     innerHTML: [o.from, o.value]

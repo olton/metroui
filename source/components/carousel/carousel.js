@@ -1,11 +1,11 @@
 /* global Metro, METRO_ANIMATION_DURATION */
 (function(Metro, $) {
     'use strict';
-    var Utils = Metro.utils;
-    var effects = [
+
+    const effects = [
         "slide", "slide-v", "fade", "switch", "zoom", "swirl"
     ];
-    var CarouselDefaultConfig = {
+    let CarouselDefaultConfig = {
         carouselDeferred: 0,
         autoStart: false,
         width: "100%",
@@ -73,16 +73,16 @@
                 dir: "left",
                 interval: false,
                 isAnimate: false,
-                id: Utils.elementId("carousel")
+                id: Metro.utils.elementId("carousel")
             });
 
             return this;
         },
 
         _create: function(){
-            var element = this.element, o = this.options;
-            var slides = element.find(".slide");
-            var slides_container = element.find(".slides");
+            const element = this.element, o = this.options;
+            const slides = element.find(".slide");
+            let slides_container = element.find(".slides");
 
             this.dir = this.options.direction;
 
@@ -134,9 +134,9 @@
         },
 
         _start: function(){
-            var that = this, element = this.element, o = this.options;
-            var period = o.period;
-            var current = this.slides[this.currentIndex];
+            const that = this, element = this.element, o = this.options;
+            let period = o.period;
+            const current = this.slides[this.currentIndex];
 
             if (current.data("period") !== undefined) {
                 period = current.data("period");
@@ -147,7 +147,7 @@
             }
 
             if (this.interval === false) this.interval = setTimeout(function run() {
-                var t = o.direction === 'left' ? 'next' : 'prior';
+                const t = o.direction === 'left' ? 'next' : 'prior';
                 that._slideTo(t, true);
             }, period);
 
@@ -162,21 +162,21 @@
         },
 
         _resize: function(){
-            var element = this.element, o = this.options;
-            var width = element.outerWidth();
-            var height;
-            var medias = [];
+            const element = this.element, o = this.options;
+            const width = element.outerWidth();
+            let height;
+            let medias = [];
 
             if (["16/9", "21/9", "4/3"].indexOf(o.height) > -1) {
-                height = Utils.aspectRatioH(width, o.height);
+                height = Metro.utils.aspectRatioH(width, o.height);
             } else {
                 if (String(o.height).indexOf("@") > -1) {
-                    medias = o.height.substr(1).toArray("|");
+                    medias = o.height.substring(1).toArray("|");
                     $.each(medias, function(){
-                        var media = this.toArray(",");
+                        const media = this.toArray(",");
                         if (globalThis.matchMedia(media[0]).matches) {
                             if (["16/9", "21/9", "4/3"].indexOf(media[1]) > -1) {
-                                height = Utils.aspectRatioH(width, media[1]);
+                                height = Metro.utils.aspectRatioH(width, media[1]);
                             } else {
                                 height = parseInt(media[1]);
                             }
@@ -193,11 +193,11 @@
         },
 
         _createSlides: function(){
-            var that = this, element = this.element, o = this.options;
-            var slides = element.find(".slide");
+            const that = this, element = this.element, o = this.options;
+            const slides = element.find(".slide");
 
             $.each(slides, function(i){
-                var slide = $(this);
+                const slide = $(this);
                 if (slide.data("cover") !== undefined) {
                     slide.css({
                         backgroundImage: "url("+slide.data('cover')+")"
@@ -233,8 +233,8 @@
         },
 
         _createControls: function(){
-            var element = this.element, o = this.options;
-            var next, prev;
+            const element = this.element, o = this.options;
+            let next, prev;
 
             if (o.controls === false) {
                 return ;
@@ -256,8 +256,8 @@
         },
 
         _createBullets: function(){
-            var element = this.element, o = this.options;
-            var bullets, i;
+            const element = this.element, o = this.options;
+            let bullets, i;
 
             if (o.bullets === false) {
                 return ;
@@ -273,7 +273,7 @@
             }
 
             for (i = 0; i < this.slides.length; i++) {
-                var bullet = $('<span>').addClass("carousel-bullet").addClass(o.clsBullet).data("slide", i);
+                const bullet = $('<span>').addClass("carousel-bullet").addClass(o.clsBullet).data("slide", i);
                 if (i === 0) {
                     bullet.addClass('bullet-on').addClass(o.clsBulletOn);
                 }
@@ -284,10 +284,10 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+            const that = this, element = this.element, o = this.options;
 
             element.on(Metro.events.click, ".carousel-bullet", function(){
-                var bullet = $(this);
+                const bullet = $(this);
                 if (that.isAnimate === false) {
                     that._slideToSlide(bullet.data('slide'));
                     that._fireEvent("bullet-click", {
@@ -341,7 +341,7 @@
             }
 
             element.on(Metro.events.click, ".slide", function(){
-                var slide = $(this);
+                const slide = $(this);
                 that._fireEvent("slide-click", {
                     slide: slide
                 });
@@ -353,8 +353,8 @@
         },
 
         _slideToSlide: function(index){
-            var element = this.element, o = this.options;
-            var current, next, to;
+            const element = this.element, o = this.options;
+            let current, next, to;
 
             if (this.slides[index] === undefined) {
                 return ;
@@ -377,8 +377,8 @@
         },
 
         _slideTo: function(to, interval){
-            var element = this.element, o = this.options;
-            var current, next;
+            const element = this.element, o = this.options;
+            let current, next;
 
             if (to === undefined) {
                 to = "next";
@@ -407,14 +407,14 @@
         },
 
         _effect: function(current, next, effect, to, interval){
-            var that = this, o = this.options;
-            var duration = o.duration;
-            var func, effectFunc = o.effectFunc;
-            var period = o.period;
+            const that = this, o = this.options;
+            let duration = o.duration;
+            let func, effectFunc = o.effectFunc;
+            let period = o.period;
 
-            var run = function(f, c, n, o){
-                Animation.effects[f](c[0], n[0], o);
-            }
+            const run = function (f, c, n, o) {
+                Metro.Effects[f](c[0], n[0], o);
+            };
 
             if (next.data('duration') !== undefined) {
                 duration = next.data('duration');
@@ -473,7 +473,7 @@
                 }
 
                 this.interval = setTimeout(function run() {
-                    var t = o.direction === 'left' ? 'next' : 'prior';
+                    const t = o.direction === 'left' ? 'next' : 'prior';
                     that._slideTo(t, true);
                 }, period);
             }
@@ -502,8 +502,8 @@
         },
 
         setEffect: function(effect){
-            var element = this.element, o = this.options;
-            var slides = element.find(".slide");
+            const element = this.element, o = this.options;
+            const slides = element.find(".slide");
 
             if (!effects.includes(effect)) return ;
 
@@ -515,7 +515,6 @@
             });
         },
 
-        /* eslint-disable-next-line */
         changeAttribute: function(attributeName, newValue){
             if (attributeName === 'data-effect') {
                 this.setEffect(newValue);
@@ -523,7 +522,7 @@
         },
 
         destroy: function(){
-            var element = this.element, o = this.options;
+            const element = this.element, o = this.options;
 
             element.off(Metro.events.click, ".carousel-bullet");
             element.off(Metro.events.click, ".carousel-switch-next");
