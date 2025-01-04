@@ -61010,6 +61010,9 @@ form,
 .sb-sat-sand * {
   scrollbar-color: #d1c5a1 #e8e8e8 !important;
 }
+.scroll-container {
+  overscroll-behavior: contain;
+}
 
 /* source/components/tag/tag.less */
 :root {

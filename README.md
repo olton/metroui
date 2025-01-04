@@ -44,7 +44,7 @@ It's an independent project with its ongoing development made possible entirely 
 
 ### License and Premium Features
 This project licensed under the **MIT** license. 
-In addition, **SUPPORT PACK** is available for an annual subscription on [https://korzh.com/](https://https://korzh.com/).
+In addition, **SUPPORT PACK** is available for an annual subscription on [https://korzh.com/](https://korzh.com/).
 
 **SUPPORT PACK** includes an **Extra time for priority support** by email and other options.
 
