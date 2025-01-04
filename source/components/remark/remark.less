@@ -31,74 +31,86 @@
     cursor: default;
     overflow: hidden;
 
-    &.rounded {
-        border-radius: 10px!important;
-    }
-
     .icon {
         margin-right: 1rem;
         font-size: 32px;
         width: 32px;
         height: 32px;
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+        transform: translateY(-50%);
     }
 }
 
+.remark:has(.icon) {
+    min-height: 40px;
+    padding-left: 60px;
+}
+
 .remark {
-    each(@accentColors, {
-        @color: "@{value}Color";
+    each(@normalColors, {
+        @bg: "light-@{value}";
+        @bd: "@{value}";
 
         &.@{value} {
-            @c: lighten(@@color, 25%);
-            border: 1px solid @c !important;
-            color: #191919 !important;
-
-            &::before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 4px;
-                height: 100%;
-                content: " ";
-                background-color: @@color;
-                z-index: 0;
-            }
+            border-color: @@bd;
+            color: #191919;
+            background: @@bg;
 
             .icon {
-                color: @@color!important;
+                color: @@bd;
             }
         }
+    });
+    
+    &.alert {
+        border-color: var(--color-red);
+        background: var(--color-light-red)!important;
+        color: #191919!important;
 
-        &.@{value} when(@color = 'primaryColor' ) {
-            @c: lighten(@@color, 50%);
-            background: @c!important;
+        .icon {
+            color: var(--color-red);
         }
-        &.@{value} when(@color = 'secondaryColor' ) {
-            @c: lighten(@@color, 50%);
-            background: @c!important;
+    }
+    
+    &.warning {
+        border-color: var(--color-orange);
+        background: var(--color-light-orange)!important;
+        color: #191919!important;
+
+        .icon {
+            color: var(--color-orange);
         }
-        &.@{value} when(@color = 'successColor' ) {
-            @c: lighten(@@color, 55%);
-            background: @c!important;
+    }
+    
+    &.info {
+        border-color: var(--color-blue);
+        background: var(--color-light-blue)!important;
+        color: #191919!important;
+
+        .icon {
+            color: var(--color-blue);
         }
-        &.@{value} when(@color = 'alertColor' ) {
-            @c: lighten(@@color, 45%);
-            background: @c!important;
+    }
+    
+    &.success {
+        border-color: var(--color-green);
+        background: var(--color-light-green)!important;
+        color: #191919!important;
+
+        .icon {
+            color: var(--color-green);
         }
-        &.@{value} when(@color = 'warningColor' ) {
-            @c: lighten(@@color, 30%);
-            background: @c!important;
+    }
+    
+    &.dark {
+        border-color: var(--color-dark);
+        background: #dddddd !important;
+        color: #191919!important;
+
+        .icon {
+            color: var(--color-dark);
         }
-        &.@{value} when(@color = 'infoColor' ) {
-            @c: lighten(@@color, 25%);
-            background: @c!important;
-        }
-        &.@{value} when(@color = 'yellowColor' ) {
-            @c: lighten(@@color, 17%);
-            background: @c!important;
-        }
-        &.@{value} when(@color = 'darkColor' ) {
-            @c: lighten(@@color, 60%);
-            background: @c!important;
-        }
-    })
+    }
 }
