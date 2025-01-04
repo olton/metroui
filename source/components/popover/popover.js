@@ -136,7 +136,7 @@
             $("<div>").addClass("popover-content").addClass(o.clsPopoverContent).html(o.popoverText).appendTo(popover);
 
             if (o.popoverHide === 0 && o.closeButton === true) {
-                closeButton = $("<button>").addClass("button square small popover-close-button bg-white").html("&times;").appendTo(popover);
+                closeButton = $("<button>").addClass("square small popover-close-button").html("&times;").appendTo(popover);
                 closeButton.on(Metro.events.click, function(){
                     that.removePopover();
                 });

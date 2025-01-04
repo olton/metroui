@@ -140,7 +140,7 @@
         kill: function(notify, callback){
             const that = this, o = this.options;
             notify.off(Metro.events.click);
-            notify.zoomOut(10000, 'linear', function(){
+            notify.zoomOut(300, 'linear', function(){
                 Metro.utils.exec(callback ? callback : that.options.onClose, null, notify[0]);
                 notify.remove();
             });

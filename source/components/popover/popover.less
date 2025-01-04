@@ -1,17 +1,30 @@
 @import (once) "../../include/vars";
-@import (once) "../../include/mixins";
+
+:root {
+    --popover-border-radius: 6px;
+    --popover-background: #ffffff;
+    --popover-color: #191919;
+    --popover-border-color: #e8e8e8;
+}
+
+.dark-side {
+    --popover-background: #1e1f22;
+    --popover-color: #dbdfe7;    
+    --popover-border-color: #4a4d51;
+}
 
 .popover {
     display: block;
     min-width: 12.5rem;
     height: auto;
     position: fixed;
-    background-color: @white;
-    color: @dark;
+    background-color: var(--popover-background);
+    color: var(--popover-color);
     z-index: @zindex-popover;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--popover-border-color);
+    border-radius: var(--popover-border-radius);
     cursor: default;
-    padding: .8125rem;
+    padding: 1rem;
     max-width: calc(100% - 32px);
 
     & > * {
@@ -27,8 +40,10 @@
     .popover-close-button {
         z-index: 100;
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 2px;
+        right: 2px;
         font-size: 26px;
+        background: var(--color-red);
+        color: #fff;
     }
 }
