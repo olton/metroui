@@ -1,0 +1,127 @@
+:root {
+    --directive-background: #f9f9f9;
+    --directive-color: #191919;
+    --directive-border-color: #3c3c3c1a;
+    --directive-title-color: #3c3c3c;
+    --directive-border-radius: 10px;
+}
+
+.dark-side {
+    --directive-color: #ffffff!important;
+    
+    .directive-note {
+        --directive-background: #292e37!important;
+        --directive-border-color: #5454547a!important;
+        --directive-title-color: #ffffff!important;
+    }
+    .directive-tip {
+        --directive-background: #079c701a!important;
+        --directive-border-color: #079c7033!important;
+        --directive-title-color: #3ec480!important;
+    }
+    .directive-info {
+        --directive-background: #0095ff33!important;
+        --directive-border-color: #0095ff33!important;
+        --directive-title-color: #66c2ff!important;
+    }
+    .directive-warning {
+        --directive-background: #ffc5171f!important;
+        --directive-border-color: #ffc51740!important;
+        --directive-title-color: #fbb451!important;
+    }
+    .directive-caution, .directive-alert, .directive-error {
+        --directive-background: #ed3c501f!important;
+        --directive-border-color: #ed3c504d!important;
+        --directive-title-color: #f76e85!important;
+    }
+    .directive-bug {
+        --directive-background: #7C7C7C19!important;
+        --directive-border-color: #5454547a!important;
+        --directive-title-color: #838383 !important;
+    }
+}
+
+.directive {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: var(--directive-background);
+    color: var(--directive-color);
+    padding: .5rem 1rem;
+    border: 1px solid var(--directive-border-color);
+    border-radius: var(--directive-border-radius);
+    margin: 1rem 0;
+    font-size: 14px;
+    line-height: 1.75;
+    
+    .directive-title {
+        font-weight: 700;
+        margin-bottom: .5rem;
+        display: flex;
+        align-items: center;
+        color: var(--directive-title-color);
+        font-size: 1.2rem;
+    }
+    
+    .icon {
+        font-size: 1.5rem;
+    }
+}
+
+.directive {
+    &.directive-note {
+        .icon::before {
+            content: "📝";
+        }
+    }
+    
+    &.directive-info {
+        --directive-background: #0095ff0f;
+        --directive-border-color: #0095ff33;
+        --directive-title-color: #0095ff;
+        
+        .icon::before {
+            content: "💡";
+        }
+    }
+    
+    &.directive-tip {
+        --directive-background: #079c700f;
+        --directive-border-color: #079c7033;
+        --directive-title-color: #278359;
+        
+        .icon::before {
+            content: "💡";
+        }
+    }
+    
+    &.directive-warning {
+        --directive-background: #ffc5171a;
+        --directive-border-color: #ffc51766;
+        --directive-title-color: #ffc517;
+        
+        .icon::before {
+            content: "⚠️";
+        }
+    }
+    
+    &.directive-caution, &.directive-alert, &.directive-error {
+        --directive-background: #ed3c5014;
+        --directive-border-color: #ed3c5033;
+        --directive-title-color: #ff1f1f;
+        
+        .icon::before {
+            content: "⛔";
+        }
+    }
+    
+    &.directive-bug {
+        --directive-background: #7C7C7C19;
+        --directive-border-color: #1C1C1C66;
+        --directive-title-color: #191919;
+        
+        .icon::before {
+            content: "🐞";
+        }
+    }
+}

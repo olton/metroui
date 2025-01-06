@@ -39,6 +39,7 @@ import "./cube/index.js";
 import "./d-menu/index.js";
 import "./datepicker/index.js";
 import "./dialog/index.js";
+import "./directive/index.js";
 import "./donut/index.js";
 import "./double-select-box/index.js";
 import "./double-slider/index.js";
