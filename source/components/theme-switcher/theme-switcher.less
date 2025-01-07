@@ -1,179 +1,166 @@
 @import (once) "../../include/mixins";
 
 :root {
-    --theme-switcher-background: #191919;
-    --theme-switcher-color: #ffffff;
-    --theme-switcher-border-color: #4c4c4c;
+    --theme-switcher-background: #e9e9e9;
+    --theme-switcher-background-button: #ffffff;
+    --theme-switcher-background-checked: #191919;
+    --theme-switcher-background-disabled: #e8e8e8;
+    --theme-switcher-toggle-color: #fff;
+    --theme-switcher-toggle-disabled: #ccc;
+    --theme-switcher-text-color: #000;
+    --theme-switcher-text-color-checked: #fff;
+    --theme-switcher-focus-color: #e8e8e8;
+    --theme-switcher-border-color: #e8e8e8;
 }
 
 .dark-side {
-    --theme-switcher-background: #ffffff;
-    --theme-switcher-color: #191919;
-    --theme-switcher-border-color: #ffffff;
+    --theme-switcher-background: #232527;
+    --theme-switcher-background-button: #232527;
+    --theme-switcher-background-checked: #474748;
+    --theme-switcher-toggle-color: #232527;
+    --theme-switcher-toggle-disabled: #3e4145;
+    --theme-switcher-text-color: #efefef;
+    --theme-switcher-text-color-checked: #fff;
+    --theme-switcher-focus-color: #191919;
+    --theme-switcher-border-color: #474748;
 }
 
 .theme-switcher {
-    display: inline-flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    position: relative;
-    margin: 0;
-    user-select: none;
-    cursor: pointer;
-    height: 36px;
-
-    .hideElement(input);
-
     &.mode-switch {
-        .check {
-            line-height: 38px;
-            font-size: 14px;
-            margin: 0 4px;
+        height: 36px;
+        padding: 8px 0;
+        margin: 0 .25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        cursor: pointer;
+        width: auto;
+        flex-wrap: nowrap;
+
+        & > input {
+            appearance: none;
             position: relative;
-            height: 20px;
             width: 48px;
-            border: 2px @dark solid;
+            height: 20px;
+            order: 2;
+            background: var(--theme-switcher-background);
+            border-radius: 10px;
             cursor: pointer;
-            background: @transparent;
-            z-index: 1;
-            display: inline-block;
-            vertical-align: middle;
-            border-radius: (1.125rem / 2);
-            flex-shrink: 0;
-        }
+            transition: 0.3s background-color;
+            margin: 0;
+            padding: 0;
+            border-color: transparent!important;
 
-        .check {
             &::before {
-                font-family: "Segoe UI Symbol", serif;
-                content: attr(data-dark-symbol); // dark
-                display: block;
+                content: attr(data-light-symbol);
                 position: absolute;
-                color: inherit;
-                left: 16px;
-                width: 26px;
-                top: -2px;
-                line-height: 20px;
-                font-size: 10px;
-                text-transform: uppercase;
-                text-align: center;
-            }
-        }
-
-        .check {
-            &::after {
-                transition: @transition-base;
-                position: absolute;
-                left: 3px;
-                display: block;
-                content: "";
-                height: 12px;
-                width: 12px;
-                top: 50%;
-                .translateY(-50%);
-                border: 2px #333 solid;
-                cursor: pointer;
-                background: #333;
-                z-index: 2;
+                top: 0;
+                left: 0;
+                width: 16px;
+                height: 16px;
+                background: var(--theme-switcher-toggle-color);
                 border-radius: 50%;
+                transition: 0.3s;
+                opacity: 1;
+                border: 1px solid transparent;
+                transform: none;
+                line-height: 1;
+                font-size: 13px;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
-        }
 
-        input[type="checkbox"]:indeterminate ~ .check {
             &::after {
-                background-color: @gray;
-                border-color: @gray;
-                left: auto;
-                .translateX(18px);
-                .translateY(-50%);
+                position: absolute;
+                content: attr(data-off);
+                top: 5px;
+                left: 2px;
+                transform: translate(20px, 0);
+                color: var(--theme-switcher-text-color);
+                text-transform: uppercase;
+                font-size: 8px;
+                font-weight: 400;
+                transition: 0.3s transform;
+                line-height: 1;
             }
-            &::before {
-                content: "";
-            }
-        }
 
-        input[type="checkbox"]:checked ~ .check {
-            background: @dark;
-            border-color: @dark;
-            color: @dark;
-            &::after {
-                background-color: @white;
-                border-color: @white;
-                left: auto;
-                .translateX(30px);
-                .translateY(-50%);
-            }
-            &::before {
-                content: attr(data-light-symbol); // light
-                color: @white;
-                left: 1px;
-            }
-        }
+            &:checked {
+                background: var(--theme-switcher-background-checked);
 
-        input[type="checkbox"]:disabled ~ .check {
-            background-color: @disabledBackground;
-            border-color: @disabledBackground;
-            &::after {
-                background-color: darken(@disabledBackground, 10%);
-                border-color: darken(@disabledBackground, 10%);
+                &::before {
+                    content: attr(data-dark-symbol);
+                    transform: translateX(28px);
+                    color: #191919;
+                }
+
+                &::after {
+                    content: attr(data-on);
+                    transform: translateX(6px);
+                    color: var(--theme-switcher-text-color-checked);
+                }
             }
-            &::before {
-                display: none;
+
+            &:disabled {
+                background: var(--theme-switcher-background-disabled);
+
+                &::before {
+                    background: var(--theme-switcher-toggle-disabled);
+                }
             }
         }
     }
     
     /* TODO add slide up-down to the theme symbol */
     &.mode-button {
+        height: 36px;
+        width: 36px;
+        border: 2px solid var(--theme-switcher-border-color);
+        border-radius: 50%;
+        display: flex;
         align-items: center;
         justify-content: center;
-        width: 24px;
-        height: 24px;
-        line-height: 24px;
-        border-radius: 50%;
-        border: 1px solid var(--theme-switcher-border-color);
-        cursor: pointer;
-        position: relative;
-        background: var(--theme-switcher-background);
-        color: var(--theme-switcher-color);
-        transition: @transition-base;
-        flex-shrink: 0;
-
-        .check {
+        background: var(--theme-switcher-background-button);
+        transition: background-color 0.5s;
+        
+        & > input {
+            appearance: none;
+            border: none;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            border-radius: 50%;
-            width: 100%;
-            height: 100%;
-
-            &::before, &::after {
-                font-family: "Segoe UI Symbol", serif;
-                content: attr(data-dark-symbol);
-                position: relative;
-                display: block;
-                z-index: 1;
-            }
-
+            
             &::before {
-                color: #ffffff;
-            }
-
-            &::after {
+                color: var(--theme-switcher-text-color);
                 content: attr(data-light-symbol);
-                display: none;
-                
+                border: none;
+                transform: none;
+                line-height: 1;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                left: 0;
+                top: 2px;
+                opacity: 1;
+                font-size: 1.4rem
+            }
+            
+            &:checked {
+                &::before {
+                    content: attr(data-dark-symbol);
+                }
             }
         }
-        
-        input:checked + .check::before {
-            display: none;
+
+        & > input[type=checkbox]:focus {
+            box-shadow: none;
         }
 
-        input:checked + .check::after {
-            display: block;
-        }
     }
 }
 

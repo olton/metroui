@@ -65212,160 +65212,148 @@ textarea {
 
 /* source/components/theme-switcher/theme-switcher.less */
 :root {
-  --theme-switcher-background: #191919;
-  --theme-switcher-color: #ffffff;
-  --theme-switcher-border-color: #4c4c4c;
+  --theme-switcher-background: #e9e9e9;
+  --theme-switcher-background-button: #ffffff;
+  --theme-switcher-background-checked: #191919;
+  --theme-switcher-background-disabled: #e8e8e8;
+  --theme-switcher-toggle-color: #fff;
+  --theme-switcher-toggle-disabled: #ccc;
+  --theme-switcher-text-color: #000;
+  --theme-switcher-text-color-checked: #fff;
+  --theme-switcher-focus-color: #e8e8e8;
+  --theme-switcher-border-color: #e8e8e8;
 }
 .dark-side {
-  --theme-switcher-background: #ffffff;
-  --theme-switcher-color: #191919;
-  --theme-switcher-border-color: #ffffff;
+  --theme-switcher-background: #232527;
+  --theme-switcher-background-button: #232527;
+  --theme-switcher-background-checked: #474748;
+  --theme-switcher-toggle-color: #232527;
+  --theme-switcher-toggle-disabled: #3e4145;
+  --theme-switcher-text-color: #efefef;
+  --theme-switcher-text-color-checked: #fff;
+  --theme-switcher-focus-color: #191919;
+  --theme-switcher-border-color: #474748;
 }
 .theme-switcher {
-  display: inline-flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
-  margin: 0;
-  user-select: none;
-  cursor: pointer;
-  height: 36px;
 }
-.theme-switcher input {
-  width: 1px;
-  height: 1px;
+.theme-switcher.mode-switch {
+  height: 36px;
+  padding: 8px 0;
+  margin: 0 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  width: auto;
+  flex-wrap: nowrap;
+}
+.theme-switcher.mode-switch > input {
+  appearance: none;
+  position: relative;
+  width: 48px;
+  height: 20px;
+  order: 2;
+  background: var(--theme-switcher-background);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s background-color;
+  margin: 0;
+  padding: 0;
+  border-color: transparent !important;
+}
+.theme-switcher.mode-switch > input::before {
+  content: attr(data-light-symbol);
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 0;
-}
-.theme-switcher.mode-switch .check {
-  line-height: 38px;
-  font-size: 14px;
-  margin: 0 4px;
-  position: relative;
-  height: 20px;
-  width: 48px;
-  border: 2px #1d1d1d solid;
-  cursor: pointer;
-  background: transparent;
-  z-index: 1;
-  display: inline-block;
-  vertical-align: middle;
-  border-radius: 0.5625rem;
-  flex-shrink: 0;
-}
-.theme-switcher.mode-switch .check::before {
-  font-family: "Segoe UI Symbol", serif;
-  content: attr(data-dark-symbol);
-  display: block;
-  position: absolute;
-  color: inherit;
-  left: 16px;
-  width: 26px;
-  top: -2px;
-  line-height: 20px;
-  font-size: 10px;
-  text-transform: uppercase;
-  text-align: center;
-}
-.theme-switcher.mode-switch .check::after {
-  transition: all 0.3s ease-in-out;
-  position: absolute;
-  left: 3px;
-  display: block;
-  content: "";
-  height: 12px;
-  width: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 2px #333 solid;
-  cursor: pointer;
-  background: #333;
-  z-index: 2;
+  width: 16px;
+  height: 16px;
+  background: var(--theme-switcher-toggle-color);
   border-radius: 50%;
-}
-.theme-switcher.mode-switch input[type=checkbox]:indeterminate ~ .check::after {
-  background-color: #ccc;
-  border-color: #ccc;
-  left: auto;
-  transform: translateX(18px) translateY(-50%);
-}
-.theme-switcher.mode-switch input[type=checkbox]:indeterminate ~ .check::before {
-  content: "";
-}
-.theme-switcher.mode-switch input[type=checkbox]:checked ~ .check {
-  background: #1d1d1d;
-  border-color: #1d1d1d;
-  color: #1d1d1d;
-}
-.theme-switcher.mode-switch input[type=checkbox]:checked ~ .check::after {
-  background-color: #ffffff;
-  border-color: #ffffff;
-  left: auto;
-  transform: translateX(30px) translateY(-50%);
-}
-.theme-switcher.mode-switch input[type=checkbox]:checked ~ .check::before {
-  content: attr(data-light-symbol);
-  color: #ffffff;
-  left: 1px;
-}
-.theme-switcher.mode-switch input[type=checkbox]:disabled ~ .check {
-  background-color: #e9e9e9;
-  border-color: #e9e9e9;
-}
-.theme-switcher.mode-switch input[type=checkbox]:disabled ~ .check::after {
-  background-color: #d0d0d0;
-  border-color: #d0d0d0;
-}
-.theme-switcher.mode-switch input[type=checkbox]:disabled ~ .check::before {
-  display: none;
-}
-.theme-switcher.mode-button {
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  line-height: 24px;
-  border-radius: 50%;
-  border: 1px solid var(--theme-switcher-border-color);
-  cursor: pointer;
-  position: relative;
-  background: var(--theme-switcher-background);
-  color: var(--theme-switcher-color);
-  transition: all 0.3s ease-in-out;
-  flex-shrink: 0;
-}
-.theme-switcher.mode-button .check {
+  transition: 0.3s;
+  opacity: 1;
+  border: 1px solid transparent;
+  transform: none;
+  line-height: 1;
+  font-size: 13px;
+  padding: 0;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+}
+.theme-switcher.mode-switch > input::after {
+  position: absolute;
+  content: attr(data-off);
+  top: 5px;
+  left: 2px;
+  transform: translate(20px, 0);
+  color: var(--theme-switcher-text-color);
+  text-transform: uppercase;
+  font-size: 8px;
+  font-weight: 400;
+  transition: 0.3s transform;
+  line-height: 1;
+}
+.theme-switcher.mode-switch > input:checked {
+  background: var(--theme-switcher-background-checked);
+}
+.theme-switcher.mode-switch > input:checked::before {
+  content: attr(data-dark-symbol);
+  transform: translateX(28px);
+  color: #191919;
+}
+.theme-switcher.mode-switch > input:checked::after {
+  content: attr(data-on);
+  transform: translateX(6px);
+  color: var(--theme-switcher-text-color-checked);
+}
+.theme-switcher.mode-switch > input:disabled {
+  background: var(--theme-switcher-background-disabled);
+}
+.theme-switcher.mode-switch > input:disabled::before {
+  background: var(--theme-switcher-toggle-disabled);
+}
+.theme-switcher.mode-button {
+  height: 36px;
+  width: 36px;
+  border: 2px solid var(--theme-switcher-border-color);
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--theme-switcher-background-button);
+  transition: background-color 0.5s;
+}
+.theme-switcher.mode-button > input {
+  appearance: none;
+  border: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.theme-switcher.mode-button > input::before {
+  color: var(--theme-switcher-text-color);
+  content: attr(data-light-symbol);
+  border: none;
+  transform: none;
+  line-height: 1;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  top: 2px;
+  opacity: 1;
+  font-size: 1.4rem;
 }
-.theme-switcher.mode-button .check::before,
-.theme-switcher.mode-button .check::after {
-  font-family: "Segoe UI Symbol", serif;
+.theme-switcher.mode-button > input:checked::before {
   content: attr(data-dark-symbol);
-  position: relative;
-  display: block;
-  z-index: 1;
 }
-.theme-switcher.mode-button .check::before {
-  color: #ffffff;
-}
-.theme-switcher.mode-button .check::after {
-  content: attr(data-light-symbol);
-  display: none;
-}
-.theme-switcher.mode-button input:checked + .check::before {
-  display: none;
-}
-.theme-switcher.mode-button input:checked + .check::after {
-  display: block;
+.theme-switcher.mode-button > input[type=checkbox]:focus {
+  box-shadow: none;
 }
 
 /* source/components/tile/tile.less */

@@ -10,7 +10,7 @@
         saveStateKey: "THEME:SWITCHER",
         clsDark: "",
         darkSymbol: "🌙",
-        lightSymbol: "☀",
+        lightSymbol: "🌞",
         mode: "switch",
         onThemeSwitcherCreate: Metro.noop,
         onChangeTheme: Metro.noop,
@@ -46,22 +46,18 @@
             const element = this.element,
                 o = this.options;
             let initState = "light";
-            
 
             if (o.saveState) {
                 initState = Metro.storage.getItem(o.saveStateKey, false);
             }
 
-            const check = $("<span>").addClass("check");
-            check.attr("data-light-symbol", o.lightSymbol);
-            check.attr("data-dark-symbol", o.darkSymbol);
+            element.attr("data-light-symbol", o.lightSymbol);
+            element.attr("data-dark-symbol", o.darkSymbol);
 
-            element.attr("type", "checkbox");
-
+            Metro.makePlugin(element, "switch");
+            
             this.container = element.wrap($("<label>").addClass("theme-switcher"));
             this.container.addClass(`mode-${o.mode}`);
-
-            check.appendTo(this.container);
 
             this.target = $(o.target);
             if (this.target.length === 0) {
