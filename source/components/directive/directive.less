@@ -4,6 +4,7 @@
     --directive-border-color: #3c3c3c1a;
     --directive-title-color: #3c3c3c;
     --directive-border-radius: 10px;
+    --directive-code-background: #f5f5f5;
 }
 
 .dark-side {
@@ -24,12 +25,12 @@
         --directive-border-color: #0095ff33!important;
         --directive-title-color: #66c2ff!important;
     }
-    .directive-warning {
+    .directive-warning, .directive-fuck {
         --directive-background: #ffc5171f!important;
         --directive-border-color: #ffc51740!important;
         --directive-title-color: #fbb451!important;
     }
-    .directive-caution, .directive-alert, .directive-error {
+    .directive-caution, .directive-alert, .directive-error, .directive-important {
         --directive-background: #ed3c501f!important;
         --directive-border-color: #ed3c504d!important;
         --directive-title-color: #f76e85!important;
@@ -71,7 +72,7 @@
 .directive {
     &.directive-note {
         .icon::before {
-            content: "📝";
+            content: "📜";
         }
     }
     
@@ -95,7 +96,7 @@
         }
     }
     
-    &.directive-warning {
+    &.directive-warning, &.directive-fuck {
         --directive-background: #ffc5171a;
         --directive-border-color: #ffc51766;
         --directive-title-color: #ffc517;
@@ -105,13 +106,25 @@
         }
     }
     
-    &.directive-caution, &.directive-alert, &.directive-error {
+    &.directive-fuck {
+        .icon::before {
+            content: "🖕";
+        }
+    }
+    
+    &.directive-caution, &.directive-alert, &.directive-error, &.directive-important {
         --directive-background: #ed3c5014;
         --directive-border-color: #ed3c5033;
         --directive-title-color: #ff1f1f;
         
         .icon::before {
             content: "⛔";
+        }
+    }
+    
+    &.directive-important {
+        .icon::before {
+            content: "🔥";
         }
     }
     

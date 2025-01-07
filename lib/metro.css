@@ -21606,8 +21606,8 @@ ol.latin-lower {
 :root {
   --mark-background: #a6d2ff;
   --mark-color: #191919;
-  --code-background: transparent;
-  --code-color: #43bef5;
+  --code-background: #99a1b31a;
+  --code-color: #191919;
   --kbd-background: #004D6FFF;
   --kbd-color: #ffffff;
 }
@@ -21926,24 +21926,47 @@ code,
 kbd,
 samp {
   font-family: monospace, monospace;
-  font-size: 16px;
+  font-size: 13px;
 }
 pre {
   margin: 0;
   overflow: auto;
 }
-code {
-  white-space: nowrap;
-}
 pre code {
   white-space: inherit;
+}
+code,
+kbd {
+  display: inline-flex;
+  font-size: 13px;
+  align-items: center;
+  white-space: nowrap;
+  border-radius: 0.5rem;
+  overflow-wrap: break-word;
+  padding: 0 6px;
+}
+a code,
+a kbd {
+  text-decoration: underline;
+  cursor: pointer;
+}
+code {
+  color: var(--code-color);
+  background-color: var(--code-background);
+}
+kbd {
+  background-color: var(--kbd-background);
+  color: var(--kbd-color);
+}
+pre code {
+  height: auto;
 }
 a {
   position: relative;
   color: var(--link-color);
   text-decoration: none;
   background-color: transparent;
-  -webkit-text-decoration-skip: objects;
+  text-decoration-skip: auto;
   box-shadow: none;
 }
 a:hover {
@@ -22087,29 +22110,6 @@ hr.thin {
 }
 hr.fat {
   height: 3px;
-}
-code,
-kbd {
-  display: inline-flex;
-  padding: 0 6px;
-  font-size: 90%;
-  color: var(--code-color);
-  background-color: var(--code-background);
-  border-radius: 4px;
-  align-items: center;
-}
-a code,
-a kbd {
-  text-decoration: underline;
-  cursor: pointer;
-}
-kbd {
-  background-color: var(--kbd-background);
-  color: var(--kbd-color);
-}
-pre code {
-  background-color: inherit;
-  height: auto;
 }
 .reduce-1 {
   font-size: 0.9em !important;
@@ -52227,6 +52227,7 @@ aside::after {
   --directive-border-color: #3c3c3c1a;
   --directive-title-color: #3c3c3c;
   --directive-border-radius: 10px;
+  --directive-code-background: #f5f5f5;
 }
 .dark-side {
   --directive-color: #ffffff !important;
@@ -52246,14 +52247,16 @@ aside::after {
   --directive-border-color: #0095ff33 !important;
   --directive-title-color: #66c2ff !important;
 }
-.dark-side .directive-warning {
+.dark-side .directive-warning,
+.dark-side .directive-fuck {
   --directive-background: #ffc5171f !important;
   --directive-border-color: #ffc51740 !important;
   --directive-title-color: #fbb451 !important;
 }
 .dark-side .directive-caution,
 .dark-side .directive-alert,
-.dark-side .directive-error {
+.dark-side .directive-error,
+.dark-side .directive-important {
   --directive-background: #ed3c501f !important;
   --directive-border-color: #ed3c504d !important;
   --directive-title-color: #f76e85 !important;
@@ -52288,7 +52291,7 @@ aside::after {
   font-size: 1.5rem;
 }
 .directive.directive-note .icon::before {
-  content: "\1f4dd";
+  content: "\1f4dc";
 }
 .directive.directive-info {
   --directive-background: #0095ff0f;
@@ -52306,25 +52309,35 @@ aside::after {
 .directive.directive-tip .icon::before {
   content: "\1f4a1";
 }
-.directive.directive-warning {
+.directive.directive-warning,
+.directive.directive-fuck {
   --directive-background: #ffc5171a;
   --directive-border-color: #ffc51766;
   --directive-title-color: #ffc517;
 }
-.directive.directive-warning .icon::before {
+.directive.directive-warning .icon::before,
+.directive.directive-fuck .icon::before {
   content: "\26a0\fe0f";
+}
+.directive.directive-fuck .icon::before {
+  content: "\1f595";
 }
 .directive.directive-caution,
 .directive.directive-alert,
-.directive.directive-error {
+.directive.directive-error,
+.directive.directive-important {
   --directive-background: #ed3c5014;
   --directive-border-color: #ed3c5033;
   --directive-title-color: #ff1f1f;
 }
 .directive.directive-caution .icon::before,
 .directive.directive-alert .icon::before,
-.directive.directive-error .icon::before {
+.directive.directive-error .icon::before,
+.directive.directive-important .icon::before {
   content: "\26d4";
+}
+.directive.directive-important .icon::before {
+  content: "\1f525";
 }
 .directive.directive-bug {
   --directive-background: #7C7C7C19;

@@ -4,8 +4,8 @@
 :root {
     --mark-background: #a6d2ff;
     --mark-color: #191919;
-    --code-background: transparent;
-    --code-color: #43bef5;
+    --code-background: #99a1b31a;
+    --code-color: #191919;
     --kbd-background: #004D6FFF;
     --kbd-color: #ffffff;
 }
@@ -197,7 +197,7 @@ code,
 kbd,
 samp {
     font-family: monospace, monospace;
-    font-size: 16px;
+    font-size: 13px;
 }
 
 pre {
@@ -205,12 +205,37 @@ pre {
     overflow: auto;
 }
 
-code {
+pre code {
+    white-space: inherit;
+}
+
+code, kbd {
+    display: inline-flex;
+    font-size: 13px;
+    align-items: center;
     white-space: nowrap;
+    border-radius: .5rem;
+    overflow-wrap: break-word;
+    padding: 0 6px;
+
+    a & {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+code {
+    color: var(--code-color);
+    background-color: var(--code-background);
+}
+
+kbd {
+    background-color: var(--kbd-background);
+    color: var(--kbd-color);
 }
 
 pre code {
-    white-space: inherit;
+    height: auto;
 }
 
 a {
@@ -218,7 +243,7 @@ a {
     color: var(--link-color);
     text-decoration: none;
     background-color: transparent;
-    -webkit-text-decoration-skip: objects;
+    text-decoration-skip: auto;
     box-shadow: none;
 
     &:hover {
@@ -392,31 +417,6 @@ hr {
     &.fat {
         height: 3px;
     }
-}
-
-code, kbd {
-    display: inline-flex;
-    padding: 0 6px;
-    font-size: 90%;
-    color: var(--code-color);
-    background-color: var(--code-background);
-    border-radius: 4px;
-    align-items: center;
-
-    a & {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-}
-
-kbd {
-    background-color: var(--kbd-background);
-    color: var(--kbd-color);
-}
-
-pre code {
-    background-color: inherit;
-    height: auto;
 }
 
 .reduce-1 {font-size: .9em!important;}
