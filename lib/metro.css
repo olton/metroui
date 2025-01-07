@@ -21614,8 +21614,8 @@ ol.latin-lower {
 .dark-side {
   --mark-background: #c0c0c0;
   --mark-color: #000000;
-  --code-background: transparent;
-  --code-color: #43bef5;
+  --code-background: #2b2d30;
+  --code-color: #b3b3aa;
   --kbd-background: #004D6FFF;
   --kbd-color: #ffffff;
 }
@@ -21953,6 +21953,7 @@ a kbd {
 code {
   color: var(--code-color);
   background-color: var(--code-background);
+  font-weight: 600;
 }
 kbd {
   background-color: var(--kbd-background);
@@ -52297,6 +52298,8 @@ aside::after {
   --directive-background: #0095ff0f;
   --directive-border-color: #0095ff33;
   --directive-title-color: #0095ff;
+  --code-background: #0095ff1a;
+  --code-color: #07f;
 }
 .directive.directive-info .icon::before {
   content: "\1f4a1";
@@ -52305,6 +52308,8 @@ aside::after {
   --directive-background: #079c700f;
   --directive-border-color: #079c7033;
   --directive-title-color: #278359;
+  --code-background: #079c701a;
+  --code-color: #278359;
 }
 .directive.directive-tip .icon::before {
   content: "\1f4a1";
@@ -52314,6 +52319,8 @@ aside::after {
   --directive-background: #ffc5171a;
   --directive-border-color: #ffc51766;
   --directive-title-color: #ffc517;
+  --code-background: #ffc5171a;
+  --code-color: #887233;
 }
 .directive.directive-warning .icon::before,
 .directive.directive-fuck .icon::before {
@@ -52329,6 +52336,8 @@ aside::after {
   --directive-background: #ed3c5014;
   --directive-border-color: #ed3c5033;
   --directive-title-color: #ff1f1f;
+  --code-background: #ed3c501a;
+  --code-color: #ab2131;
 }
 .directive.directive-caution .icon::before,
 .directive.directive-alert .icon::before,
@@ -69175,4 +69184,3 @@ body.vegas-container > .vegas-slide {
   right: calc(100% + 8px);
   z-index: 1001;
 }
-/*# sourceMappingURL=metro.css.map */
