@@ -3,7 +3,7 @@
 
     var DirectiveDefaultConfig = {
         directive: "note",
-        showIcon: true,
+        showIcon: false,
         title: "",
         onDirectiveCreate: Metro.noop
     };
