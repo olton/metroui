@@ -4,6 +4,7 @@
     var DirectiveDefaultConfig = {
         directive: "note",
         showIcon: true,
+        title: "",
         onDirectiveCreate: Metro.noop
     };
 
@@ -35,7 +36,7 @@
         _createStructure: function(){
             var that = this, element = this.element, o = this.options;
             const directive = element.wrap("<div>").addClass("directive").addClass(`directive-${o.directive}`);
-            const title = $("<div>").addClass("directive-title").html(o.directive.toUpperCase());
+            const title = $("<div>").addClass("directive-title").html(o.title ? o.title : o.directive.toUpperCase());
             if (o.showIcon) {
                 title.prepend($("<span>").addClass("icon").html("&nbsp;"));                
             }
