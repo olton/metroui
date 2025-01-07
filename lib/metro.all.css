@@ -52248,16 +52248,14 @@ aside::after {
   --directive-border-color: #0095ff33 !important;
   --directive-title-color: #66c2ff !important;
 }
-.dark-side .directive-warning,
-.dark-side .directive-fuck {
+.dark-side .directive-warning {
   --directive-background: #ffc5171f !important;
   --directive-border-color: #ffc51740 !important;
   --directive-title-color: #fbb451 !important;
 }
 .dark-side .directive-caution,
 .dark-side .directive-alert,
-.dark-side .directive-error,
-.dark-side .directive-important {
+.dark-side .directive-error {
   --directive-background: #ed3c501f !important;
   --directive-border-color: #ed3c504d !important;
   --directive-title-color: #f76e85 !important;
@@ -52265,7 +52263,7 @@ aside::after {
 .dark-side .directive-bug {
   --directive-background: #7C7C7C19 !important;
   --directive-border-color: #5454547a !important;
-  --directive-title-color: #838383 !important;
+  --directive-title-color: #d53934 !important;
 }
 .directive {
   display: flex;
@@ -52314,25 +52312,27 @@ aside::after {
 .directive.directive-tip .icon::before {
   content: "\1f4a1";
 }
-.directive.directive-warning,
-.directive.directive-fuck {
+.directive.directive-warning {
   --directive-background: #ffc5171a;
   --directive-border-color: #ffc51766;
   --directive-title-color: #ffc517;
   --code-background: #ffc5171a;
   --code-color: #887233;
 }
-.directive.directive-warning .icon::before,
-.directive.directive-fuck .icon::before {
+.directive.directive-warning .icon::before {
   content: "\26a0\fe0f";
+}
+.directive.directive-fuck {
+  --directive-background: var(--default-background);
+  --directive-border-color: var(--border-color);
+  --directive-title-color: var(--default-color);
 }
 .directive.directive-fuck .icon::before {
   content: "\1f595";
 }
 .directive.directive-caution,
 .directive.directive-alert,
-.directive.directive-error,
-.directive.directive-important {
+.directive.directive-error {
   --directive-background: #ed3c5014;
   --directive-border-color: #ed3c5033;
   --directive-title-color: #ff1f1f;
@@ -52341,9 +52341,15 @@ aside::after {
 }
 .directive.directive-caution .icon::before,
 .directive.directive-alert .icon::before,
-.directive.directive-error .icon::before,
-.directive.directive-important .icon::before {
+.directive.directive-error .icon::before {
   content: "\26d4";
+}
+.directive.directive-important {
+  --directive-background: #ff6d2914;
+  --directive-border-color: #ff6d29;
+  --directive-title-color: #ff6d29;
+  --code-background: #ff6d2914;
+  --code-color: #ff6d29;
 }
 .directive.directive-important .icon::before {
   content: "\1f525";

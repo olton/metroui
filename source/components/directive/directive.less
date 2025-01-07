@@ -25,12 +25,14 @@
         --directive-border-color: #0095ff33!important;
         --directive-title-color: #66c2ff!important;
     }
-    .directive-warning, .directive-fuck {
+    .directive-warning {
         --directive-background: #ffc5171f!important;
         --directive-border-color: #ffc51740!important;
         --directive-title-color: #fbb451!important;
     }
-    .directive-caution, .directive-alert, .directive-error, .directive-important {
+    .directive-fuck {
+    }
+    .directive-caution, .directive-alert, .directive-error {
         --directive-background: #ed3c501f!important;
         --directive-border-color: #ed3c504d!important;
         --directive-title-color: #f76e85!important;
@@ -38,7 +40,7 @@
     .directive-bug {
         --directive-background: #7C7C7C19!important;
         --directive-border-color: #5454547a!important;
-        --directive-title-color: #838383 !important;
+        --directive-title-color: #d53934 !important;
     }
 }
 
@@ -100,7 +102,7 @@
         }
     }
     
-    &.directive-warning, &.directive-fuck {
+    &.directive-warning {
         --directive-background: #ffc5171a;
         --directive-border-color: #ffc51766;
         --directive-title-color: #ffc517;
@@ -113,12 +115,16 @@
     }
     
     &.directive-fuck {
+        --directive-background: var(--default-background);
+        --directive-border-color: var(--border-color);
+        --directive-title-color: var(--default-color);
+
         .icon::before {
             content: "🖕";
         }
     }
     
-    &.directive-caution, &.directive-alert, &.directive-error, &.directive-important {
+    &.directive-caution, &.directive-alert, &.directive-error {
         --directive-background: #ed3c5014;
         --directive-border-color: #ed3c5033;
         --directive-title-color: #ff1f1f;
@@ -129,8 +135,14 @@
             content: "⛔";
         }
     }
-    
+
     &.directive-important {
+        --directive-background: #ff6d2914;
+        --directive-border-color: #ff6d29;
+        --directive-title-color: #ff6d29;
+        --code-background: #ff6d2914;
+        --code-color: #ff6d29;
+        
         .icon::before {
             content: "🔥";
         }
