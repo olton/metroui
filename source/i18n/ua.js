@@ -88,7 +88,7 @@
 
         label_rows_count: "Показати:",
         label_search: "Пошук:",
-        label_info: "Відображено з $1 по $2 із $3 записів",
+        label_table_info: "Відображено з $1 по $2 із $3 записів",
         label_prev: "Попер",
         label_next: "Наст",
         label_all: "Усі",
@@ -123,5 +123,18 @@
         label_close_tabs_right: "Закрити вкладки праворуч",
         label_close_all_tabs: "Закрийте всі вкладки",
         label_close_inactive_tabs: "Закрити неактивні вкладки",
+
+        label_note: "Примітка",
+        label_tip: "Підказка",
+        label_info: "Інформація",
+        label_warning: "Увага",
+        label_question: "Питання",
+        label_error: "Помилка",
+        label_success: "Успіх",
+        label_caution: "Обережно",
+        label_alert: "Попередження",
+        label_bug: "Помилка",
+        label_fuck: "Бля",
+        label_important: "Важливо"
     });
 })();

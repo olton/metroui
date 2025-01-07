@@ -36,7 +36,7 @@
         _createStructure: function(){
             var that = this, element = this.element, o = this.options;
             const directive = element.wrap("<div>").addClass("directive").addClass(`directive-${o.directive}`);
-            const title = $("<div>").addClass("directive-title").html(o.title ? o.title : o.directive.toUpperCase());
+            const title = $("<div>").addClass("directive-title").html(o.title ? o.title : this.strings[`label_${o.directive.toLowerCase()}`].toUpperCase());
             if (o.showIcon) {
                 title.prepend($("<span>").addClass("icon").html("&nbsp;"));                
             }

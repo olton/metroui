@@ -1513,7 +1513,7 @@ var TABLE_COL_OPTIONS = {
                 start = stop = length = 0;
             }
 
-            text = o.tableInfoTitle || strings.label_info;
+            text = o.tableInfoTitle || strings.table_info;
             text = text.replace("$1", start);
             text = text.replace("$2", stop);
             text = text.replace("$3", length);

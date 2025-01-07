@@ -88,7 +88,7 @@
 
         label_rows_count: "Show:",
         label_search: "Search:",
-        label_info: "Showing $1 to $2 of $3 entries",
+        label_table_info: "Showing $1 to $2 of $3 entries",
         label_prev: "Prev",
         label_next: "Next",
         label_all: "All",
@@ -123,5 +123,18 @@
         label_close_tabs_right: "Close tabs right",
         label_close_all_tabs: "Close all tabs",
         label_close_inactive_tabs: "Close inactive tabs",
+        
+        label_note: "Note",
+        label_tip: "Tip",
+        label_info: "Info",
+        label_warning: "Warning",
+        label_question: "Question",
+        label_error: "Error",
+        label_success: "Success",
+        label_caution: "Caution",
+        label_alert: "Alert",
+        label_bug: "Bug",
+        label_fuck: "Fuck",
+        label_important: "Important"
     });
 })();
