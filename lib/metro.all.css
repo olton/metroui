@@ -52310,7 +52310,7 @@ aside::after {
   --code-color: #278359;
 }
 .directive.directive-tip .icon::before {
-  content: "\1f4a1";
+  content: "\1f49a";
 }
 .directive.directive-warning {
   --directive-background: #ffc5171a;
