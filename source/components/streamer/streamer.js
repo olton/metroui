@@ -273,7 +273,7 @@
                                     if (Utils.isTag(event_item.icon)) {
                                         $(event_item.icon).addClass("icon").appendTo(slide_logo);
                                     } else {
-                                        $("<img>").addClass("icon").attr("src", event_item.icon).appendTo(slide_logo);
+                                        $("<img>").addClass("icon").attr("src", event_item.icon).attr("alt", "").appendTo(slide_logo);
                                     }
                                 }
 
