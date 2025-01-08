@@ -64973,6 +64973,16 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
 }
 
 /* source/components/tabs-material/tabs-material.less */
+:root {
+  --tabs-material-background: #ffffff;
+  --tabs-material-color: #191919;
+  --tabs-material-marker-color: #000000;
+}
+.dark-side {
+  --tabs-material-background: #343637;
+  --tabs-material-color: #dbdfe7;
+  --tabs-material-marker-color: #ff6211;
+}
 .tabs-material-wrapper {
   overflow: hidden;
   height: 48px;
@@ -64990,8 +65000,8 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   overflow-y: hidden;
   width: 100%;
   z-index: 1030;
-  background-color: #ffffff;
-  color: #1d1d1d;
+  background-color: var(--tabs-material-background);
+  color: var(--tabs-material-color);
   white-space: nowrap;
   list-style: none inside;
   line-height: 1;
@@ -65056,7 +65066,7 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   color: transparent;
   opacity: 1;
   z-index: 1;
-  background-color: #1d1d1d;
+  background-color: var(--tabs-material-marker-color);
 }
 .tabs-material .tab-badge {
   position: absolute;
