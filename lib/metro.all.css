@@ -64563,6 +64563,17 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
 }
 
 /* source/components/t-menu/t-menu.less */
+:root {
+  --t-menu-border-radius: 6px;
+  --t-menu-border-color: #ececec;
+  --t-menu-background: #fefefe;
+  --t-menu-color: #191919;
+}
+.dark-side {
+  --t-menu-border-color: #484b4c;
+  --t-menu-background: #343637;
+  --t-menu-color: #dbdfe7;
+}
 .t-menu {
   list-style: none inside;
   margin: 0;
@@ -64570,43 +64581,62 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   position: relative;
   width: auto;
   float: left;
-  background-color: #ffffff;
-  color: #1d1d1d;
-  border-collapse: separate;
+  background-color: var(--t-menu-background);
+  color: var(--t-menu-color);
   display: none;
-  box-shadow: 2px 2px 2px 0 rgba(227, 228, 229, 0.7), -0.5px 0 1px 0 rgba(227, 228, 229, 0.7);
+  border: 1px var(--t-menu-border-color) solid;
+  border-radius: var(--t-menu-border-radius);
 }
 .t-menu.open {
   display: block;
+}
+.t-menu > li:first-child,
+.t-menu > li:first-child a {
+  border-top-left-radius: var(--t-menu-border-radius);
+  border-top-right-radius: var(--t-menu-border-radius);
+}
+.t-menu > li:last-child,
+.t-menu > li:last-child a {
+  border-bottom-left-radius: var(--t-menu-border-radius);
+  border-bottom-right-radius: var(--t-menu-border-radius);
 }
 .t-menu > li {
   position: relative;
   background-color: inherit;
   color: inherit;
   display: block;
+  height: 60px;
+  width: 60px;
 }
 .t-menu > li > a {
-  display: block;
-  padding: 0 1rem;
-  border-bottom: 1px var(--border-color) solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px var(--t-menu-border-color) solid;
   position: relative;
   color: inherit;
   background-color: inherit;
-  height: 60px;
-  width: 60px;
-  line-height: 60px;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
-.t-menu > li > a .icon {
+.t-menu > li > a * {
   width: 1.5rem;
   height: 1.5rem;
   font-size: 1.5rem;
-  line-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.t-menu > li:hover {
-  background-color: rgba(29, 29, 29, 0.1);
+@media (hover: hover) {
+  .t-menu > li:hover {
+    background-color: rgba(29, 29, 29, 0.1);
+  }
 }
-.t-menu > li:last-child a {
-  border-bottom: 0;
+@media (hover: none) {
+  .t-menu > li:active {
+    background-color: rgba(29, 29, 29, 0.1);
+  }
 }
 .t-menu a {
   text-decoration: none !important;
@@ -64616,6 +64646,12 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
 }
 .t-menu.horizontal > li {
   float: left;
+}
+.t-menu.horizontal > li:first-child a {
+  border-radius: var(--t-menu-border-radius) 0 0 var(--t-menu-border-radius);
+}
+.t-menu.horizontal > li:last-child a {
+  border-radius: 0 var(--t-menu-border-radius) var(--t-menu-border-radius) 0;
 }
 .t-menu .t-menu {
   position: absolute;
@@ -64631,7 +64667,7 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   margin-left: 0;
 }
 .t-menu .dropdown-toggle {
-  padding-right: 1rem !important;
+  padding-right: 0 !important;
 }
 .t-menu .dropdown-toggle:after {
   content: "";
@@ -64645,14 +64681,14 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   height: 0;
   border-style: solid;
   border-width: 0 0 8px 8px;
-  border-color: transparent transparent rgba(29, 29, 29, 0.5) transparent;
+  border-color: transparent transparent var(--t-menu-border-color) transparent;
   transform: rotate(0);
 }
 .t-menu .dropdown-toggle:before {
   display: none;
 }
 .t-menu.horizontal > li > a {
-  border-right: 1px var(--border-color) solid;
+  border-right: 1px var(--t-menu-border-color) solid;
   border-bottom: 0;
 }
 .t-menu.horizontal > li:last-child > a {
@@ -64670,20 +64706,14 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   top: -0.3rem;
   float: left;
 }
-.t-menu.compact li a {
-  padding: 0 0.7rem;
+.t-menu.compact li {
   width: 40px;
   height: 40px;
-  line-height: 40px;
 }
-.t-menu.compact li a .icon {
+.t-menu.compact li a * {
   width: 1rem;
   height: 1rem;
   font-size: 1rem;
-  line-height: 40px;
-}
-.t-menu.compact .dropdown-toggle {
-  padding-right: 0.7rem !important;
 }
 .t-menu {
   z-index: 1000;

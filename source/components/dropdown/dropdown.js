@@ -105,7 +105,7 @@
                             'visibility': 'visible',
                             'display': 'none'
                         });
-                        element.css('width', children_width);
+                        element.css('width', children_width + 2);
                     }
                     that._open(element);
                     parent.addClass("active-container");
