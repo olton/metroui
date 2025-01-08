@@ -46884,6 +46884,8 @@ button.flat,
 }
 .slider .marker {
   border-radius: 50%;
+  padding: 0;
+  transition: none;
 }
 .slider .backside {
   background-color: var(--slider-back-color);
