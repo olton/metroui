@@ -63495,6 +63495,24 @@ label:has(input) {
 }
 
 /* source/components/stepper/stepper.less */
+:root {
+  --stepper-step-background: #515151;
+  --stepper-step-color: #FFFFFF;
+  --stepper-step-background-complete: #00B500;
+  --stepper-step-color-complete: #FFFFFF;
+  --stepper-step-background-current: #94B6FF;
+  --stepper-step-color-current: #FFFFFF;
+  --stepper-line-color: #e3e3e3;
+}
+.dark-side {
+  --stepper-step-background: #515151;
+  --stepper-step-color: #FFFFFF;
+  --stepper-step-background-complete: #00B500;
+  --stepper-step-color-complete: #FFFFFF;
+  --stepper-step-background-current: #94B6FF;
+  --stepper-step-color-current: #FFFFFF;
+  --stepper-line-color: #2b2d30;
+}
 .stepper {
   display: flex;
   flex-flow: row nowrap;
@@ -63508,7 +63526,7 @@ label:has(input) {
   width: 100%;
   position: absolute;
   height: 1px;
-  background-color: #ccc;
+  background-color: var(--stepper-line-color);
   top: 50%;
   left: 0;
   z-index: 0;
@@ -63523,8 +63541,8 @@ label:has(input) {
   line-height: 32px;
   text-align: center;
   z-index: 1;
-  background-color: #515151;
-  color: #ffffff;
+  background-color: var(--stepper-step-background);
+  color: var(--stepper-step-color);
   cursor: pointer;
   position: relative;
 }
@@ -63532,12 +63550,12 @@ label:has(input) {
   display: block;
 }
 .stepper .step.complete {
-  background-color: #00b500;
-  color: #ffffff;
+  background-color: var(--stepper-step-background-complete);
+  color: var(--stepper-step-color-complete);
 }
 .stepper .step.current {
-  background-color: #94b6ff;
-  color: #ffffff;
+  background-color: var(--stepper-step-background-current);
+  color: var(--stepper-step-color-current);
 }
 .stepper.cycle .step {
   border-radius: 50%;

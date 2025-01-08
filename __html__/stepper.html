@@ -8,11 +8,28 @@
     <title>Test Stepper - Metro UI :: Popular HTML, CSS and JS library</title>
 
 </head>
-<body class="m4-cloak">
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Component Test</div>
+    </div>
+</nav>
 <div class="container">
     <h1>Stepper test page</h1>
 
     <div class="example">
+        <div data-role="stepper" id="stepper1"></div>
+        <div class="d-flex flex-justify-center gap-2">
+            <button onclick="step('prev')">Prev</button>
+            <button onclick="step('next')">Next</button>
+        </div>
+    </div>
+
+    <div class="example mt-10">
         <div data-role="stepper"></div>
         <div data-role="stepper" data-view="cycle" data-step="2"></div>
         <div data-role="stepper" data-view="diamond" data-step="3"></div>
@@ -22,6 +39,14 @@
 
 <script src="../lib/metro.js"></script>
 <script>
+    function step(dir){
+        let stepper = Metro.getPlugin("#stepper1", "stepper");
+        if (dir === 'prev') {
+            stepper.prev();
+        } else {
+            stepper.next();
+        }
+    }
 </script>
 </body>
 </html>
