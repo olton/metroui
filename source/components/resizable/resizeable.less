@@ -27,22 +27,4 @@
             border-bottom-color: @gray;
         }
     }
-
-    &:not(.resize-element-disabled):hover {
-        &::after {
-            animation: resize-element-animation 1s ease infinite;
-        }
-    }
-}
-
-@keyframes resize-element-animation {
-    from {
-        right: 0;
-        bottom: 0;
-    }
-
-    to {
-        right: -2px;
-        bottom: -2px;
-    }
 }

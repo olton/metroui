@@ -1,8 +1,10 @@
 /* global Metro, Cake */
 (function(Metro, $) {
     'use strict';
-    var Utils = Metro.utils;
-    var WindowDefaultConfig = {
+
+    let WindowDefaultConfig = {
+        _runtime: false,
+
         windowDeferred: 0,
         hidden: false,
         width: "auto",
@@ -11,7 +13,7 @@
         btnMin: true,
         btnMax: true,
         draggable: true,
-        dragElement: ".window-caption .icon, .window-caption .title",
+        dragElement: ".window-caption .title",
         dragArea: "parent",
         shadow: false,
         icon: "",
@@ -29,18 +31,18 @@
         place: "auto",
         closeAction: Metro.actions.REMOVE,
         customButtons: null,
+        status: "",
 
         clsCustomButton: "",
         clsCaption: "",
         clsContent: "",
         clsWindow: "",
 
-        _runtime: false,
-
         minWidth: 0,
         minHeight: 0,
         maxWidth: 0,
         maxHeight: 0,
+        
         onDragStart: Metro.noop,
         onDragStop: Metro.noop,
         onDragMove: Metro.noop,
@@ -83,10 +85,10 @@
         },
 
         _create: function(){
-            var that = this, element = this.element, o = this.options;
-            var win, overlay;
-            var parent = o.dragArea === "parent" ? element.parent() : $(o.dragArea);
-            var _content;
+            const that = this, element = this.element, o = this.options;
+            let win, overlay;
+            const parent = o.dragArea === "parent" ? element.parent() : $(o.dragArea);
+            let _content;
 
             if (o.modal === true) {
                 o.btnMax = false;
@@ -94,18 +96,18 @@
                 o.resizable = false;
             }
 
-            if (Utils.isNull(o.content)) {
+            if (Metro.utils.isNull(o.content)) {
                 o.content = element;
             } else {
-                if (Utils.isUrl(o.content) && Utils.isVideoUrl(o.content)) {
-                    o.content = Utils.embedUrl(o.content);
+                if (Metro.utils.isUrl(o.content) && Metro.utils.isVideoUrl(o.content)) {
+                    o.content = Metro.utils.embedUrl(o.content);
                     element.css({
                         height: "100%"
                     });
                 } else
 
-                if (!Utils.isQ(o.content) && Utils.isFunc(o.content)) {
-                    o.content = Utils.exec(o.content);
+                if (!Metro.utils.isQ(o.content) && Metro.utils.isFunc(o.content)) {
+                    o.content = Metro.utils.exec(o.content);
                 }
 
                 _content = $(o.content);
@@ -154,12 +156,12 @@
         },
 
         _setPosition: function(){
-            var o = this.options;
-            var win = this.win;
-            var parent = o.dragArea === "parent" ? win.parent() : $(o.dragArea);
-            var top_center = parent.height() / 2 - win[0].offsetHeight / 2;
-            var left_center = parent.width() / 2 - win[0].offsetWidth / 2;
-            var top, left, right, bottom;
+            const o = this.options;
+            const win = this.win;
+            const parent = o.dragArea === "parent" ? win.parent() : $(o.dragArea);
+            const top_center = parent.height() / 2 - win[0].offsetHeight / 2;
+            const left_center = parent.width() / 2 - win[0].offsetWidth / 2;
+            let top, left, right, bottom;
 
             if (o.place !== 'auto') {
 
@@ -185,9 +187,9 @@
         },
 
         _window: function(o){
-            var that = this;
-            var win, caption, content, icon, title, buttons, btnClose, btnMin, btnMax, resizer, status;
-            var width = o.width, height = o.height;
+            const that = this;
+            let win, caption, content, icon, title, buttons, btnClose, btnMin, btnMax, resizer, status;
+            let width = o.width, height = o.height;
 
             win = $("<div>").addClass("window");
 
@@ -201,25 +203,25 @@
             win.append(caption);
             win.append(content);
 
-            if (o.status === true) {
-                status = $("<div>").addClass("window-status");
+            if (o.status || o.resizable) {
+                status = $("<div>").addClass("window-status").html(o.status);
                 win.append(status);
             }
 
             if (o.shadow === true) {
-                win.addClass("win-shadow");
+                win.addClass("shadowed");
             }
 
-            if (Utils.isValue(o.icon)) {
+            if (Metro.utils.isValue(o.icon)) {
                 icon = $("<span>").addClass("icon").html(o.icon);
                 icon.appendTo(caption);
             }
 
-            title = $("<span>").addClass("title").html(Utils.isValue(o.title) ? o.title : "&nbsp;");
+            title = $("<span>").addClass("title").html(Metro.utils.isValue(o.title) ? o.title : "&nbsp;");
             title.appendTo(caption);
 
-            if (!Utils.isNull(o.content)) {
-                if (Utils.isQ(o.content)) {
+            if (!Metro.utils.isNull(o.content)) {
+                if (Metro.utils.isQ(o.content)) {
                     o.content.appendTo(content);
                 } else {
                     content.html(o.content);
@@ -230,74 +232,63 @@
             buttons.appendTo(caption);
 
             if (o.btnMax === true) {
-                btnMax = $("<span>").addClass("button btn-max sys-button");
+                btnMax = $("<span>").addClass("button small btn-max sys-button");
                 btnMax.appendTo(buttons);
             }
 
             if (o.btnMin === true) {
-                btnMin = $("<span>").addClass("button btn-min sys-button");
+                btnMin = $("<span>").addClass("button small btn-min sys-button");
                 btnMin.appendTo(buttons);
             }
 
             if (o.btnClose === true) {
-                btnClose = $("<span>").addClass("button btn-close sys-button");
+                btnClose = $("<span>").addClass("button small btn-close sys-button");
                 btnClose.appendTo(buttons);
             }
 
-            if (Utils.isValue(o.customButtons)) {
-                var customButtons = [];
+            if (o.customButtons) {
+                let customButtons = Metro.utils.isObject(o.customButtons);
+                if (customButtons) {
+                    $.each(customButtons, function () {
+                        const item = this;
+                        const customButton = $("<span>");
 
-                if (Utils.isObject(o.customButtons) !== false) {
-                    o.customButtons = Utils.isObject(o.customButtons);
+                        customButton
+                            .addClass("button btn-custom")
+                            .addClass(o.clsCustomButton)
+                            .addClass(item.cls)
+                            .attr("tabindex", -1)
+                            .html(item.html);
+
+                        if (item.attr && typeof item.attr === 'object') {
+                            $.each(item.attr, function (k, v) {
+                                customButton.attr(Str.dashedName(k), v);
+                            });
+                        }
+
+                        customButton.data("action", item.onclick);
+
+                        buttons.prepend(customButton);
+                    });
                 }
-
-                if (typeof o.customButtons === "string" && o.customButtons.indexOf("{") > -1) {
-                    customButtons = JSON.parse(o.customButtons);
-                } else if (typeof o.customButtons === "object" && Utils.objectLength(o.customButtons) > 0) {
-                    customButtons = o.customButtons;
-                } else {
-                    console.warn("Unknown format for custom buttons");
-                }
-
-                $.each(customButtons, function(){
-                    var item = this;
-                    var customButton = $("<span>");
-
-                    customButton
-                        .addClass("button btn-custom")
-                        .addClass(o.clsCustomButton)
-                        .addClass(item.cls)
-                        .attr("tabindex", -1)
-                        .html(item.html);
-
-                    if (item.attr && typeof item.attr === 'object') {
-                        $.each(item.attr, function(k, v){
-                            customButton.attr(Str.dashedName(k), v);
-                        });
-                    }
-
-                    customButton.data("action", item.onclick);
-
-                    buttons.prepend(customButton);
-                });
             }
 
             caption.on(Metro.events.stop, ".btn-custom", function(e){
-                if (Utils.isRightMouse(e)) return;
-                var button = $(this);
-                var action = button.data("action");
-                Utils.exec(action, [button], this);
+                if (Metro.utils.isRightMouse(e)) return;
+                const button = $(this);
+                const action = button.data("action");
+                Metro.utils.exec(action, [button], this);
             });
 
-            win.attr("id", o.id === undefined ? Utils.elementId("window") : o.id);
+            win.attr("id", o.id === undefined ? Metro.utils.elementId("window") : o.id);
 
             win.on(Metro.events.dblclick, ".window-caption", function(e){
                 that.maximized(e);
             });
 
             caption.on(Metro.events.click, ".btn-max, .btn-min, .btn-close", function(e){
-                if (Utils.isRightMouse(e)) return;
-                var target = $(e.target);
+                if (Metro.utils.isRightMouse(e)) return;
+                const target = $(e.target);
                 if (target.hasClass("btn-max")) that.maximized(e);
                 if (target.hasClass("btn-min")) that.minimized(e);
                 if (target.hasClass("btn-close")) that.close(e);
@@ -306,7 +297,7 @@
             if (o.draggable === true) {
                 Metro.makePlugin(win, "draggable", {
                     dragContext: win[0],
-                    dragElement: o.dragElement,
+                    dragElement: caption,
                     dragArea: o.dragArea,
                     onDragStart: o.onDragStart,
                     onDragStop: o.onDragStop,
@@ -321,7 +312,7 @@
             if (o.minWidth === 0) {
                 o.minWidth = 34;
                 $.each(buttons.children(".btn-custom"), function(){
-                    o.minWidth += Utils.hiddenElementSize(this).width;
+                    o.minWidth += Metro.utils.hiddenElementSize(this).width;
                 });
                 if (o.btnMax) o.minWidth += 34;
                 if (o.btnMin) o.minWidth += 34;
@@ -335,7 +326,7 @@
                 height = o.minHeight;
             }
 
-            if (o.resizable === true) {
+            if (o.resizable) {
                 resizer = $("<span>").addClass("resize-element");
                 resizer.appendTo(win);
                 win.addClass("resizable");
@@ -364,9 +355,9 @@
         },
 
         _overlay: function(){
-            var o = this.options;
+            const o = this.options;
 
-            var overlay = $("<div>");
+            const overlay = $("<div>");
             overlay.addClass("overlay");
 
             if (o.overlayColor === 'transparent') {
@@ -381,9 +372,9 @@
         },
 
         width: function(v){
-            var win = this.win;
+            const win = this.win;
 
-            if (!Utils.isValue(v)) {
+            if (!Metro.utils.isValue(v)) {
                 return win.width();
             }
 
@@ -393,9 +384,9 @@
         },
 
         height: function(v){
-            var win = this.win;
+            const win = this.win;
 
-            if (!Utils.isValue(v)) {
+            if (!Metro.utils.isValue(v)) {
                 return win.height();
             }
 
@@ -405,8 +396,8 @@
         },
 
         maximized: function(e){
-            var win = this.win, o = this.options;
-            var target = $(e.target);
+            const win = this.win, o = this.options;
+            const target = $(e.target);
 
             if (o.btnMax) {
                 win.removeClass("minimized");
@@ -429,7 +420,7 @@
         },
 
         minimized: function(){
-            var win = this.win, o = this.options;
+            const win = this.win, o = this.options;
 
             if (o.btnMin) {
                 win.removeClass("maximized");
@@ -442,13 +433,13 @@
         },
 
         close: function(){
-            var that = this, win = this.win,  o = this.options;
+            const that = this, win = this.win, o = this.options;
 
-            if (Utils.exec(o.onCanClose, [win]) === false) {
+            if (Metro.utils.exec(o.onCanClose, [win]) === false) {
                 return false;
             }
 
-            var timeout = 0;
+            let timeout = 0;
 
             if (o.onClose !== Metro.noop) {
                 timeout = 500;
@@ -480,7 +471,7 @@
         },
 
         hide: function(){
-            var win = this.win;
+            const win = this.win;
 
             win.css({
                 display: "none"
@@ -492,7 +483,7 @@
         },
 
         show: function(){
-            var win = this.win;
+            const win = this.win;
 
             win
                 .removeClass("no-visible")
@@ -527,7 +518,7 @@
         },
 
         changeClass: function(a){
-            var element = this.element, win = this.win, o = this.options;
+            const element = this.element, win = this.win, o = this.options;
 
             if (a === "data-cls-window") {
                 win[0].className = "window " + (o.resizable ? " resizable " : " ") + element.attr("data-cls-window");
@@ -541,8 +532,8 @@
         },
 
         toggleShadow: function(){
-            var element = this.element, win = this.win;
-            var flag = JSON.parse(element.attr("data-shadow"));
+            const element = this.element, win = this.win;
+            const flag = JSON.parse(element.attr("data-shadow"));
             if (flag === true) {
                 win.addClass("win-shadow");
             } else {
@@ -551,13 +542,13 @@
         },
 
         setContent: function(c){
-            var element = this.element, win = this.win;
-            var content = Utils.isValue(c) ? c : element.attr("data-content");
-            var result;
+            const element = this.element, win = this.win;
+            const content = Metro.utils.isValue(c) ? c : element.attr("data-content");
+            let result;
 
-            if (!Utils.isQ(content) && Utils.isFunc(content)) {
-                result = Utils.exec(content);
-            } else if (Utils.isQ(content)) {
+            if (!Metro.utils.isQ(content) && Metro.utils.isFunc(content)) {
+                result = Metro.utils.exec(content);
+            } else if (Metro.utils.isQ(content)) {
                 result = content.html();
             } else {
                 result = content;
@@ -567,14 +558,14 @@
         },
 
         setTitle: function(t){
-            var element = this.element, win = this.win;
-            var title = Utils.isValue(t) ? t : element.attr("data-title");
+            const element = this.element, win = this.win;
+            const title = Metro.utils.isValue(t) ? t : element.attr("data-title");
             win.find(".window-caption .title").html(title);
         },
 
         setIcon: function(i){
-            var element = this.element, win = this.win;
-            var icon = Utils.isValue(i) ? i : element.attr("data-icon");
+            const element = this.element, win = this.win;
+            const icon = Metro.utils.isValue(i) ? i : element.attr("data-icon");
             win.find(".window-caption .icon").html(icon);
         },
 
@@ -587,9 +578,9 @@
         },
 
         toggleDraggable: function(f){
-            var win = this.win;
-            var flag = Utils.bool(f);
-            var drag = Metro.getPlugin(win, "draggable");
+            const win = this.win;
+            const flag = Metro.utils.bool(f);
+            const drag = Metro.getPlugin(win, "draggable");
             if (flag === true) {
                 drag.on();
             } else {
@@ -598,9 +589,9 @@
         },
 
         toggleResizable: function(f){
-            var win = this.win;
-            var flag = Utils.bool(f);
-            var resize = Metro.getPlugin(win, "resizable");
+            const win = this.win;
+            const flag = Metro.utils.bool(f);
+            const resize = Metro.getPlugin(win, "resizable");
             if (flag === true) {
                 resize.on();
                 win.find(".resize-element").removeClass("resize-element-disabled");
@@ -611,13 +602,13 @@
         },
 
         changePlace: function (p) {
-            var element = this.element, win = this.win;
-            var place = Utils.isValue(p) ? p : element.attr("data-place");
+            const element = this.element, win = this.win;
+            const place = Metro.utils.isValue(p) ? p : element.attr("data-place");
             win.addClass(place);
         },
 
         pos: function(top, left){
-            var win = this.win;
+            const win = this.win;
             win.css({
                 top: top,
                 left: left
@@ -640,42 +631,48 @@
         },
 
         changeAttribute: function(attr, value){
-            var changePos = function(a, v){
-                var win = this.win;
-                var pos;
+            const changePos = function (a, v) {
+                const win = this.win;
+                let pos;
                 if (a === "data-top") {
                     pos = parseInt(v);
                     if (!isNaN(pos)) {
-                        return ;
+                        return;
                     }
                     win.css("top", pos);
                 }
                 if (a === "data-left") {
                     pos = parseInt(v);
                     if (!isNaN(pos)) {
-                        return ;
+                        return;
                     }
                     win.css("left", pos);
                 }
             };
 
-            var toggleButtons = function(a, v) {
-                var win = this.win;
-                var btnClose = win.find(".btn-close");
-                var btnMin = win.find(".btn-min");
-                var btnMax = win.find(".btn-max");
-                var _v = Utils.bool(v);
-                var func = _v ? "show" : "hide";
+            const toggleButtons = function (a, v) {
+                const win = this.win;
+                const btnClose = win.find(".btn-close");
+                const btnMin = win.find(".btn-min");
+                const btnMax = win.find(".btn-max");
+                const _v = Metro.utils.bool(v);
+                const func = _v ? "show" : "hide";
 
                 switch (a) {
-                    case "data-btn-close": btnClose[func](); break;
-                    case "data-btn-min": btnMin[func](); break;
-                    case "data-btn-max": btnMax[func](); break;
+                    case "data-btn-close":
+                        btnClose[func]();
+                        break;
+                    case "data-btn-min":
+                        btnMin[func]();
+                        break;
+                    case "data-btn-max":
+                        btnMax[func]();
+                        break;
                 }
             };
 
-            var changeSize = function(a, v){
-                var win = this.win;
+            const changeSize = function (a, v) {
+                const win = this.win;
                 if (a === "data-width") {
                     win.css("width", +v);
                 }
@@ -711,9 +708,8 @@
     });
 
     Metro['window'] = {
-
         isWindow: function(el){
-            return Utils.isMetroObject(el, "window");
+            return Metro.utils.isMetroObject(el, "window");
         },
 
         min: function(el, a){
@@ -755,7 +751,7 @@
             if (!this.isWindow(el)) {
                 return false;
             }
-            var win = Metro.getPlugin(el,"window");
+            const win = Metro.getPlugin(el, "window");
             return win.isOpen();
         },
 
@@ -802,11 +798,11 @@
         },
 
         create: function(options, parent){
-            var w;
+            let w;
 
             w = $("<div>").appendTo(parent ? $(parent) : $("body"));
 
-            var w_options = $.extend({
+            const w_options = $.extend({
                 _runtime: true
             }, (options ? options : {}));
 

@@ -4,15 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
 
     <title>Test Window - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        body{
+            height: 100vh;
+        }
+    </style>
 </head>
-<body class="m4-cloak">
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Component Test</div>
+    </div>
+</nav>
 
-<h1>Window test page</h1>
+<div class="explorer no-overflow" style="height: calc(100% - 50px)">
+</div>
 
-<button class="button" onclick="createWindow()">Create window</button>
-<button class="button" onclick="getPosition()">Get position</button>
 
 <!--<div id="win1" data-role="window" class="p-2" data-on-drag-start="dragStart" data-on-resize-start="resizeStart" data-custom-buttons="customButtons">-->
 <!--    This is a simple window-->
@@ -39,17 +53,23 @@
 
     function createWindow() {
         Metro.window.create({
-            cls         : "p-0",
-            title       : "AGREGAR INFORMACION",
-            clsCaption  : 'bg-orange',
+            title       : "Window Caption",
             btnMin      : true,
+            btnMax      : true,
+            btnClose    : true,
             shadow      : true,
             resizable   : true,
-            btnMax      : false,
-            icon        : "<span class='mif-file-empty'></spam>",
-            onCaptionDblClick : function(){  } ,
-            btnClose    : true,
-            content     : "<div class='text-bold'>Hello World</div>"
+            icon        : "<span class='mif-run'>",
+            dragArea    : ".explorer",
+            width       : 400,
+            height      : 300,
+            place: "center",
+            content     : `
+                <div>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, deserunt distinctio dolore dolorem dolores dolorum ducimus ea eaque et illo laboriosam libero nesciunt nisi officiis placeat possimus quaerat quo ratione recusandae reprehenderit sed similique tempore tenetur ullam veritatis vitae voluptates voluptatibus. Accusantium ad aliquam, aliquid animi dignissimos, ducimus est, facilis incidunt nesciunt non obcaecati sint. Ab, animi aperiam autem beatae cumque doloribus facilis fugiat fugit inventore magnam mollitia nihil nisi officia perspiciatis placeat quas quasi qui quisquam, rerum suscipit totam ullam voluptatem voluptatum. Ad, aliquam blanditiis cum ducimus ex explicabo harum laboriosam neque nobis officia quibusdam similique voluptate. Blanditiis, sit?
+                </div>
+            `,
+            status: `<div>Status bar</div>`,
         });
     }
 

@@ -8,6 +8,14 @@
 @overlay8: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGAQMAAADaAn0LAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAABJJREFUCNdjcGB4AMQcDDIMHAAM8AGNu4TNogAAAABJRU5ErkJggg==";
 @overlay9: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPAgMAAABGuH3ZAAAACVBMVEUAAAAAAAAAAACDY+nAAAAAAnRSTlMAiJXwxioAAAAaSURBVAjXY1i1atUKhkYWAQcIMTU0NIRMLgDFIhFFGbSiTQAAAABJRU5ErkJggg==";
 
+:root {
+    --vegas-timer-color: #ffffff;
+}
+
+.dark-side {
+    --vegas-timer-color: #2b2d30;
+}
+
 .vegas-wrapper,
 .vegas-overlay,
 .vegas-timer,
@@ -65,7 +73,7 @@
 .vegas-timer-progress {
     width: 0;
     height: 100%;
-    background: white;
+    background: var(--vegas-timer-color, #fff);
     transition: width ease-out;
 }
 
