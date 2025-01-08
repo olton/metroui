@@ -2,14 +2,16 @@
 @import (once) "../../include/mixins";
 
 :root {
-    --button-background: #ebebeb;
-    --button-background-hover: #dadada;
-    --button-color: #191919;
-    --button-border-color: #ebebeb;
     --button-border-radius: 4px;
     --button-pill-radius: 18px;
     --button-size: 36px;
     --button-font-size: 14px;
+
+    --button-background: #ebebeb;
+    --button-background-hover: #dadada;
+    --button-color: #191919;
+    --button-border-color: #ebebeb;
+    --button-disabled-opacity: .65;
 }
 
 .dark-side {
@@ -17,6 +19,7 @@
     --button-background-hover: #333439;
     --button-color: #f3fcff;
     --button-border-color: #4e5157;
+    --button-disabled-opacity: .25;
 }
 
 button, .button, .flat-button {
@@ -51,7 +54,7 @@ button, .button, .flat-button {
 
     &.disabled, &:disabled {
         pointer-events: none;
-        opacity: .65;
+        opacity: var(--button-disabled-opacity);
     }
 
     .icon {
@@ -166,10 +169,6 @@ a {
         box-shadow: none;
         text-decoration: none;
     }
-}
-
-input[type=button], input[type=submit], input[type=reset] {
-    .button;
 }
 
 button, .button {

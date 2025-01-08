@@ -43766,20 +43766,22 @@ hr.fat {
 
 /* source/components/button/button.less */
 :root {
-  --button-background: #ebebeb;
-  --button-background-hover: #dadada;
-  --button-color: #191919;
-  --button-border-color: #ebebeb;
   --button-border-radius: 4px;
   --button-pill-radius: 18px;
   --button-size: 36px;
   --button-font-size: 14px;
+  --button-background: #ebebeb;
+  --button-background-hover: #dadada;
+  --button-color: #191919;
+  --button-border-color: #ebebeb;
+  --button-disabled-opacity: 0.65;
 }
 .dark-side {
   --button-background: #2b2d30;
   --button-background-hover: #333439;
   --button-color: #f3fcff;
   --button-border-color: #4e5157;
+  --button-disabled-opacity: 0.25;
 }
 button,
 .button,
@@ -43823,7 +43825,7 @@ button:disabled,
 .button:disabled,
 .flat-button:disabled {
   pointer-events: none;
-  opacity: 0.65;
+  opacity: var(--button-disabled-opacity);
 }
 button .icon,
 .button .icon,
@@ -43965,209 +43967,6 @@ a.flat-button {
   color: var(--button-color);
   box-shadow: none;
   text-decoration: none;
-}
-input[type=button],
-input[type=submit],
-input[type=reset] {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 400;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  user-select: none;
-  padding: 0 var(--button-font-size);
-  font-size: var(--button-font-size);
-  height: var(--button-size);
-  transition: all 0.15s ease-in-out;
-  background-color: var(--button-background);
-  color: var(--button-color);
-  border: 1px solid var(--button-border-color);
-  cursor: pointer;
-  outline: none;
-  position: relative;
-  overflow: visible;
-  border-radius: var(--button-border-radius);
-  gap: 8px;
-}
-input[type=button]:first-child,
-input[type=submit]:first-child,
-input[type=reset]:first-child {
-  margin-left: 0;
-}
-input[type=button]:last-child,
-input[type=submit]:last-child,
-input[type=reset]:last-child {
-  margin-right: 0;
-}
-input[type=button].disabled,
-input[type=submit].disabled,
-input[type=reset].disabled,
-input[type=button]:disabled,
-input[type=submit]:disabled,
-input[type=reset]:disabled {
-  pointer-events: none;
-  opacity: 0.65;
-}
-input[type=button] .icon,
-input[type=submit] .icon,
-input[type=reset] .icon {
-  height: calc(var(--button-size)/2);
-  font-size: calc(var(--button-font-size) * 1.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-input[type=button].pill-button,
-input[type=submit].pill-button,
-input[type=reset].pill-button {
-  border-radius: var(--button-pill-radius);
-}
-input[type=button]:active,
-input[type=submit]:active,
-input[type=reset]:active,
-input[type=button].focus,
-input[type=submit].focus,
-input[type=reset].focus,
-input[type=button]:focus,
-input[type=submit]:focus,
-input[type=reset]:focus {
-  text-decoration: none;
-}
-@media (hover: hover) {
-  input[type=button]:hover,
-  input[type=submit]:hover,
-  input[type=reset]:hover {
-    background-color: var(--button-background-hover);
-  }
-}
-@media (hover: none) {
-  input[type=button]:active,
-  input[type=submit]:active,
-  input[type=reset]:active {
-    background-color: var(--button-background-hover);
-  }
-}
-input[type=button].link,
-input[type=submit].link,
-input[type=reset].link {
-  background-color: transparent;
-  border: none;
-}
-input[type=button].link:hover,
-input[type=submit].link:hover,
-input[type=reset].link:hover {
-  background-color: transparent;
-  text-decoration: underline;
-}
-input[type=button].link.focus,
-input[type=submit].link.focus,
-input[type=reset].link.focus,
-input[type=button].link:focus,
-input[type=submit].link:focus,
-input[type=reset].link:focus {
-  box-shadow: none;
-}
-input[type=button].mini,
-input[type=submit].mini,
-input[type=reset].mini {
-  --button-pill-radius: 10px;
-  --button-size: 20px;
-  --button-font-size: 10px;
-}
-input[type=button].small,
-input[type=submit].small,
-input[type=reset].small {
-  --button-pill-radius: 13px;
-  --button-size: 26px;
-  --button-font-size: 12px;
-}
-input[type=button].large,
-input[type=submit].large,
-input[type=reset].large {
-  --button-pill-radius: 27px;
-  --button-size: 54px;
-  --button-font-size: 18px;
-}
-input[type=button].square,
-input[type=submit].square,
-input[type=reset].square,
-input[type=button].cycle,
-input[type=submit].cycle,
-input[type=reset].cycle {
-  width: var(--button-size);
-  height: var(--button-size);
-  padding: 0 !important;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-}
-input[type=button].cycle,
-input[type=submit].cycle,
-input[type=reset].cycle {
-  border-radius: 50%;
-}
-input[type=button].square.dropdown-toggle::before,
-input[type=submit].square.dropdown-toggle::before,
-input[type=reset].square.dropdown-toggle::before,
-input[type=button].cycle.dropdown-toggle::before,
-input[type=submit].cycle.dropdown-toggle::before,
-input[type=reset].cycle.dropdown-toggle::before {
-  display: none;
-}
-input[type=button].dropdown-toggle.no-marker,
-input[type=submit].dropdown-toggle.no-marker,
-input[type=reset].dropdown-toggle.no-marker {
-  padding-right: 0.75rem !important;
-}
-input[type=button].outline,
-input[type=submit].outline,
-input[type=reset].outline {
-  background: transparent none;
-  border-width: 1px;
-  border-color: var(--button-border-color);
-  color: var(--button-color);
-}
-@media (hover: hover) {
-  input[type=button].outline:hover,
-  input[type=submit].outline:hover,
-  input[type=reset].outline:hover {
-    background-color: var(--button-background);
-    color: var(--button-color);
-  }
-}
-@media (hover: none) {
-  input[type=button].outline:active,
-  input[type=submit].outline:active,
-  input[type=reset].outline:active {
-    background-color: var(--button-background);
-    color: var(--button-color);
-  }
-}
-input[type=button] .load-marker,
-input[type=submit] .load-marker,
-input[type=reset] .load-marker {
-  transform: scale(0);
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-}
-input[type=button] .load-caption,
-input[type=submit] .load-caption,
-input[type=reset] .load-caption {
-  margin-left: -16px;
-  transition: all 0.3s ease-in-out;
-}
-input[type=button].loading .load-marker,
-input[type=submit].loading .load-marker,
-input[type=reset].loading .load-marker {
-  transform: scale(1);
-  opacity: 1;
-  animation: spin-loader 1.5s linear infinite;
-}
-input[type=button].loading .load-caption,
-input[type=submit].loading .load-caption,
-input[type=reset].loading .load-caption {
-  margin-left: 0.5rem;
 }
 button .load-marker,
 .button .load-marker {
@@ -68858,15 +68657,27 @@ body.vegas-container > .vegas-slide {
 }
 
 /* source/components/wizard/wizard.less */
+:root {
+  --wizard-height: 200px;
+  --wizard-background: #ffffff;
+  --wizard-color: #191919;
+  --wizard-border-color: #f3f3f3;
+  --wizard-number-color: #a8a8a8;
+}
+.dark-side {
+  --wizard-background: #1e1f22;
+  --wizard-color: #dbdfe7;
+  --wizard-border-color: #484b4c;
+}
 .wizard {
   display: flex;
   flex-flow: row nowrap;
   align-items: stretch;
-  background-color: #ffffff;
-  color: #1d1d1d;
-  min-height: 200px;
+  background-color: var(--wizard-background);
+  color: var(--wizard-color);
+  min-height: var(--wizard-height);
   height: auto;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--wizard-border-color);
   counter-reset: wizard-step;
   position: relative;
 }
@@ -68875,7 +68686,7 @@ body.vegas-container > .vegas-slide {
   counter-increment: wizard-step;
   display: block;
   position: relative;
-  border-left: #ccc solid;
+  border-left: var(--wizard-border-color) solid;
   border-left-width: 4px;
   width: 0;
   transition: width 0.3s ease;
@@ -68890,7 +68701,9 @@ body.vegas-container > .vegas-slide {
   text-align: center;
   left: -25px;
   z-index: 1;
-  color: #ffffff;
+  color: var(--wizard-number-color);
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 .wizard > section .page-content,
 .wizard > .section .page-content {
@@ -68944,7 +68757,6 @@ body.vegas-container > .vegas-slide {
 .wizard .action-bar .wizard-btn-next,
 .wizard .action-bar .wizard-btn-prev,
 .wizard .action-bar .wizard-btn-finish {
-  font-family: "Segoe UI Symbol", serif;
   font-size: 20px !important;
 }
 .wizard > section {
@@ -69013,10 +68825,7 @@ body.vegas-container > .vegas-slide {
 .wizard > section.complete:nth-child(10) {
   border-color: #757575;
 }
-.wizard [class*=wizard-btn].disabled {
-  opacity: 0.1;
-}
-@media screen and (min-width: 0) {
+@container (min-width: 0) {
   .wizard.wizard-wide-fs {
     flex-flow: row nowrap;
   }
@@ -69027,7 +68836,7 @@ body.vegas-container > .vegas-slide {
     display: block;
   }
 }
-@media screen and (min-width: 360px) {
+@container (min-width: 360px) {
   .wizard.wizard-wide-xs {
     flex-flow: row nowrap;
   }
@@ -69038,7 +68847,7 @@ body.vegas-container > .vegas-slide {
     display: block;
   }
 }
-@media screen and (min-width: 576px) {
+@container (min-width: 576px) {
   .wizard.wizard-wide-sm {
     flex-flow: row nowrap;
   }
@@ -69049,7 +68858,7 @@ body.vegas-container > .vegas-slide {
     display: block;
   }
 }
-@media screen and (min-width: 640px) {
+@container (min-width: 640px) {
   .wizard.wizard-wide-ld {
     flex-flow: row nowrap;
   }
@@ -69060,7 +68869,7 @@ body.vegas-container > .vegas-slide {
     display: block;
   }
 }
-@media screen and (min-width: 768px) {
+@container (min-width: 768px) {
   .wizard.wizard-wide-md {
     flex-flow: row nowrap;
   }
@@ -69071,7 +68880,7 @@ body.vegas-container > .vegas-slide {
     display: block;
   }
 }
-@media screen and (min-width: 992px) {
+@container (min-width: 992px) {
   .wizard.wizard-wide-lg {
     flex-flow: row nowrap;
   }
@@ -69082,7 +68891,7 @@ body.vegas-container > .vegas-slide {
     display: block;
   }
 }
-@media screen and (min-width: 1200px) {
+@container (min-width: 1200px) {
   .wizard.wizard-wide-xl {
     flex-flow: row nowrap;
   }
@@ -69093,7 +68902,7 @@ body.vegas-container > .vegas-slide {
     display: block;
   }
 }
-@media screen and (min-width: 1400px) {
+@container (min-width: 1400px) {
   .wizard.wizard-wide-xxl {
     flex-flow: row nowrap;
   }
@@ -69104,7 +68913,7 @@ body.vegas-container > .vegas-slide {
     display: block;
   }
 }
-@media screen and (min-width: 2000px) {
+@container (min-width: 2000px) {
   .wizard.wizard-wide-xxxl {
     flex-flow: row nowrap;
   }

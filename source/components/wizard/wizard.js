@@ -1,8 +1,8 @@
 /* global Metro */
 (function(Metro, $) {
     'use strict';
-    var Utils = Metro.utils;
-    var WizardDefaultConfig = {
+
+    let WizardDefaultConfig = {
         wizardDeferred: 0,
         start: 1,
         finish: 0,
@@ -48,14 +48,14 @@
     Metro.Component('wizard', {
         init: function( options, elem ) {
             this._super(elem, options, WizardDefaultConfig, {
-                id: Utils.elementId('wizard')
+                id: Metro.utils.elementId('wizard')
             });
 
             return this;
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createWizard();
             this._createEvents();
@@ -66,14 +66,14 @@
         },
 
         _createWizard: function(){
-            var element = this.element, o = this.options;
-            var bar;
+            const element = this.element, o = this.options;
+            let bar;
 
             element.addClass("wizard").addClass(o.view).addClass(o.clsWizard);
 
             bar = $("<div>").addClass("action-bar").addClass(o.clsActions).appendTo(element);
 
-            var buttonMode = o.buttonMode === "button" ? "" : o.buttonMode;
+            let buttonMode = o.buttonMode === "button" ? "" : o.buttonMode;
             if (o.buttonOutline === true) {
                 buttonMode += " outline";
             }
@@ -89,14 +89,14 @@
         },
 
         _setHeight: function(){
-            var element = this.element;
-            var pages = element.children("section");
-            var max_height = 0;
+            const element = this.element;
+            const pages = element.children("section");
+            let max_height = 0;
 
             pages.children(".page-content").css("max-height", "none");
 
             $.each(pages, function(){
-                var h = $(this).height();
+                const h = $(this).height();
                 if (max_height < parseInt(h)) {
                     max_height = h;
                 }
@@ -106,11 +106,11 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element;
+            const that = this, element = this.element;
 
             element.on(Metro.events.click, ".wizard-btn-help", function(){
-                var pages = element.children("section");
-                var page = pages.get(that.current - 1);
+                const pages = element.children("section");
+                const page = pages.get(that.current - 1);
 
                 that._fireEvent("help-click", {
                     index: that.current,
@@ -120,8 +120,8 @@
 
             element.on(Metro.events.click, ".wizard-btn-prev", function(){
                 that.prev();
-                var pages = element.children("section");
-                var page = pages.get(that.current - 1);
+                const pages = element.children("section");
+                const page = pages.get(that.current - 1);
 
                 that._fireEvent("prev-click", {
                     index: that.current,
@@ -131,8 +131,8 @@
 
             element.on(Metro.events.click, ".wizard-btn-next", function(){
                 that.next();
-                var pages = element.children("section");
-                var page = pages.get(that.current - 1);
+                const pages = element.children("section");
+                const page = pages.get(that.current - 1);
 
                 that._fireEvent("next-click", {
                     index: that.current,
@@ -141,8 +141,8 @@
             });
 
             element.on(Metro.events.click, ".wizard-btn-finish", function(){
-                var pages = element.children("section");
-                var page = pages.get(that.current - 1);
+                const pages = element.children("section");
+                const page = pages.get(that.current - 1);
 
                 that._fireEvent("finish-click", {
                     index: that.current,
@@ -151,7 +151,7 @@
             });
 
             element.on(Metro.events.click, ".complete", function(){
-                var index = $(this).index() + 1;
+                const index = $(this).index() + 1;
                 that.toPage(index);
             });
 
@@ -161,11 +161,11 @@
         },
 
         next: function(){
-            var that = this, element = this.element, o = this.options;
-            var pages = element.children("section");
-            var page = $(element.children("section").get(this.current - 1));
+            const that = this, element = this.element, o = this.options;
+            const pages = element.children("section");
+            let page = $(element.children("section").get(this.current - 1));
 
-            if (this.current + 1 > pages.length || Utils.exec(o.onBeforeNext, [this.current, page, element]) === false) {
+            if (this.current + 1 > pages.length || Metro.utils.exec(o.onBeforeNext, [this.current, page, element]) === false) {
                 return ;
             }
 
@@ -182,10 +182,10 @@
         },
 
         prev: function(){
-            var that = this, element = this.element, o = this.options;
-            var page = $(element.children("section").get(this.current - 1));
+            const that = this, element = this.element, o = this.options;
+            let page = $(element.children("section").get(this.current - 1));
 
-            if (this.current - 1 === 0 || Utils.exec(o.onBeforePrev, [this.current, page, element]) === false) {
+            if (this.current - 1 === 0 || Metro.utils.exec(o.onBeforePrev, [this.current, page, element]) === false) {
                 return ;
             }
 
@@ -202,8 +202,8 @@
         },
 
         last: function(){
-            var that = this, element = this.element;
-            var page;
+            const that = this, element = this.element;
+            let page;
 
             this.toPage(element.children("section").length);
 
@@ -216,8 +216,8 @@
         },
 
         first: function(){
-            var that = this, element = this.element;
-            var page;
+            const that = this, element = this.element;
+            let page;
 
             this.toPage(1);
 
@@ -230,18 +230,18 @@
         },
 
         toPage: function(page){
-            var element = this.element, o = this.options;
-            var target = $(element.children("section").get(page - 1));
-            var sections = element.children("section");
-            var actions = element.find(".action-bar");
+            const element = this.element, o = this.options;
+            const target = $(element.children("section").get(page - 1));
+            const sections = element.children("section");
+            const actions = element.find(".action-bar");
 
             if (target.length === 0) {
                 return ;
             }
 
-            var finish = element.find(".wizard-btn-finish").addClass("disabled");
-            var next = element.find(".wizard-btn-next").addClass("disabled");
-            var prev = element.find(".wizard-btn-prev").addClass("disabled");
+            const finish = element.find(".wizard-btn-finish").addClass("disabled");
+            const next = element.find(".wizard-btn-next").addClass("disabled");
+            const prev = element.find(".wizard-btn-prev").addClass("disabled");
 
             this.current = page;
 
@@ -253,7 +253,7 @@
             target.addClass("current").addClass(o.clsCurrent);
             target.prevAll().addClass("complete").addClass(o.clsComplete);
 
-            var border_size = element.children("section.complete").length === 0 ? 0 : parseInt(Utils.getStyleOne(element.children("section.complete")[0], "border-left-width"));
+            const border_size = element.children("section.complete").length === 0 ? 0 : parseInt(Metro.utils.getStyleOne(element.children("section.complete")[0], "border-left-width"));
 
             actions.animate({
                 draw: {
@@ -294,7 +294,7 @@
         },
 
         destroy: function(){
-            var element = this.element;
+            const element = this.element;
 
             element.off(Metro.events.click, ".wizard-btn-help");
             element.off(Metro.events.click, ".wizard-btn-prev");
