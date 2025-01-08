@@ -1,19 +1,15 @@
 /* global Metro, METRO_ANIMATION_DURATION */
 (function(Metro, $) {
     'use strict';
-    var Utils = Metro.utils;
-    var SidebarDefaultConfig = {
+    let SidebarDefaultConfig = {
         menuScrollbar: false,
         sidebarDeferred: 0,
-        shadow: true,
         position: "left",
-        size: 290,
         shift: null,
         staticShift: null,
         toggle: null,
         duration: METRO_ANIMATION_DURATION,
         static: null,
-        menuItemClick: true,
         closeOutside: true,
         onOpen: Metro.noop,
         onClose: Metro.noop,
@@ -35,14 +31,14 @@
         init: function( options, elem ) {
             this._super(elem, options, SidebarDefaultConfig, {
                 toggle_element: null,
-                id: Utils.elementId('sidebar')
+                id: Metro.utils.elementId('sidebar')
             });
 
             return this;
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -55,29 +51,16 @@
         },
 
         _createStructure: function(){
-            var element = this.element, o = this.options;
-            var header = element.find(".sidebar-header");
-            var sheet = Metro.sheet;
-            var menu = element.find(".sidebar-menu");
+            const element = this.element, o = this.options;
+            const header = element.find(".sidebar-header");
+            const sheet = Metro.sheet;
+            const menu = element.find(".sidebar-menu");
+            const size = element.outerWidth();
 
             element.addClass("sidebar").addClass("on-"+o.position);
 
             if (o.menuScrollbar === false) {
                 menu.addClass("hide-scroll");
-            }
-
-            if (o.size !== 290) {
-                Utils.addCssRule(sheet, ".sidebar", "width: " + o.size + "px;");
-
-                if (o.position === "left") {
-                    Utils.addCssRule(sheet, ".sidebar.on-left", "left: " + -o.size + "px;");
-                } else {
-                    Utils.addCssRule(sheet, ".sidebar.on-right", "right: " + -o.size + "px;");
-                }
-            }
-
-            if (o.shadow === true) {
-                element.addClass("sidebar-shadow");
             }
 
             if (o.toggle !== null && $(o.toggle).length > 0) {
@@ -95,17 +78,17 @@
             if (o.static !== null) {
                 if (o.staticShift !== null) {
                     if (o.position === 'left') {
-                        Utils.addCssRule(sheet, "@media screen and " + Metro.media_queries[o.static.toUpperCase()], o.staticShift + "{margin-left: " + o.size + "px; width: calc(100% - " + o.size + "px);}");
+                        Metro.utils.addCssRule(sheet, "@media screen and " + Metro.media_queries[o.static.toUpperCase()], o.staticShift + "{margin-left: " + size + "px; width: calc(100% - " + size + "px);}");
                     } else {
-                        Utils.addCssRule(sheet, "@media screen and " + Metro.media_queries[o.static.toUpperCase()], o.staticShift + "{margin-right: " + o.size + "px; width: calc(100% - " + o.size + "px);}");
+                        Metro.utils.addCssRule(sheet, "@media screen and " + Metro.media_queries[o.static.toUpperCase()], o.staticShift + "{margin-right: " + size + "px; width: calc(100% - " + size + "px);}");
                     }
                 }
             }
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var toggle = this.toggle_element;
+            const that = this, element = this.element, o = this.options;
+            const toggle = this.toggle_element;
 
             if (toggle !== null) {
                 toggle.on(Metro.events.click, function(e){
@@ -119,17 +102,10 @@
                 })
             }
 
-            if (o.static !== null && ["fs", "sm", "md", "lg", "xl", "xxl"].indexOf(o.static) > -1) {
+            if (o.static !== null && Metro.media_modes.includes(o.static)) {
                 $(globalThis).on(Metro.events.resize,function(){
                     that._checkStatic();
                 }, {ns: this.id});
-            }
-
-            if (o.menuItemClick === true) {
-                element.on(Metro.events.click, ".sidebar-menu li > a", function(e){
-                    that.close();
-                    e.stopPropagation();
-                });
             }
 
             element.on(Metro.events.click, ".sidebar-menu .js-sidebar-close", function(e){
@@ -149,8 +125,8 @@
         },
 
         _checkStatic: function(){
-            var element = this.element, o = this.options;
-            if (Utils.mediaExist(o.static) && !element.hasClass("static")) {
+            const element = this.element, o = this.options;
+            if (Metro.utils.mediaExist(o.static) && !element.hasClass("static")) {
                 element.addClass("static");
                 element.data("opened", false).removeClass('open');
                 if (o.shift !== null) {
@@ -167,7 +143,7 @@
 
                 this._fireEvent("static-set");
             }
-            if (!Utils.mediaExist(o.static)) {
+            if (!Metro.utils.mediaExist(o.static)) {
                 element.removeClass("static");
                 this._fireEvent("static-loss");
             }
@@ -178,7 +154,7 @@
         },
 
         open: function(){
-            var element = this.element, o = this.options;
+            const element = this.element, o = this.options;
 
             if (element.hasClass("static")) {
                 return ;
@@ -200,7 +176,7 @@
         },
 
         close: function(){
-            var element = this.element, o = this.options;
+            const element = this.element, o = this.options;
 
             if (element.hasClass("static")) {
                 return ;
@@ -235,22 +211,18 @@
         },
 
         destroy: function(){
-            var element = this.element, o = this.options;
-            var toggle = this.toggle_element;
+            const element = this.element, o = this.options;
+            const toggle = this.toggle_element;
 
             if (toggle !== null) {
                 toggle.off(Metro.events.click);
             }
 
-            if (o.static !== null && ["fs", "sm", "md", "lg", "xl", "xxl"].indexOf(o.static) > -1) {
+            if (o.static !== null && Metro.media_modes.includes(o.static)) {
                 $(globalThis).off(Metro.events.resize, {ns: this.id});
             }
 
-            if (o.menuItemClick === true) {
-                element.off(Metro.events.click, ".sidebar-menu li > a");
-            }
-
-            element.off(Metro.events.click, ".sidebar-menu .js-sidebar-close");
+            element.off(Metro.events.click, ".js-sidebar-close");
 
             return element;
         }
@@ -258,7 +230,7 @@
 
     Metro['sidebar'] = {
         isSidebar: function(el){
-            return Utils.isMetroObject(el, "sidebar");
+            return Metro.utils.isMetroObject(el, "sidebar");
         },
 
         open: function(el){

@@ -15,7 +15,7 @@
         --directive-border-color: #5454547a!important;
         --directive-title-color: #ffffff!important;
     }
-    .directive-tip {
+    .directive-tip, .directive-success {
         --directive-background: #079c701a!important;
         --directive-border-color: #079c7033!important;
         --directive-title-color: #3ec480!important;
@@ -90,7 +90,7 @@
         }
     }
     
-    &.directive-tip {
+    &.directive-tip, &.directive-success {
         --directive-background: #079c700f;
         --directive-border-color: #079c7033;
         --directive-title-color: #278359;
@@ -99,6 +99,12 @@
         
         .icon::before {
             content: "💚";
+        }
+    }
+    
+    &.directive-success {
+        .icon::before {
+            content: "🗹";
         }
     }
     

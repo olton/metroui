@@ -9,47 +9,59 @@
     <title>Test Sidebar - Metro UI :: Popular HTML, CSS and JS library</title>
 
 </head>
-<body class="m4-cloak">
-<div class="container">
-    <h1>Sidebar test page</h1>
-
-    <div class="example border" style="height: 400px; overflow: hidden">
-        <aside class="sidebar pos-absolute open z-2" data-role="sidebar" data-toggle="#sidebar-toggle" id="sb1">
-            <div class="sidebar-header" data-image="./images/gradient.jpg">
-                <a href="/" class="fg-white sub-action" onclick="Metro.sidebar.close('#sb1'); return false;"><span class="mif-arrow-left mif-2x"></span></a>
-                <div class="avatar">
-                    <img data-role="gravatar" data-email="sergey@pimenov.com.ua">
-                </div>
-                <span class="title fg-white">Metro UI Components Library</span>
-                <span class="subtitle fg-white"> 2018 &copy; Sergey Pimenov</span>
-            </div>
-            <ul class="sidebar-menu">
-                <li><a><span class="mif-home icon"></span>Home</a></li>
-                <li><a><span class="mif-books icon"></span>Guide</a></li>
-                <li><a><span class="mif-files-empty icon"></span>Examples</a></li>
-                <li class="divider"></li>
-                <li><a><span class="mif-images icon"></span>Icons</a></li>
-            </ul>
-        </aside>
-        <div class="aaa h-100 p-ab">
-            <div class="app-bar pos-absolute bg-red z-1" data-role="appbar" id="app-bar-1">
-                <button class="app-bar-item c-pointer" id="sidebar-toggle"><span class="mif-menu fg-white"></span></button>
-            </div>
-
-            <div class="h-100 p-4">
-                <p class="h1">What is Lorem Ipsum?</p>
-                <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
-            </div>
-        </div>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <button class="app-bar-item no-border" id="sidebar-toggle"><span class="mif-menu"></span></button>
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Sidebar</div>
     </div>
+    <div class="app-bar-item-static no-hover ml-auto">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+<div class="container-fluid">
+    <aside class="sidebar" data-role="sidebar" data-static="md" data-static-shift="#content" data-toggle="#sidebar-toggle" id="sb1">
+        <div class="sidebar-header">
+            <span class="action" onclick="Metro.sidebar.close('#sb1'); return false;"><span class="mif-arrow-left mif-2x"></span></span>
+            <div class="avatar">
+                <img data-role="gravatar" data-email="sergey@pimenov.com.ua" alt=""/>
+            </div>
+            <span class="title">Metro UI Library</span>
+            <span class="subtitle"> <span data-role="eval">{{ new Date().getFullYear() }}</span> &copy; Sergey Pimenov</span>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a><span class="mif-home icon"></span>Home</a></li>
+            <li class="active"><a><span class="mif-books icon"></span>Guide</a></li>
+            <li class="disabled"><a><span class="mif-files-empty icon"></span>Examples</a></li>
+            <li class="divider"></li>
+            <li><a>
+                <span class="mif-images icon"></span>
+                <span class="caption">Icons</span>
+            </a></li>
+            <li class="group-title">Group</li>
+            <li><a>
+                <span class="mif-rocket icon"></span>
+                <span class="caption">Rocket</span>
+                <span class="hotkey">Ctrl+F</span>
+            </a></li>
+            <li><a><span class="mif-home icon"></span>Home</a></li>
+            <li><a><span class="mif-home icon"></span>Home</a></li>
+            <li><a><span class="mif-home icon"></span>Home</a></li>
+        </ul>
+    </aside>
 
+    <div class="content" id="content">
+        <p class="h1">What is Lorem Ipsum?</p>
+        <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+            and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
+    </div>
 </div>
 
 <script src="../lib/metro.js"></script>
