@@ -63219,7 +63219,8 @@ label:has(input) {
 .splitter > .split-block {
   position: relative;
   flex-grow: 1;
-  flex-basis: 0;
+  flex-shrink: 1;
+  flex-basis: 100%;
   overflow: hidden;
 }
 .splitter {

@@ -7,9 +7,9 @@
         HORIZONTAL: "horizontal",
     }
 
-    var Utils = Metro.utils;
-    var Storage = Metro.storage;
-    var SplitterDefaultConfig = {
+
+    const Storage = Metro.storage;
+    let SplitterDefaultConfig = {
         splitterDeferred: 0,
         split: SPLIT_MODE.VERTICAL, // horizontal or vertical
         splitSizes: null,
@@ -37,16 +37,16 @@
     Metro.Component('splitter', {
         init: function( options, elem ) {
             this._super(elem, options, SplitterDefaultConfig, {
-                storage: Utils.isValue(Storage) ? Storage : null,
+                storage: Metro.utils.isValue(Storage) ? Storage : null,
                 storageKey: "SPLITTER:",
-                id: Utils.elementId("splitter")
+                id: Metro.utils.elementId("splitter")
             });
 
             return this;
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -57,10 +57,10 @@
         },
 
         _createStructure: function(){
-            var element = this.element, o = this.options;
-            var children = element.children(o.children).addClass("split-block");
-            var i, children_sizes = [];
-            var resizeProp = o.split === SPLIT_MODE.HORIZONTAL ? "height" : "width";
+            const element = this.element, o = this.options;
+            const children = element.children(o.children).addClass("split-block");
+            let i, children_sizes = [];
+            const resizeProp = o.split === SPLIT_MODE.HORIZONTAL ? "height" : "width";
 
             element.addClass("splitter");
             element.addClass((o.split.toLowerCase() === SPLIT_MODE.VERTICAL) ? "vertical" : "horizontal");
@@ -75,7 +75,7 @@
 
             this._setSize();
 
-            if (Utils.isValue(o.minSizes)) {
+            if (Metro.utils.isValue(o.minSizes)) {
                 if ((""+o.minSizes).includes(",")) {
                     children_sizes = o.minSizes.toArray();
                     for (i = 0; i < children_sizes.length; i++) {
@@ -95,46 +95,57 @@
         },
 
         _setSize: function(){
-            var element = this.element, o = this.options;
-            var gutters, children_sizes, i;
-            var children = element.children(".split-block");
+            const element = this.element, o = this.options;
+            let gutters, children_sizes, i;
+            const children = element.children(".split-block");
+            const w = element.width();
 
             gutters = element.children(".gutter");
 
-            if (!Utils.isValue(o.splitSizes)) {
+            if (!Metro.utils.isValue(o.splitSizes)) {
                 children.css({
-                    flexBasis: "calc("+(100/children.length)+"% - "+(gutters.length * o.gutterSize)+"px)"
+                    flexBasis: `calc(${100/children.length}% - ${gutters.length * o.gutterSize}px)`
                 })
             } else {
-                children_sizes = o.splitSizes.toArray();
-                for(i = 0; i < children_sizes.length; i++) {
-                    var s = children_sizes[i]
-                    if (!isNaN(s)) {
-                        s += "%"
+                children_sizes = (""+o.splitSizes).toArray();
+                let remnant = 100
+                let i = 0
+                for(; i < children_sizes.length; i++) {
+                    let s = children_sizes[i];
+                    if (!s.includes("%")) {
+                        s = +s * 100 / w
+                    } else {
+                        s = parseInt(s);
                     }
+                    remnant -= s;
                     $(children[i]).css({
-                        flexBasis: "calc("+s+" - "+(gutters.length * o.gutterSize)+"px)"
+                        flexBasis: `calc(${s}% - ${gutters.length * o.gutterSize}px)`
+                    });
+                }
+                for (; i < children.length; i++) {
+                    $(children[i]).css({
+                        flexBasis: `calc(${remnant/(children.length - i)}% - ${gutters.length * o.gutterSize}px)`
                     });
                 }
             }
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var gutters = element.children(".gutter");
+            const that = this, element = this.element, o = this.options;
+            const gutters = element.children(".gutter");
 
             gutters.on(Metro.events.startAll, function(e){
                 if (o.noResize === true) {
                     return false
                 }
 
-                var w = o.split === SPLIT_MODE.VERTICAL ? element.width() : element.height();
-                var gutter = $(this);
-                var prev_block = gutter.prev(".split-block");
-                var next_block = gutter.next(".split-block");
-                var prev_block_size = 100 * (o.split === SPLIT_MODE.VERTICAL ? prev_block.outerWidth(true) : prev_block.outerHeight(true)) / w;
-                var next_block_size = 100 * (o.split === SPLIT_MODE.VERTICAL ? next_block.outerWidth(true) : next_block.outerHeight(true)) / w;
-                var start_pos = Utils.getCursorPosition(element[0], e);
+                const w = o.split === SPLIT_MODE.VERTICAL ? element.width() : element.height();
+                const gutter = $(this);
+                const prev_block = gutter.prev(".split-block");
+                const next_block = gutter.next(".split-block");
+                const prev_block_size = 100 * (o.split === SPLIT_MODE.VERTICAL ? prev_block.outerWidth(true) : prev_block.outerHeight(true)) / w;
+                const next_block_size = 100 * (o.split === SPLIT_MODE.VERTICAL ? next_block.outerWidth(true) : next_block.outerHeight(true)) / w;
+                const start_pos = Metro.utils.getCursorPosition(element[0], e);
 
                 gutter.addClass("active");
 
@@ -149,8 +160,8 @@
                 });
 
                 $(globalThis).on(Metro.events.moveAll, function(e){
-                    var pos = Utils.getCursorPosition(element[0], e);
-                    var new_pos;
+                    const pos = Metro.utils.getCursorPosition(element[0], e);
+                    let new_pos;
 
                     if (o.split === SPLIT_MODE.VERTICAL) {
                         new_pos = (pos.x * 100 / w) - (start_pos.x * 100 / w);
@@ -172,7 +183,7 @@
                 }, {ns: that.id});
 
                 $(globalThis).on(Metro.events.stopAll, function(e){
-                    var cur_pos;
+                    let cur_pos;
 
                     prev_block.removeClass("stop-pointer");
                     next_block.removeClass("stop-pointer");
@@ -184,7 +195,7 @@
                     $(globalThis).off(Metro.events.moveAll,{ns: that.id});
                     $(globalThis).off(Metro.events.stopAll,{ns: that.id});
 
-                    cur_pos = Utils.getCursorPosition(element[0], e);
+                    cur_pos = Metro.utils.getCursorPosition(element[0], e);
 
                     that._fireEvent("resize-stop", {
                         pos: cur_pos,
@@ -197,9 +208,9 @@
             }, {passive: true});
 
             $(globalThis).on(Metro.events.resize, function(){
-                var gutter = element.children(".gutter");
-                var prev_block = gutter.prev(".split-block");
-                var next_block = gutter.next(".split-block");
+                const gutter = element.children(".gutter");
+                const prev_block = gutter.prev(".split-block");
+                const next_block = gutter.next(".split-block");
 
                 that._fireEvent("resize-window", {
                     prevBlock: prev_block[0],
@@ -210,14 +221,14 @@
         },
 
         _saveSize: function(){
-            var element = this.element, o = this.options;
-            var storage = this.storage, itemsSize = [];
-            var id = element.attr("id") || this.id;
+            const element = this.element, o = this.options;
+            const storage = this.storage, itemsSize = [];
+            const id = element.attr("id") || this.id;
 
             if (o.saveState === true && storage !== null) {
 
                 $.each(element.children(".split-block"), function(){
-                    var item = $(this);
+                    const item = $(this);
                     itemsSize.push(item.css("flex-basis"));
                 });
 
@@ -227,24 +238,24 @@
         },
 
         _getSize: function(){
-            var element = this.element, o = this.options;
-            var storage = this.storage, itemsSize = [];
-            var id = element.attr("id") || this.id;
+            const element = this.element, o = this.options;
+            let storage = this.storage, itemsSize = [];
+            const id = element.attr("id") || this.id;
 
             if (o.saveState === true && storage !== null) {
 
                 itemsSize = storage.getItem(this.storageKey + id);
 
                 $.each(element.children(".split-block"), function(i, v){
-                    var item = $(v);
-                    if (Utils.isValue(itemsSize) && Utils.isValue(itemsSize[i])) item.css("flex-basis", itemsSize[i]);
+                    const item = $(v);
+                    if (Metro.utils.isValue(itemsSize) && Metro.utils.isValue(itemsSize[i])) item.css("flex-basis", itemsSize[i]);
                 });
             }
         },
 
         size: function(size){
-            var that = this, o = this.options;
-            if (Utils.isValue(size)) {
+            const that = this, o = this.options;
+            if (Metro.utils.isValue(size)) {
                 o.splitSizes = size;
                 that._setSize();
             }
@@ -252,10 +263,10 @@
         },
 
         changeAttribute: function(attributeName){
-            var that = this, element = this.element;
+            const that = this, element = this.element;
 
             function changeSize(){
-                var size = element.attr("data-split-sizes");
+                const size = element.attr("data-split-sizes");
                 that.size(size);
             }
 
@@ -265,10 +276,10 @@
         },
 
         destroy: function(){
-            var element = this.element;
-            var gutters = element.children(".gutter");
+            const element = this.element;
+            const gutters = element.children(".gutter");
             gutters.off(Metro.events.start);
-            return element;
+            return element.remove();
         }
     });
 }(Metro, m4q));
