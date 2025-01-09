@@ -14,6 +14,7 @@
         split: SPLIT_MODE.VERTICAL, // horizontal or vertical
         splitSizes: null,
         gutterSize: 5,
+        gutterStyle: "default", // ribbed, dashed, dotted, default
         minSizes: null,
         children: "*",
         gutterClick: "expand", // TODO expand or collapse
@@ -65,6 +66,10 @@
             element.addClass("splitter");
             element.addClass((o.split.toLowerCase() === SPLIT_MODE.VERTICAL) ? "vertical" : "horizontal");
 
+            if (o.gutterStyle !== "default") {
+                element.addClass(`gutter-style-${o.gutterStyle}`);
+            }
+            
             if (o.noResize === true) {
                 element.addClass("static-size")
             }
