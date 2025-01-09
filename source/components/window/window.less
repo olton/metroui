@@ -134,15 +134,17 @@
         }
 
         .btn-close {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             &::before {
                 border-color: var(--window-sys-button-color);
                 content: '\D7';
-                position: absolute;
+                position: relative;
                 line-height: 34px;
                 vertical-align: middle;
-                left: 50%;
-                top: -8px;
-                margin-left: -.32em;
+                left: 0;
+                top: 0;
                 color: var(--window-sys-button-color);
                 font-size: 1.5rem;
             }
@@ -200,7 +202,7 @@
     overflow: auto;
     height: calc(100% - 2.25rem);
     border: var(--window-border-size) var(--window-border-color) solid;
-    background-color: var(--window-background);
+    background-color: transparent;
     padding: calc(var(--window-border-size) * 2);
     font-size: 14px;
     

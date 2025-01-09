@@ -2,17 +2,15 @@
 
 (function (Metro, $) {
     "use strict";
-    var Utils = Metro.utils;
-    var AccordionDefaultConfig = {
+
+    let AccordionDefaultConfig = {
         accordionDeferred: 0,
         showMarker: true,
         material: false,
         duration: METRO_ANIMATION_DURATION,
         oneFrame: true,
         showActive: true,
-        activeFrameClass: "",
-        activeHeadingClass: "",
-        activeContentClass: "",
+
         clsFrame: "",
         clsHeading: "",
         clsContent: "",
@@ -20,6 +18,7 @@
         clsActiveFrame: "",
         clsActiveFrameHeading: "",
         clsActiveFrameContent: "",
+
         onFrameOpen: Metro.noop,
         onFrameBeforeOpen: Metro.noop_true,
         onFrameClose: Metro.noop,
@@ -42,7 +41,7 @@
         },
 
         _create: function () {
-            var element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -53,19 +52,19 @@
         },
 
         _createStructure: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var frames = element.children(".frame");
-            var active = element.children(".frame.active");
-            var frame_to_open;
+            const frames = element.children(".frame");
+            const active = element.children(".frame.active");
+            let frame_to_open;
 
             element.addClass("accordion").addClass(o.clsAccordion);
 
             frames.addClass(o.clsFrame).each(function () {
-                var $el = $(this);
-                $el.children(".heading").addClass(o.clsHeading);
-                $el.children(".content").addClass(o.clsContent);
+                const el = $(this);
+                el.children(".heading").addClass(o.clsHeading);
+                el.children(".content").addClass(o.clsContent);
             });
 
             if (o.showMarker === true) {
@@ -96,14 +95,14 @@
         },
 
         _createEvents: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var active = element.children(".frame.active");
+            const active = element.children(".frame.active");
 
             element.on(Metro.events.click, ".heading", function () {
-                var heading = $(this);
-                var frame = heading.parent();
+                const heading = $(this);
+                const frame = heading.parent();
 
                 if (heading.closest(".accordion")[0] !== element[0]) {
                     return false;
@@ -122,12 +121,12 @@
         },
 
         _openFrame: function (f) {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var frame = $(f);
+            const frame = $(f);
 
             if (
-                Utils.exec(o.onFrameBeforeOpen, [frame[0]], element[0]) ===
+                Metro.utils.exec(o.onFrameBeforeOpen, [frame[0]], element[0]) ===
                 false
             ) {
                 return false;
@@ -138,15 +137,13 @@
             }
 
             frame
-                .addClass("active " + o.activeFrameClass)
+                .addClass("active")
                 .addClass(o.clsActiveFrame);
             frame
                 .children(".heading")
-                .addClass(o.activeHeadingClass)
                 .addClass(o.clsActiveFrameHeading);
             frame
                 .children(".content")
-                .addClass(o.activeContentClass)
                 .addClass(o.clsActiveFrameContent)
                 .slideDown(o.duration);
 
@@ -156,31 +153,29 @@
         },
 
         _closeFrame: function (f) {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var frame = $(f);
+            const frame = $(f);
 
             if (!frame.hasClass("active")) {
                 return;
             }
 
             if (
-                Utils.exec(o.onFrameBeforeClose, [frame[0]], element[0]) ===
+                Metro.utils.exec(o.onFrameBeforeClose, [frame[0]], element[0]) ===
                 false
             ) {
                 return;
             }
 
             frame
-                .removeClass("active " + o.activeFrameClass)
+                .removeClass("active")
                 .removeClass(o.clsActiveFrame);
             frame
                 .children(".heading")
-                .removeClass(o.activeHeadingClass)
                 .removeClass(o.clsActiveFrameHeading);
             frame
                 .children(".content")
-                .removeClass(o.activeContentClass)
                 .removeClass(o.clsActiveFrameContent)
                 .slideUp(o.duration);
 
@@ -190,9 +185,9 @@
         },
 
         _closeAll: function (skip) {
-            var that = this,
+            const that = this,
                 element = this.element;
-            var frames = element.children(".frame");
+            const frames = element.children(".frame");
 
             $.each(frames, function () {
                 if (skip === this) return;
@@ -201,8 +196,8 @@
         },
 
         _hideAll: function () {
-            var element = this.element;
-            var frames = element.children(".frame");
+            const element = this.element;
+            const frames = element.children(".frame");
 
             $.each(frames, function () {
                 $(this).children(".content").hide();
@@ -210,9 +205,9 @@
         },
 
         _openAll: function () {
-            var that = this,
+            const that = this,
                 element = this.element;
-            var frames = element.children(".frame");
+            const frames = element.children(".frame");
 
             $.each(frames, function () {
                 that._openFrame(this);
@@ -220,7 +215,7 @@
         },
 
         open: function (i) {
-            var frame = this.element.children(".frame").eq(i);
+            const frame = this.element.children(".frame").eq(i);
             this._openFrame(frame);
         },
 
@@ -228,7 +223,7 @@
         changeAttribute: function (attr, newVal) {},
 
         destroy: function () {
-            var element = this.element;
+            const element = this.element;
             element.off(Metro.events.click, ".heading");
             return element;
         },

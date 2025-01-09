@@ -33,6 +33,10 @@
         customButtons: null,
         status: "",
 
+        canClose: true,
+        canMaximize: true,
+        canMinimize: true,
+        
         clsCustomButton: "",
         clsCaption: "",
         clsContent: "",
@@ -289,9 +293,9 @@
             caption.on(Metro.events.click, ".btn-max, .btn-min, .btn-close", function(e){
                 if (Metro.utils.isRightMouse(e)) return;
                 const target = $(e.target);
-                if (target.hasClass("btn-max")) that.maximized(e);
-                if (target.hasClass("btn-min")) that.minimized(e);
-                if (target.hasClass("btn-close")) that.close(e);
+                if (target.hasClass("btn-max") && o.canMaximize) that.maximized(e);
+                if (target.hasClass("btn-min") && o.canMinimize) that.minimized(e);
+                if (target.hasClass("btn-close") && o.canClose) that.close(e);
             });
 
             if (o.draggable === true) {

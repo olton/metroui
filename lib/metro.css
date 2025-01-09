@@ -43391,6 +43391,7 @@ hr.fat {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-radius: 6px;
 }
 .accordion > .frame > .content {
   display: block;
@@ -43400,18 +43401,20 @@ hr.fat {
 }
 .accordion.marker-on .heading::before {
   line-height: 1;
-  display: block;
-  content: "\203a";
+  display: flex;
+  content: "\2bc8";
   position: absolute;
   left: 0;
   top: 0;
-  font-size: 32px;
+  font-size: 16px;
   width: 34px;
   height: 34px;
   text-align: center;
   transform: rotate(0);
   transition: transform 0.3s;
-  transform-origin: 50% 50%;
+  transform-origin: center center;
+  align-items: center;
+  justify-content: center;
 }
 .accordion.marker-on .frame.active > .heading::before {
   transform: rotate(90deg);
@@ -43437,6 +43440,7 @@ hr.fat {
   font-size: 16px;
   background-color: var(--accordion-heading-background);
   color: var(--accordion-heading-color);
+  border-radius: 1rem;
 }
 .accordion.material > .frame > .heading::after {
   display: block;
@@ -43453,11 +43457,7 @@ hr.fat {
   transition: transform 0.3s;
   transform-origin: 50% 50%;
 }
-.accordion.material .frame + .frame {
-  border-top: 1px var(--border-color) solid;
-}
 .accordion.material > .frame > .content {
-  padding: 16px;
   font-size: 14px;
 }
 .accordion.material > .frame.active .heading::after {
@@ -68495,15 +68495,19 @@ body.vegas-container > .vegas-slide {
 .window-caption .buttons .sys-button:active {
   background-color: var(--window-sys-button-backgroud-hover);
 }
+.window-caption .buttons .btn-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .window-caption .buttons .btn-close::before {
   border-color: var(--window-sys-button-color);
   content: "\d7";
-  position: absolute;
+  position: relative;
   line-height: 34px;
   vertical-align: middle;
-  left: 50%;
-  top: -8px;
-  margin-left: -0.32em;
+  left: 0;
+  top: 0;
   color: var(--window-sys-button-color);
   font-size: 1.5rem;
 }
@@ -68558,7 +68562,7 @@ body.vegas-container > .vegas-slide {
   overflow: auto;
   height: calc(100% - 2.25rem);
   border: var(--window-border-size) var(--window-border-color) solid;
-  background-color: var(--window-background);
+  background-color: transparent;
   padding: calc(var(--window-border-size) * 2);
   font-size: 14px;
 }
