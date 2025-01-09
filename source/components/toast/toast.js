@@ -7,7 +7,7 @@
         timeout: METRO_TIMEOUT,
         distance: 20,
         position: "bottom", // top, bottom, center
-        cls: ""
+        clsToast: ""
     };
 
     Metro.toastSetup = function(options){
@@ -58,7 +58,7 @@
                     'left': '50%',
                     'margin-left': -(width / 2)
                 })
-                .addClass(o.cls)
+                .addClass(o.clsToast)
                 .addClass(cls)
                 .fadeIn(METRO_ANIMATION_DURATION, function(){
                     setTimeout(function(){
