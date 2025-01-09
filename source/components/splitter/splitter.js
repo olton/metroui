@@ -96,7 +96,7 @@
 
         _setSize: function(){
             const element = this.element, o = this.options;
-            let gutters, children_sizes, i;
+            let gutters, children_sizes;
             const children = element.children(".split-block");
             const w = element.width();
 
