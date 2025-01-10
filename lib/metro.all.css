@@ -25735,7 +25735,7 @@ hr.fat {
   background-color: #d1c5a1 !important;
 }
 :root {
-  --gm-value: 10px;
+  --gm-value: 16px;
 }
 .bg-glassmorphism {
   background-color: rgba(255, 255, 255, 0.1) !important;
