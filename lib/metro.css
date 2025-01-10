@@ -68566,6 +68566,9 @@ body.vegas-container > .vegas-slide {
   padding: calc(var(--window-border-size) * 2);
   font-size: 14px;
 }
+.window-content > * {
+  height: 100%;
+}
 .window-content::-webkit-scrollbar {
   height: var(--window-scrollbar-size);
   width: var(--window-scrollbar-size);
