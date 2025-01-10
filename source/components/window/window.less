@@ -125,6 +125,8 @@
         .sys-button {
             background-color: transparent;
             color: var(--window-sys-button-color);
+            border-radius: 0;
+            border: none;
             &:hover {
                 background-color: var(--window-sys-button-backgroud-hover);
             }
@@ -143,8 +145,8 @@
                 position: relative;
                 line-height: 34px;
                 vertical-align: middle;
-                left: 0;
-                top: 0;
+                left: 1px;
+                top: -1px;
                 color: var(--window-sys-button-color);
                 font-size: 1.5rem;
             }
@@ -173,7 +175,7 @@
                 bottom: .72rem;
                 left: 50%;
                 margin-left: -.3rem;
-                top: 8px;
+                top: 4px;
             }
         }
 
@@ -182,6 +184,7 @@
                 height: .575rem;
                 border: 1px var(--window-sys-button-color) solid;
                 border-top-width: 2px;
+                top: 8px;
             }
         }
 
@@ -239,29 +242,28 @@
 }
 
 .window {
-    &.info {
-        .window-caption {
-            background-color: @cyan;
-            color: @white;
-        }
+    &.info-window {
+        --window-border-color: @infoColor;
+        --window-caption-background: @infoColor;
+        --window-caption-color: @white;
+        --window-sys-button-color: @white;
     }
-    &.alert {
-        .window-caption {
-            background-color: @red;
-            color: @white;
-        }
+    &.alert-window {
+        --window-border-color: @alertColor;
+        --window-caption-background: @alertColor;
+        --window-caption-color: @white;
+        --window-sys-button-color: @white;
     }
-    &.warning {
-        .window-caption {
-            background-color: @orange;
-            color: @white;
-        }
+    &.warning-window {
+        --window-border-color: @warningColor;
+        --window-caption-background: @warningColor;
+        --window-caption-color: @white;
+        --window-sys-button-color: @white;
     }
-    &.success {
-        .window-caption {
-            background-color: @green;
-            color: @white;
-        }
+    &.success-window {
+        --window-border-color: @successColor;
+        --window-caption-color: @white;
+        --window-sys-button-color: @white;
     }
 }
 

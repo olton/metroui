@@ -68488,6 +68488,8 @@ body.vegas-container > .vegas-slide {
 .window-caption .buttons .sys-button {
   background-color: transparent;
   color: var(--window-sys-button-color);
+  border-radius: 0;
+  border: none;
 }
 .window-caption .buttons .sys-button:hover {
   background-color: var(--window-sys-button-backgroud-hover);
@@ -68506,8 +68508,8 @@ body.vegas-container > .vegas-slide {
   position: relative;
   line-height: 34px;
   vertical-align: middle;
-  left: 0;
-  top: 0;
+  left: 1px;
+  top: -1px;
   color: var(--window-sys-button-color);
   font-size: 1.5rem;
 }
@@ -68534,12 +68536,13 @@ body.vegas-container > .vegas-slide {
   bottom: 0.72rem;
   left: 50%;
   margin-left: -0.3rem;
-  top: 8px;
+  top: 4px;
 }
 .window-caption .buttons .btn-max::before {
   height: 0.575rem;
   border: 1px var(--window-sys-button-color) solid;
   border-top-width: 2px;
+  top: 8px;
 }
 .window-caption .buttons .btn-custom {
   min-width: 34px;
@@ -68592,21 +68595,28 @@ body.vegas-container > .vegas-slide {
   align-items: center;
   padding: 0 0.5rem 0.25rem;
 }
-.window.info .window-caption {
-  background-color: #94b6ff;
-  color: #ffffff;
+.window.info-window {
+  --window-border-color: #468cff;
+  --window-caption-background: #468cff;
+  --window-caption-color: #ffffff;
+  --window-sys-button-color: #ffffff;
 }
-.window.alert .window-caption {
-  background-color: #ff0000;
-  color: #ffffff;
+.window.alert-window {
+  --window-border-color: #df0e38;
+  --window-caption-background: #df0e38;
+  --window-caption-color: #ffffff;
+  --window-sys-button-color: #ffffff;
 }
-.window.warning .window-caption {
-  background-color: #ffa500;
-  color: #ffffff;
+.window.warning-window {
+  --window-border-color: #ffa500;
+  --window-caption-background: #ffa500;
+  --window-caption-color: #ffffff;
+  --window-sys-button-color: #ffffff;
 }
-.window.success .window-caption {
-  background-color: #00b500;
-  color: #ffffff;
+.window.success-window {
+  --window-border-color: #50c878;
+  --window-caption-color: #ffffff;
+  --window-sys-button-color: #ffffff;
 }
 .window.focused {
   box-shadow: 0 25px 50px -12px var(--shadow-color-large-extra);

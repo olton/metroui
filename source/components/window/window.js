@@ -236,17 +236,17 @@
             buttons.appendTo(caption);
 
             if (o.btnMax === true) {
-                btnMax = $("<span>").addClass("button small btn-max sys-button");
+                btnMax = $("<span>").addClass("button small square btn-max sys-button");
                 btnMax.appendTo(buttons);
             }
 
             if (o.btnMin === true) {
-                btnMin = $("<span>").addClass("button small btn-min sys-button");
+                btnMin = $("<span>").addClass("button small square btn-min sys-button");
                 btnMin.appendTo(buttons);
             }
 
             if (o.btnClose === true) {
-                btnClose = $("<span>").addClass("button small btn-close sys-button");
+                btnClose = $("<span>").addClass("button small square btn-close sys-button");
                 btnClose.appendTo(buttons);
             }
 
