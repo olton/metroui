@@ -3,7 +3,7 @@
 (function (Metro, $) {
     "use strict";
 
-    var PageControlDefaultConfig = {
+    let PageControlDefaultConfig = {
         appendButton: true,
         tabsPosition: "left",
         customButtons: null,
@@ -48,10 +48,6 @@
         },
 
         _create: function () {
-            var that = this,
-                element = this.element,
-                o = this.options;
-
             this._createStructure();
             this._createEvents();
 
@@ -59,7 +55,7 @@
         },
 
         _createStructure: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
 
@@ -68,15 +64,15 @@
             element.addClass("page-control__tabs").appendTo(this.component);
             element.addClass(`tabs-position-${o.tabsPosition}`);
 
-            var items = element.children("li:not(.page-control__tab-custom)");
+            const items = element.children("li:not(.page-control__tab-custom)");
 
-            var activeTabExists = false;
+            let activeTabExists = false;
 
             items.each(function (index, el) {
-                var $el = $(el),
+                const $el = $(el),
                     html = $el.html(),
                     active = $el.hasClass("active");
-                var tab = that.createTab({
+                const tab = that.createTab({
                     caption: html,
                     icon: $el.attr("data-icon"),
                     image: $el.attr("data-image"),
@@ -94,7 +90,7 @@
             });
 
             if (!activeTabExists) {
-                var tab = this.element.children(".page-control__tab").first();
+                const tab = this.element.children(".page-control__tab").first();
                 tab.addClass("active");
                 this._fireEvent("tab-activate", { tab: tab[0] });
             }
@@ -104,14 +100,14 @@
             }
 
             if (o.appendButton) {
-                var appendButton = $("<li>").addClass("page-control__tab__append").html(`<span class="toggle">+</span>`);
+                const appendButton = $("<li>").addClass("page-control__tab__append").html(`<span class="toggle">+</span>`);
 
                 if (o.appendActions) {
-                    var appendItems = Metro.utils.exec(o.appendActions, null, this);
+                    const appendItems = Metro.utils.exec(o.appendActions, null, this);
                     if (!Array.isArray(appendItems)) {
                         throw "PageControl Error! Prop appendActions must be a function that returns an array.";
                     }
-                    var appendMenu = $("<ul data-role='dropdown' class='d-menu context'>");
+                    const appendMenu = $("<ul data-role='dropdown' class='d-menu context'>");
                     appendItems.map((el) => appendMenu.append(that._renderMenuItem(el)));
                     appendButton.append(appendMenu);
                 }
@@ -119,7 +115,7 @@
                 element.append(appendButton);
             }
 
-            var services = $("<li>").addClass("page-control__tab__service").addClass("invisible-tabs").appendTo(element);
+            const services = $("<li>").addClass("page-control__tab__service").addClass("invisible-tabs").appendTo(element);
             services.append(
                 $("<div>").addClass("page-control__service-button").html(`
                     <span class="toggle">↧</span>
@@ -143,7 +139,7 @@
             this.invisibleTabsHolderToggle.hide();
             this.organizeTabs();
 
-            var tabsServices = $("<li>").addClass("page-control__tab__service").addClass("tabs-menu").appendTo(element);
+            const tabsServices = $("<li>").addClass("page-control__tab__service").addClass("tabs-menu").appendTo(element);
             tabsServices.append(
                 $("<div>").addClass("page-control__service-button").html(`
                     <span class="toggle">︙</span>
@@ -153,30 +149,30 @@
             if (!o.tabsActions) {
                 tabsServices.hide();
             } else {
-                var tabsMenu = tabsServices.find("ul");
-                var tabsMenuItems = Metro.utils.exec(o.tabsActions, null, this);
+                const tabsMenu = tabsServices.find("ul");
+                const tabsMenuItems = Metro.utils.exec(o.tabsActions, null, this);
                 tabsMenuItems.map((el) => tabsMenu.append(that._renderMenuItem(el)));
             }
         },
 
         _updateRefs: function () {
-            var tabs = this.element.find(".page-control__tab");
-            var activeTab = this.element.find(".page-control__tab.active");
+            const tabs = this.element.find(".page-control__tab");
+            const activeTab = this.element.find(".page-control__tab.active");
             tabs.each((_, el) => $($(el).data("ref")).hide());
             $(activeTab.data("ref")).show();
         },
 
         _createEvents: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
 
             element.on("click", ".page-control__tab__closer", this.closeButtonClick.bind(this));
 
             element.on("click", ".page-control__tab__menu > li > a", function (e) {
-                var action = $(this).attr("data-action");
-                var menu = Metro.getPlugin($(this).closest("ul"), "dropdown");
-                var tab = $(this).closest(".page-control__tab")[0];
+                const action = $(this).attr("data-action");
+                const menu = Metro.getPlugin($(this).closest("ul"), "dropdown");
+                const tab = $(this).closest(".page-control__tab")[0];
 
                 menu.close();
 
@@ -215,7 +211,7 @@
                 e.stopPropagation();
             });
 
-            element.on("click", ".page-control__tab", function (e) {
+            element.on("click", ".page-control__tab", function () {
                 const tab = $(this);
                 if (tab.hasClass("active")) {
                     return;
@@ -243,14 +239,14 @@
                 that._fireEvent("append-button-click", { tab });
             });
 
-            $(globalThis).on("resize", (e) => {
+            $(globalThis).on("resize", () => {
                 this.organizeTabs();
             });
         },
 
         _renderMenuItem: function (el) {
-            var li = $("<li>");
-            var an = $("<a>");
+            const li = $("<li>");
+            const an = $("<a>");
 
             if (el.icon || el.image) {
                 an.append(el.icon ? $("<span class='icon'>").addClass(el.icon) : $("<img class='icon'>").attr("src", el.image).attr("alt", ""));
@@ -268,11 +264,11 @@
         },
 
         createTab: function ({ caption, icon, image, canClose = true, hasMenu = true, data, ref }) {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
 
-            var tab = $("<li>").addClass("page-control__tab").appendTo(element);
+            const tab = $("<li>").addClass("page-control__tab").appendTo(element);
 
             if (hasMenu) {
                 tab.append(
@@ -291,8 +287,8 @@
                     `),
                 );
                 if (o.tabActions) {
-                    var tabMenu = tab.find("ul");
-                    var tabMenuItems = Metro.utils.exec(o.tabActions);
+                    const tabMenu = tab.find("ul");
+                    const tabMenuItems = Metro.utils.exec(o.tabActions);
                     if (!Array.isArray(tabMenuItems)) {
                         throw "PageControl Error! Prop tabActions must be a function that returns an array.";
                     }
@@ -326,12 +322,11 @@
         },
 
         closeButtonClick: function (e) {
-            var that = this,
-                element = this.element,
+            const that = this,
                 o = this.options;
 
-            var tab = $(e.target).closest(".page-control__tab");
-            var parent = tab.closest("ul");
+            const tab = $(e.target).closest(".page-control__tab");
+            const parent = tab.closest("ul");
 
             if (!o.onTabBeforeClose(tab[0])) {
                 return;
@@ -349,7 +344,7 @@
         },
 
         closeTab: function (tab, reorg = true) {
-            var $tab = $(tab);
+            const $tab = $(tab);
             if ($tab.hasClass("active")) {
                 const prev = $tab.prev(".page-control__tab"),
                     next = $tab.next(".page-control__tab");
@@ -373,11 +368,10 @@
         },
 
         activateTab: function (tab) {
-            var element = this.element,
-                o = this.options;
+            const element = this.element, o = this.options;
 
             element.find(".page-control__tab").each((index, el) => {
-                var t = $(el);
+                const t = $(el);
                 if (t.hasClass("active")) {
                     this._fireEvent("tab-deactivate", { tab: el });
                     t.removeClass("active");
@@ -401,10 +395,10 @@
         },
 
         organizeTabs: function () {
-            var element = this.element;
-            var tabsWidth = this.elem.getBoundingClientRect().width;
-            var holder = this.invisibleTabsHolder;
-            var addTabButton = element.find(".page-control__tab__append");
+            const element = this.element;
+            const tabsWidth = this.elem.getBoundingClientRect().width;
+            const holder = this.invisibleTabsHolder;
+            const addTabButton = element.find(".page-control__tab__append");
 
             holder.children(".page-control__tab").each((index, el) => {
                 const tab = $(el);
@@ -442,9 +436,9 @@
         },
 
         addTab: function ({ caption, icon, image, canClose = true, hasMenu = true, data, ref }, insert = "before") {
-            var o = this.options;
+            const o = this.options;
 
-            var newTab = this.createTab({ caption, icon, image, canClose, hasMenu, data, ref });
+            const newTab = this.createTab({caption, icon, image, canClose, hasMenu, data, ref});
 
             if (o.activateNewTab) {
                 this.activateTab(newTab);
@@ -471,8 +465,8 @@
             if (!caption) {
                 return undefined;
             }
-            var tabs = this.component.find(".page-control__tab");
-            for (var tab of tabs) {
+            const tabs = this.component.find(".page-control__tab");
+            for (const tab of tabs) {
                 if ($(tab).find(".caption").text() === caption) {
                     return tab;
                 }
@@ -527,7 +521,7 @@
         },
 
         setupTab: function (tab, prop, val) {
-            var $tab = $(tab);
+            const $tab = $(tab);
             switch (prop) {
                 case "caption": {
                     $tab.find(".page-control__tab__caption").text(val);
@@ -555,9 +549,8 @@
         },
 
         renameTab: function (tab) {
-            var that = this,
-                o = this.options;
-            var caption = $(tab).find(".page-control__tab__caption");
+            const that = this;
+            const caption = $(tab).find(".page-control__tab__caption");
 
             Metro.dialog.create({
                 title: that.strings.label_rename_tab,

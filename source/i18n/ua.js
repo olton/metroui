@@ -118,8 +118,8 @@
 
         label_rename_tab: "Перейменувати вкладку",
         label_close_tab: "Закрити вкладку",
-        label_close_other_tabs: "Закрийте інші вкладки",
-        label_close_tabs_left: "Закрити вкладки зліва",
+        label_close_other_tabs: "Закрити інші вкладки",
+        label_close_tabs_left: "Закрити вкладки ліворуч",
         label_close_tabs_right: "Закрити вкладки праворуч",
         label_close_all_tabs: "Закрийте всі вкладки",
         label_close_inactive_tabs: "Закрити неактивні вкладки",

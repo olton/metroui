@@ -90,8 +90,16 @@
         }
     }
 
-    &:not(.active):hover {
-        background: var(--page-control-background-hover);
+    @media (hover: hover) {
+        &:not(.active):hover {
+            background: var(--page-control-background-hover);
+        }
+    }
+
+    @media (hover: none) {
+        &:not(.active):active {
+            background: var(--page-control-background-hover);
+        }
     }
 
     &-custom {
@@ -149,7 +157,6 @@
 .page-control__tab__menu__holder {
     cursor: pointer;
     margin-right: 10px;
-    visibility: hidden;
 }
 
 .page-control__tab.active, .page-control__tab:hover {
