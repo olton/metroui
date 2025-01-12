@@ -135,21 +135,39 @@
             }
         }
 
-        .btn-close {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .btn-min, .btn-max, .btn-close {
             &::before {
-                border-color: var(--window-sys-button-color);
-                content: '\D7';
-                position: relative;
-                line-height: 34px;
-                vertical-align: middle;
-                left: 1px;
-                top: -1px;
-                color: var(--window-sys-button-color);
-                font-size: 1.5rem;
+                display: block;
+                position: absolute;
+                content: '';
             }
+        }
+
+        .btn-min {
+            &::before {
+                content: "🗕";
+            }
+        }
+        
+        .btn-max {
+            &::before {
+                content: "🗖";
+            }
+        }
+
+        .btn-close {
+            &::before {
+                content: "✕";
+            }
+        }
+        
+        .btn-custom {
+            min-width: 34px;
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        .btn-close {
             &:hover {
                 background-color: var(--window-close-button-backgroud-hover);
                 color: var(--window-close-button-color-hover);
@@ -161,37 +179,6 @@
                 background-color: var(--window-close-button-backgroud-hover);
                 color: var(--window-close-button-color-hover);
             }
-        }
-
-        .btn-min, .btn-max {
-            &::before {
-                display: block;
-                position: absolute;
-                width: .625rem;
-                height: .625rem;
-                border: 0 var(--window-sys-button-color) solid;
-                border-bottom-width: 2px;
-                content: ' ';
-                bottom: .72rem;
-                left: 50%;
-                margin-left: -.3rem;
-                top: 4px;
-            }
-        }
-
-        .btn-max {
-            &::before {
-                height: .575rem;
-                border: 1px var(--window-sys-button-color) solid;
-                border-top-width: 2px;
-                top: 8px;
-            }
-        }
-
-        .btn-custom {
-            min-width: 34px;
-            width: auto;
-            flex-shrink: 0;
         }
 
         .btn-custom {order: 1;}
@@ -304,24 +291,11 @@
         height: 100% !important;
         max-height: none !important;
         max-width: none !important;
+        border-radius: 0!important;
 
         .btn-max {
             &::before {
-                border: 1px var(--window-sys-button-color) solid;
-                z-index: 2;
-            }
-            &::after {
-                display: block;
-                position: absolute;
-                width: .625rem;
-                height: .625rem;
-                border-top: 1px var(--window-sys-button-color) solid;
-                border-right: 1px var(--window-sys-button-color) solid;
-                content: ' ';
-                bottom: .375rem;
-                right: 7px;
-                top: 8px;
-                z-index: 1;
+                content: "🗗";
             }
         }
     }

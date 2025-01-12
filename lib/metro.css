@@ -69152,21 +69152,26 @@ body.vegas-container > .vegas-slide {
 .window-caption .buttons .sys-button:active {
   background-color: var(--window-sys-button-backgroud-hover);
 }
-.window-caption .buttons .btn-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.window-caption .buttons .btn-min::before,
+.window-caption .buttons .btn-max::before,
+.window-caption .buttons .btn-close::before {
+  display: block;
+  position: absolute;
+  content: "";
+}
+.window-caption .buttons .btn-min::before {
+  content: "\1f5d5";
+}
+.window-caption .buttons .btn-max::before {
+  content: "\1f5d6";
 }
 .window-caption .buttons .btn-close::before {
-  border-color: var(--window-sys-button-color);
-  content: "\d7";
-  position: relative;
-  line-height: 34px;
-  vertical-align: middle;
-  left: 1px;
-  top: -1px;
-  color: var(--window-sys-button-color);
-  font-size: 1.5rem;
+  content: "\2715";
+}
+.window-caption .buttons .btn-custom {
+  min-width: 34px;
+  width: auto;
+  flex-shrink: 0;
 }
 .window-caption .buttons .btn-close:hover {
   background-color: var(--window-close-button-backgroud-hover);
@@ -69178,31 +69183,6 @@ body.vegas-container > .vegas-slide {
 .window-caption .buttons .btn-close:active {
   background-color: var(--window-close-button-backgroud-hover);
   color: var(--window-close-button-color-hover);
-}
-.window-caption .buttons .btn-min::before,
-.window-caption .buttons .btn-max::before {
-  display: block;
-  position: absolute;
-  width: 0.625rem;
-  height: 0.625rem;
-  border: 0 var(--window-sys-button-color) solid;
-  border-bottom-width: 2px;
-  content: " ";
-  bottom: 0.72rem;
-  left: 50%;
-  margin-left: -0.3rem;
-  top: 4px;
-}
-.window-caption .buttons .btn-max::before {
-  height: 0.575rem;
-  border: 1px var(--window-sys-button-color) solid;
-  border-top-width: 2px;
-  top: 8px;
-}
-.window-caption .buttons .btn-custom {
-  min-width: 34px;
-  width: auto;
-  flex-shrink: 0;
 }
 .window-caption .buttons .btn-custom {
   order: 1;
@@ -69299,23 +69279,10 @@ body.vegas-container > .vegas-slide {
   height: 100% !important;
   max-height: none !important;
   max-width: none !important;
+  border-radius: 0 !important;
 }
 .window.maximized .btn-max::before {
-  border: 1px var(--window-sys-button-color) solid;
-  z-index: 2;
-}
-.window.maximized .btn-max::after {
-  display: block;
-  position: absolute;
-  width: 0.625rem;
-  height: 0.625rem;
-  border-top: 1px var(--window-sys-button-color) solid;
-  border-right: 1px var(--window-sys-button-color) solid;
-  content: " ";
-  bottom: 0.375rem;
-  right: 7px;
-  top: 8px;
-  z-index: 1;
+  content: "\1f5d7";
 }
 .window.resizable {
   min-width: 12rem;
