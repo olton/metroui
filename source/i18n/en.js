@@ -124,6 +124,12 @@
         label_close_all_tabs: "Close all tabs",
         label_close_inactive_tabs: "Close inactive tabs",
         
+        label_clear_input: "Clear input",
+        label_reveal_password: "Reveal password",
+        label_hide_password: "Hide password",
+        label_generate_random: "Generate random value",
+        label_search_input: "Search for the entered value",
+        
         label_note: "Note",
         label_tip: "Tip",
         label_info: "Info",

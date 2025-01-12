@@ -22,7 +22,12 @@
     --button-disabled-opacity: .25;
 }
 
-button, .button, .flat-button {
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.button, 
+.flat-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -171,7 +176,11 @@ a {
     }
 }
 
-button, .button {
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.button {
     .load-marker {
         transform: scale(0);
         opacity: 0;
@@ -224,7 +233,11 @@ button.flat, .button.flat, .flat-button {
 
 each(@media-rules, {
     @container (min-width: @value) {
-        button, .button {
+        button,
+        input[type="button"],
+        input[type="submit"],
+        input[type="reset"],
+        .button {
             &.large-@{key} {
                 --button-pill-radius: 27px;
                 --button-size: 54px;

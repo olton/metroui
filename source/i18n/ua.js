@@ -124,6 +124,12 @@
         label_close_all_tabs: "Закрийте всі вкладки",
         label_close_inactive_tabs: "Закрити неактивні вкладки",
 
+        label_clear_input: "Очистити введення",
+        label_reveal_password: "Відкрити пароль",
+        label_hide_password: "Приховати пароль",
+        label_generate_random: "Генерувати випадковe значення",
+        label_search_input: "Шукати введене значення",
+
         label_note: "Примітка",
         label_tip: "Підказка",
         label_info: "Інформація",

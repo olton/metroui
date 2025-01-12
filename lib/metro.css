@@ -43784,6 +43784,9 @@ hr.fat {
   --button-disabled-opacity: 0.25;
 }
 button,
+input[type=button],
+input[type=submit],
+input[type=reset],
 .button,
 .flat-button {
   display: inline-flex;
@@ -43809,25 +43812,40 @@ button,
   gap: 8px;
 }
 button:first-child,
+input[type=button]:first-child,
+input[type=submit]:first-child,
+input[type=reset]:first-child,
 .button:first-child,
 .flat-button:first-child {
   margin-left: 0;
 }
 button:last-child,
+input[type=button]:last-child,
+input[type=submit]:last-child,
+input[type=reset]:last-child,
 .button:last-child,
 .flat-button:last-child {
   margin-right: 0;
 }
 button.disabled,
+input[type=button].disabled,
+input[type=submit].disabled,
+input[type=reset].disabled,
 .button.disabled,
 .flat-button.disabled,
 button:disabled,
+input[type=button]:disabled,
+input[type=submit]:disabled,
+input[type=reset]:disabled,
 .button:disabled,
 .flat-button:disabled {
   pointer-events: none;
   opacity: var(--button-disabled-opacity);
 }
 button .icon,
+input[type=button] .icon,
+input[type=submit] .icon,
+input[type=reset] .icon,
 .button .icon,
 .flat-button .icon {
   height: calc(var(--button-size)/2);
@@ -43837,23 +43855,38 @@ button .icon,
   justify-content: center;
 }
 button.pill-button,
+input[type=button].pill-button,
+input[type=submit].pill-button,
+input[type=reset].pill-button,
 .button.pill-button,
 .flat-button.pill-button {
   border-radius: var(--button-pill-radius);
 }
 button:active,
+input[type=button]:active,
+input[type=submit]:active,
+input[type=reset]:active,
 .button:active,
 .flat-button:active,
 button.focus,
+input[type=button].focus,
+input[type=submit].focus,
+input[type=reset].focus,
 .button.focus,
 .flat-button.focus,
 button:focus,
+input[type=button]:focus,
+input[type=submit]:focus,
+input[type=reset]:focus,
 .button:focus,
 .flat-button:focus {
   text-decoration: none;
 }
 @media (hover: hover) {
   button:hover,
+  input[type=button]:hover,
+  input[type=submit]:hover,
+  input[type=reset]:hover,
   .button:hover,
   .flat-button:hover {
     background-color: var(--button-background-hover);
@@ -43861,32 +43894,50 @@ button:focus,
 }
 @media (hover: none) {
   button:active,
+  input[type=button]:active,
+  input[type=submit]:active,
+  input[type=reset]:active,
   .button:active,
   .flat-button:active {
     background-color: var(--button-background-hover);
   }
 }
 button.link,
+input[type=button].link,
+input[type=submit].link,
+input[type=reset].link,
 .button.link,
 .flat-button.link {
   background-color: transparent;
   border: none;
 }
 button.link:hover,
+input[type=button].link:hover,
+input[type=submit].link:hover,
+input[type=reset].link:hover,
 .button.link:hover,
 .flat-button.link:hover {
   background-color: transparent;
   text-decoration: underline;
 }
 button.link.focus,
+input[type=button].link.focus,
+input[type=submit].link.focus,
+input[type=reset].link.focus,
 .button.link.focus,
 .flat-button.link.focus,
 button.link:focus,
+input[type=button].link:focus,
+input[type=submit].link:focus,
+input[type=reset].link:focus,
 .button.link:focus,
 .flat-button.link:focus {
   box-shadow: none;
 }
 button.mini,
+input[type=button].mini,
+input[type=submit].mini,
+input[type=reset].mini,
 .button.mini,
 .flat-button.mini {
   --button-pill-radius: 10px;
@@ -43894,6 +43945,9 @@ button.mini,
   --button-font-size: 10px;
 }
 button.small,
+input[type=button].small,
+input[type=submit].small,
+input[type=reset].small,
 .button.small,
 .flat-button.small {
   --button-pill-radius: 13px;
@@ -43901,6 +43955,9 @@ button.small,
   --button-font-size: 12px;
 }
 button.large,
+input[type=button].large,
+input[type=submit].large,
+input[type=reset].large,
 .button.large,
 .flat-button.large {
   --button-pill-radius: 27px;
@@ -43908,9 +43965,15 @@ button.large,
   --button-font-size: 18px;
 }
 button.square,
+input[type=button].square,
+input[type=submit].square,
+input[type=reset].square,
 .button.square,
 .flat-button.square,
 button.cycle,
+input[type=button].cycle,
+input[type=submit].cycle,
+input[type=reset].cycle,
 .button.cycle,
 .flat-button.cycle {
   width: var(--button-size);
@@ -43920,24 +43983,39 @@ button.cycle,
   flex-grow: 0 !important;
 }
 button.cycle,
+input[type=button].cycle,
+input[type=submit].cycle,
+input[type=reset].cycle,
 .button.cycle,
 .flat-button.cycle {
   border-radius: 50%;
 }
 button.square.dropdown-toggle::before,
+input[type=button].square.dropdown-toggle::before,
+input[type=submit].square.dropdown-toggle::before,
+input[type=reset].square.dropdown-toggle::before,
 .button.square.dropdown-toggle::before,
 .flat-button.square.dropdown-toggle::before,
 button.cycle.dropdown-toggle::before,
+input[type=button].cycle.dropdown-toggle::before,
+input[type=submit].cycle.dropdown-toggle::before,
+input[type=reset].cycle.dropdown-toggle::before,
 .button.cycle.dropdown-toggle::before,
 .flat-button.cycle.dropdown-toggle::before {
   display: none;
 }
 button.dropdown-toggle.no-marker,
+input[type=button].dropdown-toggle.no-marker,
+input[type=submit].dropdown-toggle.no-marker,
+input[type=reset].dropdown-toggle.no-marker,
 .button.dropdown-toggle.no-marker,
 .flat-button.dropdown-toggle.no-marker {
   padding-right: 0.75rem !important;
 }
 button.outline,
+input[type=button].outline,
+input[type=submit].outline,
+input[type=reset].outline,
 .button.outline,
 .flat-button.outline {
   background: transparent none;
@@ -43947,6 +44025,9 @@ button.outline,
 }
 @media (hover: hover) {
   button.outline:hover,
+  input[type=button].outline:hover,
+  input[type=submit].outline:hover,
+  input[type=reset].outline:hover,
   .button.outline:hover,
   .flat-button.outline:hover {
     background-color: var(--button-background);
@@ -43955,6 +44036,9 @@ button.outline,
 }
 @media (hover: none) {
   button.outline:active,
+  input[type=button].outline:active,
+  input[type=submit].outline:active,
+  input[type=reset].outline:active,
   .button.outline:active,
   .flat-button.outline:active {
     background-color: var(--button-background);
@@ -43969,23 +44053,35 @@ a.flat-button {
   text-decoration: none;
 }
 button .load-marker,
+input[type=button] .load-marker,
+input[type=submit] .load-marker,
+input[type=reset] .load-marker,
 .button .load-marker {
   transform: scale(0);
   opacity: 0;
   transition: all 0.3s ease-in-out;
 }
 button .load-caption,
+input[type=button] .load-caption,
+input[type=submit] .load-caption,
+input[type=reset] .load-caption,
 .button .load-caption {
   margin-left: -16px;
   transition: all 0.3s ease-in-out;
 }
 button.loading .load-marker,
+input[type=button].loading .load-marker,
+input[type=submit].loading .load-marker,
+input[type=reset].loading .load-marker,
 .button.loading .load-marker {
   transform: scale(1);
   opacity: 1;
   animation: spin-loader 1.5s linear infinite;
 }
 button.loading .load-caption,
+input[type=button].loading .load-caption,
+input[type=submit].loading .load-caption,
+input[type=reset].loading .load-caption,
 .button.loading .load-caption {
   margin-left: 0.5rem;
 }
@@ -44022,18 +44118,27 @@ button.flat,
 }
 @container (min-width: 0) {
   button.large-fs,
+  input[type=button].large-fs,
+  input[type=submit].large-fs,
+  input[type=reset].large-fs,
   .button.large-fs {
     --button-pill-radius: 27px;
     --button-size: 54px;
     --button-font-size: 18px;
   }
   button.small-fs,
+  input[type=button].small-fs,
+  input[type=submit].small-fs,
+  input[type=reset].small-fs,
   .button.small-fs {
     --button-pill-radius: 13px;
     --button-size: 26px;
     --button-font-size: 12px;
   }
   button.mini-fs,
+  input[type=button].mini-fs,
+  input[type=submit].mini-fs,
+  input[type=reset].mini-fs,
   .button.mini-fs {
     --button-pill-radius: 10px;
     --button-size: 20px;
@@ -44042,18 +44147,27 @@ button.flat,
 }
 @container (min-width: 360px) {
   button.large-xs,
+  input[type=button].large-xs,
+  input[type=submit].large-xs,
+  input[type=reset].large-xs,
   .button.large-xs {
     --button-pill-radius: 27px;
     --button-size: 54px;
     --button-font-size: 18px;
   }
   button.small-xs,
+  input[type=button].small-xs,
+  input[type=submit].small-xs,
+  input[type=reset].small-xs,
   .button.small-xs {
     --button-pill-radius: 13px;
     --button-size: 26px;
     --button-font-size: 12px;
   }
   button.mini-xs,
+  input[type=button].mini-xs,
+  input[type=submit].mini-xs,
+  input[type=reset].mini-xs,
   .button.mini-xs {
     --button-pill-radius: 10px;
     --button-size: 20px;
@@ -44062,18 +44176,27 @@ button.flat,
 }
 @container (min-width: 576px) {
   button.large-sm,
+  input[type=button].large-sm,
+  input[type=submit].large-sm,
+  input[type=reset].large-sm,
   .button.large-sm {
     --button-pill-radius: 27px;
     --button-size: 54px;
     --button-font-size: 18px;
   }
   button.small-sm,
+  input[type=button].small-sm,
+  input[type=submit].small-sm,
+  input[type=reset].small-sm,
   .button.small-sm {
     --button-pill-radius: 13px;
     --button-size: 26px;
     --button-font-size: 12px;
   }
   button.mini-sm,
+  input[type=button].mini-sm,
+  input[type=submit].mini-sm,
+  input[type=reset].mini-sm,
   .button.mini-sm {
     --button-pill-radius: 10px;
     --button-size: 20px;
@@ -44082,18 +44205,27 @@ button.flat,
 }
 @container (min-width: 640px) {
   button.large-ld,
+  input[type=button].large-ld,
+  input[type=submit].large-ld,
+  input[type=reset].large-ld,
   .button.large-ld {
     --button-pill-radius: 27px;
     --button-size: 54px;
     --button-font-size: 18px;
   }
   button.small-ld,
+  input[type=button].small-ld,
+  input[type=submit].small-ld,
+  input[type=reset].small-ld,
   .button.small-ld {
     --button-pill-radius: 13px;
     --button-size: 26px;
     --button-font-size: 12px;
   }
   button.mini-ld,
+  input[type=button].mini-ld,
+  input[type=submit].mini-ld,
+  input[type=reset].mini-ld,
   .button.mini-ld {
     --button-pill-radius: 10px;
     --button-size: 20px;
@@ -44102,18 +44234,27 @@ button.flat,
 }
 @container (min-width: 768px) {
   button.large-md,
+  input[type=button].large-md,
+  input[type=submit].large-md,
+  input[type=reset].large-md,
   .button.large-md {
     --button-pill-radius: 27px;
     --button-size: 54px;
     --button-font-size: 18px;
   }
   button.small-md,
+  input[type=button].small-md,
+  input[type=submit].small-md,
+  input[type=reset].small-md,
   .button.small-md {
     --button-pill-radius: 13px;
     --button-size: 26px;
     --button-font-size: 12px;
   }
   button.mini-md,
+  input[type=button].mini-md,
+  input[type=submit].mini-md,
+  input[type=reset].mini-md,
   .button.mini-md {
     --button-pill-radius: 10px;
     --button-size: 20px;
@@ -44122,18 +44263,27 @@ button.flat,
 }
 @container (min-width: 992px) {
   button.large-lg,
+  input[type=button].large-lg,
+  input[type=submit].large-lg,
+  input[type=reset].large-lg,
   .button.large-lg {
     --button-pill-radius: 27px;
     --button-size: 54px;
     --button-font-size: 18px;
   }
   button.small-lg,
+  input[type=button].small-lg,
+  input[type=submit].small-lg,
+  input[type=reset].small-lg,
   .button.small-lg {
     --button-pill-radius: 13px;
     --button-size: 26px;
     --button-font-size: 12px;
   }
   button.mini-lg,
+  input[type=button].mini-lg,
+  input[type=submit].mini-lg,
+  input[type=reset].mini-lg,
   .button.mini-lg {
     --button-pill-radius: 10px;
     --button-size: 20px;
@@ -44142,18 +44292,27 @@ button.flat,
 }
 @container (min-width: 1200px) {
   button.large-xl,
+  input[type=button].large-xl,
+  input[type=submit].large-xl,
+  input[type=reset].large-xl,
   .button.large-xl {
     --button-pill-radius: 27px;
     --button-size: 54px;
     --button-font-size: 18px;
   }
   button.small-xl,
+  input[type=button].small-xl,
+  input[type=submit].small-xl,
+  input[type=reset].small-xl,
   .button.small-xl {
     --button-pill-radius: 13px;
     --button-size: 26px;
     --button-font-size: 12px;
   }
   button.mini-xl,
+  input[type=button].mini-xl,
+  input[type=submit].mini-xl,
+  input[type=reset].mini-xl,
   .button.mini-xl {
     --button-pill-radius: 10px;
     --button-size: 20px;
@@ -44162,18 +44321,27 @@ button.flat,
 }
 @container (min-width: 1400px) {
   button.large-xxl,
+  input[type=button].large-xxl,
+  input[type=submit].large-xxl,
+  input[type=reset].large-xxl,
   .button.large-xxl {
     --button-pill-radius: 27px;
     --button-size: 54px;
     --button-font-size: 18px;
   }
   button.small-xxl,
+  input[type=button].small-xxl,
+  input[type=submit].small-xxl,
+  input[type=reset].small-xxl,
   .button.small-xxl {
     --button-pill-radius: 13px;
     --button-size: 26px;
     --button-font-size: 12px;
   }
   button.mini-xxl,
+  input[type=button].mini-xxl,
+  input[type=submit].mini-xxl,
+  input[type=reset].mini-xxl,
   .button.mini-xxl {
     --button-pill-radius: 10px;
     --button-size: 20px;
@@ -44182,18 +44350,27 @@ button.flat,
 }
 @container (min-width: 2000px) {
   button.large-xxxl,
+  input[type=button].large-xxxl,
+  input[type=submit].large-xxxl,
+  input[type=reset].large-xxxl,
   .button.large-xxxl {
     --button-pill-radius: 27px;
     --button-size: 54px;
     --button-font-size: 18px;
   }
   button.small-xxxl,
+  input[type=button].small-xxxl,
+  input[type=submit].small-xxxl,
+  input[type=reset].small-xxxl,
   .button.small-xxxl {
     --button-pill-radius: 13px;
     --button-size: 26px;
     --button-font-size: 12px;
   }
   button.mini-xxxl,
+  input[type=button].mini-xxxl,
+  input[type=submit].mini-xxxl,
+  input[type=reset].mini-xxxl,
   .button.mini-xxxl {
     --button-pill-radius: 10px;
     --button-size: 20px;
@@ -47527,6 +47704,18 @@ button.flat,
   --input-append-background: #4e5157;
   --input-append-color: #bac1cf;
 }
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=date],
+input[type=datetime-local],
+input[type=search],
+input[type=tel],
+input[type=time],
+input[type=url],
+input[type=week],
+textarea,
+select,
 .metro-input,
 .file,
 .input,
@@ -47547,6 +47736,18 @@ button.flat,
   background-clip: padding-box;
   min-width: 0;
 }
+input[type=text] input,
+input[type=password] input,
+input[type=email] input,
+input[type=date] input,
+input[type=datetime-local] input,
+input[type=search] input,
+input[type=tel] input,
+input[type=time] input,
+input[type=url] input,
+input[type=week] input,
+textarea input,
+select input,
 .metro-input input,
 .file input,
 .input input,
@@ -47561,6 +47762,18 @@ button.flat,
   width: 100%;
   min-width: 0;
 }
+input[type=text] input::-ms-clear,
+input[type=password] input::-ms-clear,
+input[type=email] input::-ms-clear,
+input[type=date] input::-ms-clear,
+input[type=datetime-local] input::-ms-clear,
+input[type=search] input::-ms-clear,
+input[type=tel] input::-ms-clear,
+input[type=time] input::-ms-clear,
+input[type=url] input::-ms-clear,
+input[type=week] input::-ms-clear,
+textarea input::-ms-clear,
+select input::-ms-clear,
 .metro-input input::-ms-clear,
 .file input::-ms-clear,
 .input input::-ms-clear,
@@ -47571,6 +47784,18 @@ button.flat,
 .color-picker input::-ms-clear {
   display: none;
 }
+input[type=text] input::-ms-reveal,
+input[type=password] input::-ms-reveal,
+input[type=email] input::-ms-reveal,
+input[type=date] input::-ms-reveal,
+input[type=datetime-local] input::-ms-reveal,
+input[type=search] input::-ms-reveal,
+input[type=tel] input::-ms-reveal,
+input[type=time] input::-ms-reveal,
+input[type=url] input::-ms-reveal,
+input[type=week] input::-ms-reveal,
+textarea input::-ms-reveal,
+select input::-ms-reveal,
 .metro-input input::-ms-reveal,
 .file input::-ms-reveal,
 .input input::-ms-reveal,
@@ -47581,6 +47806,18 @@ button.flat,
 .color-picker input::-ms-reveal {
   display: none;
 }
+input[type=text] input::-webkit-clear-button,
+input[type=password] input::-webkit-clear-button,
+input[type=email] input::-webkit-clear-button,
+input[type=date] input::-webkit-clear-button,
+input[type=datetime-local] input::-webkit-clear-button,
+input[type=search] input::-webkit-clear-button,
+input[type=tel] input::-webkit-clear-button,
+input[type=time] input::-webkit-clear-button,
+input[type=url] input::-webkit-clear-button,
+input[type=week] input::-webkit-clear-button,
+textarea input::-webkit-clear-button,
+select input::-webkit-clear-button,
 .metro-input input::-webkit-clear-button,
 .file input::-webkit-clear-button,
 .input input::-webkit-clear-button,
@@ -47591,6 +47828,18 @@ button.flat,
 .color-picker input::-webkit-clear-button {
   display: none;
 }
+input[type=text] input::-webkit-inner-spin-button,
+input[type=password] input::-webkit-inner-spin-button,
+input[type=email] input::-webkit-inner-spin-button,
+input[type=date] input::-webkit-inner-spin-button,
+input[type=datetime-local] input::-webkit-inner-spin-button,
+input[type=search] input::-webkit-inner-spin-button,
+input[type=tel] input::-webkit-inner-spin-button,
+input[type=time] input::-webkit-inner-spin-button,
+input[type=url] input::-webkit-inner-spin-button,
+input[type=week] input::-webkit-inner-spin-button,
+textarea input::-webkit-inner-spin-button,
+select input::-webkit-inner-spin-button,
 .metro-input input::-webkit-inner-spin-button,
 .file input::-webkit-inner-spin-button,
 .input input::-webkit-inner-spin-button,
@@ -47601,6 +47850,18 @@ button.flat,
 .color-picker input::-webkit-inner-spin-button {
   height: 100%;
 }
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+input[type=datetime-local]:focus,
+input[type=search]:focus,
+input[type=tel]:focus,
+input[type=time]:focus,
+input[type=url]:focus,
+input[type=week]:focus,
+textarea:focus,
+select:focus,
 .metro-input:focus,
 .file:focus,
 .input:focus,
@@ -47611,6 +47872,18 @@ button.flat,
 .color-picker:focus {
   outline: none;
 }
+input[type=text]:hover,
+input[type=password]:hover,
+input[type=email]:hover,
+input[type=date]:hover,
+input[type=datetime-local]:hover,
+input[type=search]:hover,
+input[type=tel]:hover,
+input[type=time]:hover,
+input[type=url]:hover,
+input[type=week]:hover,
+textarea:hover,
+select:hover,
 .metro-input:hover,
 .file:hover,
 .input:hover,
@@ -47621,6 +47894,18 @@ button.flat,
 .color-picker:hover {
   border-color: var(--input-border-color-hover);
 }
+input[type=text] .input-clear-button,
+input[type=password] .input-clear-button,
+input[type=email] .input-clear-button,
+input[type=date] .input-clear-button,
+input[type=datetime-local] .input-clear-button,
+input[type=search] .input-clear-button,
+input[type=tel] .input-clear-button,
+input[type=time] .input-clear-button,
+input[type=url] .input-clear-button,
+input[type=week] .input-clear-button,
+textarea .input-clear-button,
+select .input-clear-button,
 .metro-input .input-clear-button,
 .file .input-clear-button,
 .input .input-clear-button,
@@ -47629,6 +47914,18 @@ button.flat,
 .tag-input .input-clear-button,
 .spinner .input-clear-button,
 .color-picker .input-clear-button,
+input[type=text] .input-reveal-button,
+input[type=password] .input-reveal-button,
+input[type=email] .input-reveal-button,
+input[type=date] .input-reveal-button,
+input[type=datetime-local] .input-reveal-button,
+input[type=search] .input-reveal-button,
+input[type=tel] .input-reveal-button,
+input[type=time] .input-reveal-button,
+input[type=url] .input-reveal-button,
+input[type=week] .input-reveal-button,
+textarea .input-reveal-button,
+select .input-reveal-button,
 .metro-input .input-reveal-button,
 .file .input-reveal-button,
 .input .input-reveal-button,
@@ -47640,6 +47937,18 @@ button.flat,
   transform: scale(0);
   opacity: 0;
 }
+input[type=text] .input-clear-button:active,
+input[type=password] .input-clear-button:active,
+input[type=email] .input-clear-button:active,
+input[type=date] .input-clear-button:active,
+input[type=datetime-local] .input-clear-button:active,
+input[type=search] .input-clear-button:active,
+input[type=tel] .input-clear-button:active,
+input[type=time] .input-clear-button:active,
+input[type=url] .input-clear-button:active,
+input[type=week] .input-clear-button:active,
+textarea .input-clear-button:active,
+select .input-clear-button:active,
 .metro-input .input-clear-button:active,
 .file .input-clear-button:active,
 .input .input-clear-button:active,
@@ -47648,6 +47957,18 @@ button.flat,
 .tag-input .input-clear-button:active,
 .spinner .input-clear-button:active,
 .color-picker .input-clear-button:active,
+input[type=text] .input-reveal-button:active,
+input[type=password] .input-reveal-button:active,
+input[type=email] .input-reveal-button:active,
+input[type=date] .input-reveal-button:active,
+input[type=datetime-local] .input-reveal-button:active,
+input[type=search] .input-reveal-button:active,
+input[type=tel] .input-reveal-button:active,
+input[type=time] .input-reveal-button:active,
+input[type=url] .input-reveal-button:active,
+input[type=week] .input-reveal-button:active,
+textarea .input-reveal-button:active,
+select .input-reveal-button:active,
 .metro-input .input-reveal-button:active,
 .file .input-reveal-button:active,
 .input .input-reveal-button:active,
@@ -47656,6 +47977,18 @@ button.flat,
 .tag-input .input-reveal-button:active,
 .spinner .input-reveal-button:active,
 .color-picker .input-reveal-button:active,
+input[type=text] .input-clear-button:focus,
+input[type=password] .input-clear-button:focus,
+input[type=email] .input-clear-button:focus,
+input[type=date] .input-clear-button:focus,
+input[type=datetime-local] .input-clear-button:focus,
+input[type=search] .input-clear-button:focus,
+input[type=tel] .input-clear-button:focus,
+input[type=time] .input-clear-button:focus,
+input[type=url] .input-clear-button:focus,
+input[type=week] .input-clear-button:focus,
+textarea .input-clear-button:focus,
+select .input-clear-button:focus,
 .metro-input .input-clear-button:focus,
 .file .input-clear-button:focus,
 .input .input-clear-button:focus,
@@ -47664,6 +47997,18 @@ button.flat,
 .tag-input .input-clear-button:focus,
 .spinner .input-clear-button:focus,
 .color-picker .input-clear-button:focus,
+input[type=text] .input-reveal-button:focus,
+input[type=password] .input-reveal-button:focus,
+input[type=email] .input-reveal-button:focus,
+input[type=date] .input-reveal-button:focus,
+input[type=datetime-local] .input-reveal-button:focus,
+input[type=search] .input-reveal-button:focus,
+input[type=tel] .input-reveal-button:focus,
+input[type=time] .input-reveal-button:focus,
+input[type=url] .input-reveal-button:focus,
+input[type=week] .input-reveal-button:focus,
+textarea .input-reveal-button:focus,
+select .input-reveal-button:focus,
 .metro-input .input-reveal-button:focus,
 .file .input-reveal-button:focus,
 .input .input-reveal-button:focus,
@@ -47672,6 +48017,18 @@ button.flat,
 .tag-input .input-reveal-button:focus,
 .spinner .input-reveal-button:focus,
 .color-picker .input-reveal-button:focus,
+input[type=text] .input-clear-button:hover,
+input[type=password] .input-clear-button:hover,
+input[type=email] .input-clear-button:hover,
+input[type=date] .input-clear-button:hover,
+input[type=datetime-local] .input-clear-button:hover,
+input[type=search] .input-clear-button:hover,
+input[type=tel] .input-clear-button:hover,
+input[type=time] .input-clear-button:hover,
+input[type=url] .input-clear-button:hover,
+input[type=week] .input-clear-button:hover,
+textarea .input-clear-button:hover,
+select .input-clear-button:hover,
 .metro-input .input-clear-button:hover,
 .file .input-clear-button:hover,
 .input .input-clear-button:hover,
@@ -47680,6 +48037,18 @@ button.flat,
 .tag-input .input-clear-button:hover,
 .spinner .input-clear-button:hover,
 .color-picker .input-clear-button:hover,
+input[type=text] .input-reveal-button:hover,
+input[type=password] .input-reveal-button:hover,
+input[type=email] .input-reveal-button:hover,
+input[type=date] .input-reveal-button:hover,
+input[type=datetime-local] .input-reveal-button:hover,
+input[type=search] .input-reveal-button:hover,
+input[type=tel] .input-reveal-button:hover,
+input[type=time] .input-reveal-button:hover,
+input[type=url] .input-reveal-button:hover,
+input[type=week] .input-reveal-button:hover,
+textarea .input-reveal-button:hover,
+select .input-reveal-button:hover,
 .metro-input .input-reveal-button:hover,
 .file .input-reveal-button:hover,
 .input .input-reveal-button:hover,
@@ -47691,6 +48060,18 @@ button.flat,
   opacity: 1;
   transform: scale(1);
 }
+input[type=text]:focus .input-clear-button,
+input[type=password]:focus .input-clear-button,
+input[type=email]:focus .input-clear-button,
+input[type=date]:focus .input-clear-button,
+input[type=datetime-local]:focus .input-clear-button,
+input[type=search]:focus .input-clear-button,
+input[type=tel]:focus .input-clear-button,
+input[type=time]:focus .input-clear-button,
+input[type=url]:focus .input-clear-button,
+input[type=week]:focus .input-clear-button,
+textarea:focus .input-clear-button,
+select:focus .input-clear-button,
 .metro-input:focus .input-clear-button,
 .file:focus .input-clear-button,
 .input:focus .input-clear-button,
@@ -47699,6 +48080,18 @@ button.flat,
 .tag-input:focus .input-clear-button,
 .spinner:focus .input-clear-button,
 .color-picker:focus .input-clear-button,
+input[type=text].focused .input-clear-button,
+input[type=password].focused .input-clear-button,
+input[type=email].focused .input-clear-button,
+input[type=date].focused .input-clear-button,
+input[type=datetime-local].focused .input-clear-button,
+input[type=search].focused .input-clear-button,
+input[type=tel].focused .input-clear-button,
+input[type=time].focused .input-clear-button,
+input[type=url].focused .input-clear-button,
+input[type=week].focused .input-clear-button,
+textarea.focused .input-clear-button,
+select.focused .input-clear-button,
 .metro-input.focused .input-clear-button,
 .file.focused .input-clear-button,
 .input.focused .input-clear-button,
@@ -47707,6 +48100,18 @@ button.flat,
 .tag-input.focused .input-clear-button,
 .spinner.focused .input-clear-button,
 .color-picker.focused .input-clear-button,
+input[type=text]:hover .input-clear-button,
+input[type=password]:hover .input-clear-button,
+input[type=email]:hover .input-clear-button,
+input[type=date]:hover .input-clear-button,
+input[type=datetime-local]:hover .input-clear-button,
+input[type=search]:hover .input-clear-button,
+input[type=tel]:hover .input-clear-button,
+input[type=time]:hover .input-clear-button,
+input[type=url]:hover .input-clear-button,
+input[type=week]:hover .input-clear-button,
+textarea:hover .input-clear-button,
+select:hover .input-clear-button,
 .metro-input:hover .input-clear-button,
 .file:hover .input-clear-button,
 .input:hover .input-clear-button,
@@ -47715,6 +48120,18 @@ button.flat,
 .tag-input:hover .input-clear-button,
 .spinner:hover .input-clear-button,
 .color-picker:hover .input-clear-button,
+input[type=text]:focus .input-reveal-button,
+input[type=password]:focus .input-reveal-button,
+input[type=email]:focus .input-reveal-button,
+input[type=date]:focus .input-reveal-button,
+input[type=datetime-local]:focus .input-reveal-button,
+input[type=search]:focus .input-reveal-button,
+input[type=tel]:focus .input-reveal-button,
+input[type=time]:focus .input-reveal-button,
+input[type=url]:focus .input-reveal-button,
+input[type=week]:focus .input-reveal-button,
+textarea:focus .input-reveal-button,
+select:focus .input-reveal-button,
 .metro-input:focus .input-reveal-button,
 .file:focus .input-reveal-button,
 .input:focus .input-reveal-button,
@@ -47723,6 +48140,18 @@ button.flat,
 .tag-input:focus .input-reveal-button,
 .spinner:focus .input-reveal-button,
 .color-picker:focus .input-reveal-button,
+input[type=text].focused .input-reveal-button,
+input[type=password].focused .input-reveal-button,
+input[type=email].focused .input-reveal-button,
+input[type=date].focused .input-reveal-button,
+input[type=datetime-local].focused .input-reveal-button,
+input[type=search].focused .input-reveal-button,
+input[type=tel].focused .input-reveal-button,
+input[type=time].focused .input-reveal-button,
+input[type=url].focused .input-reveal-button,
+input[type=week].focused .input-reveal-button,
+textarea.focused .input-reveal-button,
+select.focused .input-reveal-button,
 .metro-input.focused .input-reveal-button,
 .file.focused .input-reveal-button,
 .input.focused .input-reveal-button,
@@ -47731,6 +48160,18 @@ button.flat,
 .tag-input.focused .input-reveal-button,
 .spinner.focused .input-reveal-button,
 .color-picker.focused .input-reveal-button,
+input[type=text]:hover .input-reveal-button,
+input[type=password]:hover .input-reveal-button,
+input[type=email]:hover .input-reveal-button,
+input[type=date]:hover .input-reveal-button,
+input[type=datetime-local]:hover .input-reveal-button,
+input[type=search]:hover .input-reveal-button,
+input[type=tel]:hover .input-reveal-button,
+input[type=time]:hover .input-reveal-button,
+input[type=url]:hover .input-reveal-button,
+input[type=week]:hover .input-reveal-button,
+textarea:hover .input-reveal-button,
+select:hover .input-reveal-button,
 .metro-input:hover .input-reveal-button,
 .file:hover .input-reveal-button,
 .input:hover .input-reveal-button,
@@ -47743,6 +48184,18 @@ button.flat,
   transform: scale(1);
   visibility: visible;
 }
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+input[type=datetime-local]:focus,
+input[type=search]:focus,
+input[type=tel]:focus,
+input[type=time]:focus,
+input[type=url]:focus,
+input[type=week]:focus,
+textarea:focus,
+select:focus,
 .metro-input:focus,
 .file:focus,
 .input:focus,
@@ -47751,6 +48204,18 @@ button.flat,
 .tag-input:focus,
 .spinner:focus,
 .color-picker:focus,
+input[type=text].focused,
+input[type=password].focused,
+input[type=email].focused,
+input[type=date].focused,
+input[type=datetime-local].focused,
+input[type=search].focused,
+input[type=tel].focused,
+input[type=time].focused,
+input[type=url].focused,
+input[type=week].focused,
+textarea.focused,
+select.focused,
 .metro-input.focused,
 .file.focused,
 .input.focused,
@@ -47761,6 +48226,18 @@ button.flat,
 .color-picker.focused {
   box-shadow: 0 0 0 3px var(--input-box-shadow);
 }
+input[type=text]:disabled,
+input[type=password]:disabled,
+input[type=email]:disabled,
+input[type=date]:disabled,
+input[type=datetime-local]:disabled,
+input[type=search]:disabled,
+input[type=tel]:disabled,
+input[type=time]:disabled,
+input[type=url]:disabled,
+input[type=week]:disabled,
+textarea:disabled,
+select:disabled,
 .metro-input:disabled,
 .file:disabled,
 .input:disabled,
@@ -47769,6 +48246,18 @@ button.flat,
 .tag-input:disabled,
 .spinner:disabled,
 .color-picker:disabled,
+input[type=text].disabled,
+input[type=password].disabled,
+input[type=email].disabled,
+input[type=date].disabled,
+input[type=datetime-local].disabled,
+input[type=search].disabled,
+input[type=tel].disabled,
+input[type=time].disabled,
+input[type=url].disabled,
+input[type=week].disabled,
+textarea.disabled,
+select.disabled,
 .metro-input.disabled,
 .file.disabled,
 .input.disabled,
@@ -47782,6 +48271,18 @@ button.flat,
   background-color: var(--input-background-disabled);
   color: var(--input-color-disabled);
 }
+input[type=text].hide-cursor input,
+input[type=password].hide-cursor input,
+input[type=email].hide-cursor input,
+input[type=date].hide-cursor input,
+input[type=datetime-local].hide-cursor input,
+input[type=search].hide-cursor input,
+input[type=tel].hide-cursor input,
+input[type=time].hide-cursor input,
+input[type=url].hide-cursor input,
+input[type=week].hide-cursor input,
+textarea.hide-cursor input,
+select.hide-cursor input,
 .metro-input.hide-cursor input,
 .file.hide-cursor input,
 .input.hide-cursor input,
@@ -47793,6 +48294,18 @@ button.flat,
   color: transparent;
   text-shadow: 0 0 0 var(--input-background);
 }
+input[type=text].required,
+input[type=password].required,
+input[type=email].required,
+input[type=date].required,
+input[type=datetime-local].required,
+input[type=search].required,
+input[type=tel].required,
+input[type=time].required,
+input[type=url].required,
+input[type=week].required,
+textarea.required,
+select.required,
 .metro-input.required,
 .file.required,
 .input.required,
@@ -47803,6 +48316,18 @@ button.flat,
 .color-picker.required {
   border: 1px var(--input-required-color) dashed !important;
 }
+input[type=text].required:focus,
+input[type=password].required:focus,
+input[type=email].required:focus,
+input[type=date].required:focus,
+input[type=datetime-local].required:focus,
+input[type=search].required:focus,
+input[type=tel].required:focus,
+input[type=time].required:focus,
+input[type=url].required:focus,
+input[type=week].required:focus,
+textarea.required:focus,
+select.required:focus,
 .metro-input.required:focus,
 .file.required:focus,
 .input.required:focus,
@@ -47811,6 +48336,18 @@ button.flat,
 .tag-input.required:focus,
 .spinner.required:focus,
 .color-picker.required:focus,
+input[type=text].required.focused,
+input[type=password].required.focused,
+input[type=email].required.focused,
+input[type=date].required.focused,
+input[type=datetime-local].required.focused,
+input[type=search].required.focused,
+input[type=tel].required.focused,
+input[type=time].required.focused,
+input[type=url].required.focused,
+input[type=week].required.focused,
+textarea.required.focused,
+select.required.focused,
 .metro-input.required.focused,
 .file.required.focused,
 .input.required.focused,
@@ -47821,6 +48358,18 @@ button.flat,
 .color-picker.required.focused {
   box-shadow: 0 0 0 3px var(--input-required-color) !important;
 }
+input[type=text].invalid,
+input[type=password].invalid,
+input[type=email].invalid,
+input[type=date].invalid,
+input[type=datetime-local].invalid,
+input[type=search].invalid,
+input[type=tel].invalid,
+input[type=time].invalid,
+input[type=url].invalid,
+input[type=week].invalid,
+textarea.invalid,
+select.invalid,
 .metro-input.invalid,
 .file.invalid,
 .input.invalid,
@@ -47831,6 +48380,18 @@ button.flat,
 .color-picker.invalid {
   border: 1px var(--input-invalid-color) solid !important;
 }
+input[type=text].invalid:focus,
+input[type=password].invalid:focus,
+input[type=email].invalid:focus,
+input[type=date].invalid:focus,
+input[type=datetime-local].invalid:focus,
+input[type=search].invalid:focus,
+input[type=tel].invalid:focus,
+input[type=time].invalid:focus,
+input[type=url].invalid:focus,
+input[type=week].invalid:focus,
+textarea.invalid:focus,
+select.invalid:focus,
 .metro-input.invalid:focus,
 .file.invalid:focus,
 .input.invalid:focus,
@@ -47839,6 +48400,18 @@ button.flat,
 .tag-input.invalid:focus,
 .spinner.invalid:focus,
 .color-picker.invalid:focus,
+input[type=text].invalid.focused,
+input[type=password].invalid.focused,
+input[type=email].invalid.focused,
+input[type=date].invalid.focused,
+input[type=datetime-local].invalid.focused,
+input[type=search].invalid.focused,
+input[type=tel].invalid.focused,
+input[type=time].invalid.focused,
+input[type=url].invalid.focused,
+input[type=week].invalid.focused,
+textarea.invalid.focused,
+select.invalid.focused,
 .metro-input.invalid.focused,
 .file.invalid.focused,
 .input.invalid.focused,
@@ -47849,6 +48422,18 @@ button.flat,
 .color-picker.invalid.focused {
   box-shadow: 0 0 0 3px var(--input-invalid-color) !important;
 }
+input[type=text].invalid::after,
+input[type=password].invalid::after,
+input[type=email].invalid::after,
+input[type=date].invalid::after,
+input[type=datetime-local].invalid::after,
+input[type=search].invalid::after,
+input[type=tel].invalid::after,
+input[type=time].invalid::after,
+input[type=url].invalid::after,
+input[type=week].invalid::after,
+textarea.invalid::after,
+select.invalid::after,
 .metro-input.invalid::after,
 .file.invalid::after,
 .input.invalid::after,
@@ -47865,6 +48450,18 @@ button.flat,
   font-size: 1.625rem;
   font-weight: bold;
 }
+input[type=text].valid,
+input[type=password].valid,
+input[type=email].valid,
+input[type=date].valid,
+input[type=datetime-local].valid,
+input[type=search].valid,
+input[type=tel].valid,
+input[type=time].valid,
+input[type=url].valid,
+input[type=week].valid,
+textarea.valid,
+select.valid,
 .metro-input.valid,
 .file.valid,
 .input.valid,
@@ -47875,6 +48472,18 @@ button.flat,
 .color-picker.valid {
   border: 1px var(--input-valid-color) solid !important;
 }
+input[type=text].valid:focus,
+input[type=password].valid:focus,
+input[type=email].valid:focus,
+input[type=date].valid:focus,
+input[type=datetime-local].valid:focus,
+input[type=search].valid:focus,
+input[type=tel].valid:focus,
+input[type=time].valid:focus,
+input[type=url].valid:focus,
+input[type=week].valid:focus,
+textarea.valid:focus,
+select.valid:focus,
 .metro-input.valid:focus,
 .file.valid:focus,
 .input.valid:focus,
@@ -47883,6 +48492,18 @@ button.flat,
 .tag-input.valid:focus,
 .spinner.valid:focus,
 .color-picker.valid:focus,
+input[type=text].valid.focused,
+input[type=password].valid.focused,
+input[type=email].valid.focused,
+input[type=date].valid.focused,
+input[type=datetime-local].valid.focused,
+input[type=search].valid.focused,
+input[type=tel].valid.focused,
+input[type=time].valid.focused,
+input[type=url].valid.focused,
+input[type=week].valid.focused,
+textarea.valid.focused,
+select.valid.focused,
 .metro-input.valid.focused,
 .file.valid.focused,
 .input.valid.focused,
@@ -47893,8 +48514,24 @@ button.flat,
 .color-picker.valid.focused {
   box-shadow: 0 0 0 3px var(--input-valid-color) !important;
 }
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=date],
+input[type=datetime-local],
+input[type=search],
+input[type=tel],
+input[type=time],
+input[type=url],
+input[type=week],
+select,
 .metro-input {
   padding: 0 8px;
+  font-size: var(--input-font-size, 16px);
+}
+textarea {
+  padding: 8px;
+  font-size: var(--input-font-size, 16px);
 }
 textarea.metro-input {
   height: auto;

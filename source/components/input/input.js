@@ -31,8 +31,9 @@
         clearButton: true,
         revealButton: true,
         clearButtonIcon: "❌",
-        revealButtonIcon: "👁",
+        revealButtonIcon: "👀",
         searchButtonIcon: "🔍",
+        randomButtonIcon: "🎲",
         customButtons: [],
         searchButtonClick: 'submit',
 
@@ -115,15 +116,15 @@
             }
 
             if (o.clearButton === true && !element[0].readOnly) {
-                clearButton = $("<button>").addClass("button input-clear-button").addClass(o.clsClearButton).attr("tabindex", -1).attr("type", "button").html(o.clearButtonIcon);
+                clearButton = $("<button>").addClass("button input-clear-button").addClass(o.clsClearButton).attr("tabindex", -1).attr("type", "button").html(o.clearButtonIcon).attr("title", this.strings.label_clear_input);
                 clearButton.appendTo(buttons);
             }
             if (element.attr('type') === 'password' && o.revealButton === true) {
-                revealButton = $("<button>").addClass("button input-reveal-button").addClass(o.clsRevealButton).attr("tabindex", -1).attr("type", "button").html(o.revealButtonIcon);
+                revealButton = $("<button>").addClass("button input-reveal-button").addClass(o.clsRevealButton).attr("tabindex", -1).attr("type", "button").html(o.revealButtonIcon).attr("title", this.strings.label_reveal_password);
                 revealButton.appendTo(buttons);
             }
             if (o.searchButton === true) {
-                searchButton = $("<button>").addClass("button input-search-button").addClass(o.clsSearchButton).attr("tabindex", -1).attr("type", o.searchButtonClick === 'submit' ? "submit" : "button").html(o.searchButtonIcon);
+                searchButton = $("<button>").addClass("button input-search-button").addClass(o.clsSearchButton).attr("tabindex", -1).attr("type", o.searchButtonClick === 'submit' ? "submit" : "button").html(o.searchButtonIcon).attr("title", this.strings.label_search_input);
                 searchButton.appendTo(buttons);
             }
 

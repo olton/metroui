@@ -33,6 +33,18 @@
     --input-append-color: #bac1cf;
 }
 
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=date],
+input[type=datetime-local],
+input[type=search],
+input[type=tel],
+input[type=time],
+input[type=url],
+input[type=week],
+textarea,
+select,
 .metro-input,
 .file,
 .input,
@@ -150,10 +162,26 @@
     }
 }
 
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=date],
+input[type=datetime-local],
+input[type=search],
+input[type=tel],
+input[type=time],
+input[type=url],
+input[type=week],
+select,
 .metro-input {
     padding: 0 8px;
+    font-size: var(--input-font-size, 16px);
 }
 
+textarea {
+    padding: 8px;
+    font-size: var(--input-font-size, 16px);
+}
 textarea.metro-input {
     height: auto;
     padding: 0 .75rem;
