@@ -30,12 +30,15 @@
         searchButton: false,
         clearButton: true,
         revealButton: true,
+        randomButton: false,
         clearButtonIcon: "❌",
         revealButtonIcon: "👀",
         searchButtonIcon: "🔍",
         randomButtonIcon: "🎲",
         customButtons: [],
         searchButtonClick: 'submit',
+        randomSymbols: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        randomLength: 8,
 
         badge: null,
 
@@ -47,6 +50,7 @@
         clsRevealButton: "",
         clsCustomButton: "",
         clsSearchButton: "",
+        clsRandomButton: "",
         clsLabel: "",
 
         onAutocompleteSelect: Metro.noop,
@@ -94,7 +98,7 @@
             var that = this, element = this.element, o = this.options;
             var container = $("<div>").addClass("input " + element[0].className);
             var buttons = $("<div>").addClass("button-group");
-            var clearButton, revealButton, searchButton;
+            var clearButton, revealButton, searchButton, randomButton;
 
             if (Utils.isValue(o.historyPreset)) {
                 $.each(o.historyPreset.toArray(o.historyDivider), function(){
@@ -126,6 +130,10 @@
             if (o.searchButton === true) {
                 searchButton = $("<button>").addClass("button input-search-button").addClass(o.clsSearchButton).attr("tabindex", -1).attr("type", o.searchButtonClick === 'submit' ? "submit" : "button").html(o.searchButtonIcon).attr("title", this.strings.label_search_input);
                 searchButton.appendTo(buttons);
+            }
+            if (o.randomButton === true) {
+                randomButton = $("<button>").addClass("button input-random-button").addClass(o.clsRandomButton).attr("tabindex", -1).attr("type", "button").html(o.randomButtonIcon).attr("title", this.strings.label_generate_random);
+                randomButton.appendTo(buttons);
             }
 
             if (Utils.isValue(o.prepend)) {
@@ -294,6 +302,14 @@
                 }
             });
 
+            container.on(Metro.events.click, ".input-random-button", function(){
+                var val = that._generateRandomValue();
+                element.val(val).fire('change').fire('keyup').focus();
+                that._fireEvent("random-click", {
+                    val,
+                });
+            });
+
             element.on(Metro.events.keyup, function(e){
                 var val = element.val().trim();
 
@@ -382,6 +398,20 @@
             });
         },
 
+        _generateRandomValue: function(){
+            var o = this.options;
+            var symbols = o.randomSymbols.split("");
+            var len = symbols.length;
+            var val = "";
+            var i;
+
+            for(i = 0; i < o.randomLength; i++) {
+                val += symbols[Math.floor(Math.random() * len)];
+            }
+
+            return val
+        },
+        
         _drawAutocompleteList: function(val){
             var that = this, element = this.element;
             var container = element.closest(".input");
