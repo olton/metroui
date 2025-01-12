@@ -39,7 +39,9 @@
         randomSymbols: "0123456789;abcdefghijklmnopqrstuvwxyz;ABCDEFGHIJKLMNOPQRSTUVWXYZ;<>!?@#$%^&*()_+",
         randomLength: 12,
         prependOptions: "",
+        prependOptionsSep: ",",
         appendOptions: "",
+        appendOptionsSep: ",",
 
         badge: null,
 
@@ -147,7 +149,7 @@
             if (o.prependOptions) {
                 opt = $("<div>").addClass("prepend-options").appendTo(container);
                 opt.append(ul = $("<select data-role='select'>").addClass("options-list"))
-                o.prependOptions.toArray(",").forEach(function(item){
+                o.prependOptions.toArray(o.prependOptionsSep).forEach(function(item){
                     $("<option>").attr("value", item).html(item).appendTo(ul)
                 })
                 this.prependOptionsList = ul;
@@ -159,7 +161,7 @@
             if (o.appendOptions) {
                 opt = $("<div>").addClass("append-options").appendTo(container);
                 opt.append(ul = $("<select data-role='select'>").addClass("options-list"))
-                o.appendOptions.toArray(",").forEach(function(item){
+                o.appendOptions.toArray(o.appendOptionsSep).forEach(function(item){
                     $("<option>").attr("value", item).html(item).appendTo(ul)
                 })
                 this.appendOptionsList = ul;
@@ -544,7 +546,7 @@
                 return val
             }
             
-            const groups = v.split(";")
+            const groups = v.split(splitter)
             let prepend = "", append = "", val;
             if (o.prependOptions) {
                 prepend = groups.shift();
