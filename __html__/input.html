@@ -16,10 +16,6 @@
             width: 300px;
             margin: 10px;
         }
-        
-        body {
-            padding-top: 50px;
-        }
     </style>
 </head>
 <body class="cloak">
@@ -32,45 +28,57 @@
 <div class="container">
     <h1>Input test page</h1>
     <div class="row">
-        <div class="example">
-            <input type="text" placeholder="Enter your name" />
-        </div>
+<!--        <div class="example">-->
+<!--            <input type="text" placeholder="Enter your name" />-->
+<!--        </div>-->
+
+<!--        <div class="example">-->
+<!--            <input type="text" placeholder="Enter your name" class="metro-input" >-->
+<!--        </div>-->
 
         <div class="example">
-            <input type="text" placeholder="Enter your name" class="metro-input" >
+            <input type="text" placeholder="Enter text..." data-role="input" data-label="Generate Password" data-random-button="true"/>
+        </div>
+        
+        <div class="example">
+            <input id="testOptions" type="text" placeholder="Enter text..." data-role="input" data-label="Prepend and Append Options" data-prepend-options="http://,https://" data-append-options=".com,.net,.org,.org.ua"/>
+            <div class="mt-10">
+                <button onclick="alert(Metro.getPlugin('#testOptions', 'input').val())">Get val</button>
+                <button onclick="Metro.getPlugin('#testOptions', 'input').val('https://;metroui;.org.ua')">Set val</button>
+            </div>
         </div>
 
-        <div class="example">
-            <input type="text" placeholder="Input small" data-role="input" class="input-small" data-prepend="Prepend:" data-append=".append">
-        </div>
-        <div class="example">
-            <input type="text" placeholder="Input normal" data-role="input" data-prepend="Prepend:" data-append=".append" data-clear-button="false">
-        </div>
-        <div class="example">
-            <input type="text" placeholder="Input large" data-role="input" class="input-large" data-prepend="Prepend:" data-append=".append">
-        </div>
+<!--        <div class="example">-->
+<!--            <input type="text" placeholder="Input small" data-role="input" class="input-small" data-prepend="Prepend:" data-append=".append">-->
+<!--        </div>-->
+<!--        <div class="example">-->
+<!--            <input type="text" placeholder="Input normal" data-role="input" data-prepend="Prepend:" data-append=".append" data-clear-button="false">-->
+<!--        </div>-->
+<!--        <div class="example">-->
+<!--            <input type="text" placeholder="Input large" data-role="input" class="input-large" data-prepend="Prepend:" data-append=".append">-->
+<!--        </div>-->
 
-        <div class="example">
-            <input type="password" placeholder="Enter password" data-role="input">
-        </div>
+<!--        <div class="example">-->
+<!--            <input type="password" placeholder="Enter password" data-role="input">-->
+<!--        </div>-->
 
-        <div class="example">
-            <input type="text" placeholder="Enter search" data-role="input" data-search-button="true">
-        </div>
+<!--        <div class="example">-->
+<!--            <input type="text" placeholder="Enter search" data-role="input" data-search-button="true">-->
+<!--        </div>-->
 
-        <div class="example">
-            <input type="text" placeholder="Enter search" data-role="input" data-prepend="Prepend:">
-        </div>
+<!--        <div class="example">-->
+<!--            <input type="text" placeholder="Enter search" data-role="input" data-prepend="Prepend:">-->
+<!--        </div>-->
 
-        <div class="example">
-            <input type="text" placeholder="Enter search" data-role="input" class="pill-input input-small" data-prepend="Prepend:" data-append=".append">
-            <input type="text" placeholder="Enter search" data-role="input" class="pill-input" data-prepend="Prepend:" data-append=".append">
-            <input type="text" placeholder="Enter search" data-role="input" class="pill-input input-large" data-prepend="Prepend:" data-append=".append" data-cls-prepend="text-upper">
-        </div>
+<!--        <div class="example">-->
+<!--            <input type="text" placeholder="Enter search" data-role="input" class="pill-input input-small" data-prepend="Prepend:" data-append=".append">-->
+<!--            <input type="text" placeholder="Enter search" data-role="input" class="pill-input" data-prepend="Prepend:" data-append=".append">-->
+<!--            <input type="text" placeholder="Enter search" data-role="input" class="pill-input input-large" data-prepend="Prepend:" data-append=".append" data-cls-prepend="text-upper">-->
+<!--        </div>-->
 
-        <div class="example">
-<!--            <input type="text" placeholder="Enter search" data-role="input" data-autocomplete-url="https://metroui.org.ua/data/autocomplete.txt">-->
-        </div>
+<!--        <div class="example">-->
+<!--&lt;!&ndash;            <input type="text" placeholder="Enter search" data-role="input" data-autocomplete-url="https://metroui.org.ua/data/autocomplete.txt">&ndash;&gt;-->
+<!--        </div>-->
 
     </div>
 </div>

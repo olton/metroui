@@ -5,8 +5,8 @@
 
 (function(Metro, $) {
     'use strict';
-    var Utils = Metro.utils;
-    var InputDefaultConfig = {
+
+    let InputDefaultConfig = {
         inputDeferred: 0,
 
         label: "",
@@ -26,7 +26,6 @@
         size: "default",
         prepend: "",
         append: "",
-        copyInlineStyles: false,
         searchButton: false,
         clearButton: true,
         revealButton: true,
@@ -37,8 +36,10 @@
         randomButtonIcon: "🎲",
         customButtons: [],
         searchButtonClick: 'submit',
-        randomSymbols: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-        randomLength: 8,
+        randomSymbols: "0123456789;abcdefghijklmnopqrstuvwxyz;ABCDEFGHIJKLMNOPQRSTUVWXYZ;<>!?@#$%^&*()_+",
+        randomLength: 12,
+        prependOptions: "",
+        appendOptions: "",
 
         badge: null,
 
@@ -77,14 +78,16 @@
             this._super(elem, options, InputDefaultConfig, {
                 history: [],
                 historyIndex: -1,
-                autocomplete: []
+                autocomplete: [],
+                prependOptionsList: null,
+                appendOptionsList: null
             });
 
             return this;
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -95,12 +98,12 @@
         },
 
         _createStructure: function(){
-            var that = this, element = this.element, o = this.options;
-            var container = $("<div>").addClass("input " + element[0].className);
-            var buttons = $("<div>").addClass("button-group");
-            var clearButton, revealButton, searchButton, randomButton;
+            const that = this, element = this.element, o = this.options;
+            const container = $("<div>").addClass("input " + element[0].className);
+            const buttons = $("<div>").addClass("button-group");
+            let clearButton, revealButton, searchButton, randomButton;
 
-            if (Utils.isValue(o.historyPreset)) {
+            if (Metro.utils.isValue(o.historyPreset)) {
                 $.each(o.historyPreset.toArray(o.historyDivider), function(){
                     that.history.push(this);
                 });
@@ -115,7 +118,7 @@
             element.appendTo(container);
             buttons.appendTo(container);
 
-            if (!Utils.isValue(element.val().trim())) {
+            if (!Metro.utils.isValue(element.val().trim())) {
                 element.val(o.defaultValue);
             }
 
@@ -136,21 +139,37 @@
                 randomButton.appendTo(buttons);
             }
 
-            if (Utils.isValue(o.prepend)) {
-                var prepend = $("<div>").html(o.prepend);
-                prepend.addClass("prepend").addClass(o.clsPrepend).appendTo(container);
+            let opt, ul
+            
+            if (o.prepend) {
+                $("<div>").html(o.prepend).addClass("prepend").addClass(o.clsPrepend).appendTo(container);
+            }
+            if (o.prependOptions) {
+                opt = $("<div>").addClass("prepend-options").appendTo(container);
+                opt.append(ul = $("<select data-role='select'>").addClass("options-list"))
+                o.prependOptions.toArray(",").forEach(function(item){
+                    $("<option>").attr("value", item).html(item).appendTo(ul)
+                })
+                this.prependOptionsList = ul;
             }
 
-            if (Utils.isValue(o.append)) {
-                var append = $("<div>").html(o.append);
-                append.addClass("append").addClass(o.clsAppend).appendTo(container);
+            if (o.append) {
+                $("<div>").html(o.append).addClass("append").addClass(o.clsAppend).appendTo(container);
+            }
+            if (o.appendOptions) {
+                opt = $("<div>").addClass("append-options").appendTo(container);
+                opt.append(ul = $("<select data-role='select'>").addClass("options-list"))
+                o.appendOptions.toArray(",").forEach(function(item){
+                    $("<option>").attr("value", item).html(item).appendTo(ul)
+                })
+                this.appendOptionsList = ul;
             }
 
-            const customButtons = Utils.isObject(o.customButtons);
+            const customButtons = Metro.utils.isObject(o.customButtons);
             if (Array.isArray(customButtons)) {
                 $.each(customButtons, function(){
-                    var item = this;
-                    var btn = $("<button>");
+                    const item = this;
+                    const btn = $("<button>");
 
                     btn
                         .addClass("button input-custom-button")
@@ -174,7 +193,7 @@
                 });
             }
 
-            if (Utils.isValue(element.attr('data-exclaim'))) {
+            if (Metro.utils.isValue(element.attr('data-exclaim'))) {
                 container.attr('data-exclaim', element.attr('data-exclaim'));
             }
 
@@ -183,11 +202,6 @@
             }
 
             element[0].className = '';
-            if (o.copyInlineStyles === true) {
-                for (var i = 0, l = element[0].style.length; i < l; i++) {
-                    container.css(element[0].style[i], element.css(element[0].style[i]));
-                }
-            }
 
             container.addClass(o.clsComponent);
             element.addClass(o.clsInput);
@@ -198,15 +212,15 @@
                 });
             }
 
-            if (!Utils.isNull(o.autocomplete) || !Utils.isNull(o.autocompleteUrl)) {
+            if (!Metro.utils.isNull(o.autocomplete) || !Metro.utils.isNull(o.autocompleteUrl)) {
                 $("<div>").addClass("autocomplete-list").css({
                     maxHeight: o.autocompleteListHeight,
                     display: "none"
                 }).appendTo(container);
             }
 
-            if (Utils.isValue(o.autocomplete)) {
-                var autocomplete_obj = Utils.isObject(o.autocomplete);
+            if (Metro.utils.isValue(o.autocomplete)) {
+                const autocomplete_obj = Metro.utils.isObject(o.autocomplete);
 
                 if (autocomplete_obj !== false) {
                     this.autocomplete = autocomplete_obj;
@@ -215,13 +229,13 @@
                 }
             }
 
-            if (Utils.isValue(o.autocompleteUrl)) {
+            if (Metro.utils.isValue(o.autocompleteUrl)) {
                 fetch(o.autocompleteUrl, {
                     method: o.autocompleteUrlMethod
                 }).then(function(response){
                     return response.text()
                 }).then(function(data){
-                    var newData = [];
+                    let newData = [];
 
                     try {
                         newData = JSON.parse(data);
@@ -237,7 +251,7 @@
             }
 
             if (o.label) {
-                var label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(container);
+                const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(container);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
                 }
@@ -260,13 +274,13 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var container = element.closest(".input");
-            var autocompleteList = container.find(".autocomplete-list");
+            const that = this, element = this.element, o = this.options;
+            const container = element.closest(".input");
+            const autocompleteList = container.find(".autocomplete-list");
 
             container.on(Metro.events.click, ".input-clear-button", function(){
-                var curr = element.val();
-                element.val(Utils.isValue(o.defaultValue) ? o.defaultValue : "").fire('clear').fire('change').fire('keyup').focus();
+                const curr = element.val();
+                element.val(Metro.utils.isValue(o.defaultValue) ? o.defaultValue : "").fire('clear').fire('change').fire('keyup').focus();
                 if (autocompleteList.length > 0) {
                     autocompleteList.css({
                         display: "none"
@@ -303,7 +317,7 @@
             });
 
             container.on(Metro.events.click, ".input-random-button", function(){
-                var val = that._generateRandomValue();
+                const val = that._generateRandomValue();
                 element.val(val).fire('change').fire('keyup').focus();
                 that._fireEvent("random-click", {
                     val,
@@ -311,7 +325,7 @@
             });
 
             element.on(Metro.events.keyup, function(e){
-                var val = element.val().trim();
+                const val = element.val().trim();
 
                 if (o.history && e.keyCode === Metro.keyCode.ENTER && val !== "") {
                     element.val("");
@@ -381,12 +395,12 @@
             });
 
             element.on(Metro.events.input, function(){
-                var val = this.value.toLowerCase();
+                const val = this.value.toLowerCase();
                 that._drawAutocompleteList(val);
             });
 
             container.on(Metro.events.click, ".autocomplete-list .item", function(){
-                var val = $(this).attr("data-autocomplete-value");
+                const val = $(this).attr("data-autocomplete-value");
                 element.val(val);
                 autocompleteList.css({
                     display: "none"
@@ -399,24 +413,27 @@
         },
 
         _generateRandomValue: function(){
-            var o = this.options;
-            var symbols = o.randomSymbols.split("");
-            var len = symbols.length;
-            var val = "";
-            var i;
-
-            for(i = 0; i < o.randomLength; i++) {
-                val += symbols[Math.floor(Math.random() * len)];
+            const o = this.options;
+            const groups = o.randomSymbols.split(";");
+            const symbolsPerGroup = Math.round(o.randomLength / groups.length)
+            let val = [];
+            
+            for (const g of groups) {
+                const symbols = g.split("");
+                const len = symbols.length;
+                for(let i = 0; i < symbolsPerGroup; i++) {
+                    val.push( symbols[Math.floor(Math.random() * len)] );
+                }                
             }
 
-            return val
+            return val.shuffle().join("");
         },
         
         _drawAutocompleteList: function(val){
-            var that = this, element = this.element;
-            var container = element.closest(".input");
-            var autocompleteList = container.find(".autocomplete-list");
-            var items;
+            const that = this, element = this.element;
+            const container = element.closest(".input");
+            const autocompleteList = container.find(".autocomplete-list");
+            let items;
 
             if (autocompleteList.length === 0) {
                 return;
@@ -433,14 +450,14 @@
             });
 
             $.each(items, function(){
-                var v = this;
-                var index = v.toLowerCase().indexOf(val), content;
-                var item = $("<div>").addClass("item").attr("data-autocomplete-value", v);
+                const v = this;
+                let index = v.toLowerCase().indexOf(val), content;
+                const item = $("<div>").addClass("item").attr("data-autocomplete-value", v);
 
                 if (index === 0) {
-                    content = "<strong>"+v.substr(0, val.length)+"</strong>"+v.substr(val.length);
+                    content = "<strong>"+v.substring(0, val.length)+"</strong>"+v.substring(val.length);
                 } else {
-                    content = v.substr(0, index) + "<strong>"+v.substr(index, val.length)+"</strong>"+v.substr(index + val.length);
+                    content = v.substring(0, index) + "<strong>"+v.substring(index, val.length)+"</strong>"+v.substring(index + val.length);
                 }
 
                 item.html(content).appendTo(autocompleteList);
@@ -464,8 +481,8 @@
         },
 
         setHistory: function(history, append) {
-            var that = this, o = this.options;
-            if (Utils.isNull(history)) return;
+            const that = this, o = this.options;
+            if (Metro.utils.isNull(history)) return;
             if (!Array.isArray(history) && typeof history === 'string') {
                 history = history.toArray(o.historyDivider);
             }
@@ -484,7 +501,7 @@
         },
 
         toDefault: function(){
-            this.element.val(Utils.isValue(this.options.defaultValue) ? this.options.defaultValue : "");
+            this.element.val(Metro.utils.isValue(this.options.defaultValue) ? this.options.defaultValue : "");
         },
 
         disable: function(){
@@ -506,7 +523,7 @@
         },
 
         setAutocompleteList: function(l){
-            var autocomplete_list = Utils.isObject(l);
+            const autocomplete_list = Metro.utils.isObject(l);
             if (autocomplete_list !== false) {
                 this.autocomplete = autocomplete_list;
             } else if (typeof l === "string") {
@@ -514,6 +531,50 @@
             }
         },
 
+        val: function(v, splitter = ";"){
+            const element = this.element, o = this.options;
+            if (!Metro.utils.isValue(v)) {
+                let val = element.val();
+                if (o.prependOptions) {
+                    val = this.prependOptionsList.val() + val;
+                }
+                if (o.appendOptions) {
+                    val = val + this.appendOptionsList.val();
+                }
+                return val
+            }
+            
+            const groups = v.split(";")
+            let prepend = "", append = "", val;
+            if (o.prependOptions) {
+                prepend = groups.shift();
+                Metro.getPlugin(this.prependOptionsList, "select").val(prepend);
+                console.log(prepend)
+            }
+            if (o.appendOptions) {
+                append = groups.pop();
+                Metro.getPlugin(this.appendOptionsList, "select").val(append);
+            }
+            val = groups.join("");
+            element.val(val);
+        },
+        
+        prependOptionsVal: function(v){
+            if (!this.options.prependOptions) { return; }
+            if (!Metro.utils.isValue(v)) {
+                this.prependOptionsList.val();
+            }
+            this.prependOptionsList.val(v);
+        },
+        
+        appendOptionsVal: function(v){
+            if (!this.options.appendOptions) { return; }
+            if (!Metro.utils.isValue(v)) {
+                return this.appendOptionsList.val();
+            }
+            this.appendOptionsList.val(v);
+        },
+        
         changeAttribute: function(attributeName){
             switch (attributeName) {
                 case 'disabled': this.toggleState(); break;
@@ -521,11 +582,11 @@
         },
 
         destroy: function(){
-            var element = this.element;
-            var parent = element.parent();
-            var clearBtn = parent.find(".input-clear-button");
-            var revealBtn = parent.find(".input-reveal-button");
-            var customBtn = parent.find(".input-custom-button");
+            const element = this.element;
+            const parent = element.parent();
+            const clearBtn = parent.find(".input-clear-button");
+            const revealBtn = parent.find(".input-reveal-button");
+            const customBtn = parent.find(".input-custom-button");
 
             if (clearBtn.length > 0) {
                 clearBtn.off(Metro.events.click);

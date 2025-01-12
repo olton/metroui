@@ -48527,11 +48527,11 @@ input[type=week],
 select,
 .metro-input {
   padding: 0 8px;
-  font-size: var(--input-font-size, 16px);
+  font-size: var(--input-font-size, 14px);
 }
 textarea {
   padding: 8px;
-  font-size: var(--input-font-size, 16px);
+  font-size: var(--input-font-size, 14px);
 }
 textarea.metro-input {
   height: auto;
@@ -49835,7 +49835,7 @@ input:-ms-input-placeholder {
   --input-autocomplete-selected-color: #468cff;
   --input-autocomplete-selected-background: transparent;
   --input-border-radius: 4px;
-  --input-font-size: 16px;
+  --input-font-size: 14px;
 }
 .dark-side {
   --input-autocomplete-background: #2b2d30;
@@ -49915,14 +49915,20 @@ input:-ms-input-placeholder {
 .input .prepend {
   order: 1;
 }
-.input .append {
-  order: 4;
-}
-.input input {
+.input .prepend-options {
   order: 2;
 }
-.input .button-group {
+.input input {
   order: 3;
+}
+.input .append-options {
+  order: 4;
+}
+.input .button-group {
+  order: 5;
+}
+.input .append {
+  order: 6;
 }
 .input .prepend,
 .input .append {
@@ -50547,6 +50553,18 @@ input.input-small.pill-input {
   .input.input-small-xxxl.pill-input {
     --input-border-radius: 0.8rem;
   }
+}
+.input .prepend-options .options-list,
+.input .append-options .options-list {
+  border: none;
+  border-right: 1px solid var(--input-border-color);
+  height: 100%;
+  border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
+}
+.input .append-options .options-list {
+  border-right: none;
+  border-left: 1px solid var(--input-border-color);
+  border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
 }
 
 /* source/components/chat/chat.less */
