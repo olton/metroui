@@ -1,0 +1,136 @@
+@import "../../include/vars";
+
+:root {
+    --task-bar-background: #f5f5f5;
+    --task-bar-color: #191919;
+    --task-bar-task-background: transparent;
+    --task-bar-task-color: inherit;
+    --task-bar-task-background-hover: #e8e8e8;
+    --task-bar-task-color-hover: #000000;
+}
+
+.dark-side {
+    --task-bar-background: #2b2d30;
+    --task-bar-color: #dbdfe7;
+    --task-bar-task-background: transparent;
+    --task-bar-task-color: inherit;
+    --task-bar-task-background-hover: #37393e;
+    --task-bar-task-color-hover: #ffffff;
+}
+
+.task-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: @zindex-sticky;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    height: 50px;
+    background-color: var(--task-bar-background);
+    color: var(--task-bar-color);
+    gap: 1rem;
+}
+
+.task-bar {
+    .widgets, .tasks, .system-tray {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+    }    
+
+    .tasks {
+        flex-basis: 100%;
+    }
+    
+    .system-tray {
+        font-size: 14px;
+    }
+    
+    .widgets {
+        order: 1;
+    }
+    
+    .tasks {
+        order: 2;
+    }
+    
+    .system-tray {
+        order: 3;
+    }
+}
+
+.task-bar {
+    .task {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 6px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        position: relative;
+        
+        & > * {
+            width: 36px;
+            height: 36px;
+            object-fit: cover;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        &.active {
+            &::after {
+                content: "";
+                position: absolute;
+                width: 50%;
+                height: 3px;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: var(--selected-color);
+                border-radius: 2px;
+            }
+        }
+        
+        @media (hover: hover) {
+            &:hover {
+                background-color: var(--task-bar-task-background-hover);
+                color: var(--task-bar-task-color-hover);
+            }
+        }
+        
+        @media (hover: none) {
+            &:active {
+                background-color: var(--task-bar-task-background-hover);
+                color: var(--task-bar-task-color-hover);
+            }
+        }
+    }
+    
+    .system-tray-item {
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 6px;
+
+        @media (hover: hover) {
+            &:hover {
+                background-color: var(--task-bar-task-background-hover);
+                color: var(--task-bar-task-color-hover);
+            }
+        }
+
+        @media (hover: none) {
+            &:active {
+                background-color: var(--task-bar-task-background-hover);
+                color: var(--task-bar-task-color-hover);
+            }
+        }
+    }
+}

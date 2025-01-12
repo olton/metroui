@@ -1,16 +1,15 @@
-/* global Metro */
 (function(Metro, $) {
     'use strict';
-    var ClockDefaultConfig = {
+    
+    let ClockDefaultConfig = {
         clockDeferred: 0,
+        show: "row",
         showTime: true,
         showDate: true,
-        timeFormat: '24',
-        dateFormat: 'american',
+        dateFormat: 'DD.MM.YYYY',
+        timeFormat: "HH:mm",
         divider: "&nbsp;&nbsp;",
-        leadingZero: true,
-        dateDivider: '-',
-        timeDivider: ":",
+        twoLines: false,
         onTick: Metro.noop,
         onSecond: Metro.noop,
         onClockCreate: Metro.noop
@@ -34,8 +33,13 @@
         },
 
         _create: function(){
-            var that = this, element = this.element;
-
+            const that = this, element = this.element, o = this.options;
+            
+            element.addClass("clock");
+            if (o.show === 'column') {
+                element.addClass("show-column");                
+            }
+            
             this._fireEvent('clock-create', {
                 element: element
             });
@@ -50,13 +54,8 @@
             }, 1000);
         },
 
-        _addLeadingZero: function(i){
-            if (i<10){i="0" + i;}
-            return i;
-        },
-
         _second: function(){
-            var timestamp = new Date();
+            const timestamp = new Date();
 
             this._fireEvent('second', {
                 timestamp: timestamp
@@ -64,59 +63,21 @@
         },
 
         _tick: function(){
-            var element = this.element, o = this.options;
-            var timestamp = new Date();
-            var result = "";
-            var h = timestamp.getHours(),
-                i = timestamp.getMinutes(),
-                s = timestamp.getSeconds(),
-                d = timestamp.getDate(),
-                m = timestamp.getMonth() + 1,
-                y = timestamp.getFullYear(),
-                a = '';
+            const element = this.element, o = this.options;
+            const timestamp = datetime();
+            let result = "";
 
-            if (parseInt(o.timeFormat) === 12) {
-                a = " AM";
-                if (h > 11) { a = " PM"; }
-                if (h > 12) { h = h - 12; }
-                if (h === 0) { h = 12; }
-            }
-
-            i = this._addLeadingZero(i);
-            s = this._addLeadingZero(s);
-
-            if (o.leadingZero) {
-                h = this._addLeadingZero(h);
-                m = this._addLeadingZero(m);
-                d = this._addLeadingZero(d);
+            const date = timestamp.format(o.dateFormat);
+            const time = timestamp.format(o.timeFormat);
+            
+            if (o.showTime) {
+                result = `<span class="clock-time">${time}</span>`;
             }
 
             if (o.showDate) {
-                if (o.dateFormat === 'american') {
-                    result += "<span class='date-month'>" + m + "</span>";
-                    result += "<span class='date-divider'>" + o.dateDivider + "</span>";
-                    result += "<span class='date-day'>" + d + "</span>";
-                    result += "<span class='date-divider'>" + o.dateDivider + "</span>";
-                    result += "<span class='date-year'>" + y + "</span>";
-                } else {
-                    result += "<span class='date-day'>" + d + "</span>";
-                    result += "<span class='date-divider'>" + o.dateDivider + "</span>";
-                    result += "<span class='date-month'>" + m + "</span>";
-                    result += "<span class='date-divider'>" + o.dateDivider + "</span>";
-                    result += "<span class='date-year'>" + y + "</span>";
-                }
-                result += o.divider;
+                result += `<span class="clock-date">${date}</span>`; 
             }
-
-            if (o.showTime) {
-                result += "<span class='clock-hour'>" + h + "</span>";
-                result += "<span class='clock-divider'>" + o.timeDivider + "</span>";
-                result += "<span class='clock-minute'>" + i + "</span>";
-                result += "<span class='clock-divider'>" + o.timeDivider + "</span>";
-                result += "<span class='clock-second'>" + s + "</span>";
-                result += "<span class='clock-suffix'>" + a + "</span>";
-            }
-
+            
             element.html(result);
 
             this._fireEvent('tick', {
@@ -124,14 +85,22 @@
             })
         },
 
-        /* eslint-disable-next-line */
-        changeAttribute: function(attributeName){
+        changeAttribute: function(attr, val){
+            switch (attr) {
+                case 'data-date-format': this.options.dateFormat = val; break;
+                case 'data-time-format': this.options.timeFormat = val; break;
+                case 'data-show-date': this.options.showDate = JSON.parse(val); break;
+                case 'data-show-time': this.options.showTime = JSON.parse(val); break;
+                case 'data-divider': this.options.divider = val; break;
+                case 'data-two-lines': this.options.twoLines = JSON.parse(val); break;
+            }
+            this._tick();
         },
 
         destroy: function(){
             clearInterval(this._clockInterval);
             this._clockInterval = null;
-            return this.element;
+            this.element.remove();
         }
     });
 }(Metro, m4q));

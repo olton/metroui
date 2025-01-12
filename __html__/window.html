@@ -27,10 +27,7 @@
 <div class="explorer no-overflow" style="height: calc(100% - 50px)">
 </div>
 
-
-<!--<div id="win1" data-role="window" class="p-2" data-on-drag-start="dragStart" data-on-resize-start="resizeStart" data-custom-buttons="customButtons">-->
-<!--    This is a simple window-->
-<!--</div>-->
+<div data-role="task-bar" id="taskbar" data-on-task-click="taskClick"></div>
 
 <script src="../lib/metro.js"></script>
 <script>
@@ -52,7 +49,7 @@
     ];
 
     function createWindow() {
-        Metro.window.create({
+        const window = Metro.window.create({
             title       : "Window Caption",
             btnMin      : true,
             btnMax      : true,
@@ -71,25 +68,29 @@
             `,
             status: `<div>Status bar</div>`,
         });
+        
+        taskBar.addTask({
+            title: "Window Run",
+            icon: "<span class='mif-run'></span>",
+            ref: window
+        }, true);
     }
 
-    function resizeStart(){
-        console.log(arguments);
-    }
-
-    function dragStart(pos, context) {
-        console.log(pos, context);
-    }
-
-    function getPosition(){
-        var pos = Metro.getPlugin("#win1", "window").win.pos();
-        console.log(pos);
-    }
-
+    var taskBar;
+    
     $(function(){
+        taskBar = Metro.getPlugin("#taskbar", "taskbar");
+
+        taskBar.addToSystemTray("<span data-role='clock' data-show='column' style='--clock-font-size: 12px'>")
+        
         createWindow();
     })
 
+    function taskClick(task, ref){
+        console.dir(task);
+        console.dir(ref);
+    }
+    
 </script>
 </body>
 </html>

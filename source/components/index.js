@@ -128,6 +128,7 @@ import "./tabs/index.js";
 import "./tabs-material/index.js";
 import "./tag/index.js";
 import "./tag-input/index.js";
+import "./task-bar/index.js";
 import "./template/index.js";
 import "./textarea/index.js";
 import "./theme-switcher/index.js";

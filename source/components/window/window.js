@@ -810,7 +810,8 @@
                 _runtime: true
             }, (options ? options : {}));
 
-            return Metro.makePlugin(w, "window", w_options);
+            Metro.makePlugin(w, "window", w_options);
+            return Metro.getPlugin(w, "window").win;
         }
     };
 }(Metro, m4q));

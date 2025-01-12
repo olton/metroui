@@ -556,17 +556,11 @@ import { Props } from "./props.js";
         },
 
         fetch: {
-            status: (response) =>
-                response.ok ? Promise.resolve(response) : Promise.reject(new Error(response.statusText)),
-
+            status: (response) => response.ok ? Promise.resolve(response) : Promise.reject(new Error(response.statusText)),
             json: (response) => response.json(),
-
             text: (response) => response.text(),
-
             form: (response) => response.formData(),
-
             blob: (response) => response.blob(),
-
             buffer: (response) => response.arrayBuffer(),
         },
 
