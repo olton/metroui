@@ -7,8 +7,8 @@
 (function (Metro, $) {
     "use strict";
 
-    var Utils = Metro.utils;
-    var ColorPickerDefaultConfig = {
+    let ColorPickerDefaultConfig = {
+        defaultSwatches: "#FFFFFF,#000000,#FFFB0D,#0532FF,#FF9300,#00F91A,#FF2700,#686868,#EE5464,#D27AEE,#5BA8C4,#E64AA9,#1ba1e2,#6a00ff,#bebebe,#f8f8f8",
         duration: 100,
         prepend: "",
         append: "",
@@ -16,10 +16,9 @@
         clearButtonIcon: "&#x274c;",
         pickerButtonIcon: "&#127912;",
         defaultValue: "rgba(0, 0, 0, 0)",
-        copyInlineStyles: false,
         openMode: "auto",
-        clsPickerButton: "",
-        clsClearButton: "",
+        resultType: "hex",
+        inputThreshold: 500,
         onColorSelected: Metro.noop,
         onColorPickerCreate: Metro.noop,
     };
@@ -60,9 +59,9 @@
         },
 
         _create: function () {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var current = element.val();
+            const current = element.val();
 
             if (!Metro.pluginExists("color-selector")) {
                 throw new Error("Color selector component required!");
@@ -77,11 +76,11 @@
         },
 
         _createStructure: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var picker = element.wrap($("<div>").addClass("color-picker").addClass(element[0].className));
-            var buttons, colorExample, colorSelector, colorSelectorBox;
+            const picker = element.wrap($("<div>").addClass("color-picker").addClass(element[0].className));
+            let buttons, colorExample, colorSelector, colorSelectorBox;
 
             colorExample = $("<div>").addClass("color-example-box").insertBefore(element);
 
@@ -107,11 +106,11 @@
                 );
             }
 
-            if (Utils.isValue(o.prepend)) {
+            if (Metro.utils.isValue(o.prepend)) {
                 picker.prepend($("<div>").addClass("prepend").addClass(o.clsPrepend).html(o.prepend));
             }
 
-            if (Utils.isValue(o.append)) {
+            if (Metro.utils.isValue(o.append)) {
                 picker.append($("<div>").html(o.append).addClass("append").addClass(o.clsAppend));
             }
 
@@ -125,32 +124,20 @@
 
             Metro.makePlugin(colorSelector, "color-selector", {
                 defaultSwatches: o.defaultSwatches,
-                userColors: o.userColors,
-                returnValueType: o.returnValueType,
-                returnAsString: o.returnAsString,
-                showValues: o.showValues,
-                showAsString: o.showAsString,
-                showUserColors: o.showUserColors,
-                target: o.target,
+                returnValueType: o.resultType,
+                returnAsString: true,
+                showUserColors: false,
+                showValues: "",
                 controller: element,
-                addUserColorTitle: o.addUserColorTitle,
-                userColorsTitle: o.userColorsTitle,
-                hslMode: o.hslMode,
-                showAlphaChannel: o.showAlphaChannel,
+                showAlphaChannel: true,
                 inputThreshold: o.inputThreshold,
                 initColor: this.value,
                 readonlyInput: o.readonlyInput,
-                clsSelector: o.clsSelector,
-                clsSwatches: o.clsSwatches,
-                clsSwatch: o.clsSwatch,
-                clsValue: o.clsValue,
-                clsLabel: o.clsLabel,
-                clsInput: o.clsInput,
-                clsUserColorButton: o.clsUserColorButton,
-                clsUserColors: o.clsUserColors,
-                clsUserColorsTitle: o.clsUserColorsTitle,
-                clsUserColor: o.clsUserColor,
-                onColor: o.onColor,
+                onSelectColor: (color) => {
+                    this.colorExample.css({
+                        backgroundColor: color,
+                    });
+                },
                 onColorSelectorCreate: o.onColorSelectorCreate,
             });
 
@@ -166,12 +153,6 @@
 
             element[0].className = "";
 
-            if (o.copyInlineStyles === true) {
-                $.each(Utils.getInlineStyles(element), function (key, value) {
-                    picker.css(key, value);
-                });
-            }
-
             this._setColor();
         },
 
@@ -181,23 +162,25 @@
         },
 
         _setColor: function () {
-            var colorExample = this.colorExample;
-            var color = this.value;
+            const colorExample = this.colorExample;
+            let color = this.value;
 
             if (this.value.indexOf("cmyk") !== -1 || this.value.indexOf("hsv") !== -1) {
                 color = Farbe.Routines.toHEX(this.value);
             }
 
+            console.log(color);
+            
             colorExample.css({
                 backgroundColor: color,
             });
         },
 
         _createEvents: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var picker = this.picker,
+            const picker = this.picker,
                 colorSelector = this.colorSelector,
                 colorSelectorBox = this.colorSelector;
 
@@ -219,7 +202,7 @@
         },
 
         val: function (v) {
-            if (arguments.length === 0 || !Utils.isValue(v)) {
+            if (arguments.length === 0 || !Metro.utils.isValue(v)) {
                 return this.value;
             }
 

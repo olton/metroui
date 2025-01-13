@@ -1,9 +1,3 @@
-/**
- * global Metro
- *
- * @format
- */
-
 (function (Metro, $) {
     "use strict";
 

@@ -52905,11 +52905,13 @@ input[type=radio].radio-sand::before {
 .color-selector .hue-map .hue-cursor {
   top: 0;
   left: 50%;
-  height: 20px;
-  width: 20px;
+  height: 20px !important;
+  width: 20px !important;
   margin-top: -10px;
   margin-left: -10px;
   pointer-events: none;
+  min-width: 0;
+  padding: 0;
 }
 .color-selector .hue-map canvas {
   border-radius: 8px;
@@ -52924,11 +52926,13 @@ input[type=radio].radio-sand::before {
 .color-selector .alpha-map .alpha-cursor {
   top: 0;
   left: 50%;
-  height: 20px;
-  width: 20px;
+  height: 20px !important;
+  width: 20px !important;
   margin-top: -10px;
   margin-left: -10px;
   pointer-events: none;
+  min-width: 0;
+  padding: 0;
 }
 .color-selector .alpha-map canvas {
   border-radius: 8px;
@@ -53045,13 +53049,16 @@ input[type=radio].radio-sand::before {
   justify-content: center;
   padding: 0 2px;
 }
+.color-picker button,
 .color-picker .button {
   background-color: transparent;
   color: #1d1d1d;
-  height: 30px;
-  width: 30px;
+  height: 30px !important;
+  width: 30px !important;
 }
+.color-picker button:focus,
 .color-picker .button:focus,
+.color-picker button:active,
 .color-picker .button:active {
   box-shadow: none !important;
 }
@@ -53100,6 +53107,9 @@ input[type=radio].radio-sand::before {
 }
 .color-picker input[placeholder] {
   text-overflow: ellipsis;
+}
+.color-picker .color-selector-box {
+  z-index: 1000;
 }
 .color-picker.open .color-selector-box {
   display: block !important;

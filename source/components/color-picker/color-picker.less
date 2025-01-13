@@ -43,11 +43,11 @@
         padding: 0 2px;
     }
 
-    .button {
+    button,.button {
         background-color: transparent;
         color: @dark;
-        height: 30px;
-        width: 30px;
+        height: 30px!important;
+        width: 30px!important;
         &:focus, &:active {
             box-shadow: none!important;
         }
@@ -95,6 +95,10 @@
     .buttons {order: 4;}
 
     input[placeholder] {text-overflow:ellipsis;}
+    
+    .color-selector-box {
+        z-index: @zindex-dropdown;
+    }
 }
 
 .color-picker {
