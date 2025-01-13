@@ -51955,6 +51955,7 @@ input[type=checkbox] {
   cursor: pointer;
   width: 22px;
   height: 22px;
+  flex-shrink: 0 !important;
 }
 input[type=checkbox]::before {
   content: "";
@@ -52536,6 +52537,7 @@ input[type=radio] {
   border: 2px solid var(--radio-color);
   position: relative;
   cursor: pointer;
+  flex-shrink: 0 !important;
 }
 input[type=radio]::before {
   content: "";
@@ -52837,14 +52839,15 @@ input[type=radio].radio-sand::before {
 .color-selector .user-colors .user-swatch,
 .color-selector .user-colors-actions .user-swatch {
   display: inline-flex;
-  width: 24px;
-  height: 24px;
+  width: 24px !important;
+  height: 24px !important;
   background: #ccc;
   margin: 2px;
   box-sizing: border-box;
   border: 1px solid var(--border-color);
   cursor: pointer;
   border-radius: 4px;
+  padding: 0;
 }
 .color-selector .user-colors {
   padding: 4px;
@@ -52996,6 +52999,7 @@ input[type=radio].radio-sand::before {
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
+  margin-left: 4px;
 }
 .color-selector .color-block.as-string .prepend {
   width: 40px !important;

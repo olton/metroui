@@ -48,14 +48,15 @@
 
         .swatch, .user-swatch {
             display: inline-flex;
-            width: 24px;
-            height: 24px;
+            width: 24px!important;
+            height: 24px!important;
             background: #ccc;
             margin: 2px;
             box-sizing: border-box;
             border: 1px solid var(--border-color);
             cursor: pointer;
             border-radius: 4px;
+            padding: 0;
         }
     }
 
@@ -212,6 +213,7 @@
         width: 100%;
         display: flex;
         flex-flow: row nowrap;
+        margin-left: 4px;
     }
 
     .color-block.as-string {
