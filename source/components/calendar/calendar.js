@@ -4,6 +4,7 @@
     "use strict";
 
     var CalendarDefaultConfig = {
+        weekStart: null,
         static: false,
         readonly: false,
         showGhost: false,
@@ -720,7 +721,7 @@
                 weekDays,
                 calendarDays;
 
-            var calendar = datetime(this.current.year, this.current.month, this.current.day).useLocale(this.locale, true).calendar(strings["weekStart"]);
+            var calendar = datetime(this.current.year, this.current.month, this.current.day).useLocale(this.locale, true).calendar(Metro.utils.isValue(o.weekStart) ? o.weekStart : strings["weekStart"]);
             var showDay = this.show.format("YYYY-MM-DD");
             var now = datetime();
 

@@ -309,8 +309,9 @@
 
             container.on(Metro.events.click, ".input-search-button", function(){
                 if (o.searchButtonClick !== 'submit') {
+                    console.log("Search button clicked");
                     that._fireEvent("search-button-click", {
-                        val: element.val(),
+                        val: that.val(),
                         button: this
                     });
                 } else {

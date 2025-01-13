@@ -7,6 +7,8 @@
     --task-bar-task-color: inherit;
     --task-bar-task-background-hover: #e8e8e8;
     --task-bar-task-color-hover: #000000;
+    --task-bar-task-background-active: #e8e8e8;
+    --task-bar-task-color-active: #000000;
 }
 
 .dark-side {
@@ -16,6 +18,8 @@
     --task-bar-task-color: inherit;
     --task-bar-task-background-hover: #37393e;
     --task-bar-task-color-hover: #ffffff;
+    --task-bar-task-background-active: #37393e;
+    --task-bar-task-color-active: #ffffff;
 }
 
 .task-bar {
@@ -25,9 +29,9 @@
     right: 0;
     z-index: @zindex-sticky;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 10px;
     height: 50px;
     background-color: var(--task-bar-background);
     color: var(--task-bar-color);
@@ -44,10 +48,14 @@
 
     .tasks {
         flex-basis: 100%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
     }
     
     .system-tray {
         font-size: 14px;
+        gap: 0;
     }
     
     .widgets {
@@ -76,16 +84,19 @@
         position: relative;
         
         & > * {
-            width: 36px;
-            height: 36px;
+            width: 26px;
+            height: 26px;
             object-fit: cover;
-            font-size: 24px;
+            font-size: 18px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         
         &.active {
+            background-color: var(--task-bar-task-background-active);
+            color: var(--task-bar-task-color-active);
+
             &::after {
                 content: "";
                 position: absolute;
@@ -114,10 +125,18 @@
         }
     }
     
-    .system-tray-item {
+    .system-tray-item, .widget {
         cursor: pointer;
         padding: 4px 8px;
         border-radius: 6px;
+        width: auto;
+        height: 42px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid transparent;
+        position: relative;
+        align-self: flex-end;
 
         @media (hover: hover) {
             &:hover {

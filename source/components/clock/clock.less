@@ -21,8 +21,12 @@
     color: var(--clock-color);
     
     &.show-column {
-        align-items: flex-end;
+        align-items: flex-end !important;
         flex-direction: column;
         gap: 0;
+    }
+    
+    .clock-time, .clock-date {
+        white-space: nowrap;
     }
 }

@@ -8,13 +8,14 @@
     --calendar-weekday-background: #f8f8f7;
     --calendar-weekday-color: #191919;
     --calendar-header-color: #ffffff;
-    --calendar-border-color: #aaaaaa;
+    --calendar-border-color: #dddddd;
     --calendar-color: #191919;
     --calendar-day-border-color: #e8e8e8;
     --calendar-exclude-day-background: #ffffff;
     --calendar-exclude-day-color: #aaa;
     --calendar-today-day-background: #56c30f;
     --calendar-today-day-color: #fff;
+    --calendar-border-radius: 6px;
 }
 
 .dark-side {
@@ -38,6 +39,7 @@
     overflow: hidden;
     user-select: none;
     background-color: var(--calendar-background);
+    border-radius: var(--calendar-border-radius);
 }
 
 .calendar-header, .calendar-content, .calendar-footer {

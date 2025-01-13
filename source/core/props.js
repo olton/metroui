@@ -155,8 +155,14 @@ export const Props = {
     media_modes: ["fs", "xs", "sm", "ld", "md", "lg", "xl", "xxl", "xxxl"],
 
     actions: {
+        NONE: 0,
         REMOVE: 1,
         HIDE: 2,
+        MINIMIZE: 3,
+        MAXIMIZE: 4,
+        CLOSE: 5,
+        RESTORE: 6,
+        SHOW: 7,
     },
 
     theme: {

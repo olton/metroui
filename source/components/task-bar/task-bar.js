@@ -122,7 +122,20 @@
         },
         
         removeTask: function(task){
-            this.tasks = this.tasks.filter(t => t !== task);
+            this.tasks = this.tasks.filter(t => t.ref !== task);
+            this._renderTasks();
+        },
+        
+        activateTask: function(ref){
+            const tasks = this.tasks.filter(t => t.ref === ref);
+            if (tasks.length === 0) {
+                return
+            }
+            const task = tasks[0];
+            for (const t of this.tasks) {
+                t.active = false;
+            }
+            task.active = true;            
             this._renderTasks();
         },
         

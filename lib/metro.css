@@ -48923,13 +48923,14 @@ input:-ms-input-placeholder {
   --calendar-weekday-background: #f8f8f7;
   --calendar-weekday-color: #191919;
   --calendar-header-color: #ffffff;
-  --calendar-border-color: #aaaaaa;
+  --calendar-border-color: #dddddd;
   --calendar-color: #191919;
   --calendar-day-border-color: #e8e8e8;
   --calendar-exclude-day-background: #ffffff;
   --calendar-exclude-day-color: #aaa;
   --calendar-today-day-background: #56c30f;
   --calendar-today-day-color: #fff;
+  --calendar-border-radius: 6px;
 }
 .dark-side {
   --calendar-background: #2b2d30;
@@ -48951,6 +48952,7 @@ input:-ms-input-placeholder {
   overflow: hidden;
   user-select: none;
   background-color: var(--calendar-background);
+  border-radius: var(--calendar-border-radius);
 }
 .calendar-header,
 .calendar-content,
@@ -52501,9 +52503,13 @@ input[type=checkbox].checkbox-sand::before {
   color: var(--clock-color);
 }
 .clock.show-column {
-  align-items: flex-end;
+  align-items: flex-end !important;
   flex-direction: column;
   gap: 0;
+}
+.clock .clock-time,
+.clock .clock-date {
+  white-space: nowrap;
 }
 
 /* source/components/radio/radio.less */
@@ -62759,6 +62765,7 @@ label:has(input) {
   justify-content: center;
   outline: none;
   border-radius: var(--shortcut-border-radius);
+  gap: 8px;
 }
 .shortcut .icon,
 .shortcut .caption {
@@ -62794,9 +62801,17 @@ label:has(input) {
   font-size: 32px;
   margin-top: 0;
 }
-.shortcut:hover {
-  background: var(--shortcut-background-hover);
-  color: var(--shortcut-color-hover);
+@media (hover: hover) {
+  .shortcut:hover {
+    background: var(--shortcut-background-hover);
+    color: var(--shortcut-color-hover);
+  }
+}
+@media (hover: none) {
+  .shortcut:active {
+    background: var(--shortcut-background-hover);
+    color: var(--shortcut-color-hover);
+  }
 }
 .shortcut.focus,
 .shortcut:focus {
@@ -65702,6 +65717,8 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   --task-bar-task-color: inherit;
   --task-bar-task-background-hover: #e8e8e8;
   --task-bar-task-color-hover: #000000;
+  --task-bar-task-background-active: #e8e8e8;
+  --task-bar-task-color-active: #000000;
 }
 .dark-side {
   --task-bar-background: #2b2d30;
@@ -65710,6 +65727,8 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   --task-bar-task-color: inherit;
   --task-bar-task-background-hover: #37393e;
   --task-bar-task-color-hover: #ffffff;
+  --task-bar-task-background-active: #37393e;
+  --task-bar-task-color-active: #ffffff;
 }
 .task-bar {
   position: fixed;
@@ -65718,9 +65737,9 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   right: 0;
   z-index: 1020;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 10px;
   height: 50px;
   background-color: var(--task-bar-background);
   color: var(--task-bar-color);
@@ -65736,9 +65755,13 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
 }
 .task-bar .tasks {
   flex-basis: 100%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .task-bar .system-tray {
   font-size: 14px;
+  gap: 0;
 }
 .task-bar .widgets {
   order: 1;
@@ -65761,13 +65784,17 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   position: relative;
 }
 .task-bar .task > * {
-  width: 36px;
-  height: 36px;
+  width: 26px;
+  height: 26px;
   object-fit: cover;
-  font-size: 24px;
+  font-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.task-bar .task.active {
+  background-color: var(--task-bar-task-background-active);
+  color: var(--task-bar-task-color-active);
 }
 .task-bar .task.active::after {
   content: "";
@@ -65792,19 +65819,30 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
     color: var(--task-bar-task-color-hover);
   }
 }
-.task-bar .system-tray-item {
+.task-bar .system-tray-item,
+.task-bar .widget {
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 6px;
+  width: auto;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid transparent;
+  position: relative;
+  align-self: flex-end;
 }
 @media (hover: hover) {
-  .task-bar .system-tray-item:hover {
+  .task-bar .system-tray-item:hover,
+  .task-bar .widget:hover {
     background-color: var(--task-bar-task-background-hover);
     color: var(--task-bar-task-color-hover);
   }
 }
 @media (hover: none) {
-  .task-bar .system-tray-item:active {
+  .task-bar .system-tray-item:active,
+  .task-bar .widget:active {
     background-color: var(--task-bar-task-background-hover);
     color: var(--task-bar-task-color-hover);
   }

@@ -29,7 +29,7 @@
         top: "auto",
         left: "auto",
         place: "auto",
-        closeAction: Metro.actions.REMOVE,
+        closeAction: Metro.actions.HIDE,
         customButtons: null,
         status: "",
 
@@ -50,6 +50,8 @@
         onDragStart: Metro.noop,
         onDragStop: Metro.noop,
         onDragMove: Metro.noop,
+        onWindowClick: Metro.noop,
+        onCaptionClick: Metro.noop,
         onCaptionDblClick: Metro.noop,
         onCloseClick: Metro.noop,
         onMaxClick: Metro.noop,
@@ -61,6 +63,8 @@
         onShow: Metro.noop,
         onWindowDestroy: Metro.noop,
         onCanClose: Metro.noop_true,
+        onMinimize: Metro.noop,
+        onMaximize: Metro.noop,
         onClose: Metro.noop
     };
 
@@ -277,7 +281,7 @@
                 }
             }
 
-            caption.on(Metro.events.stop, ".btn-custom", function(e){
+            caption.on(Metro.events.click, ".btn-custom", function(e){
                 if (Metro.utils.isRightMouse(e)) return;
                 const button = $(this);
                 const action = button.data("action");
@@ -286,6 +290,13 @@
 
             win.attr("id", o.id === undefined ? Metro.utils.elementId("window") : o.id);
 
+            win.on(Metro.events.startAll, ".window-caption", function(e){
+                that._fireEvent("caption-click", {
+                    win: win[0],
+                    e: e
+                })
+            });
+
             win.on(Metro.events.dblclick, ".window-caption", function(e){
                 that.maximized(e);
             });
@@ -293,9 +304,16 @@
             caption.on(Metro.events.click, ".btn-max, .btn-min, .btn-close", function(e){
                 if (Metro.utils.isRightMouse(e)) return;
                 const target = $(e.target);
-                if (target.hasClass("btn-max") && o.canMaximize) that.maximized(e);
-                if (target.hasClass("btn-min") && o.canMinimize) that.minimized(e);
+                if (target.hasClass("btn-max") && o.canMaximize) that.maximize(e);
+                if (target.hasClass("btn-min") && o.canMinimize) that.minimize(e);
                 if (target.hasClass("btn-close") && o.canClose) that.close(e);
+            });
+
+            win.on(Metro.events.click, function(e){
+                that._fireEvent("window-click", {
+                    win: win[0],
+                    e: e
+                })
             });
 
             if (o.draggable === true) {
@@ -399,7 +417,7 @@
             return this;
         },
 
-        maximized: function(e){
+        maximize: function(e){
             const win = this.win, o = this.options;
             const target = $(e.target);
 
@@ -421,9 +439,13 @@
                 });
 
             }
+
+            this._fireEvent("maximize", {
+                win: win[0]
+            });
         },
 
-        minimized: function(){
+        minimize: function(){
             const win = this.win, o = this.options;
 
             if (o.btnMin) {
@@ -432,6 +454,10 @@
             }
 
             this._fireEvent("min-click", {
+                win: win[0]
+            });
+
+            this._fireEvent("minimize", {
                 win: win[0]
             });
         },

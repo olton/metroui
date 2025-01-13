@@ -34,6 +34,7 @@
     justify-content: center;
     outline: none;
     border-radius: var(--shortcut-border-radius);
+    gap: 8px;
 
     .icon, .caption {
         display: block;
@@ -75,9 +76,18 @@
         }
     }
 
-    &:hover {
-        background: var(--shortcut-background-hover);
-        color: var(--shortcut-color-hover);
+    @media (hover: hover) {
+        &:hover {
+            background: var(--shortcut-background-hover);
+            color: var(--shortcut-color-hover);
+        }
+    }
+    
+    @media (hover: none) {
+        &:active {
+            background: var(--shortcut-background-hover);
+            color: var(--shortcut-color-hover);
+        }
     }
 
     &.focus, &:focus {
