@@ -82,7 +82,7 @@
 
             this._createStructure();
             this._createEvents();
-
+            this._setColorValues();
             this._fireEvent("color-selector-create");
         },
 

@@ -55,6 +55,9 @@
 }
 
 /* source/icons/icons.less */
+.mif-accordion:before {
+  content: "\eb4f";
+}
 .mif-maintenance:before {
   content: "\eb07";
 }
@@ -73,146 +76,8 @@
 .mif-under-construction:before {
   content: "\eb4e";
 }
-.mif-location-man:before {
-  content: "\e95c";
-}
-.mif-earth-net:before {
-  content: "\e967";
-}
-.mif-cube:before {
-  content: "\e996";
-}
-.mif-prompt:before {
-  content: "\e998";
-}
-.mif-percent:before {
-  content: "\e9a0";
-}
-.mif-award:before {
-  content: "\e9e0";
-}
-.mif-ram:before {
-  content: "\e9e2";
-}
-.mif-window-maximize:before {
-  content: "\e94e";
-}
-.mif-slideshare:before {
-  content: "\e9f1";
-}
-.mif-facebook:before {
-  content: "\f09a";
-}
-.mif-steam:before {
-  content: "\f1b6";
-}
-.mif-user-secret:before {
-  content: "\f21b";
-}
-.mif-server:before {
-  content: "\f233";
-}
-.mif-balance:before {
-  content: "\f24e";
-}
-.mif-handshake:before {
-  content: "\f2b5";
-}
-.mif-imdb:before {
-  content: "\f2d8";
-}
-.mif-unlink:before {
-  content: "\f127";
-}
-.mif-fire-extinguisher:before {
-  content: "\f134";
-}
-.mif-eur:before {
-  content: "\f153";
-}
-.mif-gbp:before {
-  content: "\f154";
-}
-.mif-dollar2:before {
-  content: "\f155";
-}
-.mif-cny:before {
-  content: "\f157";
-}
-.mif-bitcoin:before {
-  content: "\f15a";
-}
-.mif-youtube-play:before {
-  content: "\f16a";
-}
-.mif-linux:before {
-  content: "\f17c";
-}
-.mif-shuttle:before {
-  content: "\f197";
-}
-.mif-language:before {
-  content: "\f1ab";
-}
-.mif-automobile:before {
-  content: "\f1b9";
-}
-.mif-copyright:before {
-  content: "\f1f9";
-}
-.mif-bicycle:before {
-  content: "\f206";
-}
-.mif-bus:before {
-  content: "\f207";
-}
-.mif-ship:before {
-  content: "\f21a";
-}
-.mif-motorcycle:before {
-  content: "\f21c";
-}
-.mif-subway:before {
-  content: "\f239";
-}
-.mif-trademark:before {
-  content: "\f25c";
-}
-.mif-registered:before {
-  content: "\f25d";
-}
-.mif-creative-commons:before {
-  content: "\f25e";
-}
-.mif-user-md:before {
-  content: "\f0f0";
-}
-.mif-stethoscope:before {
-  content: "\f0f1";
-}
-.mif-ambulance:before {
-  content: "\f0f9";
-}
-.mif-medkit:before {
-  content: "\f0fa";
-}
-.mif-paw:before {
-  content: "\f1b0";
-}
-.mif-visa:before {
-  content: "\f1f0";
-}
-.mif-mastercard:before {
-  content: "\f1f1";
-}
-.mif-cc-paypal:before {
-  content: "\f1f4";
-}
-.mif-heartbeat:before {
-  content: "\f21e";
-}
-.mif-medium:before {
-  content: "\f23a";
+.mif-translate:before {
+  content: "\eb50";
 }
 .mif-edit-attribute:before {
   content: "\e957";
@@ -237,6 +102,27 @@
 }
 .mif-snippet-folder:before {
   content: "\eaa1";
+}
+.mif-location-man:before {
+  content: "\e95c";
+}
+.mif-earth-net:before {
+  content: "\e967";
+}
+.mif-cube:before {
+  content: "\e996";
+}
+.mif-prompt:before {
+  content: "\e998";
+}
+.mif-percent:before {
+  content: "\e9a0";
+}
+.mif-award:before {
+  content: "\e9e0";
+}
+.mif-ram:before {
+  content: "\e9e2";
 }
 .mif-person-card:before {
   content: "\e903";
@@ -1677,6 +1563,126 @@
 }
 .mif-school:before {
   content: "\e61f";
+}
+.mif-window-maximize:before {
+  content: "\e94e";
+}
+.mif-slideshare:before {
+  content: "\e9f1";
+}
+.mif-facebook:before {
+  content: "\f09a";
+}
+.mif-steam:before {
+  content: "\f1b6";
+}
+.mif-user-secret:before {
+  content: "\f21b";
+}
+.mif-server:before {
+  content: "\f233";
+}
+.mif-balance:before {
+  content: "\f24e";
+}
+.mif-handshake:before {
+  content: "\f2b5";
+}
+.mif-imdb:before {
+  content: "\f2d8";
+}
+.mif-unlink:before {
+  content: "\f127";
+}
+.mif-fire-extinguisher:before {
+  content: "\f134";
+}
+.mif-eur:before {
+  content: "\f153";
+}
+.mif-gbp:before {
+  content: "\f154";
+}
+.mif-dollar2:before {
+  content: "\f155";
+}
+.mif-cny:before {
+  content: "\f157";
+}
+.mif-bitcoin:before {
+  content: "\f15a";
+}
+.mif-youtube-play:before {
+  content: "\f16a";
+}
+.mif-linux:before {
+  content: "\f17c";
+}
+.mif-shuttle:before {
+  content: "\f197";
+}
+.mif-language:before {
+  content: "\f1ab";
+}
+.mif-automobile:before {
+  content: "\f1b9";
+}
+.mif-copyright:before {
+  content: "\f1f9";
+}
+.mif-bicycle:before {
+  content: "\f206";
+}
+.mif-bus:before {
+  content: "\f207";
+}
+.mif-ship:before {
+  content: "\f21a";
+}
+.mif-motorcycle:before {
+  content: "\f21c";
+}
+.mif-subway:before {
+  content: "\f239";
+}
+.mif-trademark:before {
+  content: "\f25c";
+}
+.mif-registered:before {
+  content: "\f25d";
+}
+.mif-creative-commons:before {
+  content: "\f25e";
+}
+.mif-user-md:before {
+  content: "\f0f0";
+}
+.mif-stethoscope:before {
+  content: "\f0f1";
+}
+.mif-ambulance:before {
+  content: "\f0f9";
+}
+.mif-medkit:before {
+  content: "\f0fa";
+}
+.mif-paw:before {
+  content: "\f1b0";
+}
+.mif-visa:before {
+  content: "\f1f0";
+}
+.mif-mastercard:before {
+  content: "\f1f1";
+}
+.mif-cc-paypal:before {
+  content: "\f1f4";
+}
+.mif-heartbeat:before {
+  content: "\f21e";
+}
+.mif-medium:before {
+  content: "\f23a";
 }
 .mif-progress:before {
   content: "\e9e6";
