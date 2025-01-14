@@ -156,4 +156,4 @@
     };
 
     Metro['notify'] = Notify.setup();
-}(Metro, m4q));
+}(Metro, Dom));

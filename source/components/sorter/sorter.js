@@ -241,4 +241,4 @@
             Metro.getPlugin(el, "sorter").reset();
         }
     };
-}(Metro, m4q));
+}(Metro, Dom));

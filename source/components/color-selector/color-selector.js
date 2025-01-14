@@ -857,4 +857,4 @@
     });
 
     Metro.defaults.ColorSelector = ColorSelectorDefaultConfig;
-})(Metro, m4q);
+})(Metro, Dom);

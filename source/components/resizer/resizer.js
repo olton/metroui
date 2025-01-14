@@ -120,4 +120,4 @@
             $(globalThis).off("resize", {ns: this.id});
         }
     });
-}(Metro, m4q));
+}(Metro, Dom));

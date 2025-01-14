@@ -68,4 +68,4 @@
             return this.element;
         }
     });
-}(Metro, m4q));
+}(Metro, Dom));

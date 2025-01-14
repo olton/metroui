@@ -1157,4 +1157,4 @@
     });
 
     Metro['touch'] = TouchConst;
-}(Metro, m4q));
+}(Metro, Dom));

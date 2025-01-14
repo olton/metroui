@@ -2546,4 +2546,4 @@ var TABLE_COL_OPTIONS = {
             return element;
         },
     });
-})(Metro, m4q);
+})(Metro, Dom);

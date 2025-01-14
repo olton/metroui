@@ -312,4 +312,4 @@
     });
 
     Metro.defaults.Chat = ChatDefaultConfig;
-})(Metro, m4q);
+})(Metro, Dom);

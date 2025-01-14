@@ -444,4 +444,4 @@
             return Metro.makePlugin(dlg, "dialog", dlg_options);
         },
     };
-})(Metro, m4q);
+})(Metro, Dom);

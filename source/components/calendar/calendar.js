@@ -1221,4 +1221,4 @@
     });
 
     Metro.defaults.Calendar = CalendarDefaultConfig;
-})(Metro, m4q);
+})(Metro, Dom);

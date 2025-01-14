@@ -121,4 +121,4 @@
             this.element.remove();
         }
     });
-}(Metro, m4q));
+}(Metro, Dom));

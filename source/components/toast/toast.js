@@ -78,4 +78,4 @@
 
     Metro['toast'] = Toast;
     Metro['createToast'] = Toast.create;
-}(Metro, m4q));
+}(Metro, Dom));

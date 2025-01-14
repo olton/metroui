@@ -119,4 +119,4 @@
             Metro.dialog.close(a);
         }
     };
-}(Metro, m4q));
+}(Metro, Dom));

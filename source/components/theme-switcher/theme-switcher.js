@@ -138,4 +138,4 @@
             this.container.remove();
         },
     });
-})(Metro, m4q);
+})(Metro, Dom);

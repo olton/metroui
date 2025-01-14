@@ -2,7 +2,7 @@
 
 import "./datetime/index.js";
 import "./string/index.js";
-import "./m4q/index.js";
+import "./dom/index.js";
 import "./hooks/index.js";
 import "./farbe/index.js";
 import "./html/index.js";

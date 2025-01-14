@@ -123,4 +123,4 @@
     });
 
     // TODO add destroy
-}(Metro, m4q));
+}(Metro, Dom));

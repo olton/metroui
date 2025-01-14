@@ -163,4 +163,4 @@
             Metro.getPlugin(el, "charms").opacity(opacity);
         }
     };
-}(Metro, m4q));
+}(Metro, Dom));

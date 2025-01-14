@@ -261,4 +261,4 @@
             return Metro.getPlugin(el, "sidebar").isOpen();
         }
     };
-}(Metro, m4q));
+}(Metro, Dom));

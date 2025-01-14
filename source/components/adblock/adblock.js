@@ -113,4 +113,4 @@
             Adblock.bite();
         });
     });
-}(Metro, m4q));
+}(Metro, Dom));

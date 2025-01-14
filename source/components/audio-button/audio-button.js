@@ -161,4 +161,4 @@
                 Utils.exec(data.onAudioEnd, [null], this);
         });
     };
-}(Metro, m4q));
+}(Metro, Dom));

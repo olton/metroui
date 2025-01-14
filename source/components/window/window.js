@@ -840,4 +840,4 @@
             return Metro.getPlugin(w, "window").win;
         }
     };
-}(Metro, m4q));
+}(Metro, Dom));

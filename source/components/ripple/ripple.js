@@ -130,4 +130,4 @@
     });
 
     Metro.ripple = getRipple;
-}(Metro, m4q));
+}(Metro, Dom));

@@ -184,4 +184,4 @@
             return this.component.remove();
         }
     });
-}(Metro, m4q));
+}(Metro, Dom));

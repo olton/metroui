@@ -154,4 +154,4 @@
             return Metro.getPlugin(el, "bottom-sheet").isOpen();
         }
     };
-}(Metro, m4q));
+}(Metro, Dom));

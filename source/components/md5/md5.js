@@ -204,4 +204,4 @@
     if (globalThis.METRO_GLOBAL_COMMON === true) {
         globalThis.md5 = Metro.md5;
     }
-}(Metro, m4q));
+}(Metro, Dom));

@@ -4,10 +4,10 @@ import { Props } from "./props.js";
 (() => {
     "use strict";
     
-    const $ = m4q;
+    const $ = Dom;
 
-    if (typeof m4q === "undefined") {
-        throw new Error("Metro UI requires m4q helper!");
+    if (typeof Dom === "undefined") {
+        throw new Error("Metro UI requires Dom helper!");
     }
 
     if (!("MutationObserver" in window)) {
@@ -293,7 +293,7 @@ import { Props } from "./props.js";
                 };
             };
 
-            register(m4q);
+            register(Dom);
 
             if (globalThis["useJQuery"]) {
                 register(globalThis["jQuery"]);
@@ -301,7 +301,7 @@ import { Props } from "./props.js";
         },
 
         pluginExists: (name) => {
-            const $ = globalThis["useJQuery"] ? globalThis["jQuery"] : m4q;
+            const $ = globalThis["useJQuery"] ? globalThis["jQuery"] : Dom;
             return typeof $.fn[normalizeComponentName(name)] === "function";
         },
 
@@ -382,7 +382,7 @@ import { Props } from "./props.js";
             return fsm !== undefined;
         },
 
-        $: () => (globalThis["useJQuery"] ? globalThis["jQuery"] : m4q),
+        $: () => (globalThis["useJQuery"] ? globalThis["jQuery"] : Dom),
 
         get$el: (el) => Metro.$()($(el)[0]),
 

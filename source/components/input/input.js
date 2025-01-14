@@ -612,4 +612,4 @@
     $(document).on(Metro.events.click, function(){
         $('.input .autocomplete-list').hide();
     });
-}(Metro, m4q));
+}(Metro, Dom));

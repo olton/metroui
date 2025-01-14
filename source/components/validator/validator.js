@@ -397,4 +397,4 @@
         changeAttribute: function(){
         }
     });
-}(Metro, m4q));
+}(Metro, Dom));

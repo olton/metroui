@@ -207,7 +207,7 @@
         },
 
         $: function () {
-            return globalThis["useJQuery"] ? globalThis["jQuery"] : m4q;
+            return globalThis["useJQuery"] ? globalThis["jQuery"] : Dom;
         },
 
         isMetroObject: function (el, type) {
@@ -238,12 +238,12 @@
             return typeof globalThis["jQuery"] !== "undefined" && el instanceof globalThis["jQuery"];
         },
 
-        isM4Q: function (el) {
-            return typeof m4q !== "undefined" && el instanceof m4q;
+        isDom: function (el) {
+            return typeof Dom !== "undefined" && el instanceof Dom;
         },
 
         isQ: function (el) {
-            return this.isJQuery(el) || this.isM4Q(el);
+            return this.isJQuery(el) || this.isDom(el);
         },
 
         isOutsider: function (element) {
@@ -766,4 +766,4 @@
     if (globalThis["METRO_GLOBAL_COMMON"] === true) {
         globalThis["Utils"] = Metro.utils;
     }
-})(Metro, m4q);
+})(Metro, Dom);

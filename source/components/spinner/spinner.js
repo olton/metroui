@@ -252,4 +252,4 @@
     $(document).on(Metro.events.click, function(){
         $(".spinner").removeClass("focused");
     });
-}(Metro, m4q));
+}(Metro, Dom));

@@ -226,4 +226,4 @@
     $(document).on(Metro.events.click, function () {
         $(".color-picker").removeClass("open");
     });
-})(Metro, m4q);
+})(Metro, Dom);

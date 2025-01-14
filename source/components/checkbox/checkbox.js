@@ -180,4 +180,4 @@
             element.parent().remove();
         }
     });
-}(Metro, m4q));
+}(Metro, Dom));

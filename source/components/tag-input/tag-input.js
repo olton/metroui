@@ -660,4 +660,4 @@
     $(document).on(Metro.events.click, function () {
         $(".tag-input .autocomplete-list").hide();
     });
-})(Metro, m4q);
+})(Metro, Dom);
