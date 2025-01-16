@@ -298,7 +298,7 @@
             });
 
             win.on(Metro.events.dblclick, ".window-caption", function(e){
-                that.maximized(e);
+                that.maximize(e);
             });
 
             caption.on(Metro.events.click, ".btn-max, .btn-min, .btn-close", function(e){

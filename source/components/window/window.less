@@ -9,7 +9,7 @@
     --window-border-color: #f3f3f3;
     --window-background: #fff;
     --window-color: #191919;
-    --window-caption-background: #f3f3f3;
+    //--window-caption-background: #f3f3f3;
     --window-caption-color: #191919;
     --window-scrollbar-thumb-color: #a8a8a8;
     --window-scrollbar-track-color: #f1f1f1;
@@ -24,7 +24,7 @@
     --window-border-color: #484b4c;
     --window-background: #1e1f22;
     --window-color: #dbdfe7;
-    --window-caption-background: #484b4c;
+    //--window-caption-background: #484b4c;
     --window-caption-color: #dbdfe7;
     --window-scrollbar-thumb-color: #d1d1d1;
     --window-scrollbar-track-color: #2c2c2c;
@@ -48,7 +48,7 @@
     overflow: hidden;
     
     &.shadowed {
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
     }
 }
 
@@ -64,7 +64,7 @@
     border-bottom: 1px transparent solid;
     cursor: default;
     vertical-align: middle;
-    background-color: var(--window-caption-background);
+    background-color: var(--window-border-color);
     color: var(--window-caption-color);
     user-select: none;
 }

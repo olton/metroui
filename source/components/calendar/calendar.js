@@ -23,10 +23,10 @@
         calendarDeferred: 0,
         dayBorder: false,
         excludeDay: null,
-        prevMonthIcon: "〈",
-        nextMonthIcon: "〉",
-        prevYearIcon: "〈",
-        nextYearIcon: "〉",
+        prevMonthIcon: "⯇",
+        nextMonthIcon: "⯈",
+        prevYearIcon: "⯇",
+        nextYearIcon: "⯈",
         compact: false,
         wide: false,
         widePoint: null,
@@ -346,7 +346,7 @@
                 );
             });
 
-            element.on(Metro.events.click, ".button.today", function () {
+            element.on(Metro.events.click, ".button-today", function () {
                 that.toDay();
                 that._fireEvent("today", {
                     today: that.today.val(),
@@ -354,7 +354,7 @@
                 });
             });
 
-            element.on(Metro.events.click, ".button.clear", function () {
+            element.on(Metro.events.click, ".button-clear", function () {
                 var date = datetime();
 
                 that.selected = [];
@@ -364,12 +364,12 @@
                 that._fireEvent("clear");
             });
 
-            element.on(Metro.events.click, ".button.cancel", function () {
+            element.on(Metro.events.click, ".button-cancel", function () {
                 that._drawContent();
                 that._fireEvent("cancel");
             });
 
-            element.on(Metro.events.click, ".button.done", function () {
+            element.on(Metro.events.click, ".button-done", function () {
                 that._drawContent();
                 that._fireEvent("done", {
                     selected: that.selected,
@@ -620,7 +620,7 @@
             $.each(o.buttons, function () {
                 var button = $("<button>")
                     .attr("type", "button")
-                    .addClass("button " + this + " " + o["cls" + Str.capitalize(this) + "Button"])
+                    .addClass("button " + `button-${this}` + " " + o["cls" + Str.capitalize(this) + "Button"])
                     .html(strings[`label_${this}`])
                     .appendTo(footer);
                 if (this === "cancel" || this === "done") {

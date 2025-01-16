@@ -23302,12 +23302,13 @@ hr.fat {
 }
 .selected {
   box-shadow: 0 0 0 4px var(--selected-color) !important;
+  border-radius: 6px;
 }
 .selected::after {
   position: absolute;
   display: block;
-  border-top: 28px solid var(--selected-color);
-  border-left: 28px solid transparent;
+  border-top: 22px solid var(--selected-color);
+  border-left: 22px solid transparent;
   right: -1px;
   content: "";
   top: -1px;
@@ -47406,7 +47407,6 @@ button.flat,
   top: 50%;
   transform: translate(0, -50%);
   font-size: 24px;
-  font-family: "Segoe UI Symbol", serif;
 }
 .analog-clock .moon.new-moon::before {
   content: "\1f311";
@@ -50133,6 +50133,7 @@ input:-ms-input-placeholder {
 }
 .calendar-content .day:hover {
   border-color: var(--calendar-border-color);
+  border-radius: 6px;
 }
 .calendar-footer {
   padding: 0.5rem;
@@ -70385,7 +70386,6 @@ body.vegas-container > .vegas-slide {
   --window-border-color: #f3f3f3;
   --window-background: #fff;
   --window-color: #191919;
-  --window-caption-background: #f3f3f3;
   --window-caption-color: #191919;
   --window-scrollbar-thumb-color: #a8a8a8;
   --window-scrollbar-track-color: #f1f1f1;
@@ -70399,7 +70399,6 @@ body.vegas-container > .vegas-slide {
   --window-border-color: #484b4c;
   --window-background: #1e1f22;
   --window-color: #dbdfe7;
-  --window-caption-background: #484b4c;
   --window-caption-color: #dbdfe7;
   --window-scrollbar-thumb-color: #d1d1d1;
   --window-scrollbar-track-color: #2c2c2c;
@@ -70422,7 +70421,7 @@ body.vegas-container > .vegas-slide {
   overflow: hidden;
 }
 .window.shadowed {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
 }
 .window-caption {
   display: flex;
@@ -70436,7 +70435,7 @@ body.vegas-container > .vegas-slide {
   border-bottom: 1px transparent solid;
   cursor: default;
   vertical-align: middle;
-  background-color: var(--window-caption-background);
+  background-color: var(--window-border-color);
   color: var(--window-caption-color);
   user-select: none;
 }
