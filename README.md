@@ -49,14 +49,20 @@ In addition, **SUPPORT PACK** is available for an annual subscription on [Korzh.
 
 **SUPPORT PACK** includes an **Extra time for priority support** by email and other options.
 
+---
+
 ### Community
 
 [![Join the chat at https://discord.gg/QYszPjRP](https://img.shields.io/badge/community-on%20discord-brightgreen.svg?style=flat)](https://discord.gg/QYszPjRP)
+
+---
 
 ### Contributing
 All contributions are welcome. Learn more about how you can contribute to this project [here](CONTRIBUTING.md). 
 
 > Important! Before you create Pull Request, you must sign CLA! 
+
+---
  
 ### Docs & Demo
 
