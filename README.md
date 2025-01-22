@@ -20,7 +20,6 @@
 </p>
 
 ----
-<div align="center">
 
 ### Project State
 ![Dependencies](https://img.shields.io/badge/Dependencies-none-darklime.svg)
@@ -36,11 +35,7 @@
 ![GitHub Icons Size](https://img.shields.io/github/size/olton/Metro-UI-CSS/lib%2Ficons.css?label=Icons%20Size&color=01796f)
 ![GitHub Bundle Size](https://img.shields.io/github/size/olton/Metro-UI-CSS/lib%2Fmetro.all.js?label=Bundle%20Size&color=8d4585)
 
-</div>
-
 ---
-
-<div align="center"> 
 
 ### License and Premium Features
 This project is licensed under the **MIT** license. 
@@ -81,7 +76,6 @@ The usual frequency of release of the new version is one week on Sundays.
 If your current version of Metro UI works for you, you can stay on it for as long as you would like. 
 If you want to make use of new features as they come in, you should upgrade to a newer version.
 
-</div>
 
 ---
 
