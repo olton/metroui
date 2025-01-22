@@ -28,8 +28,8 @@
 .border-radius-half, .to-cycle {border-radius: 50%;}
 
 each(range(1, 20), .(@i) {
-    .border-size-@{i} {border-width: unit(@i, px);}
-    .border-radius-@{i} {border-radius: unit(@i, px);}
+    .border-size-@{i} {border-width: unit(@i, px)!important;}
+    .border-radius-@{i} {border-radius: unit(@i, px)!important;}
 });
 
 each(@media-rules, {

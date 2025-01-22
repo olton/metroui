@@ -1,7 +1,4 @@
 @import (once) "../include/vars";
-@import (once) "../include/mixins";
-
-@ordersCount: 24;
 
 .d-flex {display: flex!important;}
 .d-inline-flex {display: inline-flex!important;}
@@ -33,11 +30,11 @@ each(range(24), {
 
 .flex-nowrap {flex-wrap: nowrap !important;}
 .flex-wrap {flex-wrap: wrap !important;}
-.flex-wrap-r {flex-wrap: wrap-reverse !important;}
+.flex-wrap-reverse {flex-wrap: wrap-reverse !important;}
 .flex-column {flex-direction: column !important;}
-.flex-column-r {flex-direction: column-reverse !important;}
+.flex-column-reverse {flex-direction: column-reverse !important;}
 .flex-row {flex-direction: row !important;}
-.flex-row-r {flex-direction: row-reverse !important;}
+.flex-row-reverse {flex-direction: row-reverse !important;}
 .flex-align-start {align-items: flex-start !important;}
 .flex-align-end {align-items: flex-end !important;}
 .flex-align-center {align-items: center !important;}
@@ -85,11 +82,11 @@ each(@media-rules, {
     @container (min-width: @value) {
         .flex-nowrap-@{key} {flex-wrap: nowrap !important;}
         .flex-wrap-@{key} {flex-wrap: wrap !important;}
-        .flex-wrap-r-@{key} {flex-wrap: wrap-reverse !important;}
+        .flex-wrap-reverse-@{key} {flex-wrap: wrap-reverse !important;}
         .flex-column-@{key} {flex-direction: column !important;}
-        .flex-column-r-@{key} {flex-direction: column-reverse !important;}
+        .flex-column-reverse-@{key} {flex-direction: column-reverse !important;}
         .flex-row-@{key} {flex-direction: row !important;}
-        .flex-row-r-@{key} {flex-direction: row-reverse !important;}
+        .flex-row-reverse-@{key} {flex-direction: row-reverse !important;}
         .flex-align-start-@{key} {align-items: flex-start !important;}
         .flex-align-end-@{key} {align-items: flex-end !important;}
         .flex-align-center-@{key} {align-items: center !important;}
