@@ -32,7 +32,6 @@
 ![GitHub Css Size](https://img.shields.io/github/size/olton/Metro-UI-CSS/lib%2Fmetro.css?label=CSS%20Size&color=fd9812)
 ![GitHub JS Size](https://img.shields.io/github/size/olton/Metro-UI-CSS/lib%2Fmetro.js?label=JS%20Size&color=8f99ff)
 ![GitHub Icons Size](https://img.shields.io/github/size/olton/Metro-UI-CSS/lib%2Ficons.css?label=Icons%20Size&color=01796f)
-![GitHub Bundle Size](https://img.shields.io/github/size/olton/Metro-UI-CSS/lib%2Fmetro.all.js?label=Bundle%20Size&color=8d4585)
 
 ---
 
