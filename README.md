@@ -44,6 +44,7 @@
 
 ### License and Premium Features
 This project is licensed under the **MIT** license. 
+
 In addition, **SUPPORT PACK** is available for an annual subscription on [Korzh.com](https://korzh.com/metroui).
 
 **SUPPORT PACK** includes an **Extra time for priority support** by email and other options.
