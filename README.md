@@ -10,7 +10,7 @@
 
 
 <p align="center">
-    <a href="https://docs-new.metroui.org.ua/"><strong>Explore Metro UI docs »</strong></a>
+    <a href="https://docs-new.metroui.org.ua/"><strong>Explore Metro UI Docs</strong></a>
 </p>
 
 <p align="center">
@@ -44,7 +44,7 @@
 
 ### License and Premium Features
 This project is licensed under the **MIT** license. 
-In addition, **SUPPORT PACK** is available for an annual subscription on [https://korzh.com/](https://korzh.com/).
+In addition, **SUPPORT PACK** is available for an annual subscription on [Korzh.com](https://korzh.com/metroui).
 
 **SUPPORT PACK** includes an **Extra time for priority support** by email and other options.
 
@@ -68,9 +68,9 @@ I'm creating release when there are significant bug fixes, new APIs, or componen
 The usual frequency of release of the new version is one week on Sundays.
 
 ### LTS
-**Long term support** of older versions of Metro 4 does not currently exist. 
-If your current version of Metro 4 works for you, you can stay on it for as long as you'd like. 
-If you want to make use of new features as they come in you should upgrade to a newer version.
+**Long-term support** of older versions of Metro UI doesn't currently exist. 
+If your current version of Metro UI works for you, you can stay on it for as long as you would like. 
+If you want to make use of new features as they come in, you should upgrade to a newer version.
 
 </div>
 
