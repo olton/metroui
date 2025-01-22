@@ -28,7 +28,6 @@
 ![NPM Version](https://img.shields.io/npm/v/%40olton%2Fmetroui)
 ![Website](https://img.shields.io/website/https/metroui.org.ua.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?color=7852a9)
-
 ![Code size](https://img.shields.io/github/languages/code-size/olton/Metro-UI-CSS.svg?color=830000)
 ![GitHub Css Size](https://img.shields.io/github/size/olton/Metro-UI-CSS/lib%2Fmetro.css?label=CSS%20Size&color=fd9812)
 ![GitHub JS Size](https://img.shields.io/github/size/olton/Metro-UI-CSS/lib%2Fmetro.js?label=JS%20Size&color=8f99ff)
@@ -38,15 +37,15 @@
 ---
 
 ### License and Premium Features
-This project is licensed under the **MIT** license. 
-
+This project is licensed under the **MIT** license.
 In addition, **SUPPORT PACK** is available for an annual subscription on [Korzh.com](https://korzh.com/metroui).
-
 **SUPPORT PACK** includes an **Extra time for priority support** by email and other options.
 
 ---
 
 ### Community
+
+Welcome to Metro UI Discord Server!
 
 [![Join the chat at https://discord.gg/QYszPjRP](https://img.shields.io/badge/community-on%20discord-brightgreen.svg?style=flat)](https://discord.gg/QYszPjRP)
 
