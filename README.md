@@ -60,7 +60,8 @@ In addition, **SUPPORT PACK** is available for an annual subscription on [Korzh.
 ### Contributing
 All contributions are welcome. Learn more about how you can contribute to this project [here](CONTRIBUTING.md). 
 
-> Important! Before you create Pull Request, you must sign CLA! 
+> [!IMPORTANT]
+> Important! Before you create Pull Request, you must sign CLA!
 
 ---
  
