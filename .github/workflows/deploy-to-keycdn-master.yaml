@@ -1,0 +1,44 @@
+on:
+  push:
+    branches:
+      - master
+name: Deploy to KeyCDN
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get Version
+        id: get-version
+        uses: beaconbrigade/package-json-version@v0.3.2
+        with:
+          path: .
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Push files to Current folder
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ftp.keycdn.com
+          username: metro4
+          password: ${{ secrets.FTP_PASSWORD_KEYCDN }}
+          dangerous-clean-slate: true
+          local-dir: ./lib/
+          server-dir: current/
+
+      - name: Push files to Number folder
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ftp.keycdn.com
+          username: metro4
+          password: ${{ secrets.FTP_PASSWORD_KEYCDN }}
+          dangerous-clean-slate: true
+          local-dir: ./lib/
+          server-dir: ${{ steps.get-version.outputs.version }}/

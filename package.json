@@ -34,10 +34,9 @@
         "build": "npm run clean && cross-env NODE_NO_WARNINGS=1 MODE=production node build.js",
         "dev": "npm run clean && cross-env NODE_NO_WARNINGS=1 MODE=development node build.js",
         "watch": "npm run clean && cross-env NODE_NO_WARNINGS=1 MODE=development node watch.js",
-        "dep:prod": "npm run build && node ./deploy.js",
-        "dep": "npm run dev && node ./deploy-dev.js",
+        "dep": "npm run build && node ./deploy.js",
         "pub": "npm publish --access public",
-        "test": "easytest --include='__tests__/*.test.js' --skip='gravatar,touch,sidebar,list.html,audio-player'",
+        "test": "easytest --include='__tests__/*.test.js'",
         "check": "npx biome check"
     },
     "browserslist": ["last 2 versions"],
