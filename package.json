@@ -40,7 +40,7 @@
         "check": "npx biome check",
         "commit": "node -e \"const mssg = process.argv[1]; require('child_process').execSync('npm run build && git add . && git commit -m \\\"' + mssg + '\\\"', { stdio:[0, 1, 2] })\""
     },
-    "pre-commit": [ "build" ],
+    "pre-commit": [ ],
     "browserslist": [
         "last 2 versions"
     ],
