@@ -37,7 +37,8 @@
         "dep": "npm run build && node ./deploy.js",
         "pub": "npm publish --access public",
         "test": "easytest --include='__tests__/*.test.js'",
-        "check": "npx biome check"
+        "check": "npx biome check",
+        "commit": "node -e \"const mssg = process.argv[1]; require('child_process').execSync('npm run build && git add . && git commit -m \\\"' + mssg + '\\\"', { stdio:[0, 1, 2] })\""
     },
     "pre-commit": [ "build" ],
     "browserslist": [
