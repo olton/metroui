@@ -6,8 +6,7 @@
     with the first front-end component library in Metro Style.
 </div>
 
-![Alt](https://repobeats.axiom.co/api/embed/75c6aba3d69c314c78727354cc6082e916ad1297.svg "Repobeats analytics image")
-
+![Alt](https://repobeats.axiom.co/api/embed/0bec17257148030ff28810855fc54de0735a46a7.svg "Repobeats analytics image")
 
 <p align="center">
     <a href="https://docs-new.metroui.org.ua/"><strong>Explore Metro UI Docs</strong></a>
