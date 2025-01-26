@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>MetroUI</id>
+    <version>5.1.0</version>
+    <title>Metro UI Components Library</title>
+    <authors>Serhii Pimenov</authors>
+    <owners>Serhii Pimenov</owners>
+    <licenseUrl>https://github.com/olton/metroui/blob/master/LICENSE</licenseUrl>
+    <projectUrl>http://metroui.org.ua/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Metro UI is an open source toolkit for developing with HTML, CSS, and JS in Windows Metro Style</description>
+    <releaseNotes></releaseNotes>
+    <language>en-US</language>
+    <copyright>Copyright 2012-2025, Serhii Pimenov</copyright>
+    <tags>Metro UI CSS Framework LESS CSS JS HTML</tags>
+  </metadata>
+  <files>
+    <file src="lib\*.js" target="Content\Scripts" />
+    <file src="lib\*.css" target="Content\Content" />
+  </files>
+</package>
