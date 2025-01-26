@@ -106,6 +106,6 @@ You can support my work
 
 ---
 
-2012-2024 © Copyright by Serhii Pimenov. All Rights Reserved. Created by Serhii Pimenov.
+2012-2024 © Copyright by Serhii Pimenov. All Rights Reserved.
 
 </div>
