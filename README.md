@@ -51,7 +51,7 @@ Welcome to Metro UI Discord Server!
 ### Contributing
 All contributions are welcome. Learn more about how you can contribute to this project [here](CONTRIBUTING.md). 
 
-> [!IMPORTANT]
+> [!NOTE]
 > Before you create Pull Request, you must sign CLA!
 
 
