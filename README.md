@@ -32,15 +32,13 @@
 ![GitHub JS Size](https://img.shields.io/github/size/olton/metroui/lib%2Fmetro.js?label=JS%20Size&color=8f99ff)
 ![GitHub Icons Size](https://img.shields.io/github/size/olton/metroui/lib%2Ficons.css?label=Icons%20Size&color=01796f)
 
-
-:::note
-
-> [!IMPORTANT]
+---
+> [!IMPORTANT title="License and Premium Features"]
 > ### License and Premium Features
 > This project is licensed under the **MIT** license.
 > In addition, **SUPPORT PACK** is available for an annual subscription on [Korzh.com](https://korzh.com/metroui).
 > **SUPPORT PACK** includes an **Extra time for priority support** by email and other options.
-
+---
 
 ### Community
 
