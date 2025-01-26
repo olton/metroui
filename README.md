@@ -33,7 +33,7 @@
 ![GitHub Icons Size](https://img.shields.io/github/size/olton/metroui/lib%2Ficons.css?label=Icons%20Size&color=01796f)
 
 ---
-> [!IMPORTANT title="License and Premium Features"]
+> [!IMPORTANT]
 > ### License and Premium Features
 > This project is licensed under the **MIT** license.
 > In addition, **SUPPORT PACK** is available for an annual subscription on [Korzh.com](https://korzh.com/metroui).
