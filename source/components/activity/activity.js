@@ -104,7 +104,7 @@
 
             return Metro.dialog.create({
                 content: activity + text,
-                defaultAction: false,
+                defaultActions: false,
                 clsContent: "d-flex flex-column flex-justify-center flex-align-center bg-transparent no-shadow w-auto",
                 clsDialog: "no-border no-shadow bg-transparent global-dialog",
                 autoHide: o.autoHide ? o.autoHide : 0,

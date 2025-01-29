@@ -559,16 +559,17 @@
                         <input type="text" data-role="input" value="${caption.text()}">
                     </form>
                 `,
-                actions: [
+                defaultActions: false,
+                customButtons: [
                     {
-                        caption: that.strings.label_ok,
+                        text: that.strings.label_ok,
                         cls: "js-dialog-close info",
                         onclick: function (dlg) {
                             that.setupTab(tab, "caption", dlg.find("input").val());
                         },
                     },
                     {
-                        caption: that.strings.label_cancel,
+                        text: that.strings.label_cancel,
                         cls: "js-dialog-close",
                     },
                 ],
