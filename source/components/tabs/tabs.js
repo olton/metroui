@@ -7,14 +7,15 @@
 (function (Metro, $) {
     "use strict";
 
-    var Utils = Metro.utils;
-    var TabsDefaultConfig = {
+    let TabsDefaultConfig = {
         tabsDeferred: 0,
         expand: false,
         expandPoint: null,
-        tabsPosition: "top",
-        tabsType: "default",
+        type: "default", // default, text, group, pills
         updateUri: false,
+        position: "top", // top, bottom, left, right
+        align: "left", // left, center, right
+        // linked: false,
 
         clsTabs: "",
         clsTabsList: "",
@@ -40,16 +41,15 @@
         init: function (options, elem) {
             this._super(elem, options, TabsDefaultConfig, {
                 _targets: [],
-                id: Utils.elementId("tabs"),
+                id: Metro.utils.elementId("tabs"),
             });
 
             return this;
         },
 
         _create: function () {
-            var element = this.element,
-                o = this.options;
-            var tab = element.find(".active").length > 0 ? $(element.find(".active")[0]) : undefined;
+            const element = this.element;
+            const tab = element.find(".active").length > 0 ? $(element.find(".active")[0]) : undefined;
 
             this._createStructure();
             this._createEvents();
@@ -62,74 +62,67 @@
         },
 
         _createStructure: function () {
-            var element = this.element,
-                o = this.options;
-            var parent = element.parent();
-            var right_parent = parent.hasClass("tabs");
-            var container = right_parent ? parent : $("<div>").addClass("tabs tabs-wrapper");
-            var expandTitle, hamburger;
+            const element = this.element, o = this.options;
+            const container = element.wrap("<div>").addClass("tabs");
+            let expandTitle, hamburger;
 
-            container.addClass(o.tabsPosition.replace(["-", "_", "+"], " "));
+            container.addClass(`tabs-${o.position}`);
 
             element.addClass("tabs-list");
-            if (o.tabsType !== "default") {
-                element.addClass("tabs-" + o.tabsType);
-            }
-            if (!right_parent) {
-                container.insertBefore(element);
-                element.appendTo(container);
-            }
+            element.addClass("tabs-" + o.type);
+            element.addClass("align-" + o.align);
 
             element.data("expanded", false);
 
             expandTitle = $("<div>").addClass("expand-title");
             container.prepend(expandTitle);
+            
             hamburger = container.find(".hamburger");
             if (hamburger.length === 0) {
                 hamburger = $("<button>").attr("type", "button").addClass("hamburger menu-down").appendTo(container);
-                for (var i = 0; i < 3; i++) {
+                for (let i = 0; i < 3; i++) {
                     $("<span>").addClass("line").appendTo(hamburger);
                 }
-
-                // if (Farbe.Routines.isLight(Utils.getStyleOne(container, "background-color")) === true) {
-                //     hamburger.addClass("hamburger-dark");
-                // }
             }
 
             container.addClass(o.clsTabs);
             element.addClass(o.clsTabsList);
             element.children("li").addClass(o.clsTabsListItem);
 
-            if (o.expand === true && !o.tabsPosition.includes("vertical")) {
-                container.addClass("tabs-expand");
+            if (o.expand === true) {
+                if (!["left", "right"].includes(o.position)) {
+                    container.addClass("tabs-expand");
+                }
             } else {
-                if (Utils.isValue(o.expandPoint) && Utils.mediaExist(o.expandPoint) && !o.tabsPosition.includes("vertical")) {
+                if (Metro.utils.isValue(o.expandPoint) && Metro.utils.mediaExist(o.expandPoint) && !["left", "right"].includes(o.position)) {
                     container.addClass("tabs-expand");
                 }
             }
 
-            if (o.tabsPosition.includes("vertical")) {
+            if (["left", "right"].includes(o.position)) {
                 container.addClass("tabs-expand");
             }
         },
 
         _createEvents: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var container = element.parent();
+            const container = element.parent();
 
             $(globalThis).on(
                 Metro.events.resize,
                 function () {
-                    if (o.tabsPosition.includes("vertical")) {
+                    if (["left", "right"].includes(o.position)) {
                         return;
                     }
 
-                    if (o.expand === true && !o.tabsPosition.includes("vertical")) {
-                        container.addClass("tabs-expand");
+                    if (o.expand === true) {
+                        if (!["left", "right"].includes(o.position)) {
+                            container.addClass("tabs-expand");
+                        }
                     } else {
-                        if (Utils.isValue(o.expandPoint) && Utils.mediaExist(o.expandPoint) && !o.tabsPosition.includes("vertical")) {
+                        if (Metro.utils.isValue(o.expandPoint) && Metro.utils.mediaExist(o.expandPoint) && !["left", "right"].includes(o.position)) {
                             if (!container.hasClass("tabs-expand")) container.addClass("tabs-expand");
                         } else {
                             if (container.hasClass("tabs-expand")) container.removeClass("tabs-expand");
@@ -152,9 +145,9 @@
             });
 
             element.on(Metro.events.click, "a", function (e) {
-                var link = $(this);
-                var href = link.attr("href").trim();
-                var tab = link.parent("li");
+                const link = $(this);
+                const href = link.attr("href").trim();
+                const tab = link.parent("li");
 
                 that._fireEvent("tab", {
                     tab: tab[0],
@@ -171,18 +164,18 @@
                     container.find(".hamburger").removeClass("active");
                 }
 
-                if (Utils.exec(o.onBeforeTab, [tab, element], tab[0]) !== true) {
+                if (Metro.utils.exec(o.onBeforeTab, [tab, element], tab[0]) !== true) {
                     return false;
                 }
 
-                if (Utils.isValue(href) && href[0] === "#") {
+                if (Metro.utils.isValue(href) && href[0] === "#") {
                     that._open(tab);
                     e.preventDefault();
                 }
             });
 
-            $(globalThis).on("hashchange", function (e) {
-                var hash, tab;
+            $(globalThis).on("hashchange", function () {
+                let hash, tab;
 
                 if (o.updateUri) {
                     hash = globalThis.location.hash;
@@ -193,9 +186,9 @@
         },
 
         _findTabByTarget: function (target) {
-            var element = this.element;
-            var tabs = element.find("li");
-            var tab = undefined;
+            const element = this.element;
+            const tabs = element.find("li");
+            let tab = undefined;
 
             tabs.each(function (i, el) {
                 if (!tab && $(el).children("a").attr("href") === target) {
@@ -207,14 +200,16 @@
         },
 
         _collectTargets: function () {
-            var that = this,
+            const that = this,
                 element = this.element;
-            var tabs = element.find("li");
+            const tabs = element.find("li");
 
             this._targets = [];
 
             $.each(tabs, function () {
-                var target = $(this).find("a").attr("href").trim();
+                const tab = $(this)
+                if (tab.hasClass("divider")) return;
+                const target = tab.find("a").attr("href").trim();
                 if (target.length > 1 && target[0] === "#") {
                     that._targets.push(target);
                 }
@@ -222,11 +217,11 @@
         },
 
         _open: function (tab) {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var tabs = element.find("li");
-            var expandTitle = element.siblings(".expand-title");
-            var activeTab = element.find("li.active");
+            const tabs = element.find("li");
+            const expandTitle = element.siblings(".expand-title");
+            const activeTab = element.find("li.active");
 
             if (tabs.length === 0) {
                 return;
@@ -238,7 +233,7 @@
                 tab = $(tabs[0]);
             }
 
-            var target = tab.find("a").attr("href");
+            const target = tab.find("a").attr("href");
 
             if (target === undefined) {
                 return;
@@ -252,7 +247,7 @@
             }
 
             $.each(this._targets, function () {
-                var t = $(this);
+                const t = $(this);
                 if (t.length > 0) t.hide();
             });
 
@@ -281,8 +276,8 @@
         },
 
         next: function () {
-            var element = this.element;
-            var next,
+            const element = this.element;
+            let next,
                 active_tab = element.find("li.active");
 
             next = active_tab.next("li");
@@ -292,8 +287,8 @@
         },
 
         prev: function () {
-            var element = this.element;
-            var next,
+            const element = this.element;
+            let next,
                 active_tab = element.find("li.active");
 
             next = active_tab.prev("li");
@@ -303,22 +298,22 @@
         },
 
         openByTarget: function (target) {
-            var tab = this._findTabByTarget(target);
+            const tab = this._findTabByTarget(target);
             if (tab) {
                 this._open($(tab));
             }
         },
 
         open: function (tab) {
-            var element = this.element;
-            var tabs = element.find("li");
+            const element = this.element;
+            const tabs = element.find("li");
 
-            if (!Utils.isValue(tab)) {
+            if (!Metro.utils.isValue(tab)) {
                 tab = 1;
             }
 
-            if (Utils.isInt(tab)) {
-                if (Utils.isValue(tabs[tab - 1])) this._open($(tabs[tab - 1]));
+            if (Metro.utils.isInt(tab)) {
+                if (Metro.utils.isValue(tabs[tab - 1])) this._open($(tabs[tab - 1]));
             } else {
                 this._open($(tab));
             }
@@ -327,16 +322,14 @@
         changeAttribute: function () {},
 
         destroy: function () {
-            var element = this.element;
-            var container = element.parent();
+            const element = this.element;
+            const container = element.parent();
 
             $(globalThis).off(Metro.events.resize, { ns: this.id });
-
             container.off(Metro.events.click, ".hamburger, .expand-title");
-
             element.off(Metro.events.click, "a");
 
-            return element;
+            element.remove();
         },
     });
 })(Metro, Dom);
