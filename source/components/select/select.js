@@ -86,7 +86,6 @@
             }
 
             this._final();
-            
         },
 
         _final: function () {
@@ -135,7 +134,6 @@
         },
 
         _setPlaceholder: function () {
-            
             var element = this.element,
                 o = this.options;
             var input = element.siblings(".select-input");
