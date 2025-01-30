@@ -32,6 +32,7 @@
         openMode: "auto",
         showGroupName: false,
         shortTag: true,
+        source: null,
 
         clsSelect: "",
         clsSelectInput: "",
@@ -76,9 +77,21 @@
         },
 
         _create: function () {
+            var o = this.options;
+
+            if (o.source !== null) {
+                this._loadRemoteOptions();
+            } else {
+                this._createSelect();
+            }
+
+            this._final();
+            
+        },
+
+        _final: function () {
             var element = this.element;
 
-            this._createSelect();
             this._createEvents();
 
             this._fireEvent("select-create", {
@@ -86,7 +99,43 @@
             });
         },
 
+        _loadRemoteOptions: function () {
+            var that = this, element = this.element, o = this.options;
+        
+            fetch(o.source)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error loading data for select");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    element.empty(); //clean all exiting options
+
+                    data.forEach(item => {
+                        var option = document.createElement("option");
+                        option.value = item.value;
+                        option.textContent = item.text;
+                        if(item.icon !== undefined) {
+                            if(item.icon.indexOf("mif-") === 0) {
+                                option.setAttribute("data-icon", "<span class='" + item.icon + "'></span>");
+                            } else {
+                                option.setAttribute("data-icon", item.icon);
+                            }
+                        }
+                        element.append(option);
+                    });
+        
+                    this._createSelect();
+                    that._final();
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        },
+
         _setPlaceholder: function () {
+            
             var element = this.element,
                 o = this.options;
             var input = element.siblings(".select-input");
