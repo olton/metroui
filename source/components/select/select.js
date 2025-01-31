@@ -806,10 +806,15 @@
             element.append(option);
 
             if (selected) {
+                if (element[0].multiple) {
+                    // nothing
+                } else {
+                    element.find("option").prop("selected", false);
+                }
                 option.prop("selected", true);
             }
 
-            this._createOptions();
+            // this._createOptions();
 
             return this;
         },
@@ -821,6 +826,8 @@
                 return this;
             }
 
+            this.observer.disconnect();
+            
             if (Array.isArray(values)) {
                 $.each(values, function () {
                     const o = this;
@@ -836,6 +843,13 @@
                 });
             }
 
+            this._createOptions();
+            
+            this.observer.observe(element[0], {
+                childList: true,
+                subtree: true,
+            })
+            
             return this;
         },
 
