@@ -23,7 +23,9 @@
         openMode: "auto",
         showGroupName: false,
         shortTag: true, // tag with name max width 120px
+        
         source: null,
+        sourceMethod: "GET",
 
         clsSelect: "",
         clsSelectInput: "",
@@ -38,6 +40,7 @@
         clsSelectedItemAction: "",
         clsLabel: "",
         clsGroupName: "",
+        clsFilterInput: "",
 
         onClear: Metro.noop,
         onChange: Metro.noop,
@@ -230,7 +233,7 @@
             });
         },
 
-        _createSelect: function () {
+        _createSelect: async function () {
             const that = this,
                 element = this.element,
                 o = this.options;
@@ -305,6 +308,8 @@
                 .attr("placeholder", o.filterPlaceholder || this.strings.label_filter + "...")
                 .appendTo(drop_container_input);
 
+            filter_input.addClass(o.clsFilterInput);
+            
             container.append(input);
             container.append(drop_container);
 
@@ -316,54 +321,33 @@
 
             drop_container.append(list);
 
+            if (o.source) {
+                // const result = await fetch(o.source, {
+                //     method: o.sourceMethod || "GET",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                // })
+                // if (result.ok) {
+                //     const data = await result.json();
+                //     $.each(data, function () {
+                //         const option = $("<option>").attr("value", this.value).html(this.text);
+                //         if (this.icon) {
+                //             option.attr("data-icon", this.icon);
+                //         } 
+                //         option.appendTo(element)
+                //     });
+                // }
+                await this.fetch(o.source,  {
+                    method: o.sourceMethod || "GET",
+                })
+            }
+            
             this._createOptions();
 
             this._setPlaceholder();
 
-            Metro.makePlugin(drop_container, "dropdown", {
-                dropFilter: ".select",
-                duration: o.duration,
-                toggleElement: [container],
-                openMode: o.openMode,
-                onDrop: function () {
-                    let dropped, target;
-                    dropdown_toggle.addClass("active-toggle");
-                    dropped = $(".select .drop-container");
-                    $.each(dropped, function () {
-                        const drop = $(this);
-                        if (drop.is(drop_container)) {
-                            return;
-                        }
-                        const dataDrop = Metro.getPlugin(drop, "dropdown");
-                        if (dataDrop && dataDrop.close) {
-                            dataDrop.close();
-                        }
-                    });
-
-                    filter_input.val("").trigger(Metro.events.keyup); //.focus();
-
-                    target =
-                        list.find("li.active").length > 0
-                            ? $(list.find("li.active")[0])
-                            : undefined;
-                    if (target !== undefined) {
-                        list[0].scrollTop =
-                            target.position().top -
-                            (list.height() - target.height()) / 2;
-                    }
-
-                    that._fireEvent("drop", {
-                        list: list[0],
-                    });
-                },
-                onUp: function () {
-                    dropdown_toggle.removeClass("active-toggle");
-
-                    that._fireEvent("up", {
-                        list: list[0],
-                    });
-                },
-            });
+            this._createDroppable(drop_container);
 
             this.list = list;
 
@@ -426,6 +410,59 @@
             });
         },
 
+        _createDroppable: function (drop_container) {
+            const that = this, o = this.options;
+            const filter_input = drop_container.find("input");
+            const dropdown_toggle = drop_container.siblings(".dropdown-toggle");
+            const container = this.element.closest(".select");
+            const list = drop_container.find("ul");
+            
+            Metro.makePlugin(drop_container, "dropdown", {
+                dropFilter: ".select",
+                duration: o.duration,
+                toggleElement: [container],
+                openMode: o.openMode,
+                onDrop: function () {
+                    let dropped, target;
+                    dropdown_toggle.addClass("active-toggle");
+                    dropped = $(".select .drop-container");
+                    $.each(dropped, function () {
+                        const drop = $(this);
+                        if (drop.is(drop_container)) {
+                            return;
+                        }
+                        const dataDrop = Metro.getPlugin(drop, "dropdown");
+                        if (dataDrop && dataDrop.close) {
+                            dataDrop.close();
+                        }
+                    });
+
+                    filter_input.val("").trigger(Metro.events.keyup); //.focus();
+
+                    target =
+                        list.find("li.active").length > 0
+                            ? $(list.find("li.active")[0])
+                            : undefined;
+                    if (target !== undefined) {
+                        list[0].scrollTop =
+                            target.position().top -
+                            (list.height() - target.height()) / 2;
+                    }
+
+                    that._fireEvent("drop", {
+                        list: list[0],
+                    });
+                },
+                onUp: function () {
+                    dropdown_toggle.removeClass("active-toggle");
+
+                    that._fireEvent("up", {
+                        list: list[0],
+                    });
+                },
+            });
+        },
+        
         _updateSelect: function (mutation) {
             for (let record of mutation) {
                 if (record.type === "childList") {
@@ -890,6 +927,30 @@
             this._createOptions();
 
             return this;
+        },
+        
+        fetch: async function(source, options){
+            const element = this.element;
+            const _options = Object.assign({
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }, options);
+            
+            const result = await fetch(source, _options)
+            
+            if (result.ok === false) { return; }
+            
+            const data = await result.json();
+            
+            $.each(data, function () {
+                const option = $("<option>").attr("value", this.value).html(this.text);
+                if (this.icon) {
+                    option.attr("data-icon", this.icon);
+                }
+                option.appendTo(element)
+            });
         },
 
         changeAttribute: function (attributeName) {
