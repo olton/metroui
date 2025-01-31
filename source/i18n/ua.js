@@ -141,6 +141,11 @@
         label_alert: "Попередження",
         label_bug: "Помилка",
         label_fuck: "Бля",
-        label_important: "Важливо"
+        label_important: "Важливо",
+
+        label_select_all: "Вибрати усі",
+        label_select_more: "Виберіть...",
+        label_select: "Вибрати",
+        label_filter: "Фільтр",
     });
 })();

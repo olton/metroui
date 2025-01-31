@@ -141,6 +141,11 @@
         label_alert: "Alert",
         label_bug: "Bug",
         label_fuck: "Fuck",
-        label_important: "Important"
+        label_important: "Important",
+        
+        label_select_all: "Select all",
+        label_select_more: "Select...",
+        label_select: "Select",
+        label_filter: "Filter",
     });
 })();

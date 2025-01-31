@@ -141,6 +141,11 @@
         label_alert: "Alerta",
         label_bug: "Bug",
         label_fuck: "Falla catastrófica",
-        label_important: "Importante"
+        label_important: "Importante",
+
+        label_select_all: "Select all",
+        label_select_more: "Select...",
+        label_select: "Select",
+        label_filter: "Filter",
     });
 })();

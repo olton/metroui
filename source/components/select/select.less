@@ -200,7 +200,17 @@
         .text-ellipsis();
 
         .icon {
-            margin: 0 4px
+            margin: 0 4px;
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+            display: flex;
+            object-fit: cover;
+            
+            * {
+                object-fit: cover;
+                font-size: 16px;
+            }
         }
 
         &:focus {

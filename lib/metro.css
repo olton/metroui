@@ -51238,6 +51238,15 @@ input:-ms-input-placeholder {
 }
 .select .select-input .icon {
   margin: 0 4px;
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  display: flex;
+  object-fit: cover;
+}
+.select .select-input .icon * {
+  object-fit: cover;
+  font-size: 16px;
 }
 .select .select-input:focus {
   box-shadow: none;

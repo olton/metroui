@@ -1,13 +1,7 @@
-/**
- * global Metro
- *
- * @format
- */
-
 (function (Metro, $) {
     "use strict";
-    var Utils = Metro.utils;
-    var SelectDefaultConfig = {
+
+    let SelectDefaultConfig = {
         id: "",
         label: "",
         size: "normal",
@@ -21,14 +15,11 @@
         duration: 0,
         prepend: "",
         append: "",
-        filterPlaceholder: "Search...",
+        filterPlaceholder: "",
         filter: false,
-        copyInlineStyles: false,
         dropHeight: 200,
         dropWidth: null,
         dropFullSize: false,
-        // checkDropUp: true,
-        // dropUp: false,
         openMode: "auto",
         showGroupName: false,
         shortTag: true,
@@ -76,7 +67,7 @@
         },
 
         _create: function () {
-            var element = this.element;
+            const element = this.element;
 
             this._createSelect();
             this._createEvents();
@@ -87,33 +78,28 @@
         },
 
         _setPlaceholder: function () {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var input = element.siblings(".select-input");
+            const input = element.siblings(".select-input");
             if (
                 o.usePlaceholder === true &&
-                (!Utils.isValue(element.val()) || element.val() == o.emptyValue)
+                (!Metro.utils.isValue(element.val()) || element.val() == o.emptyValue) // == important
             ) {
-                input.html(this.placeholder);
+                input.html(o.placeholder || this.strings.label_select_more);
             }
         },
 
         _addTag: function (val, data) {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var tag,
+            let tag,
                 tagSize,
                 container = element.closest(".select");
             const group = data.data("group");
             let html = "<span class='title'>" + val + "</span>"
             
             if (o.showGroupName && group) {
-                html +=
-                    "&nbsp;<span class='selected-item__group-name " +
-                    o.clsGroupName +
-                    "'>" +
-                    group +
-                    "</span>";
+                //html += `&nbsp;<span class='selected-item__group-name ${o.clsGroupName}'>${group}</span>`;
             }
 
             tag = $("<div>")
@@ -141,14 +127,14 @@
         },
 
         _addOption: function (item, parent, input, multiple, group) {
-            var option = $(item);
-            var l, a;
-            var element = this.element,
+            const option = $(item);
+            let l, a;
+            const element = this.element,
                 o = this.options;
-            var html = Utils.isValue(option.attr("data-template"))
+            let html = Metro.utils.isValue(option.attr("data-template"))
                 ? option.attr("data-template").replace("$1", item.text)
                 : item.text;
-            var displayValue = option.attr("data-display");
+            const displayValue = option.attr("data-display");
 
             l = $("<li>")
                 .addClass(o.clsOption)
@@ -179,17 +165,12 @@
                 let g = ""
                 
                 if (o.showGroupName && group) {
-                    g =
-                        "&nbsp;<span class='selected-item__group-name " +
-                        o.clsGroupName +
-                        "'>" +
-                        group +
-                        "</span>";
+                    g = `&nbsp;<span class='selected-item__group-name ${o.clsGroupName}'>${group}</span>`;
                 }
 
                 if (multiple) {
                     l.addClass("d-none");
-                    input.append(this._addTag(a.html(), l));
+                    input.append(this._addTag(a.html() + g, l));
                 } else {
                     html = a.html() + g
                     element.val(item.value);
@@ -205,9 +186,9 @@
         },
 
         _addOptionGroup: function (item, parent, input, multiple) {
-            var that = this,
+            const that = this,
                 o = this.options;
-            var group = $(item);
+            const group = $(item);
 
             $("<li>")
                 .html(item.label)
@@ -221,14 +202,14 @@
         },
 
         _createOptions: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options,
                 select = element.parent();
-            var list = select.find("ul").empty();
-            var selected = element.find("option[selected]").length > 0;
-            var multiple = element[0].multiple;
-            var input = element.siblings(".select-input");
+            const list = select.find("ul").empty();
+            const selected = element.find("option[selected]").length > 0;
+            const multiple = element[0].multiple;
+            const input = element.siblings(".select-input");
 
             element.siblings(".select-input").empty();
 
@@ -254,22 +235,22 @@
         },
 
         _createSelect: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
 
-            var container = $("<label>");
-            var multiple = element[0].multiple;
-            var select_id = Utils.elementId("select");
-            var buttons = $("<div>").addClass("button-group");
-            var input,
+            const container = element.wrap("<label>");
+            const multiple = element[0].multiple;
+            const select_id = Metro.utils.elementId("select");
+            const buttons = $("<div>").addClass("button-group");
+            let input,
                 drop_container,
                 drop_container_input,
                 list,
                 filter_input,
                 dropdown_toggle;
-            var checkboxID = Utils.elementId("select-focus-trigger");
-            var checkbox = $("<input type='checkbox'>")
+            const checkboxID = Metro.utils.elementId("select-focus-trigger");
+            const checkbox = $("<input type='checkbox'>")
                 .addClass("select-focus-trigger")
                 .attr("id", checkboxID);
 
@@ -294,8 +275,6 @@
                 container.addClass("multiple");
             }
 
-            container.insertBefore(element);
-            element.appendTo(container);
             buttons.appendTo(container);
             checkbox.appendTo(container);
 
@@ -327,7 +306,7 @@
             filter_input = $(
                 `<input type='text' data-role='input' data-clear-button-icon="${o.clearButtonIcon}">`,
             )
-                .attr("placeholder", o.filterPlaceholder)
+                .attr("placeholder", o.filterPlaceholder || this.strings.label_filter + "...")
                 .appendTo(drop_container_input);
 
             container.append(input);
@@ -349,19 +328,17 @@
                 dropFilter: ".select",
                 duration: o.duration,
                 toggleElement: [container],
-                // checkDropUp: o.checkDropUp,
-                // dropUp: o.dropUp,
                 openMode: o.openMode,
                 onDrop: function () {
-                    var dropped, target;
+                    let dropped, target;
                     dropdown_toggle.addClass("active-toggle");
                     dropped = $(".select .drop-container");
                     $.each(dropped, function () {
-                        var drop = $(this);
+                        const drop = $(this);
                         if (drop.is(drop_container)) {
                             return;
                         }
-                        var dataDrop = Metro.getPlugin(drop, "dropdown");
+                        const dataDrop = Metro.getPlugin(drop, "dropdown");
                         if (dataDrop && dataDrop.close) {
                             dataDrop.close();
                         }
@@ -395,7 +372,7 @@
             this.list = list;
 
             if (o.clearButton === true && !element[0].readOnly) {
-                var clearButton = $("<button>")
+                const clearButton = $("<button>")
                     .addClass("button input-clear-button")
                     .addClass(o.clsClearButton)
                     .attr("tabindex", -1)
@@ -407,7 +384,7 @@
             }
 
             if (o.prepend !== "" && !multiple) {
-                var prepend = $("<div>").html(o.prepend);
+                const prepend = $("<div>").html(o.prepend);
                 prepend
                     .addClass("prepend")
                     .addClass(o.clsPrepend)
@@ -415,20 +392,11 @@
             }
 
             if (o.append !== "" && !multiple) {
-                var append = $("<div>").html(o.append);
+                const append = $("<div>").html(o.append);
                 append
                     .addClass("append")
                     .addClass(o.clsAppend)
                     .appendTo(container);
-            }
-
-            if (o.copyInlineStyles === true) {
-                for (var i = 0, l = element[0].style.length; i < l; i++) {
-                    container.css(
-                        element[0].style[i],
-                        element.css(element[0].style[i]),
-                    );
-                }
             }
 
             if (element.attr("dir") === "rtl") {
@@ -436,7 +404,7 @@
             }
 
             if (o.label) {
-                var label = $("<label>")
+                const label = $("<label>")
                     .addClass("label-for-input")
                     .addClass(o.clsLabel)
                     .html(o.label)
@@ -476,16 +444,16 @@
         },
 
         _createEvents: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var container = element.closest(".select");
-            var drop_container = container.find(".drop-container");
-            var input = element.siblings(".select-input");
-            var filter_input = drop_container.find("input");
-            var list = drop_container.find("ul");
-            var clearButton = container.find(".input-clear-button");
-            var checkbox = container.find(".select-focus-trigger");
+            const container = element.closest(".select");
+            const drop_container = container.find(".drop-container");
+            const input = element.siblings(".select-input");
+            const filter_input = drop_container.find("input");
+            const list = drop_container.find("ul");
+            const clearButton = container.find(".input-clear-button");
+            const checkbox = container.find(".select-focus-trigger");
 
             checkbox.on("focus", function () {
                 container.addClass("focused");
@@ -533,16 +501,16 @@
                     e.stopPropagation();
                     return;
                 }
-                var leaf = $(this);
-                var displayValue = leaf.attr("data-display");
-                var val = leaf.data("value");
-                var group = leaf.data("group");
-                var html = displayValue
+                const leaf = $(this);
+                const displayValue = leaf.attr("data-display");
+                const val = leaf.data("value");
+                const group = leaf.data("group");
+                let html = displayValue
                     ? displayValue
                     : leaf.children("a").html();
-                var selected;
-                var option = leaf.data("option");
-                var options = element.find("option");
+                let selected;
+                const option = leaf.data("option");
+                const options = element.find("option");
 
                 if (o.showGroupName && group) {
                     html +=
@@ -585,10 +553,10 @@
             });
 
             input.on("click", ".tag .action", function (e) {
-                var item = $(this).closest(".tag");
-                var leaf = item.data("option");
-                var option = leaf.data("option");
-                var selected;
+                const item = $(this).closest(".tag");
+                const leaf = item.data("option");
+                const option = leaf.data("option");
+                let selected;
 
                 leaf.removeClass("d-none");
                 $.each(element.find("option"), function () {
@@ -613,9 +581,9 @@
             });
 
             filter_input.on(Metro.events.keyup, function () {
-                var filter = this.value.toUpperCase();
-                var li = list.find("li");
-                var i, a;
+                const filter = this.value.toUpperCase();
+                const li = list.find("li");
+                let i, a;
                 for (i = 0; i < li.length; i++) {
                     if ($(li[i]).hasClass("group-title")) continue;
                     a = li[i].getElementsByTagName("a")[0];
@@ -657,13 +625,13 @@
         },
 
         reset: function (to_default) {
-            var element = this.element;
-            var options = element.find("option");
-            var select = element.closest(".select");
-            var selected;
+            const element = this.element;
+            const options = element.find("option");
+            const select = element.closest(".select");
+            let selected;
 
             $.each(options, function () {
-                this.selected = !Utils.isNull(to_default)
+                this.selected = !Metro.utils.isNull(to_default)
                     ? this.defaultSelected
                     : false;
             });
@@ -681,8 +649,8 @@
         },
 
         getSelected: function () {
-            var element = this.element;
-            var result = [];
+            const element = this.element;
+            const result = [];
 
             element.find("option").each(function () {
                 if (this.selected) result.push(this.value);
@@ -692,18 +660,18 @@
         },
 
         val: function (val) {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var input = element.siblings(".select-input");
-            var options = element.find("option");
-            var list_items = this.list.find("li");
-            var result = [];
-            var multiple = element.attr("multiple") !== undefined;
-            var option;
-            var i, html, list_item, option_value, selected, group;
+            const input = element.siblings(".select-input");
+            const options = element.find("option");
+            const list_items = this.list.find("li");
+            const result = [];
+            const multiple = element.attr("multiple") !== undefined;
+            let option;
+            let i, html, list_item, option_value, selected, group;
 
-            if (Utils.isNull(val)) {
+            if (Metro.utils.isNull(val)) {
                 $.each(options, function () {
                     if (this.selected) result.push(this.value);
                 });
@@ -723,7 +691,7 @@
             $.each(val, function () {
                 for (i = 0; i < options.length; i++) {
                     option = options[i];
-                    html = Utils.isValue(option.getAttribute("data-template"))
+                    html = Metro.utils.isValue(option.getAttribute("data-template"))
                         ? option
                               .getAttribute("data-template")
                               .replace("$1", option.text)
@@ -776,9 +744,9 @@
         },
 
         data: function (op, selected, delimiter) {
-            var element = this.element;
-            var option_group, _selected;
-            var _delimiter = delimiter || ",";
+            const element = this.element;
+            let option_group, _selected;
+            const _delimiter = delimiter || ",";
 
             if (typeof selected === "string") {
                 _selected = selected.toArray(_delimiter).map(function (v) {
@@ -796,14 +764,14 @@
 
             if (typeof op === "string") {
                 element.html(op);
-            } else if (Utils.isObject2(op)) {
+            } else if (Metro.utils.isObject2(op)) {
                 $.each(op, function (key, val) {
-                    if (Utils.isObject2(val)) {
+                    if (Metro.utils.isObject2(val)) {
                         option_group = $("<optgroup label=''>")
                             .attr("label", key)
                             .appendTo(element);
                         $.each(val, function (key2, val2) {
-                            var op = $("<option>")
+                            const op = $("<option>")
                                 .attr("value", key2)
                                 .text(val2)
                                 .appendTo(option_group);
@@ -812,7 +780,7 @@
                             }
                         });
                     } else {
-                        var op = $("<option>")
+                        const op = $("<option>")
                             .attr("value", key)
                             .text(val)
                             .appendTo(element);
@@ -829,8 +797,8 @@
         },
 
         addOption: function (val, title, selected) {
-            var element = this.element;
-            var option = $("<option>")
+            const element = this.element;
+            const option = $("<option>")
                 .attr("value", val)
                 .text(title ? title : val);
 
@@ -846,7 +814,7 @@
         },
 
         addOptions: function (values) {
-            var that = this;
+            const that = this;
 
             if (!values) {
                 return this;
@@ -854,7 +822,7 @@
 
             if (Array.isArray(values)) {
                 $.each(values, function () {
-                    var o = this;
+                    const o = this;
                     if (Metro.utils.isObject2(o)) {
                         that.addOption(o.val, o.title, o.selected);
                     } else {
@@ -871,13 +839,13 @@
         },
 
         removeOption: function (val) {
-            var element = this.element;
-            var options = element.find("option");
+            const element = this.element;
+            const options = element.find("option");
 
             options.each(function () {
-                var $el = $(this);
+                const $el = $(this);
 
-                if ($el.attr("value") == val) {
+                if ($el.attr("value") == val) { // == important
                     $el.remove();
                 }
             });
@@ -888,16 +856,16 @@
         },
 
         removeOptions: function (values) {
-            var element = this.element;
-            var options = element.find("option");
+            const element = this.element;
+            const options = element.find("option");
 
             if (!values || !Array.isArray(values)) {
                 return this;
             }
 
             options.each(function () {
-                var $el = $(this);
-                var val = $el.attr("value");
+                const $el = $(this);
+                const val = $el.attr("value");
 
                 if (values.indexOf(val) > -1) {
                     $el.remove();
@@ -916,13 +884,13 @@
         },
 
         destroy: function () {
-            var element = this.element;
-            var container = element.closest(".select");
-            var drop_container = container.find(".drop-container");
-            var input = element.siblings(".select-input");
-            var filter_input = drop_container.find("input");
-            var list = drop_container.find("ul");
-            var clearButton = container.find(".input-clear-button");
+            const element = this.element;
+            const container = element.closest(".select");
+            const drop_container = container.find(".drop-container");
+            const input = element.siblings(".select-input");
+            const filter_input = drop_container.find("input");
+            const list = drop_container.find("ul");
+            const clearButton = container.find(".input-clear-button");
 
             container.off(Metro.events.click);
             container.off(Metro.events.click, ".input-clear-button");
@@ -936,7 +904,7 @@
 
             drop_container.data("dropdown").destroy();
 
-            return element;
+            container.remove();
         },
     });
 
