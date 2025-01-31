@@ -22,7 +22,8 @@
         dropFullSize: false,
         openMode: "auto",
         showGroupName: false,
-        shortTag: true,
+        shortTag: true, // tag with name max width 120px
+        source: null,
 
         clsSelect: "",
         clsSelectInput: "",
@@ -95,12 +96,7 @@
             let tag,
                 tagSize,
                 container = element.closest(".select");
-            const group = data.data("group");
             let html = "<span class='title'>" + val + "</span>"
-            
-            if (o.showGroupName && group) {
-                //html += `&nbsp;<span class='selected-item__group-name ${o.clsGroupName}'>${group}</span>`;
-            }
 
             tag = $("<div>")
                 .addClass("tag")
@@ -760,6 +756,7 @@
                 _selected = [];
             }
 
+            this.observer.disconnect();
             element.empty();
 
             if (typeof op === "string") {
@@ -792,6 +789,10 @@
             }
 
             this._createOptions();
+            this.observer.observe(element[0], {
+                childList: true,
+                subtree: true,
+            });
 
             return this;
         },
