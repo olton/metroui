@@ -112,6 +112,8 @@
         label_sell: "Продати",
         label_details: "Подробиці",
         label_sorting: "Сортування",
+        label_to_short: "введіть $1 або більше символів", // May be incorrect.
+        label_loading: "<span class='mif-spiner ani-spin'></span> Завантаження...", // May be incorrect.
 
         label_on: "увм",
         label_off: "вим",

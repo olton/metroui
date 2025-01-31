@@ -112,6 +112,8 @@
         label_sell: "Vender",
         label_details: "Detalles",
         label_sorting: "Ordenar",
+        label_to_short: "Por favor, introduzca $1 o más caracteres",
+        label_loading: "<span class='mif-spiner ani-spin'></span> Cargando...",
     
         label_on: "encendido",
         label_off: "apagado",
