@@ -50392,15 +50392,17 @@ input:-ms-input-placeholder {
   color: var(--tag-color);
   cursor: default;
   border-radius: 4px;
+  flex-wrap: nowrap;
 }
 .tag .title {
-  display: block;
+  display: flex;
+  align-items: center;
   position: relative;
   font-size: 12px;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
   padding: 0 0.5rem;
+  white-space: nowrap;
 }
 .tag .action {
   display: flex;
