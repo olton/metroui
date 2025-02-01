@@ -138,6 +138,7 @@
         label_warning: "Advertencia",
         label_question: "Pregunta",
         label_error: "Error",
+        label_error_load_message: "Error al cargar datos",
         label_success: "Éxito",
         label_caution: "Precaución",
         label_alert: "Alerta",

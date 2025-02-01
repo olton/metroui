@@ -138,6 +138,7 @@
         label_warning: "Увага",
         label_question: "Питання",
         label_error: "Помилка",
+        label_error_load_message: "помилка завантаження даних", //May be incorrect.
         label_success: "Успіх",
         label_caution: "Обережно",
         label_alert: "Попередження",
