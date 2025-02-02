@@ -17,6 +17,7 @@
         append: "",
         filterPlaceholder: "",
         filter: false,
+        filterRemote: false,
         dropHeight: 200,
         dropWidth: null,
         dropFullSize: false,
@@ -26,6 +27,7 @@
         
         source: null,
         sourceMethod: "GET",
+        sourceType: "json", 
 
         clsSelect: "",
         clsSelectInput: "",
@@ -49,6 +51,7 @@
         onItemSelect: Metro.noop,
         onItemDeselect: Metro.noop,
         onSelectCreate: Metro.noop,
+        onData: f => f,
     };
 
     Metro.selectSetup = function (options) {
@@ -322,24 +325,11 @@
             drop_container.append(list);
 
             if (o.source) {
-                // const result = await fetch(o.source, {
-                //     method: o.sourceMethod || "GET",
-                //     headers: {
-                //         "Content-Type": "application/json",
-                //     },
-                // })
-                // if (result.ok) {
-                //     const data = await result.json();
-                //     $.each(data, function () {
-                //         const option = $("<option>").attr("value", this.value).html(this.text);
-                //         if (this.icon) {
-                //             option.attr("data-icon", this.icon);
-                //         } 
-                //         option.appendTo(element)
-                //     });
-                // }
                 await this.fetch(o.source,  {
                     method: o.sourceMethod || "GET",
+                    headers: {
+                        "Content-Type": `application/${o.sourceType || "json"}`,
+                    },
                 })
             }
             
@@ -613,20 +603,39 @@
                 e.stopPropagation();
             });
 
-            filter_input.on(Metro.events.keyup, function () {
-                const filter = this.value.toUpperCase();
-                const li = list.find("li");
-                let i, a;
-                for (i = 0; i < li.length; i++) {
-                    if ($(li[i]).hasClass("group-title")) continue;
-                    a = li[i].getElementsByTagName("a")[0];
-                    if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        li[i].style.display = "";
-                    } else {
-                        li[i].style.display = "none";
+            const filter_input_change = Hooks.useDebounce(async (e)=>{
+                const element = this.element, o = this.options;
+                const list = this.list;
+                const filter = e.target.value.toUpperCase();
+                
+                if (o.filterRemote === true) {
+                    this._clearOptions();
+                    await this.fetch(o.source,  {
+                        method: o.sourceMethod || "GET",
+                        headers: {
+                            "Content-Type": `application/${o.sourceType || "json"}`,
+                        },
+                        data: {
+                            filter,
+                        }
+                        
+                    })
+                } else {
+                    const li = list.find("li");
+                    let i, a;
+                    for (i = 0; i < li.length; i++) {
+                        if ($(li[i]).hasClass("group-title")) continue;
+                        a = li[i].getElementsByTagName("a")[0];
+                        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = "";
+                        } else {
+                            li[i].style.display = "none";
+                        }
                     }
-                }
-            });
+                }                
+            }, 500)
+            
+            filter_input.on(Metro.events.keyup, filter_input_change.bind(this));
 
             filter_input.on(Metro.events.click, function (e) {
                 e.preventDefault();
@@ -639,6 +648,11 @@
             });
         },
 
+        _clearOptions: function () {
+            this.element.clear()
+            this.list.clear()
+        },
+        
         disable: function () {
             this.element.data("disabled", true);
             this.element.closest(".select").addClass("disabled");
@@ -930,11 +944,12 @@
         },
         
         fetch: async function(source, options){
-            const element = this.element;
+            const element = this.element, o = this.options;
+            
             const _options = Object.assign({
                 method: "GET",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": `application/${o.sourceType}`,
                 },
             }, options);
             
@@ -942,8 +957,9 @@
             
             if (result.ok === false) { return; }
             
-            const data = await result.json();
-            
+            let data = o.sourceType === "json" ? await result.json() : await result.text();
+            data = Metro.utils.exec(o.onData, [data], element[0])
+
             $.each(data, function () {
                 const option = $("<option>").attr("value", this.value).html(this.text);
                 if (this.icon) {

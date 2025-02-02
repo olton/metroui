@@ -20,10 +20,23 @@
     <h1>Select test page</h1>
 
     <div class="example">
-        <select data-role="select" id="select" data-filter="true" data-source="data/countries.json"></select>
+        <select data-role="select" id="select" data-filter="true" data-source="https://dummyjson.com/products" data-on-data="updateData"></select>
     </div>
 </div>
 
 <script src="../lib/metro.js"></script>
+<script>
+    function updateData(data){
+        const products = [...data.products]
+        const result = []
+        for (const p of products) {
+            result.push({
+                value: p.id,
+                text: p.title
+            })
+        }
+        return result
+    }
+</script>
 </body>
 </html>
