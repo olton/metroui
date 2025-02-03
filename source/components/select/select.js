@@ -17,7 +17,6 @@
         append: "",
         filterPlaceholder: "",
         filter: false,
-        filterRemote: false,
         dropHeight: 200,
         dropWidth: null,
         dropFullSize: false,
@@ -27,7 +26,8 @@
         
         source: null,
         sourceMethod: "GET",
-        sourceType: "json", 
+        sourceType: "json",
+        filterSource: null,
 
         clsSelect: "",
         clsSelectInput: "",
@@ -606,20 +606,16 @@
             const filter_input_change = Hooks.useDebounce(async (e)=>{
                 const element = this.element, o = this.options;
                 const list = this.list;
-                const filter = e.target.value.toUpperCase();
+                const filter = e.target.value;
+                const filterSource = `${o.filterSource}${filter}`
                 
-                if (o.filterRemote === true) {
-                    this._clearOptions();
-                    await this.fetch(o.source,  {
+                if (o.filterSource) {
+                    await this.fetch(filterSource,  {
                         method: o.sourceMethod || "GET",
                         headers: {
                             "Content-Type": `application/${o.sourceType || "json"}`,
-                        },
-                        data: {
-                            filter,
-                        }
-                        
-                    })
+                        }                        
+                    }, true)
                 } else {
                     const li = list.find("li");
                     let i, a;
@@ -943,7 +939,7 @@
             return this;
         },
         
-        fetch: async function(source, options){
+        fetch: async function(source, options, clearOptions = false) {
             const element = this.element, o = this.options;
             
             const _options = Object.assign({
@@ -956,6 +952,10 @@
             const result = await fetch(source, _options)
             
             if (result.ok === false) { return; }
+
+            if (clearOptions) {
+                this._clearOptions()
+            }
             
             let data = o.sourceType === "json" ? await result.json() : await result.text();
             data = Metro.utils.exec(o.onData, [data], element[0])
