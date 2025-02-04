@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Timeline - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Timeline</div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="cell-md-4">
+                <div class="box mt-4">
+                    <div class="h5">Latest Changes</div>
+                    <ul class="timeline">
+                        <li>
+                            <span class="time">Yesterday</span>
+                            <p class="data">
+                                Deprecation of real-time GitHub Actions workflow job events in Slack and...
+                            </p>
+                        </li>
+                        <li>
+                            <span class="time">13:00</span>
+                            <p class="data">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, nemo!
+                            </p>
+                        </li>
+                        <li>
+                            <span class="time">14:00</span>
+                            <p class="data">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, nemo!
+                            </p>
+                        </li>
+                        <li class="no-marker">
+                            <a href="#" class="time no-decor">View changelog →</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+</script>
+</body>
+</html>

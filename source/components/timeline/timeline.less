@@ -1,0 +1,74 @@
+:root {
+    --timeline-marker-color: #e8e8e8;
+    --timeline-time-color: #59636e;
+    --timeline-color: #191919;
+}
+
+.dark-side {
+    --timeline-marker-color: #3d444d;
+    --timeline-time-color: #9198a1;
+    --timeline-color: #efefef;
+}
+
+.timeline {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    
+    li {
+        position: relative;
+        padding: 0 0 16px 24px;
+        
+        &:last-child {
+            padding-bottom: 0;
+        }
+        
+        &::before {
+            content: "";
+            display: block;
+            width: 1px;
+            height: 100%;
+            background: var(--timeline-marker-color);
+            position: absolute;
+            top: 1px;
+            left: 0;
+        }
+        
+        &::after {
+            content: "";
+            display: block;
+            clear: both;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--timeline-marker-color);
+            margin-top: 1px;
+            margin-left: -4px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .time {
+            display: block;
+            font-size: 12px;
+            color: var(--timeline-time-color);
+            margin-top: -4px;
+        }
+        
+        .data {
+            display: block;
+            margin: 0 0 4px 0;
+            font-size: 14px;
+            color: var(--timeline-color);
+        }
+        
+        &.no-marker {
+            &::after {
+                display: none;
+            }
+        }
+    }
+}

@@ -2,6 +2,18 @@
 @import (once) "../include/mixins";
 
 :root {
+    --h1-size: 2rem;
+    --h2-size: 1.5rem;
+    --h3-size: 1.25rem;
+    --h4-size: 1rem;
+    --h5-size: 0.875rem;
+    --h6-size: 0.75rem;
+    --base-text-weight-ultralight: 100;
+    --base-text-weight-light: 300;
+    --base-text-weight-medium: 500;
+    --base-text-weight-normal: 400;
+    --base-text-weight-semibold: 600;
+    
     --mark-background: #a6d2ff;
     --mark-color: #191919;
     --code-background: #99a1b31a;
@@ -19,11 +31,11 @@
     --kbd-color: #ffffff;
 }
 
-.text-ultralight { font-weight: 100 !important;}
-.text-light { font-weight: 200 !important;}
-.text-normal { font-weight: 400 !important;}
-.text-medium {font-weight: 600 !important;}
-.text-bold { font-weight: 800 !important;}
+.text-ultralight { font-weight: var(--base-text-weight-ultralight) !important;}
+.text-light { font-weight: var(--base-text-weight-light) !important;}
+.text-normal { font-weight: var(--base-text-weight-normal) !important;}
+.text-medium {font-weight: var(--base-text-weight-medium) !important;}
+.text-bold { font-weight: var(--base-text-weight-semibold) !important;}
 
 .text-weight-1 {font-weight: 100 !important;}
 .text-weight-2 {font-weight: 200 !important;}
@@ -56,34 +68,59 @@
     font-weight: 400;
 }
 
+h1, .h1 {
+    font-size: var(--h1-size);
+    font-weight: var(--base-text-weight-semibold);
+}
+h2, .h2 {
+    font-size: var(--h2-size);
+    font-weight: var(--base-text-weight-semibold);
+}
+h3, .h3 {
+    font-size: var(--h3-size);
+    font-weight: var(--base-text-weight-semibold);
+}
+h4, .h4 {
+    font-size: var(--h4-size);
+    font-weight: var(--base-text-weight-semibold);
+}
+h5, .h5 {
+    font-size: var(--h5-size);
+    font-weight: var(--base-text-weight-semibold);
+}
+h6, .h6 {
+    font-size: var(--h6-size);
+    font-weight: var(--base-text-weight-semibold);
+}
+
 .display1, .display2, .display3, .display4 {
     margin-top: 20px;
     margin-bottom: 20px;
     line-height: 1;
 }
 
-.leader, .h1, h1 {
-    font-weight: 100;
+.leader {
+    font-weight: var(--base-text-weight-light);
     font-size: 48px;
 }
-.sub-leader, .h2, h2 {
-    font-weight: 400;
+.sub-leader {
+    font-weight: var(--base-text-weight-normal);
     font-size: 38px;
 }
-.header, .h3, h3 {
-    font-weight: 500;
+.header {
+    font-weight: var(--base-text-weight-medium);
     font-size: 30px;
 }
-.sub-header, .h4, h4 {
-    font-weight: 500;
+.sub-header {
+    font-weight: var(--base-text-weight-medium);
     font-size: 24px;
 }
-.alt-header, .h5, h5 {
-    font-weight: 500;
+.alt-header {
+    font-weight: var(--base-text-weight-medium);
     font-size: 20px;
 }
-.sub-alt-header, .h6, h6 {
-    font-weight: 500;
+.sub-alt-header {
+    font-weight: var(--base-text-weight-medium);
     font-size: 16px;
 }
 
@@ -116,7 +153,8 @@
 .header, .h3, h3,
 .sub-header, .h4, h4,
 .alt-header, .h5, h5,
-.sub-alt-header, .h6, h6 {
+.sub-alt-header, .h6, h6,
+.text-leader, .text-leader2 {
     color: inherit;
     margin: 1rem 0;
     line-height: 1.1;

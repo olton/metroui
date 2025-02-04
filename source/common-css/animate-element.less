@@ -1,6 +1,24 @@
 @import (once) "../include/vars";
 @import (once) "../include/mixins";
 
+:root {
+    --base-duration-0: 0ms;
+    --base-duration-100: 100ms;
+    --base-duration-1000: 1s;
+    --base-duration-200: 200ms;
+    --base-duration-300: 300ms;
+    --base-duration-400: 400ms;
+    --base-duration-500: 500ms;
+    --base-duration-600: 600ms;
+    --base-duration-700: 700ms;
+    --base-duration-800: 800ms;
+    --base-duration-900: 900ms;
+    --base-easing-easeIn: cubic-bezier(0.7, 0.1, 0.75, 0.9);
+    --base-easing-easeInOut: cubic-bezier(0.6, 0, 0.2, 1);
+    --base-easing-easeOut: cubic-bezier(0.3, 0.8, 0.6, 1);
+    --base-easing-linear: cubic-bezier(0, 0, 1, 1);
+}
+
 .ani-spin, .ani-hover-spin:hover {
     .animate( ani-spin 1.5s linear infinite);
 }

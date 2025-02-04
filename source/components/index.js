@@ -135,6 +135,7 @@ import "./template/index.js";
 import "./textarea/index.js";
 import "./theme-switcher/index.js";
 import "./tile/index.js";
+import "./timeline/index.js";
 import "./timepicker/index.js";
 import "./toast/index.js";
 import "./tokenizer/index.js";
