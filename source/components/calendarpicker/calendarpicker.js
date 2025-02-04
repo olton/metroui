@@ -2,8 +2,8 @@
 
 (function (Metro, $) {
     "use strict";
-    var Utils = Metro.utils;
-    var CalendarPickerDefaultConfig = {
+
+    let CalendarPickerDefaultConfig = {
         label: "",
         value: "",
         calendarpickerDeferred: 0,
@@ -52,7 +52,7 @@
                 value_date: null,
                 calendar: null,
                 overlay: null,
-                id: Utils.elementId("calendar-picker"),
+                id: Metro.utils.elementId("calendar-picker"),
                 time: [datetime().hour(), datetime().minute()],
             });
 
@@ -68,38 +68,44 @@
             });
         },
 
+        _correctTime: function (time) {
+            const h = Str.lpad(time[0], "0", 2);
+            const m = Str.lpad(time[1], "0", 2);
+            return `${h}:${m}`
+        },
+        
         _createStructure: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options,
                 locale = this.locale;
-            var container = $("<div>").addClass("input " + element[0].className + " calendar-picker");
-            var buttons = $("<div>").addClass("button-group");
-            var calendarButton,
+            const container = $("<div>").addClass("input " + element[0].className + " calendar-picker");
+            const buttons = $("<div>").addClass("button-group");
+            let calendarButton,
                 clearButton,
-                cal = $("<div>")
-            var curr, _curr, initTime, initHours, initMinutes, elementValue, h, m;
-            var body = $("body");
+                cal = $("<div>");
+            let curr, _curr, initTime, initHours, initMinutes, elementValue, h, m;
+            const body = $("body");
 
             element.attr("type", "text");
             element.attr("autocomplete", "off");
             element.attr("readonly", true);
 
-            if (Utils.isValue(o.initialTime)) {
+            if (Metro.utils.isValue(o.initialTime)) {
                 this.time = o.initialTime.trim().split(":");
             }
 
-            if (Utils.isValue(o.initialHours)) {
+            if (Metro.utils.isValue(o.initialHours)) {
                 this.time[0] = parseInt(o.initialHours);
             }
 
-            if (Utils.isValue(o.initialHours)) {
+            if (Metro.utils.isValue(o.initialMinutes)) {
                 this.time[1] = parseInt(o.initialMinutes);
             }
 
             curr = ("" + o.value).trim() !== "" ? o.value : element.val().trim();
 
-            if (!Utils.isValue(curr)) {
+            if (!Metro.utils.isValue(curr)) {
                 if (o.useNow) {
                     this.value = datetime();
                     this.time = [this.value.hour(), this.value.minute()];
@@ -115,9 +121,7 @@
             elementValue = !curr && o.nullValue === true ? "" : datetime(that.value).format(o.format, locale);
 
             if (o.showTime && this.time && elementValue) {
-                h = Str.lpad(this.time[0], "0", 2);
-                m = Str.lpad(this.time[1], "0", 2);
-                elementValue += " " + h + ":" + m;
+                elementValue += " " + this._correctTime(this.time)
             }
 
             element.val(elementValue);
@@ -191,8 +195,9 @@
                 multiSelect: false,
                 showWeekNumber: o.showWeekNumber,
                 onDayClick: function (sel, day, time, el) {
-                    var date = datetime(sel[0]).align("day");
-                    var elementValue, h, m;
+                    const date = datetime(sel[0]).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
+                    // const date = datetime(sel[0]).align("day");
+                    let elementValue;
 
                     that._removeOverlay();
 
@@ -202,9 +207,7 @@
                     elementValue = date.format(o.format, locale);
 
                     if (o.showTime) {
-                        h = Str.lpad(time[0], "0", 2);
-                        m = Str.lpad(time[1], "0", 2);
-                        elementValue += " " + h + ":" + m;
+                        elementValue += " " + that._correctTime(time);
                     }
 
                     element.val(elementValue);
@@ -230,7 +233,7 @@
                     });
                 },
                 onTimeChange: function (time) {
-                    var elementValue, h, m;
+                    let elementValue, h, m;
 
                     that.time = time;
 
@@ -240,9 +243,7 @@
                     elementValue = that.value.format(o.format, that.locale);
 
                     if (o.showTime) {
-                        h = Str.lpad(time[0], "0", 2);
-                        m = Str.lpad(time[1], "0", 2);
-                        elementValue += " " + h + ":" + m;
+                        elementValue += " " + that._correctTime(time);
                     }
 
                     element.val(elementValue);
@@ -272,7 +273,7 @@
             calendarButton.appendTo(buttons);
 
             if (o.prepend !== "") {
-                var prepend = $("<div>").html(o.prepend);
+                const prepend = $("<div>").html(o.prepend);
                 prepend.addClass("prepend").addClass(o.clsPrepend).appendTo(container);
             }
 
@@ -293,7 +294,7 @@
             element[0].className = "";
 
             if (o.copyInlineStyles === true) {
-                $.each(Utils.getInlineStyles(element), function (key, value) {
+                $.each(Metro.utils.getInlineStyles(element), function (key, value) {
                     container.css(key, value);
                 });
             }
@@ -308,14 +309,14 @@
             if (o.dialogMode === true) {
                 container.addClass("dialog-mode");
             } else {
-                if (Utils.media("(max-width: " + o.dialogPoint + "px)")) {
+                if (Metro.utils.media("(max-width: " + o.dialogPoint + "px)")) {
                     container.addClass("dialog-mode");
                     this.calendar.addClass("dialog-mode");
                 }
             }
 
             if (o.label) {
-                var label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(container);
+                const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(container);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
                 }
@@ -332,20 +333,20 @@
         },
 
         _createEvents: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var container = element.parent();
-            var clear = container.find(".input-clear-button");
-            var cal = this.calendar;
-            var cal_plugin = Metro.getPlugin(cal[0], "calendar");
-            var calendar = this.calendar;
+            const container = element.parent();
+            const clear = container.find(".input-clear-button");
+            const cal = this.calendar;
+            const cal_plugin = Metro.getPlugin(cal[0], "calendar");
+            const calendar = this.calendar;
 
             $(globalThis).on(
                 Metro.events.resize,
                 function () {
                     if (o.dialogMode !== true) {
-                        if (Utils.media("(max-width: " + o.dialogPoint + "px)")) {
+                        if (Metro.utils.media("(max-width: " + o.dialogPoint + "px)")) {
                             container.addClass("dialog-mode");
                             calendar.appendTo("body").addClass("dialog-mode");
                         } else {
@@ -365,9 +366,10 @@
                     e.stopPropagation();
                 });
 
+            // datetime(day).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
             container.on(Metro.events.click, "button, input", function (e) {
-                var value = that.value ? that.value : datetime();
-                var presetValue = o.inputFormat ? value.format(o.inputFormat) : value.format("YYYY-MM-DD");
+                const value = that.value ? that.value : datetime().addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
+                const presetValue = o.inputFormat ? value.format(o.inputFormat) : value.format("YYYY-MM-DD");
 
                 value.align("day");
 
@@ -414,7 +416,7 @@
                 container.addClass("focused");
             });
             element.on(Metro.events.change, function () {
-                Utils.exec(o.onChange, [that.value.val()], element[0]);
+                Metro.utils.exec(o.onChange, [that.value.val()], element[0]);
             });
 
             container.on(Metro.events.click, function (e) {
@@ -424,9 +426,9 @@
         },
 
         _overlay: function () {
-            var o = this.options;
+            const o = this.options;
 
-            var overlay = $("<div>");
+            const overlay = $("<div>");
             overlay.addClass("overlay for-calendar-picker").addClass(o.clsOverlay);
 
             if (o.overlayColor === "transparent") {
@@ -451,11 +453,11 @@
         },
 
         val: function (v, f) {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var elementValue, h, m;
+            let elementValue, h, m;
 
-            if (arguments.length === 0 || Utils.isNull(v)) {
+            if (arguments.length === 0 || Metro.utils.isNull(v)) {
                 return {
                     date: this.value.val(),
                     time: this.time,
@@ -470,7 +472,7 @@
                 o.inputFormat = f;
             }
 
-            var _curr = v.split(" ");
+            const _curr = v.split(" ");
             this.value = !o.inputFormat ? datetime(_curr[0]) : Datetime.from(_curr[0], o.inputFormat, this.locale);
             if (_curr[1]) {
                 this.time = _curr[1].trim().split(":");
@@ -482,9 +484,7 @@
             elementValue = this.value.format(o.format);
 
             if (o.showTime && this.time && elementValue) {
-                h = Str.lpad(this.time[0], "0", 2);
-                m = Str.lpad(this.time[1], "0", 2);
-                elementValue += " " + h + ":" + m;
+                elementValue += " " + this._correctTime(this.time)
             }
 
             element.val(elementValue);
@@ -509,11 +509,9 @@
             }
         },
 
-        getTime: function (asString) {
-            var h, m;
-
-            asString = asString || false;
-
+        getTime: function (asString = false) {
+            let h, m;
+            
             h = Str.lpad(this.time[0], "0", 2);
             m = Str.lpad(this.time[1], "0", 2);
 
@@ -521,8 +519,8 @@
         },
 
         changeAttribute: function (attributeName, newValue) {
-            var that = this;
-            var cal = Metro.getPlugin(this.calendar[0], "calendar");
+            const that = this;
+            const cal = Metro.getPlugin(this.calendar[0], "calendar");
 
             switch (attributeName) {
                 case "value":
@@ -550,9 +548,9 @@
         },
 
         destroy: function () {
-            var element = this.element;
-            var container = element.parent();
-            var clear = container.find(".input-clear-button");
+            const element = this.element;
+            const container = element.parent();
+            const clear = container.find(".input-clear-button");
 
             $(globalThis).off(Metro.events.resize, { ns: this.id });
             clear.off(Metro.events.click);
@@ -563,7 +561,7 @@
 
             Metro.getPlugin(this.calendar, "calendar").destroy();
 
-            return element;
+            container.remove()
         },
     });
 
