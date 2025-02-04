@@ -21238,9 +21238,7 @@ h4,
 h5,
 .sub-alt-header,
 .h6,
-h6,
-.text-leader,
-.text-leader2 {
+h6 {
   color: inherit;
   margin: 1rem 0;
   line-height: 1.1;
@@ -21264,8 +21262,6 @@ h5 > small,
 .sub-alt-header > small,
 .h6 > small,
 h6 > small,
-.text-leader > small,
-.text-leader2 > small,
 .leader > .small,
 .h1 > .small,
 h1 > .small,
@@ -21283,9 +21279,7 @@ h4 > .small,
 h5 > .small,
 .sub-alt-header > .small,
 .h6 > .small,
-h6 > .small,
-.text-leader > .small,
-.text-leader2 > .small {
+h6 > .small {
   font-weight: 400;
   font-size: 0.7em;
   line-height: 1;
@@ -21308,9 +21302,7 @@ h4:nth-child(1),
 h5:nth-child(1),
 .sub-alt-header:nth-child(1),
 .h6:nth-child(1),
-h6:nth-child(1),
-.text-leader:nth-child(1),
-.text-leader2:nth-child(1) {
+h6:nth-child(1) {
   margin-top: 0;
 }
 .text-upper {
