@@ -147,5 +147,7 @@
         label_select_more: "Виберіть...",
         label_select: "Вибрати",
         label_filter: "Фільтр",
+
+        label_collapse: "Згорнути",
     });
 })();

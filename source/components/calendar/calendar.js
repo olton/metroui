@@ -607,7 +607,7 @@
                 <svg aria-hidden="true" class="caret toggle-collapsed" width="16" height="16" viewBox="0 0 24 24">
                     <path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path>
                 </svg>
-            `).appendTo(headerActions)
+            `).attr("title", this.strings.label_collapse).appendTo(headerActions)
            
             
             if (o.showHeader === false) {

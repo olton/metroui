@@ -147,5 +147,7 @@
         label_select_more: "Select...",
         label_select: "Select",
         label_filter: "Filter",
+        
+        label_collapse: "Collapse",
     });
 })();
