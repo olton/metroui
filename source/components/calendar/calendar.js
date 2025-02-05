@@ -110,6 +110,7 @@
 
     Metro.Component("calendar", {
         init: function (options, elem) {
+            const time = datetime()
             const now = datetime().align("day");
 
             this._super(elem, options, CalendarDefaultConfig, {
@@ -131,7 +132,7 @@
                 minYear: null,
                 maxYear: null,
                 id: Metro.utils.elementId("calendar"),
-                time: [datetime().hour(), datetime().minute()],
+                time: [time.hour(), time.minute()],
                 content: "days",
                 yearDistance: 11,
                 yearGroupStart: now.year(),
@@ -219,6 +220,14 @@
                 });
             }
 
+            const id = element.id()
+            
+            if (id) {
+                if (Metro.storage.getItem(`METRO:CALENDAR:${id}:COLLAPSED`, element.hasClass("calendar-collapsed"))) {
+                    element.addClass("calendar-collapsed")
+                }                
+            }
+
             this._fireEvent("calendar-create");
         },
 
@@ -269,7 +278,11 @@
             );
 
             element.on(Metro.events.click, ".button-collapse", function () {
+                const id = element.id() 
                 element.toggleClass("calendar-collapsed");
+                if (id) {
+                    Metro.storage.setItem(`METRO:CALENDAR:${id}:COLLAPSED`, element.hasClass("calendar-collapsed"));
+                }
             })
             
             element.on(Metro.events.click, ".prev-year-group, .next-year-group", function () {
