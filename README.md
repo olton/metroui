@@ -1,6 +1,10 @@
 <div align="center">
   <h1 align="center">Metro UI</h1>
 
+<p align="center">
+    <a href="https://docs-new.metroui.org.ua/"><strong>Explore Metro UI Docs</strong></a>
+</p>
+
     Sleek, intuitive, and powerful front-end framework for faster and easier web development.
     Build responsive, mobile-first projects on the web 
     with the first front-end component library in Metro Style.
@@ -8,17 +12,21 @@
 
 ![Alt](https://repobeats.axiom.co/api/embed/0bec17257148030ff28810855fc54de0735a46a7.svg "Repobeats analytics image")
 
-<p align="center">
-    <a href="https://docs-new.metroui.org.ua/"><strong>Explore Metro UI Docs</strong></a>
-</p>
+---
+<div align="center">
 
-<p align="center">
+If you are using Metro UI commercially, there is a social (but no legal) expectation that you help fund its maintenance.
+
+### PayPal - serhii@pimenov.com.ua
+
 <a href="https://www.patreon.com/metroui">
 	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" height="38">
 </a>
-</p>
+</div>
 
 ----
+
+<div align="center">
 
 ### Project State
 ![Dependencies](https://img.shields.io/badge/Dependencies-none-darklime.svg)
@@ -31,6 +39,8 @@
 ![GitHub Css Size](https://img.shields.io/github/size/olton/metroui/lib%2Fmetro.css?label=CSS%20Size&color=fd9812)
 ![GitHub JS Size](https://img.shields.io/github/size/olton/metroui/lib%2Fmetro.js?label=JS%20Size&color=8f99ff)
 ![GitHub Icons Size](https://img.shields.io/github/size/olton/metroui/lib%2Ficons.css?label=Icons%20Size&color=01796f)
+
+</div>
 
 ---
 > [!IMPORTANT]
