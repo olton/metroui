@@ -55,7 +55,7 @@
             const element = this.element, o = this.options;
             let toggle;
 
-            if (o.openMode !== "auto" && o.openMode === "up") {
+            if (o.openMode === "up") {
                 element.addClass("drop-up");
             }
 
@@ -214,5 +214,29 @@
             }
         });
     });
+    
+    Metro.dropdown = function (anchor, items = [], options = {}){
+        const anchorRect = Metro.utils.rect(anchor)
+        const menu = $("<ul>").addClass("d-menu").css({
+            position: "fixed",
+            zIndex: "var(--z-index-fixed)",
+            top: anchorRect.top + anchorRect.height,
+            left: anchorRect.left,
+        })
+        
+        for (let item of items) {
+            let {href, text, icon = ""} = item;
+            if (icon) {
+                icon = $(icon).addClass("icon").outerHTML()
+            }
+            menu.append(`
+                <li><a href="${href}">${icon ? "" : ""}${text}</a></li>
+            `)
+        }
+        
+        Metro.makePlugin(menu,  "dropdown", Object.assign({
+            toggleElement: anchor
+        }, options))
+    }
 }(Metro, Dom));
 

@@ -29,7 +29,7 @@
     --d-menu-border-radius: 4px;
 }
 
-.d-menu, .d-menu ul {
+.d-menu {
     position: absolute;
     float: left;
     width: auto;
@@ -54,16 +54,14 @@
 }
 
 .d-menu {
-    li, a {
-        position: relative;
-    }
-
     li {
         display: block;
         margin: 0 4px;
+        position: relative;
     }
 
     a {
+        position: relative;
         display: flex;
         align-items: center;
         font-size: 13px;
@@ -137,16 +135,29 @@
 }
 
 .d-menu {
-    .d-menu, ul {
-        position: absolute;
+    .d-menu {
         left: calc(100% + 4px);
         top: 0;
+        
+        &.open-left {
+            left: auto;
+            right: calc(100% + 4px);
+        }
+    }
+}
+
+.d-menu {
+    &.place-right {
+        .d-menu {
+            left: auto;
+            right: calc(100% + 4px);
+        }
     }
 }
 
 each(@media-rules, {
     @media screen and (min-width: @value) {
-        .d-menu, .d-menu ul {
+        .d-menu {
             &.place-right-@{key} {
                 left: auto;
                 right: 0;

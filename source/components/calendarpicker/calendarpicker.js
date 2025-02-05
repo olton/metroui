@@ -107,7 +107,7 @@
 
             if (!Metro.utils.isValue(curr)) {
                 if (o.useNow) {
-                    this.value = datetime();
+                    this.value = datetime().addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
                     this.time = [this.value.hour(), this.value.minute()];
                 }
             } else {
@@ -386,6 +386,9 @@
                     if (o.openMode === "auto") {
                         if ( !Metro.utils.inViewport(cal[0]) ) {
                             cal.addClass("open-up");
+                        }
+                        if ( !Metro.utils.inViewport(cal[0]) ) {
+                            cal.removeClass("open-up");
                         }
                     } else {
                         if (o.openMode === "up") {

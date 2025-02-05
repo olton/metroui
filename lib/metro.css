@@ -54175,8 +54175,7 @@ aside::after {
   --d-menu-shadow-color: #191919;
   --d-menu-border-radius: 4px;
 }
-.d-menu,
-.d-menu ul {
+.d-menu {
   position: absolute;
   float: left;
   width: auto;
@@ -54190,24 +54189,20 @@ aside::after {
   z-index: 1000;
   box-shadow: 2px 2px 10px var(--d-menu-shadow-color);
 }
-.d-menu.open,
-.d-menu ul.open {
+.d-menu.open {
   display: block !important;
 }
-.d-menu.place-right,
-.d-menu ul.place-right {
+.d-menu.place-right {
   left: auto;
   right: 0;
-}
-.d-menu li,
-.d-menu a {
-  position: relative;
 }
 .d-menu li {
   display: block;
   margin: 0 4px;
+  position: relative;
 }
 .d-menu a {
+  position: relative;
   display: flex;
   align-items: center;
   font-size: 13px;
@@ -54266,71 +54261,68 @@ aside::after {
 .d-menu .disabled a {
   color: var(--d-menu-item-color-disabled) !important;
 }
-.d-menu .d-menu,
-.d-menu ul {
-  position: absolute;
+.d-menu .d-menu {
   left: calc(100% + 4px);
   top: 0;
 }
+.d-menu .d-menu.open-left {
+  left: auto;
+  right: calc(100% + 4px);
+}
+.d-menu.place-right .d-menu {
+  left: auto;
+  right: calc(100% + 4px);
+}
 @media screen and (min-width: 0) {
-  .d-menu.place-right-fs,
-  .d-menu ul.place-right-fs {
+  .d-menu.place-right-fs {
     left: auto;
     right: 0;
   }
 }
 @media screen and (min-width: 360px) {
-  .d-menu.place-right-xs,
-  .d-menu ul.place-right-xs {
+  .d-menu.place-right-xs {
     left: auto;
     right: 0;
   }
 }
 @media screen and (min-width: 576px) {
-  .d-menu.place-right-sm,
-  .d-menu ul.place-right-sm {
+  .d-menu.place-right-sm {
     left: auto;
     right: 0;
   }
 }
 @media screen and (min-width: 640px) {
-  .d-menu.place-right-ld,
-  .d-menu ul.place-right-ld {
+  .d-menu.place-right-ld {
     left: auto;
     right: 0;
   }
 }
 @media screen and (min-width: 768px) {
-  .d-menu.place-right-md,
-  .d-menu ul.place-right-md {
+  .d-menu.place-right-md {
     left: auto;
     right: 0;
   }
 }
 @media screen and (min-width: 992px) {
-  .d-menu.place-right-lg,
-  .d-menu ul.place-right-lg {
+  .d-menu.place-right-lg {
     left: auto;
     right: 0;
   }
 }
 @media screen and (min-width: 1200px) {
-  .d-menu.place-right-xl,
-  .d-menu ul.place-right-xl {
+  .d-menu.place-right-xl {
     left: auto;
     right: 0;
   }
 }
 @media screen and (min-width: 1400px) {
-  .d-menu.place-right-xxl,
-  .d-menu ul.place-right-xxl {
+  .d-menu.place-right-xxl {
     left: auto;
     right: 0;
   }
 }
 @media screen and (min-width: 2000px) {
-  .d-menu.place-right-xxxl,
-  .d-menu ul.place-right-xxxl {
+  .d-menu.place-right-xxxl {
     left: auto;
     right: 0;
   }
