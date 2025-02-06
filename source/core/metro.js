@@ -104,12 +104,15 @@ import { Props } from "./props.js";
                             }
                         }
                     } else if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-                        let widgets = [],
-                            $node,
-                            node;
+                        let widgets = [], hotkeys = [], $node, node;
                         const nodes = mutation.addedNodes;
 
                         if (nodes.length) {
+                            
+                            for (let node of $(nodes).find("[data-hotkey]")) {
+                                hotkeys.push($(node));
+                            }
+                            
                             for (let i = 0; i < nodes.length; i++) {
                                 node = nodes[i];
                                 $node = $(node);
@@ -127,6 +130,7 @@ import { Props } from "./props.js";
                             }
 
                             if (widgets.length) Metro.initWidgets(widgets, "observe");
+                            if (hotkeys.length) Metro.initHotkeys(hotkeys);
                         }
                     } else {
                         //console.log(mutation);
