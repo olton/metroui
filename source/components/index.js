@@ -13,6 +13,7 @@ import "./bottom-nav/index.js";
 import "./bottom-sheet/index.js";
 import "./box/index.js";
 import "./breadcrumbs/index.js";
+import "./bulls/index.js";
 import "./button/index.js";
 import "./button-group/index.js";
 import "./calendar/index.js";

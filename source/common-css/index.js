@@ -1,8 +1,6 @@
-/** @format */
-
 import "./media.less";
 import "./base-theme.less";
-import "./animate-element.less";
+import "./ani.less";
 import "./border.less";
 import "./cursors.less";
 import "./debug.less";
