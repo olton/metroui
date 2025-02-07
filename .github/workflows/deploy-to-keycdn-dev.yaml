@@ -1,8 +1,8 @@
+name: Deploy to KeyCDN
 on:
   push:
     branches:
       - dev
-name: Deploy to KeyCDN
 jobs:
   build:
     name: Build
@@ -15,7 +15,7 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run dev
+        run: npm run build
 
       - name: Push files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
