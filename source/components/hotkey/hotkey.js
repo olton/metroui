@@ -85,7 +85,7 @@
     $.fn.hotkey = bindKey;
 
     if (globalThis["METRO_JQUERY"] && globalThis["jquery_present"]) {
-        jQuery.fn.hotkey = bindKey;
+        globalThis["jQuery"].fn.hotkey = bindKey;
     }
 
     $(document).on(Metro.events.keydown + ".hotkey-data", function(e){
