@@ -19,6 +19,7 @@ const banner = `
  ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝      ╚═════╝ ╚═╝                                                             
 
  * Metro UI v${version} Components Library  (https://metroui.org.ua)
+ * Build: ${new Date().toLocaleString()}
  * Copyright 2012-${new Date().getFullYear()} by Serhii Pimenov
  * Licensed under MIT
  */
