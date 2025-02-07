@@ -1,0 +1,165 @@
+:root {
+    --working-tree-marker-color: #e8e8e8;
+    --working-tree-marker-success: #81e06c;
+    --working-tree-marker-fail: #fb3838;
+    --working-tree-marker-pending: #ff9c17;
+    --working-tree-color: #191919;
+}
+
+.dark-side {
+    --working-tree-marker-color: #3d444d;
+    --working-tree-color: #efefef;
+}
+
+
+.working-tree {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    color: var(--working-tree-color);
+
+    & > li {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background: transparent!important;
+        color: var(--working-tree-color)!important;
+        
+        .node {
+            display: flex;
+            flex-flow: row nowrap;
+            position: relative;
+            align-items: center;
+            padding-bottom: 1px;
+                        
+            &::before, &::after {
+                content: "";
+                position: absolute;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                top: 50%;
+                left: 3px;
+                transform: translateY(-50%);
+                background-color: var(--working-tree-marker-color);
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                font-size: 10px;
+            }
+            
+            &::after {
+                background: transparent!important;
+                font-size: 11px;
+            }
+        }    
+        
+        &.work-success {
+            color: var(--working-tree-marker-success)!important;
+            .node::before {
+                background-color: var(--working-tree-marker-success);
+            }
+            .node::after {
+                content: "√";
+                color: #000000;
+            }
+        }
+        &.work-pending {
+            color: var(--working-tree-marker-pending)!important;
+            .node::before {
+                background-color: var(--working-tree-marker-pending);
+            }
+            .node::after {
+                animation: rotate-marker 1s linear infinite;
+                content: "⭮";
+                font-size: 11px;
+                top: 3px;
+            }
+        }
+        &.work-fail {
+            color: var(--working-tree-marker-fail)!important;
+            .node::before {
+                background-color: var(--working-tree-marker-fail);
+            }
+            .node::after {
+                content: "!";
+                color: #fff;
+            }
+        }
+    }
+
+    .title {
+        margin-left: 26px;
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .value {
+        font-weight: 600;
+        font-size: 12px;
+    }
+    
+    .leaves {
+        display: flex;
+        flex-flow: column;
+        margin: 10px 0;
+        position: relative;
+        list-style: none;
+        padding: 0;
+        
+        li {
+            padding: 4px 0 4px 40px;
+            width: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            position: relative;
+            color: var(--working-tree-color);
+            
+            &::before {
+                content: "";
+                position: absolute;
+                top: calc(50% + 0px);
+                left: 10px;
+                width: 20px;
+                height: 1px;
+                background-color: var(--working-tree-marker-color);
+            }
+
+            .title {
+                margin-left: 0;
+            }
+        }
+        
+        &::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: 10px;
+            width: 1px;
+            height: calc(100% + 10px);
+            background-color: var(--working-tree-marker-color);
+        }
+    }
+    
+    & > li:last-child {
+        .leaves {
+            &::before {
+                height: calc(100% - 7px);
+            }
+        }
+    }
+}
+
+@keyframes rotate-marker {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

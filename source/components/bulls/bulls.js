@@ -41,6 +41,12 @@
             element.clear().html(bull);
         },
 
+        changeAttribute: function (attr, value) {
+            if (attr === "data-type") {
+                this._createStructure();
+            }
+        },
+        
         destroy: function(){
             this.element.remove();
         }
