@@ -1,6 +1,6 @@
 :root {
     --working-tree-marker-color: #e8e8e8;
-    --working-tree-marker-success: #81e06c;
+    --working-tree-marker-success: #219707;
     --working-tree-marker-fail: #fb3838;
     --working-tree-marker-pending: #ff9c17;
     --working-tree-color: #191919;
@@ -8,6 +8,9 @@
 
 .dark-side {
     --working-tree-marker-color: #3d444d;
+    --working-tree-marker-success: #81e06c;
+    --working-tree-marker-fail: #fb3838;
+    --working-tree-marker-pending: #ff9c17;
     --working-tree-color: #efefef;
 }
 
@@ -65,7 +68,7 @@
             }
             .node::after {
                 content: "√";
-                color: #000000;
+                color: #fff;
             }
         }
         &.work-pending {
