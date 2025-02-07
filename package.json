@@ -24,7 +24,7 @@
     "homepage": "https://metroui.org.ua",
     "repository": {
         "type": "git",
-        "url": "https://github.com/olton/Metro-UI-CSS.git"
+        "url": "https://github.com/olton/metroui.git"
     },
     "license": "MIT",
     "main": "source/index.js",
@@ -33,8 +33,6 @@
         "clean": "shx rm -rf lib/*",
         "build": "npm run clean && cross-env NODE_NO_WARNINGS=1 MODE=production node build.js",
         "dev": "npm run clean && cross-env NODE_NO_WARNINGS=1 MODE=development node build.js",
-        "watch": "npm run clean && cross-env NODE_NO_WARNINGS=1 MODE=development node watch.js",
-        "dep": "npm run build && node ./deploy.js",
         "pub": "npm publish --access public",
         "test": "easytest --include='__tests__/*.test.js'",
         "check": "npx biome check",
@@ -55,7 +53,6 @@
         "esbuild": "^0.24.2",
         "esbuild-plugin-less": "^1.3.16",
         "esbuild-plugin-replace": "^1.4.0",
-        "ftp-deploy": "^2.4.7",
         "pre-commit": "^1.2.2",
         "shx": "^0.3.4"
     },
