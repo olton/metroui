@@ -71282,6 +71282,9 @@ body.vegas-container > .vegas-slide {
 .working-tree > li:last-child .leaves::before {
   height: calc(100% - 7px);
 }
+.working-tree > li .node .title {
+  font-weight: 600;
+}
 @keyframes rotate-marker {
   0% {
     transform: rotate(0deg);
