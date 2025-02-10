@@ -10,86 +10,94 @@ each(@accentColors, {
         border-color: @@color!important;
         color: @white!important;
 
-        &.outline {
-            color: @@color!important;
-            border-color: @@color!important;
-            background-color: transparent!important;
-
-            &.dropdown-toggle::before {
-                border-color: @@color!important;
-            }
-
-            @media (hover: hover) {
-                &:hover {
-                    color: @white!important;
-                }
-            }
-            
-            @media (hover: none) {
-                &:active {
-                    color: @white!important;
-                }
-            }
-        }
-
         &.dropdown-toggle::before {
             border-color: @white!important;
-        }
-
-        @media (hover: hover) {
-            &:hover {
-                color: @white!important;
-                background-color: darken(@@color, 10%)!important;
-                border-color: darken(@@color, 10%)!important;
-
-                &.dropdown-toggle::before {
-                    border-color: @white!important;
-                }
-            }
-        }
-        
-        @media (hover: none) {
-            &:active {
-                color: @white!important;
-                background-color: darken(@@color, 10%)!important;
-                border-color: darken(@@color, 10%)!important;
-
-                &.dropdown-toggle::before {
-                    border-color: @white!important;
-                }
-            }
-        }
-
-        &.same-color {
-            @media (hover: hover) {
-                &:hover {
-                    background-color: @@color!important;
-                    border-color: @@color!important;
-                }
-            }
-            
-            @media (hover: none) {
-                &:active {
-                    background-color: @@color!important;
-                    border-color: @@color!important;
-                }
-            }
         }
     }
 })
 
-.yellow, .yellow.outline, .light, .light.outline {
-    color: @dark!important;
+button, .button {
+    each(@accentColors, {
+        @color: "@{value}Color";
 
-    @media (hover: hover) {
-        &:hover, &.outline:hover {
-            color: @dark!important;
+        &.@{value} {
+            &.outline {
+                color: @@color!important;
+                border-color: @@color!important;
+                background-color: transparent!important;
+
+                &.dropdown-toggle::before {
+                    border-color: @@color!important;
+                }
+
+                @media (hover: hover) {
+                    &:hover {
+                        color: @white!important;
+                    }
+                }
+
+                @media (hover: none) {
+                    &:active {
+                        color: @white!important;
+                    }
+                }
+            }
+
+            @media (hover: hover) {
+                &:hover {
+                    color: @white!important;
+                    background-color: darken(@@color, 10%)!important;
+                    border-color: darken(@@color, 10%)!important;
+
+                    &.dropdown-toggle::before {
+                        border-color: @white!important;
+                    }
+                }
+            }
+
+            @media (hover: none) {
+                &:active {
+                    color: @white!important;
+                    background-color: darken(@@color, 10%)!important;
+                    border-color: darken(@@color, 10%)!important;
+
+                    &.dropdown-toggle::before {
+                        border-color: @white!important;
+                    }
+                }
+            }
+
+            &.same-color {
+                @media (hover: hover) {
+                    &:hover {
+                        background-color: @@color!important;
+                        border-color: @@color!important;
+                    }
+                }
+
+                @media (hover: none) {
+                    &:active {
+                        background-color: @@color!important;
+                        border-color: @@color!important;
+                    }
+                }
+            }
         }
-    }
-    
-    @media (hover: none) {
-        &:active, &.outline:active {
-            color: @dark!important;
+    })
+
+    &.yellow, &.yellow.outline, &.light, &.light.outline {
+        color: @dark!important;
+
+        @media (hover: hover) {
+            &:hover, &.outline:hover {
+                color: @dark!important;
+            }
+        }
+
+        @media (hover: none) {
+            &:active, &.outline:active {
+                color: @dark!important;
+            }
         }
     }
 }

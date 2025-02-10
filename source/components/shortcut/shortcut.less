@@ -2,6 +2,12 @@
 @import (once) "../../include/mixins";
 
 :root {
+    --windows-shortcut-icon-size: 40px;
+    --windows-shortcut-border-radius: 4px;
+    --windows-shortcut-background: transparent;
+    --windows-shortcut-background-hover: #efefef;
+    --windows-shortcut-color: #191919;
+    
     --shortcut-border-radius: 6px;
     --shortcut-background: #f8f8f8;
     --shortcut-color: #191919;
@@ -10,6 +16,10 @@
 }
 
 .dark-side {
+    --windows-shortcut-background: transparent;
+    --windows-shortcut-background-hover: #373737;
+    --windows-shortcut-color: #F8F8F8;
+
     --shortcut-background: #2e2e2e;
     --shortcut-color: #F8F8F8;
     --shortcut-background-hover: #373737;
@@ -67,15 +77,6 @@
         background-color: inherit;
     }
 
-    &.no-caption {
-        .icon {
-            width: 32px;
-            height: 32px;
-            font-size: 32px;
-            margin-top: 0;
-        }
-    }
-
     @media (hover: hover) {
         &:hover {
             background: var(--shortcut-background-hover);
@@ -120,4 +121,51 @@
     &:active {
         box-shadow: none;
     }
+}
+
+.shortcut:not(:has(.caption)) {
+    .icon {
+        width: 32px;
+        height: 32px;
+        font-size: 32px;
+        margin-top: 0;
+    }
+}
+
+.windows-shortcut {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    cursor: default;
+    border-radius: 4px;
+    padding: 4px;
+    background: var(--windows-shortcut-background);
+    color: var(--windows-shortcut-color);
+    
+    .icon {
+        width: var(--windows-shortcut-icon-size);
+        height: var(--windows-shortcut-icon-size);
+        font-size: var(--windows-shortcut-icon-size);
+        object-fit: cover;
+    }
+    
+    .caption {
+        font-size: 12px;
+        text-align: center;
+    }
+    
+    @media (hover: hover) {
+        &:hover {
+            background: var(--windows-shortcut-background-hover);
+        }
+    }
+    
+    @media (hover: none) {
+        &:active {
+            background: var(--windows-shortcut-background-hover);
+        }
+    }   
 }

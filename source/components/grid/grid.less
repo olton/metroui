@@ -50,11 +50,11 @@
 }
 
 each(range(0, 12), .(@k) {
-    .cell-@{k}, .col-@{k}, .v-cell-@{k}, .v-col-@{k} {
+    .cell-@{k}, .col-@{k} {
         flex: 0 0 calc(@gridCellBaseSize * @k - var(--grid-gap));
         max-width: calc(@gridCellBaseSize * @k - var(--grid-gap));
     }
-    .offset-@{k}, .v-offset-@{k} {
+    .offset-@{k} {
         margin-left: calc(@gridCellBaseSize * @k);
     }
 })
