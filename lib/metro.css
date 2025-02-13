@@ -17,6 +17,8 @@ body {
   text-rendering: optimizeSpeed;
   display: flex;
   flex-direction: column;
+  padding: 0;
+  margin: 0;
 }
 blockquote,
 q {
@@ -44015,7 +44017,8 @@ button.light.outline,
   content: "\203a";
   position: absolute;
   right: 16px;
-  top: 8px;
+  top: 50%;
+  margin-top: -20px;
   font-size: 32px;
   width: 40px;
   height: 40px;
@@ -53826,7 +53829,8 @@ aside::after {
 .container-max {
   width: 100%;
 }
-.container-query {
+.container-query,
+.responsive-container {
   container-name: container-query;
   container-type: inline-size;
 }
@@ -60209,8 +60213,8 @@ label:has(input) {
 }
 .remark {
   display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
+  flex-flow: column nowrap;
+  justify-content: center;
   position: relative;
   border: 1px solid;
   border-left: 4px solid;
@@ -60218,7 +60222,7 @@ label:has(input) {
   border-radius: var(--remark-border-radius);
   color: var(--remark-color);
   background: var(--remark-background);
-  padding: 1rem;
+  padding: 1rem 2rem 1rem 1rem;
   font-size: 14px;
   margin: 1rem 0;
   cursor: default;
@@ -60230,13 +60234,27 @@ label:has(input) {
   width: 32px;
   height: 32px;
   position: absolute;
-  top: 50%;
-  left: 1rem;
-  transform: translateY(-50%);
+  top: 10px;
+  left: 10px;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.remark::before {
+  font-family: serif;
+  content: "\201d";
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  font-size: 48px;
+  font-feature-settings: "onum";
+  font-variant-numeric: oldstyle-nums;
 }
 .remark:has(.icon) {
   min-height: 40px;
-  padding-left: 60px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 .remark.lime {
   border-color: #AEFD6C;
@@ -60244,6 +60262,9 @@ label:has(input) {
   background: #f2ffe7;
 }
 .remark.lime .icon {
+  color: #AEFD6C;
+}
+.remark.lime::before {
   color: #AEFD6C;
 }
 .remark.green {
@@ -60254,12 +60275,18 @@ label:has(input) {
 .remark.green .icon {
   color: #00b500;
 }
+.remark.green::before {
+  color: #00b500;
+}
 .remark.emerald {
   border-color: #50c878;
   color: #191919;
   background: #d1e6cc;
 }
 .remark.emerald .icon {
+  color: #50c878;
+}
+.remark.emerald::before {
   color: #50c878;
 }
 .remark.blue {
@@ -60270,12 +60297,18 @@ label:has(input) {
 .remark.blue .icon {
   color: #5e87ff;
 }
+.remark.blue::before {
+  color: #5e87ff;
+}
 .remark.teal {
   border-color: #069494;
   color: #191919;
   background: #e1f2f3;
 }
 .remark.teal .icon {
+  color: #069494;
+}
+.remark.teal::before {
   color: #069494;
 }
 .remark.cyan {
@@ -60286,12 +60319,18 @@ label:has(input) {
 .remark.cyan .icon {
   color: #94b6ff;
 }
+.remark.cyan::before {
+  color: #94b6ff;
+}
 .remark.cobalt {
   border-color: #0047ab;
   color: #191919;
   background: #d1ecff;
 }
 .remark.cobalt .icon {
+  color: #0047ab;
+}
+.remark.cobalt::before {
   color: #0047ab;
 }
 .remark.indigo {
@@ -60302,12 +60341,18 @@ label:has(input) {
 .remark.indigo .icon {
   color: #6400a8;
 }
+.remark.indigo::before {
+  color: #6400a8;
+}
 .remark.almost {
   border-color: #6a2ded;
   color: #191919;
   background: #eee5ff;
 }
 .remark.almost .icon {
+  color: #6a2ded;
+}
+.remark.almost::before {
   color: #6a2ded;
 }
 .remark.violet {
@@ -60318,12 +60363,18 @@ label:has(input) {
 .remark.violet .icon {
   color: #ee82ee;
 }
+.remark.violet::before {
+  color: #ee82ee;
+}
 .remark.pink {
   border-color: #ffc0cb;
   color: #191919;
   background: #ffeef1;
 }
 .remark.pink .icon {
+  color: #ffc0cb;
+}
+.remark.pink::before {
   color: #ffc0cb;
 }
 .remark.magenta {
@@ -60334,12 +60385,18 @@ label:has(input) {
 .remark.magenta .icon {
   color: #ff00ff;
 }
+.remark.magenta::before {
+  color: #ff00ff;
+}
 .remark.crimson {
   border-color: #df0e38;
   color: #191919;
   background: #ffd1da;
 }
 .remark.crimson .icon {
+  color: #df0e38;
+}
+.remark.crimson::before {
   color: #df0e38;
 }
 .remark.red {
@@ -60350,12 +60407,18 @@ label:has(input) {
 .remark.red .icon {
   color: #ff0000;
 }
+.remark.red::before {
+  color: #ff0000;
+}
 .remark.orange {
   border-color: #ffa500;
   color: #191919;
   background: #fff3de;
 }
 .remark.orange .icon {
+  color: #ffa500;
+}
+.remark.orange::before {
   color: #ffa500;
 }
 .remark.amber {
@@ -60366,12 +60429,18 @@ label:has(input) {
 .remark.amber .icon {
   color: #ffca2a;
 }
+.remark.amber::before {
+  color: #ffca2a;
+}
 .remark.yellow {
   border-color: #ffde21;
   color: #191919;
   background: #ffffc6;
 }
 .remark.yellow .icon {
+  color: #ffde21;
+}
+.remark.yellow::before {
   color: #ffde21;
 }
 .remark.brown {
@@ -60382,12 +60451,18 @@ label:has(input) {
 .remark.brown .icon {
   color: #aa6432;
 }
+.remark.brown::before {
+  color: #aa6432;
+}
 .remark.olive {
   border-color: #a1a100;
   color: #191919;
   background: #f8fde7;
 }
 .remark.olive .icon {
+  color: #a1a100;
+}
+.remark.olive::before {
   color: #a1a100;
 }
 .remark.steel {
@@ -60398,12 +60473,18 @@ label:has(input) {
 .remark.steel .icon {
   color: #7b91a6;
 }
+.remark.steel::before {
+  color: #7b91a6;
+}
 .remark.mauve {
   border-color: #e0afff;
   color: #191919;
   background: #f7ecfe;
 }
 .remark.mauve .icon {
+  color: #e0afff;
+}
+.remark.mauve::before {
   color: #e0afff;
 }
 .remark.taupe {
@@ -60414,12 +60495,18 @@ label:has(input) {
 .remark.taupe .icon {
   color: #7a6654;
 }
+.remark.taupe::before {
+  color: #7a6654;
+}
 .remark.champagne {
   border-color: #f7e6ca;
   color: #191919;
   background: #fffdf7;
 }
 .remark.champagne .icon {
+  color: #f7e6ca;
+}
+.remark.champagne::before {
   color: #f7e6ca;
 }
 .remark.khaki {
@@ -60430,12 +60517,18 @@ label:has(input) {
 .remark.khaki .icon {
   color: #d5c58a;
 }
+.remark.khaki::before {
+  color: #d5c58a;
+}
 .remark.charcoal {
   border-color: #989898;
   color: #191919;
   background: #e8e8e8;
 }
 .remark.charcoal .icon {
+  color: #989898;
+}
+.remark.charcoal::before {
   color: #989898;
 }
 .remark.bronze {
@@ -60446,12 +60539,18 @@ label:has(input) {
 .remark.bronze .icon {
   color: #e48d3e;
 }
+.remark.bronze::before {
+  color: #e48d3e;
+}
 .remark.windstorm {
   border-color: #799ed6;
   color: #191919;
   background: #e6ebf5;
 }
 .remark.windstorm .icon {
+  color: #799ed6;
+}
+.remark.windstorm::before {
   color: #799ed6;
 }
 .remark.nude {
@@ -60462,12 +60561,18 @@ label:has(input) {
 .remark.nude .icon {
   color: #f7d9bc;
 }
+.remark.nude::before {
+  color: #f7d9bc;
+}
 .remark.terracotta {
   border-color: #e35336;
   color: #191919;
   background: #fdebed;
 }
 .remark.terracotta .icon {
+  color: #e35336;
+}
+.remark.terracotta::before {
   color: #e35336;
 }
 .remark.coral {
@@ -60478,12 +60583,18 @@ label:has(input) {
 .remark.coral .icon {
   color: #ff8559;
 }
+.remark.coral::before {
+  color: #ff8559;
+}
 .remark.army {
   border-color: #5d6532;
   color: #191919;
   background: #eceacb;
 }
 .remark.army .icon {
+  color: #5d6532;
+}
+.remark.army::before {
   color: #5d6532;
 }
 .remark.seashell {
@@ -60494,6 +60605,9 @@ label:has(input) {
 .remark.seashell .icon {
   color: #fff1e7;
 }
+.remark.seashell::before {
+  color: #fff1e7;
+}
 .remark.sand {
   border-color: #f1e0ae;
   color: #191919;
@@ -60502,12 +60616,16 @@ label:has(input) {
 .remark.sand .icon {
   color: #f1e0ae;
 }
+.remark.sand::before {
+  color: #f1e0ae;
+}
 .remark.alert {
   border-color: var(--color-red);
   background: var(--color-light-red) !important;
   color: #191919 !important;
 }
-.remark.alert .icon {
+.remark.alert .icon,
+.remark.alert::before {
   color: var(--color-red);
 }
 .remark.warning {
@@ -60515,7 +60633,8 @@ label:has(input) {
   background: var(--color-light-orange) !important;
   color: #191919 !important;
 }
-.remark.warning .icon {
+.remark.warning .icon,
+.remark.warning::before {
   color: var(--color-orange);
 }
 .remark.info {
@@ -60523,7 +60642,8 @@ label:has(input) {
   background: var(--color-light-blue) !important;
   color: #191919 !important;
 }
-.remark.info .icon {
+.remark.info .icon,
+.remark.info::before {
   color: var(--color-blue);
 }
 .remark.success {
@@ -60531,7 +60651,8 @@ label:has(input) {
   background: var(--color-light-green) !important;
   color: #191919 !important;
 }
-.remark.success .icon {
+.remark.success .icon,
+.remark.success::before {
   color: var(--color-green);
 }
 .remark.dark {

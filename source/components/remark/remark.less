@@ -1,5 +1,4 @@
 @import (once) "../../include/vars";
-@import (once) "../../include/mixins";
 
 :root {
     --remark-border-radius: 6px;
@@ -16,8 +15,8 @@
 
 .remark {
     display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
+    flex-flow: column nowrap;
+    justify-content: center;
     position: relative;
     border: 1px solid;
     border-left: 4px solid;
@@ -25,7 +24,7 @@
     border-radius: var(--remark-border-radius);
     color: var(--remark-color);
     background: var(--remark-background);
-    padding: 1rem;
+    padding: 1rem 2rem 1rem 1rem;
     font-size: 14px;
     margin: 1rem 0;
     cursor: default;
@@ -37,15 +36,30 @@
         width: 32px;
         height: 32px;
         position: absolute;
-        top: 50%;
-        left: 1rem;
-        transform: translateY(-50%);
+        top: 10px;
+        left: 10px;
+        object-fit: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    &::before {
+        font-family: serif;
+        content: "”";
+        position: absolute;
+        top: -10px;
+        right: 10px;
+        font-size: 48px;
+        font-feature-settings: 'onum';
+        font-variant-numeric: oldstyle-nums;
     }
 }
 
 .remark:has(.icon) {
     min-height: 40px;
-    padding-left: 60px;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 .remark {
@@ -61,6 +75,10 @@
             .icon {
                 color: @@bd;
             }
+            
+            &::before {
+                color: @@bd;
+            }
         }
     });
     
@@ -69,7 +87,7 @@
         background: var(--color-light-red)!important;
         color: #191919!important;
 
-        .icon {
+        .icon, &::before {
             color: var(--color-red);
         }
     }
@@ -79,7 +97,7 @@
         background: var(--color-light-orange)!important;
         color: #191919!important;
 
-        .icon {
+        .icon, &::before {
             color: var(--color-orange);
         }
     }
@@ -89,7 +107,7 @@
         background: var(--color-light-blue)!important;
         color: #191919!important;
 
-        .icon {
+        .icon, &::before {
             color: var(--color-blue);
         }
     }
@@ -99,7 +117,7 @@
         background: var(--color-light-green)!important;
         color: #191919!important;
 
-        .icon {
+        .icon, &::before {
             color: var(--color-green);
         }
     }
