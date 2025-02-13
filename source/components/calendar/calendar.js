@@ -111,7 +111,7 @@
     Metro.Component("calendar", {
         init: function (options, elem) {
             const time = datetime()
-            const now = datetime().align("day");
+            const now = this._correctDate(datetime());
 
             this._super(elem, options, CalendarDefaultConfig, {
                 today: now,
@@ -243,9 +243,9 @@
             dates = typeof val === "string" ? val.toArray() : Array.isArray(val) ? val : [];
 
             $.each(dates, function () {
-                let _d, date = this;
+                let _d
                 try {
-                    _d = this._correctDate(o.inputFormat ? Datetime.from(date, o.inputFormat) : datetime(date)).format("YYYY-MM-DD");
+                    _d = that._correctDate(o.inputFormat ? Datetime.from(this, o.inputFormat) : datetime(this)).format("YYYY-MM-DD");
                 } catch (e) {
                     return;
                 }
@@ -695,8 +695,8 @@
             time.append((inner = $("<div>").addClass("calendar-time__inner")));
 
             inner.append((row = $("<div>").addClass("calendar-time__inner-row")));
-            row.append($("<div>").addClass("calendar-time__inner-cell").append($("<span>").html(strings["label_hours"])));
-            row.append($("<div>").addClass("calendar-time__inner-cell").append($("<span>").html(strings["label_minutes"])));
+            row.append($("<div>").addClass("calendar-time__inner-cell").append($("<span>").html(str(strings["label_hours"]).capitalize())));
+            row.append($("<div>").addClass("calendar-time__inner-cell").append($("<span>").html(str(strings["label_minutes"]).capitalize())));
 
             time.append((inner = $("<div>").addClass("calendar-time__inner spinners").addClass(o.clsTime)));
             inner.append(
@@ -826,10 +826,10 @@
                         cell.addClass(o.clsSpecial);
                     }
                 } else {
-                    if (that.selected.indexOf(day) > -1) {
+                    if (that.selected.includes(day)) {
                         cell.addClass("selected").addClass(o.clsSelected);
                     }
-                    if (that.exclude.indexOf(day) > -1) {
+                    if (that.exclude.includes(day)) {
                         cell.addClass("disabled excluded").addClass(o.clsExcluded);
                     }
                     if (that.min && date.older(that.min)) {
@@ -1074,14 +1074,15 @@
         },
 
         toDay: function () {
+            const time = datetime()
             this.today = datetime().align("day");
             this.current = {
                 year: this.today.year(),
                 month: this.today.month(),
                 day: this.today.day(),
             };
-            this.time = [datetime().hour(), datetime().minute()];
-            this.yearGroupStart = datetime().year();
+            this.time = [time.hour(), time.minute()];
+            this.yearGroupStart = this.today.year();
             this.content = "days";
             this._drawHeader();
             this._drawContent();
@@ -1090,10 +1091,13 @@
         setExclude: function (exclude) {
             const element = this.element,
                 o = this.options;
+            
             if (Metro.utils.isNull(exclude) && Metro.utils.isNull(element.attr("data-exclude"))) {
                 return;
             }
-            o.exclude = !Metro.utils.isNull(exclude) ? exclude : element.attr("data-exclude");
+            
+            o.exclude = exclude ? exclude : element.attr("data-exclude");
+            
             this._dates2array(o.exclude, "exclude");
             this._drawContent();
         },
@@ -1101,11 +1105,12 @@
         setPreset: function (preset) {
             const element = this.element,
                 o = this.options;
+
             if (Metro.utils.isNull(preset) && Metro.utils.isNull(element.attr("data-preset"))) {
                 return;
             }
 
-            o.preset = !Metro.utils.isNull(preset) ? preset : element.attr("data-preset");
+            o.preset = preset ? preset : element.attr("data-preset");
 
             this._dates2array(o.preset, "selected");
             this._drawContent();
@@ -1114,10 +1119,13 @@
         setSpecial: function (special) {
             const element = this.element,
                 o = this.options;
+            
             if (Metro.utils.isNull(special) && Metro.utils.isNull(element.attr("data-special"))) {
                 return;
             }
-            o.special = !Metro.utils.isNull(special) ? special : element.attr("data-special");
+            
+            o.special = special ? special : element.attr("data-special");
+            
             this._dates2array(o.exclude, "special");
             this._drawContent();
         },

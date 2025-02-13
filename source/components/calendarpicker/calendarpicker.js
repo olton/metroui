@@ -47,13 +47,14 @@
 
     Metro.Component("calendar-picker", {
         init: function (options, elem) {
+            const time = datetime();
             this._super(elem, options, $.extend({}, Metro.defaults.Calendar, {}, CalendarPickerDefaultConfig), {
                 value: null,
                 value_date: null,
                 calendar: null,
                 overlay: null,
                 id: Metro.utils.elementId("calendar-picker"),
-                time: [datetime().hour(), datetime().minute()],
+                time: [time.hour(), time.minute()],
             });
 
             return this;
@@ -84,7 +85,7 @@
             let calendarButton,
                 clearButton,
                 cal = $("<div>");
-            let curr, _curr, initTime, initHours, initMinutes, elementValue, h, m;
+            let curr, _curr, initTime, initHours, initMinutes, elementValue, preset
             const body = $("body");
 
             element.attr("type", "text");
@@ -104,6 +105,7 @@
             }
 
             curr = ("" + o.value).trim() !== "" ? o.value : element.val().trim();
+            preset = curr ? curr : ""
 
             if (!Metro.utils.isValue(curr)) {
                 if (o.useNow) {
@@ -112,7 +114,7 @@
                 }
             } else {
                 _curr = curr.split(" ");
-                this.value = (!o.inputFormat ? datetime(_curr[0]) : Datetime.from(_curr[0], o.inputFormat, locale)).align("day");
+                this.value = (!o.inputFormat ? datetime(_curr[0]) : Datetime.from(_curr[0], o.inputFormat, locale)).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
                 if (_curr[1]) {
                     this.time = _curr[1].trim().split(":");
                 }
@@ -165,7 +167,8 @@
                 format: o.format,
                 inputFormat: o.inputFormat,
                 pickerMode: true,
-                show: o.value,
+                show: preset,
+                preset: preset,
                 weekStart: o.weekStart,
                 outside: o.outside,
                 buttons: false,
@@ -369,8 +372,8 @@
             // datetime(day).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
             container.on(Metro.events.click, "button, input", function (e) {
                 const value = that.value ? that.value : datetime().addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
-                const presetValue = o.inputFormat ? value.format(o.inputFormat) : value.format("YYYY-MM-DD");
-
+                const presetValue = value.format("YYYY/MM/DD");
+                console.log(value)
                 value.align("day");
 
                 if (cal.hasClass("open") === false && cal.hasClass("open-up") === false) {

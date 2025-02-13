@@ -49282,9 +49282,11 @@ input:-ms-input-placeholder {
   --calendar-exclude-day-color: #818181;
 }
 .calendar {
-  display: block;
+  display: flex;
+  flex-flow: column nowrap;
   position: relative;
-  width: 280px;
+  width: auto;
+  float: left;
   border: 1px solid var(--calendar-border-color);
   overflow: hidden;
   user-select: none;
@@ -49298,6 +49300,7 @@ input:-ms-input-placeholder {
   display: block;
   background-color: var(--calendar-background);
   color: var(--calnedar-color);
+  flex-shrink: 0;
 }
 .calendar-header {
   padding: 1rem;
@@ -49316,8 +49319,8 @@ input:-ms-input-placeholder {
 }
 .calendar-header .header-actions {
   position: absolute;
-  right: 1rem;
-  top: 1rem;
+  right: 8px;
+  top: 8px;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -49412,6 +49415,9 @@ input:-ms-input-placeholder {
   user-select: none;
   margin: 0;
 }
+.calendar-content .day {
+  overflow: hidden;
+}
 .calendar-content .day.selected {
   box-shadow: inset 0 0 0 1px #94b6ff !important;
 }
@@ -49473,8 +49479,8 @@ input:-ms-input-placeholder {
   line-height: 28px;
   padding: 0 4px;
 }
-.calendar.compact {
-  width: 220px;
+.calendar-footer:not(:has(button)) {
+  display: none;
 }
 .calendar.compact .calendar-content {
   width: 100%;
@@ -49584,22 +49590,6 @@ input:-ms-input-placeholder {
 }
 .calendar-wide {
   flex-flow: row nowrap;
-  width: 560px;
-}
-.calendar-wide::after {
-  display: block;
-  clear: both;
-  content: "";
-}
-.calendar-wide.calendar-picker {
-  width: 460px;
-}
-.calendar-wide .calendar-header,
-.calendar-wide .calendar-footer {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  min-height: 100%;
 }
 .calendar-wide .calendar-header {
   left: 0;
@@ -49622,20 +49612,18 @@ input:-ms-input-placeholder {
   width: 100%;
   margin: 2px 0;
 }
-.calendar-wide .calendar-content {
-  margin: 0 96px 0 180px;
-}
-.calendar-wide.compact {
-  width: 454px !important;
-}
-.calendar-wide.compact.calendar-picker {
-  width: 354px !important;
-}
 .calendar-wide.compact .calendar-header {
-  width: 120px;
+  width: 140px;
+}
+.calendar-wide.compact .calendar-header .header-actions {
+  right: 4px;
+  top: 4px;
+}
+.calendar-wide.compact .calendar-header button {
+  width: 16px;
+  height: 16px;
 }
 .calendar-wide.compact .calendar-content {
-  margin: 0 96px 0 120px;
   width: 234px;
 }
 .calendar .day,
@@ -49672,17 +49660,26 @@ input:-ms-input-placeholder {
   background-color: red;
   margin: 1px;
 }
-.calendar.calendar-collapsed .calendar-header .caret.toggle-collapsed {
+.calendar:not(.calendar-wide).calendar-collapsed .calendar-header .caret.toggle-collapsed {
   transform: rotate(-90deg);
 }
-.calendar.calendar-collapsed .calendar-content,
-.calendar.calendar-collapsed .calendar-footer {
+.calendar:not(.calendar-wide).calendar-collapsed .calendar-content,
+.calendar:not(.calendar-wide).calendar-collapsed .calendar-footer {
   height: 0;
   overflow: hidden;
   padding: 0;
 }
-.calendar.calendar-collapsed.calendar-wide .calendar-footer {
+.calendar:not(.calendar-wide).calendar-collapsed.calendar-wide .calendar-footer {
   width: 0;
+}
+.calendar.calendar-wide.calendar-collapsed .calendar-header .caret.toggle-collapsed {
+  transform: rotate(-90deg);
+}
+.calendar.calendar-wide.calendar-collapsed .calendar-content,
+.calendar.calendar-wide.calendar-collapsed .calendar-footer {
+  width: 0;
+  overflow: hidden;
+  padding: 0;
 }
 
 /* source/components/calendarpicker/calendarpicker.less */
@@ -60466,22 +60463,28 @@ label:has(input) {
 .remark.sand::before {
   color: #f1e0ae;
 }
-.remark.alert {
+.remark.alert,
+.remark.error {
   border-color: var(--color-red);
   background: var(--color-light-red) !important;
   color: #191919 !important;
 }
 .remark.alert .icon,
-.remark.alert::before {
+.remark.error .icon,
+.remark.alert::before,
+.remark.error::before {
   color: var(--color-red);
 }
-.remark.warning {
+.remark.warning,
+.remark.caution {
   border-color: var(--color-orange);
   background: var(--color-light-orange) !important;
   color: #191919 !important;
 }
 .remark.warning .icon,
-.remark.warning::before {
+.remark.caution .icon,
+.remark.warning::before,
+.remark.caution::before {
   color: var(--color-orange);
 }
 .remark.info {

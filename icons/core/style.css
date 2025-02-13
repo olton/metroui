@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'metro-ui-core';
   src:
-    url('fonts/metro-ui-core.ttf?se3412') format('truetype'),
-    url('fonts/metro-ui-core.woff?se3412') format('woff'),
-    url('fonts/metro-ui-core.svg?se3412#metro-ui-core') format('svg');
+    url('fonts/metro-ui-core.ttf?sjmzlz') format('truetype'),
+    url('fonts/metro-ui-core.woff?sjmzlz') format('woff'),
+    url('fonts/metro-ui-core.svg?sjmzlz#metro-ui-core') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -24,6 +24,60 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.mif-mina:before {
+  content: "\e9bc";
+}
+.mif-database-analyse:before {
+  content: "\eb5a";
+}
+.mif-server-rack:before {
+  content: "\eb5b";
+}
+.mif-cloud-server:before {
+  content: "\eb5c";
+}
+.mif-server-reload:before {
+  content: "\eb5d";
+}
+.mif-coding:before {
+  content: "\eb5e";
+}
+.mif-dropdown-menu:before {
+  content: "\eb5f";
+}
+.mif-data-log:before {
+  content: "\eb60";
+}
+.mif-database-log:before {
+  content: "\eb61";
+}
+.mif-blockchain:before {
+  content: "\eb62";
+}
+.mif-align-top:before {
+  content: "\eb63";
+}
+.mif-align-right:before {
+  content: "\eb64";
+}
+.mif-align-left:before {
+  content: "\eb65";
+}
+.mif-align-middle:before {
+  content: "\eb66";
+}
+.mif-align-bottom:before {
+  content: "\eb67";
+}
+.mif-align-center:before {
+  content: "\eb68";
+}
+.mif-tree:before {
+  content: "\eb69";
+}
+.mif-treeview:before {
+  content: "\eb6a";
+}
 .mif-microsoft:before {
   content: "\eb59";
   color: #666;
@@ -330,9 +384,6 @@
 }
 .mif-clipboard:before {
   content: "\e9b8";
-}
-.mif-tree:before {
-  content: "\e9bc";
 }
 .mif-download2:before {
   content: "\e9c7";
@@ -1075,16 +1126,16 @@
 .mif-attach-file:before {
   content: "\e9c1";
 }
-.mif-align-center:before {
+.mif-text-align-center:before {
   content: "\e9c2";
 }
-.mif-align-justify:before {
+.mif-text-align-justify:before {
   content: "\e9c3";
 }
-.mif-align-left:before {
+.mif-text-align-left:before {
   content: "\e9cc";
 }
-.mif-align-right:before {
+.mif-text-align-right:before {
   content: "\e9ce";
 }
 .mif-bold:before {
