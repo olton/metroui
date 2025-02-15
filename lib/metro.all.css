@@ -70099,6 +70099,42 @@ textarea {
 .treeview ul ul ul ul ul ul ul ul ul :is(a, label) {
   padding-left: 200px;
 }
+.treeview ul :is(.input) {
+  margin-left: 40px;
+  width: calc(100% - 20px * 2);
+}
+.treeview ul ul :is(.input) {
+  margin-left: 60px;
+  width: calc(100% - 20px * 3);
+}
+.treeview ul ul ul :is(.input) {
+  margin-left: 80px;
+  width: calc(100% - 20px * 4);
+}
+.treeview ul ul ul ul :is(.input) {
+  margin-left: 100px;
+  width: calc(100% - 20px * 5);
+}
+.treeview ul ul ul ul ul :is(.input) {
+  margin-left: 120px;
+  width: calc(100% - 20px * 6);
+}
+.treeview ul ul ul ul ul ul :is(.input) {
+  margin-left: 140px;
+  width: calc(100% - 20px * 7);
+}
+.treeview ul ul ul ul ul ul ul :is(.input) {
+  margin-left: 160px;
+  width: calc(100% - 20px * 8);
+}
+.treeview ul ul ul ul ul ul ul ul :is(.input) {
+  margin-left: 180px;
+  width: calc(100% - 20px * 9);
+}
+.treeview ul ul ul ul ul ul ul ul ul :is(.input) {
+  margin-left: 200px;
+  width: calc(100% - 20px * 10);
+}
 .treeview .icon {
   margin-right: 6px;
   width: 16px;
@@ -70189,6 +70225,7 @@ textarea {
   right: auto;
   transform: none;
   margin-left: 4px;
+  cursor: inherit;
 }
 .treeview .secondary-text {
   margin-left: auto;

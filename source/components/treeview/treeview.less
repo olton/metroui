@@ -94,6 +94,16 @@
     ul ul ul ul ul ul ul ul :is(a, label) { padding-left: @pl * 9; }
     ul ul ul ul ul ul ul ul ul :is(a, label) { padding-left: @pl * 10; }
 
+    ul :is(.input) { margin-left: @pl * 2; width: calc(100% - @pl * 2); }
+    ul ul :is(.input) { margin-left: @pl * 3;  width: calc(100% - @pl * 3); }
+    ul ul ul :is(.input) { margin-left: @pl * 4;  width: calc(100% - @pl * 4); }
+    ul ul ul ul :is(.input) { margin-left: @pl * 5;  width: calc(100% - @pl * 5); }
+    ul ul ul ul ul :is(.input) { margin-left: @pl * 6;  width: calc(100% - @pl * 6); }
+    ul ul ul ul ul ul :is(.input) { margin-left: @pl * 7;  width: calc(100% - @pl * 7); }
+    ul ul ul ul ul ul ul :is(.input) { margin-left: @pl * 8;  width: calc(100% - @pl * 8); }
+    ul ul ul ul ul ul ul ul :is(.input) { margin-left: @pl * 9;  width: calc(100% - @pl * 9); }
+    ul ul ul ul ul ul ul ul ul :is(.input) { margin-left: @pl * 10;  width: calc(100% - @pl * 10); }
+
     .icon {
         margin-right: 6px;
         width: 16px;
@@ -150,6 +160,7 @@
         right: auto;
         transform: none;
         margin-left: 4px;
+        cursor: inherit;
     }
 
     .secondary-text {

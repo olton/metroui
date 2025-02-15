@@ -74,11 +74,9 @@
             return caption
         },
 
-
         _createToggle: function(){
             return $("<span>").addClass("node-toggle");
         },
-
 
         _createNode: function(data, target){
             const o = this.options
@@ -105,7 +103,7 @@
 
             if (data.attributes && $.type(data.attributes) === "object") {
                 for(let key in data.attributes) {
-                    node.attr(`data-${key}`, data.attributes[key])
+                    node.attr(key, data.attributes[key])
                 }
             }
 
@@ -188,7 +186,51 @@
 
             return nodeContainer;
         },
+        
+        _createCheckNode: function(data, target){
+            const node = target ? target : $("<li>")
+            
+            node.append(`
+                <input data-role="${data.type}" type="${data.type ?? 'checkbox'}" name="${data.name}" value="${data.value ?? ''}" ${data.checked ? "checked" : ""} data-append="${data.caption}"/>
+            `)
 
+            if (data.icon) {
+                node.find("label").prepend(this._createIcon(data.icon));                
+            }
+            
+            if (data.attributes && $.type(data.attributes) === "object") {
+                for(let key in data.attributes) {
+                    node.attr(key, data.attributes[key])
+                }
+            }
+
+            if (data.secondary) {
+                const [badge, className] = data.secondary.split(":");
+                node.find("label").append(
+                    $("<span>").addClass("secondary-text").addClass(className).html(badge)
+                )
+            }
+
+            return node;
+        },
+        
+        _createInputNode: function(data, target){
+            const node = target ? target : $("<li>")
+            
+            node.append(`
+                <input data-role="${data.type}" type="${data.type ?? 'text'}" name="${data.name}" value="${data.value ?? ''}" data-prepend="${data.caption ?? ''}" placeholder="${data.placeholder ?? ''}"/>
+            `)
+
+            if (data.secondary) {
+                const [badge, className] = data.secondary.split(":");
+                node.find("label").append(
+                    $("<span>").addClass("secondary-text").addClass(className).html(badge)
+                )
+            }
+            
+            return node;
+        },
+        
         _createTree: function(){
             const element = this.element
             const nodes = element.find("li[data-caption]")
@@ -197,22 +239,45 @@
 
             $.each(nodes, (i, _el) => {
                 const el = $(_el)
-
-                this._createNode({
-                    caption: el.data("caption"),
-                    icon: el.data("icon"),
-                    html: el.data("html"),
-                    attributes: el.data("attributes"),
-                    badge: el.data("badge"),
-                    badges: el.data("badges"),
-                    actions: el.data("actions"),
-                    type: el.data("type"),
-                    collapsed: el.data("collapsed"),
-                    link: el.data("link"),
-                    href: el.data("href"),
-                    secondary: el.data("secondary"),
-                    style: el.data("style")
-                }, el)
+                
+                if (el.data("type") === "checkbox" || el.data("type") === "radio") {
+                    this._createCheckNode({
+                        caption: el.data("caption"),
+                        icon: el.data("icon"),
+                        type: el.data("type"),
+                        name: el.data("name"),
+                        attributes: el.data("attributes"),
+                        value: el.data("value"),
+                        checked: el.data("checked") === "true",
+                        secondary: el.data("secondary"),
+                    }, el)
+                } else if (el.data("type") === "input") {
+                    this._createInputNode({
+                        caption: el.data("caption"),
+                        type: el.data("type"),
+                        name: el.data("name"),
+                        attributes: el.data("attributes"),
+                        value: el.data("value"),
+                        secondary: el.data("secondary"),
+                        placeholder: el.data("placeholder"),
+                    }, el)
+                } else {
+                    this._createNode({
+                        caption: el.data("caption"),
+                        icon: el.data("icon"),
+                        html: el.data("html"),
+                        attributes: el.data("attributes"),
+                        badge: el.data("badge"),
+                        badges: el.data("badges"),
+                        actions: el.data("actions"),
+                        type: el.data("type"),
+                        collapsed: el.data("collapsed"),
+                        link: el.data("link"),
+                        href: el.data("href"),
+                        secondary: el.data("secondary"),
+                        style: el.data("style")
+                    }, el)
+                }
             });
 
             this._recheckTree()
@@ -405,9 +470,15 @@
 
             node.addClass("tree-node")
 
-            new_node = this._createNode(data);
+            if (data.type === "checkbox" || data.type === "radio") {
+                new_node = this._createCheckNode(data, target);
+            } else if (data.type === "input") {
+                new_node = this._createInputNode(data, target);
+            } else {
+                new_node = this._createNode(data, target);
+            }
 
-            new_node.appendTo(target);
+            // new_node.appendTo(target);
 
             this._fireEvent("node-insert", {
                 node: new_node[0],
@@ -434,7 +505,7 @@
                 parent: node ? node[0] : null
             });
 
-            this._recheckTree()
+            // this._recheckTree()
 
             return new_node;
         },
@@ -454,7 +525,7 @@
                 parent: node[0]
             });
 
-            this._recheckTree()
+            // this._recheckTree()
 
             return new_node;
         },
