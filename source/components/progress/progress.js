@@ -1,7 +1,7 @@
 /* global Metro */
 (function(Metro, $) {
     'use strict';
-    var ProgressDefaultConfig = {
+    let ProgressDefaultConfig = {
         progressDeferred: 0,
         showValue: false,
         showLabel: false,
@@ -10,6 +10,7 @@
         buffer: 0,
         type: "bar",
         small: false,
+        segmentSize: 10,
         clsProgress: "",
         clsBack: "",
         clsBar: "",
@@ -43,7 +44,7 @@
         },
 
         _create: function(){
-            var element = this.element, elem = this.elem, o = this.options;
+            const element = this.element, elem = this.elem, o = this.options;
 
             if (typeof o.type === "string") o.type = o.type.toLowerCase();
 
@@ -77,10 +78,21 @@
                 element.addClass("line");
             }
 
+            function _segment(){
+                element.addClass("segments");
+                element.append(`<div class="bar"></div>`)
+                const width = element.width();
+                const segments = Math.ceil(width / (o.segmentSize || 10));
+                for (let i = 0; i < segments; i++) {
+                    elem.innerHTML += `<div class="segment" style="width: ${o.segmentSize}px"></div>`;
+                }
+            }
+            
             switch (o.type) {
                 case "buffer": _buffer(); break;
                 case "load": _load(); break;
                 case "line": _line(); break;
+                case "segment": _segment(); break;
                 default: _progress();
             }
 
@@ -90,9 +102,9 @@
             element.find(".bar").addClass(o.clsBar);
             element.find(".buffer").addClass(o.clsBuffer);
 
-            var data = $("<div>").addClass("progress-data").addClass(o.clsData).insertBefore(element);
-            var label = $("<div>").addClass("progress-label").addClass(o.clsLabel).html(o.label).appendTo(data);
-            var value = $("<div>").addClass("progress-value").addClass(o.clsLabel).html(o.value).appendTo(data);
+            const data = $("<div>").addClass("progress-data").addClass(o.clsData).insertBefore(element);
+            const label = $("<div>").addClass("progress-label").addClass(o.clsLabel).html(o.label).appendTo(data);
+            const value = $("<div>").addClass("progress-value").addClass(o.clsLabel).html(o.value).appendTo(data);
 
             if (o.showLabel === false) { label.hide(); }
             if (o.showValue === false) { value.hide(); }
@@ -106,14 +118,14 @@
         },
 
         val: function(v){
-            var that = this, element = this.element, o = this.options;
-            var value = this.component.find(".progress-value");
+            const that = this, element = this.element, o = this.options;
+            const value = this.component.find(".progress-value");
 
             if (v === undefined) {
                 return that.value;
             }
 
-            var bar  = element.find(".bar");
+            const bar = element.find(".bar");
 
             if (bar.length === 0) {
                 return false;
@@ -138,13 +150,13 @@
         },
 
         buff: function(v){
-            var that = this, element = this.element;
+            const that = this, element = this.element;
 
             if (v === undefined) {
                 return that.buffer;
             }
 
-            var bar  = element.find(".buffer");
+            const bar = element.find(".buffer");
 
             if (bar.length === 0) {
                 return false;
@@ -181,7 +193,7 @@
         },
 
         destroy: function(){
-            return this.component.remove();
+            this.component.remove();
         }
     });
 }(Metro, Dom));

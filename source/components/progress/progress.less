@@ -88,7 +88,7 @@
         background: var(--progress-bar-color);
     }
 
-    &.line {
+    .line {
         background-color: var(--progress-bar-line-color);
         display: flex;
 
@@ -101,6 +101,33 @@
         }
     }
 
+    .segments {
+        background: var(--progress-bar-back-color);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        overflow: hidden;
+        
+        .bar {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: var(--progress-bar-color);
+            z-index: 1;
+        }
+        
+        .segment {
+            background: transparent;
+            border: 1px solid var(--progress-bar-back-color);
+            height: 100%;
+            z-index: 2;
+        }
+    }
+    
     .progress {
         &.small {
             --progress-bar-height: 6px;

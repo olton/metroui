@@ -59743,16 +59743,40 @@ label:has(input) {
   z-index: 3;
   background: var(--progress-bar-color);
 }
-.progress-component.line {
+.progress-component .line {
   background-color: var(--progress-bar-line-color);
   display: flex;
 }
-.progress-component.line::before {
+.progress-component .line::before {
   height: 100%;
   width: 100%;
   background-color: var(--progress-bar-line-back-color);
   content: "";
   animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.progress-component .segments {
+  background: var(--progress-bar-back-color);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+}
+.progress-component .segments .bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background: var(--progress-bar-color);
+  z-index: 1;
+}
+.progress-component .segments .segment {
+  background: transparent;
+  border: 1px solid var(--progress-bar-back-color);
+  height: 100%;
+  z-index: 2;
 }
 .progress-component .progress.small {
   --progress-bar-height: 6px;
