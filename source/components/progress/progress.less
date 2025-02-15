@@ -125,6 +125,12 @@
             border: 1px solid var(--progress-bar-back-color);
             height: 100%;
             z-index: 2;
+            &:first-child {
+                border-radius: 8px 0 0 8px;
+            }
+            &:last-child {
+                border-radius: 0 4px 4px 0;
+            }
         }
     }
     
@@ -151,6 +157,10 @@
 each(@normalColors, {
     @lightColor: "light-@{value}";
     @backColor: @@lightColor;
+    
+    .bar-@{value} {
+        --progress-bar-color: @@value;
+    }
     
     .progress-@{value} {
         --progress-bar-color: @@value;

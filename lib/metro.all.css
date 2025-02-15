@@ -59778,6 +59778,12 @@ label:has(input) {
   height: 100%;
   z-index: 2;
 }
+.progress-component .segments .segment:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.progress-component .segments .segment:last-child {
+  border-radius: 0 4px 4px 0;
+}
 .progress-component .progress.small {
   --progress-bar-height: 6px;
   --progress-bar-radius: 4px;
@@ -59809,133 +59815,232 @@ label:has(input) {
     margin-right: 0;
   }
 }
+.bar-lime {
+  --progress-bar-color: #AEFD6C;
+}
 .progress-lime {
   --progress-bar-color: #AEFD6C;
   --progress-bar-back-color: #f2ffe7;
+}
+.bar-green {
+  --progress-bar-color: #00b500;
 }
 .progress-green {
   --progress-bar-color: #00b500;
   --progress-bar-back-color: #e7f6e6;
 }
+.bar-emerald {
+  --progress-bar-color: #50c878;
+}
 .progress-emerald {
   --progress-bar-color: #50c878;
   --progress-bar-back-color: #d1e6cc;
+}
+.bar-blue {
+  --progress-bar-color: #5e87ff;
 }
 .progress-blue {
   --progress-bar-color: #5e87ff;
   --progress-bar-back-color: #e7eaff;
 }
+.bar-teal {
+  --progress-bar-color: #069494;
+}
 .progress-teal {
   --progress-bar-color: #069494;
   --progress-bar-back-color: #e1f2f3;
+}
+.bar-cyan {
+  --progress-bar-color: #94b6ff;
 }
 .progress-cyan {
   --progress-bar-color: #94b6ff;
   --progress-bar-back-color: #e3edff;
 }
+.bar-cobalt {
+  --progress-bar-color: #0047ab;
+}
 .progress-cobalt {
   --progress-bar-color: #0047ab;
   --progress-bar-back-color: #d1ecff;
+}
+.bar-indigo {
+  --progress-bar-color: #6400a8;
 }
 .progress-indigo {
   --progress-bar-color: #6400a8;
   --progress-bar-back-color: #f3dcf3;
 }
+.bar-almost {
+  --progress-bar-color: #6a2ded;
+}
 .progress-almost {
   --progress-bar-color: #6a2ded;
   --progress-bar-back-color: #eee5ff;
+}
+.bar-violet {
+  --progress-bar-color: #ee82ee;
 }
 .progress-violet {
   --progress-bar-color: #ee82ee;
   --progress-bar-back-color: #fce2fb;
 }
+.bar-pink {
+  --progress-bar-color: #ffc0cb;
+}
 .progress-pink {
   --progress-bar-color: #ffc0cb;
   --progress-bar-back-color: #ffeef1;
+}
+.bar-magenta {
+  --progress-bar-color: #ff00ff;
 }
 .progress-magenta {
   --progress-bar-color: #ff00ff;
   --progress-bar-back-color: #ffe2ff;
 }
+.bar-crimson {
+  --progress-bar-color: #df0e38;
+}
 .progress-crimson {
   --progress-bar-color: #df0e38;
   --progress-bar-back-color: #ffd1da;
+}
+.bar-red {
+  --progress-bar-color: #ff0000;
 }
 .progress-red {
   --progress-bar-color: #ff0000;
   --progress-bar-back-color: #ffe1e1;
 }
+.bar-orange {
+  --progress-bar-color: #ffa500;
+}
 .progress-orange {
   --progress-bar-color: #ffa500;
   --progress-bar-back-color: #fff3de;
+}
+.bar-amber {
+  --progress-bar-color: #ffca2a;
 }
 .progress-amber {
   --progress-bar-color: #ffca2a;
   --progress-bar-back-color: #fff8e1;
 }
+.bar-yellow {
+  --progress-bar-color: #ffde21;
+}
 .progress-yellow {
   --progress-bar-color: #ffde21;
   --progress-bar-back-color: #ffffc6;
+}
+.bar-brown {
+  --progress-bar-color: #aa6432;
 }
 .progress-brown {
   --progress-bar-color: #aa6432;
   --progress-bar-back-color: #ffeed9;
 }
+.bar-olive {
+  --progress-bar-color: #a1a100;
+}
 .progress-olive {
   --progress-bar-color: #a1a100;
   --progress-bar-back-color: #f8fde7;
+}
+.bar-steel {
+  --progress-bar-color: #7b91a6;
 }
 .progress-steel {
   --progress-bar-color: #7b91a6;
   --progress-bar-back-color: #edeeee;
 }
+.bar-mauve {
+  --progress-bar-color: #e0afff;
+}
 .progress-mauve {
   --progress-bar-color: #e0afff;
   --progress-bar-back-color: #f7ecfe;
+}
+.bar-taupe {
+  --progress-bar-color: #7a6654;
 }
 .progress-taupe {
   --progress-bar-color: #7a6654;
   --progress-bar-back-color: #eadccf;
 }
+.bar-champagne {
+  --progress-bar-color: #f7e6ca;
+}
 .progress-champagne {
   --progress-bar-color: #f7e6ca;
   --progress-bar-back-color: #fff9f2;
+}
+.bar-khaki {
+  --progress-bar-color: #d5c58a;
 }
 .progress-khaki {
   --progress-bar-color: #d5c58a;
   --progress-bar-back-color: #f6f1dd;
 }
+.bar-charcoal {
+  --progress-bar-color: #989898;
+}
 .progress-charcoal {
   --progress-bar-color: #989898;
   --progress-bar-back-color: #e8e8e8;
+}
+.bar-bronze {
+  --progress-bar-color: #e48d3e;
 }
 .progress-bronze {
   --progress-bar-color: #e48d3e;
   --progress-bar-back-color: #ffecdc;
 }
+.bar-windstorm {
+  --progress-bar-color: #799ed6;
+}
 .progress-windstorm {
   --progress-bar-color: #799ed6;
   --progress-bar-back-color: #e6ebf5;
+}
+.bar-nude {
+  --progress-bar-color: #f7d9bc;
 }
 .progress-nude {
   --progress-bar-color: #f7d9bc;
   --progress-bar-back-color: #fcf0e4;
 }
+.bar-terracotta {
+  --progress-bar-color: #e35336;
+}
 .progress-terracotta {
   --progress-bar-color: #e35336;
   --progress-bar-back-color: #ffe5df;
+}
+.bar-coral {
+  --progress-bar-color: #ff8559;
 }
 .progress-coral {
   --progress-bar-color: #ff8559;
   --progress-bar-back-color: #ffd8c8;
 }
+.bar-army {
+  --progress-bar-color: #5d6532;
+}
 .progress-army {
   --progress-bar-color: #5d6532;
   --progress-bar-back-color: #eceacb;
 }
+.bar-seashell {
+  --progress-bar-color: #fff1e7;
+}
 .progress-seashell {
   --progress-bar-color: #fff1e7;
   --progress-bar-back-color: #fff9f8;
+}
+.bar-sand {
+  --progress-bar-color: #f1e0ae;
 }
 .progress-sand {
   --progress-bar-color: #f1e0ae;
