@@ -258,8 +258,6 @@
 
 .calendar {
     &.compact {
-        //width: 220px;
-
         .calendar-content {
             width: 100%;
         }
@@ -391,6 +389,16 @@
     }
 
     &.compact {
+        .calendar-header {
+            .header-actions {
+                right: 4px;
+                top: 4px;
+            }
+            button {
+                width: 16px;
+                height: 16px;
+            }
+        }
         .months, .years {
             .month, .year {
                 height: 52px;
@@ -401,19 +409,6 @@
 
 .wide-calendar(){
     flex-flow: row nowrap;
-    //width: 560px;
-    //.clear();
-
-    //&.calendar-picker {
-    //    width: 460px;
-    //}
-
-    //.calendar-header, .calendar-footer {
-    //    position: absolute;
-    //    top: 0;
-    //    height: 100%;
-    //    min-height: 100%;
-    //}
 
     .calendar-header {
         left: 0;
@@ -441,31 +436,11 @@
         }
     }
 
-    .calendar-content {
-        //margin: 0 96px 0 180px;
-    }
-
     &.compact {
-        //width: 454px!important;
-
-        //&.calendar-picker {
-        //    width: 354px!important;
-        //}
-
         .calendar-header {
             width: 140px;
-            
-            .header-actions {
-                right: 4px;
-                top: 4px;
-            }
-            button {
-                width: 16px;
-                height: 16px;
-            }
         }
         .calendar-content {
-            //margin: 0 96px 0 120px;
             width: 234px;
         }
     }
@@ -533,7 +508,6 @@
         }
     }
     &.calendar-wide.calendar-collapsed {
-        //width: 180px;
         .calendar-header {
             .caret.toggle-collapsed {
                 transform: rotate(-90deg);

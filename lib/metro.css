@@ -49582,6 +49582,14 @@ input:-ms-input-placeholder {
 .calendar .calendar-content .calendar-toolbar {
   border-bottom: 1px solid var(--calendar-border-color);
 }
+.calendar.compact .calendar-header .header-actions {
+  right: 4px;
+  top: 4px;
+}
+.calendar.compact .calendar-header button {
+  width: 16px;
+  height: 16px;
+}
 .calendar.compact .months .month,
 .calendar.compact .years .month,
 .calendar.compact .months .year,
@@ -49614,14 +49622,6 @@ input:-ms-input-placeholder {
 }
 .calendar-wide.compact .calendar-header {
   width: 140px;
-}
-.calendar-wide.compact .calendar-header .header-actions {
-  right: 4px;
-  top: 4px;
-}
-.calendar-wide.compact .calendar-header button {
-  width: 16px;
-  height: 16px;
 }
 .calendar-wide.compact .calendar-content {
   width: 234px;
@@ -52391,9 +52391,10 @@ input[type=checkbox]:indeterminate::before {
 .checkbox .caption-prepend,
 .checkbox .caption-append {
   font-size: 12px;
-  margin: 0 4px;
+  margin: 0 8px;
   position: relative;
   white-space: nowrap;
+  user-select: none;
 }
 .checkbox .caption-prepend {
   order: 1;
@@ -52403,7 +52404,7 @@ input[type=checkbox]:indeterminate::before {
 }
 .checkbox > input[type=checkbox]:disabled ~ .caption-prepend,
 .checkbox > input[type=checkbox]:disabled ~ .caption-append {
-  color: var(--switch-toggle-disabled);
+  color: var(--checkbox-color-disabled);
 }
 input[type=checkbox].checkbox-lime {
   border-color: #AEFD6C;
@@ -52961,6 +52962,31 @@ input[type=radio]:disabled {
 input[type=radio]:disabled::before {
   background-color: var(--radio-color-disabled);
   border: none;
+}
+.radio {
+  display: inline-flex;
+  align-items: center;
+}
+.radio input[type=radio] {
+  order: 2;
+}
+.radio .caption-prepend,
+.radio .caption-append {
+  font-size: 12px;
+  margin: 0 8px;
+  position: relative;
+  white-space: nowrap;
+  user-select: none;
+}
+.radio .caption-prepend {
+  order: 1;
+}
+.radio .caption-append {
+  order: 3;
+}
+.radio > input[type=radio]:disabled ~ .caption-prepend,
+.radio > input[type=radio]:disabled ~ .caption-append {
+  color: var(--radio-color-disabled);
 }
 input[type=radio].radio-lime {
   border-color: #AEFD6C;
@@ -69616,6 +69642,16 @@ textarea {
   font-size: 12px;
   color: var(--timeline-time-color);
   margin-top: -4px;
+  position: relative;
+}
+.timeline li .time::before {
+  content: "";
+  width: 14px;
+  height: 1px;
+  background: var(--timeline-marker-color);
+  position: absolute;
+  top: 50%;
+  left: -20px;
 }
 .timeline li .data {
   display: block;
@@ -69624,6 +69660,9 @@ textarea {
   color: var(--timeline-color);
 }
 .timeline li.no-marker::after {
+  display: none;
+}
+.timeline li.timeline-end::before {
   display: none;
 }
 
@@ -69876,7 +69915,7 @@ textarea {
 :root {
   --transform-button-color: #000000;
 }
-.dark-mode {
+.dark-side {
   --transform-button-color: #ffffff;
 }
 .transform-button {
@@ -69966,14 +70005,14 @@ textarea {
   --treeview-node-toggle-color: #191919;
 }
 .dark-side {
-  --treeview-background: #2b2d30;
+  --treeview-background: #1e1f22;
   --treeview-color: #dfe1e5;
   --treeview-selected-row-background: #43454a;
   --treeview-selected-row-color: #ffffff;
   --treeview-node-toggle-color: #ffffff;
 }
 .treeview,
-.treeview ul:not(.d-menu) {
+.treeview ul {
   margin: 0;
   padding: 0;
   font-size: 14px;
@@ -69985,15 +70024,20 @@ textarea {
   color: var(--treeview-color);
 }
 .treeview {
-  padding: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none inside;
   overflow: hidden;
 }
 .treeview li {
   position: relative;
+  display: block;
 }
-.treeview a {
+.treeview a,
+.treeview label {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   font-size: 13px;
   color: var(--d-menu-item-color);
   text-decoration: none;
@@ -70003,44 +70047,68 @@ textarea {
   flex-wrap: nowrap;
   line-height: 20px;
   overflow: hidden;
+  border: 1px dotted transparent;
+  cursor: default;
 }
-.treeview a:hover {
-  background-color: var(--treeview-selected-row-background);
-  color: var(--treeview-selected-row-color);
+.treeview a[href],
+.treeview label {
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .treeview a:hover,
+  .treeview label:hover {
+    background-color: var(--treeview-selected-row-background);
+    color: var(--treeview-selected-row-color);
+  }
+}
+@media (hover: none) {
+  .treeview a:active,
+  .treeview label:active {
+    background-color: var(--treeview-selected-row-background);
+    color: var(--treeview-selected-row-color);
+  }
 }
 .treeview .current > a {
   background-color: var(--treeview-selected-row-background);
   color: var(--treeview-selected-row-color);
 }
-.treeview ul:not(.d-menu) a {
+.treeview ul :is(a, label) {
   padding-left: 40px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) a {
+.treeview ul ul :is(a, label) {
   padding-left: 60px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) a {
+.treeview ul ul ul :is(a, label) {
   padding-left: 80px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) a {
+.treeview ul ul ul ul :is(a, label) {
   padding-left: 100px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) a {
+.treeview ul ul ul ul ul :is(a, label) {
   padding-left: 120px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) a {
+.treeview ul ul ul ul ul ul :is(a, label) {
   padding-left: 140px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) a {
+.treeview ul ul ul ul ul ul ul :is(a, label) {
   padding-left: 160px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) a {
+.treeview ul ul ul ul ul ul ul ul :is(a, label) {
   padding-left: 180px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) a {
+.treeview ul ul ul ul ul ul ul ul ul :is(a, label) {
   padding-left: 200px;
 }
 .treeview .icon {
   margin-right: 6px;
+  width: 16px;
+  height: 16px;
+  font-size: 15px;
+  object-fit: cover;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .treeview .node-toggle {
   position: relative;
@@ -70049,7 +70117,7 @@ textarea {
   user-select: none;
   position: absolute;
   left: 0;
-  top: 4px;
+  top: 6px;
   width: 16px;
   height: 16px;
   z-index: 0;
@@ -70080,29 +70148,32 @@ textarea {
   transform: rotate(-135deg);
   border-color: var(--treeview-node-toggle-color);
 }
-.treeview ul:not(.d-menu) .node-toggle {
+.treeview ul .node-toggle {
   left: 20px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) .node-toggle {
+.treeview ul ul .node-toggle {
   left: 40px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) .node-toggle {
+.treeview ul ul ul .node-toggle {
   left: 60px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) .node-toggle {
+.treeview ul ul ul ul .node-toggle {
   left: 80px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) .node-toggle {
+.treeview ul ul ul ul ul .node-toggle {
   left: 100px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) .node-toggle {
+.treeview ul ul ul ul ul ul .node-toggle {
   left: 120px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) .node-toggle {
+.treeview ul ul ul ul ul ul ul .node-toggle {
   left: 140px;
 }
-.treeview ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) .node-toggle {
+.treeview ul ul ul ul ul ul ul ul .node-toggle {
   left: 160px;
+}
+.treeview ul ul ul ul ul ul ul ul ul .node-toggle {
+  left: 180px;
 }
 .treeview li.expanded > .node-toggle::before {
   transform: rotate(-45deg);
@@ -70112,12 +70183,21 @@ textarea {
   border-radius: 4px;
   padding: 2px 4px;
   font-size: 10px;
-  border: 1px solid var(--border-color);
+  border: 1px solid transparent;
   position: relative;
   top: auto;
   right: auto;
   transform: none;
   margin-left: 4px;
+}
+.treeview .secondary-text {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--treeview-color-secondary);
+}
+.treeview li:hover > .actions-holder,
+.treeview .current > .actions-holder {
+  display: flex;
 }
 .treeview .actions-holder {
   z-index: 2;
@@ -70151,37 +70231,6 @@ textarea {
 }
 .treeview .actions-holder > ul li {
   padding-left: 0;
-}
-.treeview li:hover > .actions-holder,
-.treeview .current > .actions-holder {
-  display: flex;
-}
-.treeview.auto-layout ul:not(.d-menu) li {
-  padding-left: 40px;
-}
-.treeview.auto-layout ul:not(.d-menu) ul:not(.d-menu) li {
-  padding-left: 60px;
-}
-.treeview.auto-layout ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) li {
-  padding-left: 80px;
-}
-.treeview.auto-layout ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) li {
-  padding-left: 100px;
-}
-.treeview.auto-layout ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) li {
-  padding-left: 120px;
-}
-.treeview.auto-layout ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) li {
-  padding-left: 140px;
-}
-.treeview.auto-layout ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) li {
-  padding-left: 160px;
-}
-.treeview.auto-layout ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) li {
-  padding-left: 180px;
-}
-.treeview.auto-layout ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) li {
-  padding-left: 200px;
 }
 
 /* source/components/v-menu/v-menu.less */
@@ -71290,8 +71339,8 @@ body.vegas-container > .vegas-slide {
   background-color: var(--working-tree-marker-success);
 }
 .working-tree > li.work-success .node::after {
-  content: "\221a";
-  color: #fff;
+  content: "v";
+  color: #000;
 }
 .working-tree > li.work-pending {
   color: var(--working-tree-marker-pending) !important;

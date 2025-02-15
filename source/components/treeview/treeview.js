@@ -1,12 +1,13 @@
 /* global Metro */
 (function(Metro, $) {
     'use strict';
-    var Utils = Metro.utils;
-    var TreeViewDefaultConfig = {
+
+    let TreeViewDefaultConfig = {
         treeviewDeferred: 0,
         showChildCount: false,
         duration: 100,
         hideActionsOnLeave: true,
+        recheckTimeout: 100,
         onNodeClick: Metro.noop,
         onNodeDblClick: Metro.noop,
         onNodeDelete: Metro.noop,
@@ -34,7 +35,7 @@
         },
 
         _create: function(){
-            var that = this, element = this.element;
+            const that = this, element = this.element;
 
             this._createTree();
             this._createEvents();
@@ -50,9 +51,9 @@
         },
 
         _createIcon: function(data){
-            var icon, src;
+            let icon, src;
 
-            src = Utils.isTag(data) ? $(data) : $("<img src='' alt=''>").attr("src", data);
+            src = Metro.utils.isTag(data) ? $(data) : $("<img src='' alt=''>").attr("src", data);
             icon = $("<span>").addClass("icon");
             icon.html(src.outerHTML());
 
@@ -63,7 +64,7 @@
             const caption = $("<span>").addClass("caption").html(data);
 
             if (style) {
-                if ( Utils.isObject(style) ) {
+                if ( Metro.utils.isObject(style) ) {
                     caption.css(style)
                 } else if (typeof style === "string") {
                     caption[0].style.cssText = style
@@ -86,6 +87,10 @@
 
             nodeContainer.prepend(node)
 
+            if (data.link || data.href) {
+                node.attr("href", data.link || data.href);
+            }
+            
             if (data.caption) {
                 node.prepend(this._createCaption(data.caption, data.style));
             }
@@ -98,26 +103,43 @@
                 node.append(data.html);
             }
 
-            if (data.attributes && Utils.isObject(data.attributes)) {
+            if (data.attributes && $.type(data.attributes) === "object") {
                 for(let key in data.attributes) {
                     node.attr(`data-${key}`, data.attributes[key])
                 }
             }
 
+            if (data.style) {
+                if (typeof data.style === "string") {
+                    node[0].style.cssText = data.style
+                } else if ($.type(data.style) === "object") {
+                    node.css(data.style)
+                }
+            }
+            
             if (data.badge) {
+                const [badge, className] = data.badge.split(":");
                 node.append(
-                    $("<span>").addClass("badge").html(data.badge)
+                    $("<span>").addClass("badge").addClass(className).html(badge)
                 )
             }
 
             if (data.badges) {
-                $.each(data.badges, function(_, item) {
+                $.each((typeof data.badges === "string" ? data.badges.toArray(",") : Array.isArray(data.badges) ? data.badges : []), function(_, item) {
+                    const [badge, className] = item.split(":");
                     node.append(
-                        $("<span>").addClass("badge").html(item)
+                        $("<span>").addClass("badge").addClass(className).html(badge)
                     )
                 })
             }
 
+            if (data.secondary) {
+                const [badge, className] = data.secondary.split(":");
+                node.append(
+                    $("<span>").addClass("secondary-text").addClass(className).html(badge)
+                )
+            }
+            
             if (data.actions) {
                 const actionsHolder = $("<div class='dropdown-button'>").addClass("actions-holder");
                 const actionsListTrigger = $("<span class='actions-list-trigger'>").text("⋮").appendTo(actionsHolder)
@@ -168,8 +190,8 @@
         },
 
         _createTree: function(){
-            var that = this, element = this.element, o = this.options;
-            var nodes = element.find("li[data-caption]");
+            const element = this.element
+            const nodes = element.find("li[data-caption]")
 
             element.addClass("treeview");
 
@@ -186,16 +208,22 @@
                     actions: el.data("actions"),
                     type: el.data("type"),
                     collapsed: el.data("collapsed"),
+                    link: el.data("link"),
+                    href: el.data("href"),
+                    secondary: el.data("secondary"),
+                    style: el.data("style")
                 }, el)
             });
+
+            this._recheckTree()
         },
 
         _createEvents: function(){
-            var that = this, element = this.element;
+            const that = this, element = this.element;
 
             element.on(Metro.events.click, ".node-toggle", function(e){
-                var toggle = $(this);
-                var node = toggle.parent();
+                const toggle = $(this);
+                const node = toggle.parent();
 
                 that.toggleNode(node);
 
@@ -203,7 +231,7 @@
             });
 
             element.on(Metro.events.click, "a", function(e){
-                var node = $(this).parent();
+                const node = $(this).parent();
 
                 that.current(node);
 
@@ -215,9 +243,9 @@
             });
 
             element.on(Metro.events.dblclick, "a", function(e){
-                var node = $(this).closest("li");
-                var toggle = node.children(".node-toggle");
-                var subtree = node.children("ul");
+                const node = $(this).closest("li");
+                const toggle = node.children(".node-toggle");
+                const subtree = node.children("ul");
 
                 if (toggle.length > 0 || subtree.length > 0) {
                     that.toggleNode(node);
@@ -231,9 +259,9 @@
             });
 
             element.on(Metro.events.click, "input[type=radio]", function(){
-                var check = $(this);
-                var checked = check.is(":checked");
-                var node = check.closest("li");
+                const check = $(this);
+                const checked = check.is(":checked");
+                const node = check.closest("li");
 
                 that.current(node);
 
@@ -245,9 +273,9 @@
             });
 
             element.on(Metro.events.click, "input[type=checkbox]", function(){
-                var check = $(this);
-                var checked = check.is(":checked");
-                var node = check.closest("li");
+                const check = $(this);
+                const checked = check.is(":checked");
+                const node = check.closest("li");
 
                 that._recheck(check);
 
@@ -260,57 +288,65 @@
         },
 
         _recheck: function(check){
-            var element = this.element;
-            var checked, node, checks, all_checks;
+            // const element = this.element;
+            let node //, checked, node, checks, all_checks;
 
             check = $(check);
 
-            checked = check.is(":checked");
+            const checked = check.is(":checked");
             node = check.closest("li");
 
             this.current(node);
 
             // down
-            checks = check.closest("li").find("ul input[type=checkbox]");
+            const checks = check.closest("li").find("ul input[type=checkbox]");
             checks.attr("data-indeterminate", false);
+            checks.prop("indeterminate", false);
             checks.prop("checked", checked);
             checks.trigger('change');
 
-            all_checks = [];
-
-            $.each(element.find("input[type=checkbox]"), function(){
-                all_checks.push(this);
-            });
-
-            $.each(all_checks.reverse(), function(){
-                var ch = $(this);
-                var children = ch.closest("li").children("ul").find("input[type=checkbox]").length;
-                var children_checked = ch.closest("li").children("ul").find("input[type=checkbox]").filter(function(el){
-                    return el.checked;
-                }).length;
-
-                if (children > 0 && children_checked === 0) {
-                    ch.attr("data-indeterminate", false);
-                    ch.prop("checked", false);
-                    ch.trigger('change');
-                }
-
-                if (children_checked === 0) {
-                    ch.attr("data-indeterminate", false);
-                } else {
-                    if (children_checked > 0 && children > children_checked) {
-                        ch.attr("data-indeterminate", true);
-                    } else if (children === children_checked) {
-                        ch.attr("data-indeterminate", false);
-                        ch.prop("checked", true);
-                        ch.trigger('change');
-                    }
-                }
-            });
+            this._recheckTree()
         },
 
+        _recheckTree: function (timeout){
+            setTimeout(()=>{
+                const element = this.element;
+                const all_checks = element.find("input[type=checkbox]").reverse();
+
+                $.each(all_checks.reverse(), function(){
+                    const ch = $(this);
+                    const children = ch.closest("li").children("ul").find("input[type=checkbox]").length;
+                    const children_checked = ch.closest("li").children("ul").find("input[type=checkbox]").filter(function (el) {
+                        return el.checked;
+                    }).length;
+
+                    if (children > 0 && children_checked === 0) {
+                        ch.attr("data-indeterminate", false);
+                        ch.prop("indeterminate", false);
+                        ch.prop("checked", false);
+                        ch.trigger('change');
+                    }
+
+                    if (children_checked === 0) {
+                        ch.attr("data-indeterminate", false);
+                        ch.prop("indeterminate", false);
+                    } else {
+                        if (children_checked > 0 && children > children_checked) {
+                            ch.attr("data-indeterminate", true);
+                            ch.prop("indeterminate", true);
+                        } else if (children === children_checked) {
+                            ch.attr("data-indeterminate", false);
+                            ch.prop("indeterminate", false);
+                            ch.prop("checked", true);
+                            ch.trigger('change');
+                        }
+                    }
+                });
+            }, timeout ?? this.options.recheckTimeout)
+        }, 
+        
         current: function(node){
-            var element = this.element;
+            const element = this.element;
 
             if (!node) {
                 return element.find(".current")
@@ -321,10 +357,10 @@
         },
 
         toggleNode: function(n){
-            var node = $(n);
-            var o = this.options;
-            var func;
-            var toBeExpanded = !node.data("collapsed");//!node.hasClass("expanded");
+            const node = $(n);
+            const o = this.options;
+            let func;
+            const toBeExpanded = !node.data("collapsed");//!node.hasClass("expanded");
 
             node.toggleClass("expanded");
             node.data("collapsed", toBeExpanded);
@@ -349,10 +385,10 @@
         },
 
         addTo: function(node, data){
-            var element = this.element;
-            var target;
-            var new_node;
-            var toggle;
+            const element = this.element;
+            let target;
+            let new_node;
+            let toggle;
 
             if (node === null) {
                 target = element;
@@ -378,13 +414,15 @@
                 parent: node ? node[0] : null
             });
 
+            this._recheckTree()
+            
             return new_node;
         },
 
         insertBefore: function(node, data){
-            var new_node = this._createNode(data);
+            const new_node = this._createNode(data);
 
-            if (Utils.isNull(node)) {
+            if (Metro.utils.isNull(node)) {
                 return this.addTo(node, data);
             }
 
@@ -396,13 +434,15 @@
                 parent: node ? node[0] : null
             });
 
+            this._recheckTree()
+
             return new_node;
         },
 
         insertAfter: function(node, data){
-            var new_node = this._createNode(data);
+            const new_node = this._createNode(data);
 
-            if (Utils.isNull(node)) {
+            if (Metro.utils.isNull(node)) {
                 return this.addTo(node, data);
             }
 
@@ -414,14 +454,16 @@
                 parent: node[0]
             });
 
+            this._recheckTree()
+
             return new_node;
         },
 
         del: function(node){
-            var element = this.element;
+            const element = this.element;
             node = $(node);
-            var parent_list = node.closest("ul");
-            var parent_node = parent_list.closest("li");
+            const parent_list = node.closest("ul");
+            const parent_node = parent_list.closest("li");
 
             this._fireEvent("node-delete", {
                 node: node[0]
@@ -434,6 +476,8 @@
                 parent_node.removeClass("expanded");
                 parent_node.children(".node-toggle").remove();
             }
+
+            this._recheckTree()
         },
 
         clean: function(node){
@@ -448,7 +492,7 @@
         },
 
         collapseNode(node){
-            const element = this.element, o = this.options;
+            const o = this.options;
             node = $(node)
             node.removeClass("expanded");
             node.data("collapsed", true)
@@ -459,7 +503,7 @@
         },
 
         expandNode(node){
-            const element = this.element, o = this.options;
+            const o = this.options;
             node = $(node)
             if (!node.hasClass("tree-node")) {
                 return
@@ -520,11 +564,14 @@
             this._fireEvent("expand-all");
         },
 
-        changeAttribute: function(){
+        changeAttribute: function(attr, value){
+            if (attr === "data-recheck-timeout") {
+                this.options.recheckTimeout = value ?? 100;
+            }
         },
 
         destroy: function(){
-            var element = this.element;
+            const element = this.element;
 
             element.off(Metro.events.click, ".node-toggle");
             element.off(Metro.events.click, "li > .caption");
@@ -532,7 +579,7 @@
             element.off(Metro.events.click, "input[type=radio]");
             element.off(Metro.events.click, "input[type=checkbox]");
 
-            return element;
+            element.remove();
         }
     });
 }(Metro, Dom));

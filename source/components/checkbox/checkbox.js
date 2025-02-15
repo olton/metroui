@@ -13,6 +13,7 @@
         threeState: false,
         prepend: "",
         append: "",
+        caption: "",
         clsCheckbox: "",
         clsCaption: "",
         clsPrepend: "",

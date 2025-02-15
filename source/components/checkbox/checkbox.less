@@ -85,9 +85,10 @@ input[type=checkbox] {
     
     .caption-prepend, .caption-append {
         font-size: 12px;
-        margin: 0 4px;
+        margin: 0 8px;
         position: relative;
         white-space: nowrap;
+        user-select: none;
     }
 
     .caption-prepend {
@@ -100,7 +101,7 @@ input[type=checkbox] {
 
     & > input[type=checkbox]:disabled ~ .caption-prepend,
     & > input[type=checkbox]:disabled ~ .caption-append {
-        color: var(--switch-toggle-disabled);
+        color: var(--checkbox-color-disabled);
     }
 }
 

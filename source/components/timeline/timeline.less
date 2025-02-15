@@ -56,6 +56,17 @@
             font-size: 12px;
             color: var(--timeline-time-color);
             margin-top: -4px;
+            position: relative;
+            
+            &::before {
+                content: "";
+                width: 14px;
+                height: 1px;
+                background: var(--timeline-marker-color);
+                position: absolute;
+                top: 50%;
+                left: -20px;
+            }
         }
         
         .data {
@@ -67,6 +78,12 @@
         
         &.no-marker {
             &::after {
+                display: none;
+            }
+        }
+        
+        &.timeline-end {
+            &::before {
                 display: none;
             }
         }

@@ -63,6 +63,36 @@ input[type=radio] {
     }
 }
 
+.radio {
+    display: inline-flex;
+    align-items: center;
+
+    input[type=radio] {
+        order: 2
+    }
+
+    .caption-prepend, .caption-append {
+        font-size: 12px;
+        margin: 0 8px;
+        position: relative;
+        white-space: nowrap;
+        user-select: none;
+    }
+
+    .caption-prepend {
+        order: 1;
+    }
+
+    .caption-append {
+        order: 3;
+    }
+
+    & > input[type=radio]:disabled ~ .caption-prepend,
+    & > input[type=radio]:disabled ~ .caption-append {
+        color: var(--radio-color-disabled);
+    }
+}
+
 each(@normalColors, {
     input[type=radio].radio-@{value} {
         border-color: @@value;
