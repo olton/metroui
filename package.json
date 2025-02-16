@@ -38,7 +38,7 @@
         "check": "npx biome check",
         "commit": "node -e \"const mssg = process.argv[1]; require('child_process').execSync('npm run build && git add . && git commit -m \\\"' + mssg + '\\\"', { stdio:[0, 1, 2] })\""
     },
-    "pre-commit": [ ],
+    "pre-commit": [],
     "browserslist": [
         "last 2 versions"
     ],
@@ -58,7 +58,7 @@
     },
     "dependencies": {
         "@olton/datetime": "^3.2.1",
-        "@olton/dom": "^1.2.1",
+        "@olton/dom": "^1.2.2",
         "@olton/farbe": "^1.0.4",
         "@olton/guardian": "^0.7.1",
         "@olton/hooks": "^0.10.0",

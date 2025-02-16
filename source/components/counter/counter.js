@@ -1,8 +1,8 @@
 /* global Metro */
 (function(Metro, $) {
     'use strict';
-    var Utils = Metro.utils;
-    var CounterDefaultConfig = {
+
+    let CounterDefaultConfig = {
         startOnViewport: false,
         counterDeferred: 0,
         duration: 2000,
@@ -12,6 +12,7 @@
         delimiter: ",",
         prefix: "",
         suffix: "",
+        size: 16,
         onStart: Metro.noop,
         onStop: Metro.noop,
         onTick: Metro.noop,
@@ -32,19 +33,26 @@
                 numbers: [],
                 html: $(elem).html(),
                 started: false,
-                id: Utils.elementId("counter")
+                id: Metro.utils.elementId("counter")
             });
 
             return this;
         },
 
         _create: function(){
+            this._createStruct();
             this._createEvents();
             this._fireEvent("counter-create");
         },
 
+        _createStruct: function(){
+            const element = this.element, elem = this.elem, o = this.options;
+            this.elem.value = 0;
+            element.css("font-size", this.options.size)
+        },
+        
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+            const that = this, element = this.element, o = this.options;
 
             if (o.startOnViewport) {
                 Hooks.useEvent({
@@ -58,35 +66,37 @@
         },
 
         start: function(val, from){
-            var that = this, elem = this.elem, o = this.options;
+            const that = this, elem = this.elem, o = this.options;
 
-            if (Utils.isValue(from)) {
+            if (Metro.utils.isValue(from)) {
                 o.from = +from;
             }
 
-            if (Utils.isValue(val)) {
+            if (Metro.utils.isValue(val)) {
                 o.value = +val;
             }
-
+            
             this.started = true;
+            const _from = o.from;
+            const _to = o.value;
 
             this._fireEvent("start");
 
             $.animate({
                 el: elem,
                 draw: {
-                    innerHTML: [o.from, o.value]
+                    value: [_from, _to]
                 },
                 defer: o.timeout,
                 dur: o.duration,
                 onFrame: function () {
                     that._fireEvent("tick", {
-                        value: +this.innerHTML
+                        value: this.value
                     });
-                    this.innerHTML = o.prefix + Number(this.innerHTML).format(0, 0, o.delimiter) + o.suffix
+                    this.innerHTML = o.prefix + Number(this.value).format(0, 0, o.delimiter) + o.suffix
                 },
                 onDone: function(){
-                    this.innerHTML = o.prefix + Number(o.value).format(0, 0, o.delimiter) + o.suffix
+                    // this.innerHTML = o.prefix + Number(o.value).format(0, 0, o.delimiter) + o.suffix
                     that._fireEvent("stop");
                 }
             })
@@ -98,7 +108,7 @@
         },
 
         changeAttribute: function(attr, val){
-            var o = this.options;
+            const o = this.options;
 
             if (attr === "data-value") {
                 o.value = +val;
