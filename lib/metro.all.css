@@ -47745,7 +47745,7 @@ button.flat,
   background-color: var(--badge-background);
   color: var(--badge-color);
   border-radius: var(--badge-border-radius);
-  padding: 0.25em 0.4em;
+  padding: 0.2em 0.4em 0.3em;
   font-size: 10px;
   font-weight: 500;
   line-height: 1;
