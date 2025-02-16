@@ -1,13 +1,7 @@
-/**
- * global Metro, datetime, Datetime, METRO_LOCALE
- *
- * @format
- */
-
 (function (Metro, $) {
     "use strict";
-    var Utils = Metro.utils;
-    var CountdownDefaultConfig = {
+
+    let CountdownDefaultConfig = {
         countdownDeferred: 0,
         stopOnBlur: true,
         animate: "none",
@@ -20,6 +14,7 @@
         seconds: 0,
         date: null,
         start: true,
+        fontSize: 24,
         clsCountdown: "",
         clsPart: "",
         clsZero: "",
@@ -53,7 +48,7 @@
                 zeroHoursFired: false,
                 zeroMinutesFired: false,
                 zeroSecondsFired: false,
-                fontSize: parseInt(Utils.getStyleOne(elem, "font-size")),
+                fontSize: 0,
                 current: {
                     d: 0,
                     h: 0,
@@ -61,7 +56,7 @@
                     s: 0,
                 },
                 inactiveTab: false,
-                id: Utils.elementId("countdown"),
+                id: Metro.utils.elementId("countdown"),
                 duration: 600,
             });
 
@@ -69,7 +64,7 @@
         },
 
         _create: function () {
-            var o = this.options;
+            const o = this.options;
 
             this.duration = +o.duration <= 0 || +o.duration >= 1000 ? 600 : +o.duration;
 
@@ -78,8 +73,8 @@
         },
 
         _setBreakpoint: function () {
-            var o = this.options;
-            var dm = 86400000,
+            const o = this.options;
+            const dm = 86400000,
                 hm = 3600000,
                 mm = 60000,
                 sm = 1000;
@@ -105,32 +100,29 @@
         },
 
         _build: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var parts = ["days", "hours", "minutes", "seconds"];
-            var dm = 24 * 60 * 60 * 1000;
-            var delta_days;
-            var now = datetime().time();
-            var digit;
+            const parts = ["days", "hours", "minutes", "seconds"];
+            const dm = 24 * 60 * 60 * 1000;
+            let delta_days;
+            const now = datetime().time();
+            let digit;
             const strings = this.strings;
 
             if (!element.attr("id")) {
-                element.attr("id", Utils.elementId("countdown"));
-            }
-
-            if (!Utils.isValue(element.attr("id"))) {
-                element.attr("id", Utils.elementId("countdown"));
+                element.attr("id", Metro.utils.elementId("countdown"));
             }
 
             element.addClass("countdown").addClass(o.clsCountdown);
+            element.css("font-size", o.fontSize);
 
             this._setBreakpoint();
 
             delta_days = Math.round((that.breakpoint - now) / dm);
 
             $.each(parts, function () {
-                var part = $("<div>")
+                const part = $("<div>")
                     .addClass("part " + this)
                     .addClass(o.clsPart)
                     .attr("data-label", strings[`label_${this}`])
@@ -153,7 +145,7 @@
                 $("<div>").addClass("digit").appendTo(part);
 
                 if (this === "days" && delta_days >= 100) {
-                    for (var i = 0; i < String(Math.round(delta_days / 100)).length; i++) {
+                    for (let i = 0; i < String(Math.round(delta_days / 100)).length; i++) {
                         $("<div>").addClass("digit").appendTo(part);
                     }
                 }
@@ -172,10 +164,12 @@
             } else {
                 this.tick();
             }
+            
+            this.fontSize = parseInt(element.css("font-size"));
         },
 
         _createEvents: function () {
-            var that = this;
+            const that = this;
             $(document).on(
                 "visibilitychange",
                 function () {
@@ -190,7 +184,7 @@
         },
 
         blink: function () {
-            var element = this.element;
+            const element = this.element;
             element.toggleClass("blink");
 
             this._fireEvent("blink", {
@@ -199,16 +193,16 @@
         },
 
         tick: function () {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var dm = 24 * 60 * 60,
+            const dm = 24 * 60 * 60,
                 hm = 60 * 60,
                 mm = 60,
                 sm = 1;
-            var left,
+            let left,
                 now = datetime().time();
-            var d, h, m, s;
-            var days = element.find(".days"),
+            let d, h, m, s;
+            const days = element.find(".days"),
                 hours = element.find(".hours"),
                 minutes = element.find(".minutes"),
                 seconds = element.find(".seconds");
@@ -311,16 +305,16 @@
         },
 
         draw: function (part, value) {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var digits, digits_length, digit_value, digit_current, digit;
-            var len,
+            let digits, digits_length, digit_value, digit_current, digit;
+            let len,
                 i,
                 duration = this.duration;
-            var fontSize = this.fontSize;
+            const fontSize = this.fontSize;
 
-            var slideDigit = function (digit, value) {
-                var digit_copy,
+            const slideDigit = function (digit, value) {
+                let digit_copy,
                     height = digit.height();
 
                 digit.siblings(".-old-digit").remove();
@@ -351,8 +345,8 @@
                 });
             };
 
-            var fadeDigit = function (digit, value) {
-                var digit_copy;
+            const fadeDigit = function (digit, value) {
+                let digit_copy;
                 digit.siblings(".-old-digit").remove();
                 digit_copy = digit.clone().appendTo(digit.parent());
                 digit_copy.css({
@@ -379,10 +373,10 @@
                 });
             };
 
-            var zoomDigit = function (digit, value) {
-                var digit_copy,
-                    height = digit.height(),
-                    fs = fontSize; // parseInt(digit.style("font-size"));
+            const zoomDigit = function (digit, value) {
+                let digit_copy,
+                    height = element.height(),
+                    fs = fontSize; 
 
                 digit.siblings(".-old-digit").remove();
                 digit_copy = digit.clone().appendTo(digit.parent());
@@ -456,7 +450,7 @@
         },
 
         start: function () {
-            var that = this,
+            const that = this,
                 element = this.element;
 
             if (element.data("paused") === false) {
@@ -480,7 +474,7 @@
         },
 
         stop: function () {
-            var element = this.element;
+            const element = this.element;
             clearInterval(this.blinkInterval);
             clearInterval(this.tickInterval);
             element.data("paused", true);
@@ -500,7 +494,7 @@
         },
 
         resume: function () {
-            var that = this;
+            const that = this;
 
             this.element.data("paused", false);
             this.blinkInterval = setInterval(function () {
@@ -512,7 +506,7 @@
         },
 
         reset: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
 
@@ -521,7 +515,7 @@
 
             element.find(".part").removeClass(o.clsZero);
 
-            var digit = element.find(".digit").clear();
+            const digit = element.find(".digit").clear();
 
             digit.append($("<span class='digit-placeholder'>").html("0"));
             digit.append($("<span class='digit-value'>").html("0"));
@@ -541,7 +535,7 @@
         },
 
         resetWith: function (val) {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
 
@@ -549,7 +543,7 @@
                 element.attr("data-date", val);
                 o.date = val;
             } else if (typeof val === "object") {
-                var keys = ["days", "hours", "minutes", "seconds"];
+                const keys = ["days", "hours", "minutes", "seconds"];
                 $.each(keys, function (i, v) {
                     if (Metro.utils.isValue(val[v])) {
                         element.attr("data-" + v, val[v]);
@@ -578,12 +572,12 @@
         },
 
         getLeft: function () {
-            var dm = 24 * 60 * 60 * 1000,
+            const dm = 24 * 60 * 60 * 1000,
                 hm = 60 * 60 * 1000,
                 mm = 60 * 1000,
                 sm = 1000;
-            var now = new Date().getTime();
-            var left_seconds = Math.floor(this.breakpoint - now);
+            const now = new Date().getTime();
+            const left_seconds = Math.floor(this.breakpoint - now);
             return {
                 days: Math.round(left_seconds / dm),
                 hours: Math.round(left_seconds / hm),
@@ -609,7 +603,7 @@
 
             $(document).off("visibilitychange", { ns: this.id });
 
-            return this.element;
+            this.element.remove();
         },
     });
 })(Metro, Dom);
