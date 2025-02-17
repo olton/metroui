@@ -22,7 +22,7 @@
 .pos-absolute {position: absolute!important;}
 .pos-static {position: static!important;}
 .pos-fixed {position: fixed!important;}
-.pos-sticky {position: sticky!important; top: 0;}
+.pos-sticky {position: sticky!important; top: 0; align-self: flex-start!important;}
 
 each(@media-rules, {
     @container (min-width: @value) {
