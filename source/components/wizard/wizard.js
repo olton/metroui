@@ -303,7 +303,7 @@
             element.off(Metro.events.click, ".complete");
             $(globalThis).off(Metro.events.resize,{ns: this.id});
 
-            return element;
+            element.remove();
         }
     });
 }(Metro, Dom));

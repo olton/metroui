@@ -41189,532 +41189,832 @@ hr.fat {
   border-color: #ffffff !important;
 }
 button.primary.outline,
-.button.primary.outline {
+.button.primary.outline,
+.command-button.primary.outline,
+.shortcut.primary.outline,
+.action-button.primary.outline {
   color: #0366d6 !important;
   border-color: #0366d6 !important;
   background-color: transparent !important;
 }
 button.primary.outline.dropdown-toggle::before,
-.button.primary.outline.dropdown-toggle::before {
+.button.primary.outline.dropdown-toggle::before,
+.command-button.primary.outline.dropdown-toggle::before,
+.shortcut.primary.outline.dropdown-toggle::before,
+.action-button.primary.outline.dropdown-toggle::before {
   border-color: #0366d6 !important;
 }
 @media (hover: hover) {
   button.primary.outline:hover,
-  .button.primary.outline:hover {
+  .button.primary.outline:hover,
+  .command-button.primary.outline:hover,
+  .shortcut.primary.outline:hover,
+  .action-button.primary.outline:hover {
     color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.primary.outline:active,
-  .button.primary.outline:active {
+  .button.primary.outline:active,
+  .command-button.primary.outline:active,
+  .shortcut.primary.outline:active,
+  .action-button.primary.outline:active {
     color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.primary:hover,
-  .button.primary:hover {
+  .button.primary:hover,
+  .command-button.primary:hover,
+  .shortcut.primary:hover,
+  .action-button.primary:hover {
     color: #ffffff !important;
     background-color: #024ea4 !important;
     border-color: #024ea4 !important;
   }
   button.primary:hover.dropdown-toggle::before,
-  .button.primary:hover.dropdown-toggle::before {
+  .button.primary:hover.dropdown-toggle::before,
+  .command-button.primary:hover.dropdown-toggle::before,
+  .shortcut.primary:hover.dropdown-toggle::before,
+  .action-button.primary:hover.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.primary:active,
-  .button.primary:active {
+  .button.primary:active,
+  .command-button.primary:active,
+  .shortcut.primary:active,
+  .action-button.primary:active {
     color: #ffffff !important;
     background-color: #024ea4 !important;
     border-color: #024ea4 !important;
   }
   button.primary:active.dropdown-toggle::before,
-  .button.primary:active.dropdown-toggle::before {
+  .button.primary:active.dropdown-toggle::before,
+  .command-button.primary:active.dropdown-toggle::before,
+  .shortcut.primary:active.dropdown-toggle::before,
+  .action-button.primary:active.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.primary.same-color:hover,
-  .button.primary.same-color:hover {
+  .button.primary.same-color:hover,
+  .command-button.primary.same-color:hover,
+  .shortcut.primary.same-color:hover,
+  .action-button.primary.same-color:hover {
     background-color: #0366d6 !important;
     border-color: #0366d6 !important;
   }
 }
 @media (hover: none) {
   button.primary.same-color:active,
-  .button.primary.same-color:active {
+  .button.primary.same-color:active,
+  .command-button.primary.same-color:active,
+  .shortcut.primary.same-color:active,
+  .action-button.primary.same-color:active {
     background-color: #0366d6 !important;
     border-color: #0366d6 !important;
   }
 }
 button.secondary.outline,
-.button.secondary.outline {
+.button.secondary.outline,
+.command-button.secondary.outline,
+.shortcut.secondary.outline,
+.action-button.secondary.outline {
   color: #6a89a7 !important;
   border-color: #6a89a7 !important;
   background-color: transparent !important;
 }
 button.secondary.outline.dropdown-toggle::before,
-.button.secondary.outline.dropdown-toggle::before {
+.button.secondary.outline.dropdown-toggle::before,
+.command-button.secondary.outline.dropdown-toggle::before,
+.shortcut.secondary.outline.dropdown-toggle::before,
+.action-button.secondary.outline.dropdown-toggle::before {
   border-color: #6a89a7 !important;
 }
 @media (hover: hover) {
   button.secondary.outline:hover,
-  .button.secondary.outline:hover {
+  .button.secondary.outline:hover,
+  .command-button.secondary.outline:hover,
+  .shortcut.secondary.outline:hover,
+  .action-button.secondary.outline:hover {
     color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.secondary.outline:active,
-  .button.secondary.outline:active {
+  .button.secondary.outline:active,
+  .command-button.secondary.outline:active,
+  .shortcut.secondary.outline:active,
+  .action-button.secondary.outline:active {
     color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.secondary:hover,
-  .button.secondary:hover {
+  .button.secondary:hover,
+  .command-button.secondary:hover,
+  .shortcut.secondary:hover,
+  .action-button.secondary:hover {
     color: #ffffff !important;
     background-color: #526f8c !important;
     border-color: #526f8c !important;
   }
   button.secondary:hover.dropdown-toggle::before,
-  .button.secondary:hover.dropdown-toggle::before {
+  .button.secondary:hover.dropdown-toggle::before,
+  .command-button.secondary:hover.dropdown-toggle::before,
+  .shortcut.secondary:hover.dropdown-toggle::before,
+  .action-button.secondary:hover.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.secondary:active,
-  .button.secondary:active {
+  .button.secondary:active,
+  .command-button.secondary:active,
+  .shortcut.secondary:active,
+  .action-button.secondary:active {
     color: #ffffff !important;
     background-color: #526f8c !important;
     border-color: #526f8c !important;
   }
   button.secondary:active.dropdown-toggle::before,
-  .button.secondary:active.dropdown-toggle::before {
+  .button.secondary:active.dropdown-toggle::before,
+  .command-button.secondary:active.dropdown-toggle::before,
+  .shortcut.secondary:active.dropdown-toggle::before,
+  .action-button.secondary:active.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.secondary.same-color:hover,
-  .button.secondary.same-color:hover {
+  .button.secondary.same-color:hover,
+  .command-button.secondary.same-color:hover,
+  .shortcut.secondary.same-color:hover,
+  .action-button.secondary.same-color:hover {
     background-color: #6a89a7 !important;
     border-color: #6a89a7 !important;
   }
 }
 @media (hover: none) {
   button.secondary.same-color:active,
-  .button.secondary.same-color:active {
+  .button.secondary.same-color:active,
+  .command-button.secondary.same-color:active,
+  .shortcut.secondary.same-color:active,
+  .action-button.secondary.same-color:active {
     background-color: #6a89a7 !important;
     border-color: #6a89a7 !important;
   }
 }
 button.success.outline,
-.button.success.outline {
+.button.success.outline,
+.command-button.success.outline,
+.shortcut.success.outline,
+.action-button.success.outline {
   color: #50c878 !important;
   border-color: #50c878 !important;
   background-color: transparent !important;
 }
 button.success.outline.dropdown-toggle::before,
-.button.success.outline.dropdown-toggle::before {
+.button.success.outline.dropdown-toggle::before,
+.command-button.success.outline.dropdown-toggle::before,
+.shortcut.success.outline.dropdown-toggle::before,
+.action-button.success.outline.dropdown-toggle::before {
   border-color: #50c878 !important;
 }
 @media (hover: hover) {
   button.success.outline:hover,
-  .button.success.outline:hover {
+  .button.success.outline:hover,
+  .command-button.success.outline:hover,
+  .shortcut.success.outline:hover,
+  .action-button.success.outline:hover {
     color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.success.outline:active,
-  .button.success.outline:active {
+  .button.success.outline:active,
+  .command-button.success.outline:active,
+  .shortcut.success.outline:active,
+  .action-button.success.outline:active {
     color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.success:hover,
-  .button.success:hover {
+  .button.success:hover,
+  .command-button.success:hover,
+  .shortcut.success:hover,
+  .action-button.success:hover {
     color: #ffffff !important;
     background-color: #37ae5f !important;
     border-color: #37ae5f !important;
   }
   button.success:hover.dropdown-toggle::before,
-  .button.success:hover.dropdown-toggle::before {
+  .button.success:hover.dropdown-toggle::before,
+  .command-button.success:hover.dropdown-toggle::before,
+  .shortcut.success:hover.dropdown-toggle::before,
+  .action-button.success:hover.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.success:active,
-  .button.success:active {
+  .button.success:active,
+  .command-button.success:active,
+  .shortcut.success:active,
+  .action-button.success:active {
     color: #ffffff !important;
     background-color: #37ae5f !important;
     border-color: #37ae5f !important;
   }
   button.success:active.dropdown-toggle::before,
-  .button.success:active.dropdown-toggle::before {
+  .button.success:active.dropdown-toggle::before,
+  .command-button.success:active.dropdown-toggle::before,
+  .shortcut.success:active.dropdown-toggle::before,
+  .action-button.success:active.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.success.same-color:hover,
-  .button.success.same-color:hover {
+  .button.success.same-color:hover,
+  .command-button.success.same-color:hover,
+  .shortcut.success.same-color:hover,
+  .action-button.success.same-color:hover {
     background-color: #50c878 !important;
     border-color: #50c878 !important;
   }
 }
 @media (hover: none) {
   button.success.same-color:active,
-  .button.success.same-color:active {
+  .button.success.same-color:active,
+  .command-button.success.same-color:active,
+  .shortcut.success.same-color:active,
+  .action-button.success.same-color:active {
     background-color: #50c878 !important;
     border-color: #50c878 !important;
   }
 }
 button.alert.outline,
-.button.alert.outline {
+.button.alert.outline,
+.command-button.alert.outline,
+.shortcut.alert.outline,
+.action-button.alert.outline {
   color: #df0e38 !important;
   border-color: #df0e38 !important;
   background-color: transparent !important;
 }
 button.alert.outline.dropdown-toggle::before,
-.button.alert.outline.dropdown-toggle::before {
+.button.alert.outline.dropdown-toggle::before,
+.command-button.alert.outline.dropdown-toggle::before,
+.shortcut.alert.outline.dropdown-toggle::before,
+.action-button.alert.outline.dropdown-toggle::before {
   border-color: #df0e38 !important;
 }
 @media (hover: hover) {
   button.alert.outline:hover,
-  .button.alert.outline:hover {
+  .button.alert.outline:hover,
+  .command-button.alert.outline:hover,
+  .shortcut.alert.outline:hover,
+  .action-button.alert.outline:hover {
     color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.alert.outline:active,
-  .button.alert.outline:active {
+  .button.alert.outline:active,
+  .command-button.alert.outline:active,
+  .shortcut.alert.outline:active,
+  .action-button.alert.outline:active {
     color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.alert:hover,
-  .button.alert:hover {
+  .button.alert:hover,
+  .command-button.alert:hover,
+  .shortcut.alert:hover,
+  .action-button.alert:hover {
     color: #ffffff !important;
     background-color: #af0b2c !important;
     border-color: #af0b2c !important;
   }
   button.alert:hover.dropdown-toggle::before,
-  .button.alert:hover.dropdown-toggle::before {
+  .button.alert:hover.dropdown-toggle::before,
+  .command-button.alert:hover.dropdown-toggle::before,
+  .shortcut.alert:hover.dropdown-toggle::before,
+  .action-button.alert:hover.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.alert:active,
-  .button.alert:active {
+  .button.alert:active,
+  .command-button.alert:active,
+  .shortcut.alert:active,
+  .action-button.alert:active {
     color: #ffffff !important;
     background-color: #af0b2c !important;
     border-color: #af0b2c !important;
   }
   button.alert:active.dropdown-toggle::before,
-  .button.alert:active.dropdown-toggle::before {
+  .button.alert:active.dropdown-toggle::before,
+  .command-button.alert:active.dropdown-toggle::before,
+  .shortcut.alert:active.dropdown-toggle::before,
+  .action-button.alert:active.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.alert.same-color:hover,
-  .button.alert.same-color:hover {
+  .button.alert.same-color:hover,
+  .command-button.alert.same-color:hover,
+  .shortcut.alert.same-color:hover,
+  .action-button.alert.same-color:hover {
     background-color: #df0e38 !important;
     border-color: #df0e38 !important;
   }
 }
 @media (hover: none) {
   button.alert.same-color:active,
-  .button.alert.same-color:active {
+  .button.alert.same-color:active,
+  .command-button.alert.same-color:active,
+  .shortcut.alert.same-color:active,
+  .action-button.alert.same-color:active {
     background-color: #df0e38 !important;
     border-color: #df0e38 !important;
   }
 }
 button.warning.outline,
-.button.warning.outline {
+.button.warning.outline,
+.command-button.warning.outline,
+.shortcut.warning.outline,
+.action-button.warning.outline {
   color: #ffa500 !important;
   border-color: #ffa500 !important;
   background-color: transparent !important;
 }
 button.warning.outline.dropdown-toggle::before,
-.button.warning.outline.dropdown-toggle::before {
+.button.warning.outline.dropdown-toggle::before,
+.command-button.warning.outline.dropdown-toggle::before,
+.shortcut.warning.outline.dropdown-toggle::before,
+.action-button.warning.outline.dropdown-toggle::before {
   border-color: #ffa500 !important;
 }
 @media (hover: hover) {
   button.warning.outline:hover,
-  .button.warning.outline:hover {
+  .button.warning.outline:hover,
+  .command-button.warning.outline:hover,
+  .shortcut.warning.outline:hover,
+  .action-button.warning.outline:hover {
     color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.warning.outline:active,
-  .button.warning.outline:active {
+  .button.warning.outline:active,
+  .command-button.warning.outline:active,
+  .shortcut.warning.outline:active,
+  .action-button.warning.outline:active {
     color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.warning:hover,
-  .button.warning:hover {
+  .button.warning:hover,
+  .command-button.warning:hover,
+  .shortcut.warning:hover,
+  .action-button.warning:hover {
     color: #ffffff !important;
     background-color: #cc8400 !important;
     border-color: #cc8400 !important;
   }
   button.warning:hover.dropdown-toggle::before,
-  .button.warning:hover.dropdown-toggle::before {
+  .button.warning:hover.dropdown-toggle::before,
+  .command-button.warning:hover.dropdown-toggle::before,
+  .shortcut.warning:hover.dropdown-toggle::before,
+  .action-button.warning:hover.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.warning:active,
-  .button.warning:active {
+  .button.warning:active,
+  .command-button.warning:active,
+  .shortcut.warning:active,
+  .action-button.warning:active {
     color: #ffffff !important;
     background-color: #cc8400 !important;
     border-color: #cc8400 !important;
   }
   button.warning:active.dropdown-toggle::before,
-  .button.warning:active.dropdown-toggle::before {
+  .button.warning:active.dropdown-toggle::before,
+  .command-button.warning:active.dropdown-toggle::before,
+  .shortcut.warning:active.dropdown-toggle::before,
+  .action-button.warning:active.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.warning.same-color:hover,
-  .button.warning.same-color:hover {
+  .button.warning.same-color:hover,
+  .command-button.warning.same-color:hover,
+  .shortcut.warning.same-color:hover,
+  .action-button.warning.same-color:hover {
     background-color: #ffa500 !important;
     border-color: #ffa500 !important;
   }
 }
 @media (hover: none) {
   button.warning.same-color:active,
-  .button.warning.same-color:active {
+  .button.warning.same-color:active,
+  .command-button.warning.same-color:active,
+  .shortcut.warning.same-color:active,
+  .action-button.warning.same-color:active {
     background-color: #ffa500 !important;
     border-color: #ffa500 !important;
   }
 }
 button.info.outline,
-.button.info.outline {
+.button.info.outline,
+.command-button.info.outline,
+.shortcut.info.outline,
+.action-button.info.outline {
   color: #468cff !important;
   border-color: #468cff !important;
   background-color: transparent !important;
 }
 button.info.outline.dropdown-toggle::before,
-.button.info.outline.dropdown-toggle::before {
+.button.info.outline.dropdown-toggle::before,
+.command-button.info.outline.dropdown-toggle::before,
+.shortcut.info.outline.dropdown-toggle::before,
+.action-button.info.outline.dropdown-toggle::before {
   border-color: #468cff !important;
 }
 @media (hover: hover) {
   button.info.outline:hover,
-  .button.info.outline:hover {
+  .button.info.outline:hover,
+  .command-button.info.outline:hover,
+  .shortcut.info.outline:hover,
+  .action-button.info.outline:hover {
     color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.info.outline:active,
-  .button.info.outline:active {
+  .button.info.outline:active,
+  .command-button.info.outline:active,
+  .shortcut.info.outline:active,
+  .action-button.info.outline:active {
     color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.info:hover,
-  .button.info:hover {
+  .button.info:hover,
+  .command-button.info:hover,
+  .shortcut.info:hover,
+  .action-button.info:hover {
     color: #ffffff !important;
     background-color: #136cff !important;
     border-color: #136cff !important;
   }
   button.info:hover.dropdown-toggle::before,
-  .button.info:hover.dropdown-toggle::before {
+  .button.info:hover.dropdown-toggle::before,
+  .command-button.info:hover.dropdown-toggle::before,
+  .shortcut.info:hover.dropdown-toggle::before,
+  .action-button.info:hover.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.info:active,
-  .button.info:active {
+  .button.info:active,
+  .command-button.info:active,
+  .shortcut.info:active,
+  .action-button.info:active {
     color: #ffffff !important;
     background-color: #136cff !important;
     border-color: #136cff !important;
   }
   button.info:active.dropdown-toggle::before,
-  .button.info:active.dropdown-toggle::before {
+  .button.info:active.dropdown-toggle::before,
+  .command-button.info:active.dropdown-toggle::before,
+  .shortcut.info:active.dropdown-toggle::before,
+  .action-button.info:active.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.info.same-color:hover,
-  .button.info.same-color:hover {
+  .button.info.same-color:hover,
+  .command-button.info.same-color:hover,
+  .shortcut.info.same-color:hover,
+  .action-button.info.same-color:hover {
     background-color: #468cff !important;
     border-color: #468cff !important;
   }
 }
 @media (hover: none) {
   button.info.same-color:active,
-  .button.info.same-color:active {
+  .button.info.same-color:active,
+  .command-button.info.same-color:active,
+  .shortcut.info.same-color:active,
+  .action-button.info.same-color:active {
     background-color: #468cff !important;
     border-color: #468cff !important;
   }
 }
 button.dark.outline,
-.button.dark.outline {
+.button.dark.outline,
+.command-button.dark.outline,
+.shortcut.dark.outline,
+.action-button.dark.outline {
   color: #505050 !important;
   border-color: #505050 !important;
   background-color: transparent !important;
 }
 button.dark.outline.dropdown-toggle::before,
-.button.dark.outline.dropdown-toggle::before {
+.button.dark.outline.dropdown-toggle::before,
+.command-button.dark.outline.dropdown-toggle::before,
+.shortcut.dark.outline.dropdown-toggle::before,
+.action-button.dark.outline.dropdown-toggle::before {
   border-color: #505050 !important;
 }
 @media (hover: hover) {
   button.dark.outline:hover,
-  .button.dark.outline:hover {
+  .button.dark.outline:hover,
+  .command-button.dark.outline:hover,
+  .shortcut.dark.outline:hover,
+  .action-button.dark.outline:hover {
     color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.dark.outline:active,
-  .button.dark.outline:active {
+  .button.dark.outline:active,
+  .command-button.dark.outline:active,
+  .shortcut.dark.outline:active,
+  .action-button.dark.outline:active {
     color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.dark:hover,
-  .button.dark:hover {
+  .button.dark:hover,
+  .command-button.dark:hover,
+  .shortcut.dark:hover,
+  .action-button.dark:hover {
     color: #ffffff !important;
     background-color: #373737 !important;
     border-color: #373737 !important;
   }
   button.dark:hover.dropdown-toggle::before,
-  .button.dark:hover.dropdown-toggle::before {
+  .button.dark:hover.dropdown-toggle::before,
+  .command-button.dark:hover.dropdown-toggle::before,
+  .shortcut.dark:hover.dropdown-toggle::before,
+  .action-button.dark:hover.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.dark:active,
-  .button.dark:active {
+  .button.dark:active,
+  .command-button.dark:active,
+  .shortcut.dark:active,
+  .action-button.dark:active {
     color: #ffffff !important;
     background-color: #373737 !important;
     border-color: #373737 !important;
   }
   button.dark:active.dropdown-toggle::before,
-  .button.dark:active.dropdown-toggle::before {
+  .button.dark:active.dropdown-toggle::before,
+  .command-button.dark:active.dropdown-toggle::before,
+  .shortcut.dark:active.dropdown-toggle::before,
+  .action-button.dark:active.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.dark.same-color:hover,
-  .button.dark.same-color:hover {
+  .button.dark.same-color:hover,
+  .command-button.dark.same-color:hover,
+  .shortcut.dark.same-color:hover,
+  .action-button.dark.same-color:hover {
     background-color: #505050 !important;
     border-color: #505050 !important;
   }
 }
 @media (hover: none) {
   button.dark.same-color:active,
-  .button.dark.same-color:active {
+  .button.dark.same-color:active,
+  .command-button.dark.same-color:active,
+  .shortcut.dark.same-color:active,
+  .action-button.dark.same-color:active {
     background-color: #505050 !important;
     border-color: #505050 !important;
   }
 }
 button.light.outline,
-.button.light.outline {
+.button.light.outline,
+.command-button.light.outline,
+.shortcut.light.outline,
+.action-button.light.outline {
   color: #f8f8f8 !important;
   border-color: #f8f8f8 !important;
   background-color: transparent !important;
 }
 button.light.outline.dropdown-toggle::before,
-.button.light.outline.dropdown-toggle::before {
+.button.light.outline.dropdown-toggle::before,
+.command-button.light.outline.dropdown-toggle::before,
+.shortcut.light.outline.dropdown-toggle::before,
+.action-button.light.outline.dropdown-toggle::before {
   border-color: #f8f8f8 !important;
 }
 @media (hover: hover) {
   button.light.outline:hover,
-  .button.light.outline:hover {
+  .button.light.outline:hover,
+  .command-button.light.outline:hover,
+  .shortcut.light.outline:hover,
+  .action-button.light.outline:hover {
     color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.light.outline:active,
-  .button.light.outline:active {
+  .button.light.outline:active,
+  .command-button.light.outline:active,
+  .shortcut.light.outline:active,
+  .action-button.light.outline:active {
     color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.light:hover,
-  .button.light:hover {
+  .button.light:hover,
+  .command-button.light:hover,
+  .shortcut.light:hover,
+  .action-button.light:hover {
     color: #ffffff !important;
     background-color: #dfdfdf !important;
     border-color: #dfdfdf !important;
   }
   button.light:hover.dropdown-toggle::before,
-  .button.light:hover.dropdown-toggle::before {
+  .button.light:hover.dropdown-toggle::before,
+  .command-button.light:hover.dropdown-toggle::before,
+  .shortcut.light:hover.dropdown-toggle::before,
+  .action-button.light:hover.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: none) {
   button.light:active,
-  .button.light:active {
+  .button.light:active,
+  .command-button.light:active,
+  .shortcut.light:active,
+  .action-button.light:active {
     color: #ffffff !important;
     background-color: #dfdfdf !important;
     border-color: #dfdfdf !important;
   }
   button.light:active.dropdown-toggle::before,
-  .button.light:active.dropdown-toggle::before {
+  .button.light:active.dropdown-toggle::before,
+  .command-button.light:active.dropdown-toggle::before,
+  .shortcut.light:active.dropdown-toggle::before,
+  .action-button.light:active.dropdown-toggle::before {
     border-color: #ffffff !important;
   }
 }
 @media (hover: hover) {
   button.light.same-color:hover,
-  .button.light.same-color:hover {
+  .button.light.same-color:hover,
+  .command-button.light.same-color:hover,
+  .shortcut.light.same-color:hover,
+  .action-button.light.same-color:hover {
     background-color: #f8f8f8 !important;
     border-color: #f8f8f8 !important;
   }
 }
 @media (hover: none) {
   button.light.same-color:active,
-  .button.light.same-color:active {
+  .button.light.same-color:active,
+  .command-button.light.same-color:active,
+  .shortcut.light.same-color:active,
+  .action-button.light.same-color:active {
     background-color: #f8f8f8 !important;
     border-color: #f8f8f8 !important;
   }
 }
 button.yellow,
 .button.yellow,
+.command-button.yellow,
+.shortcut.yellow,
+.action-button.yellow,
 button.yellow.outline,
 .button.yellow.outline,
+.command-button.yellow.outline,
+.shortcut.yellow.outline,
+.action-button.yellow.outline,
 button.light,
 .button.light,
+.command-button.light,
+.shortcut.light,
+.action-button.light,
 button.light.outline,
-.button.light.outline {
+.button.light.outline,
+.command-button.light.outline,
+.shortcut.light.outline,
+.action-button.light.outline {
   color: #1d1d1d !important;
 }
 @media (hover: hover) {
   button.yellow:hover,
   .button.yellow:hover,
+  .command-button.yellow:hover,
+  .shortcut.yellow:hover,
+  .action-button.yellow:hover,
   button.yellow.outline:hover,
   .button.yellow.outline:hover,
+  .command-button.yellow.outline:hover,
+  .shortcut.yellow.outline:hover,
+  .action-button.yellow.outline:hover,
   button.light:hover,
   .button.light:hover,
+  .command-button.light:hover,
+  .shortcut.light:hover,
+  .action-button.light:hover,
   button.light.outline:hover,
   .button.light.outline:hover,
+  .command-button.light.outline:hover,
+  .shortcut.light.outline:hover,
+  .action-button.light.outline:hover,
   button.yellow.outline:hover,
   .button.yellow.outline:hover,
+  .command-button.yellow.outline:hover,
+  .shortcut.yellow.outline:hover,
+  .action-button.yellow.outline:hover,
   button.yellow.outline.outline:hover,
   .button.yellow.outline.outline:hover,
+  .command-button.yellow.outline.outline:hover,
+  .shortcut.yellow.outline.outline:hover,
+  .action-button.yellow.outline.outline:hover,
   button.light.outline:hover,
   .button.light.outline:hover,
+  .command-button.light.outline:hover,
+  .shortcut.light.outline:hover,
+  .action-button.light.outline:hover,
   button.light.outline.outline:hover,
-  .button.light.outline.outline:hover {
+  .button.light.outline.outline:hover,
+  .command-button.light.outline.outline:hover,
+  .shortcut.light.outline.outline:hover,
+  .action-button.light.outline.outline:hover {
     color: #1d1d1d !important;
   }
 }
 @media (hover: none) {
   button.yellow:active,
   .button.yellow:active,
+  .command-button.yellow:active,
+  .shortcut.yellow:active,
+  .action-button.yellow:active,
   button.yellow.outline:active,
   .button.yellow.outline:active,
+  .command-button.yellow.outline:active,
+  .shortcut.yellow.outline:active,
+  .action-button.yellow.outline:active,
   button.light:active,
   .button.light:active,
+  .command-button.light:active,
+  .shortcut.light:active,
+  .action-button.light:active,
   button.light.outline:active,
   .button.light.outline:active,
+  .command-button.light.outline:active,
+  .shortcut.light.outline:active,
+  .action-button.light.outline:active,
   button.yellow.outline:active,
   .button.yellow.outline:active,
+  .command-button.yellow.outline:active,
+  .shortcut.yellow.outline:active,
+  .action-button.yellow.outline:active,
   button.yellow.outline.outline:active,
   .button.yellow.outline.outline:active,
+  .command-button.yellow.outline.outline:active,
+  .shortcut.yellow.outline.outline:active,
+  .action-button.yellow.outline.outline:active,
   button.light.outline:active,
   .button.light.outline:active,
+  .command-button.light.outline:active,
+  .shortcut.light.outline:active,
+  .action-button.light.outline:active,
   button.light.outline.outline:active,
-  .button.light.outline.outline:active {
+  .button.light.outline.outline:active,
+  .command-button.light.outline.outline:active,
+  .shortcut.light.outline.outline:active,
+  .action-button.light.outline.outline:active {
     color: #1d1d1d !important;
   }
 }
@@ -53734,6 +54034,12 @@ aside::after {
   container-type: inline-size;
 }
 
+/* source/components/context-menu/context-menu.less */
+.context-menu {
+  display: none;
+  z-index: 1031;
+}
+
 /* source/components/cookie-disclaimer/cookie-disclaimer.less */
 :root {
   --disclaimer-background: #f5f5f5;
@@ -59438,20 +59744,38 @@ label:has(input) {
   color: inherit;
   background-color: inherit;
 }
-.pagination .page-item:hover,
-.pagination .page-item.service:hover {
-  background-color: var(--pagination-page-item-background-hover);
-  color: var(--pagination-page-item-color-hover);
+@media (hover: hover) {
+  .pagination .page-item:hover,
+  .pagination .page-item.service:hover {
+    background-color: var(--pagination-page-item-background-hover);
+    color: var(--pagination-page-item-color-hover);
+  }
+}
+@media (hover: hover) {
+  .pagination .page-item:active,
+  .pagination .page-item.service:active {
+    background-color: var(--pagination-page-item-background-hover);
+    color: var(--pagination-page-item-color-hover);
+  }
 }
 .pagination .page-item.no-link {
   pointer-events: none;
   cursor: default;
   border-color: transparent;
 }
-.pagination .page-item.no-link:hover {
-  background-color: var(--pagination-page-item-background);
-  color: var(--pagination-page-item-color);
-  border-color: transparent;
+@media (hover: hover) {
+  .pagination .page-item.no-link:hover {
+    background-color: var(--pagination-page-item-background);
+    color: var(--pagination-page-item-color);
+    border-color: transparent;
+  }
+}
+@media (hover: none) {
+  .pagination .page-item.no-link:active {
+    background-color: var(--pagination-page-item-background);
+    color: var(--pagination-page-item-color);
+    border-color: transparent;
+  }
 }
 .pagination .page-item.disabled {
   pointer-events: none;
@@ -59496,6 +59820,699 @@ label:has(input) {
 .short-pagination {
   display: flex;
   gap: 6px;
+}
+.pagination.lime .page-item {
+  --pagination-page-item-background: #f2ffe7;
+  --pagination-page-item-color: #7dba4a;
+  --pagination-page-item-border-color: #7dba4a;
+}
+@media (hover: hover) {
+  .pagination.lime .page-item:hover {
+    --pagination-page-item-background-hover: #7dba4a;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.lime .page-item:active {
+    --pagination-page-item-background-hover: #7dba4a;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.lime .page-item.active {
+  --pagination-page-item-background-active: #7dba4a;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.green .page-item {
+  --pagination-page-item-background: #e7f6e6;
+  --pagination-page-item-color: #008f00;
+  --pagination-page-item-border-color: #008f00;
+}
+@media (hover: hover) {
+  .pagination.green .page-item:hover {
+    --pagination-page-item-background-hover: #008f00;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.green .page-item:active {
+    --pagination-page-item-background-hover: #008f00;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.green .page-item.active {
+  --pagination-page-item-background-active: #008f00;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.emerald .page-item {
+  --pagination-page-item-background: #d1e6cc;
+  --pagination-page-item-color: #3ca15d;
+  --pagination-page-item-border-color: #3ca15d;
+}
+@media (hover: hover) {
+  .pagination.emerald .page-item:hover {
+    --pagination-page-item-background-hover: #3ca15d;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.emerald .page-item:active {
+    --pagination-page-item-background-hover: #3ca15d;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.emerald .page-item.active {
+  --pagination-page-item-background-active: #3ca15d;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.blue .page-item {
+  --pagination-page-item-background: #e7eaff;
+  --pagination-page-item-color: #1f43ae;
+  --pagination-page-item-border-color: #1f43ae;
+}
+@media (hover: hover) {
+  .pagination.blue .page-item:hover {
+    --pagination-page-item-background-hover: #1f43ae;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.blue .page-item:active {
+    --pagination-page-item-background-hover: #1f43ae;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.blue .page-item.active {
+  --pagination-page-item-background-active: #1f43ae;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.teal .page-item {
+  --pagination-page-item-background: #e1f2f3;
+  --pagination-page-item-color: #008a8a;
+  --pagination-page-item-border-color: #008a8a;
+}
+@media (hover: hover) {
+  .pagination.teal .page-item:hover {
+    --pagination-page-item-background-hover: #008a8a;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.teal .page-item:active {
+    --pagination-page-item-background-hover: #008a8a;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.teal .page-item.active {
+  --pagination-page-item-background-active: #008a8a;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.cyan .page-item {
+  --pagination-page-item-background: #e3edff;
+  --pagination-page-item-color: #659db6;
+  --pagination-page-item-border-color: #659db6;
+}
+@media (hover: hover) {
+  .pagination.cyan .page-item:hover {
+    --pagination-page-item-background-hover: #659db6;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.cyan .page-item:active {
+    --pagination-page-item-background-hover: #659db6;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.cyan .page-item.active {
+  --pagination-page-item-background-active: #659db6;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.cobalt .page-item {
+  --pagination-page-item-background: #d1ecff;
+  --pagination-page-item-color: #003391;
+  --pagination-page-item-border-color: #003391;
+}
+@media (hover: hover) {
+  .pagination.cobalt .page-item:hover {
+    --pagination-page-item-background-hover: #003391;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.cobalt .page-item:active {
+    --pagination-page-item-background-hover: #003391;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.cobalt .page-item.active {
+  --pagination-page-item-background-active: #003391;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.indigo .page-item {
+  --pagination-page-item-background: #f3dcf3;
+  --pagination-page-item-color: #430080;
+  --pagination-page-item-border-color: #430080;
+}
+@media (hover: hover) {
+  .pagination.indigo .page-item:hover {
+    --pagination-page-item-background-hover: #430080;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.indigo .page-item:active {
+    --pagination-page-item-background-hover: #430080;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.indigo .page-item.active {
+  --pagination-page-item-background-active: #430080;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.almost .page-item {
+  --pagination-page-item-background: #eee5ff;
+  --pagination-page-item-color: #4e18c1;
+  --pagination-page-item-border-color: #4e18c1;
+}
+@media (hover: hover) {
+  .pagination.almost .page-item:hover {
+    --pagination-page-item-background-hover: #4e18c1;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.almost .page-item:active {
+    --pagination-page-item-background-hover: #4e18c1;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.almost .page-item.active {
+  --pagination-page-item-background-active: #4e18c1;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.violet .page-item {
+  --pagination-page-item-background: #fce2fb;
+  --pagination-page-item-color: #b65fb6;
+  --pagination-page-item-border-color: #b65fb6;
+}
+@media (hover: hover) {
+  .pagination.violet .page-item:hover {
+    --pagination-page-item-background-hover: #b65fb6;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.violet .page-item:active {
+    --pagination-page-item-background-hover: #b65fb6;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.violet .page-item.active {
+  --pagination-page-item-background-active: #b65fb6;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.pink .page-item {
+  --pagination-page-item-background: #ffeef1;
+  --pagination-page-item-color: #cc7296;
+  --pagination-page-item-border-color: #cc7296;
+}
+@media (hover: hover) {
+  .pagination.pink .page-item:hover {
+    --pagination-page-item-background-hover: #cc7296;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.pink .page-item:active {
+    --pagination-page-item-background-hover: #cc7296;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.pink .page-item.active {
+  --pagination-page-item-background-active: #cc7296;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.magenta .page-item {
+  --pagination-page-item-background: #ffe2ff;
+  --pagination-page-item-color: #c500c5;
+  --pagination-page-item-border-color: #c500c5;
+}
+@media (hover: hover) {
+  .pagination.magenta .page-item:hover {
+    --pagination-page-item-background-hover: #c500c5;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.magenta .page-item:active {
+    --pagination-page-item-background-hover: #c500c5;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.magenta .page-item.active {
+  --pagination-page-item-background-active: #c500c5;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.crimson .page-item {
+  --pagination-page-item-background: #ffd1da;
+  --pagination-page-item-color: #980824;
+  --pagination-page-item-border-color: #980824;
+}
+@media (hover: hover) {
+  .pagination.crimson .page-item:hover {
+    --pagination-page-item-background-hover: #980824;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.crimson .page-item:active {
+    --pagination-page-item-background-hover: #980824;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.crimson .page-item.active {
+  --pagination-page-item-background-active: #980824;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.red .page-item {
+  --pagination-page-item-background: #ffe1e1;
+  --pagination-page-item-color: #b80000;
+  --pagination-page-item-border-color: #b80000;
+}
+@media (hover: hover) {
+  .pagination.red .page-item:hover {
+    --pagination-page-item-background-hover: #b80000;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.red .page-item:active {
+    --pagination-page-item-background-hover: #b80000;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.red .page-item.active {
+  --pagination-page-item-background-active: #b80000;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.orange .page-item {
+  --pagination-page-item-background: #fff3de;
+  --pagination-page-item-color: #bc7700;
+  --pagination-page-item-border-color: #bc7700;
+}
+@media (hover: hover) {
+  .pagination.orange .page-item:hover {
+    --pagination-page-item-background-hover: #bc7700;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.orange .page-item:active {
+    --pagination-page-item-background-hover: #bc7700;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.orange .page-item.active {
+  --pagination-page-item-background-active: #bc7700;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.amber .page-item {
+  --pagination-page-item-background: #fff8e1;
+  --pagination-page-item-color: #d19b00;
+  --pagination-page-item-border-color: #d19b00;
+}
+@media (hover: hover) {
+  .pagination.amber .page-item:hover {
+    --pagination-page-item-background-hover: #d19b00;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.amber .page-item:active {
+    --pagination-page-item-background-hover: #d19b00;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.amber .page-item.active {
+  --pagination-page-item-background-active: #d19b00;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.yellow .page-item {
+  --pagination-page-item-background: #ffffc6;
+  --pagination-page-item-color: #ffee8c;
+  --pagination-page-item-border-color: #ffee8c;
+}
+@media (hover: hover) {
+  .pagination.yellow .page-item:hover {
+    --pagination-page-item-background-hover: #ffee8c;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.yellow .page-item:active {
+    --pagination-page-item-background-hover: #ffee8c;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.yellow .page-item.active {
+  --pagination-page-item-background-active: #ffee8c;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.brown .page-item {
+  --pagination-page-item-background: #ffeed9;
+  --pagination-page-item-color: #884b20;
+  --pagination-page-item-border-color: #884b20;
+}
+@media (hover: hover) {
+  .pagination.brown .page-item:hover {
+    --pagination-page-item-background-hover: #884b20;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.brown .page-item:active {
+    --pagination-page-item-background-hover: #884b20;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.brown .page-item.active {
+  --pagination-page-item-background-active: #884b20;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.olive .page-item {
+  --pagination-page-item-background: #f8fde7;
+  --pagination-page-item-color: #838300;
+  --pagination-page-item-border-color: #838300;
+}
+@media (hover: hover) {
+  .pagination.olive .page-item:hover {
+    --pagination-page-item-background-hover: #838300;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.olive .page-item:active {
+    --pagination-page-item-background-hover: #838300;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.olive .page-item.active {
+  --pagination-page-item-background-active: #838300;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.steel .page-item {
+  --pagination-page-item-background: #edeeee;
+  --pagination-page-item-color: #5c7081;
+  --pagination-page-item-border-color: #5c7081;
+}
+@media (hover: hover) {
+  .pagination.steel .page-item:hover {
+    --pagination-page-item-background-hover: #5c7081;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.steel .page-item:active {
+    --pagination-page-item-background-hover: #5c7081;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.steel .page-item.active {
+  --pagination-page-item-background-active: #5c7081;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.mauve .page-item {
+  --pagination-page-item-background: #f7ecfe;
+  --pagination-page-item-color: #a982c1;
+  --pagination-page-item-border-color: #a982c1;
+}
+@media (hover: hover) {
+  .pagination.mauve .page-item:hover {
+    --pagination-page-item-background-hover: #a982c1;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.mauve .page-item:active {
+    --pagination-page-item-background-hover: #a982c1;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.mauve .page-item.active {
+  --pagination-page-item-background-active: #a982c1;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.taupe .page-item {
+  --pagination-page-item-background: #eadccf;
+  --pagination-page-item-color: #5e4a3c;
+  --pagination-page-item-border-color: #5e4a3c;
+}
+@media (hover: hover) {
+  .pagination.taupe .page-item:hover {
+    --pagination-page-item-background-hover: #5e4a3c;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.taupe .page-item:active {
+    --pagination-page-item-background-hover: #5e4a3c;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.taupe .page-item.active {
+  --pagination-page-item-background-active: #5e4a3c;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.champagne .page-item {
+  --pagination-page-item-background: #fff9f2;
+  --pagination-page-item-color: #ccbca5;
+  --pagination-page-item-border-color: #ccbca5;
+}
+@media (hover: hover) {
+  .pagination.champagne .page-item:hover {
+    --pagination-page-item-background-hover: #ccbca5;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.champagne .page-item:active {
+    --pagination-page-item-background-hover: #ccbca5;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.champagne .page-item.active {
+  --pagination-page-item-background-active: #ccbca5;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.khaki .page-item {
+  --pagination-page-item-background: #f6f1dd;
+  --pagination-page-item-color: #aa9c6b;
+  --pagination-page-item-border-color: #aa9c6b;
+}
+@media (hover: hover) {
+  .pagination.khaki .page-item:hover {
+    --pagination-page-item-background-hover: #aa9c6b;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.khaki .page-item:active {
+    --pagination-page-item-background-hover: #aa9c6b;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.khaki .page-item.active {
+  --pagination-page-item-background-active: #aa9c6b;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.charcoal .page-item {
+  --pagination-page-item-background: #e8e8e8;
+  --pagination-page-item-color: #5e5e5e;
+  --pagination-page-item-border-color: #5e5e5e;
+}
+@media (hover: hover) {
+  .pagination.charcoal .page-item:hover {
+    --pagination-page-item-background-hover: #5e5e5e;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.charcoal .page-item:active {
+    --pagination-page-item-background-hover: #5e5e5e;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.charcoal .page-item.active {
+  --pagination-page-item-background-active: #5e5e5e;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.bronze .page-item {
+  --pagination-page-item-background: #ffecdc;
+  --pagination-page-item-color: #aa621f;
+  --pagination-page-item-border-color: #aa621f;
+}
+@media (hover: hover) {
+  .pagination.bronze .page-item:hover {
+    --pagination-page-item-background-hover: #aa621f;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.bronze .page-item:active {
+    --pagination-page-item-background-hover: #aa621f;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.bronze .page-item.active {
+  --pagination-page-item-background-active: #aa621f;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.windstorm .page-item {
+  --pagination-page-item-background: #e6ebf5;
+  --pagination-page-item-color: #5071a3;
+  --pagination-page-item-border-color: #5071a3;
+}
+@media (hover: hover) {
+  .pagination.windstorm .page-item:hover {
+    --pagination-page-item-background-hover: #5071a3;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.windstorm .page-item:active {
+    --pagination-page-item-background-hover: #5071a3;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.windstorm .page-item.active {
+  --pagination-page-item-background-active: #5071a3;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.nude .page-item {
+  --pagination-page-item-background: #fcf0e4;
+  --pagination-page-item-color: #baa28b;
+  --pagination-page-item-border-color: #baa28b;
+}
+@media (hover: hover) {
+  .pagination.nude .page-item:hover {
+    --pagination-page-item-background-hover: #baa28b;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.nude .page-item:active {
+    --pagination-page-item-background-hover: #baa28b;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.nude .page-item.active {
+  --pagination-page-item-background-active: #baa28b;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.terracotta .page-item {
+  --pagination-page-item-background: #ffe5df;
+  --pagination-page-item-color: #af3a23;
+  --pagination-page-item-border-color: #af3a23;
+}
+@media (hover: hover) {
+  .pagination.terracotta .page-item:hover {
+    --pagination-page-item-background-hover: #af3a23;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.terracotta .page-item:active {
+    --pagination-page-item-background-hover: #af3a23;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.terracotta .page-item.active {
+  --pagination-page-item-background-active: #af3a23;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.coral .page-item {
+  --pagination-page-item-background: #ffd8c8;
+  --pagination-page-item-color: #b65c39;
+  --pagination-page-item-border-color: #b65c39;
+}
+@media (hover: hover) {
+  .pagination.coral .page-item:hover {
+    --pagination-page-item-background-hover: #b65c39;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.coral .page-item:active {
+    --pagination-page-item-background-hover: #b65c39;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.coral .page-item.active {
+  --pagination-page-item-background-active: #b65c39;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.army .page-item {
+  --pagination-page-item-background: #eceacb;
+  --pagination-page-item-color: #647030;
+  --pagination-page-item-border-color: #647030;
+}
+@media (hover: hover) {
+  .pagination.army .page-item:hover {
+    --pagination-page-item-background-hover: #647030;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.army .page-item:active {
+    --pagination-page-item-background-hover: #647030;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.army .page-item.active {
+  --pagination-page-item-background-active: #647030;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.seashell .page-item {
+  --pagination-page-item-background: #fff9f8;
+  --pagination-page-item-color: #b8aea6;
+  --pagination-page-item-border-color: #b8aea6;
+}
+@media (hover: hover) {
+  .pagination.seashell .page-item:hover {
+    --pagination-page-item-background-hover: #b8aea6;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.seashell .page-item:active {
+    --pagination-page-item-background-hover: #b8aea6;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.seashell .page-item.active {
+  --pagination-page-item-background-active: #b8aea6;
+  --pagination-page-item-color-active: #ffffff;
+}
+.pagination.sand .page-item {
+  --pagination-page-item-background: #f8f3e0;
+  --pagination-page-item-color: #d1c5a1;
+  --pagination-page-item-border-color: #d1c5a1;
+}
+@media (hover: hover) {
+  .pagination.sand .page-item:hover {
+    --pagination-page-item-background-hover: #d1c5a1;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+@media (hover: none) {
+  .pagination.sand .page-item:active {
+    --pagination-page-item-background-hover: #d1c5a1;
+    --pagination-page-item-color-hover: #ffffff;
+  }
+}
+.pagination.sand .page-item.active {
+  --pagination-page-item-background-active: #d1c5a1;
+  --pagination-page-item-color-active: #ffffff;
 }
 
 /* source/components/panel/panel.less */

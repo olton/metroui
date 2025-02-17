@@ -30,6 +30,7 @@ import "./color-picker/index.js";
 import "./color-selector/index.js";
 import "./command-button/index.js";
 import "./container/index.js";
+import "./context-menu/index.js";
 import "./cookie/index.js";
 import "./cookie-disclaimer/index.js";
 import "./countdown/index.js";
