@@ -56887,6 +56887,9 @@ aside::after {
   --directive-title-color: #3c3c3c;
   --directive-border-radius: 10px;
   --directive-code-background: #f5f5f5;
+  --directive-icon-background: #f5f5f5;
+  --directive-icon-color: #7a7a7a;
+  --directive-icon-size: 4rem;
 }
 .dark-side {
   --directive-color: #ffffff !important;
@@ -56936,55 +56939,60 @@ aside::after {
   margin: 1rem 0;
   font-size: 14px;
   line-height: 1.75;
+  position: relative;
 }
 .directive .directive-title {
-  font-weight: 800;
+  font-weight: 600;
   margin-bottom: 4px;
   display: flex;
   align-items: center;
   color: var(--directive-title-color);
-  font-size: 16px;
+  font-size: 20px;
 }
 .directive .icon {
-  font-size: 1.5rem;
+  position: absolute;
+  right: 0px;
+  top: 4px;
+  width: var(--directive-icon-size);
+  height: var(--directive-icon-size);
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transform: rotate(-15deg);
+  opacity: 0.6;
 }
-.directive.directive-note .icon::before {
-  content: "\1f4dc";
+.directive .icon svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--directive-icon-color);
+  stroke: var(--directive-icon-color);
 }
 .directive.directive-info {
   --directive-background: #0095ff0f;
   --directive-border-color: #0095ff33;
   --directive-title-color: #0095ff;
+  --directive-icon-color: #0095ff;
   --code-background: #0095ff1a;
   --code-color: #07f;
-}
-.directive.directive-info .icon::before {
-  content: "\1f4a1";
 }
 .directive.directive-tip,
 .directive.directive-success {
   --directive-background: #079c700f;
   --directive-border-color: #079c7033;
   --directive-title-color: #278359;
+  --directive-icon-color: #278359;
   --code-background: #079c701a;
   --code-color: #278359;
-}
-.directive.directive-tip .icon::before,
-.directive.directive-success .icon::before {
-  content: "\1f49a";
-}
-.directive.directive-success .icon::before {
-  content: "\1f5f9";
 }
 .directive.directive-warning {
   --directive-background: #ffc5171a;
   --directive-border-color: #ffc51766;
   --directive-title-color: #ffc517;
+  --directive-icon-color: #ffc517;
   --code-background: #ffc5171a;
   --code-color: #887233;
-}
-.directive.directive-warning .icon::before {
-  content: "\26a0\fe0f";
 }
 .directive.directive-fuck {
   --directive-background: var(--default-background);
@@ -56993,6 +57001,7 @@ aside::after {
 }
 .directive.directive-fuck .icon::before {
   content: "\1f595";
+  font-size: var(--directive-icon-size);
 }
 .directive.directive-caution,
 .directive.directive-alert,
@@ -57000,13 +57009,9 @@ aside::after {
   --directive-background: #ed3c5014;
   --directive-border-color: #ed3c5033;
   --directive-title-color: #ff1f1f;
+  --directive-icon-color: #ff1f1f;
   --code-background: #ed3c501a;
   --code-color: #ab2131;
-}
-.directive.directive-caution .icon::before,
-.directive.directive-alert .icon::before,
-.directive.directive-error .icon::before {
-  content: "\26d4";
 }
 .directive.directive-important {
   --directive-background: #ff6d2914;
@@ -57017,14 +57022,13 @@ aside::after {
 }
 .directive.directive-important .icon::before {
   content: "\1f525";
+  font-size: var(--directive-icon-size);
 }
 .directive.directive-bug {
   --directive-background: #7C7C7C19;
   --directive-border-color: #1C1C1C66;
   --directive-title-color: #191919;
-}
-.directive.directive-bug .icon::before {
-  content: "\1f41e";
+  --directive-icon-color: #ff1f1f;
 }
 
 /* source/components/donut/donut.less */

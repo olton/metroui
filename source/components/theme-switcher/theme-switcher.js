@@ -1,9 +1,7 @@
-/** @format */
-
 (function (Metro, $) {
     "use strict";
 
-    var ThemeSwitcherDefaultConfig = {
+    let ThemeSwitcherDefaultConfig = {
         state: Metro.theme.LIGHT,
         target: "html",
         saveState: true,

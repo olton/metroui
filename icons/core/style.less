@@ -3,9 +3,9 @@
 @font-face {
   font-family: '@{icomoon-font-family}';
   src:
-    url('@{icomoon-font-path}/@{icomoon-font-family}.ttf?wblu8u') format('truetype'),
-    url('@{icomoon-font-path}/@{icomoon-font-family}.woff?wblu8u') format('woff'),
-    url('@{icomoon-font-path}/@{icomoon-font-family}.svg?wblu8u#@{icomoon-font-family}') format('svg');
+    url('@{icomoon-font-path}/@{icomoon-font-family}.ttf?6hsv8j') format('truetype'),
+    url('@{icomoon-font-path}/@{icomoon-font-family}.woff?6hsv8j') format('woff'),
+    url('@{icomoon-font-path}/@{icomoon-font-family}.svg?6hsv8j#@{icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -26,6 +26,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.mif-wifi {
+  &:before {
+    content: @mif-wifi; 
+  }
+}
 .mif-mina {
   &:before {
     content: @mif-mina; 
@@ -74,6 +79,141 @@
 .mif-blockchain {
   &:before {
     content: @mif-blockchain; 
+  }
+}
+.mif-free {
+  &:before {
+    content: @mif-free; 
+  }
+}
+.mif-transport {
+  &:before {
+    content: @mif-transport; 
+  }
+}
+.mif-microsd {
+  &:before {
+    content: @mif-microsd; 
+  }
+}
+.mif-simcard {
+  &:before {
+    content: @mif-simcard; 
+  }
+}
+.mif-close {
+  &:before {
+    content: @mif-close; 
+  }
+}
+.mif-open {
+  &:before {
+    content: @mif-open; 
+  }
+}
+.mif-crypto-portfolio {
+  &:before {
+    content: @mif-crypto-portfolio; 
+  }
+}
+.mif-bank {
+  &:before {
+    content: @mif-bank; 
+  }
+}
+.mif-coin-outline {
+  &:before {
+    content: @mif-coin-outline; 
+  }
+}
+.mif-coin {
+  &:before {
+    content: @mif-coin; 
+  }
+}
+.mif-currecy-exchange {
+  &:before {
+    content: @mif-currecy-exchange; 
+  }
+}
+.mif-crypto-exchange {
+  &:before {
+    content: @mif-crypto-exchange; 
+  }
+}
+.mif-ai {
+  &:before {
+    content: @mif-ai; 
+  }
+}
+.mif-database-copy {
+  &:before {
+    content: @mif-database-copy; 
+  }
+}
+.mif-folder-zip {
+  &:before {
+    content: @mif-folder-zip; 
+  }
+}
+.mif-floppy-disks {
+  &:before {
+    content: @mif-floppy-disks; 
+  }
+}
+.mif-data-exchange {
+  &:before {
+    content: @mif-data-exchange; 
+  }
+}
+.mif-connected-data {
+  &:before {
+    content: @mif-connected-data; 
+  }
+}
+.mif-connected-users {
+  &:before {
+    content: @mif-connected-users; 
+  }
+}
+.mif-user-settings2 {
+  &:before {
+    content: @mif-user-settings2; 
+  }
+}
+.mif-user-settings {
+  &:before {
+    content: @mif-user-settings; 
+  }
+}
+.mif-spam-outline {
+  &:before {
+    content: @mif-spam-outline; 
+  }
+}
+.mif-folder-tree {
+  &:before {
+    content: @mif-folder-tree; 
+  }
+}
+.mif-email-cloud {
+  &:before {
+    content: @mif-email-cloud; 
+  }
+}
+.mif-email-filter {
+  &:before {
+    content: @mif-email-filter; 
+  }
+}
+.mif-email-settings {
+  &:before {
+    content: @mif-email-settings; 
+  }
+}
+.mif-addressbook {
+  &:before {
+    content: @mif-addressbook; 
   }
 }
 .mif-numbers {
@@ -460,11 +600,6 @@
 .mif-upload {
   &:before {
     content: @mif-upload; 
-  }
-}
-.mif-floppy-disk {
-  &:before {
-    content: @mif-floppy-disk; 
   }
 }
 .mif-drive2 {
@@ -1267,11 +1402,6 @@
     content: @mif-html-file; 
   }
 }
-.mif-mp4-file {
-  &:before {
-    content: @mif-mp4-file; 
-  }
-}
 .mif-log-file {
   &:before {
     content: @mif-log-file; 
@@ -1285,31 +1415,6 @@
 .mif-format {
   &:before {
     content: @mif-format; 
-  }
-}
-.mif-format-table {
-  &:before {
-    content: @mif-format-table; 
-  }
-}
-.mif-format-document {
-  &:before {
-    content: @mif-format-document; 
-  }
-}
-.mif-format-image {
-  &:before {
-    content: @mif-format-image; 
-  }
-}
-.mif-format-formula {
-  &:before {
-    content: @mif-format-formula; 
-  }
-}
-.mif-format-code {
-  &:before {
-    content: @mif-format-code; 
   }
 }
 .mif-typescript {
@@ -1522,59 +1627,14 @@
     content: @mif-import; 
   }
 }
-.mif-database-next {
-  &:before {
-    content: @mif-database-next; 
-  }
-}
-.mif-database-prev {
-  &:before {
-    content: @mif-database-prev; 
-  }
-}
-.mif-database-down {
-  &:before {
-    content: @mif-database-down; 
-  }
-}
-.mif-database-up {
-  &:before {
-    content: @mif-database-up; 
-  }
-}
-.mif-iso-file {
-  &:before {
-    content: @mif-iso-file; 
-  }
-}
-.mif-eps-file {
-  &:before {
-    content: @mif-eps-file; 
-  }
-}
 .mif-xls-file {
   &:before {
     content: @mif-xls-file; 
   }
 }
-.mif-jpg-file {
-  &:before {
-    content: @mif-jpg-file; 
-  }
-}
 .mif-doc-file {
   &:before {
     content: @mif-doc-file; 
-  }
-}
-.mif-fnt-file {
-  &:before {
-    content: @mif-fnt-file; 
-  }
-}
-.mif-png-file {
-  &:before {
-    content: @mif-png-file; 
   }
 }
 .mif-pdf-file {
