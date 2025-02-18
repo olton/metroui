@@ -66,7 +66,7 @@
         _create: function () {
             const o = this.options;
 
-            this.duration = +o.duration <= 0 || +o.duration >= 1000 ? 600 : +o.duration;
+            this.duration = +o.duration <= 0 || +o.duration >= 1000 ? 1000 : +o.duration;
 
             this._build();
             this._createEvents();
@@ -114,7 +114,7 @@
                 element.attr("id", Metro.utils.elementId("countdown"));
             }
 
-            element.addClass("countdown").addClass(o.clsCountdown);
+            element.addClass("countdown").addClass(`animate-${o.animate}`).addClass(o.clsCountdown);
             element.css("font-size", o.fontSize);
 
             this._setBreakpoint();
@@ -338,7 +338,7 @@
                 digit_copy.html(value).animate({
                     draw: {
                         top: 0,
-                        opacity: 1,
+                        opacity: [0, 1],
                     },
                     dur: duration,
                     ease: o.ease,

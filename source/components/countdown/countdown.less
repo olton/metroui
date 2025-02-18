@@ -2,6 +2,7 @@
 @import (once) "../../include/mixins";
 
 .countdown {
+    font-family: digital, sans-serif;
     display: flex!important;
     flex-flow: row nowrap;
     position: relative;
@@ -87,5 +88,25 @@
 
 .countdown {
     &.blink {
+    }
+}
+
+.countdown {
+    &.animate-slide {
+        .digit {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin: 0 1px;
+            padding: 0 4px;
+            
+            .digit-value {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        .-old-digit .digit-value{
+            border-top: 1px solid var(--border-color);
+        }
     }
 }
