@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Test Custom Checkbox - Metro UI :: Popular HTML, CSS and JS library</title>
+</head>
+<body class="cloak">
+<nav data-role="appbar">
+    <span class="app-bar-item">Custom Checkbox</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+<div class="container">
+    <div class="d-flex flex-align-items-center gap-2">
+        <input type="checkbox" data-role="custom-checkbox" data-caption-on="Click to Unlock" data-caption-off="Click to Lock">
+        <input type="checkbox" disabled data-role="custom-checkbox" data-caption-on="Click to Unlock" data-caption-off="Click to Lock">
+        <input type="checkbox" data-role="custom-checkbox" data-state-on="<span class='mif-star-full fg-orange'>" data-state-off="<span class='mif-star-empty'>">
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+</script>
+</body>
+</html>

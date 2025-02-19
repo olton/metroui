@@ -1,18 +1,18 @@
 /* global Metro */
 (function(Metro, $) {
     'use strict';
-    var Utils = Metro.utils;
-    var KeylockDefaultConfig = {
-        keylockDeferred: 0,
 
-        stateIconOn: "🔒",
-        stateIconOff: "🔓",
+    let CustomCheckboxDefaultConfig = {
+        customCheckboxDeferred: 0,
+
+        stateOn: "☑",
+        stateOff: "☐",
 
         captionOn: "",
         captionOff: "",
         captionPosition: "right",
 
-        clsKeylock: "",
+        clsCustomCheckbox: "",
         clsIcon: "",
         clsIconOn: "",
         clsIconOff: "",
@@ -20,29 +20,28 @@
         clsCaptionOn: "",
         clsCaptionOff: "",
 
-        onKeylockCreate: Metro.noop
+        onCustomCheckboxCreate: Metro.noop
     };
 
-    Metro.keylockSetup = function (options) {
-        KeylockDefaultConfig = $.extend({}, KeylockDefaultConfig, options);
+    Metro.customCheckboxSetup = function (options) {
+        CustomCheckboxDefaultConfig = $.extend({}, CustomCheckboxDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroKeylockSetup"] !== undefined) {
-        Metro.keylockSetup(globalThis["metroKeylockSetup"]);
+    if (typeof globalThis["metroCustomCheckboxSetup"] !== undefined) {
+        Metro.customCheckboxSetup(globalThis["metroCustomCheckboxSetup"]);
     }
 
-    Metro.Component('keylock', {
+    Metro.Component('custom-checkbox', {
         init: function( options, elem ) {
-            this._super(elem, options, KeylockDefaultConfig);
+            this._super(elem, options, CustomCheckboxDefaultConfig);
 
             return this;
         },
 
         _create: function(){
-            var element = this.element, o = this.options;
-            var container;
-            var icon = $("<span>").addClass("icon").addClass(o.clsIcon);
-            
+            const element = this.element, o = this.options;
+            const container = element.wrap( $("<label>").addClass("custom-checkbox").addClass(o.clsCustomCheckbox) );
+            const icon = $("<span>").addClass("icon").addClass(o.clsIcon).appendTo(container);
 
             element.attr("type", "checkbox");
 
@@ -52,26 +51,11 @@
                 })
             }
 
-            container = element.wrap(
-                $("<label>").addClass("keylock").addClass(o.clsKeylock)
-            );
-
-            icon.appendTo(container);
-            if (o.stateIconOn) {
-                let _icon = $(o.stateIconOn)
-                if (_icon.length > 0) {
-                    _icon.addClass("state-on").addClass(o.clsIconOn).appendTo(icon)
-                } else {
-                    $("<span>").addClass("state-on").addClass(o.clsIconOn).html(o.stateIconOn).appendTo(icon)
-                }
+            if (o.stateOn) {
+                $("<span>").addClass("state-on").addClass(o.clsIconOn).html(o.stateOn).appendTo(icon)
             }
-            if (o.stateIconOff) {
-                let _icon = $(o.stateIconOff)
-                if (_icon.length > 0) {
-                    _icon.addClass("state-off").addClass(o.clsIconOff).appendTo(icon)
-                } else {
-                    $("<span>").addClass("state-off").addClass(o.clsIconOff).html(o.stateIconOff).appendTo(icon)
-                }
+            if (o.stateOff) {
+                $("<span>").addClass("state-off").addClass(o.clsIconOff).html(o.stateOff).appendTo(icon)
             }
             
             if (o.captionOn || o.captionOff) {
@@ -84,10 +68,6 @@
                 }
             }
             
-            if (o.transition === true) {
-                container.addClass("transition-on");
-            }
-
             if (o.captionPosition === 'left') {
                 container.addClass("caption-left");
             }
@@ -100,7 +80,7 @@
                 this.enable();
             }
 
-            this._fireEvent("keylock-create");
+            this._fireEvent("customCheckbox-create");
         },
 
         disable: function(){
@@ -122,10 +102,10 @@
         },
 
         toggle: function(v){
-            var element = this.element;
+            const element = this.element;
 
-            if (!Utils.isValue(v)) {
-                element.prop("checked", !Utils.bool(element.prop("checked")));
+            if (!Metro.utils.isValue(v)) {
+                element.prop("checked", !Metro.utils.bool(element.prop("checked")));
             } else {
                 element.prop("checked", v === 1);
             }

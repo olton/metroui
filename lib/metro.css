@@ -56551,6 +56551,99 @@ aside::after {
   transform: rotate(90deg);
 }
 
+/* source/components/custom-checkbox/custom-checkbox.less */
+:root {
+  --custom-checkbox-size: 36px;
+  --custom-checkbox-icon-size: 16px;
+  --custom-checkbox-color: #575757;
+  --custom-checkbox-background: transparent;
+  --custom-checkbox-caption-color: #191919;
+  --custom-checkbox-background-disabled: #e8e8e8;
+  --custom-checkbox-color-disabled: #c3c3c3;
+}
+.dark-side {
+  --custom-checkbox-color: #a6a6a6;
+  --custom-checkbox-background: transparent;
+  --custom-checkbox-caption-color: #e8e8e8;
+  --custom-checkbox-background-disabled: #353535;
+  --custom-checkbox-color-disabled: #6c6c6c;
+}
+.custom-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  height: var(--custom-checkbox-size);
+  flex-flow: row nowrap;
+  padding: 0 calc(var(--custom-checkbox-size)/4);
+  line-height: var(--custom-checkbox-size);
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid var(--border-color);
+}
+.custom-checkbox input {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+.custom-checkbox .icon {
+  font-size: var(--custom-checkbox-icon-size);
+  width: var(--custom-checkbox-icon-size);
+  height: var(--custom-checkbox-icon-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  order: 1;
+}
+.custom-checkbox .icon * {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.custom-checkbox .state-on,
+.custom-checkbox .caption-state-on {
+  display: none;
+}
+.custom-checkbox .state-off,
+.custom-checkbox .caption-state-off {
+  display: flex;
+}
+.custom-checkbox input:checked ~ .icon .state-on,
+.custom-checkbox input:checked ~ .caption .caption-state-on {
+  display: flex;
+}
+.custom-checkbox input:checked ~ .icon .state-off,
+.custom-checkbox input:checked ~ .caption .caption-state-off {
+  display: none;
+}
+.custom-checkbox .caption {
+  height: var(--custom-checkbox-size);
+  display: flex;
+  align-items: center;
+  margin: 0 6px;
+  order: 2;
+  white-space: nowrap;
+  font-size: calc(var(--custom-checkbox-icon-size) * 0.75);
+}
+.custom-checkbox.caption-left .icon {
+  order: 2;
+}
+.custom-checkbox.caption-left .caption {
+  order: 1;
+}
+.custom-checkbox input:disabled ~ .icon,
+.custom-checkbox input:disabled ~ .caption {
+  border-color: var(--custom-checkbox-background-disabled);
+  color: var(--custom-checkbox-color-disabled);
+}
+
 /* source/components/d-menu/d-menu.less */
 :root {
   --d-menu-border-color: #e9e9e9;
@@ -56935,7 +57028,7 @@ aside::after {
   color: var(--directive-color);
   padding: 0.5rem 1rem;
   border: 1px solid var(--directive-border-color);
-  border-radius: var(--directive-border-radius);
+  border-left-width: 4px;
   margin: 1rem 0;
   font-size: 14px;
   line-height: 1.75;
@@ -60405,98 +60498,6 @@ label:has(input) {
 .input-material input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
   -webkit-text-fill-color: #fff !important;
-}
-
-/* source/components/keylock/keylock.less */
-:root {
-  --keylock-color: #575757;
-  --keylock-background: transparent;
-  --keylock-caption-color: #191919;
-  --keylock-background-disabled: #e8e8e8;
-  --keylock-color-disabled: #c3c3c3;
-}
-.dark-side {
-  --keylock-color: #a6a6a6;
-  --keylock-background: transparent;
-  --keylock-caption-color: #e8e8e8;
-  --keylock-background-disabled: #353535;
-  --keylock-color-disabled: #6c6c6c;
-}
-.keylock {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  position: relative;
-  height: 36px;
-  flex-flow: row nowrap;
-  padding: 0 8px;
-  line-height: 36px;
-  cursor: pointer;
-  user-select: none;
-}
-.keylock input {
-  width: 1px;
-  height: 1px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-}
-.keylock .icon {
-  width: 34px;
-  height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  order: 1;
-  border: 1px solid var(--keylock-color);
-  border-radius: 4px;
-  font-family: "Segoe UI Symbol", serif;
-}
-.keylock .icon * {
-  font-size: 24px;
-  width: 32px;
-  height: 32px;
-  object-fit: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.keylock .state-on,
-.keylock .caption-state-on {
-  display: none;
-}
-.keylock .state-off,
-.keylock .caption-state-off {
-  display: flex;
-}
-.keylock input:checked ~ .icon .state-on,
-.keylock input:checked ~ .caption .caption-state-on {
-  display: flex;
-}
-.keylock input:checked ~ .icon .state-off,
-.keylock input:checked ~ .caption .caption-state-off {
-  display: none;
-}
-.keylock .caption {
-  height: 34px;
-  display: flex;
-  align-items: center;
-  margin: 0 6px;
-  order: 2;
-  white-space: nowrap;
-}
-.keylock.caption-left .icon {
-  order: 2;
-}
-.keylock.caption-left .caption {
-  order: 1;
-}
-.keylock input:disabled ~ .icon,
-.keylock input:disabled ~ .caption {
-  border-color: var(--keylock-background-disabled);
-  color: var(--keylock-color-disabled);
 }
 
 /* source/components/keypad/keypad.less */

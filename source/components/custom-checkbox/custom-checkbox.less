@@ -2,53 +2,53 @@
 @import (once) "../../include/mixins";
 
 :root {
-    --keylock-color: #575757;
-    --keylock-background: transparent;
-    --keylock-caption-color: #191919;
-    --keylock-background-disabled: #e8e8e8;
-    --keylock-color-disabled: #c3c3c3;
+    --custom-checkbox-size: 36px;
+    --custom-checkbox-icon-size: 16px;
+    --custom-checkbox-color: #575757;
+    --custom-checkbox-background: transparent;
+    --custom-checkbox-caption-color: #191919;
+    --custom-checkbox-background-disabled: #e8e8e8;
+    --custom-checkbox-color-disabled: #c3c3c3;
 }
 
 .dark-side {
-    --keylock-color: rgb(166, 166, 166);
-    --keylock-background: transparent;
-    --keylock-caption-color: #e8e8e8;
-    --keylock-background-disabled: #353535;
-    --keylock-color-disabled: #6c6c6c;
+    --custom-checkbox-color: rgb(166, 166, 166);
+    --custom-checkbox-background: transparent;
+    --custom-checkbox-caption-color: #e8e8e8;
+    --custom-checkbox-background-disabled: #353535;
+    --custom-checkbox-color-disabled: #6c6c6c;
 }
 
-.keylock {
+.custom-checkbox {
     display: inline-flex;
     align-items: center;
     justify-content: flex-start;
     position: relative;
-    height: 36px;
+    height: var(--custom-checkbox-size);
     flex-flow: row nowrap;
-    padding: 0 8px;
-    line-height: 36px;
+    padding: 0 calc(var(--custom-checkbox-size)/4);
+    line-height: var(--custom-checkbox-size);
     cursor: pointer;
     user-select: none;
+    border: 1px solid var(--border-color);
 }
 
-.keylock {
+.custom-checkbox {
     .hideElement(input);
 
     .icon {
-        width: 34px;
-        height: 34px;
+        font-size: var(--custom-checkbox-icon-size);
+        width: var(--custom-checkbox-icon-size);
+        height: var(--custom-checkbox-icon-size);
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
         order: 1;
-        border: 1px solid var(--keylock-color);
-        border-radius: 4px;
-        font-family: "Segoe UI Symbol", serif;
 
         * {
-            font-size: 24px;
-            width: 32px;
-            height: 32px;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             display: flex;
             align-items: center;
@@ -75,12 +75,13 @@
     }
 
     .caption {
-        height: 34px;
+        height: var(--custom-checkbox-size);
         display: flex;
         align-items: center;
         margin: 0 6px;
         order: 2;
         white-space: nowrap;
+        font-size: calc( var(--custom-checkbox-icon-size) *.75 );
     }
 
     &.caption-left {
@@ -94,7 +95,7 @@
     }
     
     input:disabled ~ .icon, input:disabled ~ .caption {
-        border-color: var(--keylock-background-disabled);
-        color: var(--keylock-color-disabled);
+        border-color: var(--custom-checkbox-background-disabled);
+        color: var(--custom-checkbox-color-disabled);
     }
 }
