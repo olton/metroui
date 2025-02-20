@@ -142,6 +142,7 @@
         label_bug: "Bug",
         label_fuck: "Falha catastrótico",
         label_important: "Importante",
+        label_shit: "Shit",
 
         label_select_all: "Select all",
         label_select_more: "Select...",

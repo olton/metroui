@@ -6418,6 +6418,14 @@ body {
     "Ubuntu",
     "Helvetica Neue",
     sans-serif;
+  --font-symbol:
+    ui-sans-serif,
+    system-ui,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    Segoe UI Symbol,
+    "Noto Color Emoji";
   --font-size: 1rem;
   --line-height: 1.5;
   --font-style: normal;
@@ -57023,6 +57031,11 @@ aside::after {
   --directive-border-color: #5454547a !important;
   --directive-title-color: #d53934 !important;
 }
+.dark-side .directive-shit {
+  --directive-background: #7a493c19 !important;
+  --directive-border-color: #7a493c !important;
+  --directive-title-color: #8f3f06 !important;
+}
 .directive {
   display: flex;
   flex-direction: column;
@@ -57059,6 +57072,9 @@ aside::after {
   transform: rotate(-15deg);
   opacity: 0.6;
 }
+.directive .icon::before {
+  font-size: var(--directive-icon-size);
+}
 .directive .icon svg {
   width: 100%;
   height: 100%;
@@ -57082,6 +57098,9 @@ aside::after {
   --code-background: #079c701a;
   --code-color: #278359;
 }
+.directive.directive-success {
+  --directive-border-color: #079c70;
+}
 .directive.directive-warning {
   --directive-background: #ffc5171a;
   --directive-border-color: #ffc51766;
@@ -57103,7 +57122,7 @@ aside::after {
 .directive.directive-alert,
 .directive.directive-error {
   --directive-background: #ed3c5014;
-  --directive-border-color: #ed3c5033;
+  --directive-border-color: #ed3c50;
   --directive-title-color: #ff1f1f;
   --directive-icon-color: #ff1f1f;
   --code-background: #ed3c501a;
@@ -57125,6 +57144,15 @@ aside::after {
   --directive-border-color: #1C1C1C66;
   --directive-title-color: #191919;
   --directive-icon-color: #ff1f1f;
+}
+.directive.directive-shit {
+  --directive-background: #7a493c19;
+  --directive-border-color: #7a493c;
+  --directive-title-color: #7a493c;
+  --directive-icon-color: #7a493c;
+}
+.directive.directive-shit .icon::before {
+  content: "\1f4a9";
 }
 
 /* source/components/donut/donut.less */
