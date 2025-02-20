@@ -3,6 +3,15 @@
 
 @pickerDefaultHeight: 34px;
 
+:root {
+    
+}
+
+.dark-side {
+    
+}
+
+
 .color-picker {
     display: flex;
     flex-flow: row nowrap;
@@ -11,14 +20,14 @@
     padding: 0;
     position: relative;
 
-    &:hover {
+    &:hover, &:active {
         input {
             border-color: transparent;
         }
     }
 
     &.focused {
-        box-shadow: 0 0 0 3px rgba(red(@light-gray), green(@light-gray), blue(@light-gray), 0.45);
+        box-shadow: 0 0 0 3px var(--input-box-shadow);
     }
 
     input {
@@ -45,16 +54,19 @@
 
     button,.button {
         background-color: transparent;
-        color: @dark;
+        color: var(--input-color);
         height: 30px!important;
         width: 30px!important;
+        border: 1px solid var(--input-border-color);
+        font-size: var(--input-font-size);
+
         &:focus, &:active {
             box-shadow: none!important;
         }
     }
 
     .color-picker-button {
-        font-family: "Segoe UI Symbol", serif;
+        font-family: "Segoe UI Symbol", sans-serif;
     }
     
     .input-clear-button {
@@ -66,8 +78,8 @@
 
     &.disabled .button-group {
         button {
-            background-color: @light;
-            color: darken(@light, 10%);
+            background-color: transparent;
+            color: var(--input-disabled-color);
         }
     }
 

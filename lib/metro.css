@@ -54004,7 +54004,7 @@ input:-ms-input-placeholder {
 .input .input-clear-button,
 .input .input-reveal-button,
 .input .input-search-button {
-  font-family: "Segoe UI Symbol", serif;
+  font-family: "Segoe UI Symbol", sans-serif;
   background-color: transparent;
   font-size: var(--input-font-size);
 }
@@ -55978,11 +55978,12 @@ input[type=radio].radio-sand::before {
   padding: 0;
   position: relative;
 }
-.color-picker:hover input {
+.color-picker:hover input,
+.color-picker:active input {
   border-color: transparent;
 }
 .color-picker.focused {
-  box-shadow: 0 0 0 3px rgba(244, 244, 244, 0.45);
+  box-shadow: 0 0 0 3px var(--input-box-shadow);
 }
 .color-picker input {
   border: none !important;
@@ -56006,9 +56007,11 @@ input[type=radio].radio-sand::before {
 .color-picker button,
 .color-picker .button {
   background-color: transparent;
-  color: #1d1d1d;
+  color: var(--input-color);
   height: 30px !important;
   width: 30px !important;
+  border: 1px solid var(--input-border-color);
+  font-size: var(--input-font-size);
 }
 .color-picker button:focus,
 .color-picker .button:focus,
@@ -56017,7 +56020,7 @@ input[type=radio].radio-sand::before {
   box-shadow: none !important;
 }
 .color-picker .color-picker-button {
-  font-family: "Segoe UI Symbol", serif;
+  font-family: "Segoe UI Symbol", sans-serif;
 }
 .color-picker .input-clear-button {
   background-color: transparent;
@@ -56026,8 +56029,8 @@ input[type=radio].radio-sand::before {
   background-color: transparent;
 }
 .color-picker.disabled .button-group button {
-  background-color: #f8f8f8;
-  color: #dfdfdf;
+  background-color: transparent;
+  color: var(--input-disabled-color);
 }
 .color-picker .color-example-box {
   display: block;
