@@ -61,7 +61,6 @@
     padding: .5rem 1rem;
     border: 1px solid var(--directive-border-color);
     border-left-width: 4px;
-    //border-radius: var(--directive-border-radius);
     margin: 1rem 0;
     font-size: 14px;
     line-height: 1.75;
@@ -106,7 +105,7 @@
 .directive {
     &.directive-info {
         --directive-background: #0095ff0f;
-        --directive-border-color: #0095ff33;
+        --directive-border-color: #0095ff;
         --directive-title-color: #0095ff;
         --directive-icon-color: #0095ff;
         --code-background: #0095ff1a;
@@ -187,6 +186,17 @@
         
         .icon::before {
             content: "💩";
+        }
+    }
+
+    &.directive-air {
+        --directive-background: #d5d9dc19;
+        --directive-border-color: #d5d9dc;
+        --directive-title-color: #8c8f91;
+        --directive-icon-color: #80dbff;
+        
+        .icon::before {
+            content: "💨";
         }
     }
 }

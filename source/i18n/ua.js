@@ -143,6 +143,7 @@
         label_fuck: "Бля",
         label_important: "Важливо",
         label_shit: "От лайно",
+        label_air: "Пуффф...",
 
         label_select_all: "Вибрати усі",
         label_select_more: "Виберіть...",

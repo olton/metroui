@@ -143,6 +143,7 @@
         label_fuck: "Fuck",
         label_important: "Important",
         label_shit: "Shit",
+        label_air: "Air",
         
         label_select_all: "Select all",
         label_select_more: "Select...",

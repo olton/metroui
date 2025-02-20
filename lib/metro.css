@@ -57083,7 +57083,7 @@ aside::after {
 }
 .directive.directive-info {
   --directive-background: #0095ff0f;
-  --directive-border-color: #0095ff33;
+  --directive-border-color: #0095ff;
   --directive-title-color: #0095ff;
   --directive-icon-color: #0095ff;
   --code-background: #0095ff1a;
@@ -57153,6 +57153,15 @@ aside::after {
 }
 .directive.directive-shit .icon::before {
   content: "\1f4a9";
+}
+.directive.directive-air {
+  --directive-background: #d5d9dc19;
+  --directive-border-color: #d5d9dc;
+  --directive-title-color: #8c8f91;
+  --directive-icon-color: #80dbff;
+}
+.directive.directive-air .icon::before {
+  content: "\1f4a8";
 }
 
 /* source/components/donut/donut.less */
