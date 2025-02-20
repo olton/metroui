@@ -1,11 +1,12 @@
 /*
 * TODO:
-*  1. Add automatic creation editor with syntax highlighting
+*  1. syntax highlighting
+*  2. markdown editor
 * */
 (function(Metro, $) {
     'use strict';
-    var Utils = Metro.utils;
-    var TextareaDefaultConfig = {
+
+    let TextareaDefaultConfig = {
         label: "",
         textareaDeferred: 0,
         charsCounter: null,
@@ -13,7 +14,6 @@
         defaultValue: "",
         prepend: "",
         append: "",
-        copyInlineStyles: false,
         clearButton: true,
         clearButtonIcon: "❌",
         autoSize: true,
@@ -42,7 +42,7 @@
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -53,10 +53,10 @@
         },
 
         _createStructure: function(){
-            var that = this, element = this.element, elem = this.elem, o = this.options;
-            var container = $("<div>").addClass("textarea " + element[0].className);
-            var fakeTextarea = $("<textarea>").addClass("fake-textarea");
-            var clearButton;
+            const that = this, element = this.element, elem = this.elem, o = this.options;
+            const container = $("<div>").addClass("textarea " + element[0].className);
+            const fakeTextarea = $("<textarea>").addClass("fake-textarea");
+            let clearButton;
 
             container.insertBefore(element);
             element.appendTo(container);
@@ -72,12 +72,12 @@
             }
 
             if (o.prepend !== "") {
-                var prepend = $("<div>").html(o.prepend);
+                const prepend = $("<div>").html(o.prepend);
                 prepend.addClass("prepend").addClass(o.clsPrepend).appendTo(container);
             }
 
             if (o.append !== "") {
-                var append = $("<div>").html(o.append);
+                const append = $("<div>").html(o.append);
                 append.addClass("append").addClass(o.clsAppend).appendTo(container);
                 clearButton.css({
                     right: append.outerWidth() + 4
@@ -85,13 +85,8 @@
             }
 
             elem.className = '';
-            if (o.copyInlineStyles === true) {
-                for (var i = 0, l = elem.style.length; i < l; i++) {
-                    container.css(elem.style[i], element.css(elem.style[i]));
-                }
-            }
 
-            if (Utils.isValue(o.defaultValue) && element.val().trim() === "") {
+            if (Metro.utils.isValue(o.defaultValue) && element.val().trim() === "") {
                 element.val(o.defaultValue);
             }
 
@@ -99,9 +94,13 @@
             element.addClass(o.clsTextarea);
 
             if (o.label) {
-                var label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(container);
+                const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(container);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
+                } else {
+                    const id = Hooks.useId(element[0])
+                    label.attr("for", id);
+                    element.attr("id", id);
                 }
                 if (element.attr("dir") === "rtl") {
                     label.addClass("rtl");
@@ -123,16 +122,18 @@
                     that.resize();
                 }, 100);
             }
+            
+            this.component = container;
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var textarea = element.closest(".textarea");
-            var fakeTextarea = textarea.find(".fake-textarea");
-            var chars_counter = $(o.charsCounter);
+            const that = this, element = this.element, o = this.options;
+            const textarea = element.closest(".textarea");
+            const fakeTextarea = textarea.find(".fake-textarea");
+            const chars_counter = $(o.charsCounter);
 
             textarea.on(Metro.events.click, ".input-clear-button", function(e){
-                element.val(Utils.isValue(o.defaultValue) ? o.defaultValue : "").trigger('change').trigger('keyup').focus();
+                element.val(Metro.utils.isValue(o.defaultValue) ? o.defaultValue : "").trigger('change').trigger('keyup').focus();
                 e.preventDefault();
                 e.stopPropagation();
             });
@@ -148,7 +149,7 @@
             element.on(Metro.events.focus, function(){textarea.addClass("focused");});
 
             element.on(Metro.events.keyup, function(){
-                if (Utils.isValue(o.charsCounter) && chars_counter.length > 0) {
+                if (Metro.utils.isValue(o.charsCounter) && chars_counter.length > 0) {
                     if (chars_counter[0].tagName === "INPUT") {
                         chars_counter.val(that.length());
                     } else {
@@ -165,7 +166,7 @@
         },
 
         resize: function(){
-            var element = this.element, o = this.options,
+            const element = this.element, o = this.options,
                 textarea = element.closest(".textarea"),
                 fakeTextarea = textarea.find(".fake-textarea"),
                 currentHeight = fakeTextarea[0].scrollHeight;
@@ -189,7 +190,7 @@
         },
 
         toDefault: function(){
-            this.element.val(Utils.isValue(this.options.defaultValue) ? this.options.defaultValue : "").trigger('change').trigger('keyup').focus();
+            this.element.val(Metro.utils.isValue(this.options.defaultValue) ? this.options.defaultValue : "").trigger('change').trigger('keyup').focus();
         },
 
         length: function(){
@@ -222,8 +223,8 @@
         },
 
         destroy: function(){
-            var element = this.element, o = this.options;
-            var textarea = element.closest(".textarea");
+            const element = this.element, o = this.options;
+            const textarea = element.closest(".textarea");
 
             textarea.off(Metro.events.click, ".input-clear-button");
 
@@ -236,7 +237,10 @@
 
             element.off(Metro.events.keyup);
 
-            return element;
+            if (o.label) {
+                this.component.prev("label").remove();
+            }
+            this.component.remove();
         }
     });
 }(Metro, Dom));
