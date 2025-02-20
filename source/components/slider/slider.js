@@ -118,6 +118,10 @@
                     .insertBefore(slider);
                 if (element.id()) {
                     label.attr("for", element.id());
+                } else {
+                    const id = Hooks.useId(element[0]);
+                    label.attr("for", id);
+                    element.attr("id", id);
                 }
             }
             
@@ -549,8 +553,8 @@
         },
 
         destroy: function(){
-            var element = this.element, slider = this.slider;
-            var marker = slider.find(".marker");
+            const element = this.element, o = this.options, slider = this.slider;
+            const marker = slider.find(".marker");
 
             marker.off(Metro.events.startAll);
             marker.off(Metro.events.focus);
@@ -560,7 +564,11 @@
             slider.off(Metro.events.click);
             $(globalThis).off(Metro.events.resize, {ns: this.id});
 
-            return element;
+            if (o.label) {
+                slider.prev("label").remove()
+            }
+            
+            slider.remove();
         }
     });
 }(Metro, Dom));

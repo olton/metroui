@@ -1,8 +1,8 @@
 /* global Metro */
 (function(Metro, $) {
     'use strict';
-    var Utils = Metro.utils;
-    var RatingDefaultConfig = {
+
+    let RatingDefaultConfig = {
         ratingDeferred: 0,
         label: "",
         static: false,
@@ -47,8 +47,8 @@
         },
 
         _create: function(){
-            var element = this.element, o = this.options;
-            var i;
+            const element = this.element, o = this.options;
+            let i;
 
             if (isNaN(o.value)) {
                 o.value = 0;
@@ -80,15 +80,15 @@
         },
 
         _createRating: function(){
-            var element = this.element, o = this.options;
+            const element = this.element, o = this.options;
 
-            var id = Utils.elementId("rating");
-            var i, stars, result, li;
-            var sheet = Metro.sheet;
-            var value = o.static ? Math.floor(this.originValue) : this.value;
+            const id = Metro.utils.elementId("rating");
+            let i, stars, result, li;
+            const sheet = Metro.sheet;
+            const value = o.static ? Math.floor(this.originValue) : this.value;
 
-            var rating = element.wrap("<div>").addClass("rating " + element[0].className).addClass(o.clsRating);
-            
+            const rating = element.wrap("<div>").addClass("rating " + element[0].className).addClass(o.clsRating);
+
             element.val(this.value);
 
             rating.attr("id", element.id() ? "rating--"+element.id() : id);
@@ -107,24 +107,24 @@
             result.html(o.message);
 
             if (o.offColor !== null && (o.offColor.includes("var(") || Farbe.Routines.isColor(o.offColor))) {
-                
+                // nothing current
             }
             
             if (o.onColor !== null && (o.onColor.includes("var(") || Farbe.Routines.isColor(o.onColor))) {
-                Utils.addCssRule(sheet, "#" + id + " .stars:hover li", "color: " + o.onColor + ";");
-                Utils.addCssRule(sheet, "#" + id + " .stars li.on", "color: "+o.onColor+";");
-                Utils.addCssRule(sheet, "#" + id + " .stars li.half::after", "color: "+o.onColor+";");
+                Metro.utils.addCssRule(sheet, "#" + id + " .stars:hover li", "color: " + o.onColor + ";");
+                Metro.utils.addCssRule(sheet, "#" + id + " .stars li.on", "color: "+o.onColor+";");
+                Metro.utils.addCssRule(sheet, "#" + id + " .stars li.half::after", "color: "+o.onColor+";");
             }
 
             if (o.title !== null) {
-                var title = $("<span>").addClass("title").addClass(o.clsTitle).html(o.title);
+                const title = $("<span>").addClass("title").addClass(o.clsTitle).html(o.title);
                 rating.prepend(title);
             }
 
             if (o.static === true) {
                 rating.addClass("static");
                 if (o.half === true){
-                    var dec = Math.round((this.originValue % 1) * 10);
+                    const dec = Math.round((this.originValue % 1) * 10);
                     if (dec > 0 && dec <= 9) {
                         rating.find('.stars li.on').last().next("li").addClass("half half-" + ( dec * 10));
                     }
@@ -132,16 +132,15 @@
             }
 
             element[0].className = '';
-            if (o.copyInlineStyles === true) {
-                for (i = 0; i < element[0].style.length; i++) {
-                    rating.css(element[0].style[i], element.css(element[0].style[i]));
-                }
-            }
 
             if (o.label) {
-                var label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(rating);
+                const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(rating);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
+                } else {
+                    const id = Hooks.useId(element[0])
+                    label.attr("for", id);
+                    element.attr("id", id);
                 }
                 if (element.attr("dir") === "rtl") {
                     label.addClass("rtl");
@@ -158,8 +157,8 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var rating = this.rating;
+            const that = this, element = this.element, o = this.options;
+            const rating = this.rating;
 
             rating.on(Metro.events.click, ".stars li", function(){
 
@@ -167,8 +166,8 @@
                     return ;
                 }
 
-                var star = $(this);
-                var value = star.data("value");
+                const star = $(this);
+                const value = star.data("value");
                 star.addClass("scale");
                 setTimeout(function(){
                     star.removeClass("scale");
@@ -187,8 +186,8 @@
         },
 
         val: function(v){
-            var that = this, element = this.element, o = this.options;
-            var rating = this.rating;
+            const that = this, element = this.element, o = this.options;
+            const rating = this.rating;
 
             if (v === undefined) {
                 return this.value;
@@ -197,7 +196,7 @@
             this.value = v > 0 ? Math[o.roundFunc](v) : 0;
             element.val(this.value).trigger("change");
 
-            var stars = rating.find(".stars li").removeClass("on");
+            const stars = rating.find(".stars li").removeClass("on");
             $.each(stars, function(){
                 var star = $(this);
                 if (star.data("value") <= that.value) {
@@ -209,7 +208,7 @@
         },
 
         msg: function(m){
-            var rating = this.rating;
+            const rating = this.rating;
             if (m ===  undefined) {
                 return ;
             }
@@ -218,8 +217,8 @@
         },
 
         static: function (mode) {
-            var o = this.options;
-            var rating = this.rating;
+            const o = this.options;
+            const rating = this.rating;
 
             o.static = mode;
 
@@ -230,21 +229,9 @@
             }
         },
 
-        changeAttributeValue: function(a){
-            var element = this.element;
-            var value = a === "value" ? element.val() : element.attr("data-value");
-            this.val(value);
-        },
-
-        changeAttributeMessage: function(){
-            var element = this.element;
-            var message = element.attr("data-message");
-            this.msg(message);
-        },
-
         changeAttributeStatic: function(){
-            var element = this.element;
-            var isStatic = JSON.parse(element.attr("data-static")) === true;
+            const element = this.element;
+            const isStatic = JSON.parse(element.attr("data-static")) === true;
 
             this.static(isStatic);
         },
@@ -267,23 +254,26 @@
             }
         },
 
-        changeAttribute: function(attributeName){
+        changeAttribute: function(attributeName, value){
             switch (attributeName) {
                 case "value":
-                case "data-value": this.changeAttributeValue(attributeName); break;
+                case "data-value": this.val(value); break;
                 case "disabled": this.toggleState(); break;
-                case "data-message": this.changeAttributeMessage(); break;
+                case "data-message": this.msg(value); break;
                 case "data-static": this.changeAttributeStatic(); break;
             }
         },
 
         destroy: function(){
-            var element = this.element;
-            var rating = this.rating;
+            const o = this.options;
+            const rating = this.rating;
 
             rating.off(Metro.events.click, ".stars li");
 
-            return element;
+            if (o.label) {
+                rating.prev("label").remove()
+            }
+            rating.remove()
         }
     });
 }(Metro, Dom));

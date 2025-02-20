@@ -1,7 +1,8 @@
 /* global Metro */
 (function(Metro, $) {
     'use strict';
-    var FileDefaultConfig = {
+
+    let FileDefaultConfig = {
         fileDeferred: 0,
         label: "",
         mode: "input",
@@ -9,13 +10,13 @@
         filesSelectedTitle: "",
         dropTitle: "",
         dropIcon: "📥",
+        clearButtonIcon: "❌",
         prepend: "",
         clsComponent: "",
         clsPrepend: "",
         clsButton: "",
         clsCaption: "",
         clsLabel: "",
-        copyInlineStyles: false,
         onSelect: Metro.noop,
         onFileCreate: Metro.noop
     };
@@ -36,7 +37,7 @@
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -47,20 +48,17 @@
         },
 
         _createStructure: function(){
-            var element = this.element, o = this.options;
-            var container = $("<label>").addClass((o.mode === "input" ? " file " : o.mode === "button" ? " file-button " : " drop-zone ") + element[0].className).addClass(o.clsComponent);
-            var caption = $("<span>").addClass("caption").addClass(o.clsCaption);
-            var files = $("<span>").addClass("files").addClass(o.clsCaption);
-            var icon, button;
-
-            container.insertBefore(element);
-            element.appendTo(container);
+            const element = this.element, o = this.options;
+            const container = element.wrap("<div>").addClass((o.mode === "input" ? " file " : o.mode === "button" ? " file-button " : " drop-zone ") + element[0].className).addClass(o.clsComponent);
+            const caption = $("<span>").addClass("caption").addClass(o.clsCaption);
+            const files = $("<span>").addClass("files").addClass(o.clsCaption);
+            let icon, button;
 
             if (o.mode.includes("drop")) {
                 icon = $("<span>").addClass("icon").html(o.dropIcon).appendTo(container);
                 caption.html(o.dropTitle || this.strings.label_drop_file).insertAfter(icon);
                 files.html((o.filesSelectedTitle || this.strings.label_files_selected).replace('{n}', 0)).insertAfter(caption);
-                button = $("<button>").addClass("button clear-button square").html("❌").appendTo(container);
+                button = $("<button>").addClass("button clear-button square").html(o.clearButtonIcon).appendTo(container);
             } else {
                 caption.insertBefore(element);
 
@@ -76,23 +74,21 @@
                 }
 
                 if (o.prepend !== "") {
-                    var prepend = $("<div>").html(o.prepend);
+                    const prepend = $("<div>").html(o.prepend);
                     prepend.addClass("prepend").addClass(o.clsPrepend).appendTo(container);
                 }
             }
 
             element[0].className = '';
 
-            if (o.copyInlineStyles === true) {
-                for (var i = 0, l = element[0].style.length; i < l; i++) {
-                    container.css(element[0].style[i], element.css(element[0].style[i]));
-                }
-            }
-
             if (o.label) {
-                var label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(container);
+                const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(container);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
+                } else {
+                    const id = Hooks.useId(element[0])
+                    label.attr("for", id);
+                    element.attr("id", id);
                 }
                 if (element.attr("dir") === "rtl") {
                     label.addClass("rtl");
@@ -107,11 +103,11 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var container = element.closest("label");
-            var caption = container.find(".caption");
-            var files = container.find(".files");
-            var form = element.closest("form");
+            const that = this, element = this.element, o = this.options;
+            const container = element.closest("label");
+            const caption = container.find(".caption");
+            const files = container.find(".files");
+            const form = element.closest("form");
 
             if (form.length) {
                 form.on("reset", function(){
@@ -128,9 +124,9 @@
             });
 
             element.on(Metro.events.change, function(){
-                var fi = this;
-                var file_names = [];
-                var entry;
+                const fi = this;
+                const file_names = [];
+                let entry;
 
                 Array.from(fi.files).forEach(function(file){
                     file_names.push(file.name);
@@ -177,8 +173,8 @@
         },
 
         clear: function(){
-            var element = this.element, o = this.options;
-            
+            const element = this.element, o = this.options;
+
             if (o.mode === "input") {
                 element.siblings(".caption").html("");
             } else {
@@ -223,11 +219,14 @@
         },
 
         destroy: function(){
-            var element = this.element;
-            var parent = element.parent();
-            element.off(Metro.events.change);
-            parent.off(Metro.events.click, "button");
-            return element;
+            const element = this.element, o = this.options
+            const parent = element.parent()
+            element.off(Metro.events.change)
+            parent.off(Metro.events.click, "button")
+            if (o.label) {
+                parent.prev("label").remove()
+            }
+            parent.remove()
         }
     });
 }(Metro, Dom));

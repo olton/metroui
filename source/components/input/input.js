@@ -101,9 +101,8 @@
 
         _createStructure: function(){
             const that = this, element = this.element, o = this.options;
-            const container = $("<div>").addClass("input " + element[0].className);
-            const buttons = $("<div>").addClass("button-group");
-            let clearButton, revealButton, searchButton, randomButton;
+            const container = element.wrap("<div>").addClass("input " + element[0].className);
+            let buttons, clearButton, revealButton, searchButton, randomButton;
 
             if (Metro.utils.isValue(o.historyPreset)) {
                 $.each(o.historyPreset.toArray(o.historyDivider), function(){
@@ -116,9 +115,7 @@
                 element.attr("type", "text");
             }
 
-            container.insertBefore(element);
-            element.appendTo(container);
-            buttons.appendTo(container);
+            buttons = $("<div>").addClass("button-group").appendTo(container);
 
             if (!Metro.utils.isValue(element.val().trim())) {
                 element.val(o.defaultValue);
@@ -256,6 +253,10 @@
                 const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(container);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
+                } else {
+                    const id = Hooks.useId(element[0])
+                    element.id (id)
+                    label.attr("for", id);
                 }
                 if (element.attr("dir") === "rtl") {
                     label.addClass("rtl");
@@ -585,7 +586,7 @@
         },
 
         destroy: function(){
-            const element = this.element;
+            const element = this.element, o = this.options;
             const parent = element.parent();
             const clearBtn = parent.find(".input-clear-button");
             const revealBtn = parent.find(".input-reveal-button");
@@ -605,7 +606,10 @@
             element.off(Metro.events.blur);
             element.off(Metro.events.focus);
 
-            return element;
+            if (o.label) {
+                parent.prev("label").remove()
+            }
+            parent.remove()
         }
     });
 

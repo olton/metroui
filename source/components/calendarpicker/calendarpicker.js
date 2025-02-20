@@ -322,6 +322,10 @@
                 const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(container);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
+                } else {
+                    const id = Hooks.useId(element[0])
+                    label.attr("for", id);
+                    element.attr("id", id);
                 }
                 if (element.attr("dir") === "rtl") {
                     label.addClass("rtl");
@@ -554,7 +558,7 @@
         },
 
         destroy: function () {
-            const element = this.element;
+            const element = this.element, o = this.options;
             const container = element.parent();
             const clear = container.find(".input-clear-button");
 
@@ -567,6 +571,9 @@
 
             Metro.getPlugin(this.calendar, "calendar").destroy();
 
+            if (o.label) {
+                container.prev("label").remove()
+            }
             container.remove()
         },
     });

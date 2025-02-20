@@ -12,9 +12,10 @@
         duration: 100,
         prepend: "",
         append: "",
+        label: "",
         clearButton: false,
-        clearButtonIcon: "&#x274c;",
-        pickerButtonIcon: "&#127912;",
+        clearButtonIcon: "❌",
+        pickerButtonIcon: "🎨",
         defaultValue: "rgba(0, 0, 0, 0)",
         openMode: "auto",
         resultType: "hex",
@@ -89,7 +90,6 @@
             buttons.append(
                 $("<button>")
                     .addClass("button color-picker-button")
-                    .addClass(o.clsPickerButton)
                     .attr("tabindex", -1)
                     .attr("type", "button")
                     .html(o.pickerButtonIcon),
@@ -153,6 +153,20 @@
 
             element[0].className = "";
 
+            if (o.label) {
+                const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(picker);
+                if (element.attr("id")) {
+                    label.attr("for", element.attr("id"));
+                } else {
+                    const id = Hooks.useId(element[0])
+                    label.attr("for", id);
+                    element.attr("id", id);
+                }
+                if (element.attr("dir") === "rtl") {
+                    label.addClass("rtl");
+                }
+            }
+            
             this._setColor();
         },
 
@@ -219,7 +233,12 @@
         // },
 
         destroy: function () {
-            this.element.remove();
+            const element = this.element, o = this.options;
+            const parent = element.parent();
+            if (o.label) {
+                parent.prev("label").remove()
+            }
+            parent.remove()
         },
     });
 

@@ -5,8 +5,7 @@
 (function (Metro, $) {
     "use strict";
 
-    var Utils = Metro.utils;
-    var TagInputDefaultConfig = {
+    let TagInputDefaultConfig = {
         autocomplete: null,
         autocompleteUnique: true,
         autocompleteUrl: null,
@@ -89,17 +88,15 @@
         },
 
         _createStructure: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var container, input, clearButton;
-            var values = element.val().trim();
+            let container, input, clearButton;
+            const values = element.val().trim();
 
-            container = $("<div>")
+            container = element.wrap("<div>")
                 .addClass("tag-input " + element[0].className)
                 .addClass(o.clsComponent)
-                .insertBefore(element);
-            element.appendTo(container);
 
             container.addClass("input-" + o.size);
 
@@ -122,20 +119,24 @@
                 clearButton.appendTo(container);
             }
 
-            if (Utils.isValue(values)) {
+            if (Metro.utils.isValue(values)) {
                 $.each(values.toArray(o.tagSeparator), function () {
                     that._addTag(this);
                 });
             }
 
             if (o.label) {
-                var label = $("<label>")
+                const label = $("<label>")
                     .addClass("label-for-input")
                     .addClass(o.clsLabel)
                     .html(o.label)
                     .insertBefore(container);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
+                } else {
+                    const id = Hooks.useId(element[0]);
+                    label.attr("for", id);
+                    element.attr("id", id);
                 }
                 if (element.attr("dir") === "rtl") {
                     label.addClass("rtl");
@@ -153,8 +154,8 @@
             }
 
             if (
-                !Utils.isNull(o.autocomplete) ||
-                !Utils.isNull(o.autocompleteUrl)
+                !Metro.utils.isNull(o.autocomplete) ||
+                !Metro.utils.isNull(o.autocompleteUrl)
             ) {
                 $("<div>")
                     .addClass("autocomplete-list")
@@ -165,8 +166,8 @@
                     .appendTo(container);
             }
 
-            if (Utils.isValue(o.autocomplete)) {
-                var autocomplete_obj = Utils.isObject(o.autocomplete);
+            if (Metro.utils.isValue(o.autocomplete)) {
+                const autocomplete_obj = Metro.utils.isObject(o.autocomplete);
 
                 if (autocomplete_obj !== false) {
                     this.autocomplete = autocomplete_obj;
@@ -177,7 +178,7 @@
                 }
             }
 
-            if (Utils.isValue(o.autocompleteUrl)) {
+            if (Metro.utils.isValue(o.autocompleteUrl)) {
                 fetch(o.autocompleteUrl, {
                     method: o.autocompleteUrlMethod,
                 })
@@ -202,12 +203,12 @@
         },
 
         _createEvents: function () {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var container = element.closest(".tag-input");
-            var input = container.find(".input-wrapper");
-            var autocompleteList = container.find(".autocomplete-list");
+            const container = element.closest(".tag-input");
+            const input = container.find(".input-wrapper");
+            const autocompleteList = container.find(".autocomplete-list");
 
             input.on(Metro.events.focus, function () {
                 container.addClass("focused");
@@ -258,8 +259,8 @@
             });
 
             input.on(Metro.events.keyup, function (e) {
-                var val = input.val();
-                var key = e.key;
+                const val = input.val();
+                const key = e.key;
 
                 if (
                     that.triggers.includes(key) &&
@@ -270,7 +271,7 @@
             });
 
             container.on(Metro.events.click, ".tag .action", function () {
-                var tag = $(this).closest(".tag");
+                const tag = $(this).closest(".tag");
                 that._delTag(tag);
             });
 
@@ -282,7 +283,7 @@
                 Metro.events.click,
                 ".input-clear-button",
                 function () {
-                    var val = element.val();
+                    const val = element.val();
                     that.clear();
 
                     that._fireEvent("clear", {
@@ -292,7 +293,7 @@
             );
 
             input.on(Metro.events.input, function () {
-                var val = this.value.toLowerCase();
+                const val = this.value.toLowerCase();
                 that._drawAutocompleteList(val);
             });
 
@@ -300,7 +301,7 @@
                 Metro.events.click,
                 ".autocomplete-list .item",
                 function () {
-                    var val = $(this).attr("data-autocomplete-value");
+                    const val = $(this).attr("data-autocomplete-value");
 
                     input.val("");
                     that._addTag(val);
@@ -317,13 +318,13 @@
         },
 
         _drawAutocompleteList: function (val) {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var container = element.closest(".tag-input");
-            var input = container.find(".input-wrapper");
-            var autocompleteList = container.find(".autocomplete-list");
-            var items;
+            const container = element.closest(".tag-input");
+            const input = container.find(".input-wrapper");
+            const autocompleteList = container.find(".autocomplete-list");
+            let items;
 
             if (autocompleteList.length === 0) {
                 return;
@@ -345,10 +346,10 @@
                     return;
                 }
 
-                var v = this;
-                var index = v.toLowerCase().indexOf(val),
+                const v = this;
+                let index = v.toLowerCase().indexOf(val),
                     content;
-                var item = $("<div>")
+                const item = $("<div>")
                     .addClass("item")
                     .attr("data-autocomplete-value", v);
 
@@ -376,12 +377,12 @@
         },
 
         _addTag: function (val) {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var container = element.closest(".tag-input");
-            var input = container.find(".input-wrapper");
-            var tag, title, remover;
-            var tagSize, tagStatic;
+            const container = element.closest(".tag-input");
+            const input = container.find(".input-wrapper");
+            let tag, title, remover;
+            let tagSize, tagStatic;
 
             if (container.hasClass("input-large")) {
                 tagSize = "large";
@@ -397,7 +398,7 @@
                 return;
             }
 
-            if (!Utils.exec(o.onBeforeTagAdd, [val, this.values], element[0])) {
+            if (!Metro.utils.exec(o.onBeforeTagAdd, [val, this.values], element[0])) {
                 return;
             }
 
@@ -431,7 +432,7 @@
             remover.appendTo(tag);
 
             if (o.randomColor === true) {
-                var colors = Object.values(
+                let colors = Object.values(
                         Object.assign(
                             {},
                             Farbe.StandardColors,
@@ -473,12 +474,12 @@
         },
 
         _delTag: function (tag) {
-            var element = this.element,
+            const element = this.element,
                 o = this.options;
-            var val = tag.data("value");
+            const val = tag.data("value");
 
             if (
-                !Utils.exec(
+                !Metro.utils.exec(
                     o.onBeforeTagRemove,
                     [tag, val, this.values],
                     element[0],
@@ -487,7 +488,7 @@
                 return;
             }
 
-            Utils.arrayDelete(this.values, val);
+            Metro.utils.arrayDelete(this.values, val);
             element.val(this.values.join(o.tagSeparator));
 
             this._fireEvent("tag-remove", {
@@ -510,13 +511,13 @@
         },
 
         val: function (v) {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
-            var container = element.closest(".tag-input");
-            var newValues = [];
+            const container = element.closest(".tag-input");
+            let newValues = [];
 
-            if (!Utils.isValue(v)) {
+            if (!Metro.utils.isValue(v)) {
                 return this.tags();
             }
 
@@ -539,9 +540,9 @@
         },
 
         append: function (v) {
-            var that = this,
+            const that = this,
                 o = this.options;
-            var newValues = this.values;
+            let newValues = this.values;
 
             if (typeof v === "string") {
                 newValues = ("" + v).toArray(o.tagSeparator);
@@ -559,8 +560,8 @@
         },
 
         clear: function () {
-            var element = this.element;
-            var container = element.closest(".tag-input");
+            const element = this.element;
+            const container = element.closest(".tag-input");
 
             this.values = [];
 
@@ -590,11 +591,11 @@
         },
 
         toggleStatic: function (val) {
-            var container = this.element.closest(".tag-input");
-            var staticMode;
+            const container = this.element.closest(".tag-input");
+            let staticMode;
 
-            if (Utils.isValue(val)) {
-                staticMode = Utils.bool(val);
+            if (Metro.utils.isValue(val)) {
+                staticMode = Metro.utils.bool(val);
             } else {
                 staticMode = !container.hasClass("static-mode");
             }
@@ -607,7 +608,7 @@
         },
 
         setAutocompleteList: function (l) {
-            var autocomplete_list = Utils.isObject(l);
+            const autocomplete_list = Metro.utils.isObject(l);
             if (autocomplete_list !== false) {
                 this.autocomplete = autocomplete_list;
             } else if (typeof l === "string") {
@@ -616,14 +617,14 @@
         },
 
         changeAttribute: function (attributeName) {
-            var that = this,
+            const that = this,
                 element = this.element,
                 o = this.options;
 
-            var changeValue = function () {
+            const changeValue = function () {
                 var val = element.attr("value").trim();
                 that.clear();
-                if (!Utils.isValue(val)) {
+                if (!Metro.utils.isValue(val)) {
                     return;
                 }
                 that.val(val.toArray(o.tagSeparator));
@@ -643,9 +644,9 @@
         },
 
         destroy: function () {
-            var element = this.element;
-            var container = element.closest(".tag-input");
-            var input = container.find(".input-wrapper");
+            const element = this.element, o = this.options;
+            const container = element.closest(".tag-input");
+            const input = container.find(".input-wrapper");
 
             input.off(Metro.events.focus);
             input.off(Metro.events.blur);
@@ -653,7 +654,10 @@
             container.off(Metro.events.click, ".tag .action");
             container.off(Metro.events.click);
 
-            return element;
+            if (o.label) {
+                container.prev("label").remove();
+            }
+            container.remove();
         },
     });
 

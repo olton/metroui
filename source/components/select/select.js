@@ -237,13 +237,11 @@
         },
 
         _createSelect: async function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const element = this.element, o = this.options;
 
             const container = element.wrap("<label>");
             const multiple = element[0].multiple;
-            const select_id = Metro.utils.elementId("select");
+            const select_id = Hooks.useId(container[0]);
             const buttons = $("<div>").addClass("button-group");
             let input,
                 drop_container,
@@ -381,6 +379,8 @@
                     .insertBefore(container);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
+                } else {
+                    label.attr("for", checkboxID);
                 }
                 if (element.attr("dir") === "rtl") {
                     label.addClass("rtl");
@@ -976,7 +976,7 @@
         },
 
         destroy: function () {
-            const element = this.element;
+            const element = this.element, o = this.options;
             const container = element.closest(".select");
             const drop_container = container.find(".drop-container");
             const input = element.siblings(".select-input");
@@ -996,6 +996,10 @@
 
             drop_container.data("dropdown").destroy();
 
+            if (o.label) {
+                container.prev("label").remove();
+            }
+            
             container.remove();
         },
     });
