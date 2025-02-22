@@ -73276,6 +73276,9 @@ textarea {
 .tool-button:disabled {
   opacity: 0.65;
 }
+.tool-button.w-auto {
+  padding: 0 8px;
+}
 .toolbar {
   display: inline-flex;
   position: relative;
@@ -73432,7 +73435,7 @@ textarea {
   --treeview-node-toggle-color: #ffffff;
 }
 .treeview,
-.treeview ul {
+.treeview ul:not(.d-menu) {
   margin: 0;
   padding: 0;
   font-size: 14px;
@@ -73682,12 +73685,18 @@ textarea {
   align-items: center;
   justify-content: center;
 }
+.treeview .actions-holder .actions-list-trigger svg {
+  display: none !important;
+}
 .treeview .actions-holder > ul {
   margin: 0;
   z-index: 3;
 }
 .treeview .actions-holder > ul li {
   padding-left: 0;
+}
+.treeview .d-menu :is(a) {
+  padding: 4px 10px 4px 32px;
 }
 
 /* source/components/v-menu/v-menu.less */

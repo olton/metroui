@@ -1,4 +1,3 @@
-/* global Metro */
 (function(Metro, $) {
     'use strict';
 
@@ -8,6 +7,7 @@
         duration: 100,
         hideActionsOnLeave: true,
         recheckTimeout: 100,
+        leaves: [],
         onNodeClick: Metro.noop,
         onNodeDblClick: Metro.noop,
         onNodeDelete: Metro.noop,
@@ -78,6 +78,22 @@
             return $("<span>").addClass("node-toggle");
         },
 
+        /*
+        * data = {
+        *   link: string,
+        *   href: string,
+        *   caption: string,
+        *   icon: string,
+        *   html: string,
+        *   attributes: {},
+        *   style: {} || string,
+        *   badge: string,
+        *   badges: [],
+        *   secondary: string,
+        *   actions: [],
+        *   type: "" || "node",
+        * }
+        * */
         _createNode: function(data, target){
             const o = this.options
             const nodeContainer = target ? target : $("<li>")
@@ -138,10 +154,19 @@
                 )
             }
             
+            /*
+            * item = {
+            *   type: "divider" || "",
+            *   caption: string,
+            *   icon: string,
+            *   cls: string,
+            *   onclick: function(){},
+            * }
+            * */
             if (data.actions) {
                 const actionsHolder = $("<div class='dropdown-button'>").addClass("actions-holder");
                 const actionsListTrigger = $("<span class='actions-list-trigger'>").text("⋮").appendTo(actionsHolder)
-                const actionsList = $("<ul data-role='dropdown' class='d-menu actions-list'>").appendTo(actionsHolder)
+                const actionsList = $("<ul data-role='dropmenu' class='d-menu actions-list'>").appendTo(actionsHolder)
                 nodeContainer.append(actionsHolder)
                 for(let a of data.actions) {
                     if (a.type && a.type === "divider") {
@@ -159,10 +184,14 @@
                     }
                 }
                 actionsList.on(Metro.events.leave, (e) => {
-                    if (o.hideActionsOnLeave) Metro.getPlugin(actionsList, "dropdown").close()
+                    if (o.hideActionsOnLeave) Metro.getPlugin(actionsList, "dropmenu").close()
                 })
             }
 
+            if (data.current) {
+                nodeContainer.addClass("current")
+            }
+            
             if (data.type === 'node') {
                 nodeContainer.addClass("tree-node")
                 nodeContainer.append($("<span>").addClass("node-toggle"))
@@ -172,11 +201,6 @@
             if (nodeContainer.children("ul").length) {
                 nodeContainer.addClass("tree-node")
                 nodeContainer.append($("<span>").addClass("node-toggle"))
-            }
-
-            const hasChildren = nodeContainer.children("ul").length
-
-            if (hasChildren) {
                 if (Metro.utils.bool(data.collapsed) !== true) {
                     nodeContainer.addClass("expanded")
                 } else {
@@ -232,7 +256,7 @@
         },
         
         _createTree: function(){
-            const element = this.element
+            const element = this.element, o = this.options;
             const nodes = element.find("li[data-caption]")
 
             element.addClass("treeview");
@@ -280,6 +304,13 @@
                 }
             });
 
+            if (o.leaves) {
+                const leaves = Metro.utils.isObject(o.leaves);
+                if (leaves) {
+                    this.fillTree(leaves);
+                } 
+            }
+            
             this._recheckTree()
         },
 
@@ -455,7 +486,7 @@
             let new_node;
             let toggle;
 
-            if (node === null) {
+            if (!node) {
                 target = element;
             } else {
                 node = $(node);
@@ -466,19 +497,18 @@
                     toggle.appendTo(node);
                     node.addClass("expanded");
                 }
+                node?.addClass("tree-node")
             }
-
-            node.addClass("tree-node")
 
             if (data.type === "checkbox" || data.type === "radio") {
-                new_node = this._createCheckNode(data, target);
+                new_node = this._createCheckNode(data);
             } else if (data.type === "input") {
-                new_node = this._createInputNode(data, target);
+                new_node = this._createInputNode(data);
             } else {
-                new_node = this._createNode(data, target);
+                new_node = this._createNode(data);
             }
 
-            // new_node.appendTo(target);
+            new_node.appendTo(target);
 
             this._fireEvent("node-insert", {
                 node: new_node[0],
@@ -635,6 +665,18 @@
             this._fireEvent("expand-all");
         },
 
+        fillTree: function (leaves, node){
+            for (const leaf of leaves) {
+                const new_node = this.addTo(node, {
+                    ...leaf,
+                    type: leaf.items ? "node" : "item"
+                });
+                if (leaf.items) {
+                    this.fillTree(leaf.items, new_node);
+                }
+            }
+        },
+        
         changeAttribute: function(attr, value){
             if (attr === "data-recheck-timeout") {
                 this.options.recheckTimeout = value ?? 100;

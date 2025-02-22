@@ -17,7 +17,7 @@
     --treeview-node-toggle-color: #ffffff;
 }
 
-.treeview, .treeview ul {
+.treeview, .treeview ul:not(.d-menu) {
     margin: 0;
     padding: 0;
     font-size: 14px;
@@ -201,6 +201,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            
+            svg {
+                display: none!important;
+            }
         }
 
         & > ul {
@@ -224,4 +228,8 @@
     //    ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) li { padding-left: @pl * 9; }
     //    ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) ul:not(.d-menu) li { padding-left: @pl * 10; }
     //}
+    
+    .d-menu {
+        :is(a) { padding: 4px 10px 4px 32px; }
+    }
 }
