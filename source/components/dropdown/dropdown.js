@@ -97,7 +97,6 @@
             const toggle = this.toggle, parent = element.parent();
 
             toggle.on(Metro.events.click, function(e){
-                console.log("ku")
                 $(".active-container").removeClass("active-container");
 
                 // parent.siblings(parent[0].tagName).removeClass("active-container");
