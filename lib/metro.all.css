@@ -49704,7 +49704,7 @@ button.flat,
 }
 .app-bar .app-bar-item,
 .app-bar .app-bar-item-static,
-.app-bar .app-bar-menu > li > a {
+.app-bar .app-bar-menu a {
   display: flex;
   align-items: center;
   font-size: 13px;
@@ -49718,21 +49718,32 @@ button.flat,
   line-height: 20px;
   overflow: hidden;
 }
-.app-bar .app-bar-item:hover,
-.app-bar .app-bar-item-static:hover,
-.app-bar .app-bar-menu > li > a:hover {
-  color: var(--appbar-item-color-hover);
-  text-decoration: none;
-  background-color: var(--appbar-item-background-hover);
+@media (hover: hover) {
+  .app-bar .app-bar-item:hover,
+  .app-bar .app-bar-item-static:hover,
+  .app-bar .app-bar-menu a:hover {
+    color: var(--appbar-item-color-hover);
+    text-decoration: none;
+    background-color: var(--appbar-item-background-hover);
+  }
+}
+@media (hover: none) {
+  .app-bar .app-bar-item:active,
+  .app-bar .app-bar-item-static:active,
+  .app-bar .app-bar-menu a:active {
+    color: var(--appbar-item-color-hover);
+    text-decoration: none;
+    background-color: var(--appbar-item-background-hover);
+  }
 }
 .app-bar .app-bar-item:focus,
 .app-bar .app-bar-item-static:focus,
-.app-bar .app-bar-menu > li > a:focus {
+.app-bar .app-bar-menu a:focus {
   outline: none;
 }
 .app-bar .app-bar-item.disabled,
 .app-bar .app-bar-item-static.disabled,
-.app-bar .app-bar-menu > li > a.disabled {
+.app-bar .app-bar-menu a.disabled {
   color: var(--appbar-item-color-disabled);
 }
 .app-bar .app-bar-item-static:hover {
