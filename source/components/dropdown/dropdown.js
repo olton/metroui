@@ -2,7 +2,7 @@
     'use strict';
 
     const participants = `[data-role-dropmenu], [data-role-dropdown]`;
-    const toggleImage = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path></svg>`
+    const toggleImage = `<svg class="dropdown-caret" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path></svg>`
 
     let DropdownDefaultConfig = {
         dropdownDeferred: 0,
@@ -12,6 +12,8 @@
         noClose: false,
         duration: 50,
         openMode: "auto",
+        openFunc: "show",
+        closeFunc: "hide",
         onDrop: Metro.noop,
         onUp: Metro.noop,
         onDropdownCreate: Metro.noop
@@ -30,7 +32,8 @@
             this._super(elem, options, DropdownDefaultConfig, {
                 toggle: null,
                 displayOrigin: null,
-                isOpen: false
+                isOpen: false,
+                level: 0,
             });
 
             return this;
@@ -54,15 +57,28 @@
             }
         },
 
+        _toggle: function(){
+            const element = this.element
+            let toggle = element.siblings(".menu-toggle, .dropdown-toggle, a");
+            if (toggle.length === 0) {
+                toggle = element.prev()
+                if (toggle.length === 0) {
+                    throw new Error("Menu toggle not found");
+                }
+            }
+            return toggle[0];
+        },
+        
         _createStructure: function(){
             const element = this.element, o = this.options;
+            const level = element.parents("[data-role-dropdown]").length;
             let toggle;
 
             if (o.openMode === "up") {
                 element.addClass("drop-up");
             }
 
-            toggle = o.toggleElement ? $(o.toggleElement) : element.siblings('.dropdown-toggle').length > 0 ? element.siblings('.dropdown-toggle') : element.prev();
+            toggle = o.toggleElement ? $(o.toggleElement) : $(this._toggle());
 
             if (toggle.length) {
                 toggle.append(toggleImage);
@@ -73,6 +89,7 @@
             element.css("display", "none");
 
             this.toggle = toggle;
+            this.level = level;
         },
 
         _createEvents: function(){
@@ -80,6 +97,7 @@
             const toggle = this.toggle, parent = element.parent();
 
             toggle.on(Metro.events.click, function(e){
+                console.log("ku")
                 $(".active-container").removeClass("active-container");
 
                 // parent.siblings(parent[0].tagName).removeClass("active-container");
@@ -139,7 +157,7 @@
             const dropdown = Metro.getPlugin(el, "dropdown");
             const toggle = dropdown.toggle;
             const options = dropdown.options;
-            let func = "slideUp";
+            let func = options.closeFunc;
 
             toggle.removeClass('active-toggle').removeClass("active-control");
             dropdown.element.parent().removeClass("active-container");
@@ -160,23 +178,25 @@
             this.isOpen = false;
         },
 
-        // TODO Add control: if no space for drop-down and no space for drop-up, element will must drop-down
         _open: function(el, immediate){
             const dropdown = Metro.getPlugin(el, "dropdown");
             const toggle = dropdown.toggle;
             const options = dropdown.options;
-            const func = "slideDown";
+            const func = options.openFunc;
 
             toggle.addClass('active-toggle').addClass("active-control");
 
-            el[func](immediate ? 0 : options.duration, function(){
+            dropdown.element[func](immediate ? 0 : options.duration, function(){
+                const _el = this, $el = $(this);
+                let wOut = Metro.utils.viewportOutByWidth(_el)
+                let hOut = Metro.utils.viewportOutByHeight(_el)
                 
                 if (options.openMode === "auto") {
-                    if (!Metro.utils.inViewport(dropdown.element[0])) {
-                        dropdown.element.addClass("drop-up");
-                    }
-                    if (!Metro.utils.inViewport(dropdown.element[0])) {
-                        dropdown.element.removeClass("drop-up").addClass("drop-as-dialog");
+                    if (hOut) { $el.addClass("drop-up"); }
+                    if (wOut) { $el.addClass("place-right"); }
+
+                    if (Metro.utils.viewportOut(_el)) {
+                        $el.removeClass("drop-up place-right").addClass("drop-as-dialog");
                     }
                 }
 
@@ -214,17 +234,17 @@
         $(participants).each(function(){
             const el = $(this);
 
-            if (el.hasClass('keep-open') || el.hasClass('stay-open') || el.hasClass('ignore-document-click')) return;
+            if (
+                el.hasClass('keep-open') || 
+                el.hasClass('stay-open') || 
+                el.hasClass('ignore-document-click')
+            ) return;
 
             const dd = Metro.getPlugin(el, 'dropdown')
             const dm = Metro.getPlugin(el, 'dropmenu')
 
-            if (dd) {
-                dd.close();
-            }
-            if (dm) {
-                dm.close();
-            }
+            if (dd) { dd.close(); }
+            if (dm) { dm.close(); }
         });
     });
 }(Metro, Dom));

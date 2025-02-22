@@ -11,7 +11,6 @@
     
 }
 
-
 .color-picker {
     display: flex;
     flex-flow: row nowrap;
@@ -98,6 +97,7 @@
         top: 100%;
         left: -1px;
         display: none;
+        box-shadow: 2px 2px 10px var(--d-menu-shadow-color);
     }
 
     .prepend {order: 1;}
@@ -110,6 +110,10 @@
     
     .color-selector-box {
         z-index: @zindex-dropdown;
+    }
+    
+    .dropdown-caret {
+        display: none!important;
     }
 }
 

@@ -280,6 +280,24 @@
             );
         },
 
+        viewportOutByWidth: function (el) {
+            const rect = this.rect(el);
+            const w = globalThis.innerWidth || document.documentElement.clientWidth;
+
+            return rect.right > w;
+        },
+        
+        viewportOutByHeight: function (el) {
+            const rect = this.rect(el);
+            const h = globalThis.innerHeight || document.documentElement.clientHeight;
+
+            return rect.bottom > h;
+        },
+        
+        viewportOut: function (el) {
+            return this.viewportOutByWidth(el) || this.viewportOutByHeight(el);
+        },
+        
         rect: function (el) {
             return el.getBoundingClientRect();
         },

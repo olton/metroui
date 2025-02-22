@@ -56018,6 +56018,7 @@ input[type=radio].radio-sand::before {
   top: 100%;
   left: -1px;
   display: none;
+  box-shadow: 2px 2px 10px var(--d-menu-shadow-color);
 }
 .color-picker .prepend {
   order: 1;
@@ -56039,6 +56040,9 @@ input[type=radio].radio-sand::before {
 }
 .color-picker .color-selector-box {
   z-index: 1000;
+}
+.color-picker .dropdown-caret {
+  display: none !important;
 }
 .color-picker.open .color-selector-box {
   display: block !important;
@@ -56743,6 +56747,11 @@ aside::after {
 .d-menu.place-right .d-menu {
   left: auto;
   right: calc(100% + 4px);
+}
+.d-menu .d-menu.place-right {
+  left: auto;
+  right: calc(100% + 4px);
+  top: 0;
 }
 @media screen and (min-width: 0) {
   .d-menu.place-right-fs {

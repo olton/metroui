@@ -377,7 +377,7 @@
             container.on(Metro.events.click, "button, input", function (e) {
                 const value = that.value ? that.value : datetime().addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
                 const presetValue = value.format("YYYY/MM/DD");
-                console.log(value)
+
                 value.align("day");
 
                 if (cal.hasClass("open") === false && cal.hasClass("open-up") === false) {

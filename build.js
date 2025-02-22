@@ -25,6 +25,12 @@ const banner = `
  */
 `
 
+const drop = []
+
+if (!production) {
+    drop.push("console")    
+}
+
 if (production) {
     await build({
         entryPoints: ['./source/default.js'],
@@ -47,6 +53,7 @@ if (production) {
                 '__VERSION__': version,
             })
         ],
+        drop, 
     })
 
     await build({
@@ -70,6 +77,7 @@ if (production) {
                 '__VERSION__': version,
             })
         ],
+        drop, 
     })
 
     await build({
@@ -88,6 +96,7 @@ if (production) {
                 files: ['./lib/icons.js']
             })
         ],
+        drop,
     })
 } else {
     let ctxLib = await context({
@@ -111,6 +120,7 @@ if (production) {
                 '__VERSION__': pkg.version,
             })
         ],
+        drop,
     })
 
     let ctxAll = await context({
@@ -134,6 +144,7 @@ if (production) {
                 '__VERSION__': pkg.version,
             })
         ],
+        drop, 
     })
 
     let ctxIcons = await context({
@@ -152,6 +163,7 @@ if (production) {
                 files: ['./lib/icons.js']
             })
         ],
+        drop, 
     })
 
     await Promise.all([
