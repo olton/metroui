@@ -1,8 +1,8 @@
 (function (Metro, $) {
-    Metro["contextMenu"] = function (options = [], element = document) {
-        function buildMenu() {
+    Metro["contextMenu"] = function (items = [], element = document) {
+        function buildMenu(items) {
             const menu = $('<ul>').addClass('d-menu context-menu').css("display", "none")
-            for (const item of options) {
+            for (const item of items) {
                 if (item.type === "divider") {
                     menu.append($('<li>').addClass('divider'))
                 } else {
@@ -26,12 +26,18 @@
                     if (item.disabled) {
                         an.prop("disabled", true)
                     }
+                    if (item.items) {
+                        const sub = buildMenu(item.items)
+                        li.children("a").addClass("dropdown-toggle")
+                        li.append(sub)
+                        Metro.makePlugin(sub, "dropdown", {})
+                    }
                 }
             }
             return menu[0]
         }
 
-        element.context_menu = buildMenu()
+        element.context_menu = buildMenu(items)
         if (element.nodeType === 1) {
             element.append(element.context_menu)
         } else {

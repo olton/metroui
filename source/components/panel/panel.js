@@ -1,7 +1,8 @@
-/** @format */
-
 (function (Metro, $) {
     "use strict";
+
+    const toggleImage = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path></svg>`
+
     var PanelDefaultConfig = {
         panelDeferred: 0,
         id: null,
@@ -153,6 +154,9 @@
                         .addClass("dropdown-toggle marker-center active-toggle")
                         .addClass(o.clsCollapseToggle)
                         .appendTo(title);
+                    
+                    collapseToggle.append(toggleImage);
+                    
                     Metro.makePlugin(element, "collapse", {
                         toggleElement: collapseToggle,
                         duration: o.collapseDuration,

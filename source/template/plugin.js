@@ -1,8 +1,7 @@
-/* global Metro */
 (function(Metro, $) {
     'use strict';
 
-    var MyObjectDefaultConfig = {
+    let MyObjectDefaultConfig = {
         onMyObjectCreate: Metro.noop
     };
 
@@ -23,7 +22,7 @@
         },
 
         _create: function(){
-            var that = this, element = this.element, o = this.options;
+            const that = this, element = this.element, o = this.options;
 
             this._createStructure();
             this._createEvents();
@@ -32,12 +31,12 @@
         },
 
         _createStructure: function(){
-            var that = this, element = this.element, o = this.options;
+            const that = this, element = this.element, o = this.options;
 
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+            const that = this, element = this.element, o = this.options;
 
         },
 

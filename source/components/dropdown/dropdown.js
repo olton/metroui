@@ -1,11 +1,14 @@
-/* global Metro */
 (function(Metro, $) {
     'use strict';
+
+    const participants = `[data-role-dropmenu], [data-role-dropdown]`;
+    const toggleImage = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path></svg>`
 
     let DropdownDefaultConfig = {
         dropdownDeferred: 0,
         dropFilter: null,
         toggleElement: null,
+        align: "left",
         noClose: false,
         duration: 50,
         openMode: "auto",
@@ -25,7 +28,7 @@
     Metro.Component('dropdown', {
         init: function( options, elem ) {
             this._super(elem, options, DropdownDefaultConfig, {
-                _toggle: null,
+                toggle: null,
                 displayOrigin: null,
                 isOpen: false
             });
@@ -59,18 +62,22 @@
                 element.addClass("drop-up");
             }
 
-            toggle = o.toggleElement !== null ? $(o.toggleElement) : element.siblings('.dropdown-toggle').length > 0 ? element.siblings('.dropdown-toggle') : element.prev();
+            toggle = o.toggleElement ? $(o.toggleElement) : element.siblings('.dropdown-toggle').length > 0 ? element.siblings('.dropdown-toggle') : element.prev();
 
+            if (toggle.length) {
+                toggle.append(toggleImage);
+            }
+            
             this.displayOrigin = Metro.utils.getStyleOne(element, "display");
 
             element.css("display", "none");
 
-            this._toggle = toggle;
+            this.toggle = toggle;
         },
 
         _createEvents: function(){
             const that = this, element = this.element, o = this.options;
-            const toggle = this._toggle, parent = element.parent();
+            const toggle = this.toggle, parent = element.parent();
 
             toggle.on(Metro.events.click, function(e){
                 $(".active-container").removeClass("active-container");
@@ -78,15 +85,15 @@
                 // parent.siblings(parent[0].tagName).removeClass("active-container");
 
                 if (element.css('display') !== 'none' && !element.hasClass('keep-open')) {
-                    that._close(element);
+                    that.close(true, element);
                 } else {
-                    $('[data-role*=dropdown]').each(function(i, el){
-                        if (!element.parents('[data-role*=dropdown]').is(el) && !$(el).hasClass('keep-open') && $(el).css('display') !== 'none') {
+                    $(participants).each(function(i, el){
+                        if (!element.parents('[data-role-dropdown]').is(el) && !$(el).hasClass('keep-open') && $(el).css('display') !== 'none') {
                             if (!Metro.utils.isValue(o.dropFilter)) {
-                                that._close(el);
+                                that.close(true, el);
                             } else {
                                 if ($(el).closest(o.dropFilter).length > 0) {
-                                    that._close(el);
+                                    that.close(true, el);
                                 }
                             }
                         }
@@ -107,7 +114,7 @@
                         });
                         element.css('width', children_width + 2);
                     }
-                    that._open(element);
+                    that.open(false, element);
                     parent.addClass("active-container");
                 }
                 e.preventDefault();
@@ -130,7 +137,7 @@
             el = $(el);
 
             const dropdown = Metro.getPlugin(el, "dropdown");
-            const toggle = dropdown._toggle;
+            const toggle = dropdown.toggle;
             const options = dropdown.options;
             let func = "slideUp";
 
@@ -155,10 +162,8 @@
 
         // TODO Add control: if no space for drop-down and no space for drop-up, element will must drop-down
         _open: function(el, immediate){
-            el = $(el);
-
             const dropdown = Metro.getPlugin(el, "dropdown");
-            const toggle = dropdown._toggle;
+            const toggle = dropdown.toggle;
             const options = dropdown.options;
             const func = "slideDown";
 
@@ -182,12 +187,12 @@
             this.isOpen = true;
         },
 
-        close: function(immediate){
-            this._close(this.element, immediate);
+        close: function(immediate, el){
+            this._close(el || this.element, immediate);
         },
 
-        open: function(immediate){
-            this._open(this.element, immediate);
+        open: function(immediate, el){
+            this._open(el || this.element, immediate);
         },
 
         toggle: function(){
@@ -201,42 +206,26 @@
         },
 
         destroy: function(){
-            this._toggle.off(Metro.events.click);
+            this.toggle.off(Metro.events.click);
         }
     });
 
     $(document).on(Metro.events.click, function(){
-        $('[data-role*=dropdown]').each(function(){
+        $(participants).each(function(){
             const el = $(this);
 
-            if (el.css('display')!=='none' && !el.hasClass('keep-open') && !el.hasClass('stay-open') && !el.hasClass('ignore-document-click')) {
-                Metro.getPlugin(el, 'dropdown').close();
+            if (el.hasClass('keep-open') || el.hasClass('stay-open') || el.hasClass('ignore-document-click')) return;
+
+            const dd = Metro.getPlugin(el, 'dropdown')
+            const dm = Metro.getPlugin(el, 'dropmenu')
+
+            if (dd) {
+                dd.close();
+            }
+            if (dm) {
+                dm.close();
             }
         });
     });
-    
-    Metro.dropdown = function (anchor, items = [], options = {}){
-        const anchorRect = Metro.utils.rect(anchor)
-        const menu = $("<ul>").addClass("d-menu").css({
-            position: "fixed",
-            zIndex: "var(--z-index-fixed)",
-            top: anchorRect.top + anchorRect.height,
-            left: anchorRect.left,
-        })
-        
-        for (let item of items) {
-            let {href, text, icon = ""} = item;
-            if (icon) {
-                icon = $(icon).addClass("icon").outerHTML()
-            }
-            menu.append(`
-                <li><a href="${href}">${icon ? "" : ""}${text}</a></li>
-            `)
-        }
-        
-        Metro.makePlugin(menu,  "dropdown", Object.assign({
-            toggleElement: anchor
-        }, options))
-    }
 }(Metro, Dom));
 

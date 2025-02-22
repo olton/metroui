@@ -1,0 +1,29 @@
+:root {
+    --drop-menu-toggle-color: #191919;
+}
+
+.dark-side {
+    --drop-menu-toggle-color: #efefef;
+}
+
+.drop-menu {
+    position: fixed!important;  
+    z-index: var(--zindex-fixed)!important;
+}
+
+.menu-toggle {
+    padding-right: 4px!important;
+    
+    svg {
+        fill: var(--drop-menu-toggle-color);
+        transform: rotate(90deg);
+        margin-left: auto;
+        transition: transform .3s
+    }
+    
+    &.active-toggle {
+        svg {
+            transform: rotate(270deg);
+        }
+    }
+}
