@@ -62,6 +62,7 @@ import { Props } from "./props.js";
             if (globalThis["Datetime"] && Datetime.info) Datetime.info();
             if (globalThis["Str"] && Str.info) Str.info();
             if (globalThis["G"] && G.info) G.info();
+            if (globalThis["Router"] && Router.info) Router.info();
         },
 
         aboutDlg: () => {
