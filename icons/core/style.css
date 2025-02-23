@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'metro-ui-core';
   src:
-    url('fonts/metro-ui-core.ttf?31r7ih') format('truetype'),
-    url('fonts/metro-ui-core.woff?31r7ih') format('woff'),
-    url('fonts/metro-ui-core.svg?31r7ih#metro-ui-core') format('svg');
+    url('fonts/metro-ui-core.ttf?2fx632') format('truetype'),
+    url('fonts/metro-ui-core.woff?2fx632') format('woff'),
+    url('fonts/metro-ui-core.svg?2fx632#metro-ui-core') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -24,6 +24,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.mif-deno:before {
+  content: "\eb8a";
+}
+.mif-bun:before {
+  content: "\eb8b";
+}
+.mif-nodejs:before {
+  content: "\eb8c";
+}
+.mif-yarn:before {
+  content: "\eb8d";
+}
+.mif-pnpm:before {
+  content: "\eb8e";
+}
+.mif-npm:before {
+  content: "\eb8f";
+}
+.mif-repository:before {
+  content: "\eb90";
+}
+.mif-git-clone:before {
+  content: "\eb89";
+}
 .mif-git-branch:before {
   content: "\eb7a";
 }
