@@ -1,9 +1,3 @@
-/**
- * global Metro
- *
- * @format
- */
-
 (function (Metro, $) {
     "use strict";
 
@@ -15,7 +9,7 @@
         updateUri: false,
         position: "top", // top, bottom, left, right
         align: "left", // left, center, right
-        // linked: false,
+        link: "",
 
         clsTabs: "",
         clsTabsList: "",
@@ -49,7 +43,7 @@
 
         _create: function () {
             const element = this.element;
-            const tab = element.find(".active").length > 0 ? $(element.find(".active")[0]) : undefined;
+            const tab = element.find(".active")[0]
 
             this._createStructure();
             this._createEvents();
@@ -144,18 +138,18 @@
                 }
             });
 
-            element.on(Metro.events.click, "a", function (e) {
-                const link = $(this);
+            element.on(Metro.events.click, "li", function (e) {
+                const link = $(this).children("a");
                 const href = link.attr("href").trim();
                 const tab = link.parent("li");
 
                 that._fireEvent("tab", {
                     tab: tab[0],
-                    target: tab.children("a").attr("href"),
+                    target: tab.children("a").href(),
                 });
 
                 if (tab.hasClass("active")) {
-                    e.preventDefault();
+                    // e.preventDefault();
                 }
 
                 if (element.data("expanded") === true) {
@@ -168,9 +162,13 @@
                     return false;
                 }
 
-                if (Metro.utils.isValue(href) && href[0] === "#") {
-                    that._open(tab);
-                    e.preventDefault();
+                if (href) {
+                    if (href.startsWith("#")) {
+                        that._open(tab);
+                        e.preventDefault();
+                    } else {
+                        globalThis.location.href = href;
+                    }
                 }
             });
 
@@ -217,8 +215,7 @@
         },
 
         _open: function (tab) {
-            const element = this.element,
-                o = this.options;
+            const element = this.element, o = this.options;
             const tabs = element.find("li");
             const expandTitle = element.siblings(".expand-title");
             const activeTab = element.find("li.active");
@@ -234,6 +231,7 @@
             }
 
             const target = tab.find("a").attr("href");
+            const tabIndex = tab.index();
 
             if (target === undefined) {
                 return;
@@ -244,6 +242,18 @@
                 tab.parent().parent().addClass("active");
             } else {
                 tab.addClass("active");
+            }
+            
+            if (o.link) {
+                $(`[data-link=${o.link}]`).each((i, el) => {
+                    if (el === this.elem) return;
+                    // Metro.getPlugin(el, "tabs").openByIndex(tabIndex);
+                    const tabs = $(el).find("li");
+                    tabs[tabIndex].click();
+                    // console.log(tabs[tabIndex],  tabIndex);
+                    // const tab = $(el).find("li")[tabIndex];
+                    // tab.children("a").click();
+                })
             }
 
             $.each(this._targets, function () {
@@ -304,6 +314,13 @@
             }
         },
 
+        openByIndex: function (index) {
+            const element = this.element;
+            const tabs = element.find("li");
+
+            if (Metro.utils.isValue(tabs[index])) this._open($(tabs[index]));
+        },
+        
         open: function (tab) {
             const element = this.element;
             const tabs = element.find("li");

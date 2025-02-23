@@ -27,7 +27,7 @@ const banner = `
 
 const drop = []
 
-if (!production) {
+if (production) {
     drop.push("console")    
 }
 
