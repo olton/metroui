@@ -7,7 +7,7 @@
     --directive-code-background: #f5f5f5;
     --directive-icon-background: #f5f5f5;
     --directive-icon-color: #7a7a7a;
-    --directive-icon-size: 4rem;
+    --directive-icon-size: 3rem;
 }
 
 .dark-side {
@@ -34,6 +34,7 @@
         --directive-title-color: #fbb451!important;
     }
     .directive-fuck {
+        --directive-background: rgba(250, 250, 250, 0.06) !important;
     }
     .directive-caution, .directive-alert, .directive-error {
         --directive-background: #ed3c501f!important;
@@ -77,8 +78,8 @@
     
     .icon {
         position: absolute;
-        right: 0px;
-        top: 4px;
+        right: 0;
+        top: 8px;
         width: var(--directive-icon-size);
         height: var(--directive-icon-size);
         margin-right: 12px;
@@ -87,7 +88,8 @@
         justify-content: center;
         border-radius: 50%;
         transform: rotate(-15deg);
-        opacity: .6;
+        opacity: .3;
+        z-index: 0;
         
         &::before {
             font-size: var(--directive-icon-size);
@@ -135,13 +137,12 @@
     }
     
     &.directive-fuck {
-        --directive-background: var(--default-background);
+        --directive-background: #fafafa;
         --directive-border-color: var(--border-color);
         --directive-title-color: var(--default-color);
 
         .icon::before {
             content: "🖕";
-            font-size: var(--directive-icon-size);
         }
     }
     
@@ -163,7 +164,6 @@
         
         .icon::before {
             content: "🔥";
-            font-size: var(--directive-icon-size);
         }
     }
     
@@ -174,7 +174,7 @@
         --directive-icon-color: #ff1f1f;
         
         .icon::before {
-            //content: "🐞";
+            content: "🐞";
         }
     }
     
@@ -216,6 +216,7 @@
         background: var(--default-background);
         padding: 6px;
         z-index: 1;
+        opacity: 1;
         &::before {
             font-size: 20px!important;          
             position: relative;
