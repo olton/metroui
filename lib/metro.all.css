@@ -68622,7 +68622,7 @@ label:has(input) {
   vertical-align: middle;
   background: var(--split-button-background);
   color: var(--split-button-color);
-  border: 1px transparent solid;
+  border: 1px var(--button-border-color) solid;
   border-radius: var(--split-button-border-radius);
   cursor: pointer;
   outline: none;
@@ -68634,8 +68634,8 @@ label:has(input) {
   align-items: center;
   justify-content: center;
 }
-.split-button .split.dropdown-toggle::before {
-  margin-left: -1.25rem;
+.split-button .split.dropdown-toggle {
+  padding: 0 0.75rem !important;
 }
 @media (hover: hover) {
   .split-button .split:hover {
@@ -68669,7 +68669,7 @@ label:has(input) {
 .split-button .split:active {
   box-shadow: none;
 }
-.split-button [data-role*=dropdown],
+.split-button [data-role-dropdown],
 .split-button .drop-object {
   right: 0;
   top: 100%;
@@ -68684,6 +68684,7 @@ label:has(input) {
 }
 .split-button.no-gap .split {
   border-radius: 0 var(--split-button-border-radius) var(--split-button-border-radius) 0;
+  border-left: 1px solid var(--split-button-background-hover);
 }
 
 /* source/components/splitter/splitter.less */

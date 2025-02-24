@@ -42,7 +42,7 @@
         vertical-align: middle ;
         background: var(--split-button-background);
         color: var(--split-button-color);
-        border: 1px @transparent solid;
+        border: 1px var(--button-border-color) solid;
         border-radius: var(--split-button-border-radius);
         cursor: pointer;
         outline: none;
@@ -55,7 +55,7 @@
         justify-content: center;
 
         &.dropdown-toggle {
-            &::before {margin-left: -1.25rem;}
+            padding: 0 .75rem!important;
         }
 
         @media (hover: hover) {
@@ -98,7 +98,7 @@
         }
     }
 
-    [data-role*=dropdown], .drop-object {
+    [data-role-dropdown], .drop-object {
         right: 0;
         top: 100%;
     }
@@ -113,6 +113,7 @@
         
         .split {
             border-radius: 0 var(--split-button-border-radius) var(--split-button-border-radius) 0;
+            border-left: 1px solid var(--split-button-background-hover);
         }
     }
 }
