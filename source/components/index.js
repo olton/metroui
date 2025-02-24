@@ -87,6 +87,7 @@ import "./media-player/index.js";
 import "./navview/index.js";
 import "./notify/index.js";
 import "./overlay/index.js";
+import "./package-manager/index.js";
 import "./page-control/index.js";
 import "./pagination/index.js";
 import "./panel/index.js";
