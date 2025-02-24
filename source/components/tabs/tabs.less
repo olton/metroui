@@ -14,6 +14,7 @@
     --tabs-item-color-hover: var(--default-color);
     --tabs-item-background-active: #eaeaea;
     --tabs-item-color-active: var(--default-color);
+    --tabs-item-marker-active: #2bcc19;
     --tabs-item-icon-background: #ffffff;
     --tabs-item-icon-color: #000000;
 }
@@ -29,6 +30,7 @@
     --tabs-item-color-hover: var(--default-color);
     --tabs-item-background-active: #4a4d51;
     --tabs-item-color-active: var(--default-color);
+    --tabs-item-marker-active: #4fff39;
     --tabs-item-icon-background: #343637;
     --tabs-item-icon-color: #ffffff;
 }
@@ -36,7 +38,6 @@
 .tabs {
     position: relative;
     border: 1px solid var(--border-color);
-    transition: @transition-base;
     background-color: var(--tabs-background);
     color: var(--tabs-color);
 
@@ -196,6 +197,16 @@
                 border-bottom: none;
                 background-color: var(--tabs-item-background-active);
                 color: var(--tabs-item-color-active);
+                &::before {
+                    display: block;
+                    position: absolute;
+                    content: '';
+                    background-color: var(--tabs-item-marker-active);
+                    height: 4px;
+                    width: 100%;
+                    z-index: 1;
+                    bottom: 0;
+                }
             }
         }
 
@@ -217,6 +228,10 @@
                 &.active {
                     border: 1px solid var(--border-color);
                     border-top: none;
+                    &::before {
+                        bottom: auto;
+                        top: 0;
+                    }
                 }
             }
         }
@@ -233,6 +248,7 @@
             }
         }
 
+        
         ul.tabs-text {
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 0;
@@ -340,6 +356,12 @@
 }
 
 .tabs {
+    .tabs-text, .tabs-pills, .tabs-group { 
+        .active::before {
+            display: none!important;
+        }
+    }
+
     .tabs-list:not(.tabs-group) {
         &.align-left {
             justify-content: flex-start;

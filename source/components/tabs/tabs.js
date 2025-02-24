@@ -247,12 +247,10 @@
             if (o.link) {
                 $(`[data-link=${o.link}]`).each((i, el) => {
                     if (el === this.elem) return;
-                    // Metro.getPlugin(el, "tabs").openByIndex(tabIndex);
                     const tabs = $(el).find("li");
-                    tabs[tabIndex].click();
-                    // console.log(tabs[tabIndex],  tabIndex);
-                    // const tab = $(el).find("li")[tabIndex];
-                    // tab.children("a").click();
+                    if (tabs.length && tabs[tabIndex]) {
+                        tabs[tabIndex].click();
+                    }
                 })
             }
 

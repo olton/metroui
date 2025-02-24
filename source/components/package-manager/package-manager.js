@@ -7,6 +7,7 @@
     </svg>`
     
     let PackageManagerDefaultConfig = {
+        link: "package-manager",
         default: "npm",
         deps: "", // dev, peer, or empty for default
         package: "",
@@ -47,7 +48,7 @@
             const bunId = Hooks.useId(`pm-bun-${timestamp}`);
             element.addClass("package-manager");
             element.html(`
-                <ul data-role="tabs" data-expand="true" data-link="package-manager">
+                <ul data-role="tabs" data-expand="true" data-link="${o.link}">
                     <li ${o.default === "npm" ? "active" : ""}><a href="#${npmId}"><span class="mif-npm"></span> npm</a></li>
                     <li ${o.default === "pnpm" ? "active" : ""}><a href="#${pnpmId}"><span class="mif-pnpm"></span> pnpm</a></li>
                     <li ${o.default === "yarn" ? "active" : ""}><a href="#${yarnId}"><span class="mif-yarn"></span> yarn</a></li>

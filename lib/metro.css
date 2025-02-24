@@ -61752,6 +61752,7 @@ label:has(input) {
   --tabs-item-color-hover: var(--default-color);
   --tabs-item-background-active: #eaeaea;
   --tabs-item-color-active: var(--default-color);
+  --tabs-item-marker-active: #2bcc19;
   --tabs-item-icon-background: #ffffff;
   --tabs-item-icon-color: #000000;
 }
@@ -61766,13 +61767,13 @@ label:has(input) {
   --tabs-item-color-hover: var(--default-color);
   --tabs-item-background-active: #4a4d51;
   --tabs-item-color-active: var(--default-color);
+  --tabs-item-marker-active: #4fff39;
   --tabs-item-icon-background: #343637;
   --tabs-item-icon-color: #ffffff;
 }
 .tabs {
   position: relative;
   border: 1px solid var(--border-color);
-  transition: all 0.3s ease-in-out;
   background-color: var(--tabs-background);
   color: var(--tabs-color);
 }
@@ -61911,6 +61912,16 @@ label:has(input) {
   background-color: var(--tabs-item-background-active);
   color: var(--tabs-item-color-active);
 }
+.tabs-expand > ul.tabs-list > li.active::before {
+  display: block;
+  position: absolute;
+  content: "";
+  background-color: var(--tabs-item-marker-active);
+  height: 4px;
+  width: 100%;
+  z-index: 1;
+  bottom: 0;
+}
 .tabs-expand > ul.tabs-list .d-menu {
   position: absolute;
   width: auto;
@@ -61926,6 +61937,10 @@ label:has(input) {
 .tabs-expand.tabs-bottom > ul.tabs-list > li.active {
   border: 1px solid var(--border-color);
   border-top: none;
+}
+.tabs-expand.tabs-bottom > ul.tabs-list > li.active::before {
+  bottom: auto;
+  top: 0;
 }
 .tabs-expand .hamburger,
 .tabs-expand .expand-title {
@@ -62017,6 +62032,11 @@ label:has(input) {
   border-color: var(--border-color);
   background: var(--tabs-item-background-active);
   color: var(--tabs-item-color-active);
+}
+.tabs .tabs-text .active::before,
+.tabs .tabs-pills .active::before,
+.tabs .tabs-group .active::before {
+  display: none !important;
 }
 .tabs .tabs-list:not(.tabs-group).align-left {
   justify-content: flex-start;
