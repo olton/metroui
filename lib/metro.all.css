@@ -62064,10 +62064,16 @@ label:has(input) {
   right: 8px;
   top: 6px;
 }
-.package-manager .pm-command button svg {
+.package-manager svg {
   fill: var(--code-color);
   width: 16px;
   height: 16px;
+}
+.package-manager li a {
+  background: var(--code-background);
+}
+.package-manager li a > svg {
+  margin-right: 6px;
 }
 
 /* source/components/page-control/pagecontrol.less */
