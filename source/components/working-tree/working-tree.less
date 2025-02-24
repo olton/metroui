@@ -37,7 +37,7 @@
             align-items: center;
             padding-bottom: 1px;
                         
-            &::before, &::after {
+            &::before {
                 content: "";
                 position: absolute;
                 width: 14px;
@@ -47,54 +47,37 @@
                 left: 3px;
                 transform: translateY(-50%);
                 background-color: var(--working-tree-marker-color);
-                color: #fff;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: 700;
-                font-size: 10px;
-            }
-            
-            &::after {
-                background: transparent!important;
-                font-size: 11px;
             }
         }    
         
         &.work-success {
             color: var(--working-tree-marker-success)!important;
             .node::before {
-                background-color: var(--working-tree-marker-success);
-            }
-            .node::after {
-                content: "v";
-                color: #000;
+                display: none;
             }
         }
+        
         &.work-pending {
             color: var(--working-tree-marker-pending)!important;
             .node::before {
-                background-color: var(--working-tree-marker-pending);
-            }
-            .node::after {
-                animation: rotate-marker 1s linear infinite;
-                content: "⭮";
-                font-size: 11px;
-                top: 3px;
+                display: none;
             }
         }
+        
         &.work-fail {
             color: var(--working-tree-marker-fail)!important;
             .node::before {
-                background-color: var(--working-tree-marker-fail);
-            }
-            .node::after {
-                content: "!";
-                color: #fff;
+                display: none;
             }
         }
     }
 
+    .bull {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+    }
+    
     .title {
         margin-left: 26px;
         width: 100%;

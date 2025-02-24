@@ -74805,8 +74805,7 @@ body.vegas-container > .vegas-slide {
   align-items: center;
   padding-bottom: 1px;
 }
-.working-tree > li .node::before,
-.working-tree > li .node::after {
+.working-tree > li .node::before {
   content: "";
   position: absolute;
   width: 14px;
@@ -74816,48 +74815,29 @@ body.vegas-container > .vegas-slide {
   left: 3px;
   transform: translateY(-50%);
   background-color: var(--working-tree-marker-color);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 10px;
-}
-.working-tree > li .node::after {
-  background: transparent !important;
-  font-size: 11px;
 }
 .working-tree > li.work-success {
   color: var(--working-tree-marker-success) !important;
 }
 .working-tree > li.work-success .node::before {
-  background-color: var(--working-tree-marker-success);
-}
-.working-tree > li.work-success .node::after {
-  content: "v";
-  color: #000;
+  display: none;
 }
 .working-tree > li.work-pending {
   color: var(--working-tree-marker-pending) !important;
 }
 .working-tree > li.work-pending .node::before {
-  background-color: var(--working-tree-marker-pending);
-}
-.working-tree > li.work-pending .node::after {
-  animation: rotate-marker 1s linear infinite;
-  content: "\2b6e";
-  font-size: 11px;
-  top: 3px;
+  display: none;
 }
 .working-tree > li.work-fail {
   color: var(--working-tree-marker-fail) !important;
 }
 .working-tree > li.work-fail .node::before {
-  background-color: var(--working-tree-marker-fail);
+  display: none;
 }
-.working-tree > li.work-fail .node::after {
-  content: "!";
-  color: #fff;
+.working-tree .bull {
+  position: absolute;
+  top: 2px;
+  left: 2px;
 }
 .working-tree .title {
   margin-left: 26px;

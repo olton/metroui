@@ -21,9 +21,9 @@
 
 <div class="container-fluid">
     <div class="container">
-        <div class="row">
+        <div class="row mt-10">
             <div class="cell-md-4">
-                <div class="box mt-4">
+                <div class="box">
                     <div class="h5">Latest Changes</div>
                     <ul class="timeline">
                         <li>
@@ -51,7 +51,13 @@
                 </div>
             </div>
             <div class="cell-md-4">
-                <div class="box mt-4">
+                <div class="box">
+                    <div class="h5">Working Tree</div>
+                    <ul data-role="working-tree" id="wt"></ul>
+                </div>
+            </div>
+            <div class="cell-md-4">
+                <div class="box">
                     <div class="h5">Working Tree</div>
                     <ul class="working-tree">
                         <li>
@@ -128,6 +134,47 @@
 <script src="../lib/metro.js"></script>
 <script>
     Metro.welcome()
+    $(()=>{
+        const tree = Metro.getPlugin("#wt", "working-tree");
+        tree.addNode({
+            title: "Staking Ledger",
+            value: "100%",
+            items: [
+                {title: "Fetch hashes", value: "2m"},
+                {title: "Fetch accounts", value: "2m"}
+            ]
+        })
+
+        const nextEpochLedgerNodeID = tree.addNode({
+            title: "Next Epoch Ledger",
+            value: "100%",
+            items: [
+                {title: "Fetch hashes", value: "2m"},
+                {title: "Fetch accounts", value: "2m"}
+            ]
+        })
+        tree.setState(nextEpochLedgerNodeID, "pending")
+
+        const prevEpochLedgerNodeID = tree.addNode({
+            title: "Prev Epoch Ledger",
+            value: "100%",
+            items: [
+                {title: "Fetch hashes", value: "2m"},
+                {title: "Fetch accounts", value: "2m"}
+            ]
+        })
+        tree.setState(prevEpochLedgerNodeID, "fail")
+
+        const genesisEpochLedgerNodeID = tree.addNode({
+            title: "Prev Epoch Ledger",
+            value: "100%",
+            items: [
+                {title: "Fetch hashes", value: "2m"},
+                {title: "Fetch accounts", value: "2m"}
+            ]
+        })
+        tree.setState(genesisEpochLedgerNodeID, "success")
+    })
 </script>
 </body>
 </html>
