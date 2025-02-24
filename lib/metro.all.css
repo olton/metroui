@@ -57148,6 +57148,28 @@ aside::after {
 .directive.directive-air .icon::before {
   content: "\1f4a8";
 }
+.directive-style-2 {
+  border: solid var(--directive-border-color);
+  border-width: 0 0 0 10px;
+}
+.directive-style-2 .icon {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  font-size: 24px;
+  transform: rotate(0);
+  left: -21px;
+  top: 10px;
+  border: 1px solid var(--directive-border-color);
+  background: var(--default-background);
+  padding: 6px;
+  z-index: 1;
+}
+.directive-style-2 .icon::before {
+  font-size: 20px !important;
+  position: relative;
+  margin-top: -3px;
+}
 
 /* source/components/donut/donut.less */
 .donut {

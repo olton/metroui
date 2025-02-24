@@ -68,6 +68,7 @@
         directive: "note",
         showIcon: true,
         title: "",
+        style: 1, // default - 1, vue - 2
         onDirectiveCreate: Metro.noop
     };
 
@@ -98,7 +99,7 @@
 
         _createStructure: function(){
             const that = this, element = this.element, o = this.options;
-            const directive = element.wrap("<div>").addClass("directive").addClass(`directive-${o.directive}`);
+            const directive = element.wrap("<div>").addClass("directive").addClass(`directive-style-${o.style}`).addClass(`directive-${o.directive}`);
             const title = $("<div>").addClass("directive-title").html(o.title ? o.title : this.strings[`label_${o.directive.toLowerCase()}`].toUpperCase());
             if (o.showIcon) {
                 title.prepend($("<span>").addClass("icon").html(icons[o.directive]));                
