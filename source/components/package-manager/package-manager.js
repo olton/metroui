@@ -49,10 +49,10 @@
             element.addClass("package-manager");
             element.html(`
                 <ul data-role="tabs" data-expand="true" data-link="${o.link}">
-                    <li ${o.default === "npm" ? "active" : ""}><a href="#${npmId}"><span class="mif-npm"></span> npm</a></li>
-                    <li ${o.default === "pnpm" ? "active" : ""}><a href="#${pnpmId}"><span class="mif-pnpm"></span> pnpm</a></li>
-                    <li ${o.default === "yarn" ? "active" : ""}><a href="#${yarnId}"><span class="mif-yarn"></span> yarn</a></li>
-                    <li ${o.default === "bun" ? "active" : ""}><a href="#${bunId}"><span class="mif-bun"></span> bun</a></li>
+                    <li class="${o.default === "npm" ? "active" : ""}"><a href="#${npmId}"><span class="mif-npm"></span> npm</a></li>
+                    <li class="${o.default === "pnpm" ? "active" : ""}"><a href="#${pnpmId}"><span class="mif-pnpm"></span> pnpm</a></li>
+                    <li class="${o.default === "yarn" ? "active" : ""}"><a href="#${yarnId}"><span class="mif-yarn"></span> yarn</a></li>
+                    <li class="${o.default === "bun" ? "active" : ""}"><a href="#${bunId}"><span class="mif-bun"></span> bun</a></li>
                 </ul>
                 <div>
                     <div class="pm-command" id="${npmId}">

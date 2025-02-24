@@ -228,6 +228,8 @@
 
             if (tab === undefined) {
                 tab = $(tabs[0]);
+            } else {
+                tab = $(tab);
             }
 
             const target = tab.find("a").attr("href");
