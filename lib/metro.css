@@ -57006,6 +57006,14 @@ aside::after {
   position: relative;
   margin-top: -3px;
 }
+.directive-style-3 {
+  padding-left: 4.5rem !important;
+}
+.directive-style-3 .icon {
+  right: auto;
+  left: 10px;
+  top: 10px;
+}
 
 /* source/components/donut/donut.less */
 .donut {
