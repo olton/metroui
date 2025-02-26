@@ -14,6 +14,7 @@
         openMode: "auto",
         openFunc: "show",
         closeFunc: "hide",
+        height: "auto",
         onDrop: Metro.noop,
         onUp: Metro.noop,
         onDropdownCreate: Metro.noop
@@ -86,6 +87,12 @@
             
             this.displayOrigin = Metro.utils.getStyleOne(element, "display");
 
+            if (o.height !== "auto") {
+                element.css({
+                    "height": o.height,
+                    "overflow-y": "auto",
+                });
+            }
             element.css("display", "none");
 
             this.toggle = toggle;
@@ -179,11 +186,11 @@
 
         _open: function(el, immediate){
             const dropdown = Metro.getPlugin(el, "dropdown");
-            const toggle = dropdown.toggle;
             const options = dropdown.options;
             const func = options.openFunc;
 
-            toggle.addClass('active-toggle').addClass("active-control");
+            dropdown.toggle.addClass('active-toggle').addClass("active-control");
+            dropdown.element.parent().addClass("active-container");
 
             dropdown.element[func](immediate ? 0 : options.duration, function(){
                 const _el = this, $el = $(this);

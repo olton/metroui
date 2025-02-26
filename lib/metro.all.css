@@ -57885,6 +57885,19 @@ aside::after {
   margin-left: 0;
   margin-right: auto;
 }
+.file.input-small {
+  line-height: 28px;
+  height: 28px;
+}
+.file.input-small .caption {
+  font-size: 12px;
+  line-height: 28px;
+  height: 28px;
+}
+.file.input-small .button {
+  height: 24px;
+  margin: 1px 1px 1px auto;
+}
 
 /* source/components/flip-card/flip-card.less */
 .flip-card .front,

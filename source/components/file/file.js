@@ -69,6 +69,10 @@
                 button.appendTo(container);
                 button.addClass(o.clsButton);
 
+                if (container.hasClass("input-small")) {
+                    button.addClass("small");
+                }
+                
                 if (element.attr('dir') === 'rtl' ) {
                     container.addClass("rtl");
                 }
