@@ -1,229 +1,122 @@
 @import (once) "../../include/vars";
-@import (once) "../../include/mixins";
+
+:root {
+    --action-button-background: #ebebeb;
+    --action-button-color: #191919;
+}
+
+.dark-side {
+    --action-button-background: #2b2d30;
+    --action-button-color: #f3fcff;
+}
 
 .action-button {
+    --num-icons: 0;
     padding: 0;
-    border-radius: 50%;
+    margin: 0;
     width: 56px;
     height: 56px;
-    line-height: 56px;
-    text-align: center;
-    display: inline-block;
-    font-weight: 400;
-    white-space: nowrap;
-    vertical-align: middle;
-    user-select: none;
-    border: 1px solid transparent;
-    font-size: .875rem;
-    transition: @transition-short;
-    background-color: darken(@light, 5%);
-    color: @dark;
-    cursor: pointer;
-    outline: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
+    z-index: @zindex-absolute;
 
-
-    .shadow(1);
-
-    .icon {
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-        font-size: 20px;
-        display: inline-block;
-        text-align: center;
-        margin-top: 18px;
-
-        & > * {
-            width: 100%;
-            max-height: 100%;
-            display: inline-block;
-        }
-    }
-
-
-    &.second {
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
-        box-shadow: 0 2px 10px 0 rgba(0,0,0,.16), 0 2px 5px 0 rgba(0,0,0,.26);
+    button {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-weight: 400;
+        white-space: nowrap;
+        user-select: none;
+        border: 1px solid transparent;
+        border-radius: 50%;
+        font-size: 1rem;
+        transition: @transition-short;
+        background-color: var(--action-button-background);
+        color: var(--action-button-color);
+        cursor: pointer;
+        outline: none;
+        z-index: 1;
 
         .icon {
-            width: 16px;
-            height: 16px;
-            line-height: 16px;
-            font-size: 16px;
-            margin-top: 0;
+            transition: @transition-short;
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            object-fit: cover;
         }
     }
 
-    &.prime {
-        .shadow(2);
-    }
-    &:active {
-        .shadow(3);
-    }
-}
+    button.active {
+        &.rotate {
+            transform: rotate(45deg);
+        }
 
-.multi-action {
-    display: inline-block;
-    vertical-align: middle;
-    position: relative;
-    .square(56, px);
-}
-
-.multi-action {
-    .action-button {
-        position: absolute;
-        z-index: 2;
-        margin: 0 !important;
+        .icon {
+            transform: scale(1.6);
+        }
     }
 
     .actions {
-        position: absolute;
         list-style: none inside none;
-        margin: 0 0 0 0;
+        margin: 0;
         padding: 0;
-        width: auto;
-        float: left;
-        background-color: transparent;
-        top: 8px;
-        left: 8px;
-        z-index: 1;
-        .circle(40, px);
-    }
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        z-index: 0;
 
-    .actions {
         li {
-            position: absolute;
-            display: block;
-            .circle(40, px);
-            .shadow(1);
-            margin: 0;
-            background: @dark-gray;
-            color: @white;
-            transform: scale(.2);
+            width: 40px;
+            height: 40px;
             line-height: 40px;
             font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: var(--action-button-background);
+            color: var(--action-button-color);
+            position: absolute;
             transition: all .3s;
-            cursor: pointer;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transform-origin: 0 0;
+            z-index: 0;
 
-            a {
-                background: inherit;
-                color: inherit;
-                display: block;
-                .circle(40, px);
-                line-height: 40px;
-                text-align: center;
+            * > {
+                width: 100%;
+                max-height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                object-fit: cover;
                 text-decoration: none;
-            }
-
-            &:active {
-                .shadow(2);
+                color: inherit;
+                background: inherit;
             }
         }
     }
 
-    .actions {
-        &.drop-right, &.drop-left, &.drop-down, &.drop-up {
-            top: 8px!important;
-            left: 8px!important;
-        }
-    }
-
-    .action-button {
-        &.active ~ .actions {
-            li {
-                transition: all .3s;
-                transform: scale(1);
-            }
-
-            li {
-                &:nth-child(1) {margin-top: -56px;}
-                &:nth-child(2) {margin-top: -104px;}
-                &:nth-child(3) {margin-top: -152px;}
-                &:nth-child(4) {margin-top: -200px;}
-                &:nth-child(5) {margin-top: -248px;}
-                &:nth-child(6) {margin-top: -296px;}
-                &:nth-child(7) {margin-top: -344px;}
-                &:nth-child(8) {margin-top: -392px;}
-                &:nth-child(9) {margin-top: -440px;}
-                &:nth-child(10) {margin-top: -488px;}
-            }
-        }
-
-        &.active ~ .actions.drop-bottom, &.active ~ .actions.drop-down {
-
-            li {
-                &:nth-child(1) {margin-top: 56px;}
-                &:nth-child(2) {margin-top: 104px;}
-                &:nth-child(3) {margin-top: 152px;}
-                &:nth-child(4) {margin-top: 200px;}
-                &:nth-child(5) {margin-top: 248px;}
-                &:nth-child(6) {margin-top: 296px;}
-                &:nth-child(7) {margin-top: 344px;}
-                &:nth-child(8) {margin-top: 392px;}
-                &:nth-child(9) {margin-top: 440px;}
-                &:nth-child(10) {margin-top: 488px;}
-            }
-        }
-        &.active ~ .actions.drop-right {
-
-            li {
-                margin-top: 0;
-            }
-            li {
-                &:nth-child(1) {margin-left: 56px;}
-                &:nth-child(2) {margin-left: 104px;}
-                &:nth-child(3) {margin-left: 152px;}
-                &:nth-child(4) {margin-left: 200px;}
-                &:nth-child(5) {margin-left: 248px;}
-                &:nth-child(6) {margin-left: 296px;}
-                &:nth-child(7) {margin-left: 344px;}
-                &:nth-child(8) {margin-left: 392px;}
-                &:nth-child(9) {margin-left: 440px;}
-                &:nth-child(10) {margin-left: 488px;}
-            }
-        }
-        &.active ~ .actions.drop-left {
-
-            li {
-                margin-top: 0;
-            }
-            li {
-                &:nth-child(1) {margin-left: -56px;}
-                &:nth-child(2) {margin-left: -104px;}
-                &:nth-child(3) {margin-left: -152px;}
-                &:nth-child(4) {margin-left: -200px;}
-                &:nth-child(5) {margin-left: -248px;}
-                &:nth-child(6) {margin-left: -296px;}
-                &:nth-child(7) {margin-left: -344px;}
-                &:nth-child(8) {margin-left: -392px;}
-                &:nth-child(9) {margin-left: -440px;}
-                &:nth-child(10) {margin-left: -488px;}
-            }
-        }
-    }
-
-    .action-button .icon {
-        transition: all .3s;
-    }
-
-    .action-button {
-        &.active.rotate .icon {
-            .rotate(45deg);
-        }
-        &.active.rotate-minus .icon {
-            .rotate(-45deg);
-        }
-    }
-}
-
-.action-button, .multi-action {
-    &.floating-action-top {
-        z-index: @zindex-top; top: 90px; left: 16px; position: fixed;
-    }
-    &.floating-action-bottom {
-        z-index: @zindex-top; bottom: 20px; right: 20px; position: fixed;
+    button.active + .actions li {
+        --angle: calc(360deg / var(--num-icons) * var(--i));
+        transform: translate(-50%, -50%) rotate(var(--angle)) translate(60px) rotate(calc(-1 * var(--angle))) scale(1);
     }
 }

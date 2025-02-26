@@ -5,6 +5,7 @@
     const toggleImage = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path></svg>`
     
     let DropMenuDefaultConfig = {
+        height: "auto",
         align: "left", // left, right
         onMenuCreate: Metro.noop
     };
@@ -48,14 +49,14 @@
         },
         
         _createStructure: function(){
-            const element = this.element
-            const level = element.parents("[data-role-dropmenu]").length;
-            let toggle = $(this._toggle())
-            toggle.append(toggleImage);
-            this.toggle = toggle;
+            const element = this.element, o = this.options;
+            this.level = element.parents("[data-role-dropmenu]").length;
+            this.toggle = $(this._toggle()).append(toggleImage)
             this.displayOrigin = element.css("display");
-            this.element.addClass("drop-menu").css("z-index", `calc(var(--z-index-fixed) + ${level})!important`).hide();
-            this.level = level;
+            this.element.addClass("drop-menu").css("z-index", `calc(var(--z-index-fixed) + ${this.level})!important`).hide();
+            if (o.height !== "auto") {
+                element.css("max-height", o.height);                
+            }
         },
 
         _createEvents: function(){

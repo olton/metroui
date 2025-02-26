@@ -46470,287 +46470,113 @@ button.light.outline,
 }
 
 /* source/components/action-button/action-button.less */
+:root {
+  --action-button-background: #ebebeb;
+  --action-button-color: #191919;
+}
+.dark-side {
+  --action-button-background: #2b2d30;
+  --action-button-color: #f3fcff;
+}
 .action-button {
+  --num-icons: 0;
   padding: 0;
-  border-radius: 50%;
+  margin: 0;
   width: 56px;
   height: 56px;
-  line-height: 56px;
-  text-align: center;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 500;
+}
+.action-button button {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   font-weight: 400;
   white-space: nowrap;
-  vertical-align: middle;
   user-select: none;
   border: 1px solid transparent;
-  font-size: 0.875rem;
+  border-radius: 50%;
+  font-size: 1rem;
   transition: all 0.15s ease-in-out;
-  background-color: #ebebeb;
-  color: #1d1d1d;
+  background-color: var(--action-button-background);
+  color: var(--action-button-color);
   cursor: pointer;
   outline: none;
-  position: relative;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-}
-.action-button .icon {
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  font-size: 20px;
-  display: inline-block;
-  text-align: center;
-  margin-top: 18px;
-}
-.action-button .icon > * {
-  width: 100%;
-  max-height: 100%;
-  display: inline-block;
-}
-.action-button.second {
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-}
-.action-button.second .icon {
-  width: 16px;
-  height: 16px;
-  line-height: 16px;
-  font-size: 16px;
-  margin-top: 0;
-}
-.action-button.prime {
-  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19), 0 8px 17px 0 rgba(0, 0, 0, 0.2);
-}
-.action-button:active {
-  box-shadow: 0 17px 50px 0 rgba(0, 0, 0, 0.19), 0 12px 15px 0 rgba(0, 0, 0, 0.24);
-}
-.multi-action {
-  display: inline-block;
-  vertical-align: middle;
-  position: relative;
-  width: 56px;
-  height: 56px;
-}
-.multi-action .action-button {
-  position: absolute;
-  z-index: 2;
-  margin: 0 !important;
-}
-.multi-action .actions {
-  position: absolute;
-  list-style: none inside none;
-  margin: 0 0 0 0;
-  padding: 0;
-  width: auto;
-  float: left;
-  background-color: transparent;
-  top: 8px;
-  left: 8px;
   z-index: 1;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
 }
-.multi-action .actions li {
-  position: absolute;
-  display: block;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-  margin: 0;
-  background: #515151;
-  color: #ffffff;
-  transform: scale(0.2);
-  line-height: 40px;
-  font-size: 20px;
-  transition: all 0.3s;
-  cursor: pointer;
+.action-button button .icon {
+  transition: all 0.15s ease-in-out;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
 }
-.multi-action .actions li a {
-  background: inherit;
-  color: inherit;
-  display: block;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  line-height: 40px;
-  text-align: center;
-  text-decoration: none;
-}
-.multi-action .actions li:active {
-  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19), 0 8px 17px 0 rgba(0, 0, 0, 0.2);
-}
-.multi-action .actions.drop-right,
-.multi-action .actions.drop-left,
-.multi-action .actions.drop-down,
-.multi-action .actions.drop-up {
-  top: 8px !important;
-  left: 8px !important;
-}
-.multi-action .action-button.active ~ .actions li {
-  transition: all 0.3s;
-  transform: scale(1);
-}
-.multi-action .action-button.active ~ .actions li:nth-child(1) {
-  margin-top: -56px;
-}
-.multi-action .action-button.active ~ .actions li:nth-child(2) {
-  margin-top: -104px;
-}
-.multi-action .action-button.active ~ .actions li:nth-child(3) {
-  margin-top: -152px;
-}
-.multi-action .action-button.active ~ .actions li:nth-child(4) {
-  margin-top: -200px;
-}
-.multi-action .action-button.active ~ .actions li:nth-child(5) {
-  margin-top: -248px;
-}
-.multi-action .action-button.active ~ .actions li:nth-child(6) {
-  margin-top: -296px;
-}
-.multi-action .action-button.active ~ .actions li:nth-child(7) {
-  margin-top: -344px;
-}
-.multi-action .action-button.active ~ .actions li:nth-child(8) {
-  margin-top: -392px;
-}
-.multi-action .action-button.active ~ .actions li:nth-child(9) {
-  margin-top: -440px;
-}
-.multi-action .action-button.active ~ .actions li:nth-child(10) {
-  margin-top: -488px;
-}
-.multi-action .action-button.active ~ .actions.drop-bottom li:nth-child(1),
-.multi-action .action-button.active ~ .actions.drop-down li:nth-child(1) {
-  margin-top: 56px;
-}
-.multi-action .action-button.active ~ .actions.drop-bottom li:nth-child(2),
-.multi-action .action-button.active ~ .actions.drop-down li:nth-child(2) {
-  margin-top: 104px;
-}
-.multi-action .action-button.active ~ .actions.drop-bottom li:nth-child(3),
-.multi-action .action-button.active ~ .actions.drop-down li:nth-child(3) {
-  margin-top: 152px;
-}
-.multi-action .action-button.active ~ .actions.drop-bottom li:nth-child(4),
-.multi-action .action-button.active ~ .actions.drop-down li:nth-child(4) {
-  margin-top: 200px;
-}
-.multi-action .action-button.active ~ .actions.drop-bottom li:nth-child(5),
-.multi-action .action-button.active ~ .actions.drop-down li:nth-child(5) {
-  margin-top: 248px;
-}
-.multi-action .action-button.active ~ .actions.drop-bottom li:nth-child(6),
-.multi-action .action-button.active ~ .actions.drop-down li:nth-child(6) {
-  margin-top: 296px;
-}
-.multi-action .action-button.active ~ .actions.drop-bottom li:nth-child(7),
-.multi-action .action-button.active ~ .actions.drop-down li:nth-child(7) {
-  margin-top: 344px;
-}
-.multi-action .action-button.active ~ .actions.drop-bottom li:nth-child(8),
-.multi-action .action-button.active ~ .actions.drop-down li:nth-child(8) {
-  margin-top: 392px;
-}
-.multi-action .action-button.active ~ .actions.drop-bottom li:nth-child(9),
-.multi-action .action-button.active ~ .actions.drop-down li:nth-child(9) {
-  margin-top: 440px;
-}
-.multi-action .action-button.active ~ .actions.drop-bottom li:nth-child(10),
-.multi-action .action-button.active ~ .actions.drop-down li:nth-child(10) {
-  margin-top: 488px;
-}
-.multi-action .action-button.active ~ .actions.drop-right li {
-  margin-top: 0;
-}
-.multi-action .action-button.active ~ .actions.drop-right li:nth-child(1) {
-  margin-left: 56px;
-}
-.multi-action .action-button.active ~ .actions.drop-right li:nth-child(2) {
-  margin-left: 104px;
-}
-.multi-action .action-button.active ~ .actions.drop-right li:nth-child(3) {
-  margin-left: 152px;
-}
-.multi-action .action-button.active ~ .actions.drop-right li:nth-child(4) {
-  margin-left: 200px;
-}
-.multi-action .action-button.active ~ .actions.drop-right li:nth-child(5) {
-  margin-left: 248px;
-}
-.multi-action .action-button.active ~ .actions.drop-right li:nth-child(6) {
-  margin-left: 296px;
-}
-.multi-action .action-button.active ~ .actions.drop-right li:nth-child(7) {
-  margin-left: 344px;
-}
-.multi-action .action-button.active ~ .actions.drop-right li:nth-child(8) {
-  margin-left: 392px;
-}
-.multi-action .action-button.active ~ .actions.drop-right li:nth-child(9) {
-  margin-left: 440px;
-}
-.multi-action .action-button.active ~ .actions.drop-right li:nth-child(10) {
-  margin-left: 488px;
-}
-.multi-action .action-button.active ~ .actions.drop-left li {
-  margin-top: 0;
-}
-.multi-action .action-button.active ~ .actions.drop-left li:nth-child(1) {
-  margin-left: -56px;
-}
-.multi-action .action-button.active ~ .actions.drop-left li:nth-child(2) {
-  margin-left: -104px;
-}
-.multi-action .action-button.active ~ .actions.drop-left li:nth-child(3) {
-  margin-left: -152px;
-}
-.multi-action .action-button.active ~ .actions.drop-left li:nth-child(4) {
-  margin-left: -200px;
-}
-.multi-action .action-button.active ~ .actions.drop-left li:nth-child(5) {
-  margin-left: -248px;
-}
-.multi-action .action-button.active ~ .actions.drop-left li:nth-child(6) {
-  margin-left: -296px;
-}
-.multi-action .action-button.active ~ .actions.drop-left li:nth-child(7) {
-  margin-left: -344px;
-}
-.multi-action .action-button.active ~ .actions.drop-left li:nth-child(8) {
-  margin-left: -392px;
-}
-.multi-action .action-button.active ~ .actions.drop-left li:nth-child(9) {
-  margin-left: -440px;
-}
-.multi-action .action-button.active ~ .actions.drop-left li:nth-child(10) {
-  margin-left: -488px;
-}
-.multi-action .action-button .icon {
-  transition: all 0.3s;
-}
-.multi-action .action-button.active.rotate .icon {
+.action-button button.active.rotate {
   transform: rotate(45deg);
 }
-.multi-action .action-button.active.rotate-minus .icon {
-  transform: rotate(-45deg);
+.action-button button.active .icon {
+  transform: scale(1.6);
 }
-.action-button.floating-action-top,
-.multi-action.floating-action-top {
-  z-index: 1080;
-  top: 90px;
-  left: 16px;
-  position: fixed;
+.action-button .actions {
+  list-style: none inside none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  z-index: 0;
 }
-.action-button.floating-action-bottom,
-.multi-action.floating-action-bottom {
-  z-index: 1080;
-  bottom: 20px;
-  right: 20px;
-  position: fixed;
+.action-button .actions li {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--action-button-background);
+  color: var(--action-button-color);
+  position: absolute;
+  transition: all 0.3s;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: 0 0;
+  z-index: 0;
+}
+.action-button .actions li * {
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
+  text-decoration: none;
+  color: inherit;
+  background: inherit;
+}
+.action-button button.active + .actions li {
+  --angle: calc(360deg / var(--num-icons) * var(--i));
+  transform: translate(-50%, -50%) rotate(var(--angle)) translate(60px) rotate(calc(-1 * var(--angle))) scale(1);
 }
 
 /* source/components/button/button.less */

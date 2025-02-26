@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Action Button - Metro UI :: Popular HTML, CSS and JS library</title>
+</head>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Action Button</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="d-flex flex-center h-100">
+    <div class="action-button" style="--num-icons: 8;">
+        <button class="" onclick="$(this).toggleClass('active')">
+            <span class="icon"><span class="mif-git"></span></span>
+        </button>
+        <ul class="actions">
+            <li style="--i: 0;"><a href="#"><span class="mif-git-branch"></span></a></li>
+            <li style="--i: 1;"><a href="#"><span class="mif-git-clone"></span></a></li>
+            <li style="--i: 2"><a href="#"><span class="mif-git-commit"></span></a></li>
+            <li style="--i: 3;"><a href="#"><span class="mif-git-compare"></span></a></li>
+            <li style="--i: 4;"><a href="#"><span class="mif-git-diff"></span></a></li>
+            <li style="--i: 5;"><a href="#"><span class="mif-git-draft"></span></a></li>
+            <li style="--i: 6;"><a href="#"><span class="mif-git-fork"></span></a></li>
+            <li style="--i: 7;"><a href="#"><span class="mif-git-pull"></span></a></li>
+            <li style="--i: 8;"><a href="#"><span class="mif-git-push"></span></a></li>
+        </ul>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+</script>
+</body>
+</html>
