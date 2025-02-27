@@ -49,12 +49,14 @@
 
         _createEvents: function(){
             const that = this, element = this.element, o = this.options;
-            element.on(Metro.events.click, ".actions li, .actions button", function(){
+            element.on(Metro.events.click, ".actions li, .actions button", function(e){
                 that._fireEvent("action-click", {action: this});
             })
             
-            element.on(Metro.events.click, ".action-button", function(){
-                that._fireEvent("click");
+            element.on(Metro.events.click, ".main-action", function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                $(this).toggleClass("active");
             });
         },
 
@@ -64,5 +66,11 @@
         destroy: function(){
             this.element.remove();
         }
+    });
+
+    $(document).on("click", function(e) {
+        $("[data-role-actionbutton]").each((i, el) => {
+            $(el).children("button").removeClass("active");
+        })
     });
 }(Metro, Dom));
