@@ -46479,7 +46479,8 @@ button.light.outline,
   --action-button-color: #f3fcff;
 }
 .action-button {
-  --num-icons: 0;
+  --num-actions: 0;
+  --action-shift: 60px;
   padding: 0;
   margin: 0;
   width: 56px;
@@ -46575,8 +46576,8 @@ button.light.outline,
   background: inherit;
 }
 .action-button button.active + .actions li {
-  --angle: calc(360deg / var(--num-icons) * var(--i));
-  transform: translate(-50%, -50%) rotate(var(--angle)) translate(60px) rotate(calc(-1 * var(--angle))) scale(1);
+  --angle: calc(360deg / var(--num-actions) * var(--action-index));
+  transform: translate(-50%, -50%) rotate(var(--angle)) translate(var(--action-shift)) rotate(calc(-1 * var(--angle))) scale(1);
 }
 
 /* source/components/button/button.less */
