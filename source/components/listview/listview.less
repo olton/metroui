@@ -7,9 +7,10 @@
 
 :root {
     --listview-item-border-radius: 4px;
-
+    --listview-item-width: 220px;
     --listview-background: #ffffff;
     --listview-color: #191919;
+    --listview-color-secondary: #919191;
     --listview-item-background-hover: #d4e2ff;
     --listview-item-background-active: #d4e2ff;
     --listview-badge-background: transparent;
@@ -19,6 +20,7 @@
 .dark-side {
     --listview-background: #1e1f22;
     --listview-color: #dbdfe7;
+    --listview-color-secondary: #bcbcbc;
     --listview-item-background-hover: #2d2d32;
     --listview-item-background-active: #28282c;
     --listview-badge-background: transparent;
@@ -29,7 +31,6 @@
     position: relative;
     margin: 0;
     padding: 0;
-    max-height: 100%;
     background-color: var(--listview-background);
     color: var(--listview-color);
     list-style: none inside;
@@ -60,26 +61,36 @@
         background-color: inherit;
         overflow: hidden;
         border-radius: var(--listview-item-border-radius);
+        //border: 1px dashed red;
+        padding: 4px 8px;
 
-        &:hover {
-            background-color: var(--listview-item-background-hover);
+        @media (hover: hover) {
+            &:hover {
+                background-color: var(--listview-item-background-hover);
+            }
         }
-
-        & > .icon {
-            text-align: center;
-
-            img {
-                max-width: 100%;
+        
+        @media (hover: none) {
+            &:active {
+                background-color: var(--listview-item-background-hover);
+            }
+        }
+        
+        .icon {
+            width: 22px;
+            height: 22px;
+            line-height: 22px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            object-fit: cover;
+            stroke: var(--listview-color);
+            
+            & > * {
+                width: 100%;
                 height: 100%;
             }
-
-            & > * {
-                vertical-align: initial;
-            }
-        }
-
-        .checkbox, .radio, .switch {
-            height: auto;
         }
     }
 
@@ -90,243 +101,403 @@
         list-style: none inside;
     }
 
-    .node {
-        & > .data > .content, & > .node-data {
-            display: none;
-        }
+    .node > :is(.content, .desc, .date) {
+        display: none;
     }
 
     &:not(.selectable) {
         .checkbox {
-            display: none;
+            display: none!important;
         }
     }
 
-    .node > .data > .caption {
+    .caption {
         line-height: 1.2;
         font-size: 12px;
     }
 
-    .node-group > .data > .caption {
+    .node-group > .caption {
         font-size: 14px;
+    }
+    
+    .content {
+        order: 100;
     }
 }
 
 .listview {
-
     &.view-list {
+        display: flex;
+        flex-flow: column wrap;        
+        
         .node {
-            min-width: 160px;
-            line-height: 26px;
-            height: 26px;
-            padding: 0 8px;
+            display: flex;
             flex-flow: row nowrap;
             align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            width: var(--listview-item-width);
+        }
+    }
+}
 
-            & > .icon {
-                width: 20px;
-                height: 20px;
-                line-height: 26px;
-                font-size: 18px;
+.listview {
+    &.view-table {
+        display: flex;
+        flex-flow: column nowrap;
+        
+        .node {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            
+            &:not(:last-child) {
+                border-bottom: 1px solid var(--border-color);
+            }
+        }
+
+        .caption {
+            width: 160px;
+        }
+
+        .desc {
+            width: 50%;
+            margin-left: auto;
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 16px;
+            color: var(--listview-color-secondary);
+        }
+        
+        .date {
+            width: 100px;
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+
+.listview {
+    &.view-content {
+        display: flex;
+        flex-flow: column nowrap;
+        
+        .node {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0 8px;
+            
+            &:not(:last-child) {
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .desc {
+                width: 50%;
+                margin-left: auto;
+                border-left: 1px solid var(--border-color);
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding-left: 16px;
+                color: var(--listview-color-secondary);
+            }
+
+            .date {
+                width: 100px;
+                border-left: 1px solid var(--border-color);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-left: 8px;
             }
 
-            & > .data {
-                line-height: 26px;
-                padding-left: 24px;
-            }
-
-            & > .icon ~ .data {
-                padding-left: 8px;
-            }
-        }
-    }
-
-    &.view-table {
-        display: table;
-        width: 100%;
-        padding: 0 8px;
-
-        .node {
-            display: table-row;
-            width: 100%;
-        }
-
-        .node > * {
-            display: table-cell;
-            vertical-align: middle;
-        }
-
-        .icon {
-            width: 20px;
-            height: 20px;
-            line-height: 26px;
-            font-size: 18px;
-
-            & > * {
+            .content {
+                display: block!important;
                 width: 100%;
+                flex-shrink: 0;
+                order: 100;
             }
-        }
-
-        & > li {
-            .data > .caption {
-                padding: 0 .5rem;
-                line-height: 26px;
-            }
-        }
-
-        .node-data {
-            display: table-cell;
-            width: auto;
-            line-height: 26px;
-        }
-
-        label.checkbox {
-            width: 32px;
-        }
-    }
-
-    &.view-content {
-        .node {
-            width: 100%;
-            min-height: 50px;
-            padding: 10px 16px;
-            flex-flow: row nowrap;
-
-            & > .icon {
-                width: 32px;
-                height: 32px;
-                line-height: 32px;
-                font-size: 28px;
-                margin-left: 16px;
-            }
-
-            & > .data {
-                padding-left: 64px;
-                font-size: 16px;
-                line-height: 32px;
-                width: 100%;
-
-                .caption, .content {
-                    display: block;
-                    line-height: 16px;
-                    height: 16px;
-                }
-
-                .content {
-                    font-size: .8em;
-                }
-            }
-
-            & > .icon ~ .data {
-                padding-left: 16px;
-            }
-        }
-
-        .node + .node {
-            border-top: 1px solid var(--border-color);
-        }
-    }
-
-    &.view-tiles {
-        .node {
-            width: 250px;
-            height: 56px;
-            padding: 5px 16px;
-            flex-flow: row nowrap;
-
-            & > .icon {
-                width: 46px;
-                height: 46px;
-                line-height: 46px;
-                font-size: 42px;
-                margin-left: 16px;
-            }
-
-            & > .data {
-                padding-left: 78px;
-                font-size: 16px;
-                line-height: 46px;
-            }
-
-            & > .icon + .data {
-                padding-left: 16px;
-            }
-
-            .caption {
-                font-size: 14px;
-            }
-        }
-    }
-
-    &.view-icons, &.view-icons-medium, &.view-icons-large {
-        .node {
-            width: 92px;
-            height: 92px;
-            padding: 8px 8px 2px;
-            display: flex;
-            flex-flow: column nowrap;
-            align-items: center;
-            justify-content: center;
-            margin: 2px;
-
-            & > .icon {
-                width: 32px;
-                height: 32px;
-                line-height: 32px;
-                font-size: 32px;
-                margin-bottom: 4px;
-            }
-
-            & > .data {
-                line-height: 1.5;
-                white-space: normal;
-                text-align: center;
-            }
-
-            .checkbox {
-                position: absolute;
-                top: 2px;
-                left: 2px;
-            }
-        }
-    }
-
-    &.view-icons-medium {
-        .node {
-            width: 124px;
-            height: 124px;
-            margin: 1px;
-
-            & > .icon {
-                width: 54px;
-                height: 54px;
-                line-height: 54px;
-                font-size: 54px;
-            }
-        }
-    }
-
-    &.view-icons-large {
-        .node {
-            width: 200px;
-            height: 200px;
-            margin: 2px;
-            padding: 30px;
-
-            & > .icon {
-                width: 90px;
-                height: 90px;
-                line-height: 90px;
-                font-size: 90px;
+            
+            .content:has(*) {
+                padding: 8px 0;
             }
         }
     }
 }
 
+.listview {
+    &.view-tiles {
+        display: flex;
+        flex-flow: row wrap;
+        
+        .node {
+            width: var(--listview-item-width);
+            padding: .5rem 1rem;
+            align-items: center;
+            border-radius: 10px;
+        }
+        
+        .icon {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 34px;
+            margin: 0 .5rem 0 1rem;
+        }
+        
+        .caption {
+            font-size: 13px;
+            margin-left: 0;
+        }
+        
+        @media (hover: hover) {
+            .node:hover {
+                .date {
+                    position: absolute;
+                    top: 0;
+                    right: 4px;
+                    font-size: 10px;
+                    display: flex;
+                }
+            }
+        }
+        
+        @media (hover: none) {
+            .node:active {
+                .date {
+                    position: absolute;
+                    top: 4px;
+                    right: 4px;
+                    font-size: 10px;
+                    display: flex;
+                }
+            }
+        }
+    }
+}
+
+//.listview {
+//    &.view-list {
+//        .node {
+//            min-width: 160px;
+//            line-height: 26px;
+//            height: 26px;
+//            flex-flow: row nowrap;
+//            align-items: center;
+//
+//            & > .icon {
+//                width: 20px;
+//                height: 20px;
+//                line-height: 26px;
+//                font-size: 18px;
+//                display: flex;
+//                align-items: center;
+//                justify-content: center;
+//            }
+//
+//            & > .data {
+//                line-height: 26px;
+//                padding-left: 24px;
+//            }
+//
+//            & > .icon ~ .data {
+//                padding-left: 8px;
+//            }
+//        }
+//    }
+//
+//    &.view-table {
+//        display: table;
+//        width: 100%;
+//
+//        .node {
+//            display: table-row;
+//            width: 100%;
+//        }
+//
+//        .node > :is(span, div, label) {
+//            display: table-cell;
+//            vertical-align: middle;
+//        }
+//
+//        .node:not(:last-child) > :is(span, div, label){
+//            border-bottom: 1px solid var(--border-color);
+//        }
+//        
+//        .icon {
+//            width: 20px;
+//            height: 20px;
+//            line-height: 26px;
+//            font-size: 18px;
+//
+//            & > * {
+//                width: 100%;
+//            }
+//        }
+//
+//        & > li {
+//            .data > .caption {
+//                padding: 0 .5rem;
+//                line-height: 26px;
+//            }
+//        }
+//
+//        .node-data {
+//            display: table-cell;
+//            width: auto;
+//            line-height: 26px;
+//        }
+//
+//        label.checkbox {
+//            width: 32px;
+//        }
+//    }
+//
+//    &.view-content {
+//        .node {
+//            width: 100%;
+//            min-height: 50px;
+//            padding: 10px 16px;
+//            flex-flow: row nowrap;
+//
+//            & > .icon {
+//                width: 32px;
+//                height: 32px;
+//                line-height: 32px;
+//                font-size: 28px;
+//                margin-left: 16px;
+//            }
+//
+//            & > .data {
+//                padding-left: 64px;
+//                font-size: 16px;
+//                line-height: 32px;
+//                width: 100%;
+//
+//                .caption, .content {
+//                    display: block;
+//                    line-height: 16px;
+//                    height: 16px;
+//                }
+//
+//                .content {
+//                    font-size: .8em;
+//                }
+//            }
+//
+//            & > .icon ~ .data {
+//                padding-left: 16px;
+//            }
+//        }
+//
+//        .node + .node {
+//            border-top: 1px solid var(--border-color);
+//        }
+//    }
+//
+//    &.view-tiles {
+//        .node {
+//            width: 250px;
+//            height: 56px;
+//            padding: 5px 16px;
+//            flex-flow: row nowrap;
+//
+//            & > .icon {
+//                width: 46px;
+//                height: 46px;
+//                line-height: 46px;
+//                font-size: 42px;
+//                margin-left: 16px;
+//            }
+//
+//            & > .data {
+//                padding-left: 78px;
+//                font-size: 16px;
+//                line-height: 46px;
+//            }
+//
+//            & > .icon + .data {
+//                padding-left: 16px;
+//            }
+//
+//            .caption {
+//                font-size: 14px;
+//            }
+//        }
+//    }
+//
+//    &.view-icons, &.view-icons-medium, &.view-icons-large {
+//        .node {
+//            width: 92px;
+//            height: 92px;
+//            padding: 8px 8px 2px;
+//            display: flex;
+//            flex-flow: column nowrap;
+//            align-items: center;
+//            justify-content: center;
+//            margin: 2px;
+//
+//            & > .icon {
+//                width: 32px;
+//                height: 32px;
+//                line-height: 32px;
+//                font-size: 32px;
+//                margin-bottom: 4px;
+//            }
+//
+//            & > .data {
+//                line-height: 1.5;
+//                white-space: normal;
+//                text-align: center;
+//            }
+//
+//            .checkbox {
+//                position: absolute;
+//                top: 2px;
+//                left: 2px;
+//            }
+//        }
+//    }
+//
+//    &.view-icons-medium {
+//        .node {
+//            width: 124px;
+//            height: 124px;
+//            margin: 1px;
+//
+//            & > .icon {
+//                width: 54px;
+//                height: 54px;
+//                line-height: 54px;
+//                font-size: 54px;
+//            }
+//        }
+//    }
+//
+//    &.view-icons-large {
+//        .node {
+//            width: 200px;
+//            height: 200px;
+//            margin: 2px;
+//            padding: 30px;
+//
+//            & > .icon {
+//                width: 90px;
+//                height: 90px;
+//                line-height: 90px;
+//                font-size: 90px;
+//            }
+//        }
+//    }
+//}
+//
 .listview {
     .node {
         &.current-select {
@@ -353,35 +524,36 @@
 
     .node-group {
         .node-toggle {
-            .toggle();
-        }
-
-        .node-toggle {
             position: absolute;
             left: 0;
             top: 0;
             .square(24, px);
-
-            &::before {
-                .rotate(-135deg);
-            }
+            fill: var(--listview-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform .2s ease-in-out;
         }
 
         &.expanded {
             & > .node-toggle {
-                &::before {
-                    .rotate(-45deg);
-                }
+                transform-origin: center;
+                .rotate(90deg);
             }
         }
     }
 
     .node-group + .node-group {
-        margin-top: .5rem;
+        margin-top: 1rem;
     }
 
-    .node-group + .listview {
+    .node-group > .listview {
         margin-top: .5rem;
+    }
+    
+    li:has(.node-toggle) > .caption{
+        margin-left: 24px;
+        margin-top: 3px;
     }
 }
 

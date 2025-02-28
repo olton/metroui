@@ -1,15 +1,20 @@
-/* global Metro */
 (function(Metro, $) {
     'use strict';
-    var Utils = Metro.utils;
-    var ListViewDefaultConfig = {
+
+    const file_icon = `
+    <svg width="800px" height="800px" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <path class="a" d="M39.5,15.5h-9a2,2,0,0,1-2-2v-9h-18a2,2,0,0,0-2,2v35a2,2,0,0,0,2,2h27a2,2,0,0,0,2-2Z"/>
+        <line class="a" x1="28.5" y1="4.5" x2="39.5" y2="15.5"/>
+    </svg>`
+    const toggleImage = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path></svg>`
+    
+    let ListViewDefaultConfig = {
         listviewDeferred: 0,
         selectable: false,
-        checkStyle: 1,
         duration: 100,
         view: Metro.listView.LIST,
         selectCurrent: true,
-        structure: {},
+        defaultIcon: file_icon,
         onNodeInsert: Metro.noop,
         onNodeDelete: Metro.noop,
         onNodeClean: Metro.noop,
@@ -37,9 +42,9 @@
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
-            this._createView();
+            this._createStructure();
             this._createEvents();
 
             this._fireEvent("listview-create", {
@@ -48,35 +53,37 @@
         },
 
         _createIcon: function(data){
-            var icon, src;
-
-            src = Utils.isTag(data) ? $(data) : $("<img>").attr("src", data);
-            icon = $("<span>").addClass("icon");
-            icon.html(src.outerHTML());
-
-            return icon;
+            return $("<div>").addClass("icon").html(data);
         },
 
-        _createCaption: function(data){
+        _createCaption: function(data = ""){
             return $("<div>").addClass("caption").html(data);
         },
 
-        _createContent: function(data){
+        _createContent: function(data = ""){
             return $("<div>").addClass("content").html(data);
         },
 
+        _createDesc: function(data = ""){
+            return $("<div>").addClass("desc").html(data);
+        },
+
+        _createDate: function(data = ""){
+            return $("<div>").addClass("date").html(data);
+        },
+
         _createToggle: function(){
-            return $("<span>").addClass("node-toggle");
+            return $("<span>").addClass("node-toggle").html(toggleImage);
         },
 
         _createNode: function(data){
-            var that = this, o = this.options;
-            var node;
+            const that = this, o = this.options;
+            let node;
 
             node = $("<li>");
 
             if (data.caption !== undefined || data.content !== undefined ) {
-                var d = $("<div>").addClass("data");
+                const d = $("<div>").addClass("data");
                 node.prepend(d);
                 if (data.caption !== undefined) d.append(that._createCaption(data.caption));
                 if (data.content !== undefined) d.append(that._createContent(data.content));
@@ -86,13 +93,13 @@
                 node.prepend(this._createIcon(data.icon));
             }
 
-            if (Utils.objectLength(o.structure) > 0) $.each(o.structure, function(key, val){
+            if (Metro.utils.objectLength(o.structure) > 0) $.each(o.structure, function(key, val){
                 if (data[key] !== undefined) {
                     $("<div>").addClass("node-data item-data-"+key).addClass(data[val]).html(data[key]).appendTo(node);
                 }
             });
 
-            if (data.attributes && Utils.isObject(data.attributes)) {
+            if (data.attributes && Metro.utils.isObject(data.attributes)) {
                 for(let key in data.attributes) {
                     node.attr(`data-${key}`, data.attributes[key])
                 }
@@ -121,51 +128,35 @@
             return node;
         },
 
-        _createView: function(){
-            var that = this, element = this.element, o = this.options;
-            var nodes = element.find("li");
-            var struct_length = Utils.objectLength(o.structure);
+        _createStructure: function(){
+            const that = this, element = this.element, o = this.options;
+            const nodes = element.find("li");
 
             element.addClass("listview");
             element.find("ul").addClass("listview");
+            if (o.selectable) {
+                element.addClass("selectable");
+            }
 
-            $.each(nodes, function(){
-                var node = $(this);
-
-                if (node.data("caption") !== undefined || node.data("content") !== undefined) {
-                    var data = $("<div>").addClass("data");
-                    node.prepend(data);
-                    if (node.data("caption") !== undefined) data.append(that._createCaption(node.data("caption")));
-                    if (node.data("content") !== undefined) data.append(that._createContent(node.data("content")));
-                }
-
-                if (node.data('icon') !== undefined) {
-                    node.prepend(that._createIcon(node.data('icon')));
-                }
+            $.each(nodes, function(index){
+                const node = $(this);
+                const nodeContent = node.html();
+                const defaultFileName = `Item_${index+1}`;
 
                 if (node.children("ul").length > 0) {
+                    node.prepend(that._createCaption(node.data("caption") ?? defaultFileName));
                     node.addClass("node-group");
                     node.append(that._createToggle());
                     if (node.data("collapsed") !== true) node.addClass("expanded");
                 } else {
-                    node.addClass("node");
-                }
-
-                if (node.hasClass("node")) {
-                    var cb = $("<input type='checkbox' data-role='checkbox' data-style='"+o.checkStyle+"'>");
-                    cb.data("node", node);
-                    node.prepend(cb);
-                }
-
-                if (struct_length > 0) $.each(o.structure, function(key){
-                    if (node.data(key) !== undefined) {
-                        $("<div>").addClass("node-data item-data-"+key).addClass(node.data(key)).html(node.data(key)).appendTo(node);
-                    }
-                });
-
-                if (node.data("class") !== undefined) {
-                    node.addClass(node.data("class"))
-                }
+                    node.clear().addClass("node");
+                    node.append($("<input type='checkbox' data-role='checkbox'>"));
+                    node.append(that._createIcon(node.data('icon') ?? o.defaultIcon));
+                    node.append(that._createCaption(node.data("caption") ?? defaultFileName));
+                    node.append(that._createDesc(node.data("desc")));
+                    node.append(that._createDate(node.data("date")));
+                    node.append(that._createContent(nodeContent));
+                }               
             });
 
             this.toggleSelectable();
@@ -174,18 +165,18 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+            const that = this, element = this.element, o = this.options;
 
             element.on(Metro.events.dblclick, ".node", function(){
-                var node = $(this);
+                const node = $(this);
                 that._fireEvent("node-dblclick", {
                     node: node
                 });
             });
 
             element.on(Metro.events.click, ".node", function(){
-                var node = $(this);
-                var href = $(this).attr("href");
+                const node = $(this);
+                const href = $(this).attr("href");
 
                 if (href) {
                     globalThis.location.href = href;
@@ -204,12 +195,12 @@
             });
 
             element.on(Metro.events.click, ".node-toggle", function(){
-                var node = $(this).closest("li");
+                const node = $(this).closest("li");
                 that.toggleNode(node);
             });
 
             element.on(Metro.events.click, ".node-group > .data > .caption", function(){
-                var node = $(this).closest("li");
+                const node = $(this).closest("li");
                 element.find(".node-group").removeClass("current-group");
                 node.addClass("current-group");
 
@@ -220,7 +211,7 @@
             });
 
             element.on(Metro.events.dblclick, ".node-group > .data > .caption", function(){
-                var node = $(this).closest("li");
+                const node = $(this).closest("li");
                 that.toggleNode(node);
 
                 that._fireEvent("node-dbl-click", {
@@ -230,7 +221,7 @@
         },
 
         view: function(v){
-            var element = this.element, o = this.options;
+            const element = this.element, o = this.options;
 
             if (v === undefined) {
                 return o.view;
@@ -248,8 +239,8 @@
         },
 
         toggleNode: function(node){
-            var o = this.options;
-            var func;
+            const o = this.options;
+            let func;
 
             node=$(node);
 
@@ -269,17 +260,17 @@
         },
 
         toggleSelectable: function(){
-            var element = this.element, o = this.options;
-            var func = o.selectable === true ? "addClass" : "removeClass";
+            const element = this.element, o = this.options;
+            const func = o.selectable === true ? "addClass" : "removeClass";
             element[func]("selectable");
             element.find("ul")[func]("selectable");
         },
 
         add: function(node, data){
-            var element = this.element, o = this.options;
-            var target;
-            var new_node;
-            var toggle;
+            const element = this.element, o = this.options;
+            let target;
+            let new_node;
+            let toggle;
 
             if (node === null) {
                 target = element;
@@ -304,7 +295,7 @@
 
             new_node.addClass("node").appendTo(target);
 
-            var cb = $("<input type='checkbox'>");
+            const cb = $("<input type='checkbox'>");
             cb.data("node", new_node);
             new_node.prepend(cb);
             Metro.makePlugin(cb, "checkbox", {});
@@ -319,8 +310,8 @@
         },
 
         addGroup: function(data){
-            var element = this.element, o = this.options;
-            var node;
+            const element = this.element, o = this.options;
+            let node;
 
             delete data['icon'];
 
@@ -340,7 +331,7 @@
         },
 
         insertBefore: function(node, data){
-            var new_node, parent_node, list;
+            let new_node, parent_node, list;
 
             node=$(node);
 
@@ -361,7 +352,7 @@
         },
 
         insertAfter: function(node, data){
-            var new_node, parent_node, list;
+            let new_node, parent_node, list;
 
             node=$(node);
 
@@ -382,14 +373,14 @@
         },
 
         del: function(node){
-            var element = this.element;
+            const element = this.element;
 
             node=$(node);
 
             if (!node.length) {return;}
 
-            var parent_list = node.closest("ul");
-            var parent_node = parent_list.closest("li");
+            const parent_list = node.closest("ul");
+            const parent_node = parent_list.closest("li");
             node.remove();
             if (parent_list.children().length === 0 && !parent_list.is(element)) {
                 parent_list.remove();
@@ -417,11 +408,11 @@
         },
 
         getSelected: function(){
-            var element = this.element;
-            var nodes = [];
+            const element = this.element;
+            const nodes = [];
 
             $.each(element.find(":checked"), function(){
-                var check = $(this);
+                const check = $(this);
                 nodes.push(check.closest(".node")[0])
             });
 
@@ -447,14 +438,14 @@
         },
 
         changeAttribute: function(attributeName){
-            var that = this, element = this.element, o = this.options;
+            const that = this, element = this.element, o = this.options;
 
-            var changeView = function(){
-                var new_view = "view-"+element.attr("data-view");
+            const changeView = function () {
+                const new_view = "view-" + element.attr("data-view");
                 that.view(new_view);
             };
 
-            var changeSelectable = function(){
+            const changeSelectable = function () {
                 o.selectable = JSON.parse(element.attr("data-selectable")) === true;
                 that.toggleSelectable();
             };
@@ -466,14 +457,14 @@
         },
 
         destroy: function(){
-            var element = this.element;
+            const element = this.element;
 
             element.off(Metro.events.click, ".node");
             element.off(Metro.events.click, ".node-toggle");
             element.off(Metro.events.click, ".node-group > .data > .caption");
             element.off(Metro.events.dblclick, ".node-group > .data > .caption");
 
-            return element;
+            element.remove();
         }
     });
 }(Metro, Dom));

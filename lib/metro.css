@@ -60713,8 +60713,10 @@ label:has(input) {
 /* source/components/listview/listview.less */
 :root {
   --listview-item-border-radius: 4px;
+  --listview-item-width: 220px;
   --listview-background: #ffffff;
   --listview-color: #191919;
+  --listview-color-secondary: #919191;
   --listview-item-background-hover: #d4e2ff;
   --listview-item-background-active: #d4e2ff;
   --listview-badge-background: transparent;
@@ -60723,6 +60725,7 @@ label:has(input) {
 .dark-side {
   --listview-background: #1e1f22;
   --listview-color: #dbdfe7;
+  --listview-color-secondary: #bcbcbc;
   --listview-item-background-hover: #2d2d32;
   --listview-item-background-active: #28282c;
   --listview-badge-background: transparent;
@@ -60732,7 +60735,6 @@ label:has(input) {
   position: relative;
   margin: 0;
   padding: 0;
-  max-height: 100%;
   background-color: var(--listview-background);
   color: var(--listview-color);
   list-style: none inside;
@@ -60762,24 +60764,32 @@ label:has(input) {
   background-color: inherit;
   overflow: hidden;
   border-radius: var(--listview-item-border-radius);
+  padding: 4px 8px;
 }
-.listview .node:hover {
-  background-color: var(--listview-item-background-hover);
+@media (hover: hover) {
+  .listview .node:hover {
+    background-color: var(--listview-item-background-hover);
+  }
 }
-.listview .node > .icon {
-  text-align: center;
+@media (hover: none) {
+  .listview .node:active {
+    background-color: var(--listview-item-background-hover);
+  }
 }
-.listview .node > .icon img {
-  max-width: 100%;
+.listview .node .icon {
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
+  stroke: var(--listview-color);
+}
+.listview .node .icon > * {
+  width: 100%;
   height: 100%;
-}
-.listview .node > .icon > * {
-  vertical-align: initial;
-}
-.listview .node .checkbox,
-.listview .node .radio,
-.listview .node .switch {
-  height: auto;
 }
 .listview ul {
   width: 100%;
@@ -60787,194 +60797,146 @@ label:has(input) {
   padding: 0;
   list-style: none inside;
 }
-.listview .node > .data > .content,
-.listview .node > .node-data {
+.listview .node > :is(.content, .desc, .date) {
   display: none;
 }
 .listview:not(.selectable) .checkbox {
-  display: none;
+  display: none !important;
 }
-.listview .node > .data > .caption {
+.listview .caption {
   line-height: 1.2;
   font-size: 12px;
 }
-.listview .node-group > .data > .caption {
+.listview .node-group > .caption {
   font-size: 14px;
+}
+.listview .content {
+  order: 100;
+}
+.listview.view-list {
+  display: flex;
+  flex-flow: column wrap;
 }
 .listview.view-list .node {
-  min-width: 160px;
-  line-height: 26px;
-  height: 26px;
-  padding: 0 8px;
+  display: flex;
   flex-flow: row nowrap;
   align-items: center;
-}
-.listview.view-list .node > .icon {
-  width: 20px;
-  height: 20px;
-  line-height: 26px;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 8px;
-}
-.listview.view-list .node > .data {
-  line-height: 26px;
-  padding-left: 24px;
-}
-.listview.view-list .node > .icon ~ .data {
-  padding-left: 8px;
+  justify-content: flex-start;
+  gap: 8px;
+  width: var(--listview-item-width);
 }
 .listview.view-table {
-  display: table;
-  width: 100%;
-  padding: 0 8px;
-}
-.listview.view-table .node {
-  display: table-row;
-  width: 100%;
-}
-.listview.view-table .node > * {
-  display: table-cell;
-  vertical-align: middle;
-}
-.listview.view-table .icon {
-  width: 20px;
-  height: 20px;
-  line-height: 26px;
-  font-size: 18px;
-}
-.listview.view-table .icon > * {
-  width: 100%;
-}
-.listview.view-table > li .data > .caption {
-  padding: 0 0.5rem;
-  line-height: 26px;
-}
-.listview.view-table .node-data {
-  display: table-cell;
-  width: auto;
-  line-height: 26px;
-}
-.listview.view-table label.checkbox {
-  width: 32px;
-}
-.listview.view-content .node {
-  width: 100%;
-  min-height: 50px;
-  padding: 10px 16px;
-  flex-flow: row nowrap;
-}
-.listview.view-content .node > .icon {
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  font-size: 28px;
-  margin-left: 16px;
-}
-.listview.view-content .node > .data {
-  padding-left: 64px;
-  font-size: 16px;
-  line-height: 32px;
-  width: 100%;
-}
-.listview.view-content .node > .data .caption,
-.listview.view-content .node > .data .content {
-  display: block;
-  line-height: 16px;
-  height: 16px;
-}
-.listview.view-content .node > .data .content {
-  font-size: 0.8em;
-}
-.listview.view-content .node > .icon ~ .data {
-  padding-left: 16px;
-}
-.listview.view-content .node + .node {
-  border-top: 1px solid var(--border-color);
-}
-.listview.view-tiles .node {
-  width: 250px;
-  height: 56px;
-  padding: 5px 16px;
-  flex-flow: row nowrap;
-}
-.listview.view-tiles .node > .icon {
-  width: 46px;
-  height: 46px;
-  line-height: 46px;
-  font-size: 42px;
-  margin-left: 16px;
-}
-.listview.view-tiles .node > .data {
-  padding-left: 78px;
-  font-size: 16px;
-  line-height: 46px;
-}
-.listview.view-tiles .node > .icon + .data {
-  padding-left: 16px;
-}
-.listview.view-tiles .node .caption {
-  font-size: 14px;
-}
-.listview.view-icons .node,
-.listview.view-icons-medium .node,
-.listview.view-icons-large .node {
-  width: 92px;
-  height: 92px;
-  padding: 8px 8px 2px;
   display: flex;
   flex-flow: column nowrap;
+}
+.listview.view-table .node {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+.listview.view-table .node:not(:last-child) {
+  border-bottom: 1px solid var(--border-color);
+}
+.listview.view-table .caption {
+  width: 160px;
+}
+.listview.view-table .desc {
+  width: 50%;
+  margin-left: auto;
+  border-left: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 16px;
+  color: var(--listview-color-secondary);
+}
+.listview.view-table .date {
+  width: 100px;
+  border-left: 1px solid var(--border-color);
+  display: flex;
   align-items: center;
   justify-content: center;
-  margin: 2px;
 }
-.listview.view-icons .node > .icon,
-.listview.view-icons-medium .node > .icon,
-.listview.view-icons-large .node > .icon {
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  font-size: 32px;
-  margin-bottom: 4px;
+.listview.view-content {
+  display: flex;
+  flex-flow: column nowrap;
 }
-.listview.view-icons .node > .data,
-.listview.view-icons-medium .node > .data,
-.listview.view-icons-large .node > .data {
-  line-height: 1.5;
-  white-space: normal;
-  text-align: center;
+.listview.view-content .node {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0 8px;
 }
-.listview.view-icons .node .checkbox,
-.listview.view-icons-medium .node .checkbox,
-.listview.view-icons-large .node .checkbox {
-  position: absolute;
-  top: 2px;
-  left: 2px;
+.listview.view-content .node:not(:last-child) {
+  border-bottom: 1px solid var(--border-color);
 }
-.listview.view-icons-medium .node {
-  width: 124px;
-  height: 124px;
-  margin: 1px;
+.listview.view-content .node .desc {
+  width: 50%;
+  margin-left: auto;
+  border-left: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 16px;
+  color: var(--listview-color-secondary);
 }
-.listview.view-icons-medium .node > .icon {
-  width: 54px;
-  height: 54px;
-  line-height: 54px;
-  font-size: 54px;
+.listview.view-content .node .date {
+  width: 100px;
+  border-left: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.listview.view-icons-large .node {
-  width: 200px;
-  height: 200px;
-  margin: 2px;
-  padding: 30px;
+.listview.view-content .node .content {
+  display: block !important;
+  width: 100%;
+  flex-shrink: 0;
+  order: 100;
 }
-.listview.view-icons-large .node > .icon {
-  width: 90px;
-  height: 90px;
-  line-height: 90px;
-  font-size: 90px;
+.listview.view-content .node .content:has(*) {
+  padding: 8px 0;
+}
+.listview.view-tiles {
+  display: flex;
+  flex-flow: row wrap;
+}
+.listview.view-tiles .node {
+  width: var(--listview-item-width);
+  padding: 0.5rem 1rem;
+  align-items: center;
+  border-radius: 10px;
+}
+.listview.view-tiles .icon {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 34px;
+  margin: 0 0.5rem 0 1rem;
+}
+.listview.view-tiles .caption {
+  font-size: 13px;
+  margin-left: 0;
+}
+@media (hover: hover) {
+  .listview.view-tiles .node:hover .date {
+    position: absolute;
+    top: 0;
+    right: 4px;
+    font-size: 10px;
+    display: flex;
+  }
+}
+@media (hover: none) {
+  .listview.view-tiles .node:active .date {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 10px;
+    display: flex;
+  }
 }
 .listview .node.current-select {
   background-color: var(--listview-item-background-active);
@@ -60995,51 +60957,30 @@ label:has(input) {
   font-size: 18px;
 }
 .listview .node-group .node-toggle {
-  position: relative;
-  cursor: pointer;
-  padding-right: 1.5rem !important;
-  user-select: none;
-}
-.listview .node-group .node-toggle::before {
-  display: block;
-  position: absolute;
-  vertical-align: middle;
-  color: transparent;
-  font-size: 0;
-  content: "";
-  height: 0.3125rem;
-  width: 0.3125rem;
-  background-color: transparent;
-  border-left: 1px solid;
-  border-bottom: 1px solid;
-  border-color: #1d1d1d;
-  top: 50%;
-  left: 100%;
-  margin-left: -1rem;
-  margin-top: -0.1625rem;
-  z-index: 2;
-  transform: rotate(-45deg);
-  transition: all 0.15s ease-in-out;
-  transform-origin: center center 1px;
-}
-.listview .node-group .node-toggle {
   position: absolute;
   left: 0;
   top: 0;
   width: 24px;
   height: 24px;
+  fill: var(--listview-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease-in-out;
 }
-.listview .node-group .node-toggle::before {
-  transform: rotate(-135deg);
-}
-.listview .node-group.expanded > .node-toggle::before {
-  transform: rotate(-45deg);
+.listview .node-group.expanded > .node-toggle {
+  transform-origin: center;
+  transform: rotate(90deg);
 }
 .listview .node-group + .node-group {
+  margin-top: 1rem;
+}
+.listview .node-group > .listview {
   margin-top: 0.5rem;
 }
-.listview .node-group + .listview {
-  margin-top: 0.5rem;
+.listview li:has(.node-toggle) > .caption {
+  margin-left: 24px;
+  margin-top: 3px;
 }
 .listview .node .badge {
   font-size: 10px;
