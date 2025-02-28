@@ -54677,6 +54677,7 @@ input[type=checkbox] {
   width: 22px;
   height: 22px;
   flex-shrink: 0 !important;
+  background-color: var(--default-background);
 }
 input[type=checkbox]::before {
   content: "";
@@ -60813,6 +60814,9 @@ label:has(input) {
 .listview .content {
   order: 100;
 }
+.listview .checkbox input:focus {
+  box-shadow: none;
+}
 .listview.view-list {
   display: flex;
   flex-flow: column wrap;
@@ -60905,38 +60909,112 @@ label:has(input) {
 }
 .listview.view-tiles .node {
   width: var(--listview-item-width);
-  padding: 0.5rem 1rem;
+  padding: 4px 8px;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 .listview.view-tiles .icon {
   width: 40px;
   height: 40px;
   line-height: 40px;
   font-size: 34px;
-  margin: 0 0.5rem 0 1rem;
+  margin: 0;
 }
 .listview.view-tiles .caption {
   font-size: 13px;
   margin-left: 0;
 }
+.listview.view-tiles .date {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 10px;
+  line-height: 1;
+}
+.listview.view-tiles .checkbox {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
 @media (hover: hover) {
   .listview.view-tiles .node:hover .date {
-    position: absolute;
-    top: 0;
-    right: 4px;
-    font-size: 10px;
     display: flex;
   }
 }
 @media (hover: none) {
   .listview.view-tiles .node:active .date {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    font-size: 10px;
     display: flex;
   }
+}
+.listview.view-icons,
+.listview.view-icons-medium,
+.listview.view-icons-large {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 6px;
+}
+.listview.view-icons .node,
+.listview.view-icons-medium .node,
+.listview.view-icons-large .node {
+  width: 92px;
+  height: 92px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.listview.view-icons .node .icon,
+.listview.view-icons-medium .node .icon,
+.listview.view-icons-large .node .icon {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 32px;
+  margin: 6px 0;
+}
+.listview.view-icons .node .checkbox,
+.listview.view-icons-medium .node .checkbox,
+.listview.view-icons-large .node .checkbox {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+.listview.view-icons .node .desc,
+.listview.view-icons-medium .node .desc,
+.listview.view-icons-large .node .desc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 1;
+}
+.listview.view-icons-medium .node {
+  width: 124px;
+  height: 124px;
+  margin: 1px;
+}
+.listview.view-icons-medium .node > .icon {
+  width: 54px;
+  height: 54px;
+  line-height: 54px;
+  font-size: 54px;
+}
+.listview.view-icons-large .node {
+  width: 200px;
+  height: 200px;
+  margin: 2px;
+  padding: 30px;
+}
+.listview.view-icons-large .node > .icon {
+  width: 90px;
+  height: 90px;
+  line-height: 90px;
+  font-size: 90px;
 }
 .listview .node.current-select {
   background-color: var(--listview-item-background-active);
@@ -60950,11 +61028,6 @@ label:has(input) {
   flex-shrink: 0;
   cursor: pointer;
   user-select: none;
-}
-.listview .node-group > .data {
-  padding-left: 24px;
-  line-height: 24px;
-  font-size: 18px;
 }
 .listview .node-group .node-toggle {
   position: absolute;
@@ -60981,21 +61054,6 @@ label:has(input) {
 .listview li:has(.node-toggle) > .caption {
   margin-left: 24px;
   margin-top: 3px;
-}
-.listview .node .badge {
-  font-size: 10px;
-  margin-bottom: 4px;
-  position: relative;
-  background-color: var(--listview-badge-background);
-  color: var(--listview-badge-color);
-}
-.listview .node .badges {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  border-color: transparent;
-  display: flex;
-  flex-flow: column;
 }
 
 /* source/components/marquee/marquee.less */
@@ -69863,7 +69921,7 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
 .switch .caption-prepend,
 .switch .caption-append {
   font-size: 12px;
-  margin: 0 4px;
+  margin: 0 6px;
   position: relative;
   white-space: nowrap;
 }

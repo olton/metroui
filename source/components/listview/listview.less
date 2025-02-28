@@ -123,6 +123,12 @@
     .content {
         order: 100;
     }
+    
+    .checkbox {
+        input:focus {
+            box-shadow: none;
+        }
+    }
 }
 
 .listview {
@@ -239,9 +245,9 @@
         
         .node {
             width: var(--listview-item-width);
-            padding: .5rem 1rem;
+            padding: 4px 8px;
             align-items: center;
-            border-radius: 10px;
+            border-radius: 4px;
         }
         
         .icon {
@@ -249,21 +255,31 @@
             height: 40px;
             line-height: 40px;
             font-size: 34px;
-            margin: 0 .5rem 0 1rem;
+            margin: 0;
         }
         
         .caption {
             font-size: 13px;
             margin-left: 0;
         }
+
+        .date {
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            font-size: 10px;
+            line-height: 1;
+        }
+        
+        .checkbox {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+        }
         
         @media (hover: hover) {
             .node:hover {
                 .date {
-                    position: absolute;
-                    top: 0;
-                    right: 4px;
-                    font-size: 10px;
                     display: flex;
                 }
             }
@@ -272,10 +288,6 @@
         @media (hover: none) {
             .node:active {
                 .date {
-                    position: absolute;
-                    top: 4px;
-                    right: 4px;
-                    font-size: 10px;
                     display: flex;
                 }
             }
@@ -283,221 +295,81 @@
     }
 }
 
-//.listview {
-//    &.view-list {
-//        .node {
-//            min-width: 160px;
-//            line-height: 26px;
-//            height: 26px;
-//            flex-flow: row nowrap;
-//            align-items: center;
-//
-//            & > .icon {
-//                width: 20px;
-//                height: 20px;
-//                line-height: 26px;
-//                font-size: 18px;
-//                display: flex;
-//                align-items: center;
-//                justify-content: center;
-//            }
-//
-//            & > .data {
-//                line-height: 26px;
-//                padding-left: 24px;
-//            }
-//
-//            & > .icon ~ .data {
-//                padding-left: 8px;
-//            }
-//        }
-//    }
-//
-//    &.view-table {
-//        display: table;
-//        width: 100%;
-//
-//        .node {
-//            display: table-row;
-//            width: 100%;
-//        }
-//
-//        .node > :is(span, div, label) {
-//            display: table-cell;
-//            vertical-align: middle;
-//        }
-//
-//        .node:not(:last-child) > :is(span, div, label){
-//            border-bottom: 1px solid var(--border-color);
-//        }
-//        
-//        .icon {
-//            width: 20px;
-//            height: 20px;
-//            line-height: 26px;
-//            font-size: 18px;
-//
-//            & > * {
-//                width: 100%;
-//            }
-//        }
-//
-//        & > li {
-//            .data > .caption {
-//                padding: 0 .5rem;
-//                line-height: 26px;
-//            }
-//        }
-//
-//        .node-data {
-//            display: table-cell;
-//            width: auto;
-//            line-height: 26px;
-//        }
-//
-//        label.checkbox {
-//            width: 32px;
-//        }
-//    }
-//
-//    &.view-content {
-//        .node {
-//            width: 100%;
-//            min-height: 50px;
-//            padding: 10px 16px;
-//            flex-flow: row nowrap;
-//
-//            & > .icon {
-//                width: 32px;
-//                height: 32px;
-//                line-height: 32px;
-//                font-size: 28px;
-//                margin-left: 16px;
-//            }
-//
-//            & > .data {
-//                padding-left: 64px;
-//                font-size: 16px;
-//                line-height: 32px;
-//                width: 100%;
-//
-//                .caption, .content {
-//                    display: block;
-//                    line-height: 16px;
-//                    height: 16px;
-//                }
-//
-//                .content {
-//                    font-size: .8em;
-//                }
-//            }
-//
-//            & > .icon ~ .data {
-//                padding-left: 16px;
-//            }
-//        }
-//
-//        .node + .node {
-//            border-top: 1px solid var(--border-color);
-//        }
-//    }
-//
-//    &.view-tiles {
-//        .node {
-//            width: 250px;
-//            height: 56px;
-//            padding: 5px 16px;
-//            flex-flow: row nowrap;
-//
-//            & > .icon {
-//                width: 46px;
-//                height: 46px;
-//                line-height: 46px;
-//                font-size: 42px;
-//                margin-left: 16px;
-//            }
-//
-//            & > .data {
-//                padding-left: 78px;
-//                font-size: 16px;
-//                line-height: 46px;
-//            }
-//
-//            & > .icon + .data {
-//                padding-left: 16px;
-//            }
-//
-//            .caption {
-//                font-size: 14px;
-//            }
-//        }
-//    }
-//
-//    &.view-icons, &.view-icons-medium, &.view-icons-large {
-//        .node {
-//            width: 92px;
-//            height: 92px;
-//            padding: 8px 8px 2px;
-//            display: flex;
-//            flex-flow: column nowrap;
-//            align-items: center;
-//            justify-content: center;
-//            margin: 2px;
-//
-//            & > .icon {
-//                width: 32px;
-//                height: 32px;
-//                line-height: 32px;
-//                font-size: 32px;
-//                margin-bottom: 4px;
-//            }
-//
-//            & > .data {
-//                line-height: 1.5;
-//                white-space: normal;
-//                text-align: center;
-//            }
-//
-//            .checkbox {
-//                position: absolute;
-//                top: 2px;
-//                left: 2px;
-//            }
-//        }
-//    }
-//
-//    &.view-icons-medium {
-//        .node {
-//            width: 124px;
-//            height: 124px;
-//            margin: 1px;
-//
-//            & > .icon {
-//                width: 54px;
-//                height: 54px;
-//                line-height: 54px;
-//                font-size: 54px;
-//            }
-//        }
-//    }
-//
-//    &.view-icons-large {
-//        .node {
-//            width: 200px;
-//            height: 200px;
-//            margin: 2px;
-//            padding: 30px;
-//
-//            & > .icon {
-//                width: 90px;
-//                height: 90px;
-//                line-height: 90px;
-//                font-size: 90px;
-//            }
-//        }
-//    }
-//}
-//
+.listview {
+    &.view-icons, &.view-icons-medium, &.view-icons-large {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 6px;
+        
+        .node {
+            width: 92px;
+            height: 92px;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+            justify-content: center;
+
+            .icon {
+                width: 32px;
+                height: 32px;
+                line-height: 32px;
+                font-size: 32px;
+                margin: 6px 0;
+            }
+
+            .checkbox {
+                position: absolute;
+                top: 2px;
+                left: 2px;
+            }
+            
+            .desc {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 10px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                line-height: 1;
+            }
+        }
+    }
+
+    &.view-icons-medium {
+        .node {
+            width: 124px;
+            height: 124px;
+            margin: 1px;
+
+            & > .icon {
+                width: 54px;
+                height: 54px;
+                line-height: 54px;
+                font-size: 54px;
+            }
+        }
+    }
+
+    &.view-icons-large {
+        .node {
+            width: 200px;
+            height: 200px;
+            margin: 2px;
+            padding: 30px;
+
+            & > .icon {
+                width: 90px;
+                height: 90px;
+                line-height: 90px;
+                font-size: 90px;
+            }
+        }
+    }
+}
+
 .listview {
     .node {
         &.current-select {
@@ -515,14 +387,6 @@
         cursor: pointer;
         user-select: none;
 
-        & > .data {
-            padding-left: 24px;
-            line-height: 24px;
-            font-size: 18px;
-        }
-    }
-
-    .node-group {
         .node-toggle {
             position: absolute;
             left: 0;
@@ -554,26 +418,5 @@
     li:has(.node-toggle) > .caption{
         margin-left: 24px;
         margin-top: 3px;
-    }
-}
-
-.listview {
-    .node {
-        .badge {
-            font-size: 10px;
-            margin-bottom: 4px;
-            position: relative;
-            background-color: var(--listview-badge-background);
-            color: var(--listview-badge-color);
-        }
-
-        .badges {
-            position: absolute;
-            top: 8px;
-            right: 10px;
-            border-color: transparent;
-            display: flex;
-            flex-flow: column;
-        }
     }
 }

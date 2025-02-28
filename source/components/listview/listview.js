@@ -78,53 +78,15 @@
 
         _createNode: function(data){
             const that = this, o = this.options;
-            let node;
+            const node = $("<li>");
 
-            node = $("<li>");
-
-            if (data.caption !== undefined || data.content !== undefined ) {
-                const d = $("<div>").addClass("data");
-                node.prepend(d);
-                if (data.caption !== undefined) d.append(that._createCaption(data.caption));
-                if (data.content !== undefined) d.append(that._createContent(data.content));
-            }
-
-            if (data.icon !== undefined) {
-                node.prepend(this._createIcon(data.icon));
-            }
-
-            if (Metro.utils.objectLength(o.structure) > 0) $.each(o.structure, function(key, val){
-                if (data[key] !== undefined) {
-                    $("<div>").addClass("node-data item-data-"+key).addClass(data[val]).html(data[key]).appendTo(node);
-                }
-            });
-
-            if (data.attributes && Metro.utils.isObject(data.attributes)) {
-                for(let key in data.attributes) {
-                    node.attr(`data-${key}`, data.attributes[key])
-                }
-            }
-
-            if (data.class) {
-                node.addClass(data.class)
-            }
-
-            if (data.badge) {
-                node.append(
-                    $("<span>").addClass("badge").html(data.badge)
-                )
-            }
-
-            if (data.badges) {
-                const badges = $("<div>").addClass("badges").appendTo(node);
-                data.badges.map(b => {
-                    if (!b) return;
-                    badges.append(
-                        $(b).addClass("badge")
-                    )
-                })
-            }
-
+            node.append($("<input type='checkbox' data-role='checkbox'>").data("node", node));
+            node.append(that._createIcon(data.icon ?? o.defaultIcon));
+            node.append(that._createCaption(data.caption));
+            node.append(that._createDesc(data.desc));
+            node.append(that._createDate(data.date));
+            node.append(that._createContent(data.content));
+            
             return node;
         },
 
@@ -150,7 +112,7 @@
                     if (node.data("collapsed") !== true) node.addClass("expanded");
                 } else {
                     node.clear().addClass("node");
-                    node.append($("<input type='checkbox' data-role='checkbox'>"));
+                    node.append($("<input type='checkbox' data-role='checkbox'>").data("node", node));
                     node.append(that._createIcon(node.data('icon') ?? o.defaultIcon));
                     node.append(that._createCaption(node.data("caption") ?? defaultFileName));
                     node.append(that._createDesc(node.data("desc")));
@@ -159,8 +121,10 @@
                 }               
             });
 
-            this.toggleSelectable();
-
+            if (o.selectable) {
+                element.addClass("selectable");
+            }
+            
             this.view(o.view);
         },
 
@@ -183,11 +147,17 @@
                     return;
                 }
 
+                const isCurrent = node.hasClass("current");
+                
                 element.find(".node").removeClass("current");
-                node.toggleClass("current");
+                if (!isCurrent) {
+                    node.addClass("current");
+                }
                 if (o.selectCurrent === true) {
                     element.find(".node").removeClass("current-select");
-                    node.toggleClass("current-select");
+                    if (!isCurrent) {
+                        node.addClass("current-select");
+                    }
                 }
                 that._fireEvent("node-click", {
                     node: node
@@ -199,7 +169,7 @@
                 that.toggleNode(node);
             });
 
-            element.on(Metro.events.click, ".node-group > .data > .caption", function(){
+            element.on(Metro.events.click, ".node-group > .caption", function(){
                 const node = $(this).closest("li");
                 element.find(".node-group").removeClass("current-group");
                 node.addClass("current-group");
@@ -210,7 +180,7 @@
 
             });
 
-            element.on(Metro.events.dblclick, ".node-group > .data > .caption", function(){
+            element.on(Metro.events.dblclick, ".node-group > .caption", function(){
                 const node = $(this).closest("li");
                 that.toggleNode(node);
 
@@ -261,12 +231,14 @@
 
         toggleSelectable: function(){
             const element = this.element, o = this.options;
+            o.selectable = !o.selectable;
             const func = o.selectable === true ? "addClass" : "removeClass";
+            console.log(func);
             element[func]("selectable");
             element.find("ul")[func]("selectable");
         },
 
-        add: function(node, data){
+        add: function(data, node = null){
             const element = this.element, o = this.options;
             let target;
             let new_node;
@@ -330,7 +302,7 @@
             return node;
         },
 
-        insertBefore: function(node, data){
+        insertBefore: function(data, node){
             let new_node, parent_node, list;
 
             node=$(node);
@@ -351,7 +323,7 @@
             return new_node;
         },
 
-        insertAfter: function(node, data){
+        insertAfter: function(data, node){
             let new_node, parent_node, list;
 
             node=$(node);
@@ -424,15 +396,12 @@
             this.element.trigger('change');
         },
 
-        selectAll: function(mode){
-            this.element.find(".node > .checkbox input").prop("checked", mode !== false);
+        selectAll: function(mode = true){
+            this.element.find(".checkbox input").prop("checked", mode);
             this.element.trigger('change');
         },
 
-        selectByAttribute: function(attributeName, attributeValue, select) {
-            if (select !== false) {
-                select = true;
-            }
+        selectByAttribute: function(attributeName, attributeValue, select = true) {
             this.element.find('li[' + attributeName + '="' + attributeValue + '"]' + ' > .checkbox input').prop("checked", select);
             this.element.trigger('change');
         },
@@ -461,8 +430,8 @@
 
             element.off(Metro.events.click, ".node");
             element.off(Metro.events.click, ".node-toggle");
-            element.off(Metro.events.click, ".node-group > .data > .caption");
-            element.off(Metro.events.dblclick, ".node-group > .data > .caption");
+            element.off(Metro.events.click, ".node-group > .caption");
+            element.off(Metro.events.dblclick, ".node-group > .caption");
 
             element.remove();
         }
