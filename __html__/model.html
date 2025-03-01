@@ -18,22 +18,24 @@
 
 <div class="h-100 d-flex flex-center flex-column">
     <div class="h1">Counter</div>
-    <div class="m-10">{{ counter }}</div>
-    <button onclick="updateCounter()">Update Counter</button>
+    <div class="m-2">Counter: {{ counter }}</div>
+    <div class="m-2"><input class="text-center" type="text" data-model="counter"></div>
+    <div class="m-2 d-flex flex-row gap-2">
+        <button onclick="updateCounter('+')">Inc Counter</button>
+        <button onclick="updateCounter('-')">Dec Counter</button>
+    </div>
 </div>
 
 <script src="../lib/metro.js"></script>
 <script>
-    Metro.welcome()
     var app = new Metro.Model({
         counter: 0
     })
     
     app.init()
     
-    function updateCounter() {
-        app.data.counter++
-        console.log(app.data.counter)
+    function updateCounter(operator) {
+        operator === "-" ? app.data.counter-- : app.data.counter++
     }
 </script>
 </body>
