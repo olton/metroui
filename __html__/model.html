@@ -20,6 +20,7 @@
     <div class="h1">Counter</div>
     <div class="m-2">Counter: {{ counter }}</div>
     <div class="m-2"><input class="text-center" type="text" data-model="counter"></div>
+    <div>Статус: {{ status }}</div>
     <div class="m-2 d-flex flex-row gap-2">
         <button onclick="updateCounter('+')">Inc Counter</button>
         <button onclick="updateCounter('-')">Dec Counter</button>
@@ -29,7 +30,10 @@
 <script src="../lib/metro.js"></script>
 <script>
     var app = new Metro.Model({
-        counter: 0
+        counter: 0,
+        status: function () {
+            return this.counter === 0 ? "Zero" : this.counter > 0 ? "Positive" : "Negative";
+        }
     })
     
     app.init()
