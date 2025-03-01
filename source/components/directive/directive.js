@@ -60,7 +60,7 @@
         directive: "note",
         showIcon: true,
         title: "default",
-        style: 1, // default - 1, vue - 2
+        style: 1, // default - 1, vue style - 2, 3 
         onDirectiveCreate: Metro.noop
     };
 

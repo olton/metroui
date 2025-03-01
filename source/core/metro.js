@@ -1,5 +1,6 @@
 /** @format */
 import { Props } from "./props.js";
+import Model from "../model/index.js"; 
 
 (() => {
     "use strict";
@@ -627,5 +628,7 @@ import { Props } from "./props.js";
         });
     }
 
+    Metro.Model = Model;
+    
     return Metro;
 })();

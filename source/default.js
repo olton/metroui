@@ -1,5 +1,3 @@
-/** @format */
-
 import "./reset/index.js";
 import "./runtime.js";
 import "./i18n/index.js";

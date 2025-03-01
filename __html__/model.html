@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+
+    <title>Test Any - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
+    <span class="app-bar-item">Model</span>
+    <div class="app-bar-item-static ml-auto">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="h-100 d-flex flex-center flex-column">
+    <div class="h1">Counter</div>
+    <div class="m-10">{{ counter }}</div>
+    <button onclick="updateCounter()">Update Counter</button>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+    var app = new Metro.Model({
+        counter: 0
+    })
+    
+    app.init()
+    
+    function updateCounter() {
+        app.data.counter++
+        console.log(app.data.counter)
+    }
+</script>
+</body>
+</html>
