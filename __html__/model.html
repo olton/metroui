@@ -17,16 +17,13 @@
 </nav>
 
 <div id="root" class="h-100 d-flex flex-center flex-column">
-    <ul>
-        <li data-for="item in items">{{ item }}</li>
-    </ul>
     <div class="h1">Counter</div>
     <div class="m-2">Counter: {{ counter }}</div>
     <div class="m-2"><input class="text-center" type="text" data-model="counter"></div>
     <div>Статус: {{ status }}</div>
     <div class="m-2 d-flex flex-row gap-2">
-        <button onclick="updateCounter('+')">Inc Counter</button>
-        <button onclick="updateCounter('-')">Dec Counter</button>
+        <button onclick="updateCounter('+')">+</button>
+        <button onclick="updateCounter('-')">-</button>
     </div>
 </div>
 
