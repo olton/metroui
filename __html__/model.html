@@ -17,6 +17,9 @@
 </nav>
 
 <div id="root" class="h-100 d-flex flex-center flex-column">
+    <ul>
+        <li data-for="item in items">{{ item }}</li>
+    </ul>
     <div class="h1">Counter</div>
     <div class="m-2">Counter: {{ counter }}</div>
     <div class="m-2"><input class="text-center" type="text" data-model="counter"></div>
@@ -32,9 +35,10 @@
     Metro.welcome()
     var app = new Metro.Model({
         counter: 0,
-        status: function () {
+        status(){
             return this.counter === 0 ? "Zero" : this.counter > 0 ? "Positive" : "Negative";
-        }
+        },
+        items: ["Item 1", "Item 2", "Item 3", "Item 4"],
     })
     
     app.init("#root")
@@ -42,6 +46,12 @@
     function updateCounter(operator) {
         operator === "-" ? app.data.counter-- : app.data.counter++
     }
+
+    const devTools = app.initDevTools({
+        enabled: true,
+        timeTravel: true,
+        maxSnapshots: 50
+    });
 </script>
 </body>
 </html>
