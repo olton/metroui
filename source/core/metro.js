@@ -1,6 +1,6 @@
 /** @format */
 import { Props } from "./props.js";
-import Model from "../model/index.js"; 
+import Model from "@olton/model"; 
 
 (() => {
     "use strict";

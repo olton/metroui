@@ -32,6 +32,7 @@
     var app = new Metro.Model({
         counter: 0,
         status: function () {
+            console.log(this)
             return this.counter === 0 ? "Zero" : this.counter > 0 ? "Positive" : "Negative";
         }
     })
