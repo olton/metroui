@@ -1,6 +1,5 @@
 /** @format */
 import { Props } from "./props.js";
-import Model from "@olton/model"; 
 
 (() => {
     "use strict";
@@ -64,7 +63,7 @@ import Model from "@olton/model";
             if (globalThis["Str"] && Str.info) Str.info();
             if (globalThis["G"] && G.info) G.info();
             if (globalThis["Router"] && Router.info) Router.info();
-            if (Metro["Model"] && Metro.Model.info) Metro.Model.info();
+            if (globalThis["Model"] && Model.info) Model.info();
         },
 
         aboutDlg: () => {
@@ -628,8 +627,6 @@ import Model from "@olton/model";
             Metro.init();
         });
     }
-
-    Metro.Model = Model;
     
     return Metro;
 })();

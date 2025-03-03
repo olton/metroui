@@ -8,6 +8,7 @@ import "./farbe/index.js";
 import "./html/index.js";
 import "./guardian/index.js";
 import "./router/index.js";
+import "./model/index.js";
 import "./core/index.js";
 import "./i18n/index.js";
 import "./extensions/index.js";

@@ -30,7 +30,7 @@
 <script src="../lib/metro.js"></script>
 <script>
     Metro.welcome()
-    var app = new Metro.Model({
+    const model = new Model({
         counter: 0,
         status(){
             return this.counter === 0 ? "Zero" : this.counter > 0 ? "Positive" : "Negative";
@@ -38,13 +38,13 @@
         items: ["Item 1", "Item 2", "Item 3", "Item 4"],
     })
     
-    app.init("#root")
+    model.init("#root")
     
     function updateCounter(operator) {
-        operator === "-" ? app.data.counter-- : app.data.counter++
+        operator === "-" ? model.data.counter-- : model.data.counter++
     }
 
-    const devTools = app.initDevTools({
+    const devTools = model.initDevTools({
         enabled: true,
         timeTravel: true,
         maxSnapshots: 50
