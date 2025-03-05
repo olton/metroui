@@ -22,29 +22,27 @@
     <div class="m-2"><input class="text-center" type="text" data-model="counter"></div>
     <div>Статус: {{ status }}</div>
     <div class="m-2 d-flex flex-row gap-2">
-        <button onclick="updateCounter('+')">+</button>
-        <button onclick="updateCounter('-')">-</button>
+        <button @click="this.counter++">+</button>
+        <button @click="this.counter--">-</button>
     </div>
 </div>
 
 <script src="../lib/metro.js"></script>
 <script>
     Metro.welcome()
+    
     const model = new Model({
         counter: 0,
         status(){
             return this.counter === 0 ? "Zero" : this.counter > 0 ? "Positive" : "Negative";
         },
-        items: ["Item 1", "Item 2", "Item 3", "Item 4"],
+    }, {
+        debug: false,
     })
     
     model.init("#root")
     
-    function updateCounter(operator) {
-        operator === "-" ? model.data.counter-- : model.data.counter++
-    }
-
-    const devTools = model.initDevTools({
+    model.runDevTools({
         enabled: true,
         timeTravel: true,
         maxSnapshots: 50
