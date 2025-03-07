@@ -1,5 +1,3 @@
-/** @format */
-
 (function (Metro, $) {
     "use strict";
 
