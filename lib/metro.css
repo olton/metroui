@@ -49478,8 +49478,8 @@ button.flat,
 :root {
   --appbar-background: #ffffff;
   --appbar-color: #191919;
-  --appbar-item-background: inherit;
-  --appbar-item-color: inherit;
+  --appbar-item-background: transparent;
+  --appbar-item-color: #191919;
   --appbar-item-color-disabled: #ccc;
   --appbar-item-color-hover: #000000;
   --appbar-item-background-hover: #e8e8e8;
@@ -49492,8 +49492,8 @@ button.flat,
 .dark-side {
   --appbar-background: #1e1f22;
   --appbar-color: #dbdfe7;
-  --appbar-item-background: inherit;
-  --appbar-item-color: inherit;
+  --appbar-item-background: transparent;
+  --appbar-item-color: #dbdfe7;
   --appbar-item-color-disabled: #a8a8a8;
   --appbar-item-color-hover: #ffffff;
   --appbar-item-background-hover: #2b2d30;
@@ -49602,7 +49602,7 @@ button.flat,
   color: inherit;
 }
 .app-bar .app-bar-menu > li > a.dropdown-toggle::before {
-  border-color: var(--appbar-dropdown-toggle-color) !important;
+  border-color: var(--appbar-item-color) !important;
 }
 .app-bar .hamburger {
   position: absolute;
@@ -49612,10 +49612,10 @@ button.flat,
   height: 52px;
   width: 52px;
   margin-top: -27px;
-  background: var(--appbar-hamburger-background);
+  background: transparent;
 }
 .app-bar .hamburger .line {
-  background-color: var(--appbar-hamburger-color);
+  background-color: var(--appbar-item-color);
 }
 .app-bar .hamburger.menu-down.active .line:nth-child(1),
 .app-bar .hamburger.menu-down.active .line:nth-child(3) {
