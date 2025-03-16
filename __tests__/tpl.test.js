@@ -1,5 +1,5 @@
 
-import {beforeAll, afterAll, describe, it, expect, delay, getFileUrl, B} from "@olton/easytest";
+import {beforeAll, afterAll, describe, it, expect, delay, getFileUrl, B} from "@olton/latte";
 
 beforeAll(async () => {
     await B.create()

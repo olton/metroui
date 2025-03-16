@@ -49476,6 +49476,10 @@ button.flat,
 
 /* source/components/app-bar/app-bar.less */
 :root {
+  --appbar-border-radius: 4px;
+  --appbar-z-index: 1030;
+}
+:root {
   --appbar-background: #ffffff;
   --appbar-color: #191919;
   --appbar-item-background: transparent;
@@ -49483,11 +49487,6 @@ button.flat,
   --appbar-item-color-disabled: #ccc;
   --appbar-item-color-hover: #000000;
   --appbar-item-background-hover: #e8e8e8;
-  --appbar-dropdown-toggle-color: #191919;
-  --appbar-border-radius: 4px;
-  --appbar-z-index: 1030;
-  --appbar-hamburger-background: transparent;
-  --appbar-hamburger-color: #000000;
 }
 .dark-side {
   --appbar-background: #1e1f22;
@@ -49497,9 +49496,6 @@ button.flat,
   --appbar-item-color-disabled: #a8a8a8;
   --appbar-item-color-hover: #ffffff;
   --appbar-item-background-hover: #2b2d30;
-  --appbar-dropdown-toggle-color: #ffffff;
-  --appbar-hamburger-background: transparent;
-  --appbar-hamburger-color: #ffffff;
 }
 .app-bar {
   display: flex;
@@ -49574,16 +49570,40 @@ button.flat,
 .app-bar .app-bar-menu a.disabled {
   color: var(--appbar-item-color-disabled);
 }
-.app-bar .app-bar-item-static:hover {
-  background-color: var(--appbar-item-background);
-  color: var(--appbar-item-color);
+@media (hover: hover) {
+  .app-bar .app-bar-item-static:hover {
+    background-color: var(--appbar-item-background);
+    color: var(--appbar-item-color);
+  }
+}
+@media (hover: none) {
+  .app-bar .app-bar-item-static:active {
+    background-color: var(--appbar-item-background);
+    color: var(--appbar-item-color);
+  }
 }
 .app-bar .brand {
   flex-shrink: 0;
-  font-size: 1.25rem;
+  font-size: 20px;
+  line-height: 0.8;
 }
 .app-bar .brand:hover {
-  background-color: var(--appbar-item-background);
+  background-color: transparent;
+}
+.app-bar .brand .icon {
+  font-size: 20px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
+}
+.app-bar .brand .icon + * {
+  margin-left: 6px;
+}
+.app-bar .brand .caption {
+  margin-bottom: 3px;
 }
 .app-bar .app-bar-button {
   width: 52px;

@@ -1,8 +1,7 @@
 /** @format */
 
-import { Datetime, datetime, info } from "@olton/datetime";
+import { Datetime, datetime } from "@olton/datetime";
 
-Datetime.info = info;
 Datetime.correctDate = function (date){
     return datetime(date).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
 } 

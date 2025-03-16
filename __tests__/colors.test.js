@@ -9,7 +9,7 @@ import {
     delay,
     getFileUrl,
     B,
-} from "@olton/easytest";
+} from "@olton/latte";
 
 beforeAll(async () => {
     await B.create();
