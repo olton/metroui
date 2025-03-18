@@ -57,7 +57,7 @@ import { Props } from "./props.js";
 
             if (globalThis["$"] && $.info) $.info();
             if (globalThis["Hooks"] && Hooks.info) Hooks.info();
-            if (globalThis["Html"] && Html.info) Html.info();
+            if (globalThis["HTML"] && HTML.info) HTML.info();
             if (globalThis["Farbe"] && Farbe.info) Farbe.info();
             if (globalThis["Datetime"] && Datetime.info) Datetime.info();
             if (globalThis["Str"] && Str.info) Str.info();
