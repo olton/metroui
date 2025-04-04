@@ -1,4 +1,4 @@
-/* global Metro */
+/* Deprecated */
 (function(Metro, $) {
     'use strict';
 

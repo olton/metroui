@@ -57,12 +57,36 @@
             const active = element.children(".frame.active");
             let frame_to_open;
 
+            if (!element.id()) {
+                element.id(Hooks.useId("accordion")); 
+            }
+            
             element.addClass("accordion").addClass(o.clsAccordion);
 
             frames.addClass(o.clsFrame).each(function () {
                 const el = $(this);
-                el.children(".heading").addClass(o.clsHeading);
-                el.children(".content").addClass(o.clsContent);
+                const heading = el.children(".heading");
+                const content = el.children(".content");
+                const headingId = Hooks.useId("accordion-heading") 
+                const contentId = Hooks.useId("accordion-content") 
+
+                // Добавляем ARIA-атрибуты
+                heading.attr({
+                    'id': headingId,
+                    'role': 'button',
+                    'aria-expanded': el.hasClass('active') ? 'true' : 'false',
+                    'aria-controls': contentId,
+                    'tabindex': '0'
+                });
+
+                content.attr({
+                    'id': contentId,
+                    'role': 'region',
+                    'aria-labelledby': headingId
+                });
+
+                heading.addClass(o.clsHeading);
+                content.addClass(o.clsContent);
             });
 
             if (o.showMarker === true) {
@@ -98,6 +122,43 @@
                 o = this.options;
             const active = element.children(".frame.active");
 
+            element.on("keydown", ".heading", function(e) {
+                const heading = $(this);
+                const frame = heading.parent();
+
+                if (heading.closest(".accordion")[0] !== element[0]) {
+                    return false;
+                }
+
+                // Enter или Space для активации
+                if (e.keyCode === 13 || e.keyCode === 32) {
+                    e.preventDefault();
+                    if (frame.hasClass("active")) {
+                        if (!(active.length === 1 && o.oneFrame)) {
+                            that._closeFrame(frame);
+                        }
+                    } else {
+                        that._openFrame(frame);
+                    }
+                }
+
+                // Стрелки для навигации
+                if (e.keyCode === 38 || e.keyCode === 40) {
+                    e.preventDefault();
+                    const frames = element.children(".frame");
+                    const currentIndex = frames.index(frame);
+                    let nextIndex;
+
+                    if (e.keyCode === 38) { // Up
+                        nextIndex = (currentIndex - 1 + frames.length) % frames.length;
+                    } else { // Down
+                        nextIndex = (currentIndex + 1) % frames.length;
+                    }
+
+                    frames.eq(nextIndex).children(".heading").focus();
+                }
+            });
+            
             element.on(Metro.events.click, ".heading", function () {
                 const heading = $(this);
                 const frame = heading.parent();
@@ -123,10 +184,7 @@
                 o = this.options;
             const frame = $(f);
 
-            if (
-                Metro.utils.exec(o.onFrameBeforeOpen, [frame[0]], element[0]) ===
-                false
-            ) {
+            if ( Metro.utils.exec(o.onFrameBeforeOpen, [frame[0]], element[0]) === false ) {
                 return false;
             }
 
@@ -159,10 +217,7 @@
                 return;
             }
 
-            if (
-                Metro.utils.exec(o.onFrameBeforeClose, [frame[0]], element[0]) ===
-                false
-            ) {
+            if ( Metro.utils.exec(o.onFrameBeforeClose, [frame[0]], element[0]) === false ) {
                 return;
             }
 
@@ -211,10 +266,38 @@
                 that._openFrame(this);
             });
         },
-
+       
         open: function (i) {
             const frame = this.element.children(".frame").eq(i);
             this._openFrame(frame);
+        },
+
+        close: function (i) {
+            const frame = this.element.children(".frame").eq(i);
+            this._closeFrame(frame);
+        },
+
+        toggle: function (i) {
+            const frame = this.element.children(".frame").eq(i);
+            if (frame.hasClass("active")) {
+                this._closeFrame(frame);
+            } else {
+                this._openFrame(frame);
+            }
+        },
+
+        getActive: function () {
+            const element = this.element;
+            const frames = element.children(".frame");
+            const active = [];
+
+            frames.each(function(index) {
+                if ($(this).hasClass("active")) {
+                    active.push(index);
+                }
+            });
+
+            return active;
         },
 
         /* eslint-disable-next-line */

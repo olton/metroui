@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+
+    <title>Test Eval - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Eval</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- Вывод текущего года -->
+    <div data-role="eval">{{ new Date().getFullYear() }}</div>
+
+    <!-- Вычисление математического выражения -->
+    <div data-role="eval">{{ 2 + 2 * 5 }}</div>
+
+    <!-- Использование условий -->
+    <div data-role="eval">{{ new Date().getHours() < 12 ? 'Доброе утро' : 'Добрый день' }}</div>
+
+    <!-- Включение логирования ошибок -->
+    <div data-role="eval" data-log-errors="true">{{ someNonExistentVariable }}</div>
+
+    <!-- Обработка дочерних узлов -->
+    <div data-role="eval" data-process-child="true">
+        <div>Сегодня {{ new Date().toLocaleDateString() }}</div>
+        <div>Время {{ new Date().toLocaleTimeString() }}</div>
+    </div>
+</div>
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+</script>
+</body>
+</html>
