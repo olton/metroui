@@ -24,7 +24,7 @@
         customButtons: null,
         actionsAlign: "right",
         defaultActions: true,
-        defaultActionButtons: "ok, cancel, help",
+        defaultActionButtons: "ok,cancel,help",
         overlay: true,
         overlayColor: "#000000",
         overlayAlpha: 0.5,
