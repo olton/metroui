@@ -28,6 +28,7 @@
         sourceMethod: "GET",
         sourceType: "json",
         filterSource: null,
+        filterThreshold: 500,
 
         clsSelect: "",
         clsSelectInput: "",
@@ -403,8 +404,8 @@
         _createDroppable: function (drop_container) {
             const that = this, o = this.options;
             const filter_input = drop_container.find("input");
-            const dropdown_toggle = drop_container.siblings(".dropdown-toggle");
             const container = this.element.closest(".select");
+            const dropdown_toggle = drop_container.siblings(".dropdown-caret");
             const list = drop_container.find("ul");
             
             Metro.makePlugin(drop_container, "dropdown", {
@@ -606,7 +607,7 @@
             const filter_input_change = Hooks.useDebounce(async (e)=>{
                 const element = this.element, o = this.options;
                 const list = this.list;
-                const filter = e.target.value;
+                const filter = e.target.value.toLowerCase();
                 const filterSource = `${o.filterSource}${filter}`
                 
                 if (o.filterSource) {
@@ -618,18 +619,20 @@
                     }, true)
                 } else {
                     const li = list.find("li");
-                    let i, a;
+                    let i, a, t;
                     for (i = 0; i < li.length; i++) {
                         if ($(li[i]).hasClass("group-title")) continue;
                         a = li[i].getElementsByTagName("a")[0];
-                        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        t = a.innerHTML || a.innerText;
+                        
+                        if (t.toLowerCase().includes(filter)) {
                             li[i].style.display = "";
                         } else {
                             li[i].style.display = "none";
                         }
                     }
                 }                
-            }, 500)
+            }, o.filterThreshold);
             
             filter_input.on(Metro.events.keyup, filter_input_change.bind(this));
 

@@ -53395,15 +53395,17 @@ input:-ms-input-placeholder {
   border: none !important;
   box-shadow: none !important;
 }
-.select .dropdown-toggle {
-  width: 34px;
-  height: 34px;
-  display: block;
-  position: relative;
+.select .dropdown-caret {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 16px;
+  height: 16px;
+  transform: rotate(90deg);
+  transition: transform 0.2s ease-in-out;
 }
-.select .dropdown-toggle::before {
-  margin-left: -1.1rem;
-  border-color: var(--select-dropdown-toggle-color);
+.select.active-toggle .dropdown-caret {
+  transform: rotate(270deg);
 }
 .select .option-list {
   margin: 0;
@@ -53477,6 +53479,10 @@ input:-ms-input-placeholder {
 .select .button-group {
   display: flex;
   flex-wrap: nowrap;
+  margin-right: 1rem;
+}
+.select select[multiple] ~ .button-group {
+  margin-right: 0;
 }
 .select .button {
   background-color: var(--select-button-background);
@@ -53559,17 +53565,6 @@ input:-ms-input-placeholder {
 .select.focused {
   box-shadow: 0 0 0 3px var(--select-focus-color);
 }
-.select.dropdown-toggle::before {
-  margin-left: -1.1rem;
-  left: 100%;
-  top: 14px;
-  margin-top: 0;
-  width: 0.4rem;
-  height: 0.4rem;
-}
-.select.disabled.dropdown-toggle:before {
-  border-color: var(--select-disabled-color);
-}
 .select .group-title {
   background-color: var(--select-group-title-background);
   color: var(--select-group-title-color);
@@ -53592,11 +53587,6 @@ input:-ms-input-placeholder {
   flex-wrap: wrap;
   height: auto;
   min-height: 36px;
-}
-.select.multiple .dropdown-toggle {
-  position: absolute;
-  top: 0;
-  right: 0;
 }
 .select.multiple > .button-group {
   position: absolute;
@@ -53623,93 +53613,9 @@ input:-ms-input-placeholder {
 .select .button-group {
   order: 3;
 }
-.select .dropdown-toggle {
-  order: 4;
-}
 .select .prepend {
   border-top-left-radius: var(--select-border-radius);
   border-bottom-left-radius: var(--select-border-radius);
-}
-.select.input-large {
-  height: 50px;
-}
-.select.input-large .dropdown-toggle,
-.select.input-large > .button-group .button {
-  height: 50px;
-  width: 50px;
-}
-.select.input-large .dropdown-toggle::before {
-  margin-left: -1.5rem;
-}
-.select.input-large .select-input,
-.select.input-large .prepend,
-.select.input-large .append {
-  height: 48px;
-  font-size: 1.3rem;
-  padding: 2px 10px;
-  line-height: 48px;
-}
-.select.input-large.multiple {
-  min-height: 50px;
-  height: auto;
-}
-.select.input-large.multiple .select-input {
-  height: auto;
-  min-height: 48px;
-}
-.select.input-large.multiple > .button-group {
-  right: 50px;
-}
-.select.input-large.multiple > .button-group:not(.d-none) ~ .select-input {
-  margin-right: 100px;
-}
-.select.input-large.dropdown-toggle::before {
-  top: 18px;
-  width: 0.6rem;
-  height: 0.6rem;
-  margin-left: -1.3rem;
-}
-.select.input-small {
-  height: 28px;
-}
-.select.input-small .dropdown-toggle,
-.select.input-small > .button-group .button {
-  height: 28px;
-  width: 28px;
-}
-.select.input-small .dropdown-toggle::before {
-  margin-left: -1rem;
-}
-.select.input-small .select-input,
-.select.input-small .prepend,
-.select.input-small .append {
-  height: 26px;
-  font-size: 0.9rem;
-  padding: 0 4px;
-  line-height: 26px;
-}
-.select.input-small.multiple {
-  min-height: 28px;
-  height: auto;
-}
-.select.input-small.multiple .select-input {
-  height: auto;
-  min-height: 26px;
-}
-.select.input-small.multiple > .button-group {
-  right: 28px;
-}
-.select.input-small.multiple > .button-group:not(.d-none) ~ .select-input {
-  margin-right: 56px;
-}
-.select.input-small.dropdown-toggle::before {
-  top: 10px;
-  width: 0.325rem;
-  height: 0.325rem;
-  margin-left: -0.9rem;
-}
-.select.input-small .button-group .button {
-  padding: 0;
 }
 .select[dir=rtl],
 .select.rtl {
@@ -53731,15 +53637,10 @@ input:-ms-input-placeholder {
 .select.rtl .button-group {
   order: 2;
 }
-.select[dir=rtl].dropdown-toggle,
-.select.rtl.dropdown-toggle {
-  padding-right: 0 !important;
-  padding-left: 0.9rem;
-}
-.select[dir=rtl].dropdown-toggle::before,
-.select.rtl.dropdown-toggle::before {
-  margin-left: 0.9rem;
-  left: 0;
+.select[dir=rtl] .dropdown-caret,
+.select.rtl .dropdown-caret {
+  right: auto;
+  left: 8px;
 }
 .select .selected-item__group-name {
   font-size: 0.75rem;
