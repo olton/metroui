@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+
+    <title>Gauge - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Gauge</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="h-100 d-flex flex-center">
+    <div id="gauge" data-role="gauge" data-size="300" data-min="950" data-max="1050" data-value="1000" data-label="hPa"></div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+    $(()=>{
+      const gauge = Metro.getPlugin("#gauge", "gauge");
+      console.log(gauge);
+      setInterval(() => {
+        const val = Math.floor(Math.random() * (gauge.options.max - gauge.options.min + 1) + gauge.options.min);
+        gauge.val(val);
+      }, 2000)
+    })
+</script>
+</body>
+</html>
