@@ -1,3 +1,7 @@
+/**
+ * Original code by Mads Stoumann (https://dev.to/madsstoumann/how-to-create-gauges-in-css-3581)
+ */
+
 (function(Metro, $) {
     'use strict';
 
