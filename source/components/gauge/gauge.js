@@ -5,13 +5,16 @@
         min: 0,
         max: 100,
         value: 0,
-        size: 100,
-        labelMin: "Low",
-        labelMax: "High",
-        label: "Gauge",
+        size: 0,
+        labelMin: "",
+        labelMax: "",
+        label: "",
         suffix: "",
         values: 10,
         segments: 10,
+        startAngle: 235,
+        range: 250,
+        theme: "",
         onGaugeCreate: Metro.noop
     };
 
@@ -34,6 +37,10 @@
         _create: function(){
             const that = this, element = this.element, o = this.options;
 
+            element[0].style.setProperty('--analog-gauge-segments', `${o.segments}`);
+            element[0].style.setProperty('--analog-gauge-start-angle', `${o.startAngle}deg`);
+            element[0].style.setProperty('--analog-gauge-range', `${o.range}deg`);
+
             this.options.range = parseFloat(getComputedStyle(element[0]).getPropertyValue('--analog-gauge-range' || 250));
             this.options.start = parseFloat(getComputedStyle(element[0]).getPropertyValue('--analog-gauge-start-angle' || 235));
             this.options.defaultMark = 90
@@ -49,18 +56,25 @@
 
         _generateMarks: function(){
             const o = this.options;
-            const values = o.values;
+            const values = (""+o.values).trim();
             
-            if (!values) return '';
+            if (values === "") return '';
 
+            let t = values.toArray(",");
             let valueArray = [];
+            let count
 
-            valueArray = Array.from({ length: values }, (_, i) =>
-              Math.round(o.min + (i * (o.max - o.min) / (values - 1 || 1)))
-            );
-
+            if (t.length === 1) {
+                valueArray = Array.from({ length: +values }, (_, i) =>
+                  Math.round(o.min + (i * (o.max - o.min) / (+values - 1 || 1)))
+                );
+                count = parseInt(values);
+            } else {
+                valueArray = [...t]
+                count = t.length;
+            }            
             
-            const degreeStep = o.range / (values - 1 || 1);
+            const degreeStep = o.range / (count - 1 || 1);
 
             return `
                 <ul class="value-marks">
@@ -74,12 +88,16 @@
         
         _createStructure: function(){
             const that = this, element = this.element, o = this.options;
+            
             element.addClass("analog-gauge");
-            element.css({
-                width: o.size,
-                height: o.size
-            });
-
+            
+            if (o.size) {
+                element.css({
+                    width: o.size,
+                    height: o.size
+                });
+            }
+            
             element.html(`
                 <div class="gauge"></div>
                 ${this._generateMarks()} 
@@ -89,6 +107,10 @@
                 <div class="label-min">${o.labelMin}</div> 
                 <div class="label-max">${o.labelMax}</div> 
             `)
+            
+            if (o.theme) {
+                element.addClass(`theme-${o.theme}`);
+            } 
         },
 
         _createEvents: function(){
@@ -113,7 +135,7 @@
             elem.style.setProperty('--analog-gauge-value', `${valuePercentage * o.range}deg`);
             elem.style.setProperty('--_d', `${degree}deg`);
             
-            element.find(".value").text(o.value + o.suffix);
+            element.find(".value").html(o.value + o.suffix);
         },
         
         changeAttribute: function(attr, newValue){

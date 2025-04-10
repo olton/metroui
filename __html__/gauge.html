@@ -16,19 +16,48 @@
     </div>
 </nav>
 
-<div class="h-100 d-flex flex-center">
-    <div id="gauge" data-role="gauge" data-size="300" data-min="950" data-max="1050" data-value="1000" data-label="hPa"></div>
+<div class="container h-100 d-flex flex-center flex-column">
+    <h1 class="mb-20 display4">Gauge</h1>
+    <div class="row gap-12">
+        <div class="cell-ld-4 cell-sm-6 d-flex flex-center">
+            <div id="gauge1" data-role="gauge" data-label-min="Low" data-label-max="High" data-min="950" data-max="1050" data-label="hPa" data-segments="10" data-values="20"></div>
+        </div>
+        <div class="cell-ld-4 cell-sm-6 d-flex flex-center">
+            <div id="gauge2" data-role="gauge" data-min="0" data-max="1000" data-label="Mbps" data-segments="10" data-theme="speed" data-values="11"></div>
+        </div>
+        <div class="cell-ld-4 cell-sm-6 d-flex flex-center">
+            <div id="gauge3" data-role="gauge" data-start-angle="270" data-range="220" data-min="0" data-max="100" data-label="Hum" data-suffix="%" data-segments="100" data-theme="sky" data-values="Arid,Dry,Crisp,Low,Fair,Mild,Moist,Damp,Wet,Soggy"></div>
+        </div>
+        <div class="cell-ld-4 cell-sm-6 d-flex flex-center">
+            <div id="gauge4" data-role="gauge" data-label-min="Cold" data-label-max="Hot" data-min="-25" data-max="50" data-label="Temp" data-suffix="&deg;" data-segments="0" data-theme="temp" data-values="20"></div>
+        </div>
+        <div class="cell-ld-4 cell-sm-6 d-flex flex-center">
+            <div id="gauge5" data-role="gauge" data-label-min="Empty" data-label-max="Full" data-min="0" data-max="100" data-label="Temp" data-suffix="&deg;" data-segments="10" data-theme="battery" data-values="11"></div>
+        </div>
+        <div class="cell-ld-4 cell-sm-6 d-flex flex-center">
+            <div id="gauge6" data-role="gauge" data-label-min="Low" data-label-max="Extreme" data-min="0" data-max="11" data-label="UV" data-segments="10" data-theme="rainbow" data-values="0"></div>
+        </div>
+    </div>
 </div>
 
 <script src="../lib/metro.js"></script>
 <script>
     Metro.welcome()
     $(()=>{
-      const gauge = Metro.getPlugin("#gauge", "gauge");
-      console.log(gauge);
+      const gauge1 = Metro.getPlugin("#gauge1", "gauge");
+      const gauge2 = Metro.getPlugin("#gauge2", "gauge");
+      const gauge3 = Metro.getPlugin("#gauge3", "gauge");
+      const gauge4 = Metro.getPlugin("#gauge4", "gauge");
+      const gauge5 = Metro.getPlugin("#gauge5", "gauge");
+      const gauge6 = Metro.getPlugin("#gauge6", "gauge");
+
       setInterval(() => {
-        const val = Math.floor(Math.random() * (gauge.options.max - gauge.options.min + 1) + gauge.options.min);
-        gauge.val(val);
+        const val1 = Math.floor(Math.random() * (gauge1.options.max - gauge1.options.min + 1) + gauge1.options.min); gauge1.val(val1);
+        const val2 = Math.floor(Math.random() * (gauge2.options.max - gauge2.options.min + 1) + gauge2.options.min); gauge2.val(val2);
+        const val3 = Math.floor(Math.random() * (gauge3.options.max - gauge3.options.min + 1) + gauge3.options.min); gauge3.val(val3);
+        const val4 = Math.floor(Math.random() * (gauge4.options.max - gauge4.options.min + 1) + gauge4.options.min); gauge4.val(val4);
+        const val5 = Math.floor(Math.random() * (gauge5.options.max - gauge5.options.min + 1) + gauge5.options.min); gauge5.val(val5);
+        const val6 = (Math.random() * (gauge6.options.max - gauge6.options.min + 1) + gauge6.options.min); gauge6.val(val6.toFixed(1));
       }, 2000)
     })
 </script>
