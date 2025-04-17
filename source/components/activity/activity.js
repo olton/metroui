@@ -14,7 +14,7 @@
         ActivityDefaultConfig = $.extend({}, ActivityDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroActivitySetup"] !== undefined) {
+    if (typeof globalThis["metroActivitySetup"] !== "undefined") {
         Metro.activitySetup(globalThis["metroActivitySetup"]);
     }
 

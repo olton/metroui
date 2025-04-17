@@ -16,7 +16,7 @@
         ResizerDefaultConfig = $.extend({}, ResizerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroResizerSetup"] !== undefined) {
+    if (typeof globalThis["metroResizerSetup"] !== "undefined") {
         Metro.resizerSetup(globalThis["metroResizerSetup"]);
     }
 

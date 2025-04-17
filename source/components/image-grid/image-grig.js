@@ -21,7 +21,7 @@
         ImageGridDefaultConfig = $.extend({}, ImageGridDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroImageGridSetup"] !== undefined) {
+    if (typeof globalThis["metroImageGridSetup"] !== "undefined") {
         Metro.imageGridSetup(globalThis["metroImageGridSetup"]);
     }
 

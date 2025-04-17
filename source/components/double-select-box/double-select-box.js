@@ -26,7 +26,7 @@
         DoubleSelectBoxDefaultConfig = $.extend({}, DoubleSelectBoxDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDoubleSelectBoxSetup"] !== undefined) {
+    if (typeof globalThis["metroDoubleSelectBoxSetup"] !== "undefined") {
         Metro.doubleSelectBoxSetup(globalThis["metroDoubleSelectBoxSetup"]);
     }
 

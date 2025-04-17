@@ -16,8 +16,8 @@
         SidenavCounterDefaultConfig = $.extend({}, SidenavCounterDefaultConfig, options);
     };
 
-    if (typeof window["metroSidenavCounterSetup"] !== undefined) {
-        Metro.sidenavCounterSetup(window["metroSidenavCounterSetup"]);
+    if (typeof globalThis["metroSidenavCounterSetup"] !== "undefined") {
+        Metro.sidenavCounterSetup(globalThis["metroSidenavCounterSetup"]);
     }
 
     Metro.Component('sidenav-counter', {

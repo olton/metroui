@@ -14,8 +14,8 @@
         DropMenuDefaultConfig = $.extend({}, DropMenuDefaultConfig, options);
     };
 
-    if (typeof window["metroDropMenuSetup"] !== undefined) {
-        Metro.dropMenuSetup(window["metroDropMenuSetup"]);
+    if (typeof globalThis["metroDropMenuSetup"] !== "undefined") {
+        Metro.dropMenuSetup(globalThis["metroDropMenuSetup"]);
     }
 
     Metro.Component('dropmenu', {

@@ -71,7 +71,7 @@
         InputDefaultConfig = $.extend({}, InputDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroInputSetup"] !== undefined) {
+    if (typeof globalThis["metroInputSetup"] !== "undefined") {
         Metro.inputSetup(globalThis["metroInputSetup"]);
     }
 

@@ -48,7 +48,7 @@
         DoubleSliderDefaultConfig = $.extend({}, DoubleSliderDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDoubleSliderSetup"] !== undefined) {
+    if (typeof globalThis["metroDoubleSliderSetup"] !== "undefined") {
         Metro.doubleSliderSetup(globalThis["metroDoubleSliderSetup"]);
     }
 

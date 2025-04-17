@@ -28,7 +28,7 @@
         AccordionDefaultConfig = $.extend({}, AccordionDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroAccordionSetup"] !== undefined) {
+    if (typeof globalThis["metroAccordionSetup"] !== "undefined") {
         Metro.accordionSetup(globalThis["metroAccordionSetup"]);
     }
 

@@ -31,7 +31,7 @@
         TextareaDefaultConfig = $.extend({}, TextareaDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTextareaSetup"] !== undefined) {
+    if (typeof globalThis["metroTextareaSetup"] !== "undefined") {
         Metro.textareaSetup(globalThis["metroTextareaSetup"]);
     }
 

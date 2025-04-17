@@ -15,8 +15,8 @@
         AnalogClockDefaultConfig = $.extend({}, AnalogClockDefaultConfig, options);
     };
 
-    if (typeof window["metroAnalogClockSetup"] !== undefined) {
-        Metro.analogClockSetup(window["metroAnalogClockSetup"]);
+    if (typeof globalThis["metroAnalogClockSetup"] !== "undefined") {
+        Metro.analogClockSetup(globalThis["metroAnalogClockSetup"]);
     }
 
     Metro.Component('analog-clock', {

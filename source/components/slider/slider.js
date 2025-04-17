@@ -48,7 +48,7 @@
         SliderDefaultConfig = $.extend({}, SliderDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSliderSetup"] !== undefined) {
+    if (typeof globalThis["metroSliderSetup"] !== "undefined") {
         Metro.sliderSetup(globalThis["metroSliderSetup"]);
     }
 

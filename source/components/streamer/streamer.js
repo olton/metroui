@@ -48,7 +48,7 @@
         StreamerDefaultConfig = $.extend({}, StreamerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroStreamerSetup"] !== undefined) {
+    if (typeof globalThis["metroStreamerSetup"] !== "undefined") {
         Metro.streamerSetup(globalThis["metroStreamerSetup"]);
     }
 
@@ -143,7 +143,7 @@
                 $.each(data.actions, function(){
                     var item = this;
                     var button = $("<button>").addClass("streamer-action").addClass(item.cls).html(item.html);
-                    if (item.onclick !== undefined) button.on(Metro.events.click, function(){
+                    if (item.onclick) button.on(Metro.events.click, function(){
                         Utils.exec(item.onclick, [element]);
                     });
                     button.appendTo(actions);

@@ -24,7 +24,7 @@
         ImageMagnifierDefaultConfig = $.extend({}, ImageMagnifierDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroImageMagnifierSetup"] !== undefined) {
+    if (typeof globalThis["metroImageMagnifierSetup"] !== "undefined") {
         Metro.imageMagnifierSetup(globalThis["metroImageMagnifierSetup"]);
     }
 

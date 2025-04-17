@@ -26,7 +26,7 @@
         InfoBoxDefaultConfig = $.extend({}, InfoBoxDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroInfoBoxSetup"] !== undefined) {
+    if (typeof globalThis["metroInfoBoxSetup"] !== "undefined") {
         Metro.infoBoxSetup(globalThis["metroInfoBoxSetup"]);
     }
 

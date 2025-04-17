@@ -24,7 +24,7 @@
         DropdownDefaultConfig = $.extend({}, DropdownDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDropdownSetup"] !== undefined) {
+    if (typeof globalThis["metroDropdownSetup"] !== "undefined") {
         Metro.dropdownSetup(globalThis["metroDropdownSetup"]);
     }
 

@@ -28,7 +28,7 @@
         MarqueeDefaultConfig = $.extend({}, MarqueeDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroMarqueeSetup"] !== undefined) {
+    if (typeof globalThis["metroMarqueeSetup"] !== "undefined") {
         Metro.marqueeSetup(globalThis["metroMarqueeSetup"]);
     }
 

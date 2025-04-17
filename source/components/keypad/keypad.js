@@ -49,7 +49,7 @@
         KeypadDefaultConfig = $.extend({}, KeypadDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroKeypadSetup"] !== undefined) {
+    if (typeof globalThis["metroKeypadSetup"] !== "undefined") {
         Metro.keypadSetup(globalThis["metroKeypadSetup"]);
     }
 

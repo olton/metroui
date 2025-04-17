@@ -262,7 +262,7 @@
         ValidatorDefaultConfig = $.extend({}, ValidatorDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroValidatorSetup"] !== undefined) {
+    if (typeof globalThis["metroValidatorSetup"] !== "undefined") {
         Metro.validatorSetup(globalThis["metroValidatorSetup"]);
     }
 

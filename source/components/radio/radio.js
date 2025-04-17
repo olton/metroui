@@ -17,7 +17,7 @@
         RadioDefaultConfig = $.extend({}, RadioDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroRadioSetup"] !== undefined) {
+    if (typeof globalThis["metroRadioSetup"] !== "undefined") {
         Metro.metroRadioSetup(globalThis["metroRadioSetup"]);
     }
 
@@ -48,7 +48,7 @@
             if (o.prepend) { container.prepend($("<span>").addClass("caption-prepend").addClass(o.clsPrepend).addClass(o.clsCaption).html(o.prepend)); }
             if (o.append)  { container.append($("<span>").addClass("caption-append").addClass(o.clsAppend).addClass(o.clsCaption).html(o.append)); }
 
-            if (element.attr("readonly") !== undefined) {
+            if (element.attr("readonly")) {
                 element.on("click", function(e){
                     e.preventDefault();
                 })

@@ -26,8 +26,8 @@
         GaugeDefaultConfig = $.extend({}, GaugeDefaultConfig, options);
     };
 
-    if (typeof window["metroGaugeSetup"] !== undefined) {
-        Metro.gaugeSetup(window["metroGaugeSetup"]);
+    if (typeof globalThis["metroGaugeSetup"] !== "undefined") {
+        Metro.gaugeSetup(globalThis["metroGaugeSetup"]);
     }
 
     Metro.Component('gauge', {

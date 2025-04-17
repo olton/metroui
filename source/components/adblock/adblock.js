@@ -17,7 +17,7 @@
         AdblockDefaultConfig = $.extend({}, AdblockDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroAdblockSetup"] !== undefined) {
+    if (typeof globalThis["metroAdblockSetup"] !== "undefined") {
         Metro.adblockSetup(globalThis["metroAdblockSetup"]);
     }
 

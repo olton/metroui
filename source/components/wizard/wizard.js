@@ -41,7 +41,7 @@
         WizardDefaultConfig = $.extend({}, WizardDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroWizardSetup"] !== undefined) {
+    if (typeof globalThis["metroWizardSetup"] !== "undefined") {
         Metro.wizardSetup(globalThis["metroWizardSetup"]);
     }
 

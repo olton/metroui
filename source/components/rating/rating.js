@@ -29,7 +29,7 @@
         RatingDefaultConfig = $.extend({}, RatingDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroRatingSetup"] !== undefined) {
+    if (typeof globalThis["metroRatingSetup"] !== "undefined") {
         Metro.ratingSetup(globalThis["metroRatingSetup"]);
     }
 

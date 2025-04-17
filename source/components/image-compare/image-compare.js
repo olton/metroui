@@ -14,7 +14,7 @@
         ImageCompareDefaultConfig = $.extend({}, ImageCompareDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroImageCompareSetup"] !== undefined) {
+    if (typeof globalThis["metroImageCompareSetup"] !== "undefined") {
         Metro.imageCompareSetup(globalThis["metroImageCompareSetup"]);
     }
 

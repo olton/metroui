@@ -49,7 +49,7 @@
         TagInputDefaultConfig = $.extend({}, TagInputDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTagInputSetup"] !== undefined) {
+    if (typeof globalThis["metroTagInputSetup"] !== "undefined") {
         Metro.tagInputSetup(globalThis["metroTagInputSetup"]);
     }
 

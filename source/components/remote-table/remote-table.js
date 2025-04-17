@@ -39,8 +39,8 @@
         RemoteTableDefaultConfig = $.extend({}, RemoteTableDefaultConfig, options);
     };
 
-    if (typeof window["metroRemoteTableSetup"] !== undefined) {
-        Metro.remoteTableSetup(window["metroRemoteTableSetup"]);
+    if (typeof globalThis["metroRemoteTableSetup"] !== "undefined") {
+        Metro.remoteTableSetup(globalThis["metroRemoteTableSetup"]);
     }
 
     Metro.Component('remote-table', {

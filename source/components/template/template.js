@@ -53,7 +53,7 @@
         TemplateDefaultConfig = $.extend({}, TemplateDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTemplateSetup"] !== undefined) {
+    if (typeof globalThis["metroTemplateSetup"] !== "undefined") {
         Metro.templateSetup(globalThis["metroTemplateSetup"]);
     }
 

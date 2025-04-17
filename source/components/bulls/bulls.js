@@ -11,8 +11,8 @@
         BullDefaultConfig = $.extend({}, BullDefaultConfig, options);
     };
 
-    if (typeof window["metroBullSetup"] !== undefined) {
-        Metro.bullSetup(window["metroBullSetup"]);
+    if (typeof globalThis["metroBullSetup"] !== "undefined") {
+        Metro.bullSetup(globalThis["metroBullSetup"]);
     }
 
     Metro.Component('bull', {

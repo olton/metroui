@@ -14,7 +14,7 @@
         AudioButtonDefaultConfig = $.extend({}, AudioButtonDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroAudioButtonSetup"] !== undefined) {
+    if (typeof globalThis["metroAudioButtonSetup"] !== "undefined") {
         Metro.audioButtonSetup(globalThis["metroAudioButtonSetup"]);
     }
 

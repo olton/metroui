@@ -34,7 +34,7 @@
         CountdownDefaultConfig = $.extend({}, CountdownDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCountdownSetup"] !== undefined) {
+    if (typeof globalThis["metroCountdownSetup"] !== "undefined") {
         Metro.countdownSetup(globalThis["metroCountdownSetup"]);
     }
 

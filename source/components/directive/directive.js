@@ -68,8 +68,8 @@
         DirectiveDefaultConfig = $.extend({}, DirectiveDefaultConfig, options);
     };
 
-    if (typeof window["metroDirectiveSetup"] !== undefined) {
-        Metro.directiveSetup(window["metroDirectiveSetup"]);
+    if (typeof globalThis["metroDirectiveSetup"] !== "undefined") {
+        Metro.directiveSetup(globalThis["metroDirectiveSetup"]);
     }
 
     Metro.Component('directive', {

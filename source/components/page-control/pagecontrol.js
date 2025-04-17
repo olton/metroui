@@ -32,7 +32,7 @@
         PageControlDefaultConfig = $.extend({}, PageControlDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroPageControlSetup"] !== undefined) {
+    if (typeof globalThis["metroPageControlSetup"] !== "undefined") {
         Metro.pageControlSetup(globalThis["metroPageControlSetup"]);
     }
 

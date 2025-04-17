@@ -20,7 +20,7 @@
         CollapseDefaultConfig = $.extend({}, CollapseDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCollapseSetup"] !== undefined) {
+    if (typeof globalThis["metroCollapseSetup"] !== "undefined") {
         Metro.collapseSetup(globalThis["metroCollapseSetup"]);
     }
 

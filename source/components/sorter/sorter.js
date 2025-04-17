@@ -21,7 +21,7 @@
         SorterDefaultConfig = $.extend({}, SorterDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSorterSetup"] !== undefined) {
+    if (typeof globalThis["metroSorterSetup"] !== "undefined") {
         Metro.sorterSetup(globalThis["metroSorterSetup"]);
     }
 
@@ -103,7 +103,7 @@
             var id = Utils.elementId("temp");
             var prev;
 
-            if (dir !== undefined) {
+            if (dir) {
                 o.sortDir = dir;
             }
 

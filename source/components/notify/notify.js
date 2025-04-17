@@ -21,7 +21,7 @@
         NotifyDefaultConfig = $.extend({}, NotifyDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroNotifySetup"] !== undefined) {
+    if (typeof globalThis["metroNotifySetup"] !== "undefined") {
         Metro.notifySetup(globalThis["metroNotifySetup"]);
     }
 
@@ -76,15 +76,13 @@
             /*
             * keepOpen, cls, width, callback
             * */
-            if (options !== undefined) {
-                if (options.clsNotify !== undefined) {
-                    notify.addClass(options.clsNotify);
-                }
-                if (options.width !== undefined) {
-                    notify.css({
-                        width: options.width
-                    });
-                }
+            if (options.clsNotify) {
+                notify.addClass(options.clsNotify);
+            }
+            if (options.width !== undefined) {
+                notify.css({
+                    width: options.width
+                });
             }
 
             notify.on(Metro.events.click, function(){

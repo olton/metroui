@@ -173,7 +173,7 @@ var TABLE_COL_OPTIONS = {
         TableDefaultConfig = $.extend({}, TableDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTableSetup"] !== undefined) {
+    if (typeof globalThis["metroTableSetup"] !== "undefined") {
         Metro.tableSetup(globalThis["metroTableSetup"]);
     }
 
@@ -884,15 +884,15 @@ var TABLE_COL_OPTIONS = {
                 var item = this;
                 th = $("<th>").appendTo(tr);
 
-                if (item.title !== undefined) {
+                if (item.title) {
                     th.html(item.title);
                 }
 
-                if (item.name !== undefined) {
+                if (item.name) {
                     th.addClass("foot-column-name-" + item.name);
                 }
 
-                if (item.cls !== undefined) {
+                if (item.cls) {
                     th.addClass(item.cls);
                 }
 

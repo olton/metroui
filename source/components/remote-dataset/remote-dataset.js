@@ -44,8 +44,8 @@
         RemoteDatasetDefaultConfig = $.extend({}, RemoteDatasetDefaultConfig, options);
     };
 
-    if (typeof window["metroRemoteDatasetSetup"] !== undefined) {
-        Metro.remoteDatasetSetup(window["metroRemoteDatasetSetup"]);
+    if (typeof globalThis["metroRemoteDatasetSetup"] !== "undefined") {
+        Metro.remoteDatasetSetup(globalThis["metroRemoteDatasetSetup"]);
     }
 
     Metro.Component('remote-dataset', {

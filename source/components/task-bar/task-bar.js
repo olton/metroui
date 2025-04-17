@@ -10,8 +10,8 @@
         TaskBarDefaultConfig = $.extend({}, TaskBarDefaultConfig, options);
     };
 
-    if (typeof window["metroTaskBarSetup"] !== undefined) {
-        Metro.taskBarSetup(window["metroTaskBarSetup"]);
+    if (typeof globalThis["metroTaskBarSetup"] !== "undefined") {
+        Metro.taskBarSetup(globalThis["metroTaskBarSetup"]);
     }
 
     Metro.Component('task-bar', {

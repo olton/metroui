@@ -54,7 +54,7 @@
         VideoPlayerDefaultConfig = $.extend({}, VideoPlayerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroVideoPlayerSetup"] !== undefined) {
+    if (typeof globalThis["metroVideoPlayerSetup"] !== "undefined") {
         Metro.videoPlayerSetup(globalThis["metroVideoPlayerSetup"]);
     }
 
@@ -483,7 +483,7 @@
         },
 
         play: function(src){
-            if (src !== undefined) {
+            if (src) {
                 this._setSource(src);
             }
 

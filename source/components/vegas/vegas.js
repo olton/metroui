@@ -45,7 +45,7 @@
         VegasDefaultConfig = $.extend({}, VegasDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroVegasSetup"] !== undefined) {
+    if (typeof globalThis["metroVegasSetup"] !== "undefined") {
         Metro.vegasSetup(globalThis["metroVegasSetup"]);
     }
 

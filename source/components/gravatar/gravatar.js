@@ -14,7 +14,7 @@
         GravatarDefaultConfig = $.extend({}, GravatarDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroGravatarSetup"] !== undefined) {
+    if (typeof globalThis["metroGravatarSetup"] !== "undefined") {
         Metro.gravatarSetup(globalThis["metroGravatarSetup"]);
     }
 

@@ -33,7 +33,7 @@
         MasterDefaultConfig = $.extend({}, MasterDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroMasterSetup"] !== undefined) {
+    if (typeof globalThis["metroMasterSetup"] !== "undefined") {
         Metro.masterSetup(globalThis["metroMasterSetup"]);
     }
 
@@ -115,7 +115,7 @@
 
             $.each(page, function(){
                 var p = $(this);
-                if (p.data("cover") !== undefined) {
+                if (p.data("cover")) {
                     element.css({
                         backgroundImage: "url("+p.data('cover')+")"
                     });

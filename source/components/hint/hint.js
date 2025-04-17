@@ -18,7 +18,7 @@
         HintDefaultConfig = $.extend({}, HintDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroHintSetup"] !== undefined) {
+    if (typeof globalThis["metroHintSetup"] !== "undefined") {
         Metro.hintSetup(globalThis["metroHintSetup"]);
     }
 

@@ -17,7 +17,7 @@
         CharmsDefaultConfig = $.extend({}, CharmsDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCharmsSetup"] !== undefined) {
+    if (typeof globalThis["metroCharmsSetup"] !== "undefined") {
         Metro.charmsSetup(globalThis["metroCharmsSetup"]);
     }
 

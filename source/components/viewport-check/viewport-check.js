@@ -14,7 +14,7 @@
         ViewportCheckDefaultConfig = $.extend({}, ViewportCheckDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroViewportCheckSetup"] !== undefined) {
+    if (typeof globalThis["metroViewportCheckSetup"] !== "undefined") {
         Metro.viewportCheckSetup(globalThis["metroViewportCheckSetup"]);
     }
 

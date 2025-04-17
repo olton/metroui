@@ -20,7 +20,7 @@
         NavigationViewDefaultConfig = $.extend({}, NavigationViewDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroNavViewSetup"] !== undefined) {
+    if (typeof globalThis["metroNavViewSetup"] !== "undefined") {
         Metro.navViewSetup(globalThis["metroNavViewSetup"]);
     }
 

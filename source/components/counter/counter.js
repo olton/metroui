@@ -23,7 +23,7 @@
         CounterDefaultConfig = $.extend({}, CounterDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCounterSetup"] !== undefined) {
+    if (typeof globalThis["metroCounterSetup"] !== "undefined") {
         Metro.counterSetup(globalThis["metroCounterSetup"]);
     }
 

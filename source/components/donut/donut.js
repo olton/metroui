@@ -33,7 +33,7 @@
         DonutDefaultConfig = $.extend({}, DonutDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDonutSetup"] !== undefined) {
+    if (typeof globalThis["metroDonutSetup"] !== "undefined") {
         Metro.donutSetup(globalThis["metroDonutSetup"]);
     }
 

@@ -69,7 +69,7 @@
         TouchDefaultConfig = $.extend({}, TouchDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTouchSetup"] !== undefined) {
+    if (typeof globalThis["metroTouchSetup"] !== "undefined") {
         Metro.touchSetup(globalThis["metroTouchSetup"]);
     }
 

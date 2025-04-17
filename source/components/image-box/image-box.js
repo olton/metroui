@@ -16,7 +16,7 @@
         ImageBoxDefaultConfig = $.extend({}, ImageBoxDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroImageBoxSetup"] !== undefined) {
+    if (typeof globalThis["metroImageBoxSetup"] !== "undefined") {
         Metro.imageBoxSetup(globalThis["metroImageBoxSetup"]);
     }
 

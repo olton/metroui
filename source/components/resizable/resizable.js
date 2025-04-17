@@ -21,7 +21,7 @@
         ResizableDefaultConfig = $.extend({}, ResizableDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroResizableSetup"] !== undefined) {
+    if (typeof globalThis["metroResizableSetup"] !== "undefined") {
         Metro.resizableSetup(globalThis["metroResizableSetup"]);
     }
 

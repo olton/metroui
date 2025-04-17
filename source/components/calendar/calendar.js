@@ -104,7 +104,7 @@
         CalendarDefaultConfig = $.extend({}, CalendarDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCalendarSetup"] !== undefined) {
+    if (typeof globalThis["metroCalendarSetup"] !== "undefined") {
         Metro.calendarSetup(globalThis["metroCalendarSetup"]);
     }
 

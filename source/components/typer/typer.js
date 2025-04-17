@@ -18,7 +18,7 @@
         TyperDefaultConfig = $.extend({}, TyperDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTyperSetup"] !== undefined) {
+    if (typeof globalThis["metroTyperSetup"] !== "undefined") {
         Metro.typerSetup(globalThis["metroTyperSetup"]);
     }
 

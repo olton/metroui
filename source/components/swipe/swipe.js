@@ -17,8 +17,8 @@
         SwipeDefaultConfig = $.extend({}, SwipeDefaultConfig, options);
     };
 
-    if (typeof window["metroSwipeSetup"] !== undefined) {
-        Metro.swipeSetup(window["metroSwipeSetup"]);
+    if (typeof globalThis["metroSwipeSetup"] !== "undefined") {
+        Metro.swipeSetup(globalThis["metroSwipeSetup"]);
     }
 
     Metro.Component('swipe', {

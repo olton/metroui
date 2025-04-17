@@ -20,7 +20,7 @@
         SwitchDefaultConfig = $.extend({}, SwitchDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSwitchSetup"] !== undefined) {
+    if (typeof globalThis["metroSwitchSetup"] !== "undefined") {
         Metro.switchSetup(globalThis["metroSwitchSetup"]);
     }
 
@@ -39,7 +39,7 @@
 
             element.attr("type", "checkbox");
 
-            if (element.attr("readonly") !== undefined) {
+            if (element.attr("readonly")) {
                 element.on("click", function (e) {
                     e.preventDefault();
                 });

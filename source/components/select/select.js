@@ -59,7 +59,7 @@
         SelectDefaultConfig = $.extend({}, SelectDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSelectSetup"] !== undefined) {
+    if (typeof globalThis["metroSelectSetup"] !== "undefined") {
         Metro.selectSetup(globalThis["metroSelectSetup"]);
     }
 
@@ -713,7 +713,7 @@
             const options = element.find("option");
             const list_items = this.list.find("li");
             const result = [];
-            const multiple = element.attr("multiple") !== undefined;
+            const multiple = !!element.attr("multiple")
             let option;
             let i, html, list_item, option_value, selected, group;
 

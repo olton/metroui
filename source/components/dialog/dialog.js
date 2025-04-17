@@ -58,7 +58,7 @@
         DialogDefaultConfig = $.extend({}, DialogDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDialogSetup"] !== undefined) {
+    if (typeof globalThis["metroDialogSetup"] !== "undefined") {
         Metro.dialogSetup(globalThis["metroDialogSetup"]);
     }
 
@@ -135,7 +135,7 @@
                     $.each(customButtons, function () {
                         var item = this;
                         button = $("<button>").addClass("button").addClass(item.cls).html(item.text);
-                        if (item.onclick !== undefined)
+                        if (item.onclick)
                             button.on(Metro.events.click, function () {
                                 Utils.exec(item.onclick, [element]);
                             });
@@ -385,10 +385,10 @@
                 return false;
             }
             var dialog = Metro.getPlugin(el, "dialog");
-            if (title !== undefined) {
+            if (title) {
                 dialog.setTitle(title);
             }
-            if (content !== undefined) {
+            if (content) {
                 dialog.setContent(content);
             }
             dialog.open();
@@ -436,7 +436,7 @@
                     closeAction: true,
                     removeOnClose: true,
                 },
-                options !== undefined ? options : {},
+                options ? options : {},
             );
 
             dlg_options._runtime = true;

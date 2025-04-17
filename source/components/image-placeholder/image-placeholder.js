@@ -18,7 +18,7 @@
         ImagePlaceholderDefaultConfig = $.extend({}, ImagePlaceholderDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroImagePlaceholderSetup"] !== undefined) {
+    if (typeof globalThis["metroImagePlaceholderSetup"] !== "undefined") {
         Metro.imagePlaceholderSetup(globalThis["metroImagePlaceholderSetup"]);
     }
 

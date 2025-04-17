@@ -26,7 +26,7 @@
         );
     };
 
-    if (typeof globalThis["metroGradientBoxSetup"] !== undefined) {
+    if (typeof globalThis["metroGradientBoxSetup"] !== "undefined") {
         Metro.gradientBoxSetup(globalThis["metroGradientBoxSetup"]);
     }
 

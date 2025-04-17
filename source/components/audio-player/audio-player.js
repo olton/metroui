@@ -62,7 +62,7 @@
         AudioPlayerDefaultConfig = $.extend({}, AudioPlayerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroAudioPlayerSetup"] !== undefined) {
+    if (typeof globalThis["metroAudioPlayerSetup"] !== "undefined") {
         Metro.audioPlayerSetup(globalThis["metroAudioPlayerSetup"]);
     }
 

@@ -14,8 +14,8 @@
         EvalDefaultConfig = $.extend({}, EvalDefaultConfig, options);
     };
 
-    if (window["metroEvalSetup"] !== undefined) {
-        Metro.evalSetup(window["metroEvalSetup"]);
+    if (typeof globalThis["metroEvalSetup"] !== "undefined") {
+        Metro.evalSetup(globalThis["metroEvalSetup"]);
     }
 
     Metro.Component('eval', {

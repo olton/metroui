@@ -17,7 +17,7 @@
         InputMaskDefaultConfig = $.extend({}, InputMaskDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroInputMaskSetup"] !== undefined) {
+    if (typeof globalThis["metroInputMaskSetup"] !== "undefined") {
         Metro.inputMaskSetup(globalThis["metroInputMaskSetup"]);
     }
 

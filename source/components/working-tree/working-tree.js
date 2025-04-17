@@ -10,8 +10,8 @@
         WorkingTreeDefaultConfig = $.extend({}, WorkingTreeDefaultConfig, options);
     };
 
-    if (typeof window["metroWorkingTreeSetup"] !== undefined) {
-        Metro.workingTreeSetup(window["metroWorkingTreeSetup"]);
+    if (typeof globalThis["metroWorkingTreeSetup"] !== "undefined") {
+        Metro.workingTreeSetup(globalThis["metroWorkingTreeSetup"]);
     }
 
     Metro.Component('working-tree', {

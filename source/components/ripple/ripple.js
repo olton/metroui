@@ -14,7 +14,7 @@
         RippleDefaultConfig = $.extend({}, RippleDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroRippleSetup"] !== undefined) {
+    if (typeof globalThis["metroRippleSetup"] !== "undefined") {
         Metro.rippleSetup(globalThis["metroRippleSetup"]);
     }
 

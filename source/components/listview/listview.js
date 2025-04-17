@@ -30,7 +30,7 @@
         ListViewDefaultConfig = $.extend({}, ListViewDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroListViewSetup"] !== undefined) {
+    if (typeof globalThis["metroListViewSetup"] !== "undefined") {
         Metro.listViewSetup(globalThis["metroListViewSetup"]);
     }
 

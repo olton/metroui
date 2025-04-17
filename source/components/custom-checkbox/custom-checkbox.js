@@ -27,7 +27,7 @@
         CustomCheckboxDefaultConfig = $.extend({}, CustomCheckboxDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCustomCheckboxSetup"] !== undefined) {
+    if (typeof globalThis["metroCustomCheckboxSetup"] !== "undefined") {
         Metro.customCheckboxSetup(globalThis["metroCustomCheckboxSetup"]);
     }
 
@@ -45,7 +45,7 @@
 
             element.attr("type", "checkbox");
 
-            if (element.attr("readonly") !== undefined) {
+            if (element.attr("readonly")) {
                 element.on("click", function(e){
                     e.preventDefault();
                 })

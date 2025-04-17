@@ -29,7 +29,7 @@
         ProgressDefaultConfig = $.extend({}, ProgressDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroProgressSetup"] !== undefined) {
+    if (typeof globalThis["metroProgressSetup"] !== "undefined") {
         Metro.progressSetup(globalThis["metroProgressSetup"]);
     }
 

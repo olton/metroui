@@ -19,7 +19,7 @@
         HtmlContainerDefaultConfig = $.extend({}, HtmlContainerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroHtmlContainerSetup"] !== undefined) {
+    if (typeof globalThis["metroHtmlContainerSetup"] !== "undefined") {
         Metro.htmlContainerSetup(globalThis["metroHtmlContainerSetup"]);
     }
 

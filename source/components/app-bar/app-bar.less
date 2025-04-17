@@ -158,6 +158,9 @@
     }
 
     .app-bar-menu > li > a {
+        &:focus {
+            outline: 1px solid var(--appbar-item-background-hover);
+        }
         &.dropdown-toggle {
             &::before {
                 border-color: var(--appbar-item-color)!important;

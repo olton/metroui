@@ -19,7 +19,7 @@
         DraggableDefaultConfig = $.extend({}, DraggableDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDraggableSetup"] !== undefined) {
+    if (typeof globalThis["metroDraggableSetup"] !== "undefined") {
         Metro.draggableSetup(globalThis["metroDraggableSetup"]);
     }
 

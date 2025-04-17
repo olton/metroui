@@ -19,7 +19,7 @@
         ClockDefaultConfig = $.extend({}, ClockDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroClockSetup"] !== undefined) {
+    if (typeof globalThis["metroClockSetup"] !== "undefined") {
         Metro.clockSetup(globalThis["metroClockSetup"]);
     }
 

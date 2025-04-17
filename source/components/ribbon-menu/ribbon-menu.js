@@ -14,7 +14,7 @@
         RibbonMenuDefaultConfig = $.extend({}, RibbonMenuDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroRibbonMenuSetup"] !== undefined) {
+    if (typeof globalThis["metroRibbonMenuSetup"] !== "undefined") {
         Metro.ribbonMenuSetup(globalThis["metroRibbonMenuSetup"]);
     }
 

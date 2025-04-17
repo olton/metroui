@@ -23,7 +23,7 @@
         SidebarDefaultConfig = $.extend({}, SidebarDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSidebarSetup"] !== undefined) {
+    if (typeof globalThis["metroSidebarSetup"] !== "undefined") {
         Metro.sidebarSetup(globalThis["metroSidebarSetup"]);
     }
 
@@ -68,7 +68,7 @@
             }
 
             if (header.length > 0) {
-                if (header.data("image") !== undefined) {
+                if (header.data("image")) {
                     header.css({
                         backgroundImage: "url("+header.data("image")+")"
                     });

@@ -16,7 +16,7 @@
         ButtonGroupDefaultConfig = $.extend({}, ButtonGroupDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroButtonGroupSetup"] !== undefined) {
+    if (typeof globalThis["metroButtonGroupSetup"] !== "undefined") {
         Metro.buttonGroupSetup(globalThis["metroButtonGroupSetup"]);
     }
 

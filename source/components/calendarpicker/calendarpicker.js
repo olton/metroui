@@ -41,7 +41,7 @@
         CalendarPickerDefaultConfig = $.extend({}, CalendarPickerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCalendarPickerSetup"] !== undefined) {
+    if (typeof globalThis["metroCalendarPickerSetup"] !== "undefined") {
         Metro.calendarPickerSetup(globalThis["metroCalendarPickerSetup"]);
     }
 

@@ -72,7 +72,7 @@
         WindowDefaultConfig = $.extend({}, WindowDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroWindowSetup"] !== undefined) {
+    if (typeof globalThis["metroWindowSetup"] !== "undefined") {
         Metro.windowSetup(globalThis["metroWindowSetup"]);
     }
 

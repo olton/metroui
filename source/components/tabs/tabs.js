@@ -27,7 +27,7 @@
         TabsDefaultConfig = $.extend({}, TabsDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTabsSetup"] !== undefined) {
+    if (typeof globalThis["metroTabsSetup"] !== "undefined") {
         Metro.tabsSetup(globalThis["metroTabsSetup"]);
     }
 

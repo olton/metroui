@@ -23,7 +23,7 @@
         PopoverDefaultConfig = $.extend({}, PopoverDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroPopoverSetup"] !== undefined) {
+    if (typeof globalThis["metroPopoverSetup"] !== "undefined") {
         Metro.popoverSetup(globalThis["metroPopoverSetup"]);
     }
 

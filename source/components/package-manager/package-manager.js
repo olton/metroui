@@ -38,8 +38,8 @@
         PackageManagerDefaultConfig = $.extend({}, PackageManagerDefaultConfig, options);
     };
 
-    if (typeof window["metroPackageManagerSetup"] !== undefined) {
-        Metro.packageManagerSetup(window["metroPackageManagerSetup"]);
+    if (typeof globalThis["metroPackageManagerSetup"] !== "undefined") {
+        Metro.packageManagerSetup(globalThis["metroPackageManagerSetup"]);
     }
 
     Metro.Component('package-manager', {

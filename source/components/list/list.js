@@ -73,7 +73,7 @@
         ListDefaultConfig = $.extend({}, ListDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroListSetup"] !== undefined) {
+    if (typeof globalThis["metroListSetup"] !== "undefined") {
         Metro.listSetup(globalThis["metroListSetup"]);
     }
 
@@ -582,7 +582,7 @@
 
             this._fireEvent("draw");
 
-            if (cb !== undefined) {
+            if (cb) {
                 Utils.exec(cb, [element], element[0]);
             }
         },

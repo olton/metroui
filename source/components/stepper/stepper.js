@@ -20,7 +20,7 @@
         StepperDefaultConfig = $.extend({}, StepperDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroStepperSetup"] !== undefined) {
+    if (typeof globalThis["metroStepperSetup"] !== "undefined") {
         Metro.stepperSetup(globalThis["metroStepperSetup"]);
     }
 

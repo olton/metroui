@@ -14,7 +14,7 @@
         ToastDefaultConfig = $.extend({}, ToastDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroToastSetup"] !== undefined) {
+    if (typeof globalThis["metroToastSetup"] !== "undefined") {
         Metro.toastSetup(globalThis["metroToastSetup"]);
     }
 

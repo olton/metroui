@@ -24,7 +24,7 @@
         TreeViewDefaultConfig = $.extend({}, TreeViewDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTreeViewSetup"] !== undefined) {
+    if (typeof globalThis["metroTreeViewSetup"] !== "undefined") {
         Metro.treeViewSetup(globalThis["metroTreeViewSetup"]);
     }
 

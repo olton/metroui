@@ -36,7 +36,7 @@
         ColorSelectorDefaultConfig = $.extend({}, ColorSelectorDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroColorSelectorSetup"] !== undefined) {
+    if (typeof globalThis["metroColorSelectorSetup"] !== "undefined") {
         Metro.colorSelectorSetup(globalThis["metroColorSelectorSetup"]);
     }
 

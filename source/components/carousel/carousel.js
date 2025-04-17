@@ -58,7 +58,7 @@
         CarouselDefaultConfig = $.extend({}, CarouselDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCarouselSetup"] !== undefined) {
+    if (typeof globalThis["metroCarouselSetup"] !== "undefined") {
         Metro.carouselSetup(globalThis["metroCarouselSetup"]);
     }
 

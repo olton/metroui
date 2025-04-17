@@ -11,8 +11,8 @@
         ActionButtonDefaultConfig = $.extend({}, ActionButtonDefaultConfig, options);
     };
 
-    if (typeof window["metroActionButtonSetup"] !== undefined) {
-        Metro.actionButtonSetup(window["metroActionButtonSetup"]);
+    if (typeof globalThis["metroActionButtonSetup"] !== "undefined") {
+        Metro.actionButtonSetup(globalThis["metroActionButtonSetup"]);
     }
 
     Metro.Component('action-button', {

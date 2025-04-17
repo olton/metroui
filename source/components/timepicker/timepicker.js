@@ -40,7 +40,7 @@
         TimePickerDefaultConfig = $.extend({}, TimePickerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTimePickerSetup"] !== undefined) {
+    if (typeof globalThis["metroTimePickerSetup"] !== "undefined") {
         Metro.timePickerSetup(globalThis["metroTimePickerSetup"]);
     }
 

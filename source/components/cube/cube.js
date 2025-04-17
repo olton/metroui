@@ -42,7 +42,7 @@
         CubeDefaultConfig = $.extend({}, CubeDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCubeSetup"] !== undefined) {
+    if (typeof globalThis["metroCubeSetup"] !== "undefined") {
         Metro.cubeSetup(globalThis["metroCubeSetup"]);
     }
 
@@ -372,8 +372,8 @@
             $.each(sides, function(){
                 var side_class = "."+this+"-side";
                 var side_name = this;
-                var cells_on = rule["on"] !== undefined && rule["on"][side_name] !== undefined ? rule["on"][side_name] : false;
-                var cells_off = rule["off"] !== undefined && rule["off"][side_name] !== undefined ? rule["off"][side_name] : false;
+                var cells_on = rule["on"] && rule["on"][side_name] ? rule["on"][side_name] : false;
+                var cells_off = rule["off"] && rule["off"][side_name] ? rule["off"][side_name] : false;
 
                 if (cells_on !== false) $.each(cells_on, function(){
                     var cell_index = this;
