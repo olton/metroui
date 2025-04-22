@@ -49645,6 +49645,9 @@ button.flat,
 .app-bar .hamburger.menu-down.active .line:nth-child(3) {
   margin: -4px 16px;
 }
+.app-bar .hamburger:focus {
+  outline: 1px solid var(--appbar-item-background-hover);
+}
 .app-bar .app-bar-menu.collapsed {
   display: none;
 }
@@ -57390,6 +57393,20 @@ label:has(input) {
 }
 .analog-gauge .label-max {
   grid-area: 3 / 3 / 4 / 4;
+}
+.analog-gauge.theme-load {
+  --analog-gauge-bg:
+    #55AF33,
+    #A0C61B,
+    #F7E98E,
+    #F6E301,
+    #FAB60D,
+    #F88D2F,
+    #F76D00,
+    #E53015,
+    #D90E21,
+    #D80010 var(--analog-gauge-range),
+    #0000 0 var(--analog-gauge-range);
 }
 .analog-gauge.theme-sky {
   --analog-gauge-bg:

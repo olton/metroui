@@ -150,22 +150,56 @@
 
 // themes
 .analog-gauge {
+    &.theme-load {
+        --analog-gauge-bg: 
+                #55AF33,
+                #A0C61B,
+                #F7E98E,
+                #F6E301,
+                #FAB60D,
+                #F88D2F,
+                #F76D00,
+                #E53015,
+                #D90E21,
+                #D80010 var(--analog-gauge-range),
+                #0000 0 var(--analog-gauge-range);
+    }
+    
     &.theme-sky {
-        --analog-gauge-bg: #8CF, #6BF, #46E, #24C var(--analog-gauge-range), #0000 0 var(--analog-gauge-range);
+        --analog-gauge-bg: 
+                #8CF, 
+                #6BF, 
+                #46E, 
+                #24C var(--analog-gauge-range), 
+                #0000 0 var(--analog-gauge-range);
     }
     
     &.theme-temp {
         --analog-gauge-bdw: 5cqi;
-        --analog-gauge-bg: #69f, #f00 var(--analog-gauge-range), #0000 0 var(--analog-gauge-range);
+        --analog-gauge-bg: 
+                #69f, 
+                #f00 var(--analog-gauge-range), 
+                #0000 0 var(--analog-gauge-range);
     }
     
     &.theme-speed {
-        --analog-gauge-bg: #12C2FC, #6CFFD4, #78FF80 var(--analog-gauge-value, 0%), var(--analog-gauge-segment-color) 0 var(--analog-gauge-range), #0000 0 var(--analog-gauge-range);
+        --analog-gauge-bg: 
+                #12C2FC, 
+                #6CFFD4, 
+                #78FF80 var(--analog-gauge-value, 0%), 
+                var(--analog-gauge-segment-color) 0 var(--analog-gauge-range), 
+                #0000 0 var(--analog-gauge-range);
     }
     
     &.theme-battery {
         --analog-gauge-bdw: 7.5cqi;
-        --analog-gauge-bg: red, orange, yellow, lightgreen, green var(--analog-gauge-range), #0000 0 var(--analog-gauge-range);
+        --analog-gauge-bg: 
+                red, 
+                orange, 
+                yellow, 
+                lightgreen, 
+                green var(--analog-gauge-range), 
+                #0000 0 var(--analog-gauge-range);
         --analog-gauge-label-ps: end center;
     }
     &.theme-rainbow {
