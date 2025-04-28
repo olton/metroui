@@ -29,4 +29,16 @@
     align-items: center;
     justify-content: center;
     cursor: default;
+
+    &.corner {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+    }
+    &.corner-outside {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+    }
 }

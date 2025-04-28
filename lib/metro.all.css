@@ -48322,6 +48322,68 @@ button.flat,
 .button-lime {
   color: #191919 !important;
 }
+button.shadow,
+.button.shadow {
+  box-shadow: 6px 6px 0 var(--shadow-color-3d);
+}
+button.shadow:active,
+.button.shadow:active {
+  transform: translate(4px, 4px);
+}
+button.large.shadow,
+.button.large.shadow {
+  box-shadow: 8px 8px 0 var(--shadow-color-3d);
+}
+button.large.shadow:active,
+.button.large.shadow:active {
+  transform: translate(6px, 6px);
+}
+button.small.shadow,
+.button.small.shadow {
+  box-shadow: 4px 4px 0 var(--shadow-color-3d);
+}
+button.small.shadow:active,
+.button.small.shadow:active {
+  transform: translate(2px, 2px);
+}
+button.mini.shadow,
+.button.mini.shadow {
+  box-shadow: 2px 2px 0 var(--shadow-color-3d);
+}
+button.mini.shadow:active,
+.button.mini.shadow:active {
+  transform: translate(1px, 1px);
+}
+button.shadow:active,
+.button.shadow:active {
+  box-shadow: none;
+}
+button.shift:active,
+.button.shift:active {
+  transform: translate(2px, 2px);
+}
+button.large.shift:active,
+.button.large.shift:active {
+  transform: translate(4px, 4px);
+}
+button.small.shift:active,
+.button.small.shift:active {
+  transform: translate(2px, 2px);
+}
+button.mini.shift:active,
+.button.mini.shift:active {
+  transform: translate(1px, 1px);
+}
+button .badge,
+.button .badge {
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  padding: 2px !important;
+}
+button:has(.badge.corner),
+.button:has(.badge.corner) {
+  padding-right: 1.5rem;
+}
 
 /* source/components/dialog/dialog.less */
 :root {
@@ -50153,6 +50215,17 @@ button.flat,
   align-items: center;
   justify-content: center;
   cursor: default;
+}
+.badge.corner {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
+.badge.corner-outside {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
 }
 
 /* source/components/box/box.less */

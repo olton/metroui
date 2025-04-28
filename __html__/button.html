@@ -18,22 +18,16 @@
         }
     </style>
 </head>
-<body class="m4-cloak">
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
     <div class="container">
         <h1>Button test page</h1>
-
-        <div class="row">
-            <div class="cell-lg-6 p-10">
-                <button class="button">Primary</button>
-                <button class="button outline">Primary</button>
-                <button class="button flat">Primary</button>
-            </div>
-            <div class="cell-lg-6 p-10 dark-side">
-                <button class="button">Primary</button>
-                <button class="button outline">Primary</button>
-                <button class="button flat">Primary</button>
-            </div>
-        </div>
 
         <div class="example">
             <button class="button primary">Primary</button>
@@ -62,7 +56,7 @@
             <button id="MACHINE" class="button success cycle mini outline mr-1" data-machine="mrdo"><span class="icon mif-gamepad"></span></button>
         </div>
 
-        <div class="example d-flex flex-justify-between">
+        <div class="example d-flex flex-justify-content-between">
             <div class="split-button no-gap">
                 <button class="button">Reply</button>
                 <button class="split dropdown-toggle"></button>
@@ -115,17 +109,16 @@
             <a class="button small">Anchor</a>
             <button class="button small outline">Outline</button>
             <button class="button small hovered">Hovered</button>
-            <button class="button small shadowed">Shadowed</button>
+            <button class="button small shadow">Shadowed</button>
         </div>
 
         <div class="example">
-            <button class="button">Button</button>
+            <button class="button shift">Button</button>
             <span class="button">Span</span>
             <a class="button">Anchor</a>
             <button class="button outline">Outline</button>
             <button class="button hovered">Hovered</button>
-            <button class="button shadowed">Shadowed</button>
-            <button class="button shadowed alert">Shadowed</button>
+            <button class="button shadow alert">Shadowed</button>
         </div>
 
         <div class="example">
@@ -134,7 +127,7 @@
             <a class="button large">Anchor</a>
             <button class="button large outline">Outline</button>
             <button class="button large hovered">Hovered</button>
-            <button class="button large shadowed">Shadowed</button>
+            <button class="button large shadow">Shadowed</button>
         </div>
 
         <div class="example">
@@ -199,6 +192,13 @@
             <button class="transform-button bottom-left" onclick="$(this).toggleClass('transform')"><span></span></button>
             <button class="transform-button bottom-right" onclick="$(this).toggleClass('transform')"><span></span></button>
         </div>
+
+        <div class="example">
+            <button class="button">Default <span class="badge">10</span></button>
+            <button class="button">corner <span class="badge corner info">10</span></button>
+            <button class="button">corner outside <span class="badge corner-outside alert">10</span></button>
+        </div>
+
     </div>
 
 <script src="../lib/metro.js"></script>

@@ -77,7 +77,7 @@ input[type="reset"],
     &:active, &.focus, &:focus {
         text-decoration: none;
     }
-
+    
     @media (hover: hover) {
         &:hover {
             background-color: var(--button-background-hover);
@@ -308,4 +308,46 @@ each(@normalColors, {
 
 .button-seashell, .button-champagne, .button-yellow, .button-lime {
     color: #191919!important;
+}
+
+button, .button {
+    &.shadow { box-shadow: 6px 6px 0 var(--shadow-color-3d); }
+    &.shadow:active { transform: translate(4px, 4px); }
+    
+    &.large {
+        &.shadow { box-shadow: 8px 8px 0 var(--shadow-color-3d); }
+        &.shadow:active { transform: translate(6px, 6px); }
+    }
+    
+    &.small {
+        &.shadow { box-shadow: 4px 4px 0 var(--shadow-color-3d); }
+        &.shadow:active { transform: translate(2px, 2px); }
+    }
+    
+    &.mini {
+        &.shadow { box-shadow: 2px 2px 0 var(--shadow-color-3d); }
+        &.shadow:active { transform: translate(1px, 1px); }
+    }
+    
+    &.shadow:active {
+        box-shadow: none;
+    }
+}
+
+button, .button {
+    &.shift { &:active {transform: translate(2px, 2px);} }
+    &.large.shift { &:active {transform: translate(4px, 4px);} }
+    &.small.shift { &:active {transform: translate(2px, 2px);} }
+    &.mini.shift { &:active {transform: translate(1px, 1px);} }
+}
+
+button, .button {
+    .badge {
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+        padding: 2px!important;
+    }
+    &:has(.badge.corner) {
+        padding-right: 1.5rem;
+    }
 }
