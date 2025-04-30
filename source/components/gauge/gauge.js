@@ -1,8 +1,8 @@
 /**
  * Original code by Mads Stoumann (https://dev.to/madsstoumann/how-to-create-gauges-in-css-3581)
  */
-
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let GaugeDefaultConfig = {
@@ -22,12 +22,12 @@
         onGaugeCreate: Metro.noop
     };
 
-    Metro.gaugeSetup = function (options) {
+    Metro.gaugeSetup = (options) => {
         GaugeDefaultConfig = $.extend({}, GaugeDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroGaugeSetup"] !== "undefined") {
-        Metro.gaugeSetup(globalThis["metroGaugeSetup"]);
+    if (typeof globalThis.metroGaugeSetup !== "undefined") {
+        Metro.gaugeSetup(globalThis.metroGaugeSetup);
     }
 
     Metro.Component('gauge', {
@@ -39,14 +39,15 @@
         },
 
         _create: function(){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             element[0].style.setProperty('--analog-gauge-segments', `${o.segments}`);
             element[0].style.setProperty('--analog-gauge-start-angle', `${o.startAngle}deg`);
             element[0].style.setProperty('--analog-gauge-range', `${o.range}deg`);
 
-            this.options.range = parseFloat(getComputedStyle(element[0]).getPropertyValue('--analog-gauge-range' || 250));
-            this.options.start = parseFloat(getComputedStyle(element[0]).getPropertyValue('--analog-gauge-start-angle' || 235));
+            this.options.range = Number.parseFloat(getComputedStyle(element[0]).getPropertyValue('--analog-gauge-range' || 250));
+            this.options.start = Number.parseFloat(getComputedStyle(element[0]).getPropertyValue('--analog-gauge-start-angle' || 235));
             this.options.defaultMark = 90
             this.options.defaultNeedle = 270
             this.options.minDegree = this.options.start - this.options.defaultNeedle;
@@ -60,11 +61,11 @@
 
         _generateMarks: function(){
             const o = this.options;
-            const values = (""+o.values).trim();
+            const values = (`${o.values}`).trim();
             
             if (values === "") return '';
 
-            let t = values.toArray(",");
+            const t = values.toArray(",");
             let valueArray = [];
             let count
 
@@ -72,7 +73,7 @@
                 valueArray = Array.from({ length: +values }, (_, i) =>
                   Math.round(o.min + (i * (o.max - o.min) / (+values - 1 || 1)))
                 );
-                count = parseInt(values);
+                count = Number.parseInt(values);
             } else {
                 valueArray = [...t]
                 count = t.length;
@@ -91,7 +92,8 @@
         },
         
         _createStructure: function(){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             
             element.addClass("analog-gauge");
             
@@ -117,8 +119,7 @@
             } 
         },
 
-        _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+        _createEvents: ()=> {
         },
 
         val: function(value){
@@ -131,7 +132,9 @@
         },
         
         update: function (){
-            const element = this.element, elem = this.elem, o = this.options;
+            const element = this.element;
+            const elem = this.elem;
+            const o = this.options;
 
             const normalizedValue = Math.max(o.min, Math.min(o.max, o.value));
             const valuePercentage = (normalizedValue - o.min) / (o.max - o.min);
@@ -142,11 +145,11 @@
             element.find(".value").html(o.value + o.suffix);
         },
         
-        changeAttribute: function(attr, newValue){
+        changeAttribute: (attr, val)=> {
         },
 
         destroy: function(){
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

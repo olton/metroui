@@ -1,4 +1,5 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let EvalDefaultConfig = {
@@ -10,12 +11,12 @@
         processChild: true // обработка дочерних элементов
     };
 
-    Metro.evalSetup = function (options) {
+    Metro.evalSetup = (options) => {
         EvalDefaultConfig = $.extend({}, EvalDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroEvalSetup"] !== "undefined") {
-        Metro.evalSetup(globalThis["metroEvalSetup"]);
+    if (typeof globalThis.metroEvalSetup !== "undefined") {
+        Metro.evalSetup(globalThis.metroEvalSetup);
     }
 
     Metro.Component('eval', {
@@ -57,15 +58,13 @@
             if (!o.enabled) return str;
 
             const regex = new RegExp(
-                this._escapeRegExp(o.delimiterStart || '{{') +
-                "(.*?)" +
-                this._escapeRegExp(o.delimiterEnd || '}}'),
+                `${this._escapeRegExp(o.delimiterStart || '{{')}(.*?)${this._escapeRegExp(o.delimiterEnd || '}}')}`,
                 "gs"
             );
 
             return str.replace(regex, (match, code) => {
                 try {
-                    const fn = new Function("return " + code);
+                    const fn = new Function(`return ${code}`);
                     return fn.call(o.context);
                 } catch (error) {
                     if (o.logErrors) {
@@ -76,9 +75,7 @@
             });
         },
 
-        _escapeRegExp: function(string) {
-            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        },
+        _escapeRegExp: (string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
 
         reset: function() {
             if (this.origContent) {
@@ -93,9 +90,9 @@
     });
 
     // Добавление глобального метода для удобства
-    Metro.evalText = function(text, options) {
+    Metro.evalText = (text, options) => {
         const tempConfig = $.extend({}, EvalDefaultConfig, options);
         const instance = {options: tempConfig};
         return Metro.Component('eval').prototype.eval.call(instance, text);
     };
-}(Metro, Dom));
+})(Metro, Dom);

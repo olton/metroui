@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var HintDefaultConfig = {
+
+    let HintDefaultConfig = {
         hintDeferred: 0,
         hintHide: 5000,
         clsHint: "",
@@ -14,12 +14,12 @@
         onHintCreate: Metro.noop
     };
 
-    Metro.hintSetup = function (options) {
+    Metro.hintSetup = (options) => {
         HintDefaultConfig = $.extend({}, HintDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroHintSetup"] !== "undefined") {
-        Metro.hintSetup(globalThis["metroHintSetup"]);
+    if (typeof globalThis.metroHintSetup !== "undefined") {
+        Metro.hintSetup(globalThis.metroHintSetup);
     }
 
     Metro.Component('hint', {
@@ -30,7 +30,7 @@
                     width: 0,
                     height: 0
                 },
-                id: Utils.elementId("hint")
+                id: Metro.utils.elementId("hint")
             });
 
             return this;
@@ -44,44 +44,47 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var over = false;
+            const element = this.element;
+            const o = this.options;
+            let over = false;
 
-            element.on(Metro.events.enter, function(){
+            element.on(Metro.events.enter, ()=> {
                 over = true;
-                setTimeout(function(){
+                setTimeout(()=> {
                     if (!over) return;
 
-                    that.createHint();
+                    this.createHint();
                     if (+o.hintHide > 0) {
-                        setTimeout(function(){
-                            that.removeHint();
+                        setTimeout(()=> {
+                            this.removeHint();
                         }, o.hintHide);
                     }
                 }, o.hintDeferred);
             });
 
-            element.on(Metro.events.leave, function(){
+            element.on(Metro.events.leave, ()=> {
                 over = false;
-                that.removeHint();
+                this.removeHint();
             });
 
-            $(globalThis).on(Metro.events.scroll+" "+Metro.events.resize, function(){
-                if (that.hint !== null) that.setPosition();
+            $(globalThis).on(`${Metro.events.scroll} ${Metro.events.resize}`, ()=> {
+                if (this.hint !== null) this.setPosition();
             }, {ns: this.id});
         },
 
         createHint: function(){
-            var elem = this.elem, element = this.element, o = this.options;
-            var hint = $("<div>").addClass("hint").addClass(o.clsHint).html(o.hintText);
+            const elem = this.elem;
+            const element = this.element;
+            const o = this.options;
+            const hint = $("<div>").addClass("hint").addClass(o.clsHint).html(o.hintText);
 
             this.hint = hint;
-            this.hint_size = Utils.hiddenElementSize(hint);
+            this.hint_size = Metro.utils.hiddenElementSize(hint);
 
             $(".hint:not(.permanent-hint)").remove();
 
             if (elem.tagName === 'TD' || elem.tagName === 'TH') {
-                var wrp = $("<div/>").css("display", "inline-block").html(element.html());
+                const wrp = $("<div/>").css("display", "inline-block").html(element.html());
                 element.html(wrp);
                 this.element = wrp;
             }
@@ -96,7 +99,10 @@
         },
 
         setPosition: function(){
-            var hint = this.hint, hint_size = this.hint_size, o = this.options, element = this.element;
+            const hint = this.hint;
+            const hint_size = this.hint_size;
+            const o = this.options;
+            const element = this.element;
 
             if (o.hintPosition === Metro.position.BOTTOM) {
                 hint.addClass('bottom');
@@ -126,10 +132,9 @@
         },
 
         removeHint: function(){
-            var that = this;
-            var hint = this.hint;
-            var options = this.options;
-            var timeout = options.onHintHide === Metro.noop ? 0 : 300;
+            const hint = this.hint;
+            const options = this.options;
+            const timeout = options.onHintHide === Metro.noop ? 0 : 300;
 
             if (hint !== null) {
 
@@ -137,10 +142,10 @@
                     hint: hint[0]
                 });
 
-                setTimeout(function(){
-                    hint.hide(0, function(){
+                setTimeout(()=> {
+                    hint.hide(0, ()=> {
                         hint.remove();
-                        that.hint = null;
+                        this.hint = null;
                     });
                 }, timeout);
             }
@@ -157,11 +162,11 @@
         },
 
         destroy: function(){
-            var element = this.element;
+            const element = this.element;
             this.removeHint();
-            element.off(Metro.events.enter + "-hint");
-            element.off(Metro.events.leave + "-hint");
-            $(globalThis).off(Metro.events.scroll + "-hint");
+            element.off(`${Metro.events.enter}-hint`);
+            element.off(`${Metro.events.leave}-hint`);
+            $(globalThis).off(`${Metro.events.scroll}-hint`);
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

@@ -1,14 +1,8 @@
-/**
- * global Metro
- *
- * @format
- */
-
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
 
-    var Utils = Metro.utils;
-    var GradientBoxDefaultConfig = {
+    let GradientBoxDefaultConfig = {
         gradientType: "linear", // linear, radial
         gradientShape: "",
         gradientPosition: "",
@@ -18,7 +12,7 @@
         onGradientBoxCreate: Metro.noop,
     };
 
-    Metro.gradientBoxSetup = function (options) {
+    Metro.gradientBoxSetup = (options) => {
         GradientBoxDefaultConfig = $.extend(
             {},
             GradientBoxDefaultConfig,
@@ -26,8 +20,8 @@
         );
     };
 
-    if (typeof globalThis["metroGradientBoxSetup"] !== "undefined") {
-        Metro.gradientBoxSetup(globalThis["metroGradientBoxSetup"]);
+    if (typeof globalThis.metroGradientBoxSetup !== "undefined") {
+        Metro.gradientBoxSetup(globalThis.metroGradientBoxSetup);
     }
 
     Metro.Component("gradient-box", {
@@ -46,36 +40,36 @@
         },
 
         _create: function () {
-            var o = this.options;
+            const o = this.options;
 
             this.colors = o.gradientColors.toArray(",");
             this.type = o.gradientType.toLowerCase();
             this.shape = o.gradientShape.toLowerCase();
             this.size = o.gradientSize.toLowerCase();
             this.repeat = o.gradientRepeat;
-            this.func =
-                (this.repeat ? "repeating-" : "") + this.type + "-gradient";
+            this.func = `${(this.repeat ? "repeating-" : "") + this.type}-gradient`;
 
             if (this.type === "linear") {
                 if (!o.gradientPosition) {
                     this.position = "to bottom";
                 } else {
                     this.position =
+                        Number.
                         isNaN(o.gradientPosition) === false
-                            ? o.gradientPosition + "deg"
+                            ? `${o.gradientPosition}deg`
                             : o.gradientPosition;
 
                     if (
                         this.position.indexOf("deg") === -1 &&
                         this.position.indexOf("to ") === -1
                     ) {
-                        this.position = "to " + this.position;
+                        this.position = `to ${this.position}`;
                     }
                 }
             } else {
                 this.position = o.gradientPosition.toLowerCase();
                 if (this.position && this.position.indexOf("at ") === -1) {
-                    this.position = "at " + this.position;
+                    this.position = `at ${this.position}`;
                 }
             }
 
@@ -89,9 +83,8 @@
         },
 
         _setGradient: function () {
-            var element = this.element;
-            var gradientRule,
-                gradientOptions = [];
+            const element = this.element;
+            const gradientOptions = [];
 
             if (this.type === "radial" && this.shape) {
                 gradientOptions.push(this.shape);
@@ -105,15 +98,9 @@
                 //gradientOptions.push((this.position.indexOf("at") === -1 ? "at " : "") + this.position);
             }
 
-            gradientRule =
-                this.func +
-                "(" +
-                (gradientOptions.length
-                    ? gradientOptions.join(" ") + ", "
-                    : "") +
-                this.colors.join(", ") +
-                ")";
-
+            const gradientRule = `${this.func}(${gradientOptions.length
+                ? `${gradientOptions.join(" ")}, `
+                : ""}${this.colors.join(", ")})`
             element.css({
                 background: gradientRule,
             });
@@ -127,7 +114,7 @@
             switch (attr) {
                 case "data-gradient-type":
                     this.type = newValue;
-                    this.func = newValue.toLowerCase() + "-gradient";
+                    this.func = `${newValue.toLowerCase()}-gradient`;
                     break;
                 case "data-gradient-colors-css":
                     this.colors = newValue
@@ -144,7 +131,7 @@
                     this.position = newValue.toLowerCase();
                     break;
                 case "data-gradient-repeat":
-                    this.repeat = Utils.bool(newValue);
+                    this.repeat = Metro.utils.bool(newValue);
                     break;
             }
 

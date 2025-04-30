@@ -1,4 +1,5 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let DraggableDefaultConfig = {
@@ -15,12 +16,12 @@
         onDraggableCreate: Metro.noop
     };
 
-    Metro.draggableSetup = function (options) {
+    Metro.draggableSetup = (options) => {
         DraggableDefaultConfig = $.extend({}, DraggableDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDraggableSetup"] !== "undefined") {
-        Metro.draggableSetup(globalThis["metroDraggableSetup"]);
+    if (typeof globalThis.metroDraggableSetup !== "undefined") {
+        Metro.draggableSetup(globalThis.metroDraggableSetup);
     }
 
     Metro.Component('draggable', {
@@ -50,7 +51,8 @@
         },
 
         _createStructure: function(){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const offset = element.offset();
             const dragElement = o.dragElement !== 'self' ? element.find(o.dragElement) : element;
 
@@ -58,7 +60,7 @@
 
             this.dragElement = dragElement;
 
-            dragElement[0].ondragstart = function(){return false;};
+            dragElement[0].ondragstart = ()=> false;
 
             element.css("position", "absolute");
 
@@ -66,13 +68,13 @@
                 o.dragArea = "body";
             }
 
-            setTimeout(function(){
-                that.dragArea = o.dragArea === 'parent' ? element.parent() : $(o.dragArea);
-                if (that.dragArea.css("position") === "static") {
-                    that.dragArea.css("position", "relative");                    
+            setTimeout(()=> {
+                this.dragArea = o.dragArea === 'parent' ? element.parent() : $(o.dragArea);
+                if (this.dragArea.css("position") === "static") {
+                    this.dragArea.css("position", "relative");                    
                 }
                 if (o.dragArea !== 'parent') {
-                    element.appendTo(that.dragArea);
+                    element.appendTo(this.dragArea);
                     element.css({
                         top: offset.top,
                         left: offset.left
@@ -86,18 +88,19 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const position = {
                 x: 0,
                 y: 0
             };
 
-            this.dragElement.on(Metro.events.startAll, function(e){
-                const coord = element.position(),
-                    shiftX = Metro.utils.pageXY(e).x - coord.left,
-                    shiftY = Metro.utils.pageXY(e).y - coord.top;
+            this.dragElement.on(Metro.events.startAll, (e)=> {
+                const coord = element.position();
+                const shiftX = Metro.utils.pageXY(e).x - coord.left;
+                const shiftY = Metro.utils.pageXY(e).y - coord.top;
 
-                const moveElement = function (e) {
+                const moveElement = (e) => {
                     let top = Metro.utils.pageXY(e).y - shiftY;
                     let left = Metro.utils.pageXY(e).x - shiftX;
 
@@ -105,8 +108,8 @@
                         if (top < 0) top = 0;
                         if (left < 0) left = 0;
 
-                        if (top > that.dragArea.outerHeight() - element.outerHeight()) top = that.dragArea.outerHeight() - element.outerHeight();
-                        if (left > that.dragArea.outerWidth() - element.outerWidth()) left = that.dragArea.outerWidth() - element.outerWidth();
+                        if (top > this.dragArea.outerHeight() - element.outerHeight()) top = this.dragArea.outerHeight() - element.outerHeight();
+                        if (left > this.dragArea.outerWidth() - element.outerWidth()) left = this.dragArea.outerWidth() - element.outerWidth();
                     }
 
                     position.y = top;
@@ -117,7 +120,7 @@
                         top: top
                     });
 
-                    that._fireEvent("drag-move", {
+                    this._fireEvent("drag-move", {
                         position: position,
                         context: o.dragContext
                     });
@@ -131,31 +134,31 @@
                     return ;
                 }
 
-                that.drag = true;
+                this.drag = true;
 
                 element.addClass("draggable");
 
-                that._fireEvent("drag-start", {
+                this._fireEvent("drag-start", {
                     position: position,
                     context: o.dragContext
                 });
 
-                $(document).on(Metro.events.moveAll, moveElement, {ns: that.id, passive: false});
+                $(document).on(Metro.events.moveAll, moveElement, {ns: this.id, passive: false});
 
-                $(document).on(Metro.events.stopAll, function(){
+                $(document).on(Metro.events.stopAll, ()=> {
                     element.removeClass("draggable");
 
-                    $(document).off(Metro.events.moveAll, {ns: that.id});
-                    $(document).off(Metro.events.stopAll, {ns: that.id});
+                    $(document).off(Metro.events.moveAll, {ns: this.id});
+                    $(document).off(Metro.events.stopAll, {ns: this.id});
 
-                    that.drag = false;
-                    that.move = false;
+                    this.drag = false;
+                    this.move = false;
 
-                    that._fireEvent("drag-stop", {
+                    this._fireEvent("drag-stop", {
                         position: position,
                         context: o.dragContext
                     });
-                }, {ns: that.id});
+                }, {ns: this.id});
             });
         },
 
@@ -167,9 +170,7 @@
             this.element.data("canDrag", true);
         },
 
-        /* eslint-disable-next-line */
-        changeAttribute: function(attributeName, newValue){
-        },
+        changeAttribute: (attr, val)=> { },
 
         destroy: function(){
             const element = this.element;
@@ -177,4 +178,4 @@
             return element;
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

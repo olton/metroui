@@ -1,9 +1,9 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var DoubleSliderDefaultConfig = {
-        doublesliderDeferred: 0,
+
+    let DoubleSliderDefaultConfig = {
+        doubleSliderDeferred: 0,
         roundValue: true,
         min: 0,
         max: 100,
@@ -44,12 +44,12 @@
         onDoubleSliderCreate: Metro.noop
     };
 
-    Metro.doubleSliderSetup = function (options) {
+    Metro.doubleSliderSetup = (options) => {
         DoubleSliderDefaultConfig = $.extend({}, DoubleSliderDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDoubleSliderSetup"] !== "undefined") {
-        Metro.doubleSliderSetup(globalThis["metroDoubleSliderSetup"]);
+    if (typeof globalThis.metroDoubleSliderSetup !== "undefined") {
+        Metro.doubleSliderSetup(globalThis.metroDoubleSliderSetup);
     }
 
     Metro.Component('double-slider', {
@@ -59,17 +59,18 @@
                 valueMin: null,
                 valueMax: null,
                 keyInterval: false,
-                id: Utils.elementId("slider")
+                id: Metro.utils.elementId("slider")
             });
 
             return this;
         },
 
         _create: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
-            this.valueMin = Utils.isValue(o.valueMin) ? +o.valueMin : +o.min;
-            this.valueMax = Utils.isValue(o.valueMax) ? +o.valueMax : +o.max;
+            this.valueMin = Metro.utils.isValue(o.valueMin) ? +o.valueMin : +o.min;
+            this.valueMax = Metro.utils.isValue(o.valueMax) ? +o.valueMax : +o.max;
 
             this._createSlider();
             this._createEvents();
@@ -82,16 +83,17 @@
         },
 
         _createSlider: function(){
-            var element = this.element, o = this.options;
-            var slider_wrapper = $("<div>").addClass("slider-wrapper");
-            var slider = $("<div>").addClass("slider").addClass(o.clsSlider).addClass(this.elem.className);
-            var backside = $("<div>").addClass("backside").addClass(o.clsBackside);
-            var complete = $("<div>").addClass("complete").addClass(o.clsComplete);
-            var markerMin = $("<button>").attr("type", "button").addClass("marker marker-min").addClass(o.clsMarker).addClass(o.clsMarkerMin);
-            var markerMax = $("<button>").attr("type", "button").addClass("marker marker-max").addClass(o.clsMarker).addClass(o.clsMarkerMax);
-            var hintMin = $("<div>").addClass("hint hint-min").addClass(o.hintPositionMin + "-side").addClass(o.clsHint).addClass(o.clsHintMin);
-            var hintMax = $("<div>").addClass("hint hint-max").addClass(o.hintPositionMax + "-side").addClass(o.clsHint).addClass(o.clsHintMax);
-            var i;
+            const element = this.element;
+            const o = this.options;
+            const slider_wrapper = $("<div>").addClass("slider-wrapper");
+            const slider = $("<div>").addClass("slider").addClass(o.clsSlider).addClass(this.elem.className);
+            const backside = $("<div>").addClass("backside").addClass(o.clsBackside);
+            const complete = $("<div>").addClass("complete").addClass(o.clsComplete);
+            const markerMin = $("<button>").attr("type", "button").addClass("marker marker-min").addClass(o.clsMarker).addClass(o.clsMarkerMin);
+            const markerMax = $("<button>").attr("type", "button").addClass("marker marker-max").addClass(o.clsMarker).addClass(o.clsMarkerMax);
+            const hintMin = $("<div>").addClass("hint hint-min").addClass(`${o.hintPositionMin}-side`).addClass(o.clsHint).addClass(o.clsHintMin);
+            const hintMax = $("<div>").addClass("hint hint-max").addClass(`${o.hintPositionMax}-side`).addClass(o.clsHint).addClass(o.clsHintMax);
+            let i;
             
             if (o.size > 0) {
                 slider.outerWidth(o.size);
@@ -116,7 +118,7 @@
             }
 
             if (o.showMinMax === true) {
-                var min_max_wrapper = $("<div>").addClass("slider-min-max").addClass(o.clsMinMax);
+                const min_max_wrapper = $("<div>").addClass("slider-min-max").addClass(o.clsMinMax);
                 $("<span>").addClass("slider-text-min").addClass(o.clsMin).html(`${o.min}`).appendTo(min_max_wrapper);
                 $("<span>").addClass("slider-text-max").addClass(o.clsMax).html(`${o.max}`).appendTo(min_max_wrapper);
                 if (o.minMaxPosition === Metro.position.TOP) {
@@ -143,12 +145,14 @@
         },
 
         _createEvents: function(){
-            var that = this, slider = this.slider, o = this.options;
-            var marker = slider.find(".marker");
+            const that = this;
+            const slider = this.slider;
+            const o = this.options;
+            const marker = slider.find(".marker");
 
             marker.on(Metro.events.startAll, function(){
-                var _marker = $(this);
-                var hint = _marker.find(".hint");
+                const _marker = $(this);
+                const hint = _marker.find(".hint");
                 
                 _marker.addClass("active");
                 
@@ -156,7 +160,7 @@
                     hint.fadeIn(300);
                 }
 
-                $(document).on(Metro.events.moveAll, function(e){
+                $(document).on(Metro.events.moveAll, (e)=> {
                     that._move(e);
                     that._fireEvent("move", {
                         min: that.valueMin,
@@ -165,7 +169,7 @@
 
                 }, {ns: that.id});
 
-                $(document).on(Metro.events.stopAll, function(){
+                $(document).on(Metro.events.stopAll, ()=> {
                     slider.find(".marker").removeClass("active");
                     
                     $(document).off(Metro.events.moveAll, {ns: that.id});
@@ -187,28 +191,29 @@
                 });
             });
 
-            marker.on(Metro.events.focus, function(){
+            marker.on(Metro.events.focus, ()=> {
                 that._fireEvent("focus", {
                     min: that.valueMin,
                     max: that.valueMax
                 });
             });
 
-            marker.on(Metro.events.blur, function(){
+            marker.on(Metro.events.blur, ()=> {
                 that._fireEvent("blur", {
                     min: that.valueMin,
                     max: that.valueMax
                 });
             });
 
-            $(globalThis).on(Metro.events.resize,function(){
+            $(globalThis).on(Metro.events.resize,()=> {
                 that.val(that.valueMin, that.valueMax);
             }, {ns: that.id});
         },
 
         _convert: function(v, how){
-            var slider = this.slider, o = this.options;
-            var length = slider.outerWidth() - slider.find(".marker").outerWidth();
+            const slider = this.slider;
+            const o = this.options;
+            const length = slider.outerWidth() - slider.find(".marker").outerWidth();
             switch (how) {
                 case "pix2prc": return ( v * 100 / length );
                 case "pix2val": return ( this._convert(v, 'pix2prc') * ((o.max - o.min) / 100) + o.min );
@@ -221,14 +226,13 @@
         },
 
         _correct: function(value){
-            var res = value;
-            var accuracy  = this.options.accuracy;
-            var min = this.options.min, max = this.options.max;
-            var _dec = function(v){
-                return v % 1 === 0 ? 0 : v.toString().split(".")[1].length;
-            };
+            let res = value;
+            const accuracy  = this.options.accuracy;
+            const min = this.options.min;
+            const max = this.options.max;
+            const _dec = (v)=> v % 1 === 0 ? 0 : v.toString().split(".")[1].length;
 
-            if (accuracy === 0 || isNaN(accuracy)) {
+            if (accuracy === 0 || Number.isNaN(accuracy)) {
                 return res;
             }
 
@@ -246,23 +250,23 @@
         },
 
         _move: function(e){
-            var target = this.slider.find(".marker.active");
-            var isMin = target.hasClass("marker-min");
-            var slider = this.slider;
-            var offset = slider.offset(),
-                marker_size = slider.find(".marker").outerWidth(),
-                markerMin = slider.find(".marker-min"),
-                markerMax = slider.find(".marker-max"),
-                length = slider.outerWidth(),
-                cPix, cStart, cStop;
+            const target = this.slider.find(".marker.active");
+            const isMin = target.hasClass("marker-min");
+            const slider = this.slider;
+            const offset = slider.offset();
+            const marker_size = slider.find(".marker").outerWidth();
+            const markerMin = slider.find(".marker-min");
+            const markerMax = slider.find(".marker-max");
+            const length = slider.outerWidth();
+            let cStart;
+            let cStop;
 
-            cPix = Utils.pageXY(e).x - offset.left - marker_size / 2;
-
+            const cPix = Metro.utils.pageXY(e).x - offset.left - marker_size / 2
             if (isMin) {
                 cStart = 0;
-                cStop = parseInt(markerMax.css("left")) - marker_size;
+                cStop = Number.parseInt(markerMax.css("left")) - marker_size;
             } else {
-                cStart = parseInt(markerMin.css("left")) + marker_size;
+                cStart = Number.parseInt(markerMin.css("left")) + marker_size;
                 cStop = length - marker_size;
             }
 
@@ -276,25 +280,30 @@
         },
 
         _hint: function(){
-            var that = this, o = this.options, slider = this.slider, hint = slider.find(".hint");
+            const that = this;
+            const o = this.options;
+            const slider = this.slider;
+            const hint = slider.find(".hint");
 
             hint.each(function(){
-                var _hint = $(this);
-                var isMin = _hint.hasClass("hint-min");
-                var _mask = isMin ? o.hintMaskMin : o.hintMaskMax;
-                var value = +(isMin ? that.valueMin : that.valueMax) || 0;
-                _hint.text(_mask.replace("$1", value.toFixed(Utils.decCount(o.accuracy))))
+                const _hint = $(this);
+                const isMin = _hint.hasClass("hint-min");
+                const _mask = isMin ? o.hintMaskMin : o.hintMaskMax;
+                const value = +(isMin ? that.valueMin : that.valueMax) || 0;
+                _hint.text(_mask.replace("$1", value.toFixed(Metro.utils.decCount(o.accuracy))))
             });
         },
 
         _value: function(){
-            var element = this.element, o = this.options;
-            var v1 = +this.valueMin || 0, v2 = +this.valueMax || 0;
-            var value;
+            const element = this.element;
+            const o = this.options;
+            let v1 = +this.valueMin || 0;
+            let v2 = +this.valueMax || 0;
+            let value;
 
             if (o.roundValue) {
-                v1 = v1.toFixed(Utils.decCount(o.accuracy));
-                v2 = v2.toFixed(Utils.decCount(o.accuracy));
+                v1 = v1.toFixed(Metro.utils.decCount(o.accuracy));
+                v2 = v2.toFixed(Metro.utils.decCount(o.accuracy));
             }
 
             value = [v1, v2].join(", ");
@@ -304,11 +313,11 @@
             }
 
             if (o.target !== null) {
-                var target = $(o.target);
+                const target = $(o.target);
                 if (target.length !== 0) {
 
                     $.each(target, function(){
-                        var t = $(this);
+                        const t = $(this);
                         if (this.tagName === "INPUT") {
                             t.val(value);
                         } else {
@@ -329,12 +338,12 @@
         },
 
         _marker: function(){
-            var slider = this.slider;
-            var markerMin = slider.find(".marker-min");
-            var markerMax = slider.find(".marker-max");
-            var complete = slider.find(".complete");
-            var marker_size = parseInt(Utils.getStyleOne(markerMin, "width"));
-            var slider_visible = Utils.isVisible(slider);
+            const slider = this.slider;
+            const markerMin = slider.find(".marker-min");
+            const markerMax = slider.find(".marker-max");
+            const complete = slider.find(".complete");
+            const marker_size = Number.parseInt(Metro.utils.getStyleOne(markerMin, "width"));
+            const slider_visible = Metro.utils.isVisible(slider);
 
             if (slider_visible) {
                 $([markerMin, markerMax]).css({
@@ -348,11 +357,11 @@
                 markerMax.css('left', this._convert(this.valueMax, 'val2pix'));
             } else {
                 markerMin.css({
-                    'left': (this._convert(this.valueMin, 'val2prc')) + "%",
+                    'left': `${this._convert(this.valueMin, 'val2prc')}%`,
                     'margin-top': this._convert(this.valueMin, 'val2prc') === 0 ? 0 : -1 * marker_size / 2
                 });
                 markerMax.css({
-                    'left': (this._convert(this.valueMax, 'val2prc')) + "%",
+                    'left': `${this._convert(this.valueMax, 'val2prc')}%`,
                     'margin-top': this._convert(this.valueMax, 'val2prc') === 0 ? 0 : -1 * marker_size / 2
                 });
             }
@@ -370,39 +379,42 @@
         },
 
         val: function(vMin, vMax){
-            var o = this.options;
+            const o = this.options;
 
-            if (!Utils.isValue(vMin) && !Utils.isValue(vMax)) {
+            if (!Metro.utils.isValue(vMin) && !Metro.utils.isValue(vMax)) {
                 return [this.valueMin, this.valueMax];
             }
+                        
+            let min = vMin
+            let max = vMax
+            
+            if (typeof min !== "undefined" && min < o.min) min = o.min;
+            if (typeof max !== "undefined" && max < o.min) max = o.min;
 
-            if (vMin < o.min) vMin = o.min;
-            if (vMax < o.min) vMax = o.min;
+            if (typeof min !== "undefined" && min > o.max) min = o.max;
+            if (typeof max !== "undefined" && max > o.max) max = o.max;
 
-            if (vMin > o.max) vMin = o.max;
-            if (vMax > o.max) vMax = o.max;
-
-            this.valueMin = this._correct(vMin);
-            this.valueMax = this._correct(vMax);
+            if (typeof min !== "undefined") this.valueMin = this._correct(min);
+            if (typeof max !== "undefined") this.valueMax = this._correct(max);
 
             this._redraw();
         },
 
         changeValue: function(){
-            var element = this.element;
-            var valMin = +element.attr("data-value-min");
-            var valMax = +element.attr("data-value-max");
+            const element = this.element;
+            const valMin = +element.attr("data-value-min");
+            const valMax = +element.attr("data-value-max");
             this.val(valMin, valMax);
         },
 
         disable: function(){
-            var element = this.element;
+            const element = this.element;
             element.data("disabled", true);
             element.parent().addClass("disabled");
         },
 
         enable: function(){
-            var element = this.element;
+            const element = this.element;
             element.data("disabled", false);
             element.parent().removeClass("disabled");
         },
@@ -424,8 +436,9 @@
         },
 
         destroy: function(){
-            var element = this.element, slider = this.slider;
-            var marker = slider.find(".marker");
+            const element = this.element;
+            const slider = this.slider;
+            const marker = slider.find(".marker");
 
             marker.off(Metro.events.startAll);
             marker.off(Metro.events.focus);
@@ -435,7 +448,7 @@
             slider.off(Metro.events.click);
             $(globalThis).off(Metro.events.resize, {ns: this.id});
 
-            return element;
+            element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

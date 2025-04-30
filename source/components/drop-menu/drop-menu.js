@@ -1,7 +1,8 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    const participants = `[data-role-dropmenu], [data-role-dropdown]`;
+    const participants = "[data-role-dropmenu], [data-role-dropdown]";
     const toggleImage = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path></svg>`
     
     let DropMenuDefaultConfig = {
@@ -10,12 +11,12 @@
         onMenuCreate: Metro.noop
     };
 
-    Metro.dropMenuSetup = function (options) {
+    Metro.dropMenuSetup = (options) => {
         DropMenuDefaultConfig = $.extend({}, DropMenuDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDropMenuSetup"] !== "undefined") {
-        Metro.dropMenuSetup(globalThis["metroDropMenuSetup"]);
+    if (typeof globalThis.metroDropMenuSetup !== "undefined") {
+        Metro.dropMenuSetup(globalThis.metroDropMenuSetup);
     }
 
     Metro.Component('dropmenu', {
@@ -49,7 +50,8 @@
         },
         
         _createStructure: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             this.level = element.parents("[data-role-dropmenu]").length;
             this.toggle = $(this._toggle()).append(toggleImage)
             this.displayOrigin = element.css("display");
@@ -101,7 +103,8 @@
         },
         
         open: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const toggleRect = Metro.utils.rect(this.toggle[0]);
             const level = element.parents("[data-role-dropmenu]").length;
             
@@ -113,8 +116,8 @@
                     left: toggleRect.left
                 })
 
-                let wOut = Metro.utils.viewportOutByWidth(element[0])
-                let hOut = Metro.utils.viewportOutByHeight(element[0])
+                const wOut = Metro.utils.viewportOutByWidth(element[0])
+                const hOut = Metro.utils.viewportOutByHeight(element[0])
 
                 if ( o.align === "right" || wOut ) {
                     element.css({
@@ -143,7 +146,7 @@
                     left: toggleRect.right
                 })
 
-                let wOut = Metro.utils.viewportOutByWidth(element[0])
+                const wOut = Metro.utils.viewportOutByWidth(element[0])
 
                 if (o.align === "right" || wOut) {
                     element.css({
@@ -163,7 +166,7 @@
             element.visible(true);
         },
         
-        changeAttribute: function(attr, newValue){
+        changeAttribute: (attr, val)=> {
         },
 
         destroy: function(){
@@ -171,7 +174,7 @@
         }
     });
     
-    $(document).on("click", function(e) {
+    $(document).on("click", () => {
         $(participants).each((i, el) => {
             const $el = $(el);
             
@@ -188,4 +191,4 @@
             if (dm) { dm.close(); }
         })
     });
-}(Metro, Dom));
+})(Metro, Dom);

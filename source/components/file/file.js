@@ -1,5 +1,5 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let FileDefaultConfig = {
@@ -21,12 +21,12 @@
         onFileCreate: Metro.noop
     };
 
-    Metro.fileSetup = function (options) {
+    Metro.fileSetup = (options) => {
         FileDefaultConfig = $.extend({}, FileDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroFileSetup"] !== "undefined") {
-        Metro.fileSetup(globalThis["metroFileSetup"]);
+    if (typeof globalThis.metroFileSetup !== "undefined") {
+        Metro.fileSetup(globalThis.metroFileSetup);
     }
 
     Metro.Component('file', {
@@ -48,11 +48,13 @@
         },
 
         _createStructure: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const container = element.wrap("<div>").addClass((o.mode === "input" ? " file " : o.mode === "button" ? " file-button " : " drop-zone ") + element[0].className).addClass(o.clsComponent);
             const caption = $("<span>").addClass("caption").addClass(o.clsCaption);
             const files = $("<span>").addClass("files").addClass(o.clsCaption);
-            let icon, button;
+            let icon;
+            let button;
 
             if (o.mode.includes("drop")) {
                 icon = $("<span>").addClass("icon").html(o.dropIcon).appendTo(container);
@@ -107,39 +109,39 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const container = element.closest("label");
             const caption = container.find(".caption");
             const files = container.find(".files");
             const form = element.closest("form");
 
             if (form.length) {
-                form.on("reset", function(){
+                form.on("reset", ()=> {
                     that.clear();
                 })
             }
 
-            container.on(Metro.events.click, ".select-files-button", function(){
+            container.on(Metro.events.click, ".select-files-button", ()=> {
                 element[0].click();
             });
 
-            container.on(Metro.events.click, ".clear-button", function(){
+            container.on(Metro.events.click, ".clear-button", ()=> {
                 that.clear();
             });
 
             element.on(Metro.events.change, function(){
-                const fi = this;
                 const file_names = [];
                 let entry;
-
-                Array.from(fi.files).forEach(function(file){
+                const files = Array.from(this.files)
+                
+                for(const file of files) {
                     file_names.push(file.name);
-                });
+                }
 
                 if (o.mode === "input") {
-
                     entry = file_names.join(", ");
-
                     caption.html(entry);
                     caption.attr('title', entry);
                 } else {
@@ -147,27 +149,27 @@
                 }
 
                 that._fireEvent("select", {
-                    files: fi.files
+                    files: this.files
                 });
             });
 
-            element.on(Metro.events.focus, function(){container.addClass("focused");});
-            element.on(Metro.events.blur, function(){container.removeClass("focused");});
+            element.on(Metro.events.focus, ()=> {container.addClass("focused");});
+            element.on(Metro.events.blur, ()=> {container.removeClass("focused");});
 
             if (o.mode !== "input") {
-                container.on('drag dragstart dragend dragover dragenter dragleave drop', function(e){
+                container.on('drag dragstart dragend dragover dragenter dragleave drop', (e)=> {
                     e.preventDefault();
                 });
 
-                container.on('dragenter dragover', function(){
+                container.on('dragenter dragover', ()=> {
                     container.addClass("drop-on");
                 });
 
-                container.on('dragleave', function(){
+                container.on('dragleave', ()=> {
                     container.removeClass("drop-on");
                 });
 
-                container.on('drop', function(e){
+                container.on('drop', (e)=> {
                     element[0].files = e.dataTransfer.files;
                     files.html((o.filesSelectedTitle || that.strings.label_files_selected).replace('{n}', element[0].files.length))
                     container.removeClass("drop-on");
@@ -177,7 +179,8 @@
         },
 
         clear: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             if (o.mode === "input") {
                 element.siblings(".caption").html("");
@@ -223,7 +226,8 @@
         },
 
         destroy: function(){
-            const element = this.element, o = this.options
+            const element = this.element
+            const o = this.options
             const parent = element.parent()
             element.off(Metro.events.change)
             parent.off(Metro.events.click, "button")
@@ -233,4 +237,4 @@
             parent.remove()
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

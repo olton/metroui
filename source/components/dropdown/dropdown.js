@@ -1,7 +1,8 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    const participants = `[data-role-dropmenu], [data-role-dropdown]`;
+    const participants = "[data-role-dropmenu], [data-role-dropdown]";
     const toggleImage = `<svg class="dropdown-caret" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path></svg>`
 
     let DropdownDefaultConfig = {
@@ -20,12 +21,12 @@
         onDropdownCreate: Metro.noop
     };
 
-    Metro.dropdownSetup = function (options) {
+    Metro.dropdownSetup = (options) => {
         DropdownDefaultConfig = $.extend({}, DropdownDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDropdownSetup"] !== "undefined") {
-        Metro.dropdownSetup(globalThis["metroDropdownSetup"]);
+    if (typeof globalThis.metroDropdownSetup !== "undefined") {
+        Metro.dropdownSetup(globalThis.metroDropdownSetup);
     }
 
     Metro.Component('dropdown', {
@@ -41,7 +42,7 @@
         },
 
         _create: function(){
-            const that = this, element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -52,8 +53,8 @@
 
             if (element.hasClass("open")) {
                 element.removeClass("open");
-                setTimeout(function(){
-                    that.open(true);
+                setTimeout(()=> {
+                    this.open(true);
                 },0);
             }
         },
@@ -71,7 +72,8 @@
         },
         
         _createStructure: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const level = element.parents("[data-role-dropdown]").length;
             let toggle;
 
@@ -100,24 +102,26 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
-            const toggle = this.toggle, parent = element.parent();
+            const element = this.element;
+            const o = this.options;
+            const toggle = this.toggle;
+            const parent = element.parent();
 
-            toggle.on(Metro.events.click, function(e){
+            toggle.on(Metro.events.click, (e)=> {
                 $(".active-container").removeClass("active-container");
 
                 // parent.siblings(parent[0].tagName).removeClass("active-container");
 
                 if (element.css('display') !== 'none' && !element.hasClass('keep-open')) {
-                    that.close(true, element);
+                    this.close(true, element);
                 } else {
-                    $(participants).each(function(i, el){
+                    $(participants).each((i, el)=> {
                         if (!element.parents('[data-role-dropdown]').is(el) && !$(el).hasClass('keep-open') && $(el).css('display') !== 'none') {
                             if (!Metro.utils.isValue(o.dropFilter)) {
-                                that.close(true, el);
+                                this.close(true, el);
                             } else {
                                 if ($(el).closest(o.dropFilter).length > 0) {
-                                    that.close(true, el);
+                                    this.close(true, el);
                                 }
                             }
                         }
@@ -138,7 +142,7 @@
                         });
                         element.css('width', children_width + 2);
                     }
-                    that.open(false, element);
+                    this.open(false, element);
                     parent.addClass("active-container");
                 }
                 e.preventDefault();
@@ -146,21 +150,21 @@
             });
 
             if (o.noClose === true) {
-                element.addClass("keep-open").on(Metro.events.click, function (e) {
-                    //e.preventDefault();
+                element.addClass("keep-open").on(Metro.events.click, (e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                 });
             }
 
-            $(element).find('li.disabled a').on(Metro.events.click, function(e){
+            $(element).find('li.disabled a').on(Metro.events.click, (e)=> {
                 e.preventDefault();
             });
         },
 
         _close: function(el, immediate){
-            el = $(el);
+            const _el = $(el);
 
-            const dropdown = Metro.getPlugin(el, "dropdown");
+            const dropdown = Metro.getPlugin(_el, "dropdown");
             const toggle = dropdown.toggle;
             const options = dropdown.options;
             let func = options.closeFunc;
@@ -172,7 +176,7 @@
                 func = 'hide'
             }
 
-            el[func](immediate ? 0 : options.duration, function(){
+            _el[func](immediate ? 0 : options.duration, ()=> {
                 dropdown._fireEvent("close");
                 dropdown._fireEvent("up");
 
@@ -193,15 +197,15 @@
             dropdown.element.parent().addClass("active-container");
 
             dropdown.element[func](immediate ? 0 : options.duration, function(){
-                const _el = this, $el = $(this);
-                let wOut = Metro.utils.viewportOutByWidth(_el)
-                let hOut = Metro.utils.viewportOutByHeight(_el)
+                const $el = $(this);
+                const wOut = Metro.utils.viewportOutByWidth(this)
+                const hOut = Metro.utils.viewportOutByHeight(this)
                 
                 if (options.openMode === "auto") {
                     if (hOut) { $el.addClass("drop-up"); }
                     if (wOut) { $el.addClass("place-right"); }
 
-                    if (Metro.utils.viewportOut(_el)) {
+                    if (Metro.utils.viewportOut(this)) {
                         $el.removeClass("drop-up place-right").addClass("drop-as-dialog");
                     }
                 }
@@ -228,7 +232,7 @@
                 this.open();
         },
 
-        changeAttribute: function(){
+        changeAttribute: (attr, val)=> {
         },
 
         destroy: function(){
@@ -236,7 +240,7 @@
         }
     });
 
-    $(document).on(Metro.events.click, function(){
+    $(document).on(Metro.events.click, ()=> {
         $(participants).each(function(){
             const el = $(this);
 
@@ -253,5 +257,5 @@
             if (dm) { dm.close(); }
         });
     });
-}(Metro, Dom));
+})(Metro, Dom);
 
