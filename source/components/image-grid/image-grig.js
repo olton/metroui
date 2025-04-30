@@ -1,9 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    var Utils = Metro.utils;
-    var ImageGridDefaultConfig = {
+    let ImageGridDefaultConfig = {
         useBackground: false,
         backgroundSize: "cover",
         backgroundPosition: "top left",
@@ -17,12 +16,12 @@
         onImageGridCreate: Metro.noop
     };
 
-    Metro.imageGridSetup = function (options) {
+    Metro.imageGridSetup = (options) => {
         ImageGridDefaultConfig = $.extend({}, ImageGridDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroImageGridSetup"] !== "undefined") {
-        Metro.imageGridSetup(globalThis["metroImageGridSetup"]);
+    if (typeof globalThis.metroImageGridSetup !== "undefined") {
+        Metro.imageGridSetup(globalThis.metroImageGridSetup);
     }
 
     Metro.Component('image-grid', {
@@ -42,7 +41,8 @@
         },
 
         _createStructure: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("image-grid").addClass(o.clsImageGrid);
 
@@ -50,7 +50,8 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element;
+            const that = this;
+            const element = this.element;
 
             element.on(Metro.events.click, ".image-grid__item", function(){
                 that._fireEvent("item-click", {
@@ -60,27 +61,29 @@
         },
 
         _createItems: function(){
-            var that = this, element = this.element, o = this.options;
-            var items = this.items;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const items = this.items;
 
             element.clear();
 
             items.each(function(){
-                var el = $(this);
-                var src = this.src;
-                var wrapper = $("<div>").addClass("image-grid__item").addClass(o.clsImageGridItem).appendTo(element);
-                var img = new Image();
+                const el = $(this);
+                const src = this.src;
+                const wrapper = $("<div>").addClass("image-grid__item").addClass(o.clsImageGridItem).appendTo(element);
+                const img = new Image();
 
                 img.src = src;
                 img.onload = function(){
-                    var port = this.height >= this.width;
+                    const port = this.height >= this.width;
                     wrapper.addClass(port ? "image-grid__item-portrait" : "image-grid__item-landscape");
                     el.addClass(o.clsImageGridImage).appendTo(wrapper);
 
                     if (o.useBackground) {
                         wrapper
                             .css({
-                                background: "url("+src+")",
+                                background: `url(${src})`,
                                 backgroundRepeat: "no-repeat",
                                 backgroundSize: o.backgroundSize,
                                 backgroundPosition: o.backgroundPosition
@@ -99,10 +102,10 @@
         },
 
         changeAttribute: function(attr, val){
-            var o = this.options;
+            const o = this.options;
 
             if (attr === "data-use-background") {
-                o.useBackground = Utils.bool(val);
+                o.useBackground = Metro.utils.bool(val);
                 this._createItems();
             }
 
@@ -121,4 +124,4 @@
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

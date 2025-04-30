@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    var ImageBoxDefaultConfig = {
+    let ImageBoxDefaultConfig = {
         image: null,
         size: "cover",
         repeat: false,
@@ -12,12 +12,12 @@
         onImageBoxCreate: Metro.noop
     };
 
-    Metro.imageBoxSetup = function (options) {
+    Metro.imageBoxSetup = (options) => {
         ImageBoxDefaultConfig = $.extend({}, ImageBoxDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroImageBoxSetup"] !== "undefined") {
-        Metro.imageBoxSetup(globalThis["metroImageBoxSetup"]);
+    if (typeof globalThis.metroImageBoxSetup !== "undefined") {
+        Metro.imageBoxSetup(globalThis.metroImageBoxSetup);
     }
 
     Metro.Component('image-box', {
@@ -35,7 +35,7 @@
         },
 
         _createStructure: function(){
-            var element = this.element;
+            const element = this.element;
 
             element.addClass("image-box");
 
@@ -43,15 +43,16 @@
         },
 
         _drawImage: function(){
-            var element = this.element, o = this.options;
-            var image = new Image();
-            var portrait;
+            const element = this.element;
+            const o = this.options;
+            const image = new Image();
+            let portrait;
 
             if (!element.attr("data-original"))
                 element.attr("data-original", o.image);
 
             element.css({
-                backgroundImage: "url("+o.image+")",
+                backgroundImage: `url(${o.image})`,
                 backgroundSize: o.size,
                 backgroundRepeat: o.repeat ? "repeat" : "no-repeat",
                 backgroundColor: o.color,
@@ -64,12 +65,12 @@
                 portrait = this.height >= this.width;
                 element
                     .removeClass("image-box__portrait image-box__landscape")
-                    .addClass("image-box__" + (portrait ? "portrait" : "landscape"));
+                    .addClass(`image-box__${portrait ? "portrait" : "landscape"}`);
             }
         },
 
         changeAttribute: function(attr, newValue){
-            var attrName = attr.replace("data-", "");
+            const attrName = attr.replace("data-", "");
 
             if (["image", "size", "repeat", "color", "attachment", "origin"].indexOf(attrName) > -1) {
                 this.options[attrName] = newValue;
@@ -81,4 +82,4 @@
             return this.element;
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

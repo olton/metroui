@@ -2,8 +2,8 @@
 * TODO:
 *  1. Add keyboard support to autocomplete list
 * */
-
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let InputDefaultConfig = {
@@ -67,12 +67,12 @@
         onInputCreate: Metro.noop
     };
 
-    Metro.inputSetup = function (options) {
+    Metro.inputSetup = (options) => {
         InputDefaultConfig = $.extend({}, InputDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroInputSetup"] !== "undefined") {
-        Metro.inputSetup(globalThis["metroInputSetup"]);
+    if (typeof globalThis.metroInputSetup !== "undefined") {
+        Metro.inputSetup(globalThis.metroInputSetup);
     }
 
     Metro.Component('input', {
@@ -100,9 +100,15 @@
         },
 
         _createStructure: function(){
-            const that = this, element = this.element, o = this.options;
-            const container = element.wrap("<div>").addClass("input " + element[0].className);
-            let buttons, clearButton, revealButton, searchButton, randomButton;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const container = element.wrap("<div>").addClass(`input ${element[0].className}`);
+            let buttons;
+            let clearButton;
+            let revealButton;
+            let searchButton;
+            let randomButton;
 
             if (Metro.utils.isValue(o.historyPreset)) {
                 $.each(o.historyPreset.toArray(o.historyDivider), function(){
@@ -138,17 +144,19 @@
                 randomButton.appendTo(buttons);
             }
 
-            let opt, ul
+            let opt
+            let ul
             
             if (o.prepend) {
                 $("<div>").html(o.prepend).addClass("prepend").addClass(o.clsPrepend).appendTo(container);
             }
             if (o.prependOptions) {
                 opt = $("<div>").addClass("prepend-options").appendTo(container);
-                opt.append(ul = $("<select data-role='select'>").addClass("options-list"))
-                o.prependOptions.toArray(o.prependOptionsSep).forEach(function(item){
+                ul = $("<select data-role='select'>").addClass("options-list")
+                opt.append(ul)
+                for (const item of o.prependOptions.toArray(o.prependOptionsSep)) {
                     $("<option>").attr("value", item).html(item).appendTo(ul)
-                })
+                }
                 this.prependOptionsList = ul;
             }
 
@@ -157,35 +165,35 @@
             }
             if (o.appendOptions) {
                 opt = $("<div>").addClass("append-options").appendTo(container);
-                opt.append(ul = $("<select data-role='select'>").addClass("options-list"))
-                o.appendOptions.toArray(o.appendOptionsSep).forEach(function(item){
+                ul = $("<select data-role='select'>").addClass("options-list")
+                opt.append(ul)
+                for (const item of o.appendOptions.toArray(o.appendOptionsSep)) {
                     $("<option>").attr("value", item).html(item).appendTo(ul)
-                })
+                }
                 this.appendOptionsList = ul;
             }
 
             const customButtons = Metro.utils.isObject(o.customButtons);
             if (Array.isArray(customButtons)) {
                 $.each(customButtons, function(){
-                    const item = this;
                     const btn = $("<button>");
 
                     btn
                         .addClass("button input-custom-button")
                         .addClass(o.clsCustomButton)
-                        .addClass(item.cls)
+                        .addClass(this.cls)
                         .attr("tabindex", -1)
                         .attr("type", "button")
-                        .html(item.text);
+                        .html(this.text);
 
-                    if (item.attr && typeof item.attr === 'object') {
-                        $.each(item.attr, function(k, v){
+                    if (this.attr && typeof this.attr === 'object') {
+                        $.each(this.attr, (k, v)=> {
                             btn.attr(Str.dashedName(k), v);
                         });
                     }
 
-                    if (item.onclick) btn.on("click", () => {
-                        item.onclick.apply(btn, [element.valueOf(), element]);
+                    if (this.onclick) btn.on("click", () => {
+                        this.onclick.apply(btn, [element.valueOf(), element]);
                     });
                     
                     btn.appendTo(buttons);
@@ -231,9 +239,7 @@
             if (Metro.utils.isValue(o.autocompleteUrl)) {
                 fetch(o.autocompleteUrl, {
                     method: o.autocompleteUrlMethod
-                }).then(function(response){
-                    return response.text()
-                }).then(function(data){
+                }).then((response)=> response.text()).then((data)=> {
                     let newData = [];
 
                     try {
@@ -277,11 +283,13 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const container = element.closest(".input");
             const autocompleteList = container.find(".autocomplete-list");
 
-            container.on(Metro.events.click, ".input-clear-button", function(){
+            container.on(Metro.events.click, ".input-clear-button", ()=> {
                 const curr = element.val();
                 element.val(Metro.utils.isValue(o.defaultValue) ? o.defaultValue : "").fire('clear').fire('change').fire('keyup').focus();
                 if (autocompleteList.length > 0) {
@@ -295,7 +303,7 @@
                 });
             });
 
-            container.on(Metro.events.click, ".input-reveal-button", function(){
+            container.on(Metro.events.click, ".input-reveal-button", ()=> {
                 if (element.attr('type') === 'password') {
                     element.attr('type', 'text');
                 } else {
@@ -320,7 +328,7 @@
                 }
             });
 
-            container.on(Metro.events.click, ".input-random-button", function(){
+            container.on(Metro.events.click, ".input-random-button", ()=> {
                 const val = that._generateRandomValue();
                 element.val(val).fire('change').fire('keyup').focus();
                 that._fireEvent("random-click", {
@@ -328,7 +336,7 @@
                 });
             });
 
-            element.on(Metro.events.keyup, function(e){
+            element.on(Metro.events.keyup, (e)=> {
                 const val = element.val().trim();
 
                 if (o.history && e.keyCode === Metro.keyCode.ENTER && val !== "") {
@@ -382,7 +390,7 @@
                 }
             });
 
-            element.on(Metro.events.keydown, function(e){
+            element.on(Metro.events.keydown, (e)=> {
                 if (e.keyCode === Metro.keyCode.ENTER) {
                     that._fireEvent("enter-click", {
                         val: element.val()
@@ -390,11 +398,11 @@
                 }
             });
 
-            element.on(Metro.events.blur, function(){
+            element.on(Metro.events.blur, ()=> {
                 container.removeClass("focused");
             });
 
-            element.on(Metro.events.focus, function(){
+            element.on(Metro.events.focus, ()=> {
                 container.addClass("focused");
             });
 
@@ -420,7 +428,7 @@
             const o = this.options;
             const groups = o.randomSymbols.split(";");
             const symbolsPerGroup = Math.round(o.randomLength / groups.length)
-            let val = [];
+            const val = [];
             
             for (const g of groups) {
                 const symbols = g.split("");
@@ -434,10 +442,10 @@
         },
         
         _drawAutocompleteList: function(val){
-            const that = this, element = this.element;
+            const that = this;
+            const element = this.element;
             const container = element.closest(".input");
             const autocompleteList = container.find(".autocomplete-list");
-            let items;
 
             if (autocompleteList.length === 0) {
                 return;
@@ -445,23 +453,20 @@
 
             autocompleteList.html("");
 
-            items = this.autocomplete.filter(function(item){
-                return item.toLowerCase().indexOf(val) > -1;
-            });
-
+            const items = this.autocomplete.filter((item) => item.toLowerCase().indexOf(val) > -1)
             autocompleteList.css({
                 display: items.length > 0 ? "block" : "none"
             });
 
             $.each(items, function(){
-                const v = this;
-                let index = v.toLowerCase().indexOf(val), content;
-                const item = $("<div>").addClass("item").attr("data-autocomplete-value", v);
+                const index = this.toLowerCase().indexOf(val);
+                let content;
+                const item = $("<div>").addClass("item").attr("data-autocomplete-value", this);
 
                 if (index === 0) {
-                    content = "<strong>"+v.substring(0, val.length)+"</strong>"+v.substring(val.length);
+                    content = `<strong>${this.substring(0, val.length)}</strong>${this.substring(val.length)}`;
                 } else {
-                    content = v.substring(0, index) + "<strong>"+v.substring(index, val.length)+"</strong>"+v.substring(index + val.length);
+                    content = `${this.substring(0, index)}<strong>${this.substring(index, val.length)}</strong>${this.substring(index + val.length)}`;
                 }
 
                 item.html(content).appendTo(autocompleteList);
@@ -485,13 +490,19 @@
         },
 
         setHistory: function(history, append) {
-            const that = this, o = this.options;
-            if (Metro.utils.isNull(history)) return;
-            if (!Array.isArray(history) && typeof history === 'string') {
-                history = history.toArray(o.historyDivider);
+            const that = this;
+            const o = this.options;
+            
+            if (!history) return;
+            if (typeof history !== "string" && !Array.isArray(history)) {
+                console.error("History must be a string or an array!");
+                console.dir(history)
             }
+            
+            const _history = typeof history === 'string' ? history.toArray(o.historyDivider) : history;
+            
             if (append === true) {
-                $.each(history, function () {
+                $.each(_history, function () {
                     that.history.push(this);
                 })
             } else{
@@ -536,7 +547,8 @@
         },
 
         val: function(v, splitter = ";"){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             if (!Metro.utils.isValue(v)) {
                 let val = element.val();
                 if (o.prependOptions) {
@@ -549,7 +561,8 @@
             }
             
             const groups = v.split(splitter)
-            let prepend = "", append = "", val;
+            let prepend = "";
+            let append = "";
             if (o.prependOptions) {
                 prepend = groups.shift();
                 Metro.getPlugin(this.prependOptionsList, "select").val(prepend);
@@ -559,7 +572,7 @@
                 append = groups.pop();
                 Metro.getPlugin(this.appendOptionsList, "select").val(append);
             }
-            val = groups.join("");
+            const val = groups.join("")
             element.val(val);
         },
         
@@ -586,7 +599,8 @@
         },
 
         destroy: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const parent = element.parent();
             const clearBtn = parent.find(".input-clear-button");
             const revealBtn = parent.find(".input-reveal-button");
@@ -613,7 +627,7 @@
         }
     });
 
-    $(document).on(Metro.events.click, function(){
+    $(document).on(Metro.events.click, ()=> {
         $('.input .autocomplete-list').hide();
     });
-}(Metro, Dom));
+})(Metro, Dom);

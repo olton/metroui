@@ -1,4 +1,5 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     const Hotkey = {
@@ -30,8 +31,10 @@
             "datetime-local", "search", "color", "tel"
         ],
 
-        getKey: function (e) {
-            let key, k = e.keyCode, char = String.fromCharCode(k).toLowerCase();
+        getKey: (e) => {
+            let key;
+            const k = e.keyCode;
+            const char = String.fromCharCode(k).toLowerCase();
             if (e.shiftKey) {
                 key = Hotkey.shiftNums[char] ? Hotkey.shiftNums[char] : char;
             } else {
@@ -40,10 +43,10 @@
                     : Hotkey.specialKeys[k];
             }
 
-            return Hotkey.getModifier(e).length ? Hotkey.getModifier(e).join("+") + "+" + key : key;
+            return Hotkey.getModifier(e).length ? `${Hotkey.getModifier(e).join("+")}+${key}` : key;
         },
 
-        getModifier: function (e) {
+        getModifier: (e) => {
             const m = [];
             if (e.altKey) {
                 m.push("alt");
@@ -60,12 +63,12 @@
 
     function bindKey(key, fn){
         return this.each(function(){
-            $(this).on(Metro.events.keydown+".hotkey-method-"+key, function(e){
+            $(this).on(`${Metro.events.keydown}.hotkey-method-${key}`, function(e){
                 if (e.repeat) return
 
                 const _key = Hotkey.getKey(e);
                 const el = $(this);
-                const href = "" + el.attr("href");
+                const href = `${el.attr("href")}`;
 
                 if (key !== _key) {
                     return;
@@ -84,12 +87,15 @@
 
     $.fn.hotkey = bindKey;
 
-    if (globalThis["METRO_JQUERY"] && globalThis["jquery_present"]) {
-        globalThis["jQuery"].fn.hotkey = bindKey;
+    if (globalThis.METRO_JQUERY && globalThis.jquery_present) {
+        globalThis.jQuery.fn.hotkey = bindKey;
     }
 
-    $(document).on(Metro.events.keydown + ".hotkey-data", function(e){
-        let el, fn, key, href;
+    $(document).on(`${Metro.events.keydown}.hotkey-data`, (e)=> {
+        let el;
+        let fn;
+        let key;
+        let href;
 
         if (
             (METRO_HOTKEYS_FILTER_INPUT_ACCEPTING_ELEMENTS && /textarea|input|select/i.test(e.target.nodeName)) ||
@@ -105,7 +111,7 @@
         if (Metro.utils.keyInObject(Metro.hotkeys, key)) {
             el = $(Metro.hotkeys[key][0]);
             fn = Metro.hotkeys[key][1];
-            href = (""+el.attr("href")).trim();
+            href = (`${el.attr("href")}`).trim();
 
             if (e.repeat && !el.attr("data-repeat")) {
                 return
@@ -124,4 +130,4 @@
             }
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

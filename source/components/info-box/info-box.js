@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var InfoBoxDefaultConfig = {
+
+    let InfoBoxDefaultConfig = {
         infoboxDeferred: 0,
         type: "",
         width: 480,
@@ -22,26 +22,26 @@
         onInfoBoxCreate: Metro.noop
     };
 
-    Metro.infoBoxSetup = function (options) {
+    Metro.infoBoxSetup = (options) => {
         InfoBoxDefaultConfig = $.extend({}, InfoBoxDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroInfoBoxSetup"] !== "undefined") {
-        Metro.infoBoxSetup(globalThis["metroInfoBoxSetup"]);
+    if (typeof globalThis.metroInfoBoxSetup !== "undefined") {
+        Metro.infoBoxSetup(globalThis.metroInfoBoxSetup);
     }
 
     Metro.Component('info-box', {
         init: function( options, elem ) {
             this._super(elem, options, InfoBoxDefaultConfig, {
                 overlay: null,
-                id: Utils.elementId("info-box")
+                id: Metro.utils.elementId("info-box")
             });
 
             return this;
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -52,9 +52,8 @@
         },
 
         _overlay: function(){
-            var o = this.options;
-
-            var overlay = $("<div>");
+            const o = this.options;
+            const overlay = $("<div>");
             overlay.addClass("overlay").addClass(o.clsOverlay);
 
             if (o.overlayColor === 'transparent') {
@@ -69,8 +68,9 @@
         },
 
         _createStructure: function(){
-            var element = this.element, o = this.options;
-            var closer, content;
+            const element = this.element;
+            const o = this.options;
+            let closer;
 
             if (o.overlay === true) {
                 this.overlay = this._overlay();
@@ -88,7 +88,7 @@
                 closer.hide();
             }
 
-            content = element.find(".info-box-content");
+            const content = element.find(".info-box-content")
             if (content.length > 0) {
                 content.addClass(o.clsBoxContent);
             }
@@ -105,23 +105,23 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element;
+            const element = this.element;
 
-            element.on(Metro.events.click, ".closer", function(){
-                that.close();
+            element.on(Metro.events.click, ".closer", ()=> {
+                this.close();
             });
 
-            element.on(Metro.events.click, ".js-dialog-close", function(){
-                that.close();
+            element.on(Metro.events.click, ".js-dialog-close", ()=> {
+                this.close();
             });
 
-            $(globalThis).on(Metro.events.resize, function(){
-                that.reposition();
+            $(globalThis).on(Metro.events.resize, ()=> {
+                this.reposition();
             }, {ns: this.id});
         },
 
         _setPosition: function(){
-            var element = this.element;
+            const element = this.element;
             element.css({
                 top: ( $(globalThis).height() - element.outerHeight() ) / 2,
                 left: ( $(globalThis).width() - element.outerWidth() ) / 2
@@ -133,8 +133,8 @@
         },
 
         setContent: function(c){
-            var element = this.element;
-            var content = element.find(".info-box-content");
+            const element = this.element;
+            const content = element.find(".info-box-content");
             if (content.length === 0) {
                 return ;
             }
@@ -143,12 +143,13 @@
         },
 
         setType: function(t){
-            var element = this.element;
+            const element = this.element;
             element.removeClass("success info alert warning").addClass(t);
         },
 
         open: function(){
-            var that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             // if (o.overlay === true) {
             //     this.overlay.appendTo($("body"));
@@ -156,8 +157,8 @@
             if (o.overlay === true && $(".overlay").length === 0) {
                 this.overlay.appendTo($("body"));
                 if (o.overlayClickClose === true) {
-                    this.overlay.on(Metro.events.click, function(){
-                        that.close();
+                    this.overlay.on(Metro.events.click, ()=> {
+                        this.close();
                     });
                 }
             }
@@ -172,15 +173,16 @@
 
             element.data("open", true);
 
-            if (parseInt(o.autoHide) > 0) {
-                setTimeout(function(){
-                    that.close();
-                }, parseInt(o.autoHide));
+            if (Number.parseInt(o.autoHide) > 0) {
+                setTimeout(()=> {
+                    this.close();
+                }, Number.parseInt(o.autoHide));
             }
         },
 
         close: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             if (o.overlay === true) {
                 $('body').find('.overlay').remove();
@@ -205,30 +207,27 @@
             return this.element.data("open") === true;
         },
 
-        /* eslint-disable-next-line */
-        changeAttribute: function(attributeName){
+        changeAttribute: (attr, val)=> {
         },
 
         destroy: function(){
-            var element = this.element;
+            const element = this.element;
 
             element.off("all");
             $(globalThis).off(Metro.events.resize, {ns: this.id});
 
-            return element;
+            element.remove();
         }
     });
 
-    Metro['infobox'] = {
-        isInfoBox: function(el){
-            return Utils.isMetroObject(el, "infobox");
-        },
+    Metro.infobox = {
+        isInfoBox: (el)=> Metro.utils.isMetroObject(el, "infobox"),
 
         open: function(el, c, t){
             if (!this.isInfoBox(el)) {
                 return false;
             }
-            var ib = Metro.getPlugin(el, "infobox");
+            const ib = Metro.getPlugin(el, "infobox");
             if (c !== undefined) {
                 ib.setContent(c);
             }
@@ -242,20 +241,16 @@
             if (!this.isInfoBox(el)) {
                 return false;
             }
-            var ib = Metro.getPlugin(el, "infobox");
+            const ib = Metro.getPlugin(el, "infobox");
             ib.close();
         },
 
-        setContent: function(el, c){
+        setContent: function(el, c = ''){
             if (!this.isInfoBox(el)) {
                 return false;
             }
 
-            if (c === undefined) {
-                c = "";
-            }
-
-            var ib = Metro.getPlugin(el, "infobox");
+            const ib = Metro.getPlugin(el, "infobox");
             ib.setContent(c);
             ib.reposition();
         },
@@ -265,7 +260,7 @@
                 return false;
             }
 
-            var ib = Metro.getPlugin(el, "infobox");
+            const ib = Metro.getPlugin(el, "infobox");
             ib.setType(t);
             ib.reposition();
         },
@@ -274,20 +269,19 @@
             if (!this.isInfoBox(el)) {
                 return false;
             }
-            var ib = Metro.getPlugin(el, "infobox");
+            const ib = Metro.getPlugin(el, "infobox");
             return ib.isOpen();
         },
 
-        create: function(c, t, o, open){
-            var $$ = Utils.$();
-            var el, ib, box_type;
+        create: (c, t, o, open)=> {
+            const $$ = Metro.utils.$();
+            let ib;
 
-            box_type = t !== undefined ? t : "";
-
-            el = $$("<div>").appendTo($$("body"));
+            const box_type = t !== undefined ? t : ""
+            const el = $$("<div>").appendTo($$("body"))
             $$("<div>").addClass("info-box-content").appendTo(el);
 
-            var ib_options = $$.extend({}, {
+            const ib_options = $$.extend({}, {
                 removeOnClose: true,
                 type: box_type
             }, (o !== undefined ? o : {}));
@@ -305,4 +299,4 @@
             return el;
         }
     };
-}(Metro, Dom));
+})(Metro, Dom);
