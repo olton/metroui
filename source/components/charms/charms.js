@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var CharmsDefaultConfig = {
+
+    let CharmsDefaultConfig = {
         charmsDeferred: 0,
         position: "right",
         opacity: 1,
@@ -13,12 +13,12 @@
         onToggle: Metro.noop
     };
 
-    Metro.charmsSetup = function (options) {
+    Metro.charmsSetup = (options) => {
         CharmsDefaultConfig = $.extend({}, CharmsDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCharmsSetup"] !== "undefined") {
-        Metro.charmsSetup(globalThis["metroCharmsSetup"]);
+    if (typeof globalThis.metroCharmsSetup !== "undefined") {
+        Metro.charmsSetup(globalThis.metroCharmsSetup);
     }
 
     Metro.Component('charms', {
@@ -33,7 +33,7 @@
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -44,25 +44,25 @@
         },
 
         _createStructure: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             element
                 .addClass("charms")
-                .addClass(o.position + "-side")
+                .addClass(`${o.position}-side`)
                 .addClass(o.clsCharms);
 
             this.origin.background = element.css("background-color");
 
             element.css({
-                backgroundColor: Farbe.Routines.toRGBA(Utils.getStyleOne(element, "background-color"), o.opacity)
+                backgroundColor: Farbe.Routines.toRGBA(Metro.utils.getStyleOne(element, "background-color"), o.opacity)
             });
         },
-
-        _createEvents: function(){
-        },
+        
+        _createEvents: ()=> { },
 
         open: function(){
-            var element = this.element;
+            const element = this.element;
 
             element.addClass("open");
 
@@ -70,7 +70,7 @@
         },
 
         close: function(){
-            var element = this.element;
+            const element = this.element;
 
             element.removeClass("open");
 
@@ -78,7 +78,7 @@
         },
 
         toggle: function(){
-            var element = this.element;
+            const element = this.element;
 
             if (element.hasClass("open") === true) {
                 this.close();
@@ -90,25 +90,26 @@
         },
 
         opacity: function(v){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             if (v === undefined) {
                 return o.opacity;
             }
 
-            var opacity = Math.abs(parseFloat(v));
+            const opacity = Math.abs(Number.parseFloat(v));
             if (opacity < 0 || opacity > 1) {
                 return ;
             }
             o.opacity = opacity;
 
             element.css({
-                backgroundColor: Farbe.Routines.toRGBA(Utils.getStyleOne(element, "background-color"), opacity)
+                backgroundColor: Farbe.Routines.toRGBA(Metro.utils.getStyleOne(element, "background-color"), opacity)
             });
         },
 
         changeOpacity: function(){
-            var element = this.element;
+            const element = this.element;
             this.opacity(element.attr("data-opacity"));
         },
 
@@ -123,9 +124,9 @@
         }
     });
 
-    Metro['charms'] = {
-        check: function(el){
-            if (Utils.isMetroObject(el, "charms") === false) {
+    Metro.charms = {
+        check: (el)=> {
+            if (Metro.utils.isMetroObject(el, "charms") === false) {
                 console.warn("Element is not a charms component");
                 return false;
             }
@@ -152,7 +153,7 @@
             Metro.getPlugin(el, "charms").toggle();
         },
 
-        closeAll: function(){
+        closeAll: ()=> {
             $('[data-role*=charms]').each(function() {
                 Metro.getPlugin(this, 'charms').close();
             });
@@ -163,4 +164,4 @@
             Metro.getPlugin(el, "charms").opacity(opacity);
         }
     };
-}(Metro, Dom));
+})(Metro, Dom);

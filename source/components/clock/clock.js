@@ -1,4 +1,5 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
     
     let ClockDefaultConfig = {
@@ -15,12 +16,12 @@
         onClockCreate: Metro.noop
     };
 
-    Metro.clockSetup = function (options) {
+    Metro.clockSetup = (options) => {
         ClockDefaultConfig = $.extend({}, ClockDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroClockSetup"] !== "undefined") {
-        Metro.clockSetup(globalThis["metroClockSetup"]);
+    if (typeof globalThis.metroClockSetup !== "undefined") {
+        Metro.clockSetup(globalThis.metroClockSetup);
     }
 
     Metro.Component('clock', {
@@ -33,7 +34,8 @@
         },
 
         _create: function(){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             
             element.addClass("clock");
             if (o.show === 'column') {
@@ -46,11 +48,11 @@
 
             this._tick();
 
-            this._clockInterval = setInterval(function(){
-                that._tick();
+            this._clockInterval = setInterval(()=> {
+                this._tick();
             }, 500);
-            this._secondInterval = setInterval(function(){
-                that._second();
+            this._secondInterval = setInterval(()=> {
+                this._second();
             }, 1000);
         },
 
@@ -63,7 +65,8 @@
         },
 
         _tick: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const timestamp = datetime();
             let result = "";
 
@@ -103,4 +106,4 @@
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

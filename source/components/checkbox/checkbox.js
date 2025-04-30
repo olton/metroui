@@ -1,4 +1,5 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     globalThis.CHECKBOX_STATE = {
@@ -21,12 +22,12 @@
         onCheckboxCreate: Metro.noop
     };
 
-    Metro.metroCheckboxSetup = function (options) {
+    Metro.metroCheckboxSetup = (options) => {
         CheckboxDefaultConfig = $.extend({}, CheckboxDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCheckboxSetup"] !== "undefined") {
-        Metro.metroCheckboxSetup(globalThis["metroCheckboxSetup"]);
+    if (typeof globalThis.metroCheckboxSetup !== "undefined") {
+        Metro.metroCheckboxSetup(globalThis.metroCheckboxSetup);
     }
 
     Metro.Component('checkbox', {
@@ -69,7 +70,8 @@
         },
 
         _createStructure: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             
             const container = element.wrap("<label>").addClass("checkbox").addClass(o.clsCheckbox);
 
@@ -79,7 +81,7 @@
             if (o.append)  { container.append($("<span>").addClass("caption-append").addClass(o.clsAppend).addClass(o.clsCaption).html(o.append)); }
             
             if (element.attr("readonly") !== undefined) {
-                element.on("click", function(e){
+                element.on("click", (e)=> {
                     e.preventDefault();
                 })
             }
@@ -104,18 +106,18 @@
         },
 
         _createEvents: function(){
-            const element = this.element, o = this.options;
-            const that = this
+            const element = this.element;
+            const o = this.options;
 
-            element.on("click", function(){
-                that.state++
-                if (that.state === 0 && o.threeState === false) {
-                    that.state = 1
+            element.on("click", ()=> {
+                this.state++
+                if (this.state === 0 && o.threeState === false) {
+                    this.state = 1
                 }
-                if (that.state === 2) {
-                    that.state = -1
+                if (this.state === 2) {
+                    this.state = -1
                 }
-                that._drawState()
+                this._drawState()
             })
         },
 
@@ -165,7 +167,7 @@
             this._drawState()
         },
 
-        changeAttribute: function(attr, newVal){
+        changeAttribute: (attr, newVal)=> {
             const changeState = function(val){
                 this.toggle(val);
             };
@@ -181,4 +183,4 @@
             element.parent().remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);
