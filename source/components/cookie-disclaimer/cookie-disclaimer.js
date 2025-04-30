@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var cookieDisclaimerDefaults = {
+
+    const cookieDisclaimerDefaults = {
         name: 'cookies_accepted',
         templateUrl: null,
         title: "",
@@ -19,7 +19,7 @@
 
     Metro.cookieDisclaimer = {
         init: function(options){
-            var that = this, cookie = Metro.cookie;
+            const cookie = Metro.cookie;
 
             this.options = $.extend({}, cookieDisclaimerDefaults, options);
             this.disclaimer = $("<div>");
@@ -29,13 +29,13 @@
             }
 
             this.locale = $("html").attr("lang") || "en";
-            this.strings = $.extend({}, Metro.locales["en"], Metro.locales[this.locale]);
+            this.strings = $.extend({}, Metro.locales.en, Metro.locales[this.locale]);
             
             if (this.options.templateUrl) {
                 fetch(this.options.templateUrl)
                     .then(Metro.fetch.text)
-                    .then(function(data){
-                        that.create(data)
+                    .then((data)=> {
+                        this.create(data)
                     });
             } else {
                 this.create();
@@ -43,8 +43,9 @@
         },
 
         create: function(html){
-            var cookie = Metro.cookie;
-            var o = this.options, wrapper = this.disclaimer, buttons;
+            const cookie = Metro.cookie;
+            const o = this.options;
+            const wrapper = this.disclaimer;
 
             wrapper
                 .addClass("cookie-disclaimer")
@@ -64,58 +65,57 @@
                 wrapper.append(html);
             }
 
-            buttons = $("<div>")
-                .addClass("disclaimer-actions")
-                .addClass(o.clsButtons)
-                .append( $('<button>').addClass('button cookie-accept-button').addClass(o.clsAcceptButton).html(this.strings.label_accept) )
-                .append( $('<button>').addClass('button cookie-cancel-button').addClass(o.clsCancelButton).html(this.strings.label_cancel) )
-                
+            const buttons = $("<div>")
+              .addClass("disclaimer-actions")
+              .addClass(o.clsButtons)
+              .append($('<button>').addClass('button cookie-accept-button').addClass(o.clsAcceptButton).html(this.strings.label_accept))
+              .append($('<button>').addClass('button cookie-cancel-button').addClass(o.clsCancelButton).html(this.strings.label_cancel))
             buttons.appendTo(wrapper);
             if (o.customButtons) {
                 $.each(o.customButtons, function(){
-                    var btn = $('<button>')
+                    const btn = $('<button>')
                         .addClass('button cookie-custom-button')
                         .addClass(this.cls)
                         .html(this.text);
                     btn.on("click", () =>{
-                        Utils.exec(this.onclick);
+                        Metro.utils.exec(this.onclick);
                     });
                     btn.appendTo(buttons);
                 });
             }
             wrapper.appendTo($('body'));
 
-            wrapper.on(Metro.events.click, ".cookie-accept-button", function(){
-                var dur = 0;
-                var durations = (""+o.duration).toArray(" ");
+            wrapper.on(Metro.events.click, ".cookie-accept-button", ()=> {
+                let dur = 0;
+                const durations = (`${o.duration}`).toArray(" ");
 
                 $.each(durations, function(){
-                    var d = ""+this;
+                    const d = `${this}`;
                     if (d.includes("day")) {
-                        dur += parseInt(d)*24*60*60*1000;
+                        dur += Number.parseInt(d)*24*60*60*1000;
                     } else
                     if (d.includes("hour")) {
-                        dur += parseInt(d)*60*60*1000;
+                        dur += Number.parseInt(d)*60*60*1000;
                     } else
                     if (d.includes("min")) {
-                        dur += parseInt(d)*60*1000;
+                        dur += Number.parseInt(d)*60*1000;
                     } else
                     if (d.includes("sec")) {
-                        dur += parseInt(d)*1000;
+                        dur += Number.parseInt(d)*1000;
                     } else {
-                        dur += parseInt(d);
+                        dur += Number.parseInt(d);
                     }
                 })
 
                 cookie.setCookie(o.name, true, dur);
-                Utils.exec(o.onAccept);
+                Metro.utils.exec(o.onAccept);
                 wrapper.remove();
             });
 
-            wrapper.on(Metro.events.click, ".cookie-cancel-button", function(){
-                Utils.exec(o.onDecline);
+            wrapper.on(Metro.events.click, ".cookie-cancel-button", ()=> {
+                Metro.utils.exec(o.onDecline);
                 wrapper.remove();
             });
         }
     };
-}(Metro, Dom));
+})(Metro, Dom);

@@ -1,10 +1,5 @@
-/**
- * global Metro
- *
- * @format
- */
-
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
 
     let ColorPickerDefaultConfig = {
@@ -24,12 +19,12 @@
         onColorPickerCreate: Metro.noop,
     };
 
-    Metro.colorPickerSetup = function (options) {
+    Metro.colorPickerSetup = (options) => {
         ColorPickerDefaultConfig = $.extend({}, ColorPickerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroColorPickerSetup"] !== "undefined") {
-        Metro.colorPickerSetup(globalThis["metroColorPickerSetup"]);
+    if (typeof globalThis.metroColorPickerSetup !== "undefined") {
+        Metro.colorPickerSetup(globalThis.metroColorPickerSetup);
     }
 
     Metro.Component("color-picker", {
@@ -60,8 +55,8 @@
         },
 
         _create: function () {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             const current = element.val();
 
             if (!Metro.pluginExists("color-selector")) {
@@ -77,14 +72,12 @@
         },
 
         _createStructure: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             const picker = element.wrap($("<div>").addClass("color-picker").addClass(element[0].className));
-            let buttons, colorExample, colorSelector, colorSelectorBox;
+            let buttons;
 
-            colorExample = $("<div>").addClass("color-example-box").insertBefore(element);
-
+            const colorExample = $("<div>").addClass("color-example-box").insertBefore(element)
             buttons = $("<div>").addClass("buttons").appendTo(picker);
 
             buttons.append(
@@ -114,9 +107,8 @@
                 picker.append($("<div>").html(o.append).addClass("append").addClass(o.clsAppend));
             }
 
-            colorSelectorBox = $("<div>").addClass("color-selector-box").appendTo(picker);
-            colorSelector = $("<div>").appendTo(colorSelectorBox);
-
+            const colorSelectorBox = $("<div>").addClass("color-selector-box").appendTo(picker)
+            const colorSelector = $("<div>").appendTo(colorSelectorBox)
             this.picker = picker;
             this.colorExample = colorExample;
             this.colorSelector = colorSelector;
@@ -146,8 +138,8 @@
                 duration: o.duration,
                 toggleElement: [picker],
                 checkDropUp: true,
-                onDrop: function () {
-                    Metro.getPlugin(colorSelector, "color-selector").val(that.value);
+                onDrop: () => {
+                    Metro.getPlugin(colorSelector, "color-selector").val(this.value);
                 },
             });
 
@@ -191,14 +183,14 @@
         },
 
         _createEvents: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
-            const picker = this.picker,
-                colorSelector = this.colorSelector,
-                colorSelectorBox = this.colorSelector;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const picker = this.picker;
+            const colorSelector = this.colorSelector;
+            const colorSelectorBox = this.colorSelector;
 
-            picker.on(Metro.events.click, ".input-clear-button", function (e) {
+            picker.on(Metro.events.click, ".input-clear-button", (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 element.val(o.defaultValue).trigger("change");
@@ -210,13 +202,13 @@
                 that._setColor();
             });
 
-            colorSelectorBox.on(Metro.events.click, function (e) {
+            colorSelectorBox.on(Metro.events.click, (e) => {
                 e.stopPropagation();
             });
         },
 
         val: function (v) {
-            if (arguments.length === 0 || !Metro.utils.isValue(v)) {
+            if (typeof v === "undefined") {
                 return this.value;
             }
 
@@ -233,7 +225,8 @@
         // },
 
         destroy: function () {
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const parent = element.parent();
             if (o.label) {
                 parent.prev("label").remove()
@@ -242,7 +235,7 @@
         },
     });
 
-    $(document).on(Metro.events.click, function () {
+    $(document).on(Metro.events.click, () => {
         $(".color-picker").removeClass("open");
     });
 })(Metro, Dom);

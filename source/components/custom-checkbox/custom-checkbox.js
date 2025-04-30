@@ -1,5 +1,5 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let CustomCheckboxDefaultConfig = {
@@ -23,12 +23,12 @@
         onCustomCheckboxCreate: Metro.noop
     };
 
-    Metro.customCheckboxSetup = function (options) {
+    Metro.customCheckboxSetup = (options) => {
         CustomCheckboxDefaultConfig = $.extend({}, CustomCheckboxDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCustomCheckboxSetup"] !== "undefined") {
-        Metro.customCheckboxSetup(globalThis["metroCustomCheckboxSetup"]);
+    if (typeof globalThis.metroCustomCheckboxSetup !== "undefined") {
+        Metro.customCheckboxSetup(globalThis.metroCustomCheckboxSetup);
     }
 
     Metro.Component('custom-checkbox', {
@@ -39,14 +39,15 @@
         },
 
         _create: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const container = element.wrap( $("<label>").addClass("custom-checkbox").addClass(o.clsCustomCheckbox) );
             const icon = $("<span>").addClass("icon").addClass(o.clsIcon).appendTo(container);
 
             element.attr("type", "checkbox");
 
             if (element.attr("readonly")) {
-                element.on("click", function(e){
+                element.on("click", (e)=> {
                     e.preventDefault();
                 })
             }
@@ -123,4 +124,4 @@
             return this.element;
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

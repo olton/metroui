@@ -1,5 +1,5 @@
-(function (Metro, $) {
-    Metro["contextMenu"] = function (items = [], element = document) {
+((Metro, $) => {
+    Metro.contextMenu = (items = [], element = document) => {
         function buildMenu(items) {
             const menu = $('<ul>').addClass('d-menu context-menu').css("display", "none")
             for (const item of items) {
@@ -48,13 +48,13 @@
             e.preventDefault()
             e.stopPropagation()
             $(".context-menu").hide()
-            this.context_menu.style.left = e.pageX + "px"
-            this.context_menu.style.top = e.pageY + "px"
+            this.context_menu.style.left = `${e.pageX}px`
+            this.context_menu.style.top = `${e.pageY}px`
             this.context_menu.style.display = "block"
         }
     }
     
-    $(document).on("click", function(e) {
+    $(document).on("click", () => {
         $(".context-menu").hide()
     })    
 })(Metro, Dom);

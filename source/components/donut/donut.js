@@ -1,13 +1,8 @@
-/**
- * global Metro
- *
- * @format
- */
-
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
-    var Utils = Metro.utils;
-    var DonutDefaultConfig = {
+
+    let DonutDefaultConfig = {
         donutDeferred: 0,
         size: 100,
         hole: 0.8,
@@ -23,18 +18,16 @@
         showValue: false,
         animate: 0,
         onChange: Metro.noop,
-        onDrawValue: function (v) {
-            return v;
-        },
+        onDrawValue: (v) => v,
         onDonutCreate: Metro.noop,
     };
 
-    Metro.donutSetup = function (options) {
+    Metro.donutSetup = (options) => {
         DonutDefaultConfig = $.extend({}, DonutDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDonutSetup"] !== "undefined") {
-        Metro.donutSetup(globalThis["metroDonutSetup"]);
+    if (typeof globalThis.metroDonutSetup !== "undefined") {
+        Metro.donutSetup(globalThis.metroDonutSetup);
     }
 
     Metro.Component("donut", {
@@ -48,8 +41,8 @@
         },
 
         _create: function () {
-            var element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("donut");
 
@@ -64,9 +57,9 @@
         },
 
         _setElementSize: function () {
-            var element = this.element,
-                o = this.options;
-            var width = o.size;
+            const element = this.element;
+            const o = this.options;
+            const width = o.size;
 
             element.css({
                 width: width,
@@ -79,58 +72,21 @@
         },
 
         _draw: function () {
-            var element = this.element,
-                o = this.options;
-            var html = "";
-            var radius = element.width() / 2;
-            var r = radius * (1 - (1 - o.hole) / 2);
-            var width = radius * (1 - o.hole);
-            var transform = "rotate(-90 " + radius + "," + radius + ")";
-            var fontSize = o.fontSize === 0 ? r * o.hole * 0.6 : o.fontSize;
+            const element = this.element;
+            const o = this.options;
+            let html = "";
+            const radius = element.width() / 2;
+            const r = radius * (1 - (1 - o.hole) / 2);
+            const width = radius * (1 - o.hole);
+            const transform = `rotate(-90 ${radius},${radius})`;
+            const fontSize = o.fontSize === 0 ? r * o.hole * 0.6 : o.fontSize;
 
             html += "<svg>";
-            html +=
-                "   <circle class='donut-back' r='" +
-                r +
-                "px' cx='" +
-                radius +
-                "px' cy='" +
-                radius +
-                "px' transform='" +
-                transform +
-                "' fill='none' stroke='" +
-                o.stroke +
-                "' stroke-width='" +
-                width +
-                "'/>";
-            html +=
-                "   <circle class='donut-fill' r='" +
-                r +
-                "px' cx='" +
-                radius +
-                "px' cy='" +
-                radius +
-                "px' transform='" +
-                transform +
-                "' fill='none' stroke='" +
-                o.fill +
-                "' stroke-width='" +
-                width +
-                "'/>";
+            html += `   <circle class='donut-back' r='${r}px' cx='${radius}px' cy='${radius}px' transform='${transform}' fill='none' stroke='${o.stroke}' stroke-width='${width}'/>`;
+            html += `   <circle class='donut-fill' r='${r}px' cx='${radius}px' cy='${radius}px' transform='${transform}' fill='none' stroke='${o.fill}' stroke-width='${width}'/>`;
 
             if (o.showText === true)
-                html +=
-                    "   <text class='donut-title' x='" +
-                    radius +
-                    "px' y='" +
-                    radius +
-                    "px' dy='" +
-                    fontSize / 3 +
-                    "px' text-anchor='middle' fill='" +
-                    (o.color !== "" ? o.color : o.fill) +
-                    "' font-size='" +
-                    fontSize +
-                    "px'></text>";
+                html += `   <text class='donut-title' x='${radius}px' y='${radius}px' dy='${fontSize / 3}px' text-anchor='middle' fill='${o.color !== "" ? o.color : o.fill}' font-size='${fontSize}px'></text>`;
 
             html += "</svg>";
 
@@ -138,38 +94,36 @@
         },
 
         _addEvents: function () {
-            var that = this;
-
-            $(globalThis).on("resize", function () {
-                that._setElementSize();
-                that._draw();
-                that.val(that.value);
+            $(globalThis).on("resize", () => {
+                this._setElementSize();
+                this._draw();
+                this.val(this.value);
             });
         },
 
         _setValue: function (v) {
-            var element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
-            var fill = element.find(".donut-fill");
-            var title = element.find(".donut-title");
-            var radius = element.width() / 2;
-            var r = radius * (1 - (1 - o.hole) / 2);
-            var circumference = Math.round(2 * Math.PI * r);
-            var title_value = o.showValue ? v : Utils.percent(o.total, v, true); /*  + (o.cap)*/
-            var fill_value = Math.round((+v * circumference) / o.total); // + ' ' + circumference;
+            const fill = element.find(".donut-fill");
+            const title = element.find(".donut-title");
+            const radius = element.width() / 2;
+            const r = radius * (1 - (1 - o.hole) / 2);
+            const circumference = Math.round(2 * Math.PI * r);
+            const title_value = o.showValue ? v : Metro.utils.percent(o.total, v, true); /*  + (o.cap)*/
+            const fill_value = Math.round((+v * circumference) / o.total); // + ' ' + circumference;
 
-            var sda = fill.attr("stroke-dasharray");
+            let sda = fill.attr("stroke-dasharray");
             if (typeof sda === "undefined") {
                 sda = 0;
             } else {
                 sda = +sda.split(" ")[0];
             }
-            var delta = fill_value - sda;
+            const delta = fill_value - sda;
 
             fill.animate({
                 draw: function (t, p) {
-                    $(this).attr("stroke-dasharray", sda + delta * p + " " + circumference);
+                    $(this).attr("stroke-dasharray", `${sda + delta * p} ${circumference}`);
                 },
                 dur: o.animate,
             });
@@ -178,13 +132,13 @@
         },
 
         val: function (v) {
-            var o = this.options;
+            const o = this.options;
 
             if (v === undefined) {
                 return this.value;
             }
 
-            if (parseInt(v) < 0 || parseInt(v) > o.total) {
+            if (Number.parseInt(v) < 0 || Number.parseInt(v) > o.total) {
                 return false;
             }
 
@@ -198,12 +152,11 @@
         },
 
         setColor: function (obj) {
-            var validKeys = ["background", "fill", "stroke", "color"];
-            var that = this;
+            const validKeys = ["background", "fill", "stroke", "color"];
 
-            $.each(obj, function (key, val) {
+            $.each(obj, (key, val) => {
                 if (validKeys.indexOf(key) !== -1) {
-                    that.options[key] = val;
+                    this.options[key] = val;
                 }
             });
 

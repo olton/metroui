@@ -55258,6 +55258,12 @@ input[type=radio].radio-sand::before {
   flex-flow: row nowrap;
   margin-left: 4px;
 }
+.color-selector .color-block .input {
+  border-radius: 0;
+}
+.color-selector .color-block input {
+  padding: 0;
+}
 .color-selector .color-block.as-string .prepend {
   width: 40px !important;
 }

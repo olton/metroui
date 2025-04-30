@@ -1,4 +1,5 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
        
     const note_icon = `
@@ -64,12 +65,12 @@
         onDirectiveCreate: Metro.noop
     };
 
-    Metro.directiveSetup = function (options) {
+    Metro.directiveSetup = (options) => {
         DirectiveDefaultConfig = $.extend({}, DirectiveDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDirectiveSetup"] !== "undefined") {
-        Metro.directiveSetup(globalThis["metroDirectiveSetup"]);
+    if (typeof globalThis.metroDirectiveSetup !== "undefined") {
+        Metro.directiveSetup(globalThis.metroDirectiveSetup);
     }
 
     Metro.Component('directive', {
@@ -81,8 +82,6 @@
         },
 
         _create: function(){
-            const that = this, element = this.element, o = this.options;
-
             this._createStructure();
             this._createEvents();
 
@@ -90,7 +89,8 @@
         },
 
         _createStructure: function(){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const directive = element.wrap("<div>").addClass("directive").addClass(`directive-style-${o.style}`).addClass(`directive-${o.directive}`);
             const title = $("<div>").addClass("directive-title").html(o.title === "default" ? this.strings[`label_${o.directive.toLowerCase()}`].toUpperCase() : o.title);
             if (o.showIcon) {
@@ -100,16 +100,14 @@
             this.component = directive
         },
 
-        _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
-
+        _createEvents: ()=> {
         },
 
-        changeAttribute: function(attr, newValue){
+        changeAttribute: (attr, val)=> {
         },
 
         destroy: function(){
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

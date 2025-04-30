@@ -1,5 +1,5 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let CounterDefaultConfig = {
@@ -19,12 +19,12 @@
         onCounterCreate: Metro.noop
     };
 
-    Metro.counterSetup = function (options) {
+    Metro.counterSetup = (options) => {
         CounterDefaultConfig = $.extend({}, CounterDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCounterSetup"] !== "undefined") {
-        Metro.counterSetup(globalThis["metroCounterSetup"]);
+    if (typeof globalThis.metroCounterSetup !== "undefined") {
+        Metro.counterSetup(globalThis.metroCounterSetup);
     }
 
     Metro.Component('counter', {
@@ -46,27 +46,31 @@
         },
 
         _createStruct: function(){
-            const element = this.element, elem = this.elem, o = this.options;
+            const element = this.element;
+            const elem = this.elem;
+            const o = this.options;
             this.elem.value = 0;
             element.css("font-size", this.options.size)
         },
         
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const o = this.options;
 
             if (o.startOnViewport) {
                 Hooks.useEvent({
                     effect: ()=>{
-                        that.start()
+                        this.start()
                     },
-                    target: that.elem,
+                    target: this.elem,
                     event: Hooks.EVENTS.VIEWPORT
                 })
             }
         },
 
         start: function(val, from){
-            const that = this, elem = this.elem, o = this.options;
+            const that = this;
+            const elem = this.elem;
+            const o = this.options;
 
             if (Metro.utils.isValue(from)) {
                 o.from = +from;
@@ -95,7 +99,7 @@
                     });
                     this.innerHTML = o.prefix + Number(this.value).format(0, 0, o.delimiter) + o.suffix
                 },
-                onDone: function(){
+                onDone: ()=> {
                     // this.innerHTML = o.prefix + Number(o.value).format(0, 0, o.delimiter) + o.suffix
                     that._fireEvent("stop");
                 }
@@ -122,4 +126,4 @@
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

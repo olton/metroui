@@ -1,5 +1,4 @@
-(function (Metro, $) {
-    "use strict";
+((Metro, $) => {
 
     let CountdownDefaultConfig = {
         countdownDeferred: 0,
@@ -30,12 +29,12 @@
         onCountdownCreate: Metro.noop,
     };
 
-    Metro.countdownSetup = function (options) {
+    Metro.countdownSetup = (options) => {
         CountdownDefaultConfig = $.extend({}, CountdownDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCountdownSetup"] !== "undefined") {
-        Metro.countdownSetup(globalThis["metroCountdownSetup"]);
+    if (typeof globalThis.metroCountdownSetup !== "undefined") {
+        Metro.countdownSetup(globalThis.metroCountdownSetup);
     }
 
     Metro.Component("countdown", {
@@ -74,10 +73,10 @@
 
         _setBreakpoint: function () {
             const o = this.options;
-            const dm = 86400000,
-                hm = 3600000,
-                mm = 60000,
-                sm = 1000;
+            const dm = 86400000;
+            const hm = 3600000;
+            const mm = 60000;
+            const sm = 1000;
 
             this.breakpoint = datetime().time();
 
@@ -85,29 +84,26 @@
                 this.breakpoint = (o.inputFormat ? Datetime.from(o.date, o.inputFormat) : datetime(o.date)).time();
             }
 
-            if (parseInt(o.days) > 0) {
-                this.breakpoint += parseInt(o.days) * dm;
+            if (Number.parseInt(o.days) > 0) {
+                this.breakpoint += Number.parseInt(o.days) * dm;
             }
-            if (parseInt(o.hours) > 0) {
-                this.breakpoint += parseInt(o.hours) * hm;
+            if (Number.parseInt(o.hours) > 0) {
+                this.breakpoint += Number.parseInt(o.hours) * hm;
             }
-            if (parseInt(o.minutes) > 0) {
-                this.breakpoint += parseInt(o.minutes) * mm;
+            if (Number.parseInt(o.minutes) > 0) {
+                this.breakpoint += Number.parseInt(o.minutes) * mm;
             }
-            if (parseInt(o.seconds) > 0) {
-                this.breakpoint += parseInt(o.seconds) * sm;
+            if (Number.parseInt(o.seconds) > 0) {
+                this.breakpoint += Number.parseInt(o.seconds) * sm;
             }
         },
 
         _build: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             const parts = ["days", "hours", "minutes", "seconds"];
             const dm = 24 * 60 * 60 * 1000;
-            let delta_days;
             const now = datetime().time();
-            let digit;
             const strings = this.strings;
 
             if (!element.attr("id")) {
@@ -119,11 +115,10 @@
 
             this._setBreakpoint();
 
-            delta_days = Math.round((that.breakpoint - now) / dm);
-
+            const delta_days = Math.round((this.breakpoint - now) / dm)
             $.each(parts, function () {
                 const part = $("<div>")
-                    .addClass("part " + this)
+                    .addClass(`part ${this}`)
                     .addClass(o.clsPart)
                     .attr("data-label", strings[`label_${this}`])
                     .appendTo(element);
@@ -151,7 +146,7 @@
                 }
             });
 
-            digit = element.find(".digit");
+            const digit = element.find(".digit")
             digit.append($("<span class='digit-placeholder'>").html("0"));
             digit.append($("<span class='digit-value'>").html("0"));
 
@@ -165,18 +160,17 @@
                 this.tick();
             }
             
-            this.fontSize = parseInt(element.css("font-size"));
+            this.fontSize = Number.parseInt(element.css("font-size"));
         },
 
         _createEvents: function () {
-            const that = this;
             $(document).on(
                 "visibilitychange",
-                function () {
+                () => {
                     if (document.hidden) {
-                        that.pause();
+                        this.pause();
                     } else {
-                        that.resume();
+                        this.resume();
                     }
                 },
                 { ns: this.id },
@@ -193,19 +187,22 @@
         },
 
         tick: function () {
-            const element = this.element,
-                o = this.options;
-            const dm = 24 * 60 * 60,
-                hm = 60 * 60,
-                mm = 60,
-                sm = 1;
-            let left,
-                now = datetime().time();
-            let d, h, m, s;
-            const days = element.find(".days"),
-                hours = element.find(".hours"),
-                minutes = element.find(".minutes"),
-                seconds = element.find(".seconds");
+            const element = this.element;
+            const o = this.options;
+            const dm = 24 * 60 * 60;
+            const hm = 60 * 60;
+            const mm = 60;
+            const sm = 1;
+            let left;
+            const now = datetime().time();
+            let d;
+            let h;
+            let m;
+            let s;
+            const days = element.find(".days");
+            const hours = element.find(".hours");
+            const minutes = element.find(".minutes");
+            const seconds = element.find(".seconds");
 
             left = Math.floor((this.breakpoint - now) / 1000);
 
@@ -305,22 +302,25 @@
         },
 
         draw: function (part, value) {
-            const element = this.element,
-                o = this.options;
-            let digits, digits_length, digit_value, digit_current, digit;
-            let len,
-                i,
-                duration = this.duration;
+            const element = this.element;
+            const o = this.options;
+            let digits;
+            let digits_length;
+            let digit_value;
+            let digit_current;
+            let digit;
+            let len;
+            let i;
+            const duration = this.duration;
             const fontSize = this.fontSize;
 
-            const slideDigit = function (digit, value) {
-                let digit_copy,
-                    height = digit.height();
+            const slideDigit = (digit, value) => {
+                const height = digit.height();
 
                 digit.siblings(".-old-digit").remove();
-                digit_copy = digit.clone().appendTo(digit.parent());
+                const digit_copy = digit.clone().appendTo(digit.parent())
                 digit_copy.css({
-                    top: -1 * height + "px",
+                    top: `${-1 * height}px`,
                 });
 
                 digit.addClass("-old-digit").animate({
@@ -345,10 +345,9 @@
                 });
             };
 
-            const fadeDigit = function (digit, value) {
-                let digit_copy;
+            const fadeDigit = (digit, value) => {
                 digit.siblings(".-old-digit").remove();
-                digit_copy = digit.clone().appendTo(digit.parent());
+                const digit_copy = digit.clone().appendTo(digit.parent())
                 digit_copy.css({
                     opacity: 0,
                 });
@@ -373,13 +372,12 @@
                 });
             };
 
-            const zoomDigit = function (digit, value) {
-                let digit_copy,
-                    height = element.height(),
-                    fs = fontSize; 
+            const zoomDigit = (digit, value) => {
+                const height = element.height();
+                const fs = fontSize; 
 
                 digit.siblings(".-old-digit").remove();
-                digit_copy = digit.clone().appendTo(digit.parent());
+                const digit_copy = digit.clone().appendTo(digit.parent())
                 digit_copy.css({
                     top: 0,
                     left: 0,
@@ -410,22 +408,22 @@
                 });
             };
 
-            value = "" + value;
+            let _value = `${value}`;
 
-            if (value.length === 1) {
-                value = "0" + value;
+            if (_value.length === 1) {
+                _value = `0${value}`;
             }
 
             len = value.length;
 
-            digits = element.find("." + part + " .digit:not(.-old-digit)");
+            digits = element.find(`.${part} .digit:not(.-old-digit)`);
             digits_length = digits.length;
             element.find(".-old-digit").remove();
 
             for (i = 0; i < len; i++) {
                 digit = digits.eq(digits_length - 1).find(".digit-value");
-                digit_value = Math.floor(parseInt(value) / Math.pow(10, i)) % 10;
-                digit_current = parseInt(digit.text());
+                digit_value = Math.floor(Number.parseInt(_value) / 10 ** i) % 10;
+                digit_current = Number.parseInt(digit.text());
 
                 digits_length--;
 
@@ -433,7 +431,7 @@
                     continue;
                 }
 
-                switch (("" + o.animate).toLowerCase()) {
+                switch ((`${o.animate}`).toLowerCase()) {
                     case "slide":
                         slideDigit(digit, digit_value);
                         break;
@@ -450,8 +448,7 @@
         },
 
         start: function () {
-            const that = this,
-                element = this.element;
+            const element = this.element;
 
             if (element.data("paused") === false) {
                 return;
@@ -465,11 +462,11 @@
             this._setBreakpoint();
             this.tick();
 
-            this.blinkInterval = setInterval(function () {
-                that.blink();
+            this.blinkInterval = setInterval(() => {
+                this.blink();
             }, 500);
-            this.tickInterval = setInterval(function () {
-                that.tick();
+            this.tickInterval = setInterval(() => {
+                this.tick();
             }, 1000);
         },
 
@@ -494,21 +491,18 @@
         },
 
         resume: function () {
-            const that = this;
-
             this.element.data("paused", false);
-            this.blinkInterval = setInterval(function () {
-                that.blink();
+            this.blinkInterval = setInterval(() => {
+                this.blink();
             }, 500);
-            this.tickInterval = setInterval(function () {
-                that.tick();
+            this.tickInterval = setInterval(() => {
+                this.tick();
             }, 1000);
         },
 
         reset: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             clearInterval(this.blinkInterval);
             clearInterval(this.tickInterval);
@@ -526,27 +520,26 @@
 
             this.tick();
 
-            this.blinkInterval = setInterval(function () {
-                that.blink();
+            this.blinkInterval = setInterval(() => {
+                this.blink();
             }, 500);
-            this.tickInterval = setInterval(function () {
-                that.tick();
+            this.tickInterval = setInterval(() => {
+                this.tick();
             }, 1000);
         },
 
         resetWith: function (val) {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             if (typeof val === "string") {
                 element.attr("data-date", val);
                 o.date = val;
             } else if (typeof val === "object") {
                 const keys = ["days", "hours", "minutes", "seconds"];
-                $.each(keys, function (i, v) {
+                $.each(keys, (i, v) => {
                     if (Metro.utils.isValue(val[v])) {
-                        element.attr("data-" + v, val[v]);
+                        element.attr(`data-${v}`, val[v]);
                         o[v] = val[v];
                     }
                 });
@@ -572,10 +565,10 @@
         },
 
         getLeft: function () {
-            const dm = 24 * 60 * 60 * 1000,
-                hm = 60 * 60 * 1000,
-                mm = 60 * 1000,
-                sm = 1000;
+            const dm = 24 * 60 * 60 * 1000;
+            const hm = 60 * 60 * 1000;
+            const mm = 60 * 1000;
+            const sm = 1000;
             const now = new Date().getTime();
             const left_seconds = Math.floor(this.breakpoint - now);
             return {
