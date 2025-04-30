@@ -1,18 +1,12 @@
-/**
- * global Metro
- *
- * @format
- */
-
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
-
-    var Utils = Metro.utils;
-    var AppBarDefaultConfig = {
+    let AppBarDefaultConfig = {
         appbarDeferred: 0,
         expand: false,
         expandPoint: null,
         duration: 100,
+        checkHamburgerColor: false,
         onMenuOpen: Metro.noop,
         onMenuClose: Metro.noop,
         onBeforeMenuOpen: Metro.noop,
@@ -22,12 +16,12 @@
         onAppBarCreate: Metro.noop,
     };
 
-    Metro.appBarSetup = function (options) {
+    Metro.appBarSetup = (options) => {
         AppBarDefaultConfig = $.extend({}, AppBarDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroAppBarSetup"] !== "undefined") {
-        Metro.appBarSetup(globalThis["metroAppBarSetup"]);
+    if (typeof globalThis.metroAppBarSetup !== "undefined") {
+        Metro.appBarSetup(globalThis.metroAppBarSetup);
     }
 
     Metro.Component("app-bar", {
@@ -43,7 +37,7 @@
             const element = this.element;
 
             this.id = element.attr("id") || Hooks.useId(this.elem);
-            
+
             this._createStructure();
             this._createEvents();
 
@@ -53,23 +47,22 @@
         },
 
         _createStructure: function () {
-            const element = this.element,
-              o = this.options
-            let hamburger,
-              menu,
-              elementColor = Utils.getStyleOne(element, 'background-color')
+            const element = this.element;
+            const o = this.options;
+            let hamburger;
+            let menu;
+            const elementColor = Metro.utils.getStyleOne(element, "background-color");
 
             element.addClass("app-bar").attr("role", "navigation");
 
             hamburger = element.find(".hamburger");
             if (hamburger.length === 0) {
                 hamburger = $("<button>")
-                  .attr("type", "button")
-                  .addClass("hamburger menu-down")
-                  .attr("aria-label", "Toggle menu")
-                  .attr("aria-expanded", "false")
-                  .attr("aria-controls", "app-bar-menu-" + this.id);
-
+                    .attr("type", "button")
+                    .addClass("hamburger menu-down")
+                    .attr("aria-label", "Toggle menu")
+                    .attr("aria-expanded", "false")
+                    .attr("aria-controls", `app-bar-menu-${this.id}`);
 
                 for (let i = 0; i < 3; i++) {
                     $("<span>").addClass("line").appendTo(hamburger);
@@ -80,7 +73,7 @@
             menu = element.find(".app-bar-menu");
 
             if (menu.length > 0) {
-                menu.attr("id", "app-bar-menu-" + this.id);
+                menu.attr("id", `app-bar-menu-${this.id}`);
                 menu.attr("role", "menubar");
             }
 
@@ -107,23 +100,27 @@
                 element.addClass("app-bar-expand");
                 hamburger.addClass("hidden");
             } else {
-                if (Utils.isValue(o.expandPoint) && Utils.mediaExist(o.expandPoint)) {
+                if (Metro.utils.isValue(o.expandPoint) && Metro.utils.mediaExist(o.expandPoint)) {
                     element.addClass("app-bar-expand");
                     hamburger.addClass("hidden");
                 }
             }
+            
+            if (o.checkHamburgerColor === true) {
+                // TODO: if true, hamburger color will be set dependent on app-bar background color
+            }
         },
 
         _createEvents: function () {
-            const that = this,
-              element = this.element,
-              o = this.options
-            const menu = element.find('.app-bar-menu')
-            const hamburger = element.find('.hamburger')
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const menu = element.find(".app-bar-menu");
+            const hamburger = element.find(".hamburger");
 
-            element.on(Metro.events.click, ".hamburger", function () {
+            element.on(Metro.events.click, ".hamburger", () => {
                 if (menu.length === 0) return;
-                const collapsed = menu.hasClass('collapsed')
+                const collapsed = menu.hasClass("collapsed");
                 if (collapsed) {
                     that.open();
                 } else {
@@ -132,21 +129,24 @@
             });
 
             // Додаємо підтримку клавіатурної навігації
-            hamburger.on("keydown", function(e) {
-                if (e.keyCode === 13 || e.keyCode === 32) { // Enter або Space
+            hamburger.on("keydown", (e) => {
+                if (e.keyCode === 13 || e.keyCode === 32) {
+                    // Enter або Space
                     e.preventDefault();
                     hamburger.trigger("click");
                 }
             });
 
             // Додаємо обробку клавіш для пунктів меню
-            menu.find("li a").on("keydown", function(e) {
-                if (e.keyCode === 13 || e.keyCode === 32) { // Enter або Space
+            menu.find("li a").on("keydown", function (e) {
+                if (e.keyCode === 13 || e.keyCode === 32) {
+                    // Enter або Space
                     e.preventDefault();
                     $(this).trigger("click");
                 }
 
-                if (e.keyCode === 27) { // Escape
+                if (e.keyCode === 27) {
+                    // Escape
                     e.preventDefault();
                     that.close();
                     hamburger.focus();
@@ -155,9 +155,9 @@
 
             $(globalThis).on(
                 Metro.events.resize,
-                function () {
+                () => {
                     if (o.expand !== true) {
-                        if (Utils.isValue(o.expandPoint) && Utils.mediaExist(o.expandPoint)) {
+                        if (Metro.utils.isValue(o.expandPoint) && Metro.utils.mediaExist(o.expandPoint)) {
                             element.addClass("app-bar-expand");
                             that._fireEvent("menu-expand");
                         } else {
@@ -190,58 +190,55 @@
         },
 
         close: function () {
-            const that = this,
-              element = this.element,
-              o = this.options
-            const menu = element.find('.app-bar-menu')
-            const hamburger = element.find('.hamburger')
+            const element = this.element;
+            const o = this.options;
+            const menu = element.find(".app-bar-menu");
+            const hamburger = element.find(".hamburger");
 
-            that._fireEvent("before-menu-close", {
+            this._fireEvent("before-menu-close", {
                 menu: menu[0],
             });
 
             hamburger.attr("aria-expanded", "false");
             menu.find("ul").attr("aria-hidden", "true");
 
-            menu.slideUp(o.duration, function () {
+            menu.slideUp(o.duration, () => {
                 menu.addClass("collapsed").removeClass("opened");
                 hamburger.removeClass("active");
 
-                that._fireEvent("menu-close", {
+                this._fireEvent("menu-close", {
                     menu: menu[0],
                 });
             });
         },
 
         open: function () {
-            const that = this,
-              element = this.element,
-              o = this.options
-            const menu = element.find('.app-bar-menu')
-            const hamburger = element.find('.hamburger')
+            const element = this.element;
+            const o = this.options;
+            const menu = element.find(".app-bar-menu");
+            const hamburger = element.find(".hamburger");
 
-            that._fireEvent("before-menu-open", {
+            this._fireEvent("before-menu-open", {
                 menu: menu[0],
             });
 
             hamburger.attr("aria-expanded", "true");
             menu.find("ul").attr("aria-hidden", "false");
 
-            menu.slideDown(o.duration, function () {
+            menu.slideDown(o.duration, () => {
                 menu.removeClass("collapsed").addClass("opened");
                 hamburger.addClass("active");
 
-                that._fireEvent("menu-open", {
+                this._fireEvent("menu-open", {
                     menu: menu[0],
                 });
             });
         },
 
-        /* eslint-disable-next-line */
-        changeAttribute: function (attributeName) {},
+        changeAttribute: (attr, val) => {},
 
         destroy: function () {
-            const element = this.element
+            const element = this.element;
             element.off(Metro.events.click, ".hamburger");
             $(globalThis).off(Metro.events.resize, { ns: this.id });
             element.remove();

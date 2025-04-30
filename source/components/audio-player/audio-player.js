@@ -1,8 +1,7 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var AudioPlayerDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+    let AudioPlayerDefaultConfig = {
         audioDeferred: 0,
         playlist: null,
         src: null,
@@ -58,12 +57,12 @@
         onAudioPlayerCreate: Metro.noop
     };
 
-    Metro.audioPlayerSetup = function(options){
+    Metro.audioPlayerSetup = (options) =>{
         AudioPlayerDefaultConfig = $.extend({}, AudioPlayerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroAudioPlayerSetup"] !== "undefined") {
-        Metro.audioPlayerSetup(globalThis["metroAudioPlayerSetup"]);
+    if (typeof globalThis.metroAudioPlayerSetup !== "undefined") {
+        Metro.audioPlayerSetup(globalThis.metroAudioPlayerSetup);
     }
 
     Metro.Component('audio-player', {
@@ -82,7 +81,8 @@
         },
 
         _create: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             this._createPlayer();
             this._createEvents();
@@ -98,9 +98,11 @@
         },
 
         _createPlayer: function(){
-            var element = this.element, o = this.options, audio = this.audio;
+            const element = this.element;
+            const o = this.options;
+            const audio = this.audio;
 
-            const player = element.wrap("<div>").addClass("media-player audio-player " + element[0].className)
+            const player = element.wrap("<div>").addClass(`media-player audio-player ${element[0].className}`)
 
             $.each(['muted', 'autoplay', 'controls', 'height', 'width', 'loop', 'poster', 'preload'], function(){
                 element.removeAttr(this);
@@ -122,15 +124,14 @@
         },
 
         _setSource: function(src){
-            var element = this.element;
+            const element = this.element;
 
             element.find("source").remove();
             element.removeAttr("src");
             if (Array.isArray(src)) {
                 $.each(src, function(){
-                    var item = this;
-                    if (item.src === undefined) return ;
-                    $("<source>").attr('src', item.src).attr('type', item.type !== undefined ? item.type : '').appendTo(element);
+                    if (this.src === undefined) return ;
+                    $("<source>").attr('src', this.src).attr('type', this.type !== undefined ? this.type : '').appendTo(element);
                 });
             } else {
                 element.attr("src", src);
@@ -138,19 +139,21 @@
         },
 
         _createControls: function(){
-            var that = this, element = this.element, o = this.options, audio = this.elem;
+            const element = this.element;
+            const o = this.options;
+            const audio = this.elem;
 
-            var controls = $("<div>").addClass("controls").addClass(o.clsControls).insertAfter(element);
+            const controls = $("<div>").addClass("controls").addClass(o.clsControls).insertAfter(element);
 
 
-            var stream = $("<div>").addClass("stream").appendTo(controls);
-            var streamSlider = $("<input>").addClass("stream-slider ultra-thin cycle-marker").appendTo(stream);
-            var preloader = $("<div>").addClass("load-audio").appendTo(stream);
+            const stream = $("<div>").addClass("stream").appendTo(controls);
+            const streamSlider = $("<input>").addClass("stream-slider ultra-thin cycle-marker").appendTo(stream);
+            const preloader = $("<div>").addClass("load-audio").appendTo(stream);
 
-            var volume = $("<div>").addClass("volume").appendTo(controls);
-            var volumeSlider = $("<input>").addClass("volume-slider ultra-thin cycle-marker").appendTo(volume);
+            const volume = $("<div>").addClass("volume").appendTo(controls);
+            const volumeSlider = $("<input>").addClass("volume-slider ultra-thin cycle-marker").appendTo(volume);
 
-            var infoBox = $("<div>").addClass("info-box").appendTo(controls);
+            const infoBox = $("<div>").addClass("info-box").appendTo(controls);
 
             if (o.showInfo !== true) {
                 infoBox.hide();
@@ -170,12 +173,12 @@
                 clsHint: "bg-cyan fg-white",
                 clsComplete: "bg-cyan",
                 hint: true,
-                onStart: function(){
+                onStart: ()=> {
                     if (!audio.paused) audio.pause();
                 },
-                onStop: function(val){
+                onStop: (val)=> {
                     if (audio.seekable.length > 0) {
-                        audio.currentTime = (that.duration * val / 100).toFixed(0);
+                        audio.currentTime = (this.duration * val / 100).toFixed(0);
                     }
                     if (audio.paused && audio.currentTime > 0) {
                         audio.play();
@@ -194,7 +197,7 @@
                 clsHint: "bg-cyan fg-white",
                 hint: true,
                 value: o.volume * 100,
-                onChangeValue: function(val){
+                onChangeValue: (val)=> {
                     audio.volume = val / 100;
                 }
             });
@@ -205,23 +208,28 @@
                 volume.hide();
             }
 
-            var loop;
+            let loop;
 
-            if (o.showLoop === true) loop = $("<button>").attr("type", "button").addClass("button square loop").html(o.loopIcon).appendTo(controls);
-            if (o.showPlay === true) $("<button>").attr("type", "button").addClass("button square play").html(o.playIcon).appendTo(controls);
-            if (o.showStop === true) $("<button>").attr("type", "button").addClass("button square stop").html(o.stopIcon).appendTo(controls);
-            if (o.showMute === true) $("<button>").attr("type", "button").addClass("button square mute").html(o.muteIcon).appendTo(controls);
-
-            if (o.loop === true) {
+            if (o.showLoop === true) {
+                loop = $('<button>').attr('type', 'button').addClass('button square loop').html(o.loopIcon).appendTo(controls)
                 loop.addClass("active");
                 element.attr("loop", "loop");
+            }
+            if (o.showPlay === true) {
+                $('<button>').attr('type', 'button').addClass('button square play').html(o.playIcon).appendTo(controls)
+            }
+            if (o.showStop === true) {
+                $('<button>').attr('type', 'button').addClass('button square stop').html(o.stopIcon).appendTo(controls)
+            }
+            if (o.showMute === true) {
+                $('<button>').attr('type', 'button').addClass('button square mute').html(o.muteIcon).appendTo(controls)
             }
 
             this._setVolume();
 
             if (o.muted) {
-                that.volumeBackup = audio.volume;
-                Metro.getPlugin(that.volume, 'slider').val(0);
+                this.volumeBackup = audio.volume;
+                Metro.getPlugin(this.volume, 'slider').val(0);
                 audio.volume = 0;
             }
 
@@ -229,89 +237,91 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options, audio = this.elem, player = this.player;
+            const element = this.element;
+            const o = this.options;
+            const audio = this.elem;
+            const player = this.player;
 
-            element.on("loadstart", function(){
-                that.preloader.fadeIn();
+            element.on("loadstart", ()=> {
+                this.preloader.fadeIn();
             });
 
-            element.on("loadedmetadata", function(){
-                that.duration = audio.duration.toFixed(0);
-                that._setInfo(0, that.duration);
-                Utils.exec(o.onMetadata, [audio, player], element[0]);
+            element.on("loadedmetadata", ()=> {
+                this.duration = audio.duration.toFixed(0);
+                this._setInfo(0, this.duration);
+                Metro.utils.exec(o.onMetadata, [audio, player], element[0]);
             });
 
-            element.on("canplay", function(){
-                that._setBuffer();
-                that.preloader.fadeOut();
+            element.on("canplay", ()=> {
+                this._setBuffer();
+                this.preloader.fadeOut();
             });
 
-            element.on("progress", function(){
-                that._setBuffer();
+            element.on("progress", ()=> {
+                this._setBuffer();
             });
 
-            element.on("timeupdate", function(){
-                var position = Math.round(audio.currentTime * 100 / that.duration);
-                that._setInfo(audio.currentTime, that.duration);
-                Metro.getPlugin(that.stream, 'slider').val(position);
-                Utils.exec(o.onTime, [audio.currentTime, that.duration, audio, player], element[0]);
+            element.on("timeupdate", ()=> {
+                const position = Math.round(audio.currentTime * 100 / this.duration);
+                this._setInfo(audio.currentTime, this.duration);
+                Metro.getPlugin(this.stream, 'slider').val(position);
+                Metro.utils.exec(o.onTime, [audio.currentTime, this.duration, audio, player], element[0]);
             });
 
-            element.on("waiting", function(){
-                that.preloader.fadeIn();
+            element.on("waiting", ()=> {
+                this.preloader.fadeIn();
             });
 
-            element.on("loadeddata", function(){
-
+            element.on("loadeddata", ()=> {
             });
 
-            element.on("play", function(){
+            element.on("play", ()=> {
                 player.find(".play").html(o.pauseIcon);
-                Utils.exec(o.onPlay, [audio, player], element[0]);
+                Metro.utils.exec(o.onPlay, [audio, player], element[0]);
             });
 
-            element.on("pause", function(){
+            element.on("pause", ()=> {
                 player.find(".play").html(o.playIcon);
-                Utils.exec(o.onPause, [audio, player], element[0]);
+                Metro.utils.exec(o.onPause, [audio, player], element[0]);
             });
 
-            element.on("stop", function(){
-                Metro.getPlugin(that.stream, 'slider').val(0);
-                Utils.exec(o.onStop, [audio, player], element[0]);
+            element.on("stop", ()=> {
+                Metro.getPlugin(this.stream, 'slider').val(0);
+                Metro.utils.exec(o.onStop, [audio, player], element[0]);
             });
 
-            element.on("ended", function(){
-                Metro.getPlugin(that.stream, 'slider').val(0);
-                Utils.exec(o.onEnd, [audio, player], element[0]);
+            element.on("ended", ()=> {
+                Metro.getPlugin(this.stream, 'slider').val(0);
+                Metro.utils.exec(o.onEnd, [audio, player], element[0]);
             });
 
-            element.on("volumechange", function(){
-                that._setVolume();
+            element.on("volumechange", ()=> {
+                this._setVolume();
             });
 
-            player.on(Metro.events.click, ".play", function(){
+            player.on(Metro.events.click, ".play", ()=> {
                 if (audio.paused) {
-                    that.play();
+                    this.play();
                 } else {
-                    that.pause();
+                    this.pause();
                 }
             });
 
-            player.on(Metro.events.click, ".stop", function(){
-                that.stop();
+            player.on(Metro.events.click, ".stop", ()=> {
+                this.stop();
             });
 
-            player.on(Metro.events.click, ".mute", function(){
-                that._toggleMute();
+            player.on(Metro.events.click, ".mute", ()=> {
+                this._toggleMute();
             });
 
-            player.on(Metro.events.click, ".loop", function(){
-                that._toggleLoop();
+            player.on(Metro.events.click, ".loop", ()=> {
+                this._toggleLoop();
             });
         },
 
         _toggleLoop: function(){
-            var loop = this.player.find(".loop");
+            const loop = this.player.find(".loop");
             if (loop.length === 0) return ;
             loop.toggleClass("active");
             if (loop.hasClass("active")) {
@@ -333,19 +343,21 @@
         },
 
         _setInfo: function(a, b){
-            this.player.find(".info-box").html(Utils.secondsToFormattedString(Math.round(a)) + " / " + Utils.secondsToFormattedString(Math.round(b)));
+            this.player.find(".info-box").html(`${Metro.utils.secondsToFormattedString(Math.round(a))} / ${Metro.utils.secondsToFormattedString(Math.round(b))}`);
         },
 
         _setBuffer: function(){
-            var buffer = this.audio.buffered.length ? Math.round(Math.floor(this.audio.buffered.end(0)) / Math.floor(this.audio.duration) * 100) : 0;
+            const buffer = this.audio.buffered.length ? Math.round(Math.floor(this.audio.buffered.end(0)) / Math.floor(this.audio.duration) * 100) : 0;
             Metro.getPlugin(this.stream, 'slider').buff(buffer);
         },
 
         _setVolume: function(){
-            var audio = this.audio, player = this.player, o = this.options;
+            const audio = this.audio;
+            const player = this.player;
+            const o = this.options;
 
-            var volumeButton = player.find(".mute");
-            var volume = audio.volume * 100;
+            const volumeButton = player.find(".mute");
+            const volume = audio.volume * 100;
             if (volume > 1 && volume < 30) {
                 volumeButton.html(o.volumeLowIcon);
             } else if (volume >= 30 && volume < 60) {
@@ -390,12 +402,10 @@
                 return this.audio.volume;
             }
 
-            if (v > 1) {
-                v /= 100;
-            }
-
+            const volume = v > 1 ? v / 100 : v;
+            
             this.audio.volume = v;
-            Metro.getPlugin(this.volume, 'slider').val(v*100);
+            Metro.getPlugin(this.volume, 'slider').val(volume*100);
         },
 
         loop: function(){
@@ -407,12 +417,12 @@
         },
 
         changeSource: function(){
-            var src = JSON.parse(this.element.attr('data-src'));
+            const src = JSON.parse(this.element.attr('data-src'));
             this.play(src);
         },
 
         changeVolume: function(){
-            var volume = this.element.attr("data-volume");
+            const volume = this.element.attr("data-volume");
             this.setVolume(volume);
         },
 
@@ -424,7 +434,8 @@
         },
 
         destroy: function(){
-            var element = this.element, player = this.player;
+            const element = this.element;
+            const player = this.player;
 
             element.off("all");
             player.off("all");
@@ -435,4 +446,4 @@
             return element;
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

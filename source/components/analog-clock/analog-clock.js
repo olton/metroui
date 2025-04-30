@@ -1,7 +1,7 @@
-(function(Metro, $) {
-    'use strict';
-
-    var AnalogClockDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+    let AnalogClockDefaultConfig = {
         icon: null,
         showNumbers: false,
         showMoon: true,
@@ -11,12 +11,12 @@
         onAnalogClockCreate: Metro.noop
     };
 
-    Metro.analogClockSetup = function (options) {
+    Metro.analogClockSetup = (options) => {
         AnalogClockDefaultConfig = $.extend({}, AnalogClockDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroAnalogClockSetup"] !== "undefined") {
-        Metro.analogClockSetup(globalThis["metroAnalogClockSetup"]);
+    if (typeof globalThis.metroAnalogClockSetup !== "undefined") {
+        Metro.analogClockSetup(globalThis.metroAnalogClockSetup);
     }
 
     Metro.Component('analog-clock', {
@@ -28,8 +28,6 @@
         },
 
         _create: function(){
-            var that = this, element = this.element, o = this.options;
-
             this._createStructure();
             this._createEvents();
 
@@ -37,7 +35,8 @@
         },
 
         _createStructure: function(){
-            var that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const now = datetime()
             
             element.addClass("analog-clock");
@@ -107,13 +106,12 @@
             }, 500)
         },
 
-        _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-
+        _createEvents: () => {
         },
 
         _updateTime: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             
             const secondHand = element.find(".second")
             const minuteHand = element.find(".minute")
@@ -126,13 +124,13 @@
             const moonEl = element.find(".moon")
                 
             const updateTime = () => {
-                let date = datetime(),
-                    sec = (date.second() / 60) * 360,
-                    min = (date.minute() / 60) * 360,
-                    hr = (date.hour12() / 12) * 360,
-                    day = date.format("DD", this.locale),
-                    month = date.format("MMM", this.locale),
-                    moon = date.moon();
+                const date = datetime();
+                const sec = (date.second() / 60) * 360;
+                const min = (date.minute() / 60) * 360;
+                const hr = (date.hour12() / 12) * 360;
+                const day = date.format("DD", this.locale);
+                const month = date.format("MMM", this.locale);
+                const moon = date.moon();
 
                 secondHand[0].style.transform = `rotate(${sec}deg)`;
                 minuteHand[0].style.transform = `rotate(${min}deg)`;
@@ -151,11 +149,11 @@
             setInterval(updateTime, 1000);
         },
         
-        changeAttribute: function(attr, newValue){
+        changeAttribute: (attr, newValue)=> {
         },
 
         destroy: function(){
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

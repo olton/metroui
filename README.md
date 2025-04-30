@@ -39,6 +39,7 @@ If you are using Metro UI commercially, there is a social (but no legal) expecta
 ![GitHub Css Size](https://img.shields.io/github/size/olton/metroui/lib%2Fmetro.css?label=CSS%20Size&color=fd9812)
 ![GitHub JS Size](https://img.shields.io/github/size/olton/metroui/lib%2Fmetro.js?label=JS%20Size&color=8f99ff)
 ![GitHub Icons Size](https://img.shields.io/github/size/olton/metroui/lib%2Ficons.css?label=Icons%20Size&color=01796f)
+[![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
 
 </div>
 

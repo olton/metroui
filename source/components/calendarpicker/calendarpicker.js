@@ -1,12 +1,11 @@
-/** @format */
-
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
 
     let CalendarPickerDefaultConfig = {
         label: "",
         value: "",
-        calendarpickerDeferred: 0,
+        calendarPickerDeferred: 0,
         nullValue: true,
         useNow: false,
         prepend: "",
@@ -37,12 +36,12 @@
         onYearChange: Metro.noop,
     };
 
-    Metro.calendarPickerSetup = function (options) {
+    Metro.calendarPickerSetup = (options) => {
         CalendarPickerDefaultConfig = $.extend({}, CalendarPickerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCalendarPickerSetup"] !== "undefined") {
-        Metro.calendarPickerSetup(globalThis["metroCalendarPickerSetup"]);
+    if (typeof globalThis.metroCalendarPickerSetup !== "undefined") {
+        Metro.calendarPickerSetup(globalThis.metroCalendarPickerSetup);
     }
 
     Metro.Component("calendar-picker", {
@@ -69,23 +68,25 @@
             });
         },
 
-        _correctTime: function (time) {
+        _correctTime: (time) => {
             const h = Str.lpad(time[0], "0", 2);
             const m = Str.lpad(time[1], "0", 2);
             return `${h}:${m}`
         },
         
         _createStructure: function () {
-            const that = this,
-                element = this.element,
-                o = this.options,
-                locale = this.locale;
-            const container = $("<div>").addClass("input " + element[0].className + " calendar-picker");
+            const element = this.element;
+            const o = this.options;
+            const locale = this.locale;
+            const container = $("<div>").addClass(`input ${element[0].className} calendar-picker`);
             const buttons = $("<div>").addClass("button-group");
-            let calendarButton,
-                clearButton,
-                cal = $("<div>");
-            let curr, _curr, initTime, initHours, initMinutes, elementValue, preset
+            let clearButton;
+            const cal = $("<div>");
+            let curr
+            let _curr
+            let initHours
+            let initMinutes
+            let elementValue
             const body = $("body");
 
             element.attr("type", "text");
@@ -97,16 +98,15 @@
             }
 
             if (Metro.utils.isValue(o.initialHours)) {
-                this.time[0] = parseInt(o.initialHours);
+                this.time[0] = Number.parseInt(o.initialHours);
             }
 
             if (Metro.utils.isValue(o.initialMinutes)) {
-                this.time[1] = parseInt(o.initialMinutes);
+                this.time[1] = Number.parseInt(o.initialMinutes);
             }
 
-            curr = ("" + o.value).trim() !== "" ? o.value : element.val().trim();
-            preset = curr ? curr : ""
-
+            curr = (`${o.value}`).trim() !== "" ? o.value : element.val().trim();
+            const preset = curr ? curr : ""
             if (!Metro.utils.isValue(curr)) {
                 if (o.useNow) {
                     this.value = datetime().addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
@@ -120,10 +120,10 @@
                 }
             }
 
-            elementValue = !curr && o.nullValue === true ? "" : datetime(that.value).format(o.format, locale);
+            elementValue = !curr && o.nullValue === true ? "" : datetime(this.value).format(o.format, locale);
 
             if (o.showTime && this.time && elementValue) {
-                elementValue += " " + this._correctTime(this.time)
+                elementValue += ` ${this._correctTime(this.time)}`
             }
 
             element.val(elementValue);
@@ -133,13 +133,12 @@
             buttons.appendTo(container);
             cal.appendTo(o.dialogMode ? body : container);
 
-            if (this.time && this.time.length) {
+            if (this.time?.length) {
                 initHours = this.time[0];
                 if (typeof this.time[1] !== "undefined") initMinutes = this.time[1];
             }
 
-            initTime = o.initialTime;
-
+            const initTime = o.initialTime
             if (o.initialHours) {
                 initHours = o.initialHours;
             }
@@ -197,20 +196,20 @@
                 showFooter: false,
                 multiSelect: false,
                 showWeekNumber: o.showWeekNumber,
-                onDayClick: function (sel, day, time, el) {
+                onDayClick: (sel, day, time, el) => {
                     const date = datetime(sel[0]).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
                     // const date = datetime(sel[0]).align("day");
                     let elementValue;
 
-                    that._removeOverlay();
+                    this._removeOverlay();
 
-                    that.value = date;
-                    that.time = time;
+                    this.value = date;
+                    this.time = time;
 
                     elementValue = date.format(o.format, locale);
 
                     if (o.showTime) {
-                        elementValue += " " + that._correctTime(time);
+                        elementValue += ` ${this._correctTime(time)}`;
                     }
 
                     element.val(elementValue);
@@ -218,47 +217,47 @@
                     cal.removeClass("open open-up");
                     cal.hide();
 
-                    that._fireEvent("change", {
-                        val: that.value.val(),
-                        time: that.time,
+                    this._fireEvent("change", {
+                        val: this.value.val(),
+                        time: this.time,
                     });
 
-                    that._fireEvent("day-click", {
+                    this._fireEvent("day-click", {
                         sel: sel,
                         day: day,
                         time: time,
                         el: el,
                     });
 
-                    that._fireEvent("picker-change", {
-                        val: that.value.val(),
-                        time: that.time,
+                    this._fireEvent("picker-change", {
+                        val: this.value.val(),
+                        time: this.time,
                     });
                 },
-                onTimeChange: function (time) {
-                    let elementValue, h, m;
+                onTimeChange: (time) => {
+                    let elementValue;
 
-                    that.time = time;
+                    this.time = time;
 
-                    if (!that.value) {
-                        that.value = datetime();
+                    if (!this.value) {
+                        this.value = datetime();
                     }
-                    elementValue = that.value.format(o.format, that.locale);
+                    elementValue = this.value.format(o.format, this.locale);
 
                     if (o.showTime) {
-                        elementValue += " " + that._correctTime(time);
+                        elementValue += ` ${this._correctTime(time)}`;
                     }
 
                     element.val(elementValue);
 
-                    that._fireEvent("change", {
-                        val: that.value.val(),
-                        time: that.time,
+                    this._fireEvent("change", {
+                        val: this.value.val(),
+                        time: this.time,
                     });
 
-                    that._fireEvent("picker-change", {
-                        val: that.value.val(),
-                        time: that.time,
+                    this._fireEvent("picker-change", {
+                        val: this.value.val(),
+                        time: this.time,
                     });
                 },
                 onMonthChange: o.onMonthChange,
@@ -272,7 +271,7 @@
                 clearButton.appendTo(buttons);
             }
 
-            calendarButton = $("<button>").addClass("button input-calendar-button").attr("tabindex", -1).attr("type", "button").html(o.calendarButtonIcon);
+            const calendarButton = $("<button>").addClass("button input-calendar-button").attr("tabindex", -1).attr("type", "button").html(o.calendarButtonIcon)
             calendarButton.appendTo(buttons);
 
             if (o.prepend !== "") {
@@ -290,14 +289,14 @@
                 });
             } else {
                 container.css({
-                    width: parseInt(o.size) + "px",
+                    width: `${Number.parseInt(o.size)}px`,
                 });
             }
 
             element[0].className = "";
 
             if (o.copyInlineStyles === true) {
-                $.each(Metro.utils.getInlineStyles(element), function (key, value) {
+                $.each(Metro.utils.getInlineStyles(element), (key, value) => {
                     container.css(key, value);
                 });
             }
@@ -306,13 +305,13 @@
             element.addClass(o.clsInput);
 
             if (o.dialogOverlay === true) {
-                this.overlay = that._overlay();
+                this.overlay = this._overlay();
             }
 
             if (o.dialogMode === true) {
                 container.addClass("dialog-mode");
             } else {
-                if (Metro.utils.media("(max-width: " + o.dialogPoint + "px)")) {
+                if (Metro.utils.media(`(max-width: ${o.dialogPoint}px)`)) {
                     container.addClass("dialog-mode");
                     this.calendar.addClass("dialog-mode");
                 }
@@ -340,9 +339,8 @@
         },
 
         _createEvents: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             const container = element.parent();
             const clear = container.find(".input-clear-button");
             const cal = this.calendar;
@@ -351,9 +349,9 @@
 
             $(globalThis).on(
                 Metro.events.resize,
-                function () {
+                () => {
                     if (o.dialogMode !== true) {
-                        if (Metro.utils.media("(max-width: " + o.dialogPoint + "px)")) {
+                        if (Metro.utils.media(`(max-width: ${o.dialogPoint}px)`)) {
                             container.addClass("dialog-mode");
                             calendar.appendTo("body").addClass("dialog-mode");
                         } else {
@@ -366,16 +364,16 @@
             );
 
             if (clear.length > 0)
-                clear.on(Metro.events.click, function (e) {
+                clear.on(Metro.events.click, (e) => {
                     element.val("").trigger("change").blur(); // TODO change blur
-                    that.value = null;
+                    this.value = null;
                     e.preventDefault();
                     e.stopPropagation();
                 });
 
             // datetime(day).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
-            container.on(Metro.events.click, "button, input", function (e) {
-                const value = that.value ? that.value : datetime().addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
+            container.on(Metro.events.click, "button, input", (e) => {
+                const value = this.value ? this.value : datetime().addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
                 const presetValue = value.format("YYYY/MM/DD");
 
                 value.align("day");
@@ -387,7 +385,7 @@
                     cal_plugin.setShow(value);
 
                     if (container.hasClass("dialog-mode")) {
-                        that.overlay.appendTo($("body"));
+                        this.overlay.appendTo($("body"));
                     }
                     cal.addClass("open");
                     if (o.openMode === "auto") {
@@ -403,14 +401,14 @@
                         }
                     }
 
-                    that._fireEvent("calendar-show", {
+                    this._fireEvent("calendar-show", {
                         calendar: cal,
                     });
                 } else {
-                    that._removeOverlay();
+                    this._removeOverlay();
                     cal.removeClass("open open-up");
 
-                    that._fireEvent("calendar-hide", {
+                    this._fireEvent("calendar-hide", {
                         calendar: cal,
                     });
                 }
@@ -419,17 +417,17 @@
                 e.stopPropagation();
             });
 
-            element.on(Metro.events.blur, function () {
+            element.on(Metro.events.blur, () => {
                 container.removeClass("focused");
             });
-            element.on(Metro.events.focus, function () {
+            element.on(Metro.events.focus, () => {
                 container.addClass("focused");
             });
-            element.on(Metro.events.change, function () {
-                Metro.utils.exec(o.onChange, [that.value.val()], element[0]);
+            element.on(Metro.events.change, () => {
+                Metro.utils.exec(o.onChange, [this.value.val()], element[0]);
             });
 
-            container.on(Metro.events.click, function (e) {
+            container.on(Metro.events.click, (e) => {
                 e.preventDefault();
                 e.stopPropagation();
             });
@@ -452,7 +450,7 @@
             return overlay;
         },
 
-        _removeOverlay: function () {
+        _removeOverlay: () => {
             $("body").find(".overlay.for-calendar-picker").remove();
         },
 
@@ -463,10 +461,11 @@
         },
 
         val: function (v, f) {
-            const element = this.element,
-                o = this.options;
-            let elementValue, h, m;
+            const element = this.element;
+            const o = this.options;
+            let elementValue;
 
+            // biome-ignore lint/style/noArguments: <explanation>
             if (arguments.length === 0 || Metro.utils.isNull(v)) {
                 return {
                     date: this.value.val(),
@@ -494,7 +493,7 @@
             elementValue = this.value.format(o.format);
 
             if (o.showTime && this.time && elementValue) {
-                elementValue += " " + this._correctTime(this.time)
+                elementValue += ` ${this._correctTime(this.time)}`
             }
 
             element.val(elementValue);
@@ -520,21 +519,18 @@
         },
 
         getTime: function (asString = false) {
-            let h, m;
-            
-            h = Str.lpad(this.time[0], "0", 2);
-            m = Str.lpad(this.time[1], "0", 2);
+            const h = Str.lpad(this.time[0], "0", 2);
+            const m = Str.lpad(this.time[1], "0", 2);
 
-            return asString ? h + ":" + m : this.time;
+            return asString ? `${h}:${m}` : this.time;
         },
 
         changeAttribute: function (attributeName, newValue) {
-            const that = this;
             const cal = Metro.getPlugin(this.calendar[0], "calendar");
 
             switch (attributeName) {
                 case "value":
-                    that.val(newValue);
+                    this.val(newValue);
                     break;
                 case "disabled":
                     this.toggleState();
@@ -552,13 +548,14 @@
                     cal.setMaxDate(newValue);
                     break;
                 case "data-value":
-                    that.val(newValue);
+                    this.val(newValue);
                     break;
             }
         },
 
         destroy: function () {
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const container = element.parent();
             const clear = container.find(".input-clear-button");
 
@@ -583,7 +580,7 @@
         $(".calendar-for-picker.open").removeClass("open open-up");
     });
 
-    $(document).on(Metro.events.click, function () {
+    $(document).on(Metro.events.click, () => {
         $(".calendar-picker .calendar").removeClass("open open-up");
     });
 })(Metro, Dom);

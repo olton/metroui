@@ -1,6 +1,6 @@
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
-
     let AccordionDefaultConfig = {
         accordionDeferred: 0,
         showMarker: true,
@@ -24,12 +24,12 @@
         onAccordionCreate: Metro.noop,
     };
 
-    Metro.accordionSetup = function (options) {
+    Metro.accordionSetup = (options) => {
         AccordionDefaultConfig = $.extend({}, AccordionDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroAccordionSetup"] !== "undefined") {
-        Metro.accordionSetup(globalThis["metroAccordionSetup"]);
+    if (typeof globalThis.metroAccordionSetup !== "undefined") {
+        Metro.accordionSetup(globalThis.metroAccordionSetup);
     }
 
     Metro.Component("accordion", {
@@ -50,9 +50,9 @@
         },
 
         _createStructure: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const frames = element.children(".frame");
             const active = element.children(".frame.active");
             let frame_to_open;
@@ -117,9 +117,9 @@
         },
 
         _createEvents: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const active = element.children(".frame.active");
 
             element.on("keydown", ".heading", function(e) {
@@ -180,8 +180,8 @@
         },
 
         _openFrame: function (f) {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             const frame = $(f);
 
             if ( Metro.utils.exec(o.onFrameBeforeOpen, [frame[0]], element[0]) === false ) {
@@ -209,8 +209,8 @@
         },
 
         _closeFrame: function (f) {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             const frame = $(f);
 
             if (!frame.hasClass("active")) {
@@ -238,8 +238,8 @@
         },
 
         _closeAll: function (skip) {
-            const that = this,
-                element = this.element;
+            const that = this;
+            const element = this.element;
             const frames = element.children(".frame");
 
             $.each(frames, function () {
@@ -258,8 +258,8 @@
         },
 
         _openAll: function () {
-            const that = this,
-                element = this.element;
+            const that = this;
+            const element = this.element;
             const frames = element.children(".frame");
 
             $.each(frames, function () {
@@ -300,8 +300,7 @@
             return active;
         },
 
-        /* eslint-disable-next-line */
-        changeAttribute: function (attr, newVal) {},
+        changeAttribute: (attr, newVal) => {},
 
         destroy: function () {
             const element = this.element;

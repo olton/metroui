@@ -1,8 +1,7 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var AudioButtonDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+    let AudioButtonDefaultConfig = {
         audioVolume: 0.5,
         audioSrc: "",
         onAudioStart: Metro.noop,
@@ -10,12 +9,12 @@
         onAudioButtonCreate: Metro.noop
     };
 
-    Metro.audioButtonSetup = function (options) {
+    Metro.audioButtonSetup = (options) => {
         AudioButtonDefaultConfig = $.extend({}, AudioButtonDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroAudioButtonSetup"] !== "undefined") {
-        Metro.audioButtonSetup(globalThis["metroAudioButtonSetup"]);
+    if (typeof globalThis.metroAudioButtonSetup !== "undefined") {
+        Metro.audioButtonSetup(globalThis.metroAudioButtonSetup);
     }
 
     Metro.Component('audio-button', {
@@ -24,14 +23,14 @@
             this._super(elem, options, AudioButtonDefaultConfig, {
                 audio: null,
                 canPlay: null,
-                id: Utils.elementId("audioButton")
+                id: Metro.utils.elementId("audioButton")
             });
 
             return this;
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -42,34 +41,36 @@
         },
 
         _createStructure: function(){
-            var o = this.options;
+            const o = this.options;
             this.audio = new Audio(o.audioSrc);
             this.audio.volume = o.audioVolume;
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var audio = this.audio;
+            const element = this.element;
+            const o = this.options;
+            const audio = this.audio;
 
-            audio.addEventListener('loadeddata', function(){
-                that.canPlay = true;
+            audio.addEventListener('loadeddata', () =>{
+                this.canPlay = true;
             });
 
-            audio.addEventListener('ended', function(){
-                that._fireEvent("audioEnd", {
+            audio.addEventListener('ended', () =>{
+                this._fireEvent("audioEnd", {
                     src: o.audioSrc,
                     audio: audio
                 });
             })
 
-            element.on(Metro.events.click, function(){
-                that.play();
+            element.on(Metro.events.click, () =>{
+                this.play();
             }, {ns: this.id});
         },
 
         play: function(cb){
-            var element = this.element, o = this.options;
-            var audio = this.audio;
+            const element = this.element;
+            const o = this.options;
+            const audio = this.audio;
 
             if (o.audioSrc !== "" && this.audio.duration && this.canPlay) {
 
@@ -82,13 +83,14 @@
                 audio.currentTime = 0;
                 audio.play();
 
-                Utils.exec(cb, [audio], element[0]);
+                Metro.utils.exec(cb, [audio], element[0]);
             }
         },
 
         stop: function(cb){
-            var element = this.element, o = this.options;
-            var audio = this.audio;
+            const element = this.element;
+            const o = this.options;
+            const audio = this.audio;
 
             audio.pause();
             audio.currentTime = 0;
@@ -98,24 +100,25 @@
                 audio: audio
             });
 
-            Utils.exec(cb, [audio], element[0]);
+            Metro.utils.exec(cb, [audio], element[0]);
         },
 
         changeAttribute: function(attributeName){
-            var element = this.element, o = this.options;
-            var audio = this.audio;
+            const element = this.element;
+            const o = this.options;
+            const audio = this.audio;
 
-            var changeSrc = function(){
-                var src = element.attr('data-audio-src');
+            const changeSrc = ()=> {
+                const src = element.attr('data-audio-src');
                 if (src && src.trim() !== "") {
                     o.audioSrc = src;
                     audio.src = src;
                 }
             }
 
-            var changeVolume = function(){
-                var volume = parseFloat(element.attr('data-audio-volume'));
-                if (isNaN(volume)) {
+            const changeVolume = () =>{
+                const volume = Number.parseFloat(element.attr('data-audio-volume'));
+                if (Number.isNaN(volume)) {
                     return ;
                 }
                 o.audioVolume = volume;
@@ -132,33 +135,33 @@
         },
 
         destroy: function(){
-            var element = this.element;
+            const element = this.element;
 
             element.off(Metro.events.click, {ns: this.id});
+            element.remove()
         }
     });
 
-    Metro["playSound"] = function(data){
-        var audio;
-        var src = typeof data === "string" ? data : data.audioSrc;
-        var volume = data && data.audioVolume ? data.audioVolume : 0.5;
+    Metro.playSound = (data) => {
+        const src = typeof data === "string" ? data : data.audioSrc;
+        const volume = data?.audioVolume ? data.audioVolume : 0.5;
 
         if (!src) {
             return;
         }
 
-        audio = new Audio(src);
-        audio.volume = parseFloat(volume);
+        const audio = new Audio(src);
+        audio.volume = Number.parseFloat(volume);
 
         audio.addEventListener('loadeddata', function(){
-            if (data && data.onAudioStart)
-                Utils.exec(data.onAudioStart, [src], this);
+            if (data?.onAudioStart)
+                Metro.utils.exec(data.onAudioStart, [src], this);
             this.play();
         });
 
         audio.addEventListener('ended', function(){
-            if (data && data.onAudioEnd)
-                Utils.exec(data.onAudioEnd, [null], this);
+            if (data?.onAudioEnd)
+                Metro.utils.exec(data.onAudioEnd, [null], this);
         });
     };
-}(Metro, Dom));
+})(Metro, Dom);

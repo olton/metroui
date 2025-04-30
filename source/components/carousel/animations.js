@@ -1,12 +1,13 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    let AnimationDefaultConfig = {
+    const AnimationDefaultConfig = {
         duration: METRO_ANIMATION_DURATION,
         ease: "linear"
     }
 
     Metro.Effects = {
-        switchIn: function(el){
+        switchIn: (el)=> {
             $(el)
                 .hide()
                 .css({
@@ -16,7 +17,7 @@
                 .show();
         },
 
-        switchOut: function(el){
+        switchOut: (el)=> {
             $(el).hide();
         },
 
@@ -25,12 +26,11 @@
             this.switchIn(next);
         },
 
-        slideUpIn: function(el, o){
-            let op, $el = $(el);
+        slideUpIn: (el, o)=> {
+            const $el = $(el);
             const h = $el.parent().outerHeight(true);
 
-            op = $.extend({}, AnimationDefaultConfig, o);
-
+            const op = $.extend({}, AnimationDefaultConfig, o)
             $el
                 .css({
                     top: h,
@@ -47,12 +47,11 @@
                 });
         },
 
-        slideUpOut: function(el, o){
-            let op, $el = $(el);
+        slideUpOut: (el, o)=> {
+            const $el = $(el);
             const h = $el.parent().outerHeight(true);
 
-            op = $.extend({}, AnimationDefaultConfig, o);
-
+            const op = $.extend({}, AnimationDefaultConfig, o)
             $el
                 .css({
                     zIndex: 1
@@ -72,12 +71,11 @@
             this.slideUpIn(next, o);
         },
 
-        slideDownIn: function(el, o){
-            let op, $el = $(el);
+        slideDownIn: (el, o)=> {
+            const $el = $(el);
             const h = $el.parent().outerHeight(true);
 
-            op = $.extend({}, AnimationDefaultConfig, o);
-
+            const op = $.extend({}, AnimationDefaultConfig, o)
             $el
                 .css({
                     left: 0,
@@ -94,12 +92,11 @@
                 });
         },
 
-        slideDownOut: function(el, o){
-            let op, $el = $(el);
+        slideDownOut: (el, o)=> {
+            const $el = $(el);
             const h = $el.parent().outerHeight(true);
 
-            op = $.extend({}, AnimationDefaultConfig, o);
-
+            const op = $.extend({}, AnimationDefaultConfig, o)
             $el
                 .css({
                     zIndex: 1
@@ -119,12 +116,11 @@
             this.slideDownIn(next, o);
         },
 
-        slideLeftIn: function(el, o){
-            let op, $el = $(el);
+        slideLeftIn: (el, o)=> {
+            const $el = $(el);
             const w = $el.parent().outerWidth(true);
 
-            op = $.extend({}, AnimationDefaultConfig, o);
-
+            const op = $.extend({}, AnimationDefaultConfig, o)
             $el
                 .css({
                     left: w,
@@ -140,12 +136,11 @@
                 });
         },
 
-        slideLeftOut: function(el, o){
-            let op, $el = $(el);
+        slideLeftOut: (el, o)=> {
+            const $el = $(el);
             const w = $el.parent().outerWidth(true);
 
-            op = $.extend({}, AnimationDefaultConfig, o);
-
+            const op = $.extend({}, AnimationDefaultConfig, o)
             $el
                 .css({
                     zIndex: 1
@@ -165,12 +160,11 @@
             this.slideLeftIn(next, o);
         },
 
-        slideRightIn: function(el, o){
-            let op, $el = $(el);
+        slideRightIn: (el, o)=> {
+            const $el = $(el);
             const w = $el.parent().outerWidth(true);
 
-            op = $.extend({}, AnimationDefaultConfig, o);
-
+            const op = $.extend({}, AnimationDefaultConfig, o)
             $el
                 .css({
                     left: -w,
@@ -186,12 +180,11 @@
                 });
         },
 
-        slideRightOut: function(el, o){
-            let op, $el = $(el);
+        slideRightOut: (el, o)=> {
+            const $el = $(el);
             const w = $el.parent().outerWidth(true);
 
-            op = $.extend({}, AnimationDefaultConfig, o);
-
+            const op = $.extend({}, AnimationDefaultConfig, o)
             $el
                 .css({
                     zIndex: 1
@@ -211,7 +204,7 @@
             this.slideRightIn(next, o);
         },
 
-        fadeIn: function(el, o){
+        fadeIn: (el, o)=> {
             const op = $.extend({}, AnimationDefaultConfig, o);
             const $el = $(el);
 
@@ -230,7 +223,7 @@
                 });
         },
 
-        fadeOut: function(el, o){
+        fadeOut: (el, o)=> {
             const op = $.extend({}, AnimationDefaultConfig, o);
             const $el = $(el);
 
@@ -249,7 +242,7 @@
             this.fadeIn(next, o);
         },
 
-        zoomIn: function(el, o){
+        zoomIn: (el, o)=> {
             const op = $.extend({}, AnimationDefaultConfig, o);
             const $el = $(el);
 
@@ -271,7 +264,7 @@
                 });
         },
 
-        zoomOut: function(el, o){
+        zoomOut: (el, o)=> {
             const op = $.extend({}, AnimationDefaultConfig, o);
             const $el = $(el);
 
@@ -294,7 +287,7 @@
             this.zoomIn(next, o);
         },
 
-        swirlIn: function(el, o){
+        swirlIn: (el, o)=> {
             const op = $.extend({}, AnimationDefaultConfig, o);
             const $el = $(el);
 
@@ -317,7 +310,7 @@
                 });
         },
 
-        swirlOut: function(el, o){
+        swirlOut: (el, o)=> {
             const op = $.extend({}, AnimationDefaultConfig, o);
             const $el = $(el);
 
@@ -341,4 +334,4 @@
             this.swirlIn(next, o);
         }
     };
-}(Metro, Dom));
+})(Metro, Dom);

@@ -232,6 +232,13 @@
             border-radius: 6px;
         }
     }
+    
+    .month {
+        &.today {
+            border: 1px solid var(--calendar-border-color)!important;
+            border-radius: 6px;
+        }
+    }
 }
 
 .calendar-footer {
@@ -373,8 +380,18 @@
                 font-size: 14px;
                 cursor: pointer;
 
-                &:hover {
-                    border-color: var(--calendar-border-color);
+                @media (hover: hover) {
+                    &:hover {
+                        border-color: var(--calendar-border-color);
+                        border-radius: 6px;
+                    }
+                }
+
+                @media (hover: none) {
+                    &:active {
+                        border-color: var(--calendar-border-color);
+                        border-radius: 6px;
+                    }
                 }
             }
         }

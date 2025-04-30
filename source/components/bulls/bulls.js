@@ -1,18 +1,19 @@
-(function(Metro, $) {
-    'use strict';
-    
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+   
     let BullDefaultConfig = {
         type: "success", // success, fail, pending
         size: 16,
         onBullCreate: Metro.noop
     };
 
-    Metro.bullSetup = function (options) {
+    Metro.bullSetup = (options) => {
         BullDefaultConfig = $.extend({}, BullDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroBullSetup"] !== "undefined") {
-        Metro.bullSetup(globalThis["metroBullSetup"]);
+    if (typeof globalThis.metroBullSetup !== "undefined") {
+        Metro.bullSetup(globalThis.metroBullSetup);
     }
 
     Metro.Component('bull', {
@@ -29,7 +30,8 @@
         },
 
         _createStructure: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             let bull;
             switch (o.type.toLowerCase()) {
                 case "default": bull = `<svg width="${o.size}" height="${o.size}" aria-label="completed successfully" viewBox="0 0 16 16" role="img" xmlns="http://www.w3.org/2000/svg"><path fill="#57ab5a" d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16Zm3.78-9.72a.751.751 0 0 0-.018-1.042.751.751 0 0 0-1.042-.018L6.75 9.19 5.28 7.72a.751.751 0 0 0-1.042.018.751.751 0 0 0-.018 1.042l2 2a.75.75 0 0 0 1.06 0Z"></path></svg>`; break;
@@ -52,4 +54,4 @@
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

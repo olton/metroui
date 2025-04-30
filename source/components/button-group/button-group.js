@@ -1,8 +1,7 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var ButtonGroupDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+    let ButtonGroupDefaultConfig = {
         buttongroupDeferred: 0,
         targets: "button",
         clsActive: "",
@@ -12,26 +11,26 @@
         onButtonGroupCreate: Metro.noop
     };
 
-    Metro.buttonGroupSetup = function(options){
+    Metro.buttonGroupSetup = (options)=> {
         ButtonGroupDefaultConfig = $.extend({}, ButtonGroupDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroButtonGroupSetup"] !== "undefined") {
-        Metro.buttonGroupSetup(globalThis["metroButtonGroupSetup"]);
+    if (typeof globalThis.metroButtonGroupSetup !== "undefined") {
+        Metro.buttonGroupSetup(globalThis.metroButtonGroupSetup);
     }
 
     Metro.Component('button-group', {
         init: function( options, elem ) {
             this._super(elem, options, ButtonGroupDefaultConfig, {
                 active: null,
-                id: Utils.elementId("button-group")
+                id: Metro.utils.elementId("button-group")
             });
 
             return this;
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createGroup();
             this._createEvents();
@@ -42,13 +41,13 @@
         },
 
         _createGroup: function(){
-            var element = this.element, o = this.options;
-            var buttons, buttons_active;
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("button-group");
 
-            buttons = element.find( o.targets );
-            buttons_active = element.find( ".active" );
+            const buttons = element.find( o.targets );
+            const buttons_active = element.find( ".active" );
 
             if (o.mode === Metro.groupMode.ONE && buttons_active.length === 0 && o.requiredButton === true) {
                 $(buttons[0]).addClass("active");
@@ -66,10 +65,12 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
             element.on(Metro.events.click, o.targets, function(){
-                var el = $(this);
+                const el = $(this);
 
                 that._fireEvent("button-click", {
                     button: this
@@ -89,15 +90,14 @@
             });
         },
 
-        /* eslint-disable-next-line */
-        changeAttribute: function(attributeName){
-        },
+        changeAttribute: (attributeName)=> {  },
 
         destroy: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             element.off(Metro.events.click, o.targets);
-            return element;
+            element.remove();
         }
 
     });
-}(Metro, Dom));
+})(Metro, Dom);

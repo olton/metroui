@@ -1,7 +1,7 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var ActivityDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+    let ActivityDefaultConfig = {
         activityDeferred: 0,
         type: "ring",
         style: "",
@@ -10,12 +10,12 @@
         onActivityCreate: Metro.noop
     };
 
-    Metro.activitySetup = function(options){
+    Metro.activitySetup = (options) =>{
         ActivityDefaultConfig = $.extend({}, ActivityDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroActivitySetup"] !== "undefined") {
-        Metro.activitySetup(globalThis["metroActivitySetup"]);
+    if (typeof globalThis.metroActivitySetup !== "undefined") {
+        Metro.activitySetup(globalThis.metroActivitySetup);
     }
 
     Metro.Component('activity', {
@@ -25,13 +25,15 @@
         },
 
         _create: function(){
-            var element = this.element, o = this.options;
-            var i, wrap;
+            const element = this.element;
+            const o = this.options;
+            let i;
+            let wrap;
 
             element
                 .html('')
                 .addClass(o.style === "dark" ? "dark-side" : o.style === "color" ? "color-style" : "")
-                .addClass("activity-" + o.type);
+                .addClass(`activity-${o.type}`);
 
             function _metro(){
                 for(i = 0; i < 5 ; i++) {
@@ -57,7 +59,18 @@
             }
 
             function _simple(){
-                $('<svg class="circular"><circle class="path" cx="'+o.size/2+'" cy="'+o.size/2+'" r="'+o.radius+'" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg>').appendTo(element);
+                $(`
+                    <svg class="circular">
+                        <circle class="path" 
+                                cx="${o.size/2}" 
+                                cy="${o.size/2}" 
+                                r="${o.radius}" 
+                                fill="none" 
+                                stroke-width="2" 
+                                stroke-miterlimit="10"
+                        />
+                    </svg>
+                `).appendTo(element);
             }
 
             function _atom(){
@@ -87,9 +100,7 @@
             })
         },
 
-        /*eslint-disable-next-line*/
-        changeAttribute: function(attributeName){
-        },
+        changeAttribute: (attributeName) => { },
 
         destroy: function(){
             return this.element;
@@ -97,10 +108,10 @@
     });
 
     Metro.activity = {
-        open: function(options){
-            var o = options || {};
-            var activity = '<div data-role="activity" data-type="'+( o.type ? o.type : 'cycle' )+'" data-style="'+( o.style ? o.style : 'color' )+'"></div>';
-            var text = o.text ? '<div class="text-center">'+o.text+'</div>' : '';
+        open: (options = {}) => {
+            const o = options;
+            const activity = `<div data-role="activity" data-type="${o.type ? o.type : 'cycle'}" data-style="${o.style ? o.style : 'color'}"></div>`;
+            const text = o.text ? `<div class="text-center">${o.text}</div>` : '';
 
             return Metro.dialog.create({
                 content: activity + text,
@@ -115,8 +126,8 @@
             });
         },
 
-        close: function(a){
+        close: (a) =>{
             Metro.dialog.close(a);
         }
     };
-}(Metro, Dom));
+})(Metro, Dom);

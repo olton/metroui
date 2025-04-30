@@ -1,16 +1,15 @@
-(function(Metro, $) {
-    'use strict';
+((Metro, $) => {
 
     let MyObjectDefaultConfig = {
         onMyObjectCreate: Metro.noop
     };
 
-    Metro.myObjectSetup = function (options) {
+    Metro.myObjectSetup = (options) => {
         MyObjectDefaultConfig = $.extend({}, MyObjectDefaultConfig, options);
     };
 
-    if (typeof window["metroMyObjectSetup"] !== undefined) {
-        Metro.myObjectSetup(window["metroMyObjectSetup"]);
+    if (typeof window.metroMyObjectSetup !== "undefined") {
+        Metro.myObjectSetup(window.metroMyObjectSetup);
     }
 
     Metro.Component('name', {
@@ -22,7 +21,8 @@
         },
 
         _create: function(){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             this._createStructure();
             this._createEvents();
@@ -31,20 +31,20 @@
         },
 
         _createStructure: function(){
-            const that = this, element = this.element, o = this.options;
-
+            const element = this.element;
+            const o = this.options;
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
-
+            const element = this.element;
+            const o = this.options;
         },
 
-        changeAttribute: function(attr, newValue){
+        changeAttribute: (attr, newValue) =>{
         },
 
         destroy: function(){
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);
