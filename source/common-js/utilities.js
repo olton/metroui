@@ -1,10 +1,14 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
+
     Metro.utils = {
         nothing: () => {},
+
         noop: () => {},
+
         elementId: (prefix) => `${prefix}-${new Date().getTime()}${$.random(1, 1000)}`,
+
         secondsToTime: (s) => {
             const days = Math.floor((s % 31536000) / 86400);
             const hours = Math.floor(((s % 31536000) % 86400) / 3600);
