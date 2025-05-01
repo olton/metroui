@@ -1,8 +1,8 @@
- /* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    Metro.pagination = function(c){
-        var defConf = {
+    Metro.pagination = (c)=> {
+        const defConf = {
             length: 0, //total rows
             rows: 0, // page size
             current: 0,
@@ -13,23 +13,24 @@
             distance: 5,
             islandSize: 3,
             shortTrack: 10,
-        }, conf;
+        };
 
-        var strings = Metro.locales[$("html").attr("lang") || "en"];
+        const strings = Metro.locales[$("html").attr("lang") || "en"];
         
-        var i, prev, next;
+        let i;
+        let prev;
+        let next;
 
-        conf = $.extend( {}, defConf, c);
-
-        var distance = parseInt(conf.distance);
-        var shortTrack = parseInt(conf.shortTrack);
-        var islandSize = parseInt(conf.islandSize)
-        var totalRows = parseInt(conf.length)
-        var pageSize = parseInt(conf.rows)
-        var totalPages = Math.ceil(totalRows/pageSize)
-        var current = parseInt(conf.current)
-        var pagination_wrapper = $(conf.target); pagination_wrapper.html("");
-        var pagination = $("<ul>").addClass("pagination").addClass(conf.clsPagination).appendTo(pagination_wrapper);
+        const conf = $.extend({}, defConf, c)
+        const distance = Number.parseInt(conf.distance);
+        const shortTrack = Number.parseInt(conf.shortTrack);
+        const islandSize = Number.parseInt(conf.islandSize)
+        const totalRows = Number.parseInt(conf.length)
+        const pageSize = Number.parseInt(conf.rows)
+        const totalPages = Math.ceil(totalRows/pageSize)
+        const current = Number.parseInt(conf.current)
+        const pagination_wrapper = $(conf.target); pagination_wrapper.html("");
+        const pagination = $("<ul>").addClass("pagination").addClass(conf.clsPagination).appendTo(pagination_wrapper);
 
         if (totalRows === 0) {
             return ;
@@ -39,11 +40,9 @@
             return ;
         }
 
-        var add_item = function(item_title, item_type, data){
-            var li, a;
-
-            li = $("<li>").addClass("page-item").addClass(item_type);
-            a  = $("<a>").addClass("page-link").html(item_title);
+        const add_item = (item_title, item_type, data)=> {
+            const li = $("<li>").addClass("page-item").addClass(item_type)
+            const a = $("<a>").addClass("page-link").html(item_title)
             a.data("page", data);
             a.appendTo(li);
 
@@ -113,4 +112,4 @@
 
         return pagination;
     };
-}(Metro, Dom));
+})(Metro, Dom);

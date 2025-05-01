@@ -1,5 +1,5 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
     let ProgressDefaultConfig = {
         progressDeferred: 0,
@@ -25,12 +25,12 @@
         onProgressCreate: Metro.noop
     };
 
-    Metro.progressSetup = function (options) {
+    Metro.progressSetup = (options) => {
         ProgressDefaultConfig = $.extend({}, ProgressDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroProgressSetup"] !== "undefined") {
-        Metro.progressSetup(globalThis["metroProgressSetup"]);
+    if (typeof globalThis.metroProgressSetup !== "undefined") {
+        Metro.progressSetup(globalThis.metroProgressSetup);
     }
 
     Metro.Component('progress', {
@@ -44,7 +44,9 @@
         },
 
         _create: function(){
-            const element = this.element, elem = this.elem, o = this.options;
+            const element = this.element;
+            const elem = this.elem;
+            const o = this.options;
 
             if (typeof o.type === "string") o.type = o.type.toLowerCase();
 
@@ -118,11 +120,11 @@
         },
 
         val: function(v){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
             const value = this.component.find(".progress-value");
 
             if (v === undefined) {
-                return that.value;
+                return this.value;
             }
 
             const bar = element.find(".bar");
@@ -131,10 +133,10 @@
                 return false;
             }
 
-            this.value = parseInt(v, 10);
+            this.value = Number.parseInt(v, 10);
 
-            bar.css("width", this.value + "%");
-            value.html(this.value+"%");
+            bar.css("width", `${this.value}%`);
+            value.html(`${this.value}%`);
 
             this._fireEvent("value-change", {
                 val: this.value
@@ -150,10 +152,10 @@
         },
 
         buff: function(v){
-            const that = this, element = this.element;
+            const element = this.element;
 
             if (v === undefined) {
-                return that.buffer;
+                return this.buffer;
             }
 
             const bar = element.find(".buffer");
@@ -162,9 +164,9 @@
                 return false;
             }
 
-            this.buffer = parseInt(v, 10);
+            this.buffer = Number.parseInt(v, 10);
 
-            bar.css("width", this.buffer + "%");
+            bar.css("width", `${this.buffer}%`);
 
             this._fireEvent("buffer-change", {
                 val: this.buffer
@@ -196,4 +198,4 @@
             this.component.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

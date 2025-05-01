@@ -1,4 +1,5 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
     
     let RemoteTableDefaultConfig = {
@@ -35,12 +36,12 @@
         onTableCreate: Metro.noop
     };
 
-    Metro.remoteTableSetup = function (options) {
+    Metro.remoteTableSetup = (options) => {
         RemoteTableDefaultConfig = $.extend({}, RemoteTableDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroRemoteTableSetup"] !== "undefined") {
-        Metro.remoteTableSetup(globalThis["metroRemoteTableSetup"]);
+    if (typeof globalThis.metroRemoteTableSetup !== "undefined") {
+        Metro.remoteTableSetup(globalThis.metroRemoteTableSetup);
     }
 
     Metro.Component('remote-table', {
@@ -78,9 +79,9 @@
         _loadData: async function (){
             const o = this.options
             if (!this.url) { return }
-            let url = this.url + "?" + o.limitKey + "=" + this.limit + "&" + o.offsetKey + "=" + this.offset
-            if (this.sortField) { url += "&" + o.sortKey + "=" + this.sortField + "&" + o.orderKey + "=" + this.sortOrder; }
-            if (this.search) { url += "&" + o.searchKey + "=" + this.search; }
+            let url = `${this.url}?${o.limitKey}=${this.limit}&${o.offsetKey}=${this.offset}`
+            if (this.sortField) { url += `&${o.sortKey}=${this.sortField}&${o.orderKey}=${this.sortOrder}`; }
+            if (this.search) { url += `&${o.searchKey}=${this.search}`; }
             const response = await fetch(url, { method: o.method })
             if (response.ok === false) { return ; }
             this.data = Metro.utils.exec(o.onLoad, [await response.json()], this);
@@ -88,11 +89,12 @@
         },
         
         _createStructure: function(){
-            const element = this.element, o = this.options;
-            let entries
+            const element = this.element;
+            const o = this.options;
+            const entries = $("<div>").addClass("table-entry")
             
             element.addClass("table-component remote-table")
-            element.append(entries = $("<div>").addClass("table-entry"))
+            element.append(entries)
             
             entries.html(`
                 <div class="search-block row">
@@ -116,14 +118,15 @@
             `)
             this.header = entries.find("thead")
             this.body = entries.find("tbody")
-            
-            element.append(
-                this.pagination = $("<div>").addClass("table-pagination")
-            )
+
+            this.pagination = $("<div>").addClass("table-pagination")
+            element.append( this.pagination )
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             
             element.on("click", ".page-link", function(){
                 const parent = $(this).parent()
@@ -196,13 +199,13 @@
             
             const headerRow = $("<tr>").addClass("table-header").appendTo(this.header);
             let hIndex = 0;
-            for (let key of Object.keys(this.entries[0])) {
+            for (const key of Object.keys(this.entries[0])) {
                 if (this.fields.length && !this.fields.includes(key)) {
                     continue;
                 }
                 const cellData = this.captions ? this.captions[hIndex] : key
                 const cell = $("<th>").html(cellData).attr("data-field", key);
-                if (o.sortableFields && o.sortableFields.includes(key)) {
+                if (o.sortableFields?.includes(key)) {
                     cell.addClass("sortable-column")
                     if (this.sortField === key) {
                         cell.addClass(`sort-${this.sortOrder}`)
@@ -221,7 +224,7 @@
                 this.body.append(row);
                 Metro.utils.exec(o.onDrawRow, [row, entry, index], this);
                 let hIndex = 0;
-                for (let key in entry) {
+                for (const key in entry) {
                     if (this.fields.length && !this.fields.includes(key)) {
                         continue;
                     }
@@ -254,11 +257,11 @@
             
         },
         
-        changeAttribute: function(attr, newValue){
+        changeAttribute: (attr, newValue)=> {
         },
 
         destroy: function(){
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

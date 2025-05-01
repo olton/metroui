@@ -1,4 +1,5 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let RadioDefaultConfig = {
@@ -13,12 +14,12 @@
         onRadioCreate: Metro.noop
     };
 
-    Metro.metroRadioSetup = function (options) {
+    Metro.metroRadioSetup = (options) => {
         RadioDefaultConfig = $.extend({}, RadioDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroRadioSetup"] !== "undefined") {
-        Metro.metroRadioSetup(globalThis["metroRadioSetup"]);
+    if (typeof globalThis.metroRadioSetup !== "undefined") {
+        Metro.metroRadioSetup(globalThis.metroRadioSetup);
     }
 
     Metro.Component('radio', {
@@ -39,7 +40,8 @@
         },
 
         _createStructure: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             const container = element.wrap("<label>").addClass("radio").addClass(o.clsCheckbox);
 
@@ -49,7 +51,7 @@
             if (o.append)  { container.append($("<span>").addClass("caption-append").addClass(o.clsAppend).addClass(o.clsCaption).html(o.append)); }
 
             if (element.attr("readonly")) {
-                element.on("click", function(e){
+                element.on("click", (e)=> {
                     e.preventDefault();
                 })
             }
@@ -61,15 +63,14 @@
             this._drawState()
         },
 
-        _drawState: function(){
+        _drawState: ()=> {
         },
 
         _createEvents: function(){
-            const element = this.element, o = this.options;
-            const that = this
+            const element = this.element;
 
-            element.on("click", function(){
-                that._drawState()
+            element.on("click", ()=> {
+                this._drawState()
             })
         },
 
@@ -105,7 +106,7 @@
             this._drawState()
         },
 
-        changeAttribute: function(attr, newVal){
+        changeAttribute: (attr, newVal)=> {
         },
 
         destroy: function(){
@@ -114,4 +115,4 @@
             element.parent().remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

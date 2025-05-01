@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var PopoverDefaultConfig = {
+
+    let PopoverDefaultConfig = {
         popoverDeferred: 0,
         popoverText: "",
         popoverHide: 3000,
@@ -19,12 +19,12 @@
         onPopoverCreate: Metro.noop
     };
 
-    Metro.popoverSetup = function (options) {
+    Metro.popoverSetup = (options) => {
         PopoverDefaultConfig = $.extend({}, PopoverDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroPopoverSetup"] !== "undefined") {
-        Metro.popoverSetup(globalThis["metroPopoverSetup"]);
+    if (typeof globalThis.metroPopoverSetup !== "undefined") {
+        Metro.popoverSetup(globalThis.metroPopoverSetup);
     }
 
     Metro.Component('popover', {
@@ -36,7 +36,7 @@
                     width: 0,
                     height: 0
                 },
-                id: Utils.elementId("popover")
+                id: Metro.utils.elementId("popover")
             });
 
             return this;
@@ -50,8 +50,9 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var event;
+            const element = this.element;
+            const o = this.options;
+            let event;
 
             switch (o.popoverTrigger) {
                 case Metro.popoverEvents.CLICK: event = Metro.events.click; break;
@@ -59,38 +60,41 @@
                 default: event = Metro.events.enter;
             }
 
-            element.on(event, function(){
-                if (that.popover !== null || that.popovered === true) {
+            element.on(event, ()=> {
+                if (this.popover !== null || this.popovered === true) {
                     return ;
                 }
-                setTimeout(function(){
-                    that.createPopover();
+                setTimeout(()=> {
+                    this.createPopover();
 
-                    that._fireEvent("popover-show", {
-                        popover: that.popover
+                    this._fireEvent("popover-show", {
+                        popover: this.popover
                     });
 
                     if (o.popoverHide > 0) {
-                        setTimeout(function(){
-                            that.removePopover();
+                        setTimeout(()=> {
+                            this.removePopover();
                         }, o.popoverHide);
                     }
                 }, o.popoverTimeout);
             });
 
             if (o.hideOnLeave === true) {
-                element.on(Metro.events.leave, function(){
-                    that.removePopover();
+                element.on(Metro.events.leave, ()=> {
+                    this.removePopover();
                 });
             }
 
-            $(globalThis).on(Metro.events.scroll, function(){
-                if (that.popover !== null) that.setPosition();
+            $(globalThis).on(Metro.events.scroll, ()=> {
+                if (this.popover !== null) this.setPosition();
             }, {ns: this.id});
         },
 
         setPosition: function(){
-            var popover = this.popover, size = this.size, o = this.options, element = this.element;
+            const popover = this.popover;
+            const size = this.size;
+            const o = this.options;
+            const element = this.element;
 
             if (o.popoverPosition === Metro.position.BOTTOM) {
                 popover.addClass('bottom');
@@ -120,11 +124,13 @@
         },
 
         createPopover: function(){
-            var that = this, elem = this.elem, element = this.element, o = this.options;
-            var popover;
-            var neb_pos;
-            var id = Utils.elementId("popover");
-            var closeButton;
+            const elem = this.elem;
+            let element = this.element;
+            const o = this.options;
+            let popover;
+            let neb_pos;
+            const id = Metro.utils.elementId("popover");
+            let closeButton;
 
             if (this.popovered) {
                 return ;
@@ -137,8 +143,8 @@
 
             if (o.popoverHide === 0 && o.closeButton === true) {
                 closeButton = $("<button>").addClass("square small popover-close-button").html("&times;").appendTo(popover);
-                closeButton.on(Metro.events.click, function(){
-                    that.removePopover();
+                closeButton.on(Metro.events.click, ()=> {
+                    this.removePopover();
                 });
             }
 
@@ -152,16 +158,16 @@
             popover.addClass(neb_pos);
 
             if (o.closeButton !== true) {
-                popover.on(Metro.events.click, function(){
-                    that.removePopover();
+                popover.on(Metro.events.click, ()=> {
+                    this.removePopover();
                 });
             }
 
             this.popover = popover;
-            this.size = Utils.hiddenElementSize(popover);
+            this.size = Metro.utils.hiddenElementSize(popover);
 
             if (elem.tagName === 'TD' || elem.tagName === 'TH') {
-                var wrp = $("<div/>").css("display", "inline-block").html(element.html());
+                const wrp = $("<div/>").css("display", "inline-block").html(element.html());
                 element.html(wrp);
                 element = wrp;
             }
@@ -178,9 +184,8 @@
         },
 
         removePopover: function(){
-            var that = this;
-            var timeout = this.options.onPopoverHide === Metro.noop ? 0 : 300;
-            var popover = this.popover;
+            const timeout = this.options.onPopoverHide === Metro.noop ? 0 : 300;
+            const popover = this.popover;
 
             if (!this.popovered) {
                 return ;
@@ -190,32 +195,32 @@
                 popover: popover
             });
 
-            setTimeout(function(){
-                popover.hide(0, function(){
+            setTimeout(()=> {
+                popover.hide(0, ()=> {
                     popover.remove();
-                    that.popover = null;
-                    that.popovered = false;
+                    this.popover = null;
+                    this.popovered = false;
                 });
             }, timeout);
         },
 
         show: function(){
-            var that = this, o = this.options;
+            const o = this.options;
 
             if (this.popovered === true) {
                 return ;
             }
 
-            setTimeout(function(){
-                that.createPopover();
+            setTimeout(()=> {
+                this.createPopover();
 
-                that._fireEvent("popover-show", {
-                    popover: that.popover
+                this._fireEvent("popover-show", {
+                    popover: this.popover
                 });
 
                 if (o.popoverHide > 0) {
-                    setTimeout(function(){
-                        that.removePopover();
+                    setTimeout(()=> {
+                        this.removePopover();
                     }, o.popoverHide);
                 }
             }, o.popoverTimeout);
@@ -226,19 +231,20 @@
         },
 
         changeAttribute: function(attributeName){
-            var that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
-            var changeText = function(){
+            const changeText = ()=> {
                 o.popoverText = element.attr("data-popover-text");
-                if (that.popover) {
-                    that.popover.find(".popover-content").html(o.popoverText);
-                    that.setPosition();
+                if (this.popover) {
+                    this.popover.find(".popover-content").html(o.popoverText);
+                    this.setPosition();
                 }
             };
 
-            var changePosition = function(){
+            const changePosition = ()=> {
                 o.popoverPosition = element.attr("data-popover-position");
-                that.setPosition();
+                this.setPosition();
             };
 
             switch (attributeName) {
@@ -248,8 +254,9 @@
         },
 
         destroy: function(){
-            var element = this.element, o = this.options;
-            var event;
+            const element = this.element;
+            const o = this.options;
+            let event;
 
             switch (o.popoverTrigger) {
                 case Metro.popoverEvents.CLICK: event = Metro.events.click; break;
@@ -268,4 +275,4 @@
             return element;
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

@@ -1,5 +1,5 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let RatingDefaultConfig = {
@@ -25,12 +25,12 @@
         onRatingCreate: Metro.noop
     };
 
-    Metro.ratingSetup = function (options) {
+    Metro.ratingSetup = (options) => {
         RatingDefaultConfig = $.extend({}, RatingDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroRatingSetup"] !== "undefined") {
-        Metro.ratingSetup(globalThis["metroRatingSetup"]);
+    if (typeof globalThis.metroRatingSetup !== "undefined") {
+        Metro.ratingSetup(globalThis.metroRatingSetup);
     }
 
     Metro.Component('rating', {
@@ -47,13 +47,14 @@
         },
 
         _create: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             let i;
 
-            if (isNaN(o.value)) {
+            if (Number.isNaN(o.value)) {
                 o.value = 0;
             } else {
-                o.value = parseFloat(o.value).toFixed(1);
+                o.value = Number.parseFloat(o.value).toFixed(1);
             }
 
             if (o.values !== null) {
@@ -80,18 +81,21 @@
         },
 
         _createRating: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             const id = Metro.utils.elementId("rating");
-            let i, stars, result, li;
+            let i;
+            let stars;
+            let li;
             const sheet = Metro.sheet;
             const value = o.static ? Math.floor(this.originValue) : this.value;
 
-            const rating = element.wrap("<div>").addClass("rating " + element[0].className).addClass(o.clsRating);
+            const rating = element.wrap("<div>").addClass(`rating ${element[0].className}`).addClass(o.clsRating);
 
             element.val(this.value);
 
-            rating.attr("id", element.id() ? "rating--"+element.id() : id);
+            rating.attr("id", element.id() ? `rating--${element.id()}` : id);
 
             stars = $("<ul>").addClass("stars").addClass(o.clsStars).appendTo(rating);
 
@@ -102,8 +106,7 @@
                 }
             }
 
-            result = $("<span>").addClass("result").addClass(o.clsResult).appendTo(rating);
-
+            const result = $("<span>").addClass("result").addClass(o.clsResult).appendTo(rating)
             result.html(o.message);
 
             if (o.offColor !== null && (o.offColor.includes("var(") || Farbe.Routines.isColor(o.offColor))) {
@@ -111,9 +114,9 @@
             }
             
             if (o.onColor !== null && (o.onColor.includes("var(") || Farbe.Routines.isColor(o.onColor))) {
-                Metro.utils.addCssRule(sheet, "#" + id + " .stars:hover li", "color: " + o.onColor + ";");
-                Metro.utils.addCssRule(sheet, "#" + id + " .stars li.on", "color: "+o.onColor+";");
-                Metro.utils.addCssRule(sheet, "#" + id + " .stars li.half::after", "color: "+o.onColor+";");
+                Metro.utils.addCssRule(sheet, `#${id} .stars:hover li`, `color: ${o.onColor};`);
+                Metro.utils.addCssRule(sheet, `#${id} .stars li.on`, `color: ${o.onColor};`);
+                Metro.utils.addCssRule(sheet, `#${id} .stars li.half::after`, `color: ${o.onColor};`);
             }
 
             if (o.title !== null) {
@@ -126,7 +129,7 @@
                 if (o.half === true){
                     const dec = Math.round((this.originValue % 1) * 10);
                     if (dec > 0 && dec <= 9) {
-                        rating.find('.stars li.on').last().next("li").addClass("half half-" + ( dec * 10));
+                        rating.find('.stars li.on').last().next("li").addClass(`half half-${dec * 10}`);
                     }
                 }
             }
@@ -157,7 +160,9 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const rating = this.rating;
 
             rating.on(Metro.events.click, ".stars li", function(){
@@ -169,7 +174,7 @@
                 const star = $(this);
                 const value = star.data("value");
                 star.addClass("scale");
-                setTimeout(function(){
+                setTimeout(()=> {
                     star.removeClass("scale");
                 }, 300);
                 element.val(value).trigger("change");
@@ -186,7 +191,9 @@
         },
 
         val: function(v){
-            const that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const rating = this.rating;
 
             if (v === undefined) {
@@ -198,7 +205,7 @@
 
             const stars = rating.find(".stars li").removeClass("on");
             $.each(stars, function(){
-                var star = $(this);
+                const star = $(this);
                 if (star.data("value") <= that.value) {
                     star.addClass("on");
                 }
@@ -276,4 +283,4 @@
             rating.remove()
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

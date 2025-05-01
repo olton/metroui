@@ -1,7 +1,8 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    var RemoteDatasetDefaultConfig = {
+    let RemoteDatasetDefaultConfig = {
         caption: "",
         url: "",
         searchUrl: "",
@@ -40,12 +41,12 @@
         onDatasetCreate: Metro.noop
     };
 
-    Metro.remoteDatasetSetup = function (options) {
+    Metro.remoteDatasetSetup = (options) => {
         RemoteDatasetDefaultConfig = $.extend({}, RemoteDatasetDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroRemoteDatasetSetup"] !== "undefined") {
-        Metro.remoteDatasetSetup(globalThis["metroRemoteDatasetSetup"]);
+    if (typeof globalThis.metroRemoteDatasetSetup !== "undefined") {
+        Metro.remoteDatasetSetup(globalThis.metroRemoteDatasetSetup);
     }
 
     Metro.Component('remote-dataset', {
@@ -82,9 +83,9 @@
         _loadData: async function (append = false){
             const o = this.options
             if (!this.url) { return }
-            let url = this.url + "?" + o.limitKey + "=" + this.limit + "&" + o.offsetKey + "=" + this.offset
-            if (this.sortField) { url += "&" + o.sortKey + "=" + this.sortField + "&" + o.orderKey + "=" + this.sortOrder; }
-            if (this.search) { url += "&" + o.searchKey + "=" + this.search; }
+            let url = `${this.url}?${o.limitKey}=${this.limit}&${o.offsetKey}=${this.offset}`
+            if (this.sortField) { url += `&${o.sortKey}=${this.sortField}&${o.orderKey}=${this.sortOrder}`; }
+            if (this.search) { url += `&${o.searchKey}=${this.search}`; }
             const response = await fetch(url, { method: o.method })
             if (response.ok === false) { return ; }
             this.data = Metro.utils.exec(o.onLoad, [await response.json()], this);
@@ -92,11 +93,12 @@
         },
 
         _createStructure: function(){
-            var that = this, element = this.element, o = this.options;
-            let entries
+            const element = this.element;
+            const o = this.options;
+            const entries = $("<div>").addClass("dataset-entry")
 
             element.addClass("remote-dataset")
-            element.append(entries = $("<div>").addClass("dataset-entry"))
+            element.append(entries)
 
             entries.html(`
                 <div class="service-block">
@@ -141,14 +143,15 @@
                     ${this.strings.label_load_more}
                 </button>
             `).appendTo(element)
-            
-            element.append(
-                this.pagination = $("<div>").addClass("dataset-pagination")
-            )
+
+            this.pagination = $("<div>").addClass("dataset-pagination")
+            element.append(this.pagination)
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
             element.on("click", ".page-link", function(){
                 const parent = $(this).parent()
@@ -201,14 +204,14 @@
                 that._loadData().then(() => {})
             })
             
-            element.on("click", ".load-more-button", function(){
+            element.on("click", ".load-more-button", ()=> {
                 that.offset += that.limit
                 that._loadData(true).then(() => {})
             })
         },
 
         _createEntries: function (append = false){
-            var that = this, element = this.element, o = this.options;
+            const o = this.options;
 
             if (!this.data) {
                 return ;
@@ -224,7 +227,7 @@
             this.entries.forEach((entry, index) => {
                 const item = $("<div>").addClass("dataset-item").addClass(o.clsItem).addClass(index % 2 === 0 ? "even" : "odd")
                 const html = Metro.utils.exec(o.template, [entry], entry)
-                item.html(html).appendTo(that.body)
+                item.html(html).appendTo(this.body)
             });
 
             if (usePagination && !o.shortPagination) {
@@ -258,15 +261,15 @@
         *   limitKey: "limit",
         * }
         * */
-        setup: function (options){
+        setup: (options)=> {
             
         },
         
-        changeAttribute: function(attr, newValue){
+        changeAttribute: (attr, newValue)=> {
         },
 
         destroy: function(){
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);
