@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    var LightboxDefaultConfig = {
+    let LightboxDefaultConfig = {
         loop: true,
         source: "img",
 
@@ -22,12 +22,12 @@
         onLightboxCreate: Metro.noop
     };
 
-    Metro.lightboxSetup = function (options) {
+    Metro.lightboxSetup = (options) => {
         LightboxDefaultConfig = $.extend({}, LightboxDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroLightboxSetup"] !== "undefined") {
-        Metro.lightboxSetup(globalThis["metroLightboxSetup"]);
+    if (typeof globalThis.metroLightboxSetup !== "undefined") {
+        Metro.lightboxSetup(globalThis.metroLightboxSetup);
     }
 
     Metro.Component('lightbox', {
@@ -43,7 +43,7 @@
         },
 
         _create: function(){
-            var o = this.options;
+            const o = this.options;
 
             if (!o.source) {
                 o.source = "img";
@@ -56,8 +56,8 @@
         },
 
         _createStructure: function(){
-            var o = this.options;
-            var lightbox, overlay;
+            const o = this.options;
+            let overlay;
 
             overlay = $(".lightbox-overlay");
 
@@ -65,8 +65,7 @@
                 overlay = $("<div>").addClass("lightbox-overlay").appendTo("body").hide();
             }
 
-            lightbox = $("<div>").addClass("lightbox").addClass(o.clsLightbox).appendTo("body").hide();
-
+            const lightbox = $("<div>").addClass("lightbox").addClass(o.clsLightbox).appendTo("body").hide()
             $("<span>").addClass("lightbox__prev").addClass(o.clsPrev).html(o.iconPrev).appendTo(lightbox);
             $("<span>").addClass("lightbox__next").addClass(o.clsNext).html(o.iconNext).appendTo(lightbox);
             $("<span>").addClass("lightbox__closer").addClass(o.clsClose).html(o.iconClose).appendTo(lightbox);
@@ -78,29 +77,32 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var lightbox = $(this.component);
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const lightbox = $(this.component);
 
             element.on(Metro.events.click, o.source, function(){
                 that.open(this);
             });
 
-            lightbox.on(Metro.events.click, ".lightbox__closer", function(){
+            lightbox.on(Metro.events.click, ".lightbox__closer", ()=> {
                 that.close();
             });
 
-            lightbox.on(Metro.events.click, ".lightbox__prev", function(){
+            lightbox.on(Metro.events.click, ".lightbox__prev", ()=> {
                 that.prev();
             });
 
-            lightbox.on(Metro.events.click, ".lightbox__next", function(){
+            lightbox.on(Metro.events.click, ".lightbox__next", ()=> {
                 that.next();
             });
         },
 
         _setupItems: function(){
-            var element = this.element, o = this.options;
-            var items = element.find(o.source);
+            const element = this.element;
+            const o = this.options;
+            const items = element.find(o.source);
 
             if (items.length === 0) {
                 return ;
@@ -110,22 +112,20 @@
         },
 
         _goto: function(el){
-            var that = this, o = this.options;
-            var $el = $(el);
-            var img = $("<img>"), src;
-            var imageContainer, imageWrapper, activity;
+            const that = this;
+            const o = this.options;
+            const $el = $(el);
+            const img = $("<img>");
+            let src;
 
-            imageContainer = this.lightbox.find(".lightbox__image");
-
+            const imageContainer = this.lightbox.find(".lightbox__image")
             imageContainer.find(".lightbox__image-wrapper").remove();
-            imageWrapper = $("<div>")
-                .addClass("lightbox__image-wrapper")
-                .addClass(o.clsImageWrapper)
-                .attr("data-title", ($el.attr("alt") || $el.attr("data-title") || ""))
-                .appendTo(imageContainer);
-
-            activity = $("<div>").appendTo(imageWrapper);
-
+            const imageWrapper = $("<div>")
+              .addClass("lightbox__image-wrapper")
+              .addClass(o.clsImageWrapper)
+              .attr("data-title", ($el.attr("alt") || $el.attr("data-title") || ""))
+              .appendTo(imageContainer)
+            const activity = $("<div>").appendTo(imageWrapper)
             Metro.makePlugin(activity, "activity", {
                 type: "cycle",
                 style: "color"
@@ -137,7 +137,7 @@
                 src = $el.attr("data-original") || $el.attr("src");
                 img.attr("src", src);
                 img[0].onload = function(){
-                    var port = this.height > this.width;
+                    const port = this.height > this.width;
                     img.addClass(port ? "lightbox__image-portrait" : "lightbox__image-landscape").addClass(o.clsImage);
                     img.attr("alt", $el.attr("alt"));
                     img.appendTo(imageWrapper);
@@ -151,7 +151,7 @@
         },
 
         _index: function(el){
-            var index = -1;
+            let index = -1;
 
             this.items.each(function(i){
                 if (this === el) {
@@ -163,7 +163,8 @@
         },
 
         next: function(){
-            var index, current = this.current;
+            let index;
+            const current = this.current;
 
             index = this._index(current);
 
@@ -179,7 +180,8 @@
         },
 
         prev: function(){
-            var index, current = this.current;
+            let index;
+            const current = this.current;
 
             index = this._index(current);
 
@@ -210,11 +212,11 @@
             this.lightbox.hide();
         },
 
-        changeAttribute: function(){
+        changeAttribute: (attr, val)=> {
         },
 
         destroy: function(){
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

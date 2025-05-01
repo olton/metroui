@@ -2,7 +2,8 @@
 * TODO:
 *  1. Add custom buttons
 * */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let KeypadDefaultConfig = {
@@ -45,12 +46,12 @@
         onKeypadCreate: Metro.noop
     };
 
-    Metro.keypadSetup = function (options) {
+    Metro.keypadSetup = (options) => {
         KeypadDefaultConfig = $.extend({}, KeypadDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroKeypadSetup"] !== "undefined") {
-        Metro.keypadSetup(globalThis["metroKeypadSetup"]);
+    if (typeof globalThis.metroKeypadSetup !== "undefined") {
+        Metro.keypadSetup(globalThis.metroKeypadSetup);
     }
 
     Metro.Component('keypad', {
@@ -68,7 +69,8 @@
         },
 
         _create: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             this.options.position = "bottom-left"
             this.keys = o.keys.toArray(o.keyDelimiter);
@@ -88,7 +90,8 @@
         },
 
         _createKeypad: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             let keys;
 
             const keypad = element.wrap("<div>").addClass("input keypad").addClass(element[0].className).addClass(o.clsKeypad);
@@ -109,7 +112,8 @@
 
             element[0].className = '';
             if (o.copyInlineStyles === true) {
-                let i = 0, l = element[0].style.length;
+                let i = 0;
+                const l = element[0].style.length;
                 for (; i < l; i++) {
                     keypad.css(element[0].style[i], element.css(element[0].style[i]));
                 }
@@ -118,8 +122,8 @@
             element.addClass(o.clsInput);
             keypad.addClass(o.clsKeypad);
 
-            element.on(Metro.events.blur, function(){keypad.removeClass("focused");});
-            element.on(Metro.events.focus, function(){keypad.addClass("focused");});
+            element.on(Metro.events.blur, ()=> {keypad.removeClass("focused");});
+            element.on(Metro.events.focus, ()=> {keypad.addClass("focused");});
 
             const buttons = $("<div>").addClass("button-group").appendTo(keypad);
             const kbdButton = $("<button>").addClass("button input-kbd-button").addClass(o.clsKbdButton).attr("tabindex", -1).attr("type", "button").html("⌨");
@@ -149,16 +153,19 @@
         },
 
         _setKeysPosition: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const keypad = element.parent();
             const keys = keypad.find(".keys");
             keys.removeClass(this.positions.join(" ")).addClass(o.position)
         },
 
         _createKeys: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const keypad = element.parent();
-            let key, keys = keypad.find(".keys");
+            let key;
+            const keys = keypad.find(".keys");
             const factor = Math.round(Math.sqrt(this.keys.length + 2));
             const key_size = o.keySize;
             let width;
@@ -205,7 +212,9 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const keypad = element.parent();
             const keys = keypad.find(".keys");
 
@@ -216,7 +225,7 @@
 
                 if (key.data('key') !== '&larr;' && key.data('key') !== '&times;') {
 
-                    if (o.keyLength > 0 && (""+that.value).length === o.keyLength) {
+                    if (o.keyLength > 0 && (`${that.value}`).length === o.keyLength) {
                         return false;
                     }
 
@@ -268,7 +277,7 @@
                 e.stopPropagation();
             });
 
-            keypad.on(Metro.events.click, function(e){
+            keypad.on(Metro.events.click, (e)=> {
                 if (o.open === true) {
                     return ;
                 }
@@ -293,7 +302,7 @@
             });
 
             if (o.target !== null) {
-                element.on(Metro.events.change, function(){
+                element.on(Metro.events.change, ()=> {
                     const t = $(o.target);
                     if (t.length === 0) {
                         return ;
@@ -319,10 +328,7 @@
             });
         },
 
-        shuffleKeys: function(count){
-            if (count === undefined) {
-                count = this.options.shuffleCount;
-            }
+        shuffleKeys: function(count = 3){
             for (let i = 0; i < count; i++) {
                 this.keys_to_work = this.keys_to_work.shuffle();
             }
@@ -330,13 +336,14 @@
         },
 
         val: function(v){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             if (typeof v === "undefined") {
                 return o.trimSeparator ? this.value.replace(new RegExp(o.keySeparator, "g")) : this.value;
             }
 
-            this.value = ""+v;
+            this.value = `${v}`;
 
             if (element[0].tagName === "INPUT") {
                 element.val(v);
@@ -349,7 +356,8 @@
         },
 
         open: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const keypad = element.parent();
             const keys = keypad.find(".keys");
 
@@ -408,8 +416,10 @@
         },
 
         destroy: function(){
-            const element = this.element, o = this.options,
-                keypad = this.keypad, keys = keypad.find(".keys");
+            const element = this.element;
+            const o = this.options;
+            const keypad = this.keypad;
+            const keys = keypad.find(".keys");
 
             keypad.off(Metro.events.click);
             keys.off(Metro.events.click, ".key");
@@ -422,7 +432,7 @@
         }
     });
 
-    $(document).on(Metro.events.click, function(){
+    $(document).on(Metro.events.click, ()=> {
         const keypads = $(".keypad .keys");
         $.each(keypads, function(){
             if (!$(this).hasClass("keep-open")) {
@@ -430,4 +440,4 @@
             }
         });
     });
-}(Metro, Dom));
+})(Metro, Dom);

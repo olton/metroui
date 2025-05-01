@@ -1,9 +1,9 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var MaterialInputDefaultConfig = {
-        materialinputDeferred: 0,
+
+    let MaterialInputDefaultConfig = {
+        materialInputDeferred: 0,
         
         label: "",
         informer: "",
@@ -30,12 +30,12 @@
         onInputCreate: Metro.noop
     };
 
-    Metro.materialInputSetup = function (options) {
+    Metro.materialInputSetup = (options) => {
         MaterialInputDefaultConfig = $.extend({}, MaterialInputDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroMaterialInputSetup"] !== "undefined") {
-        Metro.materialInputSetup(globalThis["metroMaterialInputSetup"]);
+    if (typeof globalThis.metroMaterialInputSetup !== "undefined") {
+        Metro.materialInputSetup(globalThis.metroMaterialInputSetup);
     }
 
     Metro.Component('material-input', {
@@ -49,7 +49,7 @@
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -60,9 +60,10 @@
         },
 
         _createStructure: function(){
-            var element = this.element, o = this.options;
-            var container;
-            var buttons;
+            const element = this.element;
+            const o = this.options;
+            let container;
+            let buttons;
 
             element[0].className = "";
             element.attr("autocomplete", "nope");
@@ -71,16 +72,16 @@
                 element.attr("type", "text");
             }
 
-            container = element.wrap("<div>").addClass("input-material " + element[0].className);
+            container = element.wrap("<div>").addClass(`input-material ${element[0].className}`);
             buttons = $("<div>").addClass("buttons").appendTo(container);
 
             if (o.label) {
                 $("<span>").html(o.label).addClass("label").addClass(o.clsLabel).insertAfter(element);
             }
-            if (Utils.isValue(o.informer)) {
+            if (Metro.utils.isValue(o.informer)) {
                 $("<span>").html(o.informer).addClass("informer").addClass(o.clsInformer).insertAfter(element);
             }
-            if (Utils.isValue(o.icon)) {
+            if (Metro.utils.isValue(o.icon)) {
                 container.addClass("with-icon");
                 $("<span>").html(o.icon).addClass("icon").addClass(o.clsIcon).insertAfter(element);
             }
@@ -98,28 +99,27 @@
                 searchButton.appendTo(buttons);
             }
 
-            const customButtons = Utils.isObject(o.customButtons);
+            const customButtons = Metro.utils.isObject(o.customButtons);
             if (Array.isArray(customButtons)) {
                 $.each(customButtons, function(){
-                    var item = this;
-                    var btn = $("<button>");
+                    const btn = $("<button>");
 
                     btn
                         .addClass("button input-custom-button")
                         .addClass(o.clsCustomButton)
-                        .addClass(item.cls)
+                        .addClass(this.cls)
                         .attr("tabindex", -1)
                         .attr("type", "button")
-                        .html(item.text);
+                        .html(this.text);
 
-                    if (item.attr && typeof item.attr === 'object') {
-                        $.each(item.attr, function(k, v){
+                    if (this.attr && typeof this.attr === 'object') {
+                        $.each(this.attr, (k, v)=> {
                             btn.attr(Str.dashedName(k), v);
                         });
                     }
 
-                    if (item.onclick) btn.on("click", () => {
-                        item.onclick.apply(btn, [element.valueOf(), element]);
+                    if (this.onclick) btn.on("click", () => {
+                        this.onclick.apply(btn, [element.valueOf(), element]);
                     });
                     
                     btn.appendTo(buttons);
@@ -145,10 +145,11 @@
         },
 
         _createEvents: function(){
-            const that = this, o = this.options
+            const that = this
+            const o = this.options
             const element = this.element;
             
-            this.component.on(Metro.events.click, ".input-clear-button", function(){
+            this.component.on(Metro.events.click, ".input-clear-button", ()=> {
                 const curr = element.val();
                 element.val("").fire('clear').fire('change').fire('keyup').focus();
 
@@ -157,7 +158,7 @@
                 });
             });
 
-            this.component.on(Metro.events.click, ".input-reveal-button", function(){
+            this.component.on(Metro.events.click, ".input-reveal-button", ()=> {
                 if (element.attr('type') === 'password') {
                     element.attr('type', 'text');
                 } else {
@@ -180,7 +181,7 @@
                 }
             });
 
-            element.on(Metro.events.keydown, function(e){
+            element.on(Metro.events.keydown, (e)=> {
                 if (e.keyCode === Metro.keyCode.ENTER) {
                     that._fireEvent("enter-click", {
                         val: element.val()
@@ -221,4 +222,4 @@
             return this.element;
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

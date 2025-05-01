@@ -1,4 +1,5 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     const file_icon = `
@@ -26,12 +27,12 @@
         onListViewCreate: Metro.noop
     };
 
-    Metro.listViewSetup = function (options) {
+    Metro.listViewSetup = (options) => {
         ListViewDefaultConfig = $.extend({}, ListViewDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroListViewSetup"] !== "undefined") {
-        Metro.listViewSetup(globalThis["metroListViewSetup"]);
+    if (typeof globalThis.metroListViewSetup !== "undefined") {
+        Metro.listViewSetup(globalThis.metroListViewSetup);
     }
 
     Metro.Component('listview', {
@@ -52,46 +53,30 @@
             });
         },
 
-        _createIcon: function(data){
-            return $("<div>").addClass("icon").html(data);
-        },
-
-        _createCaption: function(data = ""){
-            return $("<div>").addClass("caption").html(data);
-        },
-
-        _createContent: function(data = ""){
-            return $("<div>").addClass("content").html(data);
-        },
-
-        _createDesc: function(data = ""){
-            return $("<div>").addClass("desc").html(data);
-        },
-
-        _createDate: function(data = ""){
-            return $("<div>").addClass("date").html(data);
-        },
-
-        _createToggle: function(){
-            return $("<span>").addClass("node-toggle").html(toggleImage);
-        },
-
+        _createIcon: (data)=> $("<div>").addClass("icon").html(data),
+        _createCaption: (data = "")=> $("<div>").addClass("caption").html(data),
+        _createContent: (data = "")=> $("<div>").addClass("content").html(data),
+        _createDesc: (data = "")=> $("<div>").addClass("desc").html(data),
+        _createDate: (data = "")=> $("<div>").addClass("date").html(data),
+        _createToggle: ()=> $("<span>").addClass("node-toggle").html(toggleImage),
         _createNode: function(data){
-            const that = this, o = this.options;
+            const o = this.options;
             const node = $("<li>");
 
             node.append($("<input type='checkbox' data-role='checkbox'>").data("node", node));
-            node.append(that._createIcon(data.icon ?? o.defaultIcon));
-            node.append(that._createCaption(data.caption));
-            node.append(that._createDesc(data.desc));
-            node.append(that._createDate(data.date));
-            node.append(that._createContent(data.content));
+            node.append(this._createIcon(data.icon ?? o.defaultIcon));
+            node.append(this._createCaption(data.caption));
+            node.append(this._createDesc(data.desc));
+            node.append(this._createDate(data.date));
+            node.append(this._createContent(data.content));
             
             return node;
         },
 
         _createStructure: function(){
-            const that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const nodes = element.find("li");
 
             element.addClass("listview");
@@ -129,7 +114,9 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
             element.on(Metro.events.dblclick, ".node", function(){
                 const node = $(this);
@@ -191,7 +178,8 @@
         },
 
         view: function(v){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             if (v === undefined) {
                 return o.view;
@@ -199,38 +187,36 @@
 
             o.view = v;
 
-            $.each(Metro.listView, function(i, v){
-                element.removeClass("view-"+v);
-                element.find("ul").removeClass("view-"+v);
+            $.each(Metro.listView, (i, v)=> {
+                element.removeClass(`view-${v}`);
+                element.find("ul").removeClass(`view-${v}`);
             });
 
-            element.addClass("view-" + o.view);
-            element.find("ul").addClass("view-" + o.view);
+            element.addClass(`view-${o.view}`);
+            element.find("ul").addClass(`view-${o.view}`);
         },
 
         toggleNode: function(node){
             const o = this.options;
-            let func;
+            const n = $(node)
 
-            node=$(node);
-
-            if (!node.hasClass("node-group")) {
+            if (!n.hasClass("node-group")) {
                 return ;
             }
 
-            node.toggleClass("expanded");
+            n.toggleClass("expanded");
 
-            func = node.hasClass("expanded") !== true ? "slideUp" : "slideDown";
-
+            const func = n.hasClass("expanded") !== true ? "slideUp" : "slideDown"
             this._fireEvent("collapse-node", {
-                node: node
+                node: n
             });
 
-            node.children("ul")[func](o.duration);
+            n.children("ul")[func](o.duration);
         },
 
         toggleSelectable: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             o.selectable = !o.selectable;
             const func = o.selectable === true ? "addClass" : "removeClass";
             console.log(func);
@@ -239,32 +225,32 @@
         },
 
         add: function(data, node = null){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             let target;
-            let new_node;
             let toggle;
+            let n;
 
             if (node === null) {
                 target = element;
             } else {
 
-                node=$(node);
+                n = $(node);
 
-                if (!node.hasClass("node-group")) {
+                if (!n.hasClass("node-group")) {
                     return ;
                 }
 
-                target = node.children("ul");
+                target = n.children("ul");
                 if (target.length === 0) {
-                    target = $("<ul>").addClass("listview").addClass("view-"+o.view).appendTo(node);
+                    target = $("<ul>").addClass("listview").addClass(`view-${o.view}`).appendTo(n);
                     toggle = this._createToggle();
-                    toggle.appendTo(node);
-                    node.addClass("expanded");
+                    toggle.appendTo(n);
+                    n.addClass("expanded");
                 }
             }
 
-            new_node = this._createNode(data);
-
+            const new_node = this._createNode(data)
             new_node.addClass("node").appendTo(target);
 
             const cb = $("<input type='checkbox'>");
@@ -282,16 +268,17 @@
         },
 
         addGroup: function(data){
-            const element = this.element, o = this.options;
-            let node;
+            const element = this.element;
+            const o = this.options;
 
-            delete data['icon'];
+            // biome-ignore lint/performance/noDelete: <explanation>
+            if (data.icon) delete data.icon;
 
-            node = this._createNode(data);
+            const node = this._createNode(data)
             node.addClass("node-group").appendTo(element);
             node.append(this._createToggle());
             node.addClass("expanded");
-            node.append($("<ul>").addClass("listview").addClass("view-"+o.view));
+            node.append($("<ul>").addClass("listview").addClass(`view-${o.view}`));
 
             this._fireEvent("node-insert", {
                 newNode: node,
@@ -303,17 +290,14 @@
         },
 
         insertBefore: function(data, node){
-            let new_node, parent_node, list;
+            const n = $(node);
 
-            node=$(node);
+            if (!n.length) {return;}
 
-            if (!node.length) {return;}
-
-            new_node = this._createNode(data);
-            new_node.addClass("node").insertBefore(node);
-            parent_node = new_node.closest(".node");
-            list = new_node.closest("ul");
-
+            const new_node = this._createNode(data)
+            new_node.addClass("node").insertBefore(n);
+            const parent_node = new_node.closest(".node")
+            const list = new_node.closest("ul")
             this._fireEvent("node-insert", {
                 newNode: new_node,
                 parentNode: parent_node,
@@ -324,17 +308,14 @@
         },
 
         insertAfter: function(data, node){
-            let new_node, parent_node, list;
+            const n = $(node);
 
-            node=$(node);
+            if (!n.length) {return;}
 
-            if (!node.length) {return;}
-
-            new_node = this._createNode(data);
-            new_node.addClass("node").insertAfter(node);
-            parent_node = new_node.closest(".node");
-            list = new_node.closest("ul");
-
+            const new_node = this._createNode(data)
+            new_node.addClass("node").insertAfter(n);
+            const parent_node = new_node.closest(".node")
+            const list = new_node.closest("ul")
             this._fireEvent("node-insert", {
                 newNode: new_node,
                 parentNode: parent_node,
@@ -346,14 +327,13 @@
 
         del: function(node){
             const element = this.element;
+            const n = $(node);
 
-            node=$(node);
+            if (!n.length) {return;}
 
-            if (!node.length) {return;}
-
-            const parent_list = node.closest("ul");
+            const parent_list = n.closest("ul");
             const parent_node = parent_list.closest("li");
-            node.remove();
+            n.remove();
             if (parent_list.children().length === 0 && !parent_list.is(element)) {
                 parent_list.remove();
                 parent_node.removeClass("expanded");
@@ -361,21 +341,21 @@
             }
 
             this._fireEvent("node-delete", {
-                node: node
+                node: n
             });
         },
 
         clean: function(node){
-            node=$(node);
+            const n = $(node);
 
-            if (!node.length) {return;}
+            if (!n.length) {return;}
 
-            node.children("ul").remove();
-            node.removeClass("expanded");
-            node.children(".node-toggle").remove();
+            n.children("ul").remove();
+            n.removeClass("expanded");
+            n.children(".node-toggle").remove();
 
             this._fireEvent("node-clean", {
-                node: node
+                node: n
             });
         },
 
@@ -402,21 +382,22 @@
         },
 
         selectByAttribute: function(attributeName, attributeValue, select = true) {
-            this.element.find('li[' + attributeName + '="' + attributeValue + '"]' + ' > .checkbox input').prop("checked", select);
+            this.element.find(`li[${attributeName}="${attributeValue}"] > .checkbox input`).prop("checked", select);
             this.element.trigger('change');
         },
 
         changeAttribute: function(attributeName){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
-            const changeView = function () {
-                const new_view = "view-" + element.attr("data-view");
-                that.view(new_view);
+            const changeView = () => {
+                const new_view = `view-${element.attr("data-view")}`;
+                this.view(new_view);
             };
 
-            const changeSelectable = function () {
+            const changeSelectable = () => {
                 o.selectable = JSON.parse(element.attr("data-selectable")) === true;
-                that.toggleSelectable();
+                this.toggleSelectable();
             };
 
             switch (attributeName) {
@@ -436,4 +417,4 @@
             element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

@@ -1,9 +1,8 @@
-/** @format */
-
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
-    var Utils = Metro.utils;
-    var ListDefaultConfig = {
+
+    let ListDefaultConfig = {
         listDeferred: 0,
         templateBeginToken: "<%",
         templateEndToken: "%>",
@@ -69,12 +68,12 @@
         onListCreate: Metro.noop,
     };
 
-    Metro.listSetup = function (options) {
+    Metro.listSetup = (options) => {
         ListDefaultConfig = $.extend({}, ListDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroListSetup"] !== "undefined") {
-        Metro.listSetup(globalThis["metroListSetup"]);
+    if (typeof globalThis.metroListSetup !== "undefined") {
+        Metro.listSetup(globalThis.metroListSetup);
     }
 
     Metro.Component("list", {
@@ -108,37 +107,36 @@
         },
 
         _create: function () {
-            var that = this,
-                o = this.options;
+            const o = this.options;
 
             if (o.source) {
-                that._fireEvent("data-load", {
+                this._fireEvent("data-load", {
                     source: o.source,
                 });
 
                 fetch(o.source)
                     .then(Metro.fetch.status)
                     .then(Metro.fetch.json)
-                    .then(function (data) {
-                        that._fireEvent("data-loaded", {
+                    .then((data) => {
+                        this._fireEvent("data-loaded", {
                             source: o.source,
                             data: data,
                         });
-                        that._build(data);
+                        this._build(data);
                     })
-                    .catch(function (error) {
-                        that._fireEvent("data-load-error", {
+                    .catch((error) => {
+                        this._fireEvent("data-load-error", {
                             source: o.source,
                             error: error,
                         });
                     });
             } else {
-                that._build();
+                this._build();
             }
         },
 
         _build: function (data) {
-            if (Utils.isValue(data)) {
+            if (Metro.utils.isValue(data)) {
                 this._createItemsFromJSON(data);
             } else {
                 this._createItemsFromHTML();
@@ -151,21 +149,21 @@
         },
 
         _createItemsFromHTML: function () {
-            var that = this,
-                element = this.element,
-                o = this.options;
-            var clsTemplateTag = ("" + o.clsTemplateTag).toArray(",");
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const clsTemplateTag = (`${o.clsTemplateTag}`).toArray(",");
 
             this.items = [];
 
             $.each(element.children(o.itemTag), function () {
-                var tagChildren = $(this).children("*");
+                const tagChildren = $(this).children("*");
 
                 if (clsTemplateTag.length) {
                     if (clsTemplateTag.length === 1) {
                         tagChildren.addClass(clsTemplateTag[0]);
                     } else {
-                        tagChildren.each(function (i, child) {
+                        tagChildren.each((i, child) => {
                             $(child).addClass(clsTemplateTag[i] ? clsTemplateTag[i] : clsTemplateTag[clsTemplateTag.length - 1]);
                         });
                     }
@@ -175,34 +173,33 @@
         },
 
         _createItemsFromJSON: function (source) {
-            var that = this,
-                o = this.options;
-            var clsTemplateTag = ("" + o.clsTemplateTag).toArray(",");
+            const that = this;
+            const o = this.options;
+            const clsTemplateTag = (`${o.clsTemplateTag}`).toArray(",");
 
             this.items = [];
 
-            if (Utils.isValue(source.template)) {
+            if (Metro.utils.isValue(source.template)) {
                 this.itemTemplate = source.template;
             }
 
-            if (Utils.isValue(source.header)) {
+            if (Metro.utils.isValue(source.header)) {
                 this.header = source.header;
             }
 
-            if (Utils.isValue(source.data)) {
+            if (Metro.utils.isValue(source.data)) {
                 $.each(source.data, function () {
-                    var item = "",
-                        row = this;
-                    var li = document.createElement(o.itemTag);
-                    var tpl = that.itemTemplate;
-                    var tagChildren;
+                    let item = "";
+                    const li = document.createElement(o.itemTag);
+                    const tpl = that.itemTemplate;
+                    let tagChildren;
 
-                    if (!Utils.isValue(tpl)) {
-                        for (var i in row) {
-                            item += "<" + o.defaultTemplateTag + ">" + row[i] + "</" + o.defaultTemplateTag + ">";
+                    if (!Metro.utils.isValue(tpl)) {
+                        for (const i in this) {
+                            item += `<${o.defaultTemplateTag}>${this[i]}</${o.defaultTemplateTag}>`;
                         }
                     } else {
-                        item = Metro.template(tpl, row, {
+                        item = Metro.template(tpl, this, {
                             beginToken: o.templateBeginToken,
                             endToken: o.templateEndToken,
                         });
@@ -215,7 +212,7 @@
                         if (clsTemplateTag.length === 1) {
                             tagChildren.addClass(clsTemplateTag[0]);
                         } else {
-                            tagChildren.each(function (i, child) {
+                            tagChildren.each((i, child) => {
                                 $(child).addClass(clsTemplateTag[i] ? clsTemplateTag[i] : clsTemplateTag[clsTemplateTag.length - 1]);
                             });
                         }
@@ -227,17 +224,17 @@
         },
 
         _createTopBlock: function () {
-            var that = this,
-                element = this.element,
-                o = this.options;
-            var top_block = $("<div>").addClass("list-top").addClass(o.clsListTop).insertBefore(element);
-            var search_block, search_input, rows_block, rows_select;
+            const element = this.element;
+            const o = this.options;
+            const top_block = $("<div>").addClass("list-top").addClass(o.clsListTop).insertBefore(element);
+            let search_block;
+            let rows_block;
 
-            search_block = Utils.isValue(this.wrapperSearch)
+            search_block = Metro.utils.isValue(this.wrapperSearch)
                 ? this.wrapperSearch
                 : $("<div>").addClass("list-search-block").addClass(o.clsSearch).appendTo(top_block);
 
-            search_input = $("<input>").attr("type", "text").appendTo(search_block);
+            const search_input = $("<input>").attr("type", "text").appendTo(search_block)
             Metro.makePlugin(search_input, "input", {
                 prepend: o.listSearchTitle,
             });
@@ -246,13 +243,13 @@
                 search_block.hide();
             }
 
-            rows_block = Utils.isValue(this.wrapperRows)
+            rows_block = Metro.utils.isValue(this.wrapperRows)
                 ? this.wrapperRows
                 : $("<div>").addClass("list-rows-block").addClass(o.clsItemsCount).appendTo(top_block);
 
-            rows_select = $("<select>").appendTo(rows_block);
+            const rows_select = $("<select>").appendTo(rows_block)
             $.each(o.itemsSteps.toArray(), function () {
-                var option = $("<option>")
+                const option = $("<option>")
                     .attr("value", this === "all" ? -1 : this)
                     .text(this === "all" ? o.itemsAllTitle : this)
                     .appendTo(rows_select);
@@ -261,13 +258,13 @@
             rows_select.select({
                 filter: false,
                 prepend: o.listItemsCountTitle,
-                onChange: function (val) {
+                onChange: (val) => {
                     if (+val === +o.items) return;
-                    o.items = parseInt(val);
-                    that.currentPage = 1;
-                    that._draw();
+                    o.items = Number.parseInt(val);
+                    this.currentPage = 1;
+                    this._draw();
 
-                    that._fireEvent("rows-count-change", {
+                    this._fireEvent("rows-count-change", {
                         val: val,
                     });
                 },
@@ -281,10 +278,11 @@
         },
 
         _createBottomBlock: function () {
-            var element = this.element,
-                o = this.options;
-            var bottom_block = $("<div>").addClass("list-bottom").addClass(o.clsListBottom).insertAfter(element);
-            var info, pagination;
+            const element = this.element;
+            const o = this.options;
+            const bottom_block = $("<div>").addClass("list-bottom").addClass(o.clsListBottom).insertAfter(element);
+            let info;
+            let pagination;
 
             info = $("<div>").addClass("list-info").addClass(o.clsListInfo).appendTo(bottom_block);
             if (o.showListInfo !== true) {
@@ -300,14 +298,14 @@
         },
 
         _createStructure: function () {
-            var that = this,
-                element = this.element,
-                o = this.options;
-            var list_component;
-            var w_search = $(o.searchWrapper),
-                w_info = $(o.infoWrapper),
-                w_rows = $(o.rowsWrapper),
-                w_paging = $(o.paginationWrapper);
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            let list_component;
+            const w_search = $(o.searchWrapper);
+            const w_info = $(o.infoWrapper);
+            const w_rows = $(o.rowsWrapper);
+            const w_paging = $(o.paginationWrapper);
 
             if (w_search.length > 0) {
                 this.wrapperSearch = w_search;
@@ -351,23 +349,23 @@
             this._createTopBlock();
             this._createBottomBlock();
 
-            if (Utils.isValue(o.filterString)) {
+            if (Metro.utils.isValue(o.filterString)) {
                 this.filterString = o.filterString;
             }
 
-            var filter_func;
+            let filter_func;
 
-            if (Utils.isValue(o.filter)) {
-                filter_func = Utils.isFunc(o.filter);
+            if (Metro.utils.isValue(o.filter)) {
+                filter_func = Metro.utils.isFunc(o.filter);
                 if (filter_func === false) {
-                    filter_func = Utils.func(o.filter);
+                    filter_func = Metro.utils.func(o.filter);
                 }
                 that.filterIndex = that.addFilter(filter_func);
             }
 
-            if (Utils.isValue(o.filters) && typeof o.filters === "string") {
+            if (Metro.utils.isValue(o.filters) && typeof o.filters === "string") {
                 $.each(o.filters.toArray(), function () {
-                    filter_func = Utils.isFunc(this);
+                    filter_func = Metro.utils.isFunc(this);
                     if (filter_func !== false) {
                         that.filtersIndexes.push(that.addFilter(filter_func));
                     }
@@ -381,14 +379,14 @@
         },
 
         _createEvents: function () {
-            var that = this,
-                element = this.element,
-                o = this.options;
-            var component = element.parent();
-            var search = component.find(".list-search-block input");
-            var customSearch;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const component = element.parent();
+            const search = component.find(".list-search-block input");
+            let customSearch;
 
-            function searchItem(e) {
+            let searchItem = function () {
                 that.filterString = this.value.trim().toLowerCase();
                 if (that.filterString[that.filterString.length - 1] === ":") {
                     return;
@@ -401,7 +399,7 @@
 
             search.on(Metro.events.inputchange, searchItem);
 
-            if (Utils.isValue(this.wrapperSearch)) {
+            if (Metro.utils.isValue(this.wrapperSearch)) {
                 customSearch = this.wrapperSearch.find("input");
                 if (customSearch.length > 0) {
                     customSearch.on(Metro.events.inputchange, searchItem);
@@ -409,8 +407,8 @@
             }
 
             function pageLinkClick(l) {
-                var link = $(l);
-                var item = link.parent();
+                const link = $(l);
+                const item = link.parent();
 
                 if (item.hasClass("active")) {
                     return;
@@ -439,7 +437,7 @@
                 pageLinkClick(this);
             });
 
-            if (Utils.isValue(this.wrapperPagination)) {
+            if (Metro.utils.isValue(this.wrapperPagination)) {
                 this.wrapperPagination.on(Metro.events.click, ".pagination .page-link", function () {
                     pageLinkClick(this);
                 });
@@ -447,41 +445,44 @@
         },
 
         _info: function (start, stop, length) {
-            var element = this.element,
-                o = this.options;
-            var component = element.parent();
-            var info = Utils.isValue(this.wrapperInfo) ? this.wrapperInfo : component.find(".list-info");
-            var text;
+            const element = this.element;
+            const o = this.options;
+            const component = element.parent();
+            const info = Metro.utils.isValue(this.wrapperInfo) ? this.wrapperInfo : component.find(".list-info");
+            let text;
+            let _stop = stop;
+            let _start = start;
+            let _length = length;
 
             if (info.length === 0) {
                 return;
             }
 
-            if (stop > length) {
-                stop = length;
+            if (_stop > length) {
+                _stop = length;
             }
 
             if (this.items.length === 0) {
-                start = stop = length = 0;
+                _start = _stop = _length = 0;
             }
 
             text = o.listInfoTitle;
-            text = text.replace("$1", start);
-            text = text.replace("$2", stop);
-            text = text.replace("$3", length);
+            text = text.replace("$1", _start);
+            text = text.replace("$2", _stop);
+            text = text.replace("$3", _length);
             info.html(text);
         },
 
         _paging: function (length) {
-            var element = this.element,
-                o = this.options;
-            var component = element.parent();
+            const element = this.element;
+            const o = this.options;
+            const component = element.parent();
             this.pagesCount = Math.ceil(length / o.items); // Костыль
             Metro.pagination({
                 length: length,
                 rows: o.items,
                 current: this.currentPage,
-                target: Utils.isValue(this.wrapperPagination) ? this.wrapperPagination : component.find(".list-pagination"),
+                target: Metro.utils.isValue(this.wrapperPagination) ? this.wrapperPagination : component.find(".list-pagination"),
                 claPagination: o.clsPagination,
                 prevTitle: o.paginationPrevTitle,
                 nextTitle: o.paginationNextTitle,
@@ -490,20 +491,19 @@
         },
 
         _filter: function () {
-            var that = this,
-                o = this.options,
-                items,
-                i,
-                data,
-                inset,
-                c1,
-                result;
+            const o = this.options;
+            let items;
+            let i;
+            let data;
+            let inset;
+            let c1;
+            let result;
 
-            if (Utils.isValue(this.filterString) || this.filters.length > 0) {
-                items = this.items.filter(function (item) {
+            if (Metro.utils.isValue(this.filterString) || this.filters.length > 0) {
+                items = this.items.filter((item) => {
                     data = "";
 
-                    if (Utils.isValue(o.filterClass)) {
+                    if (Metro.utils.isValue(o.filterClass)) {
                         inset = item.getElementsByClassName(o.filterClass);
 
                         if (inset.length > 0)
@@ -518,11 +518,11 @@
                         .replace(/[\n\r]+|[\s]{2,}/g, " ")
                         .trim()
                         .toLowerCase();
-                    result = Utils.isValue(that.filterString) ? c1.indexOf(that.filterString) > -1 : true;
+                    result = Metro.utils.isValue(this.filterString) ? c1.indexOf(this.filterString) > -1 : true;
 
-                    if (result === true && that.filters.length > 0) {
-                        for (i = 0; i < that.filters.length; i++) {
-                            if (Utils.exec(that.filters[i], [item]) !== true) {
+                    if (result === true && this.filters.length > 0) {
+                        for (i = 0; i < this.filters.length; i++) {
+                            if (Metro.utils.exec(this.filters[i], [item]) !== true) {
                                 result = false;
                                 break;
                             }
@@ -530,11 +530,11 @@
                     }
 
                     if (result) {
-                        that._fireEvent("filter-item-accepted", {
+                        this._fireEvent("filter-item-accepted", {
                             item: item,
                         });
                     } else {
-                        that._fireEvent("filter-item-declined", {
+                        this._fireEvent("filter-item-declined", {
                             item: item,
                         });
                     }
@@ -542,8 +542,8 @@
                     return result;
                 });
 
-                that._fireEvent("search", {
-                    search: that.filterString,
+                this._fireEvent("search", {
+                    search: this.filterString,
                     items: items,
                 });
             } else {
@@ -554,19 +554,19 @@
         },
 
         _draw: function (cb) {
-            var element = this.element,
-                o = this.options;
-            var i;
-            var start = o.items === -1 ? 0 : o.items * (this.currentPage - 1),
-                stop = o.items === -1 ? this.items.length - 1 : start + o.items - 1;
-            var items;
+            const element = this.element;
+            const o = this.options;
+            let i;
+            const start = o.items === -1 ? 0 : o.items * (this.currentPage - 1);
+            const stop = o.items === -1 ? this.items.length - 1 : start + o.items - 1;
+            let items;
 
             items = this._filter();
 
             element.children(o.itemTag).remove();
 
             for (i = start; i <= stop; i++) {
-                if (Utils.isValue(items[i])) {
+                if (Metro.utils.isValue(items[i])) {
                     $(items[i]).addClass(o.clsListItem).appendTo(element);
                 }
 
@@ -583,21 +583,23 @@
             this._fireEvent("draw");
 
             if (cb) {
-                Utils.exec(cb, [element], element[0]);
+                Metro.utils.exec(cb, [element], element[0]);
             }
         },
 
         _getItemContent: function (item) {
             const locale = this.locale;
-            var o = this.options,
-                $item = $(item);
-            var i, inset, data;
-            var format,
-                formatMask = Utils.isValue($item.data("formatMask")) ? $item.data("formatMask") : null;
+            const o = this.options;
+            const $item = $(item);
+            let i;
+            let inset;
+            let data;
+            let format;
+            const formatMask = Metro.utils.isValue($item.data("formatMask")) ? $item.data("formatMask") : null;
 
-            if (Utils.isValue(o.sortClass)) {
+            if (Metro.utils.isValue(o.sortClass)) {
                 data = "";
-                inset = $(item).find("." + o.sortClass);
+                inset = $(item).find(`.${o.sortClass}`);
 
                 if (inset.length > 0)
                     for (i = 0; i < inset.length; i++) {
@@ -609,14 +611,14 @@
                 format = item.getAttribute("data-format");
             }
 
-            data = ("" + data)
+            data = (`${data}`)
                 .toLowerCase()
                 .replace(/[\n\r]+|[\s]{2,}/g, " ")
                 .trim();
 
-            if (Utils.isValue(format)) {
+            if (Metro.utils.isValue(format)) {
                 if (["number", "int", "integer", "float", "money"].indexOf(format) !== -1 && (o.thousandSeparator !== "," || o.decimalSeparator !== ".")) {
-                    data = Utils.parseNumber(data, o.thousandSeparator, o.decimalSeparator);
+                    data = Metro.utils.parseNumber(data, o.thousandSeparator, o.decimalSeparator);
                 }
 
                 switch (format) {
@@ -628,19 +630,19 @@
                         break;
                     case "int":
                     case "integer":
-                        data = parseInt(data);
+                        data = Number.parseInt(data);
                         break;
                     case "float":
-                        data = parseFloat(data);
+                        data = Number.parseFloat(data);
                         break;
                     case "money":
-                        data = Utils.parseMoney(data);
+                        data = Metro.utils.parseMoney(data);
                         break;
                     case "card":
-                        data = Utils.parseCard(data);
+                        data = Metro.utils.parseCard(data);
                         break;
                     case "phone":
-                        data = Utils.parsePhone(data);
+                        data = Metro.utils.parsePhone(data);
                         break;
                 }
             }
@@ -649,16 +651,16 @@
         },
 
         deleteItem: function (value) {
-            var i,
-                deleteIndexes = [],
-                item;
-            var is_func = Utils.isFunc(value);
+            let i;
+            const deleteIndexes = [];
+            let item;
+            const is_func = Metro.utils.isFunc(value);
 
             for (i = 0; i < this.items.length; i++) {
                 item = this.items[i];
 
                 if (is_func) {
-                    if (Utils.exec(value, [item])) {
+                    if (Metro.utils.exec(value, [item])) {
                         deleteIndexes.push(i);
                     }
                 } else {
@@ -668,7 +670,7 @@
                 }
             }
 
-            this.items = Utils.arrayDeleteByMultipleKeys(this.items, deleteIndexes);
+            this.items = Metro.utils.arrayDeleteByMultipleKeys(this.items, deleteIndexes);
 
             return this;
         },
@@ -678,13 +680,12 @@
         },
 
         sorting: function (source, dir, redraw) {
-            var that = this,
-                o = this.options;
+            const o = this.options;
 
-            if (Utils.isValue(source)) {
+            if (Metro.utils.isValue(source)) {
                 o.sortClass = source;
             }
-            if (Utils.isValue(dir) && ["asc", "desc"].indexOf(dir) > -1) {
+            if (Metro.utils.isValue(dir) && ["asc", "desc"].indexOf(dir) > -1) {
                 o.sortDir = dir;
             }
 
@@ -692,10 +693,10 @@
                 items: this.items,
             });
 
-            this.items.sort(function (a, b) {
-                var c1 = that._getItemContent(a);
-                var c2 = that._getItemContent(b);
-                var result = 0;
+            this.items.sort((a, b) => {
+                const c1 = this._getItemContent(a);
+                const c2 = this._getItemContent(b);
+                let result = 0;
 
                 if (c1 < c2) {
                     result = o.sortDir === "asc" ? -1 : 1;
@@ -705,7 +706,7 @@
                 }
 
                 if (result !== 0) {
-                    that._fireEvent("sort-item-switch", {
+                    this._fireEvent("sort-item-switch", {
                         a: a,
                         b: b,
                         result: result,
@@ -733,11 +734,11 @@
         },
 
         setData: function (data) {
-            var that = this,
-                element = this.element,
-                o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
-            if (Utils.isValue(data) !== true) {
+            if (Metro.utils.isValue(data) !== true) {
                 return;
             }
 
@@ -745,23 +746,23 @@
 
             element.html("");
 
-            if (Utils.isValue(o.filterString)) {
+            if (Metro.utils.isValue(o.filterString)) {
                 that.filterString = o.filterString;
             }
 
-            var filter_func;
+            let filter_func;
 
-            if (Utils.isValue(o.filter)) {
-                filter_func = Utils.isFunc(o.filter);
+            if (Metro.utils.isValue(o.filter)) {
+                filter_func = Metro.utils.isFunc(o.filter);
                 if (filter_func === false) {
-                    filter_func = Utils.func(o.filter);
+                    filter_func = Metro.utils.func(o.filter);
                 }
                 that.filterIndex = that.addFilter(filter_func);
             }
 
-            if (Utils.isValue(o.filters) && typeof o.filters === "string") {
+            if (Metro.utils.isValue(o.filters) && typeof o.filters === "string") {
                 $.each(o.filters.toArray(), function () {
-                    filter_func = Utils.isFunc(this);
+                    filter_func = Metro.utils.isFunc(this);
                     if (filter_func !== false) {
                         that.filtersIndexes.push(that.addFilter(filter_func));
                     }
@@ -774,10 +775,9 @@
         },
 
         loadData: function (source) {
-            var that = this,
-                o = this.options;
+            const o = this.options;
 
-            if (Utils.isValue(source) !== true) {
+            if (Metro.utils.isValue(source) !== true) {
                 return;
             }
 
@@ -790,15 +790,15 @@
             fetch(o.source)
                 .then(Metro.fetch.status)
                 .then(Metro.fetch.json)
-                .then(function (data) {
-                    that._fireEvent("data-loaded", {
+                .then((data) => {
+                    this._fireEvent("data-loaded", {
                         source: o.source,
                         data: data,
                     });
-                    that.setData(data);
+                    this.setData(data);
                 })
-                .catch(function (error) {
-                    that._fireEvent("data-load-error", {
+                .catch((error) => {
+                    this._fireEvent("data-load-error", {
                         source: o.source,
                         error: error,
                     });
@@ -838,20 +838,22 @@
         },
 
         page: function (num) {
-            if (num <= 0) {
-                num = 1;
+            let _num = Number.parseInt(num);
+            
+            if (_num <= 0) {
+                _num = 1;
             }
 
-            if (num > this.pagesCount) {
-                num = this.pagesCount;
+            if (_num > this.pagesCount) {
+                _num = this.pagesCount;
             }
 
-            this.currentPage = num;
+            this.currentPage = _num;
             this._draw();
         },
 
         addFilter: function (f, redraw) {
-            var func = Utils.isFunc(f);
+            const func = Metro.utils.isFunc(f);
             if (func === false) {
                 return;
             }
@@ -866,7 +868,7 @@
         },
 
         removeFilter: function (key, redraw) {
-            Utils.arrayDeleteByKey(this.filters, key);
+            Metro.utils.arrayDeleteByKey(this.filters, key);
             if (redraw === true) {
                 this.currentPage = 1;
                 this.draw();
@@ -895,35 +897,34 @@
         },
 
         changeAttribute: function (attributeName) {
-            var that = this,
-                element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
-            var changeSortDir = function () {
-                var dir = element.attr("data-sort-dir");
-                if (!Utils.isValue(dir)) {
+            const changeSortDir = () => {
+                const dir = element.attr("data-sort-dir");
+                if (!Metro.utils.isValue(dir)) {
                     return;
                 }
                 o.sortDir = dir;
-                that.sorting(o.sortClass, o.sortDir, true);
+                this.sorting(o.sortClass, o.sortDir, true);
             };
 
-            var changeSortClass = function () {
-                var target = element.attr("data-sort-source");
-                if (!Utils.isValue(target)) {
+            const changeSortClass = () => {
+                const target = element.attr("data-sort-source");
+                if (!Metro.utils.isValue(target)) {
                     return;
                 }
                 o.sortClass = target;
-                that.sorting(o.sortClass, o.sortDir, true);
+                this.sorting(o.sortClass, o.sortDir, true);
             };
 
-            var changeFilterString = function () {
-                var filter = element.attr("data-filter-string");
-                if (!Utils.isValue(filter)) {
+            const changeFilterString = () => {
+                const filter = element.attr("data-filter-string");
+                if (!Metro.utils.isValue(filter)) {
                     return;
                 }
                 o.filterString = filter;
-                that.filter(o.filterString);
+                this.filter(o.filterString);
             };
 
             switch (attributeName) {
@@ -940,13 +941,13 @@
         },
 
         destroy: function () {
-            var element = this.element;
-            var component = element.parent();
-            var search = component.find(".list-search-block input");
-            var customSearch;
+            const element = this.element;
+            const component = element.parent();
+            const search = component.find(".list-search-block input");
+            let customSearch;
 
             search.off(Metro.events.inputchange);
-            if (Utils.isValue(this.wrapperSearch)) {
+            if (Metro.utils.isValue(this.wrapperSearch)) {
                 customSearch = this.wrapperSearch.find("input");
                 if (customSearch.length > 0) {
                     customSearch.off(Metro.events.inputchange);
@@ -955,7 +956,7 @@
 
             component.off(Metro.events.click, ".pagination .page-link");
 
-            if (Utils.isValue(this.wrapperPagination)) {
+            if (Metro.utils.isValue(this.wrapperPagination)) {
                 this.wrapperPagination.off(Metro.events.click, ".pagination .page-link");
             }
 
