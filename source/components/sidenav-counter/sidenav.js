@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    var SidenavCounterDefaultConfig = {
+    let SidenavCounterDefaultConfig = {
         compacted: false,
         toggle: null,
         expandPoint: "fs",
@@ -12,12 +12,12 @@
         onSidenavCreate: Metro.noop
     };
 
-    Metro.sidenavCounterSetup = function (options) {
+    Metro.sidenavCounterSetup = (options) => {
         SidenavCounterDefaultConfig = $.extend({}, SidenavCounterDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSidenavCounterSetup"] !== "undefined") {
-        Metro.sidenavCounterSetup(globalThis["metroSidenavCounterSetup"]);
+    if (typeof globalThis.metroSidenavCounterSetup !== "undefined") {
+        Metro.sidenavCounterSetup(globalThis.metroSidenavCounterSetup);
     }
 
     Metro.Component('sidenav-counter', {
@@ -29,8 +29,6 @@
         },
 
         _create: function(){
-            var that = this, element = this.element, o = this.options;
-
             this._createStructure();
             this._createEvents();
 
@@ -38,7 +36,8 @@
         },
 
         _createStructure: function(){
-            var that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("sidenav-counter")
             if (Metro.utils.mediaExist(o.expandPoint)) {
@@ -52,10 +51,11 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             if (o.toggle) {
-                $(o.toggle).on("click", function() {
+                $(o.toggle).on("click", () => {
                     element.toggleClass("expanded");
                     element.toggleClass("handmade");
                     Metro.storage.setItem("sidenav-counter:compacted", !element.hasClass("expanded"));
@@ -74,11 +74,11 @@
             }, {ns: this.id})
         },
 
-        changeAttribute: function(attr, newValue){
+        changeAttribute: (attr, newValue)=> {
         },
 
         destroy: function(){
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

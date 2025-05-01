@@ -1,4 +1,5 @@
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
 
     let SelectDefaultConfig = {
@@ -55,12 +56,12 @@
         onData: f => f,
     };
 
-    Metro.selectSetup = function (options) {
+    Metro.selectSetup = (options) => {
         SelectDefaultConfig = $.extend({}, SelectDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSelectSetup"] !== "undefined") {
-        Metro.selectSetup(globalThis["metroSelectSetup"]);
+    if (typeof globalThis.metroSelectSetup !== "undefined") {
+        Metro.selectSetup(globalThis.metroSelectSetup);
     }
 
     Metro.Component("select", {
@@ -86,32 +87,30 @@
         },
 
         _setPlaceholder: function () {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             const input = element.siblings(".select-input");
             if (
                 o.usePlaceholder === true &&
-                (!Metro.utils.isValue(element.val()) || element.val() == o.emptyValue) // == important
+                (!Metro.utils.isValue(element.val()) || `${element.val()}` === `${o.emptyValue}`)
             ) {
                 input.html(o.placeholder || this.strings.label_select_more);
             }
         },
 
         _addTag: function (val, data) {
-            const element = this.element,
-                o = this.options;
-            let tag,
-                tagSize,
-                container = element.closest(".select");
-            let html = "<span class='title'>" + val + "</span>"
+            const element = this.element;
+            const o = this.options;
+            let tagSize;
+            const container = element.closest(".select");
+            const html = `<span class='title'>${val}</span>`
 
-            tag = $("<div>")
+            const tag = $("<div>")
                 .addClass("tag")
                 .addClass(o.shortTag ? "short-tag" : "")
                 .addClass(o.clsSelectedItem)
                 .html(html)
-                .data("option", data);
-            
+                .data("option", data)
             $("<span>")
                 .addClass("action unselect-option")
                 .addClass(o.clsSelectedItemAction)
@@ -131,9 +130,10 @@
 
         _addOption: function (item, parent, input, multiple, group) {
             const option = $(item);
-            let l, a;
-            const element = this.element,
-                o = this.options;
+            let l;
+            let a;
+            const element = this.element;
+            const o = this.options;
             let html = Metro.utils.isValue(option.attr("data-template"))
                 ? option.attr("data-template").replace("$1", item.text)
                 : item.text;
@@ -189,8 +189,8 @@
         },
 
         _addOptionGroup: function (item, parent, input, multiple) {
-            const that = this,
-                o = this.options;
+            const that = this;
+            const o = this.options;
             const group = $(item);
 
             $("<li>")
@@ -205,10 +205,10 @@
         },
 
         _createOptions: function () {
-            const that = this,
-                element = this.element,
-                o = this.options,
-                select = element.parent();
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const select = element.parent();
             const list = select.find("ul").empty();
             const selected = element.find("option[selected]").length > 0;
             const multiple = element[0].multiple;
@@ -218,13 +218,7 @@
 
             if (o.addEmptyValue === true) {
                 element.prepend(
-                    $(
-                        "<option " +
-                            (!selected ? "selected" : "") +
-                            " value='" +
-                            o.emptyValue +
-                            "' class='d-none'></option>",
-                    ),
+                    $(`<option ${!selected ? "selected" : ""} value='${o.emptyValue}' class='d-none'></option>`),
                 );
             }
 
@@ -238,18 +232,15 @@
         },
 
         _createSelect: async function () {
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             const container = element.wrap("<label>");
             const multiple = element[0].multiple;
             const select_id = Hooks.useId(container[0]);
             const buttons = $("<div>").addClass("button-group");
-            let input,
-                drop_container,
-                drop_container_input,
-                list,
-                filter_input,
-                dropdown_toggle;
+            let drop_container;
+            let drop_container_input;
             const checkboxID = Metro.utils.elementId("select-focus-trigger");
             const checkbox = $("<input type='checkbox'>")
                 .addClass("select-focus-trigger")
@@ -264,12 +255,12 @@
                 .attr("for", checkboxID);
             container[0].className = Metro.utils.classNames(
                 element[0].className,
-                "input-" + o.size,
+                `input-${o.size}`,
                 "select",
                 o.clsSelect,
             );
 
-            dropdown_toggle = $("<span>").addClass("dropdown-toggle");
+            const dropdown_toggle = $("<span>").addClass("dropdown-toggle")
             dropdown_toggle.appendTo(container);
 
             if (multiple) {
@@ -279,10 +270,10 @@
             buttons.appendTo(container);
             checkbox.appendTo(container);
 
-            input = $("<div>")
+            const input = $("<div>")
                 .addClass("select-input")
                 .addClass(o.clsSelectInput)
-                .attr("name", "__" + select_id + "__");
+                .attr("name", `__${select_id}__`)
             drop_container = $("<div>")
                 .addClass("drop-container")
                 .addClass(o.clsDropContainer);
@@ -298,18 +289,17 @@
             }
 
             drop_container_input = $("<div>").appendTo(drop_container);
-            list = $("<ul>")
+            const list = $("<ul>")
                 .addClass("option-list")
                 .addClass(o.clsDropList)
                 .css({
                     "max-height": o.dropHeight,
-                });
-            filter_input = $(
+                })
+            const filter_input = $(
                 `<input type='text' data-role='input' data-clear-button-icon="${o.clearButtonIcon}">`,
             )
-                .attr("placeholder", o.filterPlaceholder || this.strings.label_filter + "...")
-                .appendTo(drop_container_input);
-
+                .attr("placeholder", o.filterPlaceholder || `${this.strings.label_filter}...`)
+                .appendTo(drop_container_input)
             filter_input.addClass(o.clsFilterInput);
             
             container.append(input);
@@ -402,7 +392,7 @@
         },
 
         _createDroppable: function (drop_container) {
-            const that = this, o = this.options;
+            const o = this.options;
             const filter_input = drop_container.find("input");
             const container = this.element.closest(".select");
             const dropdown_toggle = drop_container.siblings(".dropdown-caret");
@@ -413,17 +403,17 @@
                 duration: o.duration,
                 toggleElement: [container],
                 openMode: o.openMode,
-                onDrop: function () {
-                    let dropped, target;
+                onDrop: () => {
+                    let target;
                     dropdown_toggle.addClass("active-toggle");
-                    dropped = $(".select .drop-container");
+                    const dropped = $(".select .drop-container")
                     $.each(dropped, function () {
                         const drop = $(this);
                         if (drop.is(drop_container)) {
                             return;
                         }
                         const dataDrop = Metro.getPlugin(drop, "dropdown");
-                        if (dataDrop && dataDrop.close) {
+                        if (dataDrop?.close) {
                             dataDrop.close();
                         }
                     });
@@ -440,14 +430,14 @@
                             (list.height() - target.height()) / 2;
                     }
 
-                    that._fireEvent("drop", {
+                    this._fireEvent("drop", {
                         list: list[0],
                     });
                 },
-                onUp: function () {
+                onUp: () => {
                     dropdown_toggle.removeClass("active-toggle");
 
-                    that._fireEvent("up", {
+                    this._fireEvent("up", {
                         list: list[0],
                     });
                 },
@@ -455,7 +445,7 @@
         },
         
         _updateSelect: function (mutation) {
-            for (let record of mutation) {
+            for (const record of mutation) {
                 if (record.type === "childList") {
                     if (
                         record.addedNodes.length ||
@@ -468,9 +458,9 @@
         },
 
         _createEvents: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const container = element.closest(".select");
             const drop_container = container.find(".drop-container");
             const input = element.siblings(".select-input");
@@ -479,15 +469,15 @@
             const clearButton = container.find(".input-clear-button");
             const checkbox = container.find(".select-focus-trigger");
 
-            checkbox.on("focus", function () {
+            checkbox.on("focus", () => {
                 container.addClass("focused");
             });
 
-            checkbox.on("blur", function () {
+            checkbox.on("blur", () => {
                 container.removeClass("focused");
             });
 
-            clearButton.on(Metro.events.click, function (e) {
+            clearButton.on(Metro.events.click, (e) => {
                 element.val(o.emptyValue);
                 if (element[0].multiple) {
                     list.find("li").removeClass("d-none");
@@ -505,16 +495,16 @@
                 });
             });
 
-            element.on(Metro.events.change, function () {
+            element.on(Metro.events.change, () => {
                 that._setPlaceholder();
             });
 
-            container.on(Metro.events.click, function () {
+            container.on(Metro.events.click, () => {
                 $(".focused").removeClass("focused");
                 container.addClass("focused");
             });
 
-            input.on(Metro.events.click, function () {
+            input.on(Metro.events.click, () => {
                 $(".focused").removeClass("focused");
                 container.addClass("focused");
             });
@@ -532,17 +522,11 @@
                 let html = displayValue
                     ? displayValue
                     : leaf.children("a").html();
-                let selected;
                 const option = leaf.data("option");
                 const options = element.find("option");
 
                 if (o.showGroupName && group) {
-                    html +=
-                        "&nbsp;<span class='selected-item__group-name " +
-                        o.clsGroupName +
-                        "'>" +
-                        group +
-                        "</span>";
+                    html += `&nbsp;<span class='selected-item__group-name ${o.clsGroupName}'>${group}</span>`;
                 }
 
                 if (element[0].multiple) {
@@ -569,8 +553,7 @@
                     leaf: leaf[0],
                 });
 
-                selected = that.getSelected();
-
+                const selected = that.getSelected()
                 that._fireEvent("change", {
                     selected: selected,
                 });
@@ -580,7 +563,6 @@
                 const item = $(this).closest(".tag");
                 const leaf = item.data("option");
                 const option = leaf.data("option");
-                let selected;
 
                 leaf.removeClass("d-none");
                 $.each(element.find("option"), function () {
@@ -594,8 +576,7 @@
                     option: option,
                 });
 
-                selected = that.getSelected();
-
+                const selected = that.getSelected()
                 that._fireEvent("change", {
                     selected: selected,
                 });
@@ -605,7 +586,7 @@
             });
 
             const filter_input_change = Hooks.useDebounce(async (e)=>{
-                const element = this.element, o = this.options;
+                const o = this.options;
                 const list = this.list;
                 const filter = e.target.value.toLowerCase();
                 const filterSource = `${o.filterSource}${filter}`
@@ -619,7 +600,9 @@
                     }, true)
                 } else {
                     const li = list.find("li");
-                    let i, a, t;
+                    let i;
+                    let a;
+                    let t;
                     for (i = 0; i < li.length; i++) {
                         if ($(li[i]).hasClass("group-title")) continue;
                         a = li[i].getElementsByTagName("a")[0];
@@ -636,12 +619,12 @@
             
             filter_input.on(Metro.events.keyup, filter_input_change.bind(this));
 
-            filter_input.on(Metro.events.click, function (e) {
+            filter_input.on(Metro.events.click, (e) => {
                 e.preventDefault();
                 e.stopPropagation();
             });
 
-            drop_container.on(Metro.events.click, function (e) {
+            drop_container.on(Metro.events.click, (e) => {
                 e.preventDefault();
                 e.stopPropagation();
             });
@@ -674,7 +657,6 @@
             const element = this.element;
             const options = element.find("option");
             const select = element.closest(".select");
-            let selected;
 
             $.each(options, function () {
                 this.selected = !Metro.utils.isNull(to_default)
@@ -687,8 +669,7 @@
 
             this._createOptions();
 
-            selected = this.getSelected();
-
+            const selected = this.getSelected()
             this._fireEvent("change", {
                 selected: selected,
             });
@@ -706,16 +687,20 @@
         },
 
         val: function (val) {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const input = element.siblings(".select-input");
             const options = element.find("option");
             const list_items = this.list.find("li");
             const result = [];
             const multiple = !!element.attr("multiple")
             let option;
-            let i, html, list_item, option_value, selected, group;
+            let i;
+            let html;
+            let list_item;
+            let option_value;
+            let group;
 
             if (Metro.utils.isNull(val)) {
                 $.each(options, function () {
@@ -730,11 +715,9 @@
             list_items.removeClass("active").removeClass(o.clsOptionActive);
             input.html("");
 
-            if (Array.isArray(val) === false) {
-                val = [val];
-            }
-
-            $.each(val, function () {
+            const _val = Array.isArray(val) ? val : [val];
+            
+            $.each(_val, function () {
                 for (i = 0; i < options.length; i++) {
                     option = options[i];
                     html = Metro.utils.isValue(option.getAttribute("data-template"))
@@ -742,7 +725,7 @@
                               .getAttribute("data-template")
                               .replace("$1", option.text)
                         : option.text;
-                    if ("" + option.value === "" + this) {
+                    if (`${option.value}` === `${this}`) {
                         option.selected = true;
                         break;
                     }
@@ -752,12 +735,9 @@
                     list_item = $(list_items[i]);
                     group = list_item.data("group");
                     option_value = list_item.attr("data-value");
-                    if ("" + option_value === "" + this) {
+                    if (`${option_value}` === `${this}`) {
                         if (o.showGroupName && group) {
-                            html +=
-                                "&nbsp;<span class='selected-item__group-name'>" +
-                                group +
-                                "</span>";
+                            html += `&nbsp;<span class='selected-item__group-name'>${group}</span>`;
                         }
 
                         if (multiple) {
@@ -778,8 +758,7 @@
                 }
             });
 
-            selected = this.getSelected();
-
+            const selected = this.getSelected()
             this._fireEvent("change", {
                 selected: selected,
             });
@@ -791,17 +770,14 @@
 
         data: function (op, selected, delimiter) {
             const element = this.element;
-            let option_group, _selected;
+            let option_group;
+            let _selected;
             const _delimiter = delimiter || ",";
 
             if (typeof selected === "string") {
-                _selected = selected.toArray(_delimiter).map(function (v) {
-                    return isNaN(v) ? v : +v;
-                });
+                _selected = selected.toArray(_delimiter).map((v) => Number.isNaN(v) ? v : +v);
             } else if (Array.isArray(selected)) {
-                _selected = selected.slice().map(function (v) {
-                    return isNaN(v) ? v : +v;
-                });
+                _selected = selected.slice().map((v) => Number.isNaN(v) ? v : +v);
             } else {
                 _selected = [];
             }
@@ -812,12 +788,12 @@
             if (typeof op === "string") {
                 element.html(op);
             } else if (Metro.utils.isObject2(op)) {
-                $.each(op, function (key, val) {
+                $.each(op, (key, val) => {
                     if (Metro.utils.isObject2(val)) {
                         option_group = $("<optgroup label=''>")
                             .attr("label", key)
                             .appendTo(element);
-                        $.each(val, function (key2, val2) {
+                        $.each(val, (key2, val2) => {
                             const op = $("<option>")
                                 .attr("value", key2)
                                 .text(val2)
@@ -880,15 +856,14 @@
             
             if (Array.isArray(values)) {
                 $.each(values, function () {
-                    const o = this;
-                    if (Metro.utils.isObject2(o)) {
-                        that.addOption(o.val, o.title, o.selected);
+                    if (Metro.utils.isObject2(this)) {
+                        that.addOption(this.val, this.title, this.selected);
                     } else {
-                        that.addOption(o);
+                        that.addOption(this);
                     }
                 });
             } else if (Metro.utils.isObject2(values)) {
-                $.each(values, function (key, val) {
+                $.each(values, (key, val) => {
                     that.addOption(key, val);
                 });
             }
@@ -909,8 +884,7 @@
 
             options.each(function () {
                 const $el = $(this);
-
-                if ($el.attr("value") == val) { // == important
+                if (`${$el.attr("value")}` === '${val}') {
                     $el.remove();
                 }
             });
@@ -943,7 +917,8 @@
         },
         
         fetch: async function(source, options, clearOptions = false) {
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             
             const _options = Object.assign({
                 method: "GET",
@@ -979,7 +954,8 @@
         },
 
         destroy: function () {
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const container = element.closest(".select");
             const drop_container = container.find(".drop-container");
             const input = element.siblings(".select-input");
@@ -1009,7 +985,7 @@
 
     $(document).on(
         Metro.events.click,
-        function () {
+        () => {
             $(".select").removeClass("focused");
         },
         { ns: "blur-select-elements" },

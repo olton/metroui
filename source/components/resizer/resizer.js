@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var ResizerDefaultConfig = {
+
+    let ResizerDefaultConfig = {
         resizerDeferred: 0,
         onMediaPoint: Metro.noop,
         onMediaPointEnter: Metro.noop,
@@ -12,12 +12,12 @@
         onResizerCreate: Metro.noop
     };
 
-    Metro.resizerSetup = function (options) {
+    Metro.resizerSetup = (options) => {
         ResizerDefaultConfig = $.extend({}, ResizerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroResizerSetup"] !== "undefined") {
-        Metro.resizerSetup(globalThis["metroResizerSetup"]);
+    if (typeof globalThis.metroResizerSetup !== "undefined") {
+        Metro.resizerSetup(globalThis.metroResizerSetup);
     }
 
     Metro.Component('resizer', {
@@ -25,14 +25,14 @@
             this._super(elem, options, ResizerDefaultConfig, {
                 size: {width: 0, height: 0},
                 media: globalThis.METRO_MEDIA,
-                id: Utils.elementId("resizer")
+                id: Metro.utils.elementId("resizer")
             });
 
             return this;
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this.size = {
                 width: element.width(),
@@ -47,32 +47,34 @@
             });
         },
 
-        _createStructure: function(){
+        _createStructure: ()=> {
         },
 
         _createEvents: function(){
-            var that = this, element = this.element;
-            var win = $.window();
+            const element = this.element;
+            const win = $.window();
 
-            win.on("resize", function(){
-                var windowWidth = win.width(), windowHeight = win.height();
-                var elementWidth = element.width(), elementHeight = element.height();
-                var oldSize = that.size;
-                var point;
+            win.on("resize", ()=> {
+                const windowWidth = win.width();
+                const windowHeight = win.height();
+                const elementWidth = element.width();
+                const elementHeight = element.height();
+                const oldSize = this.size;
+                let point;
 
-                that._fireEvent("window-resize", {
+                this._fireEvent("window-resize", {
                     width: windowWidth,
                     height: windowHeight,
                     media: globalThis.METRO_MEDIA
                 });
 
-                if (that.size.width !== elementWidth || that.size.height !== elementHeight) {
-                    that.size = {
+                if (this.size.width !== elementWidth || this.size.height !== elementHeight) {
+                    this.size = {
                         width: elementWidth,
                         height: elementHeight
                     };
 
-                    that._fireEvent("element-resize", {
+                    this._fireEvent("element-resize", {
                         width: elementWidth,
                         height: elementHeight,
                         oldSize: oldSize,
@@ -81,31 +83,27 @@
 
                 }
 
-                if (that.media.length !== globalThis.METRO_MEDIA.length) {
-                    if (that.media.length > globalThis.METRO_MEDIA.length) {
-                        point = that.media.filter(function(x){
-                            return !globalThis.METRO_MEDIA.includes(x);
-                        });
+                if (this.media.length !== globalThis.METRO_MEDIA.length) {
+                    if (this.media.length > globalThis.METRO_MEDIA.length) {
+                        point = this.media.filter((x)=> !globalThis.METRO_MEDIA.includes(x));
 
-                        that._fireEvent("media-point-leave", {
+                        this._fireEvent("media-point-leave", {
                             point: point,
                             media: globalThis.METRO_MEDIA
                         });
 
                     } else {
-                        point = globalThis.METRO_MEDIA.filter(function(x){
-                            return !that.media.includes(x);
-                        });
+                        point = globalThis.METRO_MEDIA.filter((x)=> !this.media.includes(x));
 
-                        that._fireEvent("media-point-enter", {
+                        this._fireEvent("media-point-enter", {
                             point: point,
                             media: globalThis.METRO_MEDIA
                         });
                     }
 
-                    that.media = globalThis.METRO_MEDIA;
+                    this.media = globalThis.METRO_MEDIA;
 
-                    that._fireEvent("media-point", {
+                    this._fireEvent("media-point", {
                         point: point,
                         media: globalThis.METRO_MEDIA
                     });
@@ -113,11 +111,11 @@
             }, {ns: this.id});
         },
 
-        changeAttribute: function(){
+        changeAttribute: ()=> {
         },
 
         destroy: function(){
             $(globalThis).off("resize", {ns: this.id});
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

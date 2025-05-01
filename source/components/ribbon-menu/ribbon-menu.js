@@ -1,21 +1,21 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var RibbonMenuDefaultConfig = {
-        ribbonmenuDeferred: 0,
+
+    let RibbonMenuDefaultConfig = {
+        ribbonMenuDeferred: 0,
         onStatic: Metro.noop,
         onBeforeTab: Metro.noop_true,
         onTab: Metro.noop,
         onRibbonMenuCreate: Metro.noop
     };
 
-    Metro.ribbonMenuSetup = function (options) {
+    Metro.ribbonMenuSetup = (options) => {
         RibbonMenuDefaultConfig = $.extend({}, RibbonMenuDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroRibbonMenuSetup"] !== "undefined") {
-        Metro.ribbonMenuSetup(globalThis["metroRibbonMenuSetup"]);
+    if (typeof globalThis.metroRibbonMenuSetup !== "undefined") {
+        Metro.ribbonMenuSetup(globalThis.metroRibbonMenuSetup);
     }
 
     Metro.Component('ribbon-menu', {
@@ -26,7 +26,7 @@
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -37,23 +37,23 @@
         },
 
         _createStructure: function(){
-            var element = this.element;
+            const element = this.element;
 
             element.addClass("ribbon-menu");
 
 
-            var fluentGroups = element.find(".ribbon-toggle-group");
+            const fluentGroups = element.find(".ribbon-toggle-group");
 
             $.each(fluentGroups, function(){
-                var g = $(this);
+                const g = $(this);
                 g.buttongroup({
                     clsActive: "active"
                 });
-                var gw = 0;
-                var btns = g.find(".ribbon-icon-button");
+                let gw = 0;
+                const btns = g.find(".ribbon-icon-button");
                 $.each(btns, function(){
-                    var b = $(this);
-                    var w = b.outerWidth(true);
+                    const b = $(this);
+                    const w = b.outerWidth(true);
                     if (w > gw) gw = w;
                 });
                 g.css("width", gw * Math.ceil(btns.length / 3) + 4);
@@ -61,8 +61,8 @@
 
             element.find(".section").addClass("non-active")
 
-            var tabs = element.find(".tabs-holder li:not(.static)");
-            var active_tab = element.find(".tabs-holder li.active");
+            const tabs = element.find(".tabs-holder li:not(.static)");
+            const active_tab = element.find(".tabs-holder li.active");
 
             if (active_tab.length > 0) {
                 this.open($(active_tab[0]));
@@ -74,11 +74,13 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
             element.on(Metro.events.click, ".tabs-holder li a", function(e){
-                var link = $(this);
-                var tab = $(this).parent("li");
+                const link = $(this);
+                const tab = $(this).parent("li");
 
                 if (tab.hasClass("static")) {
                     if (o.onStatic === Metro.noop && link.attr("href") !== undefined) {
@@ -89,7 +91,7 @@
                         });
                     }
                 } else {
-                    if (Utils.exec(o.onBeforeTab, [tab[0]], element[0]) === true) {
+                    if (Metro.utils.exec(o.onBeforeTab, [tab[0]], element[0]) === true) {
                         that.open(tab[0]);
                     }
                 }
@@ -98,12 +100,12 @@
         },
 
         open: function(tab){
-            var element = this.element;
-            var $tab = $(tab);
-            var tabs = element.find(".tabs-holder li");
-            var sections = element.find(".content-holder .section");
-            var target = $tab.children("a").attr("href");
-            var target_section = target !== "#" ? element.find(target) : null;
+            const element = this.element;
+            const $tab = $(tab);
+            const tabs = element.find(".tabs-holder li");
+            const sections = element.find(".content-holder .section");
+            const target = $tab.children("a").attr("href");
+            const target_section = target !== "#" ? element.find(target) : null;
 
             sections.addClass("non-active")
             tabs.removeClass("active");
@@ -120,13 +122,15 @@
             });
         },
 
-        changeAttribute: function(){
+        changeAttribute: ()=> {
         },
 
         destroy: function(){
-            var element = this.element;
+            const element = this.element;
             element.off(Metro.events.click, ".tabs-holder li a");
             return element;
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);
+
+// TODO: Add scroll buttons for long lists

@@ -105,7 +105,6 @@ import "./ribbon/index.js";
 import "./ribbon-menu/index.js";
 import "./ripple/index.js";
 import "./scrollbar/index.js";
-import "./searcher/index.js";
 import "./select/index.js";
 import "./shadows/index.js";
 import "./shortcut/index.js";
