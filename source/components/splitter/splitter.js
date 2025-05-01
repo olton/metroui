@@ -1,5 +1,5 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     const SPLIT_MODE = {
@@ -27,12 +27,12 @@
         onSplitterCreate: Metro.noop
     };
 
-    Metro.splitterSetup = function (options) {
+    Metro.splitterSetup = (options) => {
         SplitterDefaultConfig = $.extend({}, SplitterDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSplitterSetup"] !== "undefined") {
-        Metro.splitterSetup(globalThis["metroSplitterSetup"]);
+    if (typeof globalThis.metroSplitterSetup !== "undefined") {
+        Metro.splitterSetup(globalThis.metroSplitterSetup);
     }
 
     Metro.Component('splitter', {
@@ -58,9 +58,11 @@
         },
 
         _createStructure: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const children = element.children(o.children).addClass("split-block");
-            let i, children_sizes = [];
+            let i;
+            let children_sizes = [];
             const resizeProp = o.split === SPLIT_MODE.HORIZONTAL ? "height" : "width";
 
             element.addClass("splitter");
@@ -81,15 +83,15 @@
             this._setSize();
 
             if (Metro.utils.isValue(o.minSizes)) {
-                if ((""+o.minSizes).includes(",")) {
+                if ((`${o.minSizes}`).includes(",")) {
                     children_sizes = o.minSizes.toArray();
                     for (i = 0; i < children_sizes.length; i++) {
                         $(children[i]).data("min-size", children_sizes[i]);
-                        children[i].style.setProperty('min-'+resizeProp, (""+children_sizes[i]).includes("%") ? children_sizes[i] : (""+children_sizes[i]).replace("px", "")+"px", 'important');
+                        children[i].style.setProperty(`min-${resizeProp}`, (`${children_sizes[i]}`).includes("%") ? children_sizes[i] : `${(`${children_sizes[i]}`).replace("px", "")}px`, 'important');
                     }
                 } else {
                     $.each(children, function(){
-                        this.style.setProperty('min-'+resizeProp, (""+o.minSizes).includes("%") ? o.minSizes : (""+o.minSizes).replace("px", "")+"px", 'important');
+                        this.style.setProperty(`min-${resizeProp}`, (`${o.minSizes}`).includes("%") ? o.minSizes : `${(`${o.minSizes}`).replace("px", "")}px`, 'important');
                     });
                 }
             }
@@ -100,8 +102,10 @@
         },
 
         _setSize: function(){
-            const element = this.element, o = this.options;
-            let gutters, children_sizes;
+            const element = this.element;
+            const o = this.options;
+            let gutters;
+            let children_sizes;
             const children = element.children(".split-block");
             const w = element.width();
 
@@ -112,7 +116,7 @@
                     flexBasis: `calc(${100/children.length}% - ${gutters.length * o.gutterSize}px)`
                 })
             } else {
-                children_sizes = (""+o.splitSizes).toArray();
+                children_sizes = (`${o.splitSizes}`).toArray();
                 let remnant = 100
                 let i = 0
                 for(; i < children_sizes.length; i++) {
@@ -120,7 +124,7 @@
                     if (!s.includes("%")) {
                         s = +s * 100 / w
                     } else {
-                        s = parseInt(s);
+                        s = Number.parseInt(s);
                     }
                     remnant -= s;
                     $(children[i]).css({
@@ -136,7 +140,9 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const gutters = element.children(".gutter");
 
             gutters.on(Metro.events.startAll, function(e){
@@ -164,7 +170,7 @@
                     nextBlock: next_block[0]
                 });
 
-                $(globalThis).on(Metro.events.moveAll, function(e){
+                $(globalThis).on(Metro.events.moveAll, (e)=> {
                     const pos = Metro.utils.getCursorPosition(element[0], e);
                     let new_pos;
 
@@ -175,8 +181,8 @@
                         new_pos = (pos.y * 100 / w) - (start_pos.y * 100 / w);
                     }
 
-                    prev_block.css("flex-basis", "calc(" + (prev_block_size + new_pos) + "% - "+(gutters.length * o.gutterSize)+"px)");
-                    next_block.css("flex-basis", "calc(" + (next_block_size - new_pos) + "% - "+(gutters.length * o.gutterSize)+"px)");
+                    prev_block.css("flex-basis", `calc(${prev_block_size + new_pos}% - ${gutters.length * o.gutterSize}px)`);
+                    next_block.css("flex-basis", `calc(${next_block_size - new_pos}% - ${gutters.length * o.gutterSize}px)`);
 
                     that._fireEvent("resize-split", {
                         pos: pos,
@@ -187,8 +193,7 @@
 
                 }, {ns: that.id});
 
-                $(globalThis).on(Metro.events.stopAll, function(e){
-                    let cur_pos;
+                $(globalThis).on(Metro.events.stopAll, (e)=> {
 
                     prev_block.removeClass("stop-pointer");
                     next_block.removeClass("stop-pointer");
@@ -200,8 +205,7 @@
                     $(globalThis).off(Metro.events.moveAll,{ns: that.id});
                     $(globalThis).off(Metro.events.stopAll,{ns: that.id});
 
-                    cur_pos = Metro.utils.getCursorPosition(element[0], e);
-
+                    const cur_pos = Metro.utils.getCursorPosition(element[0], e)
                     that._fireEvent("resize-stop", {
                         pos: cur_pos,
                         gutter: gutter[0],
@@ -212,7 +216,7 @@
                 }, {ns: that.id})
             }, {passive: true});
 
-            $(globalThis).on(Metro.events.resize, function(){
+            $(globalThis).on(Metro.events.resize, ()=> {
                 const gutter = element.children(".gutter");
                 const prev_block = gutter.prev(".split-block");
                 const next_block = gutter.next(".split-block");
@@ -226,8 +230,10 @@
         },
 
         _saveSize: function(){
-            const element = this.element, o = this.options;
-            const storage = this.storage, itemsSize = [];
+            const element = this.element;
+            const o = this.options;
+            const storage = this.storage;
+            const itemsSize = [];
             const id = element.attr("id") || this.id;
 
             if (o.saveState === true && storage !== null) {
@@ -243,15 +249,17 @@
         },
 
         _getSize: function(){
-            const element = this.element, o = this.options;
-            let storage = this.storage, itemsSize = [];
+            const element = this.element;
+            const o = this.options;
+            const storage = this.storage;
+            let itemsSize = [];
             const id = element.attr("id") || this.id;
 
             if (o.saveState === true && storage !== null) {
 
                 itemsSize = storage.getItem(this.storageKey + id);
 
-                $.each(element.children(".split-block"), function(i, v){
+                $.each(element.children(".split-block"), (i, v)=> {
                     const item = $(v);
                     if (Metro.utils.isValue(itemsSize) && Metro.utils.isValue(itemsSize[i])) item.css("flex-basis", itemsSize[i]);
                 });
@@ -259,16 +267,17 @@
         },
 
         size: function(size){
-            const that = this, o = this.options;
+            const o = this.options;
             if (Metro.utils.isValue(size)) {
                 o.splitSizes = size;
-                that._setSize();
+                this._setSize();
             }
             return this;
         },
 
         changeAttribute: function(attributeName){
-            const that = this, element = this.element;
+            const that = this;
+            const element = this.element;
 
             function changeSize(){
                 const size = element.attr("data-split-sizes");
@@ -287,4 +296,4 @@
             return element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

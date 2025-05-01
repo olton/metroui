@@ -1,10 +1,8 @@
-/* global Metro */
-(function(Metro) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    const MetroStorage = function (type) {
-        return new MetroStorage.init(type);
-    };
+    const MetroStorage = (type) => new MetroStorage.init(type);
 
     MetroStorage.prototype = {
         setKey: function(key){
@@ -16,13 +14,14 @@
         },
 
         setItem: function(key, value){
-            this.storage.setItem(this.key + ":" + key, JSON.stringify(value));
+            this.storage.setItem(`${this.key}:${key}`, JSON.stringify(value));
         },
 
         getItem: function(key, default_value, reviver){
-            let result, value;
+            let result;
+            let value;
 
-            value = this.storage.getItem(this.key + ":" + key);
+            value = this.storage.getItem(`${this.key}:${key}`);
 
             try {
                 result = JSON.parse(value, reviver);
@@ -36,15 +35,15 @@
             let i;
             let val = this.getItem(key, default_value, reviver);
 
-            sub_key = sub_key.split("->");
-            for(i = 0; i < sub_key.length; i++) {
-                val = val[sub_key[i]];
+            const _sub_key = sub_key.split("->");
+            for(i = 0; i < _sub_key.length; i++) {
+                val = val[_sub_key[i]];
             }
             return val;
         },
 
         delItem: function(key){
-            this.storage.removeItem(this.key + ":" + key)
+            this.storage.removeItem(`${this.key}:${key}`)
         },
 
         size: function(unit){
@@ -78,4 +77,4 @@
 
     Metro.storage = MetroStorage(globalThis.localStorage);
     Metro.session = MetroStorage(globalThis.sessionStorage);
-}(Metro));
+})(Metro, Dom);

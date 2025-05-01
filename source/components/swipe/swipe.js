@@ -1,5 +1,5 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let SwipeDefaultConfig = {
@@ -13,12 +13,12 @@
         onSwipeCreate: Metro.noop
     };
 
-    Metro.swipeSetup = function (options) {
+    Metro.swipeSetup = (options) => {
         SwipeDefaultConfig = $.extend({}, SwipeDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSwipeSetup"] !== "undefined") {
-        Metro.swipeSetup(globalThis["metroSwipeSetup"]);
+    if (typeof globalThis.metroSwipeSetup !== "undefined") {
+        Metro.swipeSetup(globalThis.metroSwipeSetup);
     }
 
     Metro.Component('swipe', {
@@ -36,36 +36,37 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             
-            element.on("touchstart mousedown", function(e){
-                let start = Metro.utils.pageXY(e);
+            element.on("touchstart mousedown", (e)=> {
+                const start = Metro.utils.pageXY(e);
 
-                let swipe = {
+                const swipe = {
                     x: 0,
                     y: 0
                 };
 
-                element.on("touchmove mousemove", function(e){
-                    let changes = Metro.utils.pageXY(e);
+                element.on("touchmove mousemove", (e)=> {
+                    const changes = Metro.utils.pageXY(e);
                     swipe.x = changes.x - start.x;
                     swipe.y = changes.y - start.y;
                 });
 
-                element.on("touchend mouseup", function(e){
+                element.on("touchend mouseup", (e)=> {
                     let direction = "";
                     
                     if (Math.abs(swipe.x) > o.swipeThreshold || Math.abs(swipe.y) > o.swipeThreshold) {
                         if (Math.abs(swipe.x) > Math.abs(swipe.y)) {
                             if (swipe.x > 0) {
                                 direction = "right";
-                                that._fireEvent("swipe-right", {
+                                this._fireEvent("swipe-right", {
                                     start,
                                     swipe, 
                                 });
                             } else {
                                 direction = "left";
-                                that._fireEvent("swipe-left", {
+                                this._fireEvent("swipe-left", {
                                     start,
                                     swipe,
                                 });
@@ -73,19 +74,19 @@
                         } else {
                             if (swipe.y > 0) {
                                 direction = "down";
-                                that._fireEvent("swipe-down", {
+                                this._fireEvent("swipe-down", {
                                     start,
                                     swipe,
                                 });
                             } else {
                                 direction = "up";
-                                that._fireEvent("swipe-up", {
+                                this._fireEvent("swipe-up", {
                                     start,
                                     swipe,
                                 });
                             }
                         }
-                        that._fireEvent("swipe", {
+                        this._fireEvent("swipe", {
                             start,
                             swipe,
                             direction
@@ -98,11 +99,11 @@
             });
         },
 
-        changeAttribute: function(attr, newValue){
+        changeAttribute: (attr, newValue)=> {
         },
 
         destroy: function(){
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

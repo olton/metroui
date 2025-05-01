@@ -1,4 +1,5 @@
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let WorkingTreeDefaultConfig = {
@@ -6,12 +7,12 @@
         onWorkingTreeCreate: Metro.noop
     };
 
-    Metro.workingTreeSetup = function (options) {
+    Metro.workingTreeSetup = (options) => {
         WorkingTreeDefaultConfig = $.extend({}, WorkingTreeDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroWorkingTreeSetup"] !== "undefined") {
-        Metro.workingTreeSetup(globalThis["metroWorkingTreeSetup"]);
+    if (typeof globalThis.metroWorkingTreeSetup !== "undefined") {
+        Metro.workingTreeSetup(globalThis.metroWorkingTreeSetup);
     }
 
     Metro.Component('working-tree', {
@@ -57,12 +58,11 @@
         },
         
         _createStructure () {
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
             element.addClass("working-tree");            
         },
 
         _createEvents () {
-            const that = this, element = this.element, o = this.options;
         },
 
         changeAttribute (attr, newValue) {
@@ -72,4 +72,4 @@
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

@@ -1,5 +1,5 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let SpinnerDefaultConfig = {
@@ -32,12 +32,12 @@
         onSpinnerCreate: Metro.noop
     };
 
-    Metro.spinnerSetup = function (options) {
+    Metro.spinnerSetup = (options) => {
         SpinnerDefaultConfig = $.extend({}, SpinnerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSpinnerSetup"] !== "undefined") {
-        Metro.spinnerSetup(globalThis["metroSpinnerSetup"]);
+    if (typeof globalThis.metroSpinnerSetup !== "undefined") {
+        Metro.spinnerSetup(globalThis.metroSpinnerSetup);
     }
 
     Metro.Component('spinner', {
@@ -50,7 +50,7 @@
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
@@ -61,10 +61,11 @@
         },
 
         _createStructure: function(){
-            const element = this.element, o = this.options;
-            const spinner = $("<div>").addClass("spinner").addClass("buttons-" + o.buttonsPosition).addClass(element[0].className).addClass(o.clsSpinner);
-            const button_plus = $("<button>").attr("type", "button").addClass("button spinner-button spinner-button-plus").addClass(o.clsSpinnerButton + " " + o.clsSpinnerButtonPlus).html(o.plusIcon);
-            const button_minus = $("<button>").attr("type", "button").addClass("button spinner-button spinner-button-minus").addClass(o.clsSpinnerButton + " " + o.clsSpinnerButtonMinus).html(o.minusIcon);
+            const element = this.element;
+            const o = this.options;
+            const spinner = $("<div>").addClass("spinner").addClass(`buttons-${o.buttonsPosition}`).addClass(element[0].className).addClass(o.clsSpinner);
+            const button_plus = $("<button>").attr("type", "button").addClass("button spinner-button spinner-button-plus").addClass(`${o.clsSpinnerButton} ${o.clsSpinnerButtonPlus}`).html(o.plusIcon);
+            const button_minus = $("<button>").attr("type", "button").addClass("button spinner-button spinner-button-minus").addClass(`${o.clsSpinnerButton} ${o.clsSpinnerButtonMinus}`).html(o.minusIcon);
             const init_value = element.val().trim();
 
             if (!Metro.utils.isValue(init_value)) {
@@ -107,12 +108,12 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const spinner = element.closest(".spinner");
-            const spinner_buttons = spinner.find(".spinner-button");
-            let value, repeat_timer;
+            let repeat_timer;
 
-            const spinnerButtonClick = function (plus) {
+            const spinnerButtonClick = (plus) => {
                 const events = [plus ? "plus-click" : "minus-click", plus ? "arrow-up" : "arrow-down", "button-click", "arrow-click"];
                 const curr = +element.val();
                 let val = +element.val();
@@ -124,9 +125,9 @@
                     val -= step;
                 }
 
-                that._setValue(val.toFixed(o.fixed), true);
+                this._setValue(val.toFixed(o.fixed), true);
 
-                that._fireEvents(events, {
+                this._fireEvents(events, {
                     curr: curr,
                     val: val,
                     elementVal: element.val(),
@@ -136,12 +137,12 @@
 
             spinner.on(Metro.events.startAll, ".spinner-button", function(e){
                 const plus = $(this).hasClass("spinner-button-plus");
-                repeat_timer = setInterval(function(){
+                repeat_timer = setInterval(()=> {
                     spinnerButtonClick(plus);
                 }, 100)
             }, {passive: true});
 
-            spinner.on(Metro.events.stopAll, ".spinner-button", function(e){
+            spinner.on(Metro.events.stopAll, ".spinner-button", (e)=> {
                 clearInterval(repeat_timer)
             }, {passive: true});
 
@@ -150,7 +151,7 @@
                 spinnerButtonClick(plus);
             }, {passive: true});
 
-            spinner.on(Metro.events.click, function(e){
+            spinner.on(Metro.events.click, (e)=> {
                 $(".focused").removeClass("focused");
                 spinner.addClass("focused");
 
@@ -159,19 +160,22 @@
             });
         },
 
-        _setValue: function(val, trigger_change){
-            const element = this.element, o = this.options;
+        _setValue: function(val = 0, trigger_change = false){
+            const element = this.element;
+            const o = this.options;
 
             if (Metro.utils.exec(o.onBeforeChange, [val], element[0]) !== true) {
                 return ;
             }
 
-            if (Metro.utils.isValue(o.maxValue) && val > Number(o.maxValue)) {
-                val =  Number(o.maxValue);
+            let _val = +val
+            
+            if (_val > Number(o.maxValue)) {
+                _val =  Number(o.maxValue);
             }
 
-            if (Metro.utils.isValue(o.minValue) && val < Number(o.minValue)) {
-                val =  Number(o.minValue);
+            if (_val < Number(o.minValue)) {
+                _val =  Number(o.minValue);
             }
 
             element.val(val);
@@ -186,12 +190,13 @@
         },
 
         val: function(val){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             if (!Metro.utils.isValue(val)) {
                 return element.val();
             }
 
-            that._setValue(val.toFixed(o.fixed), true);
+            this._setValue(val.toFixed(o.fixed), true);
         },
 
         toDefault: function(){
@@ -223,12 +228,12 @@
         },
 
         changeAttribute: function(attributeName){
-            const that = this, element = this.element;
+            const element = this.element;
 
-            var changeValue = function(){
+            const changeValue = ()=> {
                 const val = element.attr('value').trim();
                 if (Metro.utils.isValue(val)) {
-                    that._setValue(Number(val), false);
+                    this._setValue(Number(val), false);
                 }
             };
 
@@ -239,7 +244,8 @@
         },
 
         destroy: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const spinner = element.closest(".spinner");
             const spinner_buttons = spinner.find(".spinner-button");
 
@@ -256,7 +262,7 @@
         }
     });
 
-    $(document).on(Metro.events.click, function(){
+    $(document).on(Metro.events.click, ()=> {
         $(".spinner").removeClass("focused");
     });
-}(Metro, Dom));
+})(Metro, Dom);

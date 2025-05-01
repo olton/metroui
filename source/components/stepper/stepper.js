@@ -1,7 +1,7 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var StepperDefaultConfig = {
+    let StepperDefaultConfig = {
         stepperDeferred: 0,
         view: Metro.stepperView.SQUARE, // square, cycle, diamond
         steps: 3,
@@ -16,12 +16,12 @@
         onStepperCreate: Metro.noop
     };
 
-    Metro.stepperSetup = function (options) {
+    Metro.stepperSetup = (options) => {
         StepperDefaultConfig = $.extend({}, StepperDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroStepperSetup"] !== "undefined") {
-        Metro.stepperSetup(globalThis["metroStepperSetup"]);
+    if (typeof globalThis.metroStepperSetup !== "undefined") {
+        Metro.stepperSetup(globalThis.metroStepperSetup);
     }
 
     Metro.Component('stepper', {
@@ -34,7 +34,8 @@
         },
 
         _create: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             if (o.step <= 0) {
                 o.step = 1;
@@ -49,13 +50,14 @@
         },
 
         _createStepper: function(){
-            var element = this.element, o = this.options;
-            var i;
+            const element = this.element;
+            const o = this.options;
+            let i;
 
             element.addClass("stepper").addClass(o.view).addClass(o.clsStepper);
 
             for(i = 1; i <= o.steps; i++) {
-                $("<span>").addClass("step").addClass(o.clsStep).data("step", i).html("<span>"+i+"</span>").appendTo(element);
+                $("<span>").addClass("step").addClass(o.clsStep).data("step", i).html(`<span>${i}</span>`).appendTo(element);
             }
 
             this.current = 1;
@@ -63,10 +65,12 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
             element.on(Metro.events.click, ".step", function(){
-                var step = $(this).data("step");
+                const step = $(this).data("step");
                 if (o.stepClick === true) {
                     that.toStep(step);
 
@@ -78,8 +82,8 @@
         },
 
         next: function(){
-            var element = this.element;
-            var steps = element.find(".step");
+            const element = this.element;
+            const steps = element.find(".step");
 
             if (this.current + 1 > steps.length) {
                 return ;
@@ -101,7 +105,7 @@
         },
 
         last: function(){
-            var element = this.element;
+            const element = this.element;
 
             this.toStep(element.find(".step").length);
         },
@@ -111,9 +115,10 @@
         },
 
         toStep: function(step){
-            var element = this.element, o = this.options;
-            var target = $(element.find(".step").get(step - 1));
-            var prevStep = this.current;
+            const element = this.element;
+            const o = this.options;
+            const target = $(element.find(".step").get(step - 1));
+            const prevStep = this.current;
 
             if (target.length === 0) {
                 return ;
@@ -136,13 +141,13 @@
 
         },
 
-        changeAttribute: function(){
+        changeAttribute: ()=> {
         },
 
         destroy: function(){
-            var element = this.element;
+            const element = this.element;
             element.off(Metro.events.click, ".step");
-            return element;
+            element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

@@ -1,5 +1,5 @@
-/* global Metro, Cake */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let WindowDefaultConfig = {
@@ -68,12 +68,12 @@
         onClose: Metro.noop
     };
 
-    Metro.windowSetup = function (options) {
+    Metro.windowSetup = (options) => {
         WindowDefaultConfig = $.extend({}, WindowDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroWindowSetup"] !== "undefined") {
-        Metro.windowSetup(globalThis["metroWindowSetup"]);
+    if (typeof globalThis.metroWindowSetup !== "undefined") {
+        Metro.windowSetup(globalThis.metroWindowSetup);
     }
 
     Metro.Component('window', {
@@ -93,8 +93,10 @@
         },
 
         _create: function(){
-            const that = this, element = this.element, o = this.options;
-            let win, overlay;
+            const element = this.element;
+            const o = this.options;
+            let win;
+            let overlay;
             const parent = o.dragArea === "parent" ? element.parent() : $(o.dragArea);
             let _content;
 
@@ -149,15 +151,15 @@
                 element: element
             });
 
-            setTimeout(function(){
-                that._setPosition();
+            setTimeout(()=> {
+                this._setPosition();
 
                 if (o.hidden !== true) {
-                    that.win.removeClass("no-visible");
+                    this.win.removeClass("no-visible");
                 }
 
-                that._fireEvent("show", {
-                    win: that.win[0],
+                this._fireEvent("show", {
+                    win: this.win[0],
                     element: element
                 });
             }, 100);
@@ -169,7 +171,10 @@
             const parent = o.dragArea === "parent" ? win.parent() : $(o.dragArea);
             const top_center = parent.height() / 2 - win[0].offsetHeight / 2;
             const left_center = parent.width() / 2 - win[0].offsetWidth / 2;
-            let top, left, right, bottom;
+            let top;
+            let left;
+            let right;
+            let bottom;
 
             if (o.place !== 'auto') {
 
@@ -195,9 +200,18 @@
         },
 
         _window: function(o){
-            const that = this;
-            let win, caption, content, icon, title, buttons, btnClose, btnMin, btnMax, resizer, status;
-            let width = o.width, height = o.height;
+            let win;
+            let caption;
+            let content;
+            let icon;
+            let buttons;
+            let btnClose;
+            let btnMin;
+            let btnMax;
+            let resizer;
+            let status;
+            let width = o.width;
+            let height = o.height;
 
             win = $("<div>").addClass("window");
 
@@ -225,7 +239,7 @@
                 icon.appendTo(caption);
             }
 
-            title = $("<span>").addClass("title").html(Metro.utils.isValue(o.title) ? o.title : "&nbsp;");
+            const title = $("<span>").addClass("title").html(Metro.utils.isValue(o.title) ? o.title : "&nbsp;")
             title.appendTo(caption);
 
             if (!Metro.utils.isNull(o.content)) {
@@ -255,26 +269,25 @@
             }
 
             if (o.customButtons) {
-                let customButtons = Metro.utils.isObject(o.customButtons);
+                const customButtons = Metro.utils.isObject(o.customButtons);
                 if (customButtons) {
                     $.each(customButtons, function () {
-                        const item = this;
                         const customButton = $("<span>");
 
                         customButton
                             .addClass("button btn-custom")
                             .addClass(o.clsCustomButton)
-                            .addClass(item.cls)
+                            .addClass(this.cls)
                             .attr("tabindex", -1)
-                            .html(item.html);
+                            .html(this.html);
 
-                        if (item.attr && typeof item.attr === 'object') {
-                            $.each(item.attr, function (k, v) {
+                        if (this.attr && typeof this.attr === 'object') {
+                            $.each(this.attr, (k, v) => {
                                 customButton.attr(Str.dashedName(k), v);
                             });
                         }
 
-                        customButton.data("action", item.onclick);
+                        customButton.data("action", this.onclick);
 
                         buttons.prepend(customButton);
                     });
@@ -290,27 +303,27 @@
 
             win.attr("id", o.id === undefined ? Metro.utils.elementId("window") : o.id);
 
-            win.on(Metro.events.startAll, ".window-caption", function(e){
-                that._fireEvent("caption-click", {
+            win.on(Metro.events.startAll, ".window-caption", (e)=> {
+                this._fireEvent("caption-click", {
                     win: win[0],
                     e: e
                 })
             });
 
-            win.on(Metro.events.dblclick, ".window-caption", function(e){
-                that.maximize(e);
+            win.on(Metro.events.dblclick, ".window-caption", (e)=> {
+                this.maximize(e);
             });
 
-            caption.on(Metro.events.click, ".btn-max, .btn-min, .btn-close", function(e){
+            caption.on(Metro.events.click, ".btn-max, .btn-min, .btn-close", (e)=> {
                 if (Metro.utils.isRightMouse(e)) return;
                 const target = $(e.target);
-                if (target.hasClass("btn-max") && o.canMaximize) that.maximize(e);
-                if (target.hasClass("btn-min") && o.canMinimize) that.minimize(e);
-                if (target.hasClass("btn-close") && o.canClose) that.close(e);
+                if (target.hasClass("btn-max") && o.canMaximize) this.maximize(e);
+                if (target.hasClass("btn-min") && o.canMinimize) this.minimize(e);
+                if (target.hasClass("btn-close") && o.canClose) this.close(e);
             });
 
-            win.on(Metro.events.click, function(e){
-                that._fireEvent("window-click", {
+            win.on(Metro.events.click, (e)=> {
+                this._fireEvent("window-click", {
                     win: win[0],
                     e: e
                 })
@@ -341,10 +354,10 @@
                 if (o.btnClose) o.minWidth += 34;
             }
 
-            if (o.minWidth > 0 && !isNaN(o.width) && o.width < o.minWidth) {
+            if (o.minWidth > 0 && !Number.isNaN(o.width) && o.width < o.minWidth) {
                 width = o.minWidth;
             }
-            if (o.minHeight > 0 && !isNaN(o.height) && o.height > o.minHeight) {
+            if (o.minHeight > 0 && !Number.isNaN(o.height) && o.height > o.minHeight) {
                 height = o.minHeight;
             }
 
@@ -400,7 +413,7 @@
                 return win.width();
             }
 
-            win.css("width", parseInt(v));
+            win.css("width", Number.parseInt(v));
 
             return this;
         },
@@ -412,13 +425,14 @@
                 return win.height();
             }
 
-            win.css("height", parseInt(v));
+            win.css("height", Number.parseInt(v));
 
             return this;
         },
 
         maximize: function(e){
-            const win = this.win, o = this.options;
+            const win = this.win;
+            const o = this.options;
             const target = $(e.target);
 
             if (o.btnMax) {
@@ -426,7 +440,7 @@
                 win.toggleClass("maximized");
             }
 
-            if (target.hasClass && target.hasClass("title")) {
+            if (target.hasClass?.("title")) {
 
                 this._fireEvent("caption-dbl-click", {
                     win: win[0]
@@ -446,7 +460,8 @@
         },
 
         minimize: function(){
-            const win = this.win, o = this.options;
+            const win = this.win;
+            const o = this.options;
 
             if (o.btnMin) {
                 win.removeClass("maximized");
@@ -463,7 +478,8 @@
         },
 
         close: function(){
-            const that = this, win = this.win, o = this.options;
+            const win = this.win;
+            const o = this.options;
 
             if (Metro.utils.exec(o.onCanClose, [win]) === false) {
                 return false;
@@ -479,22 +495,22 @@
                 win: win[0]
             });
 
-            setTimeout(function(){
+            setTimeout(()=> {
                 if (o.modal === true) {
                     win.siblings(".overlay").remove();
                 }
 
-                that._fireEvent("close-click", {
+                this._fireEvent("close-click", {
                     win: win[0]
                 });
 
                 if (o.closeAction === Metro.actions.REMOVE) {
-                    that._fireEvent("window-destroy", {
+                    this._fireEvent("window-destroy", {
                         win: win[0]
                     });
                     win.remove();
                 } else {
-                    that.hide();
+                    this.hide();
                 }
 
             }, timeout);
@@ -548,21 +564,24 @@
         },
 
         changeClass: function(a){
-            const element = this.element, win = this.win, o = this.options;
+            const element = this.element;
+            const win = this.win;
+            const o = this.options;
 
             if (a === "data-cls-window") {
-                win[0].className = "window " + (o.resizable ? " resizable " : " ") + element.attr("data-cls-window");
+                win[0].className = `window ${o.resizable ? " resizable " : " "}${element.attr("data-cls-window")}`;
             }
             if (a === "data-cls-caption") {
-                win.find(".window-caption")[0].className = "window-caption " + element.attr("data-cls-caption");
+                win.find(".window-caption")[0].className = `window-caption ${element.attr("data-cls-caption")}`;
             }
             if (a === "data-cls-content") {
-                win.find(".window-content")[0].className = "window-content " + element.attr("data-cls-content");
+                win.find(".window-content")[0].className = `window-content ${element.attr("data-cls-content")}`;
             }
         },
 
         toggleShadow: function(){
-            const element = this.element, win = this.win;
+            const element = this.element;
+            const win = this.win;
             const flag = JSON.parse(element.attr("data-shadow"));
             if (flag === true) {
                 win.addClass("win-shadow");
@@ -572,7 +591,8 @@
         },
 
         setContent: function(c){
-            const element = this.element, win = this.win;
+            const element = this.element;
+            const win = this.win;
             const content = Metro.utils.isValue(c) ? c : element.attr("data-content");
             let result;
 
@@ -588,13 +608,15 @@
         },
 
         setTitle: function(t){
-            const element = this.element, win = this.win;
+            const element = this.element;
+            const win = this.win;
             const title = Metro.utils.isValue(t) ? t : element.attr("data-title");
             win.find(".window-caption .title").html(title);
         },
 
         setIcon: function(i){
-            const element = this.element, win = this.win;
+            const element = this.element;
+            const win = this.win;
             const icon = Metro.utils.isValue(i) ? i : element.attr("data-icon");
             win.find(".window-caption .icon").html(icon);
         },
@@ -632,7 +654,8 @@
         },
 
         changePlace: function (p) {
-            const element = this.element, win = this.win;
+            const element = this.element;
+            const win = this.win;
             const place = Metro.utils.isValue(p) ? p : element.attr("data-place");
             win.addClass(place);
         },
@@ -665,15 +688,15 @@
                 const win = this.win;
                 let pos;
                 if (a === "data-top") {
-                    pos = parseInt(v);
-                    if (!isNaN(pos)) {
+                    pos = Number.parseInt(v);
+                    if (!Number.isNaN(pos)) {
                         return;
                     }
                     win.css("top", pos);
                 }
                 if (a === "data-left") {
-                    pos = parseInt(v);
-                    if (!isNaN(pos)) {
+                    pos = Number.parseInt(v);
+                    if (!Number.isNaN(pos)) {
                         return;
                     }
                     win.css("left", pos);
@@ -737,10 +760,8 @@
         }
     });
 
-    Metro['window'] = {
-        isWindow: function(el){
-            return Metro.utils.isMetroObject(el, "window");
-        },
+    Metro.window = {
+        isWindow: (el)=> Metro.utils.isMetroObject(el, "window"),
 
         min: function(el, a){
             if (!this.isWindow(el)) {
@@ -827,11 +848,8 @@
             Metro.getPlugin(el, "window").height(height);
         },
 
-        create: function(options, parent){
-            let w;
-
-            w = $("<div>").appendTo(parent ? $(parent) : $("body"));
-
+        create: (options, parent)=> {
+            const w = $("<div>").appendTo(parent ? $(parent) : $("body"))
             const w_options = $.extend({
                 _runtime: true
             }, (options ? options : {}));
@@ -840,4 +858,4 @@
             return Metro.getPlugin(w, "window").win;
         }
     };
-}(Metro, Dom));
+})(Metro, Dom);

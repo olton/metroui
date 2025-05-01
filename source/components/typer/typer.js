@@ -1,7 +1,8 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    var TyperDefaultConfig = {
+    let TyperDefaultConfig = {
         splitter: ',',
         variance: 0,
         delay: 100,
@@ -14,12 +15,12 @@
         onTyperCreate: Metro.noop
     };
 
-    Metro.typerSetup = function (options) {
+    Metro.typerSetup = (options) => {
         TyperDefaultConfig = $.extend({}, TyperDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTyperSetup"] !== "undefined") {
-        Metro.typerSetup(globalThis["metroTyperSetup"]);
+    if (typeof globalThis.metroTyperSetup !== "undefined") {
+        Metro.typerSetup(globalThis.metroTyperSetup);
     }
 
     Metro.Component('typer', {
@@ -39,7 +40,8 @@
         },
 
         _create: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("typer");
 
@@ -64,20 +66,20 @@
         },
 
         doTyping: function(){
-            const that = this, element = this.element, elem = this.elem, o = this.options;
+            const element = this.element;
+            const elem = this.elem;
+            const o = this.options;
             let atWordEnd
             const p = this.progress;
             const w = p.word
             const c = p.char
             const curr = [...this.words[w]].slice(0, c).join("")
             const timeout = ((2 * Math.random() - 1) * o.variance) + o.delay
-
-            {
-                this.cursor[0].style.opacity = "1"
-                this.on = true
-                clearInterval(this.interval);
-                this.interval = setInterval(() => this._blink(), +o.blinkDelay);
-            }
+            
+            this.cursor[0].style.opacity = "1"
+            this.on = true
+            clearInterval(this.interval);
+            this.interval = setInterval(() => this._blink(), +o.blinkDelay);
 
             element.html(curr)
 
@@ -129,4 +131,4 @@
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

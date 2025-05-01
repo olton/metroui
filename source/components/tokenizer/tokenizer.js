@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    var TokenizerDefaultConfig = {
+    let TokenizerDefaultConfig = {
         textToTokenize: "",
         spaceSymbol: "",
         spaceClass: "space",
@@ -20,12 +20,12 @@
         onTokenizerCreate: Metro.noop
     };
 
-    Metro.tokenizerSetup = function (options) {
+    Metro.tokenizerSetup = (options) => {
         TokenizerDefaultConfig = $.extend({}, TokenizerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTokenizerSetup"] !== "undefined") {
-        Metro.tokenizerSetup(globalThis["metroTokenizerSetup"]);
+    if (typeof globalThis.metroTokenizerSetup !== "undefined") {
+        Metro.tokenizerSetup(globalThis.metroTokenizerSetup);
     }
 
     Metro.Component('tokenizer', {
@@ -38,7 +38,8 @@
         },
 
         _create: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             this.originalText = o.textToTokenize ? o.textToTokenize.trim() : element.text().trim().replace(/[\r\n\t]/gi, '').replace(/\s\s+/g, " ");
 
             this._createStructure();
@@ -46,22 +47,25 @@
         },
 
         _tokenize: function(){
-            var that = this, element = this.element, o = this.options;
-            var index = 0, append, prepend;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            let index = 0;
+            let append;
+            let prepend;
 
             element.clear().attr("aria-label", this.originalText);
 
             $.each(this.originalText.split(o.splitter), function(i){
-                var symbol = this;
-                var isSpace = symbol === " ";
-                var token;
+                const isSpace = this === " ";
+                let token;
 
-                token = $("<"+o.tokenElement+">")
-                    .html(isSpace ? o.spaceSymbol : symbol)
+                token = $(`<${o.tokenElement}>`)
+                    .html(isSpace ? o.spaceSymbol : this)
                     .attr("aria-hidden", true)
                     .addClass(isSpace ? o.spaceClass : "")
-                    .addClass(isSpace && o.useTokenSymbol ? "" : "ts-"+symbol.replace(" ", "_"))
-                    .addClass(isSpace && o.useTokenIndex ? "" : "ti-" + (i + 1))
+                    .addClass(isSpace && o.useTokenSymbol ? "" : `ts-${this.replace(" ", "_")}`)
+                    .addClass(isSpace && o.useTokenIndex ? "" : `ti-${i + 1}`)
                     .addClass(o.tokenClass ? o.tokenClass : "")
                     .addClass(!isSpace ? o.clsToken : "");
 
@@ -95,7 +99,8 @@
         },
 
         _createStructure: function(){
-            var element = this.element,  o = this.options;
+            const element = this.element;
+            const o = this.options;
             element.addClass(o.clsTokenizer);
             this._tokenize();
         },
@@ -109,4 +114,4 @@
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

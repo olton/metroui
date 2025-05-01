@@ -1,35 +1,18 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    var ValidatorFuncs = {
-        required: function(val){
-            return G.safeParse(G.required(), val).ok
-        },
-        length: function(val, len){
-            return G.safeParse(G.length(+len), val).ok
-        },
-        minlength: function(val, len){
-            return G.safeParse(G.minLength(+len), val).ok
-        },
-        maxlength: function(val, len){
-            return G.safeParse(G.maxLength(+len), val).ok
-        },
-        min: function(val, min_value){
-            return G.safeParse(G.minValue(+min_value), +val).ok
-        },
-        max: function(val, max_value){
-            return G.safeParse(G.maxValue(+max_value), +val).ok
-        },
-        email: function(val){
-            return G.safeParse(G.email(), val).ok
-        },
-        domain: function(val){
-            return G.safeParse(G.domain(), val).ok
-        },
-        url: function(val){
-            return G.safeParse(G.url(), val).ok
-        },
-        date: function(val, format, locale){
+    const ValidatorFuncs = {
+        required: (val)=> G.safeParse(G.required(), val).ok,
+        length: (val, len)=> G.safeParse(G.length(+len), val).ok,
+        minlength: (val, len)=> G.safeParse(G.minLength(+len), val).ok,
+        maxlength: (val, len)=> G.safeParse(G.maxLength(+len), val).ok,
+        min: (val, min_value)=> G.safeParse(G.minValue(+min_value), +val).ok,
+        max: (val, max_value)=> G.safeParse(G.maxValue(+max_value), +val).ok,
+        email: (val)=> G.safeParse(G.email(), val).ok,
+        domain: (val)=> G.safeParse(G.domain(), val).ok,
+        url: (val)=> G.safeParse(G.url(), val).ok,
+        date: (val, format, locale)=> {
             try {
                 if (!format) {
                     datetime(val);
@@ -41,57 +24,35 @@
                 return false;
             }
         },
-        number: function(val){
-            return G.safeParse(G.number(), +val).ok
-        },
-        integer: function(val){
-            return G.safeParse(G.integer(), +val).ok
-        },
-        safeInteger: function(val){
-            return G.safeParse(G.safeInteger(), +val).ok
-        },
-        float: function(val){
-            return G.safeParse(G.float(), +val).ok
-        },
-        digits: function(val){
-            return G.safeParse(G.digits(), val).ok
-        },
-        hexcolor: function(val){
-            return G.safeParse(G.hexColor(), val).ok
-        },
-        color: function(val){
+        number: (val)=> G.safeParse(G.number(), +val).ok,
+        integer: (val)=> G.safeParse(G.integer(), +val).ok,
+        safeInteger: (val)=> G.safeParse(G.safeInteger(), +val).ok,
+        float: (val)=> G.safeParse(G.float(), +val).ok,
+        digits: (val)=> G.safeParse(G.digits(), val).ok,
+        hexcolor: (val)=> G.safeParse(G.hexColor(), val).ok,
+        color: (val)=> {
             if (!Metro.utils.isValue(val)) return false;
             return Farbe.Palette.color(val, Farbe.StandardColors) || Farbe.Routines.isColor(val);
         },
-        pattern: function(val, pat){
-            return G.safeParse(G.pattern(pat), val).ok
-        },
-        compare: function(val, val2){
-            return val == val2;
-        },
-        not: function(val, not_this){
-            return val != not_this;
-        },
-        notequals: function(val, val2){
-            return val !== val2
-        },
-        equals: function(val, val2){
-            return val === val2
-        },
-        custom: function(val, func){
+        pattern: (val, pat)=> G.safeParse(G.pattern(pat), val).ok,
+        // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
+        compare: (val, val2)=> val == val2,
+        // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
+        not: (val, not_this)=> val != not_this,
+        notequals: (val, val2)=> val !== val2,
+        equals: (val, val2)=> val === val2,
+        custom: (val, func)=> {
             if (Metro.utils.isFunc(func) === false) {
                 return false;
             }
             return Metro.utils.exec(func, [val]);
         },
 
-        is_control: function(el){
-            return el.attr("data-role");
-        },
+        is_control: (el)=> el.attr("data-role"),
 
-        reset_state: function(el){
-            var input = $(el);
-            var is_control = ValidatorFuncs.is_control(input);
+        reset_state: (el)=> {
+            const input = $(el);
+            const is_control = ValidatorFuncs.is_control(input);
 
             if (is_control) {
                 input.parent().removeClass("invalid valid");
@@ -100,9 +61,9 @@
             }
         },
 
-        set_valid_state: function(el){
-            var input = $(el);
-            var is_control = ValidatorFuncs.is_control(input);
+        set_valid_state: (el)=> {
+            const input = $(el);
+            const is_control = ValidatorFuncs.is_control(input);
 
             if (is_control) {
                 input.parent().addClass("valid");
@@ -111,9 +72,9 @@
             }
         },
 
-        set_invalid_state: function(el){
-            var input = $(el);
-            var is_control = ValidatorFuncs.is_control(input);
+        set_invalid_state: (el)=> {
+            const input = $(el);
+            const is_control = ValidatorFuncs.is_control(input);
 
             if (is_control) {
                 input.parent().addClass("invalid");
@@ -123,7 +84,7 @@
         },
 
         reset: function(form){
-            var that = this;
+            const that = this;
             $.each($(form).find("[data-validate]"), function(){
                 that.reset_state(this);
             });
@@ -132,12 +93,13 @@
         },
 
         validate: function(el, result, cb_ok, cb_error, required_mode){
-            var this_result = true;
-            var input = $(el);
-            var funcs = input.data('validate') !== undefined ? String(input.data('validate')).split(" ").map(function(s){return s.trim();}) : [];
-            var errors = [];
-            var hasForm = input.closest('form').length > 0;
-            var attr_name, radio_checked;
+            let this_result = true;
+            const input = $(el);
+            const funcs = input.data('validate') !== undefined ? String(input.data('validate')).split(" ").map((s)=> s.trim()) : [];
+            const errors = [];
+            const hasForm = input.closest('form').length > 0;
+            let attr_name;
+            let radio_checked;
 
             if (funcs.length === 0) {
                 return true;
@@ -161,13 +123,13 @@
                 }
             } else if (input.attr('type') && input.attr('type').toLowerCase() === "radio") {
                 attr_name = input.attr('name');
-                if (typeof attr_name  === undefined) {
+                if (typeof attr_name  === "undefined") {
                     this_result = true;
                 } else {
                     /*
                     * Fix with escaped name by nlared https://github.com/nlared
                     * */
-                    radio_checked = $("input[name=" + attr_name.replace("[", "\\\[").replace("]", "\\\]") + "]:checked"); // eslint-disable-line
+                    radio_checked = $(`input[name=${attr_name.replace("[", "\\\[").replace("]", "\\\]")}]:checked`); // eslint-disable-line
                     this_result = radio_checked.length > 0;
                 }
                 if (result !== undefined) {
@@ -176,14 +138,16 @@
             } else {
                 $.each(funcs, function(){
                     if (this_result === false) return;
-                    var rule = this.split("=");
-                    var f, a, b;
+                    const rule = this.split("=");
+                    let f;
+                    let a;
+                    let b;
 
                     f = rule[0]; rule.shift();
                     a = rule.join("=");
 
                     if (['compare', 'not', 'equals', 'notequals'].indexOf(f) > -1) {
-                        a = hasForm ? input[0].form.elements[a].value : $("[name="+a+"]").val();
+                        a = hasForm ? input[0].form.elements[a].value : $(`[name=${a}]`).val();
                     }
 
                     if (f === 'date') {
@@ -240,9 +204,9 @@
         }
     };
 
-    Metro['validator'] = ValidatorFuncs;
+    Metro.validator = ValidatorFuncs;
 
-    var ValidatorDefaultConfig = {
+    let ValidatorDefaultConfig = {
         validatorDeferred: 0,
         submitTimeout: 200,
         interactiveCheck: false,
@@ -258,12 +222,12 @@
         onValidatorCreate: Metro.noop
     };
 
-    Metro.validatorSetup = function (options) {
+    Metro.validatorSetup = (options) => {
         ValidatorDefaultConfig = $.extend({}, ValidatorDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroValidatorSetup"] !== "undefined") {
-        Metro.validatorSetup(globalThis["metroValidatorSetup"]);
+    if (typeof globalThis.metroValidatorSetup !== "undefined") {
+        Metro.validatorSetup(globalThis.metroValidatorSetup);
     }
 
     Metro.Component('validator', {
@@ -278,16 +242,17 @@
         },
 
         _create: function(){
-            var that = this, element = this.element, o = this.options;
-            var inputs = element.find("[data-validate]");
+            const element = this.element;
+            const o = this.options;
+            const inputs = element.find("[data-validate]");
 
             element
                 .attr("novalidate", 'novalidate');
 
             $.each(inputs, function(){
-                var input = $(this);
-                var funcs = input.data("validate");
-                var required = funcs.indexOf("required") > -1;
+                const input = $(this);
+                const funcs = input.data("validate");
+                const required = funcs.indexOf("required") > -1;
                 if (required && o.useRequiredClass === true) {
                     if (ValidatorFuncs.is_control(input)) {
                         input.parent().addClass("required");
@@ -315,13 +280,9 @@
                 element[0].onreset = null;
             }
 
-            element[0].onsubmit = function(){
-                return that._submit();
-            };
+            element[0].onsubmit = ()=> this._submit();
 
-            element[0].onreset = function(){
-                return that._reset();
-            };
+            element[0].onreset = ()=> this._reset();
 
             this._fireEvent("validator-create", {
                 element: element
@@ -334,15 +295,16 @@
         },
 
         _submit: function(){
-            var that = this, element = this.element, o = this.options;
-            var form = this.elem;
-            var inputs = element.find("[data-validate]");
-            var submit = element.find("input[type=submit], button[type=submit]");
-            var result = {
+            const element = this.element;
+            const o = this.options;
+            const form = this.elem;
+            const inputs = element.find("[data-validate]");
+            const submit = element.find("input[type=submit], button[type=submit]");
+            const result = {
                 val: 0,
                 log: []
             };
-            var formData = $.serializeToArray(element);
+            const formData = $.serializeToArray(element);
 
             if (submit.length > 0) {
                 submit.attr('disabled', 'disabled').addClass('disabled');
@@ -362,13 +324,13 @@
                     data: formData
                 });
 
-                setTimeout(function(){
+                setTimeout(()=> {
                     // TODO need fix event name to equivalent
                     Metro.utils.exec(o.onSubmit, [formData], form);
                     element.fire("formsubmit", {
                         data: formData
                     });
-                    if (that._onsubmit !==  null) Metro.utils.exec(that._onsubmit, null, form);
+                    if (this._onsubmit !==  null) Metro.utils.exec(this._onsubmit, null, form);
                 }, o.submitTimeout);
             } else {
 
@@ -378,9 +340,9 @@
                 });
 
                 if (o.clearInvalid > 0) {
-                    setTimeout(function(){
+                    setTimeout(()=> {
                         $.each(inputs, function(){
-                            var inp  = $(this);
+                            const inp  = $(this);
                             if (ValidatorFuncs.is_control(inp)) {
                                 inp.parent().removeClass("invalid");
                             } else {
@@ -394,7 +356,7 @@
             return result.val === 0;
         },
 
-        changeAttribute: function(){
+        changeAttribute: ()=> {
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

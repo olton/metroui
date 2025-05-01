@@ -1,4 +1,5 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let TreeViewDefaultConfig = {
@@ -20,12 +21,12 @@
         onTreeViewCreate: Metro.noop
     };
 
-    Metro.treeViewSetup = function (options) {
+    Metro.treeViewSetup = (options) => {
         TreeViewDefaultConfig = $.extend({}, TreeViewDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTreeViewSetup"] !== "undefined") {
-        Metro.treeViewSetup(globalThis["metroTreeViewSetup"]);
+    if (typeof globalThis.metroTreeViewSetup !== "undefined") {
+        Metro.treeViewSetup(globalThis.metroTreeViewSetup);
     }
 
     Metro.Component('tree-view', {
@@ -35,7 +36,8 @@
         },
 
         _create: function(){
-            const that = this, element = this.element;
+            const that = this;
+            const element = this.element;
 
             this._createTree();
             this._createEvents();
@@ -50,17 +52,15 @@
             });
         },
 
-        _createIcon: function(data){
-            let icon, src;
-
-            src = Metro.utils.isTag(data) ? $(data) : $("<img src='' alt=''>").attr("src", data);
-            icon = $("<span>").addClass("icon");
+        _createIcon: (data)=> {
+            const src = Metro.utils.isTag(data) ? $(data) : $("<img src='' alt=''>").attr("src", data)
+            const icon = $("<span>").addClass("icon")
             icon.html(src.outerHTML());
 
             return icon;
         },
 
-        _createCaption: function(data, style){
+        _createCaption: (data, style)=> {
             const caption = $("<span>").addClass("caption").html(data);
 
             if (style) {
@@ -74,9 +74,7 @@
             return caption
         },
 
-        _createToggle: function(){
-            return $("<span>").addClass("node-toggle");
-        },
+        _createToggle: ()=> $("<span>").addClass("node-toggle"),
 
         /*
         * data = {
@@ -118,7 +116,7 @@
             }
 
             if (data.attributes && $.type(data.attributes) === "object") {
-                for(let key in data.attributes) {
+                for(const key in data.attributes) {
                     node.attr(key, data.attributes[key])
                 }
             }
@@ -139,7 +137,7 @@
             }
 
             if (data.badges) {
-                $.each((typeof data.badges === "string" ? data.badges.toArray(",") : Array.isArray(data.badges) ? data.badges : []), function(_, item) {
+                $.each((typeof data.badges === "string" ? data.badges.toArray(",") : Array.isArray(data.badges) ? data.badges : []), (_, item) => {
                     const [badge, className] = item.split(":");
                     node.append(
                         $("<span>").addClass("badge").addClass(className).html(badge)
@@ -168,7 +166,7 @@
                 const actionsListTrigger = $("<span class='actions-list-trigger'>").text("⋮").appendTo(actionsHolder)
                 const actionsList = $("<ul data-role='dropmenu' class='d-menu actions-list'>").appendTo(actionsHolder)
                 nodeContainer.append(actionsHolder)
-                for(let a of data.actions) {
+                for(const a of data.actions) {
                     if (a.type && a.type === "divider") {
                         $("<li>").addClass("divider").appendTo(actionsList)
                     } else {
@@ -223,7 +221,7 @@
             }
             
             if (data.attributes && $.type(data.attributes) === "object") {
-                for(let key in data.attributes) {
+                for(const key in data.attributes) {
                     node.attr(key, data.attributes[key])
                 }
             }
@@ -238,7 +236,7 @@
             return node;
         },
         
-        _createInputNode: function(data, target){
+        _createInputNode: (data, target)=> {
             const node = target ? target : $("<li>")
             
             node.append(`
@@ -256,7 +254,8 @@
         },
         
         _createTree: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const nodes = element.find("li[data-caption]")
 
             element.addClass("treeview");
@@ -315,7 +314,8 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element;
+            const that = this;
+            const element = this.element;
 
             element.on(Metro.events.click, ".node-toggle", function(e){
                 const toggle = $(this);
@@ -383,14 +383,10 @@
             });
         },
 
-        _recheck: function(check){
-            // const element = this.element;
-            let node //, checked, node, checks, all_checks;
-
-            check = $(check);
-
+        _recheck: function(check_element){
+            const check = $(check_element);
             const checked = check.is(":checked");
-            node = check.closest("li");
+            const node = check.closest("li")
 
             this.current(node);
 
@@ -412,9 +408,7 @@
                 $.each(all_checks.reverse(), function(){
                     const ch = $(this);
                     const children = ch.closest("li").children("ul").find("input[type=checkbox]").length;
-                    const children_checked = ch.closest("li").children("ul").find("input[type=checkbox]").filter(function (el) {
-                        return el.checked;
-                    }).length;
+                    const children_checked = ch.closest("li").children("ul").find("input[type=checkbox]").filter((el) => el.checked).length;
 
                     if (children > 0 && children_checked === 0) {
                         ch.attr("data-indeterminate", false);
@@ -455,14 +449,12 @@
         toggleNode: function(n){
             const node = $(n);
             const o = this.options;
-            let func;
             const toBeExpanded = !node.data("collapsed");//!node.hasClass("expanded");
 
             node.toggleClass("expanded");
             node.data("collapsed", toBeExpanded);
 
-            func = toBeExpanded === true ? "slideUp" : "slideDown";
-
+            const func = toBeExpanded === true ? "slideUp" : "slideDown"
             if (!toBeExpanded) {
 
                 this._fireEvent("expand-node", {
@@ -480,16 +472,17 @@
             node.children("ul")[func](o.duration);
         },
 
-        addTo: function(node, data){
+        addTo: function(target_node, data){
             const element = this.element;
             let target;
             let new_node;
             let toggle;
+            let node
 
-            if (!node) {
+            if (!target_node) {
                 target = element;
             } else {
-                node = $(node);
+                node = $(target_node);
                 target = node.children("ul");
                 if (target.length === 0) {
                     target = $("<ul>").appendTo(node);
@@ -520,14 +513,15 @@
             return new_node;
         },
 
-        insertBefore: function(node, data){
+        insertBefore: function(target_node, data){
             const new_node = this._createNode(data);
 
-            if (Metro.utils.isNull(node)) {
-                return this.addTo(node, data);
+            if (!target_node) {
+                return this.addTo(undefined, data);
             }
 
-            node = $(node);
+            const node = $(target_node);
+            
             new_node.insertBefore(node);
 
             this._fireEvent("node-insert", {
@@ -540,14 +534,15 @@
             return new_node;
         },
 
-        insertAfter: function(node, data){
+        insertAfter: function(target_node, data){
             const new_node = this._createNode(data);
 
-            if (Metro.utils.isNull(node)) {
-                return this.addTo(node, data);
+            if (!target_node) {
+                return this.addTo(undefined, data);
             }
 
-            node = $(node);
+            const node = $(target_node);
+            
             new_node.insertAfter(node);
 
             this._fireEvent("node-insert", {
@@ -560,9 +555,9 @@
             return new_node;
         },
 
-        del: function(node){
+        del: function(target_node){
             const element = this.element;
-            node = $(node);
+            const node = $(target_node);
             const parent_list = node.closest("ul");
             const parent_node = parent_list.closest("li");
 
@@ -581,8 +576,8 @@
             this._recheckTree()
         },
 
-        clean: function(node){
-            node = $(node);
+        clean: function(target_node){
+            const node = $(target_node);
             node.children("ul").remove();
             node.removeClass("expanded");
             node.children(".node-toggle").remove();
@@ -592,41 +587,41 @@
             });
         },
 
-        collapseNode(node){
+        collapseNode(target_node){
             const o = this.options;
-            node = $(node)
+            const node = $(target_node)
             node.removeClass("expanded");
             node.data("collapsed", true)
-            node.children("ul")["slideUp"](o.duration);
+            node.children("ul").slideUp(o.duration);
             this._fireEvent("collapse-node", {
                 node: node[0]
             });
         },
 
-        expandNode(node){
+        expandNode(target_node){
             const o = this.options;
-            node = $(node)
+            const node = $(target_node)
             if (!node.hasClass("tree-node")) {
                 return
             }
             node.addClass("expanded");
             node.data("collapsed", false)
-            node.children("ul")["slideDown"](o.duration);
+            node.children("ul").slideDown(o.duration);
             this._fireEvent("expand-node", {
                 node: node[0]
             });
         },
 
         collapseAll(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             element.find(".expanded").each((_, el)=>{
                 const node = $(el);
-                let func;
                 const toBeExpanded = !node.data("collapsed");//!node.hasClass("expanded");
 
                 node.toggleClass("expanded");
                 node.data("collapsed", toBeExpanded);
-                func = toBeExpanded === true ? "slideUp" : "slideDown";
+                const func = toBeExpanded === true ? "slideUp" : "slideDown"
                 if (!toBeExpanded) {
                     this._fireEvent("expand-node", {
                         node: node[0]
@@ -642,15 +637,15 @@
         },
 
         expandAll(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             element.find(".tree-node:not(.expanded)").each((_, el)=>{
                 const node = $(el);
-                let func;
                 const toBeExpanded = !node.data("collapsed");//!node.hasClass("expanded");
 
                 node.toggleClass("expanded");
                 node.data("collapsed", toBeExpanded);
-                func = toBeExpanded === true ? "slideUp" : "slideDown";
+                const func = toBeExpanded === true ? "slideUp" : "slideDown"
                 if (!toBeExpanded) {
                     this._fireEvent("expand-node", {
                         node: node[0]
@@ -695,4 +690,4 @@
             element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

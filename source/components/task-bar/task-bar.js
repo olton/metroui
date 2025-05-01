@@ -1,4 +1,5 @@
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let TaskBarDefaultConfig = {
@@ -6,12 +7,12 @@
         onMyObjectCreate: Metro.noop
     };
 
-    Metro.taskBarSetup = function (options) {
+    Metro.taskBarSetup = (options) => {
         TaskBarDefaultConfig = $.extend({}, TaskBarDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTaskBarSetup"] !== "undefined") {
-        Metro.taskBarSetup(globalThis["metroTaskBarSetup"]);
+    if (typeof globalThis.metroTaskBarSetup !== "undefined") {
+        Metro.taskBarSetup(globalThis.metroTaskBarSetup);
     }
 
     Metro.Component('task-bar', {
@@ -33,7 +34,8 @@
         },
 
         _createStructure: function(){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("task-bar");
             element.append($("<div>").addClass("widgets"));
@@ -42,7 +44,8 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
 
             element.on(Metro.events.click, ".task", function(){
                 const task = that.tasks[$(this).index()];
@@ -73,7 +76,8 @@
         },
 
         _renderTasks: function (){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const tasks = element.find(".tasks").clear();
             
             for (const task of this.tasks) {
@@ -86,7 +90,7 @@
         },
         
         _renderSystemTray: function (){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
             const systemTray = element.find(".system-tray").clear();
             
             for (const item of this.systemTray) {
@@ -95,7 +99,7 @@
         },
         
         _renderWidgets: function (){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
             const widgets = element.find(".widgets").clear();
             
             for (const widget of this.widgets) {
@@ -155,11 +159,11 @@
             this._renderWidgets();
         },
         
-        changeAttribute: function(attr, newValue){
+        changeAttribute: (attr, newValue)=> {
         },
 
         destroy: function(){
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

@@ -3,7 +3,8 @@
 *  1. syntax highlighting
 *  2. markdown editor
 * */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let TextareaDefaultConfig = {
@@ -27,12 +28,12 @@
         onTextareaCreate: Metro.noop
     };
 
-    Metro.textareaSetup = function (options) {
+    Metro.textareaSetup = (options) => {
         TextareaDefaultConfig = $.extend({}, TextareaDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTextareaSetup"] !== "undefined") {
-        Metro.textareaSetup(globalThis["metroTextareaSetup"]);
+    if (typeof globalThis.metroTextareaSetup !== "undefined") {
+        Metro.textareaSetup(globalThis.metroTextareaSetup);
     }
 
     Metro.Component('textarea', {
@@ -53,8 +54,10 @@
         },
 
         _createStructure: function(){
-            const that = this, element = this.element, elem = this.elem, o = this.options;
-            const container = $("<div>").addClass("textarea " + element[0].className);
+            const element = this.element;
+            const elem = this.elem;
+            const o = this.options;
+            const container = $("<div>").addClass(`textarea ${element[0].className}`);
             const fakeTextarea = $("<textarea>").addClass("fake-textarea");
             let clearButton;
 
@@ -118,8 +121,8 @@
             if (o.autoSize === true) {
                 container.addClass("autosize no-scroll-vertical");
 
-                setTimeout(function(){
-                    that.resize();
+                setTimeout(()=> {
+                    this.resize();
                 }, 100);
             }
             
@@ -127,28 +130,30 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const textarea = element.closest(".textarea");
             const fakeTextarea = textarea.find(".fake-textarea");
             const chars_counter = $(o.charsCounter);
 
-            textarea.on(Metro.events.click, ".input-clear-button", function(e){
+            textarea.on(Metro.events.click, ".input-clear-button", (e)=> {
                 element.val(Metro.utils.isValue(o.defaultValue) ? o.defaultValue : "").trigger('change').trigger('keyup').focus();
                 e.preventDefault();
                 e.stopPropagation();
             });
 
             if (o.autoSize) {
-                element.on(Metro.events.inputchange + " " + Metro.events.keyup, function(){
+                element.on(`${Metro.events.inputchange} ${Metro.events.keyup}`, function(){
                     fakeTextarea.val(this.value);
                     that.resize();
                 });
             }
 
-            element.on(Metro.events.blur, function(){textarea.removeClass("focused");});
-            element.on(Metro.events.focus, function(){textarea.addClass("focused");});
+            element.on(Metro.events.blur, ()=> {textarea.removeClass("focused");});
+            element.on(Metro.events.focus, ()=> {textarea.addClass("focused");});
 
-            element.on(Metro.events.keyup, function(){
+            element.on(Metro.events.keyup, ()=> {
                 if (Metro.utils.isValue(o.charsCounter) && chars_counter.length > 0) {
                     if (chars_counter[0].tagName === "INPUT") {
                         chars_counter.val(that.length());
@@ -166,10 +171,11 @@
         },
 
         resize: function(){
-            const element = this.element, o = this.options,
-                textarea = element.closest(".textarea"),
-                fakeTextarea = textarea.find(".fake-textarea"),
-                currentHeight = fakeTextarea[0].scrollHeight;
+            const element = this.element;
+            const o = this.options;
+            const textarea = element.closest(".textarea");
+            const fakeTextarea = textarea.find(".fake-textarea");
+            const currentHeight = fakeTextarea[0].scrollHeight;
 
             if (o.maxHeight && currentHeight >= o.maxHeight) {
                 textarea.removeClass("no-scroll-vertical");
@@ -181,8 +187,8 @@
             }
 
             fakeTextarea[0].style.cssText = 'height:auto;';
-            fakeTextarea[0].style.cssText = 'height:' + fakeTextarea[0].scrollHeight + 'px';
-            element[0].style.cssText = 'height:' + fakeTextarea[0].scrollHeight + 'px';
+            fakeTextarea[0].style.cssText = `height:${fakeTextarea[0].scrollHeight}px`;
+            element[0].style.cssText = `height:${fakeTextarea[0].scrollHeight}px`;
         },
 
         clear: function(){
@@ -194,7 +200,7 @@
         },
 
         length: function(){
-            var characters = this.elem.value.split('');
+            const characters = this.elem.value.split('');
             return characters.length;
         },
 
@@ -223,13 +229,14 @@
         },
 
         destroy: function(){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const textarea = element.closest(".textarea");
 
             textarea.off(Metro.events.click, ".input-clear-button");
 
             if (o.autoSize) {
-                element.off(Metro.events.inputchange + " " + Metro.events.keyup);
+                element.off(`${Metro.events.inputchange} ${Metro.events.keyup}`);
             }
 
             element.off(Metro.events.blur);
@@ -243,4 +250,4 @@
             this.component.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

@@ -1,7 +1,8 @@
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
-    var Utils = Metro.utils;
-    var SwitchDefaultConfig = {
+
+    let SwitchDefaultConfig = {
         switchDeferred: 0,
         material: false,
         prepend:"",
@@ -16,12 +17,12 @@
         onSwitchCreate: Metro.noop,
     };
 
-    Metro.switchSetup = function (options) {
+    Metro.switchSetup = (options) => {
         SwitchDefaultConfig = $.extend({}, SwitchDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSwitchSetup"] !== "undefined") {
-        Metro.switchSetup(globalThis["metroSwitchSetup"]);
+    if (typeof globalThis.metroSwitchSetup !== "undefined") {
+        Metro.switchSetup(globalThis.metroSwitchSetup);
     }
 
     Metro.Component("switch", {
@@ -32,7 +33,8 @@
         },
 
         _create: function () {
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const strings = this.strings;
 
             const container = element.wrap("<label>").addClass("switch").addClass(element[0].className).addClass(o.clsSwitch);
@@ -40,7 +42,7 @@
             element.attr("type", "checkbox");
 
             if (element.attr("readonly")) {
-                element.on("click", function (e) {
+                element.on("click", (e) => {
                     e.preventDefault();
                 });
             }
@@ -77,8 +79,8 @@
 
             if (element.is(":disabled")) return this;
 
-            if (!Utils.isValue(v)) {
-                element.prop("checked", !Utils.bool(element.prop("checked")));
+            if (!Metro.utils.isValue(v)) {
+                element.prop("checked", !Metro.utils.bool(element.prop("checked")));
             } else {
                 element.prop("checked", v === 1);
             }
@@ -86,7 +88,7 @@
             return this;
         },
 
-        changeAttribute: function (attr, newVal) {},
+        changeAttribute: (attr, newVal) => {},
 
         destroy: function () {
             return this.element;

@@ -1,11 +1,9 @@
-/* global Metro, Cake */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var effects = [
-        "slide-up", "slide-down", "slide-left", "slide-right", "fade", "zoom", "swirl", "switch"
-    ];
-    var TileDefaultConfig = {
+
+    const effects = ["slide-up", "slide-down", "slide-left", "slide-right", "fade", "zoom", "swirl", "switch"];
+    let TileDefaultConfig = {
         tileDeferred: 0,
         size: "medium",
         cover: "",
@@ -19,12 +17,12 @@
         onTileCreate: Metro.noop
     };
 
-    Metro.tileSetup = function (options) {
+    Metro.tileSetup = (options) => {
         TileDefaultConfig = $.extend({}, TileDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTileSetup"] !== "undefined") {
-        Metro.tileSetup(globalThis["metroTileSetup"]);
+    if (typeof globalThis.metroTileSetup !== "undefined") {
+        Metro.tileSetup(globalThis.metroTileSetup);
     }
 
     Metro.Component('tile', {
@@ -41,7 +39,7 @@
         },
 
         _create: function(){
-            var element = this.element;
+            const element = this.element;
 
             this._createTile();
             this._createEvents();
@@ -53,24 +51,26 @@
 
         _createTile: function(){
             function switchImage(el, img_src, i){
-                setTimeout(function(){
-                    el.fadeOut(500, function(){
-                        el.css("background-image", "url(" + img_src + ")");
+                setTimeout(()=> {
+                    el.fadeOut(500, ()=> {
+                        el.css("background-image", `url(${img_src})`);
                         el.fadeIn();
                     });
                 }, i * 300);
             }
 
-            var that = this, element = this.element, o = this.options;
-            var slides = element.find(".slide");
-            var slides2 = element.find(".slide-front, .slide-back");
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const slides = element.find(".slide");
+            const slides2 = element.find(".slide-front, .slide-back");
 
-            element.addClass("tile-" + o.size);
+            element.addClass(`tile-${o.size}`);
 
             if (o.effect.indexOf("hover-") > -1) {
-                element.addClass("effect-" + o.effect);
+                element.addClass(`effect-${o.effect}`);
                 $.each(slides2, function(){
-                    var slide = $(this);
+                    const slide = $(this);
 
                     if (slide.data("cover") !== undefined) {
                         that._setCover(slide, slide.data("cover"), slide.data("cover-position"));
@@ -80,7 +80,7 @@
 
             if (effects.includes(o.effect) && slides.length > 1) {
                 $.each(slides, function(i){
-                    var slide = $(this);
+                    const slide = $(this);
 
                     that.slides.push(this);
 
@@ -112,26 +112,26 @@
                     $(this).remove();
                 });
 
-                var temp = this.images.slice();
+                const temp = this.images.slice();
 
-                for(var i = 0; i < 5; i++) {
-                    var rnd_index = $.random(0, temp.length - 1);
-                    var div = $("<div>").addClass("img -js-img-"+i).css("background-image", "url("+temp[rnd_index].src+")");
+                for(let i = 0; i < 5; i++) {
+                    const rnd_index = $.random(0, temp.length - 1);
+                    const div = $("<div>").addClass(`img -js-img-${i}`).css("background-image", `url(${temp[rnd_index].src})`);
                     element.prepend(div);
                     temp.splice(rnd_index, 1);
                 }
 
-                var a = [0, 1, 4, 3, 2];
+                let a = [0, 1, 4, 3, 2];
 
-                setInterval(function(){
-                    var temp = that.images.slice();
-                    var bg = Farbe.Routines.randomColor();
+                setInterval(()=> {
+                    const temp = that.images.slice();
+                    const bg = Farbe.Routines.randomColor();
 
                     element.css("background-color", bg);
 
-                    for(var i = 0; i < a.length; i++) {
-                        var rnd_index = $.random(0, temp.length - 1);
-                        var div = element.find(".-js-img-"+a[i]);
+                    for(let i = 0; i < a.length; i++) {
+                        const rnd_index = $.random(0, temp.length - 1);
+                        const div = element.find(`.-js-img-${a[i]}`);
                         switchImage(div, temp[rnd_index].src, i);
                         temp.splice(rnd_index, 1);
                     }
@@ -142,19 +142,20 @@
         },
 
         _runEffects: function(){
-            var that = this, o = this.options;
+            const o = this.options;
 
-            if (this.effectInterval === false) this.effectInterval = setInterval(function(){
-                var current, next;
+            if (this.effectInterval === false) this.effectInterval = setInterval(()=> {
+                let current;
+                let next;
 
-                current = $(that.slides[that.currentSlide]);
+                current = $(this.slides[this.currentSlide]);
 
-                that.currentSlide++;
-                if (that.currentSlide === that.slides.length) {
-                    that.currentSlide = 0;
+                this.currentSlide++;
+                if (this.currentSlide === this.slides.length) {
+                    this.currentSlide = 0;
                 }
 
-                next = that.slides[that.currentSlide];
+                next = this.slides[this.currentSlide];
 
                 if (effects.includes(o.effect)) {
                     Metro.Effects[Str.camelCase(o.effect)]($(current)[0], $(next)[0], {duration: o.effectDuration});
@@ -169,28 +170,27 @@
         },
 
         _setCover: function(to, src, pos){
-            if (!Utils.isValue(pos)) {
-                pos = this.options.coverPosition;
-            }
             to.css({
-                backgroundImage: "url("+src+")",
+                backgroundImage: `url(${src})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
-                backgroundPosition: pos
+                backgroundPosition: pos || this.options.coverPosition
             });
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
             element.on(Metro.events.startAll, function(e){
-                var tile = $(this);
-                var dim = {w: element.width(), h: element.height()};
-                var X = Utils.pageXY(e).x - tile.offset().left,
-                    Y = Utils.pageXY(e).y - tile.offset().top;
-                var side;
+                const tile = $(this);
+                const dim = {w: element.width(), h: element.height()};
+                const X = Metro.utils.pageXY(e).x - tile.offset().left;
+                const Y = Metro.utils.pageXY(e).y - tile.offset().top;
+                let side;
 
-                if (Utils.isRightMouse(e) === false) {
+                if (Metro.utils.isRightMouse(e) === false) {
 
                     if (X < dim.w * 1 / 3 && (Y < dim.h * 1 / 2 || Y > dim.h * 1 / 2)) {
                         side = 'left';
@@ -202,10 +202,10 @@
                         side = "top";
                     }
 
-                    if (o.canTransform === true) tile.addClass("transform-" + side);
+                    if (o.canTransform === true) tile.addClass(`transform-${side}`);
 
                     if (o.target !== null) {
-                        setTimeout(function(){
+                        setTimeout(()=> {
                             document.location.href = o.target;
                         }, 100);
                     }
@@ -225,17 +225,14 @@
             });
         },
 
-        changeAttribute: function(){
+        changeAttribute: ()=> {
         },
 
         destroy: function(){
-            var element = this.element;
-
+            const element = this.element;
             element.off(Metro.events.startAll);
-
             element.off([Metro.events.stopAll, Metro.events.leave].join(" "));
-
-            return element;
+            element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

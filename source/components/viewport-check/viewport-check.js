@@ -1,21 +1,20 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    var Utils = Metro.utils;
-    var ViewportCheckDefaultConfig = {
+    let ViewportCheckDefaultConfig = {
         onViewport: Metro.noop,
         onViewportEnter: Metro.noop,
         onViewportLeave: Metro.noop,
         onViewportCheckCreate: Metro.noop
     };
 
-    Metro.viewportCheckSetup = function (options) {
+    Metro.viewportCheckSetup = (options) => {
         ViewportCheckDefaultConfig = $.extend({}, ViewportCheckDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroViewportCheckSetup"] !== "undefined") {
-        Metro.viewportCheckSetup(globalThis["metroViewportCheckSetup"]);
+    if (typeof globalThis.metroViewportCheckSetup !== "undefined") {
+        Metro.viewportCheckSetup(globalThis.metroViewportCheckSetup);
     }
 
     Metro.Component('viewport-check', {
@@ -23,13 +22,13 @@
             this._super(elem, options, ViewportCheckDefaultConfig, {
                 // define instance vars here
                 inViewport: false,
-                id: Utils.elementId("viewport-check")
+                id: Metro.utils.elementId("viewport-check")
             });
             return this;
         },
 
         _create: function(){
-            this.inViewport = Utils.inViewport(this.elem);
+            this.inViewport = Metro.utils.inViewport(this.elem);
 
             this._createEvents();
 
@@ -37,25 +36,25 @@
         },
 
         _createEvents: function(){
-            var that = this, elem = this.elem;
+            const elem = this.elem;
 
-            $(globalThis).on(Metro.events.scroll, function(){
-                var oldState = that.inViewport;
+            $(globalThis).on(Metro.events.scroll, ()=> {
+                const oldState = this.inViewport;
 
-                that.inViewport = Utils.inViewport(elem);
+                this.inViewport = Metro.utils.inViewport(elem);
 
-                if (oldState !== that.inViewport) {
-                    if (that.inViewport) {
-                        that._fireEvent("viewport-enter");
+                if (oldState !== this.inViewport) {
+                    if (this.inViewport) {
+                        this._fireEvent("viewport-enter");
                     } else {
-                        that._fireEvent("viewport-leave");
+                        this._fireEvent("viewport-leave");
                     }
                 }
 
-                that._fireEvent("viewport", {
-                    state: that.inViewport
+                this._fireEvent("viewport", {
+                    state: this.inViewport
                 });
-            }, {ns: that.id});
+            }, {ns: this.id});
         },
 
         state: function(){
@@ -68,4 +67,4 @@
             return this.element;
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

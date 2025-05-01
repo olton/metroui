@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var VideoPlayerDefaultConfig = {
+
+    let VideoPlayerDefaultConfig = {
         videoDeferred: 0,
         src: null,
 
@@ -50,12 +50,12 @@
         onVideoPlayerCreate: Metro.noop
     };
 
-    Metro.videoPlayerSetup = function (options) {
+    Metro.videoPlayerSetup = (options) => {
         VideoPlayerDefaultConfig = $.extend({}, VideoPlayerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroVideoPlayerSetup"] !== "undefined") {
-        Metro.videoPlayerSetup(globalThis["metroVideoPlayerSetup"]);
+    if (typeof globalThis.metroVideoPlayerSetup !== "undefined") {
+        Metro.videoPlayerSetup(globalThis.metroVideoPlayerSetup);
     }
 
     Metro.Component('video-player', {
@@ -71,14 +71,15 @@
                 muted: false,
                 fullScreenInterval: false,
                 isPlaying: false,
-                id: Utils.elementId('video-player')
+                id: Metro.utils.elementId('video-player')
             });
 
             return this;
         },
 
         _create: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             if (Metro.fullScreenEnabled === false) {
                 o.fullScreenMode = Metro.fullScreenMode.WINDOW;
@@ -100,10 +101,12 @@
         },
 
         _createPlayer: function(){
-            var element = this.element, o = this.options, video = this.video;
-            var player = $("<div>").addClass("media-player video-player " + element[0].className);
-            var preloader = $("<div>").addClass("preloader").appendTo(player);
-            var logo = $("<a>").attr("href", o.logoTarget).addClass("logo").appendTo(player);
+            const element = this.element;
+            const o = this.options;
+            const video = this.video;
+            const player = $("<div>").addClass(`media-player video-player ${element[0].className}`);
+            const preloader = $("<div>").addClass("preloader").appendTo(player);
+            const logo = $("<a>").attr("href", o.logoTarget).addClass("logo").appendTo(player);
 
             player.insertBefore(element);
             element.appendTo(player);
@@ -148,15 +151,14 @@
         },
 
         _setSource: function(src){
-            var element = this.element;
+            const element = this.element;
 
             element.find("source").remove();
             element.removeAttr("src");
             if (Array.isArray(src)) {
                 $.each(src, function(){
-                    var item = this;
-                    if (item.src === undefined) return ;
-                    $("<source>").attr('src', item.src).attr('type', item.type !== undefined ? item.type : '').appendTo(element);
+                    if (this.src === undefined) return ;
+                    $("<source>").attr('src', this.src).attr('type', this.type !== undefined ? this.type : '').appendTo(element);
                 });
             } else {
                 element.attr("src", src);
@@ -164,17 +166,19 @@
         },
 
         _createControls: function(){
-            var that = this, element = this.element, o = this.options, video = this.elem;
+            const element = this.element;
+            const o = this.options;
+            const video = this.elem;
 
-            var controls = $("<div>").addClass("controls").addClass(o.clsControls).insertAfter(element);
+            const controls = $("<div>").addClass("controls").addClass(o.clsControls).insertAfter(element);
 
-            var stream = $("<div>").addClass("stream").appendTo(controls);
-            var streamSlider = $("<input>").addClass("stream-slider ultra-thin cycle-marker").appendTo(stream);
+            const stream = $("<div>").addClass("stream").appendTo(controls);
+            const streamSlider = $("<input>").addClass("stream-slider ultra-thin cycle-marker").appendTo(stream);
 
-            var volume = $("<div>").addClass("volume").appendTo(controls);
-            var volumeSlider = $("<input>").addClass("volume-slider ultra-thin cycle-marker").appendTo(volume);
+            const volume = $("<div>").addClass("volume").appendTo(controls);
+            const volumeSlider = $("<input>").addClass("volume-slider ultra-thin cycle-marker").appendTo(volume);
 
-            var infoBox = $("<div>").addClass("info-box").appendTo(controls);
+            const infoBox = $("<div>").addClass("info-box").appendTo(controls);
 
             if (o.showInfo !== true) {
                 infoBox.hide();
@@ -185,12 +189,12 @@
                 clsHint: "bg-cyan fg-white",
                 clsComplete: "bg-cyan",
                 hint: true,
-                onStart: function(){
+                onStart: ()=> {
                     if (!video.paused) video.pause();
                 },
-                onStop: function(val){
+                onStop: (val)=> {
                     if (video.seekable.length > 0) {
-                        video.currentTime = (that.duration * val / 100).toFixed(0);
+                        video.currentTime = (this.duration * val / 100).toFixed(0);
                     }
                     if (video.paused && video.currentTime > 0) {
                         video.play();
@@ -209,7 +213,7 @@
                 clsHint: "bg-cyan fg-white",
                 hint: true,
                 value: o.volume * 100,
-                onChangeValue: function(val){
+                onChangeValue: (val)=> {
                     video.volume = val / 100;
                 }
             });
@@ -220,7 +224,7 @@
                 volume.hide();
             }
 
-            var loop;
+            let loop;
 
             if (o.showLoop === true) loop = $("<button>").attr("type", "button").addClass("button square loop").html(o.loopIcon).appendTo(controls);
             if (o.showPlay === true) $("<button>").attr("type", "button").addClass("button square play").html(o.playIcon).appendTo(controls);
@@ -236,8 +240,8 @@
             this._setVolume();
 
             if (o.muted) {
-                that.volumeBackup = video.volume;
-                Metro.getPlugin(that.volume, 'slider').val(0);
+                this.volumeBackup = video.volume;
+                Metro.getPlugin(this.volume, 'slider').val(0);
                 video.volume = 0;
             }
 
@@ -245,109 +249,111 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options, video = this.elem, player = this.player;
+            const element = this.element;
+            const o = this.options;
+            const video = this.elem;
+            const player = this.player;
 
-            element.on("loadstart", function(){
-                that.preloader.show();
+            element.on("loadstart", ()=> {
+                this.preloader.show();
             });
 
-            element.on("loadedmetadata", function(){
-                that.duration = video.duration.toFixed(0);
-                that._setInfo(0, that.duration);
-                Utils.exec(o.onMetadata, [video, player], element[0]);
+            element.on("loadedmetadata", ()=> {
+                this.duration = video.duration.toFixed(0);
+                this._setInfo(0, this.duration);
+                Metro.utils.exec(o.onMetadata, [video, player], element[0]);
             });
 
-            element.on("canplay", function(){
-                that._setBuffer();
-                that.preloader.hide();
+            element.on("canplay", ()=> {
+                this._setBuffer();
+                this.preloader.hide();
             });
 
-            element.on("progress", function(){
-                that._setBuffer();
+            element.on("progress", ()=> {
+                this._setBuffer();
             });
 
-            element.on("timeupdate", function(){
-                var position = Math.round(video.currentTime * 100 / that.duration);
-                that._setInfo(video.currentTime, that.duration);
-                Metro.getPlugin(that.stream, 'slider').val(position);
-                Utils.exec(o.onTime, [video.currentTime, that.duration, video, player], element[0]);
+            element.on("timeupdate", ()=> {
+                const position = Math.round(video.currentTime * 100 / this.duration);
+                this._setInfo(video.currentTime, this.duration);
+                Metro.getPlugin(this.stream, 'slider').val(position);
+                Metro.utils.exec(o.onTime, [video.currentTime, this.duration, video, player], element[0]);
             });
 
-            element.on("waiting", function(){
-                that.preloader.show();
+            element.on("waiting", ()=> {
+                this.preloader.show();
             });
 
-            element.on("loadeddata", function(){
-
+            element.on("loadeddata", ()=> {
             });
 
-            element.on("play", function(){
+            element.on("play", ()=> {
                 player.find(".play").html(o.pauseIcon);
-                Utils.exec(o.onPlay, [video, player], element[0]);
-                that._onMouse();
+                Metro.utils.exec(o.onPlay, [video, player], element[0]);
+                this._onMouse();
             });
 
-            element.on("pause", function(){
+            element.on("pause", ()=> {
                 player.find(".play").html(o.playIcon);
-                Utils.exec(o.onPause, [video, player], element[0]);
-                that._offMouse();
+                Metro.utils.exec(o.onPause, [video, player], element[0]);
+                this._offMouse();
             });
 
-            element.on("stop", function(){
-                Metro.getPlugin(that.stream, 'slider').val(0);
-                Utils.exec(o.onStop, [video, player], element[0]);
-                that._offMouse();
+            element.on("stop", ()=> {
+                Metro.getPlugin(this.stream, 'slider').val(0);
+                Metro.utils.exec(o.onStop, [video, player], element[0]);
+                this._offMouse();
             });
 
-            element.on("ended", function(){
-                Metro.getPlugin(that.stream, 'slider').val(0);
-                Utils.exec(o.onEnd, [video, player], element[0]);
-                that._offMouse();
+            element.on("ended", ()=> {
+                Metro.getPlugin(this.stream, 'slider').val(0);
+                Metro.utils.exec(o.onEnd, [video, player], element[0]);
+                this._offMouse();
             });
 
-            element.on("volumechange", function(){
-                that._setVolume();
+            element.on("volumechange", ()=> {
+                this._setVolume();
             });
 
-            player.on(Metro.events.click, ".play", function(){
+            player.on(Metro.events.click, ".play", ()=> {
                 if (video.paused) {
-                    that.play();
+                    this.play();
                 } else {
-                    that.pause();
+                    this.pause();
                 }
             });
 
-            player.on(Metro.events.click, ".stop", function(){
-                that.stop();
+            player.on(Metro.events.click, ".stop", ()=> {
+                this.stop();
             });
 
-            player.on(Metro.events.click, ".mute", function(){
-                that._toggleMute();
+            player.on(Metro.events.click, ".mute", ()=> {
+                this._toggleMute();
             });
 
-            player.on(Metro.events.click, ".loop", function(){
-                that._toggleLoop();
+            player.on(Metro.events.click, ".loop", ()=> {
+                this._toggleLoop();
             });
 
-            player.on(Metro.events.click, ".full", function(){
-                that.fullscreen = !that.fullscreen;
-                player.find(".full").html(that.fullscreen === true ? o.screenLessIcon : o.screenMoreIcon);
+            player.on(Metro.events.click, ".full", ()=> {
+                this.fullscreen = !this.fullscreen;
+                player.find(".full").html(this.fullscreen === true ? o.screenLessIcon : o.screenMoreIcon);
                 if (o.fullScreenMode === Metro.fullScreenMode.WINDOW) {
-                    if (that.fullscreen === true) {
+                    if (this.fullscreen === true) {
                         player.addClass("full-screen");
                     } else {
                         player.removeClass("full-screen");
                     }
                 } else {
-                    if (that.fullscreen === true) {
+                    if (this.fullscreen === true) {
 
                         Metro.requestFullScreen(video);
 
-                        if (that.fullScreenInterval === false) that.fullScreenInterval = setInterval(function(){
+                        if (this.fullScreenInterval === false) this.fullScreenInterval = setInterval(()=> {
                             if (Metro.inFullScreen() === false) {
-                                that.fullscreen = false;
-                                clearInterval(that.fullScreenInterval);
-                                that.fullScreenInterval = false;
+                                this.fullscreen = false;
+                                clearInterval(this.fullScreenInterval);
+                                this.fullScreenInterval = false;
                                 player.find(".full").html(o.screenMoreIcon);
                             }
 
@@ -368,34 +374,35 @@
                 // }
             });
 
-            $(globalThis).on(Metro.events.keyup, function(e){
-                if (that.fullscreen && e.keyCode === 27) {
+            $(globalThis).on(Metro.events.keyup, (e)=> {
+                if (this.fullscreen && e.keyCode === 27) {
                     player.find(".full").click();
                 }
             }, {ns: this.id});
 
-            $(globalThis).on(Metro.events.resize, function(){
-                that._setAspectRatio();
+            $(globalThis).on(Metro.events.resize, ()=> {
+                this._setAspectRatio();
             }, {ns: this.id});
 
         },
 
         _onMouse: function(){
-            var o = this.options, player = this.player;
+            const o = this.options;
+            const player = this.player;
 
-            player.on(Metro.events.enter, function(){
-                var controls = player.find(".controls");
+            player.on(Metro.events.enter, ()=> {
+                const controls = player.find(".controls");
                 if (o.controlsHide > 0 && controls.style('display') === 'none') {
-                    controls.stop(true).fadeIn(500, function(){
+                    controls.stop(true).fadeIn(500, ()=> {
                         controls.css("display", "flex");
                     });
                 }
             });
 
-            player.on(Metro.events.leave, function(){
-                var controls = player.find(".controls");
-                if (o.controlsHide > 0 && parseInt(controls.style('opacity')) === 1) {
-                    setTimeout(function () {
+            player.on(Metro.events.leave, ()=> {
+                const controls = player.find(".controls");
+                if (o.controlsHide > 0 && Number.parseInt(controls.style('opacity')) === 1) {
+                    setTimeout(() => {
                         controls.stop(true).fadeOut(500);
                     }, o.controlsHide);
                 }
@@ -403,21 +410,22 @@
         },
 
         _offMouse: function(){
-            var player = this.player, o = this.options;
-            var controls = player.find(".controls");
+            const player = this.player;
+            const o = this.options;
+            const controls = player.find(".controls");
 
             player.off(Metro.events.enter);
             player.off(Metro.events.leave);
 
             if (o.controlsHide > 0 && controls.style('display') === 'none') {
-                controls.stop(true).fadeIn(500, function(){
+                controls.stop(true).fadeIn(500, ()=> {
                     controls.css("display", "flex");
                 });
             }
         },
 
         _toggleLoop: function(){
-            var loop = this.player.find(".loop");
+            const loop = this.player.find(".loop");
             if (loop.length === 0) return ;
             loop.toggleClass("active");
             if (loop.hasClass("active")) {
@@ -439,19 +447,22 @@
         },
 
         _setInfo: function(a, b){
-            this.player.find(".info-box").html(Utils.secondsToFormattedString(Math.round(a)) + " / " + Utils.secondsToFormattedString(Math.round(b)));
+            this.player.find(".info-box").html(`${Metro.utils.secondsToFormattedString(Math.round(a))} / ${Metro.utils.secondsToFormattedString(Math.round(b))}`);
         },
 
         _setBuffer: function(){
-            var buffer = this.video.buffered.length ? Math.round(Math.floor(this.video.buffered.end(0)) / Math.floor(this.video.duration) * 100) : 0;
+            const buffer = this.video.buffered.length ? Math.round(Math.floor(this.video.buffered.end(0)) / Math.floor(this.video.duration) * 100) : 0;
             Metro.getPlugin(this.stream, 'slider').buff(buffer);
         },
 
         _setVolume: function(){
-            var video = this.video, player = this.player, o = this.options;
+            const video = this.video;
+            const player = this.player;
+            const o = this.options;
 
-            var volumeButton = player.find(".mute");
-            var volume = video.volume * 100;
+            const volumeButton = player.find(".mute");
+            const volume = video.volume * 100;
+            
             if (volume > 1 && volume < 30) {
                 volumeButton.html(o.volumeLowIcon);
             } else if (volume >= 30 && volume < 60) {
@@ -464,14 +475,15 @@
         },
 
         _setAspectRatio: function(){
-            var player = this.player, o = this.options;
-            var width = player.outerWidth();
-            var height;
+            const player = this.player;
+            const o = this.options;
+            const width = player.outerWidth();
+            let height;
 
             switch (o.aspectRatio) {
-                case Metro.aspectRatio.SD: height = Utils.aspectRatioH(width, "4/3"); break;
-                case Metro.aspectRatio.CINEMA: height = Utils.aspectRatioH(width, "21/9"); break;
-                default: height = Utils.aspectRatioH(width, "16/9");
+                case Metro.aspectRatio.SD: height = Metro.utils.aspectRatioH(width, "4/3"); break;
+                case Metro.aspectRatio.CINEMA: height = Metro.utils.aspectRatioH(width, "21/9"); break;
+                default: height = Metro.utils.aspectRatioH(width, "16/9");
             }
 
             player.outerHeight(height);
@@ -516,15 +528,18 @@
         },
 
         setVolume: function(v){
-            if (v === undefined) {
+            if (typeof v === "undefined") {
                 return this.video.volume;
             }
 
-            if (v > 1) {
-                v /= 100;
+            let new_volume = Number.parseFloat(v);
+            
+            if (new_volume > 1) {
+                new_volume /= 100;
             }
 
-            this.video.volume = v;
+            this.video.volume = new_volume;
+            
             Metro.getPlugin(this.volume[0], 'slider').val(v*100);
         },
 
@@ -542,12 +557,12 @@
         },
 
         changeSource: function(){
-            var src = JSON.parse(this.element.attr('data-src'));
+            const src = JSON.parse(this.element.attr('data-src'));
             this.play(src);
         },
 
         changeVolume: function(){
-            var volume = this.element.attr("data-volume");
+            const volume = this.element.attr("data-volume");
             this.setVolume(volume);
         },
 
@@ -560,7 +575,8 @@
         },
 
         destroy: function(){
-            var element = this.element, player = this.player;
+            const element = this.element;
+            const player = this.player;
 
             Metro.getPlugin(this.stream, "slider").destroy();
             Metro.getPlugin(this.volume, "slider").destroy();
@@ -590,4 +606,4 @@
             return element;
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

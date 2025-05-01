@@ -1,5 +1,3 @@
-/* global Metro, Cake */
-
 /**
  * Component Vegas based on Vegas by Jay Salvat (http://jaysalvat.com/)
  * Original code https://github.com/jaysalvat/vegas
@@ -9,10 +7,11 @@
  * Copyright 2020 Serhii Pimenov
  */
 
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var VegasDefaultConfig = {
+
+    let VegasDefaultConfig = {
         duration: 4000,
         animationDuration: null,
         transitionDuration: null,
@@ -41,12 +40,12 @@
         onVegasCreate: Metro.noop
     };
 
-    Metro.vegasSetup = function (options) {
+    Metro.vegasSetup = (options) => {
         VegasDefaultConfig = $.extend({}, VegasDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroVegasSetup"] !== "undefined") {
-        Metro.vegasSetup(globalThis["metroVegasSetup"]);
+    if (typeof globalThis.metroVegasSetup !== "undefined") {
+        Metro.vegasSetup(globalThis.metroVegasSetup);
     }
 
     Metro.Component('vegas', {
@@ -99,9 +98,10 @@
         },
 
         _create: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
-            this.slides = Utils.isObject(o.slides) || [];
+            this.slides = Metro.utils.isObject(o.slides) || [];
             this.total = this.slides.length;
             this.noshow = this.total < 2;
             this.paused = !o.autoplay || this.noshow;
@@ -123,9 +123,10 @@
         },
 
         _createStructure: function(){
-            var that = this, element = this.element, o = this.options;
-            var isBody = element[0].tagName === 'BODY';
-            var wrapper;
+            const element = this.element;
+            const o = this.options;
+            const isBody = element[0].tagName === 'BODY';
+            let wrapper;
 
             if (!isBody) {
                 element.css('height', element.css('height')); // it is not clear why this line
@@ -158,25 +159,25 @@
             }
 
             if (o.overlay) {
-                this.overlay = $('<div class="vegas-overlay">').addClass('overlay' + (typeof o.overlay === 'boolean' || isNaN(o.overlay) ? 2 : +o.overlay));
+                this.overlay = $('<div class="vegas-overlay">').addClass(`overlay${typeof o.overlay === 'boolean' || Number.isNaN(o.overlay) ? 2 : +o.overlay}`);
                 element.append(this.overlay);
             }
 
-            setTimeout(function(){
-                Utils.exec(o.onPlay, null, element[0]);
-                that._goto(that.slide);
+            setTimeout(()=> {
+                Metro.utils.exec(o.onPlay, null, element[0]);
+                this._goto(this.slide);
             },1)
         },
 
-        _createEvents: function(){
+        _createEvents: ()=> {
         },
 
         _preload: function(){
-            var img, i;
+            let img;
+            let i;
 
             for (i = 0; i < this.slides.length; i++) {
-
-                var obj = this.slides[i];
+                const obj = this.slides[i];
 
                 if (obj.src) {
                     img = new Image();
@@ -184,7 +185,7 @@
                 }
 
                 if (obj.video) {
-                    if (obj.video instanceof Array) {
+                    if (Array.isArray(obj.video)) {
                         this._video(obj.video);
                     } else {
                         this._video(obj.video.src);
@@ -194,17 +195,17 @@
         },
 
         _slideShow: function () {
-            var that = this, o = this.options;
+            const o = this.options;
 
             if (this.total > 1 && !this.ended && !this.paused && !this.noshow) {
-                this.timeout = setTimeout(function () {
-                    that.next();
+                this.timeout = setTimeout(() => {
+                    this.next();
                 }, o.duration);
             }
         },
 
         _timer: function (state) {
-            var that = this, o = this.options;
+            const o = this.options;
 
             clearTimeout(this.timeout);
 
@@ -222,17 +223,17 @@
             }
 
             if (state) {
-                setTimeout(function () {
-                    that.timer
+                setTimeout(() => {
+                    this.timer
                         .addClass('vegas-timer-running')
                         .find('div')
-                        .css('transition-duration', +o.duration - 100 + 'ms');
+                        .css('transition-duration', `${+o.duration - 100}ms`);
                 }, 100);
             }
         },
 
         _fadeSoundIn: function(video, duration){
-            var o = this.options;
+            const o = this.options;
 
             $.animate({
                 el: video,
@@ -243,7 +244,7 @@
             })
         },
 
-        _fadeSoundOut: function(video, duration){
+        _fadeSoundOut: (video, duration)=> {
             $.animate({
                 el: video,
                 draw: {
@@ -254,25 +255,24 @@
         },
 
         _video: function(sources){
-            var video, source;
-            var cacheKey = sources.toString();
+            let source;
+            const cacheKey = sources.toString();
+            const srcArray = Array.isArray(sources) ? sources : [sources];
 
             if (this.videoCache[cacheKey]) {
                 return this.videoCache[cacheKey];
             }
 
-            if (!Array.isArray(sources)) {
-                sources = [sources];
-            }
-
-            video = document.createElement("video");
+            const video = document.createElement("video")
+            
+            // TODO: check it
             video.preload = true;
 
-            sources.forEach(function(src){
+            for (const src of srcArray) {
                 source = document.createElement("source");
                 source.src = src;
                 video.appendChild(source);
-            });
+            }
 
             this.videoCache[cacheKey] = video;
 
@@ -280,20 +280,29 @@
         },
 
         _goto: function(n){
-            var that = this, element = this.element, o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            let _n = n;
 
-            if (typeof this.slides[n] === 'undefined') {
-                n = 0;
+            if (typeof this.slides[_n] === 'undefined') {
+                _n = 0;
             }
 
-            this.slide = n;
+            this.slide = _n;
 
-            var $slide, $inner, video, img, $video;
-            var slides = element.children(".vegas-slide");
-            var obj = this.slides[n];
-            var cover = o.cover;
-            var transition, animation;
-            var transitionDuration, animationDuration;
+            let $slide;
+            let $inner;
+            let video;
+            let img;
+            let $video;
+            const slides = element.children(".vegas-slide");
+            const obj = this.slides[n];
+            let cover = o.cover;
+            let transition;
+            let animation;
+            let transitionDuration;
+            let animationDuration;
 
             if (this.first) {
                 this.first = false;
@@ -335,10 +344,10 @@
                 animationDuration = +o.animationDuration;
             }
 
-            $slide = $("<div>").addClass("vegas-slide").addClass('vegas-transition-' + transition);
+            $slide = $("<div>").addClass("vegas-slide").addClass(`vegas-transition-${transition}`);
 
             if (this.support.video && obj.video) {
-                video = obj.video instanceof Array ? this._video(obj.video) : this._video(obj.video.src);
+                video = Array.isArray(obj.video) ? this._video(obj.video) : this._video(obj.video.src);
                 video.loop = obj.video.loop ? obj.video.loop : o.loop;
                 video.muted = obj.video.mute ? obj.video.mute : o.mute;
 
@@ -354,7 +363,7 @@
 
                 if (this.support.objectFit) {
                     $video
-                        .css('object-position', o.align + ' ' + o.valign)
+                        .css('object-position', `${o.align} ${o.valign}`)
                         .css('object-fit', cover)
                         .css('width',  '100%')
                         .css('height', '100%');
@@ -369,9 +378,9 @@
                 img = new Image();
                 $inner = $("<div>").addClass('vegas-slide-inner')
                     .css({
-                        backgroundImage: 'url("'+obj.src+'")',
+                        backgroundImage: `url("${obj.src}")`,
                         backgroundColor: o.color || '#000000',
-                        backgroundPosition: o.align + ' ' + o.valign
+                        backgroundPosition: `${o.align} ${o.valign}`
                     });
 
                 if (cover === 'repeat') {
@@ -382,8 +391,8 @@
 
                 if (animation) {
                     $inner
-                        .addClass('vegas-animation-' + animation)
-                        .css('animation-duration',  animationDuration + 'ms');
+                        .addClass(`vegas-animation-${animation}`)
+                        .css('animation-duration',  `${animationDuration}ms`);
                 }
 
                 $slide.append($inner);
@@ -405,8 +414,8 @@
                     }
 
                     if (transition) {
-                        this.className += ' vegas-transition-' + transition;
-                        this.className += ' vegas-transition-' + transition + '-in';
+                        this.className += ` vegas-transition-${transition}`;
+                        this.className += ` vegas-transition-${transition}-in`;
                     }
                 }
             );
@@ -415,13 +424,13 @@
 
             function go(){
                 that._timer(true);
-                setTimeout(function () {
+                setTimeout(() => {
                     slides
-                        .css('transition', 'all ' + transitionDuration + 'ms')
-                        .addClass('vegas-transition-' + transition + '-out');
+                        .css('transition', `all ${transitionDuration}ms`)
+                        .addClass(`vegas-transition-${transition}-out`);
 
-                    slides.each(function () {
-                        var video = slides.find('video').get(0);
+                    slides.each(() => {
+                        const video = slides.find('video').get(0);
 
                         if (video) {
                             video.volume = 1;
@@ -430,10 +439,10 @@
                     });
 
                     $slide
-                        .css('transition', 'all ' + transitionDuration + 'ms')
-                        .addClass('vegas-transition-' + transition + '-in');
+                        .css('transition', `all ${transitionDuration}ms`)
+                        .addClass(`vegas-transition-${transition}-in`);
 
-                    for (var i = 0; i < slides.length - 1; i++) {
+                    for (let i = 0; i < slides.length - 1; i++) {
                         slides.eq(i).remove();
                     }
 
@@ -527,7 +536,7 @@
         },
 
         next: function(){
-            var o = this.options;
+            const o = this.options;
 
             this.slide++;
 
@@ -547,7 +556,7 @@
         },
 
         prev: function(){
-            var o = this.options;
+            const o = this.options;
 
             this.slide--;
 
@@ -568,12 +577,13 @@
         },
 
         changeAttribute: function(attr){
-            var element = this.element, o = this.options;
-            var propName = Str.camelCase(attr.replace("data-", ""));
+            const element = this.element;
+            const o = this.options;
+            const propName = Str.camelCase(attr.replace("data-", ""));
 
             if (propName === 'slides') {
                 o.slides = element.attr('data-slides');
-                this.slides = Utils.isObject(o.slides) || [];
+                this.slides = Metro.utils.isObject(o.slides) || [];
                 this.total = this.slides.length;
                 this.noshow = this.total < 2;
                 this.paused = !this.options.autoplay || this.noshow;
@@ -584,7 +594,8 @@
         },
 
         destroy: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             clearTimeout(this.timeout);
             element.removeClass('vegas-container');
@@ -600,7 +611,7 @@
                 this.overlay.remove();
             }
 
-            return element[0];
+            element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

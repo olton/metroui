@@ -1,4 +1,5 @@
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
 
     let TabsDefaultConfig = {
@@ -23,12 +24,12 @@
         onTabsCreate: Metro.noop,
     };
 
-    Metro.tabsSetup = function (options) {
+    Metro.tabsSetup = (options) => {
         TabsDefaultConfig = $.extend({}, TabsDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTabsSetup"] !== "undefined") {
-        Metro.tabsSetup(globalThis["metroTabsSetup"]);
+    if (typeof globalThis.metroTabsSetup !== "undefined") {
+        Metro.tabsSetup(globalThis.metroTabsSetup);
     }
 
     Metro.Component("tabs", {
@@ -56,19 +57,20 @@
         },
 
         _createStructure: function () {
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const container = element.wrap("<div>").addClass("tabs");
-            let expandTitle, hamburger;
+            let hamburger;
 
             container.addClass(`tabs-${o.position}`);
 
             element.addClass("tabs-list");
-            element.addClass("tabs-" + o.type);
-            element.addClass("align-" + o.align);
+            element.addClass(`tabs-${o.type}`);
+            element.addClass(`align-${o.align}`);
 
             element.data("expanded", false);
 
-            expandTitle = $("<div>").addClass("expand-title");
+            const expandTitle = $("<div>").addClass("expand-title")
             container.prepend(expandTitle);
             
             hamburger = container.find(".hamburger");
@@ -99,14 +101,14 @@
         },
 
         _createEvents: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const container = element.parent();
 
             $(globalThis).on(
                 Metro.events.resize,
-                function () {
+                () => {
                     if (["left", "right"].includes(o.position)) {
                         return;
                     }
@@ -126,7 +128,7 @@
                 { ns: this.id },
             );
 
-            container.on(Metro.events.click, ".hamburger, .expand-title", function () {
+            container.on(Metro.events.click, ".hamburger, .expand-title", () => {
                 if (element.data("expanded") === false) {
                     element.addClass("expand");
                     element.data("expanded", true);
@@ -172,8 +174,9 @@
                 }
             });
 
-            $(globalThis).on("hashchange", function () {
-                let hash, tab;
+            $(globalThis).on("hashchange", () => {
+                let hash;
+                let tab;
 
                 if (o.updateUri) {
                     hash = globalThis.location.hash;
@@ -188,7 +191,7 @@
             const tabs = element.find("li");
             let tab = undefined;
 
-            tabs.each(function (i, el) {
+            tabs.each((i, el) => {
                 if (!tab && $(el).children("a").attr("href") === target) {
                     tab = el;
                 }
@@ -198,8 +201,8 @@
         },
 
         _collectTargets: function () {
-            const that = this,
-                element = this.element;
+            const that = this;
+            const element = this.element;
             const tabs = element.find("li");
 
             this._targets = [];
@@ -214,8 +217,9 @@
             });
         },
 
-        _open: function (tab) {
-            const element = this.element, o = this.options;
+        _open: function (tab_to_open) {
+            const element = this.element;
+            const o = this.options;
             const tabs = element.find("li");
             const expandTitle = element.siblings(".expand-title");
             const activeTab = element.find("li.active");
@@ -226,12 +230,7 @@
 
             this._collectTargets();
 
-            if (tab === undefined) {
-                tab = $(tabs[0]);
-            } else {
-                tab = $(tab);
-            }
-
+            const tab = typeof tab_to_open === "undefined" ? $(tabs[0]) : $(tab_to_open); 
             const target = tab.find("a").attr("href");
             const tabIndex = tab.index();
 
@@ -287,8 +286,8 @@
 
         next: function () {
             const element = this.element;
-            let next,
-                active_tab = element.find("li.active");
+            let next;
+            const active_tab = element.find("li.active");
 
             next = active_tab.next("li");
             if (next.length > 0) {
@@ -298,8 +297,8 @@
 
         prev: function () {
             const element = this.element;
-            let next,
-                active_tab = element.find("li.active");
+            let next;
+            const active_tab = element.find("li.active");
 
             next = active_tab.prev("li");
             if (next.length > 0) {
@@ -321,13 +320,9 @@
             if (Metro.utils.isValue(tabs[index])) this._open($(tabs[index]));
         },
         
-        open: function (tab) {
+        open: function (tab = 1) {
             const element = this.element;
             const tabs = element.find("li");
-
-            if (!Metro.utils.isValue(tab)) {
-                tab = 1;
-            }
 
             if (Metro.utils.isInt(tab)) {
                 if (Metro.utils.isValue(tabs[tab - 1])) this._open($(tabs[tab - 1]));
@@ -336,7 +331,7 @@
             }
         },
 
-        changeAttribute: function () {},
+        changeAttribute: () => {},
 
         destroy: function () {
             const element = this.element;

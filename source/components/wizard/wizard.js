@@ -1,5 +1,5 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     let WizardDefaultConfig = {
@@ -37,12 +37,12 @@
         onWizardCreate: Metro.noop
     };
 
-    Metro.wizardSetup = function (options) {
+    Metro.wizardSetup = (options) => {
         WizardDefaultConfig = $.extend({}, WizardDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroWizardSetup"] !== "undefined") {
-        Metro.wizardSetup(globalThis["metroWizardSetup"]);
+    if (typeof globalThis.metroWizardSetup !== "undefined") {
+        Metro.wizardSetup(globalThis.metroWizardSetup);
     }
 
     Metro.Component('wizard', {
@@ -66,13 +66,12 @@
         },
 
         _createWizard: function(){
-            const element = this.element, o = this.options;
-            let bar;
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("wizard").addClass(o.view).addClass(o.clsWizard);
 
-            bar = $("<div>").addClass("action-bar").addClass(o.clsActions).appendTo(element);
-
+            const bar = $("<div>").addClass("action-bar").addClass(o.clsActions).appendTo(element)
             let buttonMode = o.buttonMode === "button" ? "" : o.buttonMode;
             if (o.buttonOutline === true) {
                 buttonMode += " outline";
@@ -97,7 +96,7 @@
 
             $.each(pages, function(){
                 const h = $(this).height();
-                if (max_height < parseInt(h)) {
+                if (max_height < Number.parseInt(h)) {
                     max_height = h;
                 }
             });
@@ -106,9 +105,10 @@
         },
 
         _createEvents: function(){
-            const that = this, element = this.element;
+            const that = this;
+            const element = this.element;
 
-            element.on(Metro.events.click, ".wizard-btn-help", function(){
+            element.on(Metro.events.click, ".wizard-btn-help", ()=> {
                 const pages = element.children("section");
                 const page = pages.get(that.current - 1);
 
@@ -118,7 +118,7 @@
                 });
             });
 
-            element.on(Metro.events.click, ".wizard-btn-prev", function(){
+            element.on(Metro.events.click, ".wizard-btn-prev", ()=> {
                 that.prev();
                 const pages = element.children("section");
                 const page = pages.get(that.current - 1);
@@ -129,7 +129,7 @@
                 });
             });
 
-            element.on(Metro.events.click, ".wizard-btn-next", function(){
+            element.on(Metro.events.click, ".wizard-btn-next", ()=> {
                 that.next();
                 const pages = element.children("section");
                 const page = pages.get(that.current - 1);
@@ -140,7 +140,7 @@
                 });
             });
 
-            element.on(Metro.events.click, ".wizard-btn-finish", function(){
+            element.on(Metro.events.click, ".wizard-btn-finish", ()=> {
                 const pages = element.children("section");
                 const page = pages.get(that.current - 1);
 
@@ -155,13 +155,14 @@
                 that.toPage(index);
             });
 
-            $(globalThis).on(Metro.events.resize, function(){
+            $(globalThis).on(Metro.events.resize, ()=> {
                 that._setHeight();
             }, {ns: this.id});
         },
 
         next: function(){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const pages = element.children("section");
             let page = $(element.children("section").get(this.current - 1));
 
@@ -176,13 +177,14 @@
             page = $(element.children("section").get(this.current - 1));
 
             this._fireEvent("next-page", {
-                index: that.current,
+                index: this.current,
                 page: page[0]
             });
         },
 
         prev: function(){
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             let page = $(element.children("section").get(this.current - 1));
 
             if (this.current - 1 === 0 || Metro.utils.exec(o.onBeforePrev, [this.current, page, element]) === false) {
@@ -196,41 +198,38 @@
             page = $(element.children("section").get(this.current - 1));
 
             this._fireEvent("prev-page", {
-                index: that.current,
+                index: this.current,
                 page: page[0]
             });
         },
 
         last: function(){
-            const that = this, element = this.element;
-            let page;
+            const element = this.element;
 
             this.toPage(element.children("section").length);
 
-            page = $(element.children("section").get(this.current - 1));
-
+            const page = $(element.children("section").get(this.current - 1))
             this._fireEvent("last-page", {
-                index: that.current,
+                index: this.current,
                 page: page[0]
             });
         },
 
         first: function(){
-            const that = this, element = this.element;
-            let page;
+            const element = this.element;
 
             this.toPage(1);
 
-            page = $(element.children("section").get(0));
-
+            const page = $(element.children("section").get(0))
             this._fireEvent("first-page", {
-                index: that.current,
+                index: this.current,
                 page: page[0]
             });
         },
 
         toPage: function(page){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const target = $(element.children("section").get(page - 1));
             const sections = element.children("section");
             const actions = element.find(".action-bar");
@@ -253,7 +252,7 @@
             target.addClass("current").addClass(o.clsCurrent);
             target.prevAll().addClass("complete").addClass(o.clsComplete);
 
-            const border_size = element.children("section.complete").length === 0 ? 0 : parseInt(Metro.utils.getStyleOne(element.children("section.complete")[0], "border-left-width"));
+            const border_size = element.children("section.complete").length === 0 ? 0 : Number.parseInt(Metro.utils.getStyleOne(element.children("section.complete")[0], "border-left-width"));
 
             actions.animate({
                 draw: {
@@ -268,7 +267,7 @@
                 finish.removeClass("disabled");
             }
 
-            if (parseInt(o.finish) > 0 && this.current === parseInt(o.finish)) {
+            if (Number.parseInt(o.finish) > 0 && this.current === Number.parseInt(o.finish)) {
 
                 this._fireEvent("finish-page", {
                     index: this.current,
@@ -290,7 +289,7 @@
             });
         },
 
-        changeAttribute: function(){
+        changeAttribute: ()=> {
         },
 
         destroy: function(){
@@ -306,4 +305,4 @@
             element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);
