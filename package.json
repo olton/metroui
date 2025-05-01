@@ -35,12 +35,10 @@
         "dev": "npm run clean && cross-env NODE_NO_WARNINGS=1 MODE=development node build.js",
         "pub": "npm publish --access public",
         "test": "latte --dom --progress=dots",
-        "check": "npx biome check",
+        "check": "npx @biomejs/biome check --write ./source",
         "commit": "node -e \"const mssg = process.argv[1]; require('child_process').execSync('npm run build && git add . && git commit -m \\\"' + mssg + '\\\"', { stdio:[0, 1, 2] })\""
     },
-    "browserslist": [
-        "last 2 versions"
-    ],
+    "browserslist": ["last 2 versions"],
     "devDependencies": {
         "@biomejs/biome": "1.9.4",
         "@olton/latte": "^0.13.0",
@@ -63,6 +61,6 @@
         "@olton/html": "^0.14.0",
         "@olton/model": "^0.17.0",
         "@olton/router": "^0.4.0",
-        "@olton/string": "^0.10.0" 
+        "@olton/string": "^0.10.0"
     }
 }
