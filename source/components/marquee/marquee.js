@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
-    var MarqueeDefaultConfig = {
+    let MarqueeDefaultConfig = {
         items: null,
         loop: true,
         height: "auto",
@@ -24,12 +24,12 @@
         onMarqueeCreate: Metro.noop
     };
 
-    Metro.marqueeSetup = function (options) {
+    Metro.marqueeSetup = (options) => {
         MarqueeDefaultConfig = $.extend({}, MarqueeDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroMarqueeSetup"] !== "undefined") {
-        Metro.marqueeSetup(globalThis["metroMarqueeSetup"]);
+    if (typeof globalThis.metroMarqueeSetup !== "undefined") {
+        Metro.marqueeSetup(globalThis.metroMarqueeSetup);
     }
 
     Metro.Component('marquee', {
@@ -53,7 +53,8 @@
         },
 
         _createStructure: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("marquee").addClass(o.clsMarquee);
 
@@ -77,7 +78,8 @@
         },
 
         setItems: function(items, replace = true){
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const dir = o.direction.toLowerCase()
 
             if (replace) {
@@ -108,7 +110,10 @@
 
 
         setItem: function(index, value){
-            var target = $(this.items[index]), h, o = this.options, element = this.element;
+            const target = $(this.items[index]);
+            let h;
+            const o = this.options;
+            const element = this.element;
 
             if (!target.length) {
                 return;
@@ -126,8 +131,12 @@
         },
 
         addItem: function(item, index = -1){
-            var element = this.element, o = this.options;
-            var ins, $item = $(item), trg, h;
+            const element = this.element;
+            const o = this.options;
+            let ins;
+            const $item = $(item);
+            let trg;
+            let h;
 
             ins = $item.length ? $item : $("<div>").html(item);
 
@@ -152,12 +161,14 @@
         },
 
         createChain: function(){
-            const element = this.element, o = this.options, magic = 20
+            const element = this.element
+            const o = this.options
+            const magic = 20
             let dir = o.direction
             let ease = o.ease
             let dur = +o.duration
             let i = 0
-            let rect = element[0].getBoundingClientRect()
+            const rect = element[0].getBoundingClientRect()
 
             this.chain.length = 0
             
@@ -214,7 +225,8 @@
                     const halfW = (rect.width - elRect.width) / 2
                     const halfH = (rect.height - elRect.height) / 2
                     
-                    let draw1, draw2;
+                    let draw1;
+                    let draw2;
                     
                     dur = o.duration / 2;
 
@@ -276,23 +288,24 @@
         },
         
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
-            element.on(Metro.events.enter, function(){
+            element.on(Metro.events.enter, ()=> {
                 if (o.stopOnHover)
-                    $.pauseAll(that.items);
+                    $.pauseAll(this.items);
             })
 
-            element.on(Metro.events.leave, function(){
+            element.on(Metro.events.leave, ()=> {
                 if (o.stopOnHover)
-                    $.resumeAll(that.items);
+                    $.resumeAll(this.items);
             })
             
             const resize = Hooks.useDebounce((e) => {
-                that.stop()
-                that.setItems(this.items, true)
-                that.createChain();
-                that.start();
+                this.stop()
+                this.setItems(this.items, true)
+                this.createChain();
+                this.start();
             }, 1000)
             
             $(window).on(Metro.events.resize, resize)
@@ -319,11 +332,11 @@
             return this
         },
 
-        changeAttribute: function(){
+        changeAttribute: (attr, val)=> {
         },
 
         destroy: function(){
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

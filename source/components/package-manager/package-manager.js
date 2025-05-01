@@ -1,4 +1,5 @@
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
 
     const copy_image = `<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,12 +35,12 @@
         onPackageManagerCreate: Metro.noop
     };
 
-    Metro.packageManagerSetup = function (options) {
+    Metro.packageManagerSetup = (options) => {
         PackageManagerDefaultConfig = $.extend({}, PackageManagerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroPackageManagerSetup"] !== "undefined") {
-        Metro.packageManagerSetup(globalThis["metroPackageManagerSetup"]);
+    if (typeof globalThis.metroPackageManagerSetup !== "undefined") {
+        Metro.packageManagerSetup(globalThis.metroPackageManagerSetup);
     }
 
     Metro.Component('package-manager', {
@@ -51,8 +52,6 @@
         },
 
         _create: function () {
-            const that = this, element = this.element, o = this.options;
-
             this._createStructure();
             this._createEvents();
 
@@ -60,7 +59,8 @@
         },
 
         _createStructure: function () {
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             const timestamp = new Date().getTime();
             const npmId = Hooks.useId(`pm-npm-${timestamp}`);
             const pnpmId = Hooks.useId(`pm-pnpm-${timestamp}`);
@@ -96,18 +96,19 @@
         },
 
         _createEvents: function () {
-            const that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
             element.on("click", ".pm-command button", function () {
                 const command = $(this).parent().find("code").text();
                 Metro.utils.copy2clipboard(command);
             });
         },
 
-        changeAttribute: function (attr, newValue) {
+        changeAttribute: (attr, newValue) => {
         },
 
         destroy: function () {
             this.element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);

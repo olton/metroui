@@ -1,8 +1,8 @@
-/* global Metro, METRO_ANIMATION_DURATION */
-(function(Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     'use strict';
-    var Utils = Metro.utils;
-    var MasterDefaultConfig = {
+
+    let MasterDefaultConfig = {
         masterDeferred: 0,
         effect: "slide", // slide, fade, switch, slowdown, custom
         effectFunc: "linear",
@@ -29,12 +29,12 @@
         onMasterCreate: Metro.noop
     };
 
-    Metro.masterSetup = function (options) {
+    Metro.masterSetup = (options) => {
         MasterDefaultConfig = $.extend({}, MasterDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroMasterSetup"] !== "undefined") {
-        Metro.masterSetup(globalThis["metroMasterSetup"]);
+    if (typeof globalThis.metroMasterSetup !== "undefined") {
+        Metro.masterSetup(globalThis.metroMasterSetup);
     }
 
     Metro.Component('master', {
@@ -43,18 +43,19 @@
                 pages: [],
                 currentIndex: 0,
                 isAnimate: false,
-                id: Utils.elementId("master")
+                id: Metro.utils.elementId("master")
             });
 
             return this;
         },
 
         _create: function(){
-            var element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("master").addClass(o.clsMaster);
             element.css({
-                backgroundImage: "url("+o.backgroundImage+")"
+                backgroundImage: `url(${o.backgroundImage})`
             });
 
             this._createControls();
@@ -67,15 +68,18 @@
         },
 
         _createControls: function(){
-            var element = this.element, o = this.options;
-            var controls_position = ['top', 'bottom'];
-            var controls, title, pages = element.find(".page");
+            const element = this.element;
+            const o = this.options;
+            const controls_position = ['top', 'bottom'];
+            let controls;
+            let title;
+            const pages = element.find(".page");
 
             title = String(o.controlTitle).replace("$1", "1");
             title = String(title).replace("$2", pages.length);
 
             $.each(controls_position, function(){
-                controls = $("<div>").addClass("controls controls-"+this).addClass(o.clsControls).appendTo(element);
+                controls = $("<div>").addClass(`controls controls-${this}`).addClass(o.clsControls).appendTo(element);
                 $("<span>").addClass("prev").addClass(o.clsControlPrev).html(o.controlPrev).appendTo(controls);
                 $("<span>").addClass("next").addClass(o.clsControlNext).html(o.controlNext).appendTo(controls);
                 $("<span>").addClass("title").addClass(o.clsControlTitle).html(title).appendTo(controls);
@@ -85,7 +89,7 @@
         },
 
         _enableControl: function(type, state){
-            var control = this.element.find(".controls ." + type);
+            const control = this.element.find(`.controls .${type}`);
             if (state === true) {
                 control.removeClass("disabled");
             } else {
@@ -94,18 +98,18 @@
         },
 
         _setTitle: function(){
-            var title = this.element.find(".controls .title");
-
-            var title_str = this.options.controlTitle.replace("$1", this.currentIndex + 1);
+            const title = this.element.find(".controls .title");
+            let title_str = this.options.controlTitle.replace("$1", this.currentIndex + 1);
             title_str = title_str.replace("$2", String(this.pages.length));
-
             title.html(title_str);
         },
 
         _createPages: function(){
-            var that = this, element = this.element, o = this.options;
-            var pages = element.find(".pages");
-            var page = element.find(".page");
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            let pages = element.find(".pages");
+            const page = element.find(".page");
 
             if (pages.length === 0) {
                 pages = $("<div>").addClass("pages").appendTo(element);
@@ -114,14 +118,14 @@
             pages.addClass(o.clsPages);
 
             $.each(page, function(){
-                var p = $(this);
+                const p = $(this);
                 if (p.data("cover")) {
                     element.css({
-                        backgroundImage: "url("+p.data('cover')+")"
+                        backgroundImage: `url(${p.data('cover')})`
                     });
                 } else {
                     element.css({
-                        backgroundImage: "url("+o.backgroundImage+")"
+                        backgroundImage: `url(${o.backgroundImage})`
                     });
                 }
 
@@ -140,11 +144,11 @@
             if (this.pages[this.currentIndex] !== undefined) {
                 if (this.pages[this.currentIndex].data("cover") !== undefined ) {
                     element.css({
-                        backgroundImage: "url("+this.pages[this.currentIndex].data('cover')+")"
+                        backgroundImage: `url(${this.pages[this.currentIndex].data('cover')})`
                     });
                 }
                 this.pages[this.currentIndex].css("left", "0").show(0);
-                setTimeout(function(){
+                setTimeout(()=> {
                     pages.css({
                         height: that.pages[0].outerHeight(true) + 2
                     });
@@ -153,40 +157,39 @@
         },
 
         _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
-            element.on(Metro.events.click, ".controls .prev", function(){
-                if (that.isAnimate === true) {
+            element.on(Metro.events.click, ".controls .prev", ()=> {
+                if (this.isAnimate === true) {
                     return ;
                 }
                 if (
-                    Utils.exec(o.onBeforePrev, [that.currentIndex, that.pages[that.currentIndex], element]) === true &&
-                    Utils.exec(o.onBeforePage, ["prev", that.currentIndex, that.pages[that.currentIndex], element]) === true
+                    Metro.utils.exec(o.onBeforePrev, [this.currentIndex, this.pages[this.currentIndex], element]) === true &&
+                    Metro.utils.exec(o.onBeforePage, ["prev", this.currentIndex, this.pages[this.currentIndex], element]) === true
                 ) {
-                    that.prev();
+                    this.prev();
                 }
             });
 
-            element.on(Metro.events.click, ".controls .next", function(){
-                if (that.isAnimate === true) {
+            element.on(Metro.events.click, ".controls .next", ()=> {
+                if (this.isAnimate === true) {
                     return ;
                 }
                 if (
-                    Utils.exec(o.onBeforeNext, [that.currentIndex, that.pages[that.currentIndex], element]) === true &&
-                    Utils.exec(o.onBeforePage, ["next", that.currentIndex, that.pages[that.currentIndex], element]) === true
+                    Metro.utils.exec(o.onBeforeNext, [this.currentIndex, this.pages[this.currentIndex], element]) === true &&
+                    Metro.utils.exec(o.onBeforePage, ["next", this.currentIndex, this.pages[this.currentIndex], element]) === true
                 ) {
-                    that.next();
+                    this.next();
                 }
             });
 
-            $(globalThis).on(Metro.events.resize, function(){
-                element.find(".pages").height(that.pages[that.currentIndex].outerHeight(true) + 2);
+            $(globalThis).on(Metro.events.resize, ()=> {
+                element.find(".pages").height(this.pages[this.currentIndex].outerHeight(true) + 2);
             }, {ns: this.id});
         },
 
         _slideToPage: function(index){
-            var current, next, to;
-
             if (this.pages[index] === undefined) {
                 return ;
             }
@@ -195,20 +198,18 @@
                 return ;
             }
 
-            to = index > this.currentIndex ? "next" : "prev";
-            current = this.pages[this.currentIndex];
-            next = this.pages[index];
-
+            const to = index > this.currentIndex ? "next" : "prev"
+            const current = this.pages[this.currentIndex]
+            const next = this.pages[index]
             this.currentIndex = index;
 
             this._effect(current, next, to);
         },
 
         _slideTo: function(to){
-            var current, next, forward = to.toLowerCase() === 'next';
+            const forward = to.toLowerCase() === 'next';
 
-            current = this.pages[this.currentIndex];
-
+            const current = this.pages[this.currentIndex]
             if (forward ) {
                 if (this.currentIndex + 1 >= this.pages.length) {
                     return ;
@@ -221,8 +222,7 @@
                 this.currentIndex--;
             }
 
-            next = this.pages[this.currentIndex];
-
+            const next = this.pages[this.currentIndex]
             this._fireEvent(forward ? "next-page" : "prev-page", {
                 current: current,
                 next: next,
@@ -233,9 +233,11 @@
         },
 
         _effect: function(current, next, to){
-            var that = this, element = this.element, o = this.options;
-            var out = element.width();
-            var pages = element.find(".pages");
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const out = element.width();
+            const pages = element.find(".pages");
 
             this._setTitle();
 
@@ -251,15 +253,15 @@
                 this._enableControl("prev", true);
             }
 
-            setTimeout(function(){
+            setTimeout(()=> {
                 that.isAnimate = true;
                 pages.animate({
                     draw: {
                         height: next.outerHeight(true) + 2
                     },
-					onDone: function(){ 
-						finish();
-					}
+                    onDone: ()=> { 
+                        finish();
+                    }
                 });
             },0);
 
@@ -268,11 +270,11 @@
             function finish(){
                 if (next.data("cover") !== undefined) {
                     element.css({
-                        backgroundImage: "url("+next.data('cover')+")"
+                        backgroundImage: `url(${next.data('cover')})`
                     });
                 } else {
                     element.css({
-                        backgroundImage: "url("+o.backgroundImage+")"
+                        backgroundImage: `url(${o.backgroundImage})`
                     });
                 }
                 pages.css("overflow", "initial");
@@ -288,7 +290,7 @@
                         },
                         dur: o.duration,
                         ease: o.effectFunc,
-                        onDone: function(){
+                        onDone: ()=> {
                             current.hide(0);
                         }
                     });
@@ -305,7 +307,7 @@
                         },
                         dur: o.duration,
                         ease: o.effectFunc,
-                        onDone: function(){
+                        onDone: ()=> {
                             finish();
                         }
                     });
@@ -318,7 +320,7 @@
                     top: 0,
                     left: 0,
                     opacity: 0
-                }).show(function(){
+                }).show(()=> {
                     finish();
                 });
             }
@@ -330,7 +332,7 @@
                     top: 0,
                     left: 0,
                     opacity: 0
-                }).fadeIn(o.duration, "linear", function(){
+                }).fadeIn(o.duration, "linear", ()=> {
                     finish();
                 });
             }
@@ -375,13 +377,13 @@
         },
 
         destroy: function(){
-            var element = this.element;
+            const element = this.element;
 
             element.off(Metro.events.click, ".controls .prev");
             element.off(Metro.events.click, ".controls .next");
             $(globalThis).off(Metro.events.resize,{ns: this.id});
 
-            return element;
+            element.remove();
         }
     });
-}(Metro, Dom));
+})(Metro, Dom);
