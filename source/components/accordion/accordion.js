@@ -58,31 +58,31 @@
             let frame_to_open;
 
             if (!element.id()) {
-                element.id(Hooks.useId("accordion")); 
+                element.id(Hooks.useId("accordion"));
             }
-            
+
             element.addClass("accordion").addClass(o.clsAccordion);
 
             frames.addClass(o.clsFrame).each(function () {
                 const el = $(this);
                 const heading = el.children(".heading");
                 const content = el.children(".content");
-                const headingId = Hooks.useId("accordion-heading") 
-                const contentId = Hooks.useId("accordion-content") 
+                const headingId = Hooks.useId("accordion-heading");
+                const contentId = Hooks.useId("accordion-content");
 
                 // Добавляем ARIA-атрибуты
                 heading.attr({
-                    'id': headingId,
-                    'role': 'button',
-                    'aria-expanded': el.hasClass('active') ? 'true' : 'false',
-                    'aria-controls': contentId,
-                    'tabindex': '0'
+                    id: headingId,
+                    role: "button",
+                    "aria-expanded": el.hasClass("active") ? "true" : "false",
+                    "aria-controls": contentId,
+                    tabindex: "0",
                 });
 
                 content.attr({
-                    'id': contentId,
-                    'role': 'region',
-                    'aria-labelledby': headingId
+                    id: contentId,
+                    role: "region",
+                    "aria-labelledby": headingId,
                 });
 
                 heading.addClass(o.clsHeading);
@@ -122,7 +122,7 @@
             const o = this.options;
             const active = element.children(".frame.active");
 
-            element.on("keydown", ".heading", function(e) {
+            element.on("keydown", ".heading", function (e) {
                 const heading = $(this);
                 const frame = heading.parent();
 
@@ -149,16 +149,18 @@
                     const currentIndex = frames.index(frame);
                     let nextIndex;
 
-                    if (e.keyCode === 38) { // Up
+                    if (e.keyCode === 38) {
+                        // Up
                         nextIndex = (currentIndex - 1 + frames.length) % frames.length;
-                    } else { // Down
+                    } else {
+                        // Down
                         nextIndex = (currentIndex + 1) % frames.length;
                     }
 
                     frames.eq(nextIndex).children(".heading").focus();
                 }
             });
-            
+
             element.on(Metro.events.click, ".heading", function () {
                 const heading = $(this);
                 const frame = heading.parent();
@@ -184,7 +186,7 @@
             const o = this.options;
             const frame = $(f);
 
-            if ( Metro.utils.exec(o.onFrameBeforeOpen, [frame[0]], element[0]) === false ) {
+            if (Metro.utils.exec(o.onFrameBeforeOpen, [frame[0]], element[0]) === false) {
                 return false;
             }
 
@@ -192,16 +194,9 @@
                 this._closeAll(frame[0]);
             }
 
-            frame
-                .addClass("active")
-                .addClass(o.clsActiveFrame);
-            frame
-                .children(".heading")
-                .addClass(o.clsActiveFrameHeading);
-            frame
-                .children(".content")
-                .addClass(o.clsActiveFrameContent)
-                .slideDown(o.duration);
+            frame.addClass("active").addClass(o.clsActiveFrame);
+            frame.children(".heading").addClass(o.clsActiveFrameHeading);
+            frame.children(".content").addClass(o.clsActiveFrameContent).slideDown(o.duration);
 
             this._fireEvent("frameOpen", {
                 frame: frame[0],
@@ -217,20 +212,13 @@
                 return;
             }
 
-            if ( Metro.utils.exec(o.onFrameBeforeClose, [frame[0]], element[0]) === false ) {
+            if (Metro.utils.exec(o.onFrameBeforeClose, [frame[0]], element[0]) === false) {
                 return;
             }
 
-            frame
-                .removeClass("active")
-                .removeClass(o.clsActiveFrame);
-            frame
-                .children(".heading")
-                .removeClass(o.clsActiveFrameHeading);
-            frame
-                .children(".content")
-                .removeClass(o.clsActiveFrameContent)
-                .slideUp(o.duration);
+            frame.removeClass("active").removeClass(o.clsActiveFrame);
+            frame.children(".heading").removeClass(o.clsActiveFrameHeading);
+            frame.children(".content").removeClass(o.clsActiveFrameContent).slideUp(o.duration);
 
             this._fireEvent("frameClose", {
                 frame: frame[0],
@@ -266,7 +254,7 @@
                 that._openFrame(this);
             });
         },
-       
+
         open: function (i) {
             const frame = this.element.children(".frame").eq(i);
             this._openFrame(frame);
@@ -291,7 +279,7 @@
             const frames = element.children(".frame");
             const active = [];
 
-            frames.each(function(index) {
+            frames.each(function (index) {
                 if ($(this).hasClass("active")) {
                     active.push(index);
                 }

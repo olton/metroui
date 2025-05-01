@@ -1,6 +1,6 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
+    "use strict";
 
     let SidenavCounterDefaultConfig = {
         compacted: false,
@@ -9,7 +9,7 @@
         onMenuItemClick: Metro.noop,
         onCollapse: Metro.noop,
         onExpand: Metro.noop,
-        onSidenavCreate: Metro.noop
+        onSidenavCreate: Metro.noop,
     };
 
     Metro.sidenavCounterSetup = (options) => {
@@ -20,26 +20,26 @@
         Metro.sidenavCounterSetup(globalThis.metroSidenavCounterSetup);
     }
 
-    Metro.Component('sidenav-counter', {
-        init: function( options, elem ) {
+    Metro.Component("sidenav-counter", {
+        init: function (options, elem) {
             this._super(elem, options, SidenavCounterDefaultConfig, {
                 // define instance vars here
             });
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             this._createStructure();
             this._createEvents();
 
-            this._fireEvent('sidenav-create');
+            this._fireEvent("sidenav-create");
         },
 
-        _createStructure: function(){
+        _createStructure: function () {
             const element = this.element;
             const o = this.options;
 
-            element.addClass("sidenav-counter")
+            element.addClass("sidenav-counter");
             if (Metro.utils.mediaExist(o.expandPoint)) {
                 element.addClass("expanded");
             }
@@ -50,7 +50,7 @@
             }
         },
 
-        _createEvents: function(){
+        _createEvents: function () {
             const element = this.element;
             const o = this.options;
 
@@ -59,26 +59,29 @@
                     element.toggleClass("expanded");
                     element.toggleClass("handmade");
                     Metro.storage.setItem("sidenav-counter:compacted", !element.hasClass("expanded"));
-                })
+                });
             }
 
-            $(globalThis).on(Metro.events.resize, () => {
-                if (element.hasClass("handmade")) {
-                    return
-                }
-                if (Metro.utils.mediaExist(o.expandPoint)) {
-                    element.addClass("expanded");
-                } else {
-                    element.removeClass("expanded");
-                }
-            }, {ns: this.id})
+            $(globalThis).on(
+                Metro.events.resize,
+                () => {
+                    if (element.hasClass("handmade")) {
+                        return;
+                    }
+                    if (Metro.utils.mediaExist(o.expandPoint)) {
+                        element.addClass("expanded");
+                    } else {
+                        element.removeClass("expanded");
+                    }
+                },
+                { ns: this.id },
+            );
         },
 
-        changeAttribute: (attr, newValue)=> {
-        },
+        changeAttribute: (attr, newValue) => {},
 
-        destroy: function(){
+        destroy: function () {
             this.element.remove();
-        }
+        },
     });
 })(Metro, Dom);

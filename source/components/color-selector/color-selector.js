@@ -4,7 +4,8 @@
 
     const supportedColorTypes = "hex, rgb, rgba, hsl, hsla, hsv, cmyk";
     let ColorSelectorDefaultConfig = {
-        defaultSwatches: "#FFFFFF,#000000,#FFFB0D,#0532FF,#FF9300,#00F91A,#FF2700,#686868,#EE5464,#D27AEE,#5BA8C4,#E64AA9,#1ba1e2,#6a00ff,#bebebe,#f8f8f8",
+        defaultSwatches:
+            "#FFFFFF,#000000,#FFFB0D,#0532FF,#FF9300,#00F91A,#FF2700,#686868,#EE5464,#D27AEE,#5BA8C4,#E64AA9,#1ba1e2,#6a00ff,#bebebe,#f8f8f8",
         userColors: null,
         returnValueType: "hex",
         returnAsString: true,
@@ -96,70 +97,76 @@
 
             element.addClass("color-selector").addClass(o.clsSelector);
 
-            const colorBox = $("<div>").addClass("color-box")
+            const colorBox = $("<div>").addClass("color-box");
             element.append(colorBox);
 
-            row = $("<div>").addClass("row")
+            row = $("<div>").addClass("row");
             colorBox.append(row);
 
-
-            const swatches = $("<div>").addClass("default-swatches").addClass(o.clsSwatches)
+            const swatches = $("<div>").addClass("default-swatches").addClass(o.clsSwatches);
             row.append(swatches);
             $.each(this.defaultSwatches, function () {
                 swatches.append(
-                    $("<button>").attr("data-color", this).attr("type", "button").addClass("swatch").addClass(o.clsSwatch).css("background-color", this),
+                    $("<button>")
+                        .attr("data-color", this)
+                        .attr("type", "button")
+                        .addClass("swatch")
+                        .addClass(o.clsSwatch)
+                        .css("background-color", this),
                 );
             });
 
-            row = $("<div>").addClass("row")
+            row = $("<div>").addClass("row");
             colorBox.append(row);
 
-            map = $("<div>").addClass("color-map")
+            map = $("<div>").addClass("color-map");
             row.append(map);
 
-            const shadeCursor = $("<button>").attr("type", "button").addClass("cursor color-cursor dragging")
+            const shadeCursor = $("<button>").attr("type", "button").addClass("cursor color-cursor dragging");
             map.append(shadeCursor);
 
-            const shadeCanvas = $("<canvas>").addClass("color-canvas")
+            const shadeCanvas = $("<canvas>").addClass("color-canvas");
             map.append(shadeCanvas);
 
-            map = $("<div>").addClass("hue-map")
+            map = $("<div>").addClass("hue-map");
             row.append(map);
 
-            const hueCursor = $("<button>").attr("type", "button").addClass("cursor hue-cursor dragging")
+            const hueCursor = $("<button>").attr("type", "button").addClass("cursor hue-cursor dragging");
             map.append(hueCursor);
 
-            const hueCanvas = $("<canvas>").addClass("hue-canvas")
+            const hueCanvas = $("<canvas>").addClass("hue-canvas");
             map.append(hueCanvas);
 
-            map = $("<div>").addClass("alpha-map")
+            map = $("<div>").addClass("alpha-map");
             row.append(map);
 
-            const alphaCursor = $("<button>").attr("type", "button").addClass("cursor alpha-cursor dragging")
+            const alphaCursor = $("<button>").attr("type", "button").addClass("cursor alpha-cursor dragging");
             map.append(alphaCursor);
 
-            const alphaCanvas = $("<canvas>").addClass("alpha-canvas")
+            const alphaCanvas = $("<canvas>").addClass("alpha-canvas");
             map.append(alphaCanvas);
 
-            row = $("<div>").addClass("row color-values-block")
+            row = $("<div>").addClass("row color-values-block");
             colorBox.append(row);
 
-            value = $("<div>").addClass("color-value-hex")
+            value = $("<div>").addClass("color-value-hex");
             row.append(value);
-            value.append($("<input type='radio' name='returnType' value='hex' checked>").addClass("check-color-value-hex"));
-            colorBlock = $("<div>").addClass("color-block as-string color-hex")
+            value.append(
+                $("<input type='radio' name='returnType' value='hex' checked>").addClass("check-color-value-hex"),
+            );
+            colorBlock = $("<div>").addClass("color-block as-string color-hex");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='HEX:'>").addClass("input-small value-hex"));
 
-            value = $("<div>").addClass("color-value-rgb")
+            value = $("<div>").addClass("color-value-rgb");
             row.append(value);
             value.append($("<input type='radio' name='returnType' value='rgb'>").addClass("check-color-value-rgb"));
-            colorBlock = $("<div>").addClass("color-block color-rgb")
+            colorBlock = $("<div>").addClass("color-block color-rgb");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='R:'>").addClass("input-small value-r"));
             colorBlock.append($("<input type='text' data-prepend='G:'>").addClass("input-small value-g"));
             colorBlock.append($("<input type='text' data-prepend='B:'>").addClass("input-small value-b"));
-            colorBlock = $("<div>").addClass("color-block as-string color-rgb")
+            colorBlock = $("<div>").addClass("color-block as-string color-rgb");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='RGB:'>").addClass("input-small value-rgb"));
 
@@ -169,16 +176,16 @@
                 value.find(".value-rgb").parent().hide();
             }
 
-            value = $("<div>").addClass("color-value-rgba")
+            value = $("<div>").addClass("color-value-rgba");
             row.append(value);
             value.append($("<input type='radio' name='returnType' value='rgba'>").addClass("check-color-value-rgba"));
-            colorBlock = $("<div>").addClass("color-block color-rgba")
+            colorBlock = $("<div>").addClass("color-block color-rgba");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='R:'>").addClass("input-small value-r"));
             colorBlock.append($("<input type='text' data-prepend='G:'>").addClass("input-small value-g"));
             colorBlock.append($("<input type='text' data-prepend='B:'>").addClass("input-small value-b"));
             colorBlock.append($("<input type='text' data-prepend='A:'>").addClass("input-small value-a"));
-            colorBlock = $("<div>").addClass("color-block as-string color-rgba")
+            colorBlock = $("<div>").addClass("color-block as-string color-rgba");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='RGBA:'>").addClass("input-small value-rgba"));
 
@@ -188,15 +195,15 @@
                 value.find(".value-rgba").parent().hide();
             }
 
-            value = $("<div>").addClass("color-value-hsl")
+            value = $("<div>").addClass("color-value-hsl");
             row.append(value);
             value.append($("<input type='radio' name='returnType' value='hsl'>").addClass("check-color-value-hsl"));
-            colorBlock = $("<div>").addClass("color-block color-hsl")
+            colorBlock = $("<div>").addClass("color-block color-hsl");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='H:'>").addClass("input-small value-h"));
             colorBlock.append($("<input type='text' data-prepend='S:'>").addClass("input-small value-s"));
             colorBlock.append($("<input type='text' data-prepend='L:'>").addClass("input-small value-l"));
-            colorBlock = $("<div>").addClass("color-block as-string color-hsl")
+            colorBlock = $("<div>").addClass("color-block as-string color-hsl");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='HSL:'>").addClass("input-small value-hsl"));
 
@@ -206,16 +213,16 @@
                 value.find(".value-hsl").parent().hide();
             }
 
-            value = $("<div>").addClass("color-value-hsla")
+            value = $("<div>").addClass("color-value-hsla");
             row.append(value);
             value.append($("<input type='radio' name='returnType' value='hsla'>").addClass("check-color-value-hsla"));
-            colorBlock = $("<div>").addClass("color-block color-hsla")
+            colorBlock = $("<div>").addClass("color-block color-hsla");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='H:'>").addClass("input-small value-h"));
             colorBlock.append($("<input type='text' data-prepend='S:'>").addClass("input-small value-s"));
             colorBlock.append($("<input type='text' data-prepend='L:'>").addClass("input-small value-l"));
             colorBlock.append($("<input type='text' data-prepend='A:'>").addClass("input-small value-a"));
-            colorBlock = $("<div>").addClass("color-block as-string color-hsla")
+            colorBlock = $("<div>").addClass("color-block as-string color-hsla");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='HSLA:'>").addClass("input-small value-hsla"));
 
@@ -225,15 +232,15 @@
                 value.find(".value-hsla").parent().hide();
             }
 
-            value = $("<div>").addClass("color-value-hsv")
+            value = $("<div>").addClass("color-value-hsv");
             row.append(value);
             value.append($("<input type='radio' name='returnType' value='hsv'>").addClass("check-color-value-hsl"));
-            colorBlock = $("<div>").addClass("color-block color-hsv")
+            colorBlock = $("<div>").addClass("color-block color-hsv");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='H:'>").addClass("input-small value-h"));
             colorBlock.append($("<input type='text' data-prepend='S:'>").addClass("input-small value-s"));
             colorBlock.append($("<input type='text' data-prepend='V:'>").addClass("input-small value-v"));
-            colorBlock = $("<div>").addClass("color-block as-string color-hsv")
+            colorBlock = $("<div>").addClass("color-block as-string color-hsv");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='HSV:'>").addClass("input-small value-hsv"));
 
@@ -243,16 +250,16 @@
                 value.find(".value-hsv").parent().hide();
             }
 
-            value = $("<div>").addClass("color-value-cmyk")
+            value = $("<div>").addClass("color-value-cmyk");
             row.append(value);
             value.append($("<input type='radio' name='returnType' value='cmyk'>").addClass("check-color-value-cmyk"));
-            colorBlock = $("<div>").addClass("color-block color-cmyk")
+            colorBlock = $("<div>").addClass("color-block color-cmyk");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='C:'>").addClass("input-small value-c"));
             colorBlock.append($("<input type='text' data-prepend='M:'>").addClass("input-small value-m"));
             colorBlock.append($("<input type='text' data-prepend='Y:'>").addClass("input-small value-y"));
             colorBlock.append($("<input type='text' data-prepend='K:'>").addClass("input-small value-k"));
-            colorBlock = $("<div>").addClass("color-block as-string color-cmyk")
+            colorBlock = $("<div>").addClass("color-block as-string color-cmyk");
             value.append(colorBlock);
             colorBlock.append($("<input type='text' data-prepend='CMYK:'>").addClass("input-small value-cmyk"));
 
@@ -262,7 +269,7 @@
                 value.find(".value-cmyk").parent().hide();
             }
 
-            row = $("<div>").addClass("row user-colors-css-container")
+            row = $("<div>").addClass("row user-colors-css-container");
             colorBox.append(row);
             row.append(
                 $("<div>")
@@ -271,13 +278,15 @@
                     .html(o.userColorsTitle || strings.label_user_colors),
             );
             row.append($("<div>").addClass("user-colors").addClass(o.clsUserColors));
-            const userColorsActions = $("<div>").addClass("user-colors-actions")
+            const userColorsActions = $("<div>").addClass("user-colors-actions");
             row.append(userColorsActions);
             userColorsActions.append(
                 $("<button>")
                     .addClass("button add-button")
                     .addClass(o.clsUserColorButton)
-                    .html(`<span class='user-swatch'></span><span>${o.addUserColorTitle || strings.label_add_user_color}</span>`),
+                    .html(
+                        `<span class='user-swatch'></span><span>${o.addUserColorTitle || strings.label_add_user_color}</span>`,
+                    ),
             );
 
             inputs = colorBox.find("input[type=text]");
@@ -294,7 +303,7 @@
 
             const radios = colorBox.find("input[type=radio]").each(function () {
                 $(this).attr("name", `${that.id}-returnType`);
-            })
+            });
             radios.each(function () {
                 if ($(this).val() === o.returnValueType) {
                     this.checked = true;
@@ -416,10 +425,10 @@
             if (y > height) y = height;
             if (y < 0) y = 0;
 
-            const percent = y / height
+            const percent = y / height;
             hue = 360 - 360 * percent;
             if (hue === 360) hue = 0;
-            const color = `hsl(${hue}, 100%, 50%)`
+            const color = `hsl(${hue}, 100%, 50%)`;
             this.hue = hue;
 
             this._createShadeCanvas(color);
@@ -440,7 +449,7 @@
             if (y > height) y = height;
             if (y < 0) y = 0;
 
-            const percent = 1 - y / height
+            const percent = 1 - y / height;
             this.alpha = percent.toFixed(2);
 
             this._updateAlphaCursor(y);
@@ -486,13 +495,18 @@
 
         _updateCursorsColor: function () {
             this.shadeCursor.css({
-                backgroundColor: Farbe.Routines.toHEX(new Farbe.Primitives.HSL(this.hue, this.saturation, this.lightness)),
+                backgroundColor: Farbe.Routines.toHEX(
+                    new Farbe.Primitives.HSL(this.hue, this.saturation, this.lightness),
+                ),
             });
             this.hueCursor.css({
                 backgroundColor: Farbe.Routines.toHEX(new Farbe.Primitives.HSL(this.hue, 1, 0.5)),
             });
             this.alphaCursor.css({
-                backgroundColor: Farbe.Routines.toRGBA(new Farbe.Primitives.HSL(this.hue, 1, 0.5), this.alpha).toString(),
+                backgroundColor: Farbe.Routines.toRGBA(
+                    new Farbe.Primitives.HSL(this.hue, 1, 0.5),
+                    this.alpha,
+                ).toString(),
             });
         },
 
@@ -563,19 +577,31 @@
             element.find(".color-value-rgba .value-rgba input").val(rgba.toString());
 
             element.find(".color-value-hsl .value-h input").val(hsl.h.toFixed(0));
-            element.find(".color-value-hsl .value-s input").val(percent ? `${Math.round(hsl.s * 100)}%` : hsl.s.toFixed(4));
-            element.find(".color-value-hsl .value-l input").val(percent ? `${Math.round(hsl.l * 100)}%` : hsl.l.toFixed(4));
+            element
+                .find(".color-value-hsl .value-s input")
+                .val(percent ? `${Math.round(hsl.s * 100)}%` : hsl.s.toFixed(4));
+            element
+                .find(".color-value-hsl .value-l input")
+                .val(percent ? `${Math.round(hsl.l * 100)}%` : hsl.l.toFixed(4));
             element.find(".color-value-hsl .value-hsl input").val(hsl.toString());
 
             element.find(".color-value-hsla .value-h input").val(hsla.h.toFixed(0));
-            element.find(".color-value-hsla .value-s input").val(percent ? `${Math.round(hsla.s * 100)}%` : hsl.s.toFixed(4));
-            element.find(".color-value-hsla .value-l input").val(percent ? `${Math.round(hsla.l * 100)}%` : hsl.l.toFixed(4));
+            element
+                .find(".color-value-hsla .value-s input")
+                .val(percent ? `${Math.round(hsla.s * 100)}%` : hsl.s.toFixed(4));
+            element
+                .find(".color-value-hsla .value-l input")
+                .val(percent ? `${Math.round(hsla.l * 100)}%` : hsl.l.toFixed(4));
             element.find(".color-value-hsla .value-a input").val(hsla.a);
             element.find(".color-value-hsla .value-hsla input").val(hsla.toString());
 
             element.find(".color-value-hsv .value-h input").val(hsv.h.toFixed(0));
-            element.find(".color-value-hsv .value-s input").val(percent ? `${Math.round(hsv.s * 100)}%` : hsv.s.toFixed(4));
-            element.find(".color-value-hsv .value-v input").val(percent ? `${Math.round(hsv.v * 100)}%` : hsv.v.toFixed(4));
+            element
+                .find(".color-value-hsv .value-s input")
+                .val(percent ? `${Math.round(hsv.s * 100)}%` : hsv.s.toFixed(4));
+            element
+                .find(".color-value-hsv .value-v input")
+                .val(percent ? `${Math.round(hsv.v * 100)}%` : hsv.v.toFixed(4));
             element.find(".color-value-hsv .value-hsv input").val(hsv.toString());
 
             element.find(".color-value-cmyk .value-c input").val(cmyk.c.toFixed(0));
@@ -777,7 +803,9 @@
             });
 
             element.on("click", ".add-button", () => {
-                const color = Farbe.Routines.toHEX(new Farbe.Primitives.HSL(that.hue, that.saturation, that.lightness)).toUpperCase();
+                const color = Farbe.Routines.toHEX(
+                    new Farbe.Primitives.HSL(that.hue, that.saturation, that.lightness),
+                ).toUpperCase();
                 if (that.userColors.includes(color)) {
                     return;
                 }

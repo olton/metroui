@@ -1,1 +1,1 @@
-import "./shadows.less"
+import "./shadows.less";

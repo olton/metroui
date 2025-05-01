@@ -6,7 +6,7 @@
         audioSrc: "",
         onAudioStart: Metro.noop,
         onAudioEnd: Metro.noop,
-        onAudioButtonCreate: Metro.noop
+        onAudioButtonCreate: Metro.noop,
     };
 
     Metro.audioButtonSetup = (options) => {
@@ -17,66 +17,68 @@
         Metro.audioButtonSetup(globalThis.metroAudioButtonSetup);
     }
 
-    Metro.Component('audio-button', {
-        init: function( options, elem ) {
-
+    Metro.Component("audio-button", {
+        init: function (options, elem) {
             this._super(elem, options, AudioButtonDefaultConfig, {
                 audio: null,
                 canPlay: null,
-                id: Metro.utils.elementId("audioButton")
+                id: Metro.utils.elementId("audioButton"),
             });
 
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             const element = this.element;
 
             this._createStructure();
             this._createEvents();
 
-            this._fireEvent('audioButtonCreate', {
-                element: element
+            this._fireEvent("audioButtonCreate", {
+                element: element,
             });
         },
 
-        _createStructure: function(){
+        _createStructure: function () {
             const o = this.options;
             this.audio = new Audio(o.audioSrc);
             this.audio.volume = o.audioVolume;
         },
 
-        _createEvents: function(){
+        _createEvents: function () {
             const element = this.element;
             const o = this.options;
             const audio = this.audio;
 
-            audio.addEventListener('loadeddata', () =>{
+            audio.addEventListener("loadeddata", () => {
                 this.canPlay = true;
             });
 
-            audio.addEventListener('ended', () =>{
+            audio.addEventListener("ended", () => {
                 this._fireEvent("audioEnd", {
                     src: o.audioSrc,
-                    audio: audio
+                    audio: audio,
                 });
-            })
+            });
 
-            element.on(Metro.events.click, () =>{
-                this.play();
-            }, {ns: this.id});
+            element.on(
+                Metro.events.click,
+                () => {
+                    this.play();
+                },
+                { ns: this.id },
+            );
         },
 
-        play: function(cb){
+        play: function (cb) {
             const element = this.element;
             const o = this.options;
             const audio = this.audio;
 
             if (o.audioSrc !== "" && this.audio.duration && this.canPlay) {
-
                 this._fireEvent("audioStart", {
                     src: o.audioSrc,
-                    audio: audio
+                    audio: audio,
                 });
 
                 audio.pause();
@@ -87,7 +89,7 @@
             }
         },
 
-        stop: function(cb){
+        stop: function (cb) {
             const element = this.element;
             const o = this.options;
             const audio = this.audio;
@@ -97,49 +99,49 @@
 
             this._fireEvent("audioEnd", {
                 src: o.audioSrc,
-                audio: audio
+                audio: audio,
             });
 
             Metro.utils.exec(cb, [audio], element[0]);
         },
 
-        changeAttribute: function(attributeName){
+        changeAttribute: function (attributeName) {
             const element = this.element;
             const o = this.options;
             const audio = this.audio;
 
-            const changeSrc = ()=> {
-                const src = element.attr('data-audio-src');
+            const changeSrc = () => {
+                const src = element.attr("data-audio-src");
                 if (src && src.trim() !== "") {
                     o.audioSrc = src;
                     audio.src = src;
                 }
-            }
+            };
 
-            const changeVolume = () =>{
-                const volume = Number.parseFloat(element.attr('data-audio-volume'));
+            const changeVolume = () => {
+                const volume = Number.parseFloat(element.attr("data-audio-volume"));
                 if (Number.isNaN(volume)) {
-                    return ;
+                    return;
                 }
                 o.audioVolume = volume;
                 audio.volume = volume;
-            }
+            };
 
-            if (attributeName === 'data-audio-src') {
+            if (attributeName === "data-audio-src") {
                 changeSrc();
             }
 
-            if (attributeName === 'data-audio-volume') {
+            if (attributeName === "data-audio-volume") {
                 changeVolume();
             }
         },
 
-        destroy: function(){
+        destroy: function () {
             const element = this.element;
 
-            element.off(Metro.events.click, {ns: this.id});
-            element.remove()
-        }
+            element.off(Metro.events.click, { ns: this.id });
+            element.remove();
+        },
     });
 
     Metro.playSound = (data) => {
@@ -153,15 +155,13 @@
         const audio = new Audio(src);
         audio.volume = Number.parseFloat(volume);
 
-        audio.addEventListener('loadeddata', function(){
-            if (data?.onAudioStart)
-                Metro.utils.exec(data.onAudioStart, [src], this);
+        audio.addEventListener("loadeddata", function () {
+            if (data?.onAudioStart) Metro.utils.exec(data.onAudioStart, [src], this);
             this.play();
         });
 
-        audio.addEventListener('ended', function(){
-            if (data?.onAudioEnd)
-                Metro.utils.exec(data.onAudioEnd, [null], this);
+        audio.addEventListener("ended", function () {
+            if (data?.onAudioEnd) Metro.utils.exec(data.onAudioEnd, [null], this);
         });
     };
 })(Metro, Dom);

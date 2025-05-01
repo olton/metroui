@@ -1,2 +1,2 @@
-import "./countdown.js"
-import "./countdown.less"
+import "./countdown.js";
+import "./countdown.less";

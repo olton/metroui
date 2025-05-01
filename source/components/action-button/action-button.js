@@ -4,7 +4,7 @@
     let ActionButtonDefaultConfig = {
         onClick: Metro.noop,
         onActionClick: Metro.noop,
-        onActionButtonCreate: Metro.noop
+        onActionButtonCreate: Metro.noop,
     };
 
     Metro.actionButtonSetup = (options) => {
@@ -15,22 +15,22 @@
         Metro.actionButtonSetup(globalThis.metroActionButtonSetup);
     }
 
-    Metro.Component('action-button', {
-        init: function( options, elem ) {
+    Metro.Component("action-button", {
+        init: function (options, elem) {
             this._super(elem, options, ActionButtonDefaultConfig, {
                 // define instance vars here
             });
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             this._createStructure();
             this._createEvents();
 
-            this._fireEvent('action-button-create');
+            this._fireEvent("action-button-create");
         },
 
-        _createStructure: function(){
+        _createStructure: function () {
             const element = this.element;
             const actions = element.find(".actions li, .actions button");
 
@@ -39,20 +39,20 @@
             if (actions.length > 8) {
                 element.cssVar("action-shift", `${60 + (actions.length - 8) * 6}px`);
             }
-            actions.each(function(index){
+            actions.each(function (index) {
                 $(this).cssVar("action-index", index).addClass("sub-action");
             });
             element.children("button").addClass("main-action");
         },
 
-        _createEvents: function(){
+        _createEvents: function () {
             const that = this;
             const element = this.element;
-            element.on(Metro.events.click, ".actions li, .actions button", function(e){
-                that._fireEvent("action-click", {action: this});
-            })
-            
-            element.on(Metro.events.click, ".main-action", function(e){
+            element.on(Metro.events.click, ".actions li, .actions button", function (e) {
+                that._fireEvent("action-click", { action: this });
+            });
+
+            element.on(Metro.events.click, ".main-action", function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $(this).toggleClass("active");
@@ -61,14 +61,14 @@
 
         changeAttribute: (attr, newValue) => {},
 
-        destroy: function(){
+        destroy: function () {
             this.element.remove();
-        }
+        },
     });
 
     $(document).on("click", (e) => {
         $("[data-role-actionbutton]").each((i, el) => {
             $(el).children("button").removeClass("active");
-        })
+        });
     });
 })(Metro, Dom);

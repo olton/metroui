@@ -1,2 +1,2 @@
-import "./directive.less"
-import "./directive.js"
+import "./directive.less";
+import "./directive.js";

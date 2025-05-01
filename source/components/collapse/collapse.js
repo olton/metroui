@@ -32,20 +32,18 @@
             const element = this.element;
             const o = this.options;
 
-            const toggle = o.toggleElement !== false
-              ? $(o.toggleElement)
-              : element.siblings(".collapse-toggle").length > 0
-                ? element.siblings(".collapse-toggle")
-                : element.siblings("a:nth-child(1)")
+            const toggle =
+                o.toggleElement !== false
+                    ? $(o.toggleElement)
+                    : element.siblings(".collapse-toggle").length > 0
+                      ? element.siblings(".collapse-toggle")
+                      : element.siblings("a:nth-child(1)");
             if (o.collapsed === true || element.attr("collapsed") === true) {
                 element.hide(0);
             }
 
             toggle.on(Metro.events.click, (e) => {
-                if (
-                    element.css("display") !== "none" &&
-                    !element.hasClass("keep-open")
-                ) {
+                if (element.css("display") !== "none" && !element.hasClass("keep-open")) {
                     this._close(element);
                 } else {
                     this._open(element);
@@ -134,10 +132,7 @@
 
         toggleState: function () {
             const element = this.element;
-            if (
-                element.attr("collapsed") === true ||
-                element.data("collapsed") === true
-            ) {
+            if (element.attr("collapsed") === true || element.data("collapsed") === true) {
                 this.collapse();
             } else {
                 this.expand();

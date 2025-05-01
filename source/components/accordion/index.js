@@ -1,2 +1,2 @@
-import "./accordion.js"
-import "./accordion.less"
+import "./accordion.js";
+import "./accordion.less";

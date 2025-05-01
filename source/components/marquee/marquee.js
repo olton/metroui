@@ -1,6 +1,6 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
+    "use strict";
 
     let MarqueeDefaultConfig = {
         items: null,
@@ -21,7 +21,7 @@
         onMarqueeItem: Metro.noop,
         onMarqueeItemComplete: Metro.noop,
         onMarqueeComplete: Metro.noop,
-        onMarqueeCreate: Metro.noop
+        onMarqueeCreate: Metro.noop,
     };
 
     Metro.marqueeSetup = (options) => {
@@ -32,8 +32,8 @@
         Metro.marqueeSetup(globalThis.metroMarqueeSetup);
     }
 
-    Metro.Component('marquee', {
-        init: function( options, elem ) {
+    Metro.Component("marquee", {
+        init: function (options, elem) {
             this._super(elem, options, MarqueeDefaultConfig, {
                 // define instance vars here
                 origin: null,
@@ -45,14 +45,14 @@
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             this._createStructure();
             this._createEvents();
 
-            this._fireEvent('marquee-create');
+            this._fireEvent("marquee-create");
         },
 
-        _createStructure: function(){
+        _createStructure: function () {
             const element = this.element;
             const o = this.options;
 
@@ -63,53 +63,56 @@
                 width: o.width,
             });
 
-            const items = element.html().split("\n").map(a => a.trim()).filter(a => a.length)
-            const itemsFromOptions = Metro.utils.isObject(o.items) || []
+            const items = element
+                .html()
+                .split("\n")
+                .map((a) => a.trim())
+                .filter((a) => a.length);
+            const itemsFromOptions = Metro.utils.isObject(o.items) || [];
 
-            this.origin = [...items,  ...itemsFromOptions]
+            this.origin = [...items, ...itemsFromOptions];
             this.setItems(this.origin, true);
-            
+
             if (this.items.length) {
                 this.current = 0;
-                this.createChain()
-                console.log(this.chain)
+                this.createChain();
+                console.log(this.chain);
                 this.start();
             }
         },
 
-        setItems: function(items, replace = true){
+        setItems: function (items, replace = true) {
             const element = this.element;
             const o = this.options;
-            const dir = o.direction.toLowerCase()
+            const dir = o.direction.toLowerCase();
 
             if (replace) {
-                this.items.length = 0    
+                this.items.length = 0;
             }
 
             element.clear();
-            
+
             this.items = items.map((item) => {
                 return $("<div>").html(item).addClass("marquee__item").addClass(o.clsMarqueeItem).appendTo(element)[0];
-            })
+            });
 
-            $(this.items).addClass((dir === "left" || dir === "right") ? "moveLeftRight" : "moveUpDown")
-            
+            $(this.items).addClass(dir === "left" || dir === "right" ? "moveLeftRight" : "moveUpDown");
+
             if (o.height === "auto") {
                 let h = 0;
-                $(this.items).each(function(){
-                    const el = $(this)
-                    const eh = +el.outerHeight(true)
-                    if ( eh > h) {
-                        h = eh
+                $(this.items).each(function () {
+                    const el = $(this);
+                    const eh = +el.outerHeight(true);
+                    if (eh > h) {
+                        h = eh;
                     }
                 });
                 element.height(h);
             }
-            return this
+            return this;
         },
 
-
-        setItem: function(index, value){
+        setItem: function (index, value) {
             const target = $(this.items[index]);
             let h;
             const o = this.options;
@@ -119,18 +122,18 @@
                 return;
             }
 
-            target.html(value)
+            target.html(value);
 
-            h = target.outerHeight(true)
-            
+            h = target.outerHeight(true);
+
             if (o.height === "auto" && element.height() < h) {
                 element.height(h);
             }
-            
-            return this
+
+            return this;
         },
 
-        addItem: function(item, index = -1){
+        addItem: function (item, index = -1) {
             const element = this.element;
             const o = this.options;
             let ins;
@@ -143,7 +146,7 @@
             if (index < 0) {
                 element.append(ins);
             } else {
-                trg = this.items[index]
+                trg = this.items[index];
                 if (trg) {
                     ins.insertBefore(trg);
                 } else {
@@ -151,33 +154,33 @@
                 }
             }
 
-            h = ins.outerHeight(true)
-            
+            h = ins.outerHeight(true);
+
             if (o.height === "auto" && element.height() < h) {
                 element.height(h);
             }
-            
-            return this
+
+            return this;
         },
 
-        createChain: function(){
-            const element = this.element
-            const o = this.options
-            const magic = 20
-            let dir = o.direction
-            let ease = o.ease
-            let dur = +o.duration
-            let i = 0
-            const rect = element[0].getBoundingClientRect()
+        createChain: function () {
+            const element = this.element;
+            const o = this.options;
+            const magic = 20;
+            let dir = o.direction;
+            let ease = o.ease;
+            let dur = +o.duration;
+            let i = 0;
+            const rect = element[0].getBoundingClientRect();
 
-            this.chain.length = 0
-            
+            this.chain.length = 0;
+
             if (o.mode === "default") {
                 for (const item of this.items) {
                     const el = $(item);
-                    const elRect = item.getBoundingClientRect()
-                    const half = (rect.width - elRect.width) / 2
-                    
+                    const elRect = item.getBoundingClientRect();
+                    const half = (rect.width - elRect.width) / 2;
+
                     let draw;
 
                     if (el.attr("data-direction")) {
@@ -196,16 +199,18 @@
 
                     if (["left", "right"].indexOf(dir) > -1) {
                         draw = {
-                            left: dir === "left" 
-                                ? [rect.width, -elRect.width - magic] 
-                                : [-elRect.width - magic, rect.width]
-                        }
+                            left:
+                                dir === "left"
+                                    ? [rect.width, -elRect.width - magic]
+                                    : [-elRect.width - magic, rect.width],
+                        };
                     } else {
                         draw = {
-                            top: dir === "up" 
-                                ? [rect.height, -elRect.height - magic] 
-                                : [-elRect.height - magic, rect.height]
-                        }
+                            top:
+                                dir === "up"
+                                    ? [rect.height, -elRect.height - magic]
+                                    : [-elRect.height - magic, rect.height],
+                        };
                     }
 
                     this.chain.push({
@@ -213,21 +218,21 @@
                         draw: draw,
                         dur: dur,
                         ease,
-                        defer: i === 0 ? +o.firstPause : 0
+                        defer: i === 0 ? +o.firstPause : 0,
                     });
 
-                    i++
+                    i++;
                 }
             } else {
                 for (const item of this.items) {
                     const el = $(item);
-                    const elRect = item.getBoundingClientRect()
-                    const halfW = (rect.width - elRect.width) / 2
-                    const halfH = (rect.height - elRect.height) / 2
-                    
+                    const elRect = item.getBoundingClientRect();
+                    const halfW = (rect.width - elRect.width) / 2;
+                    const halfH = (rect.height - elRect.height) / 2;
+
                     let draw1;
                     let draw2;
-                    
+
                     dur = o.duration / 2;
 
                     if (el.attr("data-direction")) {
@@ -237,106 +242,95 @@
                     if (el.attr("data-duration")) {
                         dur = +el.attr("data-duration") / 2;
                     }
-                    
-                    let _ease = ease ? ease.split(" ") : ["linear"]
+
+                    let _ease = ease ? ease.split(" ") : ["linear"];
                     if (el.attr("data-ease")) {
                         _ease = el.attr("data-ease").split(" ");
                     }
-                    
+
                     if (["left", "right"].includes(dir)) {
                         draw1 = {
-                            left: dir === "left" 
-                                ? [rect.width, halfW] 
-                                : [-elRect.width - magic, halfW]
-                        }
+                            left: dir === "left" ? [rect.width, halfW] : [-elRect.width - magic, halfW],
+                        };
                         draw2 = {
-                            left: dir === "left" 
-                                ? [halfW, -elRect.width - magic] 
-                                : [halfW, rect.width + magic]
-                        }
+                            left: dir === "left" ? [halfW, -elRect.width - magic] : [halfW, rect.width + magic],
+                        };
                     } else {
                         draw1 = {
-                            top: dir === "up" 
-                                ? [rect.height, halfH] 
-                                : [-elRect.height - magic, halfH]
-                        }
+                            top: dir === "up" ? [rect.height, halfH] : [-elRect.height - magic, halfH],
+                        };
                         draw2 = {
-                            top: dir === "up" 
-                                ? [halfH, -elRect.height - magic] 
-                                : [halfH, rect.height + magic]
-                        }
+                            top: dir === "up" ? [halfH, -elRect.height - magic] : [halfH, rect.height + magic],
+                        };
                     }
-                    
+
                     this.chain.push({
                         el: el[0],
                         draw: draw1,
                         dur: dur,
                         ease: _ease[0] || "linear",
-                        defer: i === 0 ? +o.firstPause : 0
+                        defer: i === 0 ? +o.firstPause : 0,
                     });
                     this.chain.push({
                         el: el[0],
                         draw: draw2,
                         dur: dur,
                         ease: _ease[1] ? _ease[1] : _ease[0] ? _ease[0] : "linear",
-                        defer: +o.accentPause
+                        defer: +o.accentPause,
                     });
 
-                    i++
+                    i++;
                 }
             }
         },
-        
-        _createEvents: function(){
+
+        _createEvents: function () {
             const element = this.element;
             const o = this.options;
 
-            element.on(Metro.events.enter, ()=> {
-                if (o.stopOnHover)
-                    $.pauseAll(this.items);
-            })
+            element.on(Metro.events.enter, () => {
+                if (o.stopOnHover) $.pauseAll(this.items);
+            });
 
-            element.on(Metro.events.leave, ()=> {
-                if (o.stopOnHover)
-                    $.resumeAll(this.items);
-            })
-            
+            element.on(Metro.events.leave, () => {
+                if (o.stopOnHover) $.resumeAll(this.items);
+            });
+
             const resize = Hooks.useDebounce((e) => {
-                this.stop()
-                this.setItems(this.items, true)
+                this.stop();
+                this.setItems(this.items, true);
                 this.createChain();
                 this.start();
-            }, 1000)
-            
-            $(window).on(Metro.events.resize, resize)
+            }, 1000);
+
+            $(window).on(Metro.events.resize, resize);
         },
 
-        start: function(){
-            const o = this.options
-            
+        start: function () {
+            const o = this.options;
+
             this.running = true;
 
             $.chain(this.chain, {
                 loop: o.loop,
                 onChainItem: Metro.utils.isFunc(o.onMarqueeItem),
                 onChainItemComplete: Metro.utils.isFunc(o.onMarqueeItemComplete),
-                onChainComplete: Metro.utils.isFunc(o.onMarqueeComplete)
+                onChainComplete: Metro.utils.isFunc(o.onMarqueeComplete),
             });
-            
-            return this
+
+            return this;
         },
 
-        stop: function(){
+        stop: function () {
             this.running = false;
             $.stopAll(false);
-            return this
+            return this;
         },
 
-        changeAttribute: (attr, val)=> {
-        },
+        changeAttribute: (attr, val) => {},
 
-        destroy: function(){
+        destroy: function () {
             this.element.remove();
-        }
+        },
     });
 })(Metro, Dom);

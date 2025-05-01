@@ -24,9 +24,11 @@
     const meta_theme = $.meta("metro:theme").attr("content");
 
     if (meta_theme !== undefined) {
-        $("html").addClass(meta_theme === "auto" ? $.dark ? "dark-side" : "" : meta_theme === "dark" ? "dark-side" : "light-side");
+        $("html").addClass(
+            meta_theme === "auto" ? ($.dark ? "dark-side" : "") : meta_theme === "dark" ? "dark-side" : "light-side",
+        );
     }
-    
+
     if (globalThis.METRO_BLUR_IMAGE === undefined) {
         globalThis.METRO_BLUR_IMAGE = meta_blur_image !== undefined ? JSON.parse(meta_global_common) : false;
     }
@@ -80,19 +82,22 @@
             meta_animation_duration !== undefined ? Number.parseInt(meta_animation_duration) : 100;
     }
     if (globalThis.METRO_CALLBACK_TIMEOUT === undefined) {
-        globalThis.METRO_CALLBACK_TIMEOUT = meta_callback_timeout !== undefined ? Number.parseInt(meta_callback_timeout) : 500;
+        globalThis.METRO_CALLBACK_TIMEOUT =
+            meta_callback_timeout !== undefined ? Number.parseInt(meta_callback_timeout) : 500;
     }
     if (globalThis.METRO_TIMEOUT === undefined) {
         globalThis.METRO_TIMEOUT = meta_timeout !== undefined ? Number.parseInt(meta_timeout) : 2000;
     }
     if (globalThis.METRO_SCROLL_MULTIPLE === undefined) {
-        globalThis.METRO_SCROLL_MULTIPLE = meta_scroll_multiple !== undefined ? Number.parseInt(meta_scroll_multiple) : 20;
+        globalThis.METRO_SCROLL_MULTIPLE =
+            meta_scroll_multiple !== undefined ? Number.parseInt(meta_scroll_multiple) : 20;
     }
     if (globalThis.METRO_CLOAK_REMOVE === undefined) {
-        globalThis.METRO_CLOAK_REMOVE = meta_cloak !== undefined ? (`${meta_cloak}`).toLowerCase() : "fade";
+        globalThis.METRO_CLOAK_REMOVE = meta_cloak !== undefined ? `${meta_cloak}`.toLowerCase() : "fade";
     }
     if (globalThis.METRO_CLOAK_DURATION === undefined) {
-        globalThis.METRO_CLOAK_DURATION = meta_cloak_duration !== undefined ? Number.parseInt(meta_cloak_duration) : 300;
+        globalThis.METRO_CLOAK_DURATION =
+            meta_cloak_duration !== undefined ? Number.parseInt(meta_cloak_duration) : 300;
     }
 
     if (globalThis.METRO_SMOOTH_SCROLL === undefined) {

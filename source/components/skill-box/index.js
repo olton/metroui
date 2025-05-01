@@ -1,1 +1,1 @@
-import "./skill-box.less"
+import "./skill-box.less";

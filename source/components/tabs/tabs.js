@@ -44,7 +44,7 @@
 
         _create: function () {
             const element = this.element;
-            const tab = element.find(".active")[0]
+            const tab = element.find(".active")[0];
 
             this._createStructure();
             this._createEvents();
@@ -70,9 +70,9 @@
 
             element.data("expanded", false);
 
-            const expandTitle = $("<div>").addClass("expand-title")
+            const expandTitle = $("<div>").addClass("expand-title");
             container.prepend(expandTitle);
-            
+
             hamburger = container.find(".hamburger");
             if (hamburger.length === 0) {
                 hamburger = $("<button>").attr("type", "button").addClass("hamburger menu-down").appendTo(container);
@@ -90,7 +90,11 @@
                     container.addClass("tabs-expand");
                 }
             } else {
-                if (Metro.utils.isValue(o.expandPoint) && Metro.utils.mediaExist(o.expandPoint) && !["left", "right"].includes(o.position)) {
+                if (
+                    Metro.utils.isValue(o.expandPoint) &&
+                    Metro.utils.mediaExist(o.expandPoint) &&
+                    !["left", "right"].includes(o.position)
+                ) {
                     container.addClass("tabs-expand");
                 }
             }
@@ -118,7 +122,11 @@
                             container.addClass("tabs-expand");
                         }
                     } else {
-                        if (Metro.utils.isValue(o.expandPoint) && Metro.utils.mediaExist(o.expandPoint) && !["left", "right"].includes(o.position)) {
+                        if (
+                            Metro.utils.isValue(o.expandPoint) &&
+                            Metro.utils.mediaExist(o.expandPoint) &&
+                            !["left", "right"].includes(o.position)
+                        ) {
                             if (!container.hasClass("tabs-expand")) container.addClass("tabs-expand");
                         } else {
                             if (container.hasClass("tabs-expand")) container.removeClass("tabs-expand");
@@ -208,7 +216,7 @@
             this._targets = [];
 
             $.each(tabs, function () {
-                const tab = $(this)
+                const tab = $(this);
                 if (tab.hasClass("divider")) return;
                 const target = tab.find("a").attr("href").trim();
                 if (target.length > 1 && target[0] === "#") {
@@ -230,7 +238,7 @@
 
             this._collectTargets();
 
-            const tab = typeof tab_to_open === "undefined" ? $(tabs[0]) : $(tab_to_open); 
+            const tab = typeof tab_to_open === "undefined" ? $(tabs[0]) : $(tab_to_open);
             const target = tab.find("a").attr("href");
             const tabIndex = tab.index();
 
@@ -244,7 +252,7 @@
             } else {
                 tab.addClass("active");
             }
-            
+
             if (o.link) {
                 $(`[data-link=${o.link}]`).each((i, el) => {
                     if (el === this.elem) return;
@@ -252,7 +260,7 @@
                     if (tabs.length && tabs[tabIndex]) {
                         tabs[tabIndex].click();
                     }
-                })
+                });
             }
 
             $.each(this._targets, function () {
@@ -319,7 +327,7 @@
 
             if (Metro.utils.isValue(tabs[index])) this._open($(tabs[index]));
         },
-        
+
         open: function (tab = 1) {
             const element = this.element;
             const tabs = element.find("li");

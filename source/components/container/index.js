@@ -1,1 +1,1 @@
-import "./container.less"
+import "./container.less";

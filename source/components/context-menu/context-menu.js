@@ -1,60 +1,60 @@
 ((Metro, $) => {
     Metro.contextMenu = (items = [], element = document) => {
         function buildMenu(items) {
-            const menu = $('<ul>').addClass('d-menu context-menu').css("display", "none")
+            const menu = $("<ul>").addClass("d-menu context-menu").css("display", "none");
             for (const item of items) {
                 if (item.type === "divider") {
-                    menu.append($('<li>').addClass('divider'))
+                    menu.append($("<li>").addClass("divider"));
                 } else {
-                    const li = $('<li>').appendTo(menu)
-                    const an = $('<a>').appendTo(li)
+                    const li = $("<li>").appendTo(menu);
+                    const an = $("<a>").appendTo(li);
                     if (item.icon) {
-                        an.append($("<span>").addClass("icon").html(item.icon))
+                        an.append($("<span>").addClass("icon").html(item.icon));
                     }
-                    an.append($("<span>").addClass("caption").html(item.text))
-                    an.href(item.href || "#")
+                    an.append($("<span>").addClass("caption").html(item.text));
+                    an.href(item.href || "#");
                     if (item.onclick) {
-                        an.on("click", (e)=>{
-                            Metro.utils.exec(item.onclick, [e, item])
-                        })
+                        an.on("click", (e) => {
+                            Metro.utils.exec(item.onclick, [e, item]);
+                        });
                     }
                     if (item.attributes) {
                         for (const [key, value] of Object.entries(item.attributes)) {
-                            an.attr(key, value)
+                            an.attr(key, value);
                         }
                     }
                     if (item.disabled) {
-                        an.prop("disabled", true)
+                        an.prop("disabled", true);
                     }
                     if (item.items) {
-                        const sub = buildMenu(item.items)
-                        li.children("a").addClass("dropdown-toggle")
-                        li.append(sub)
-                        Metro.makePlugin(sub, "dropdown", {})
+                        const sub = buildMenu(item.items);
+                        li.children("a").addClass("dropdown-toggle");
+                        li.append(sub);
+                        Metro.makePlugin(sub, "dropdown", {});
                     }
                 }
             }
-            return menu[0]
+            return menu[0];
         }
 
-        element.context_menu = buildMenu(items)
+        element.context_menu = buildMenu(items);
         if (element.nodeType === 1) {
-            element.append(element.context_menu)
+            element.append(element.context_menu);
         } else {
-            $("body").append(element.context_menu)
+            $("body").append(element.context_menu);
         }
-        
-        element.oncontextmenu = function(e) {
-            e.preventDefault()
-            e.stopPropagation()
-            $(".context-menu").hide()
-            this.context_menu.style.left = `${e.pageX}px`
-            this.context_menu.style.top = `${e.pageY}px`
-            this.context_menu.style.display = "block"
-        }
-    }
-    
+
+        element.oncontextmenu = function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(".context-menu").hide();
+            this.context_menu.style.left = `${e.pageX}px`;
+            this.context_menu.style.top = `${e.pageY}px`;
+            this.context_menu.style.display = "block";
+        };
+    };
+
     $(document).on("click", () => {
-        $(".context-menu").hide()
-    })    
+        $(".context-menu").hide();
+    });
 })(Metro, Dom);

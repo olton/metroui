@@ -1,9 +1,8 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
+    "use strict";
 
     const Export = {
-
         init: function () {
             return this;
         },
@@ -11,7 +10,7 @@
         options: {
             csvDelimiter: "\t",
             csvNewLine: "\r\n",
-            includeHeader: true
+            includeHeader: true,
         },
 
         setup: function (options) {
@@ -21,13 +20,12 @@
 
         base64: (data) => globalThis.btoa(unescape(encodeURIComponent(data))),
 
-        b64toBlob: (b64Data, contentType = '', sliceSize = 512) => {
-
+        b64toBlob: (b64Data, contentType = "", sliceSize = 512) => {
             const byteCharacters = globalThis.atob(b64Data);
             const byteArrays = [];
 
             let offset;
-            
+
             for (offset = 0; offset < byteCharacters.length; offset += sliceSize) {
                 const slice = byteCharacters.slice(offset, offset + sliceSize);
 
@@ -42,7 +40,7 @@
             }
 
             return new Blob(byteArrays, {
-                type: contentType
+                type: contentType,
             });
         },
 
@@ -59,14 +57,13 @@
             const _table = $(table)[0];
 
             if (Metro.utils.bool(o.includeHeader)) {
-
                 head = _table.querySelectorAll("thead")[0];
 
                 for (let i = 0; i < head.rows.length; i++) {
                     row = head.rows[i];
                     for (let j = 0; j < row.cells.length; j++) {
                         cell = row.cells[j];
-                        data += (j ? o.csvDelimiter : '') + cell.textContent.trim();
+                        data += (j ? o.csvDelimiter : "") + cell.textContent.trim();
                     }
                     data += o.csvNewLine;
                 }
@@ -78,26 +75,25 @@
                 row = body.rows[i];
                 for (let j = 0; j < row.cells.length; j++) {
                     cell = row.cells[j];
-                    data += (j ? o.csvDelimiter : '') + cell.textContent.trim();
+                    data += (j ? o.csvDelimiter : "") + cell.textContent.trim();
                 }
                 data += o.csvNewLine;
             }
 
             if (Metro.utils.isValue(filename)) {
-                return this.createDownload(this.base64(`\uFEFF${data}`), 'application/csv', filename);
+                return this.createDownload(this.base64(`\uFEFF${data}`), "application/csv", filename);
             }
 
             return data;
         },
 
         createDownload: function (data, contentType, filename) {
-
-            const anchor = document.createElement('a')
+            const anchor = document.createElement("a");
             anchor.style.display = "none";
             document.body.appendChild(anchor);
 
-            const blob = this.b64toBlob(data, contentType)
-            const url = globalThis.URL.createObjectURL(blob)
+            const blob = this.b64toBlob(data, contentType);
+            const url = globalThis.URL.createObjectURL(blob);
             anchor.href = url;
             anchor.download = filename || Metro.utils.elementId("download");
             anchor.click();
@@ -106,7 +102,7 @@
             return true;
         },
 
-        arrayToCsv: function(array, filename, options){
+        arrayToCsv: function (array, filename, options) {
             let o;
             let data = "";
             let i;
@@ -120,19 +116,19 @@
                 if (typeof row !== "object") {
                     data += row + o.csvNewLine;
                 } else {
-                    $.each(row, (key, val)=> {
-                        data += (key ? o.csvDelimiter : '') + val.toString();
+                    $.each(row, (key, val) => {
+                        data += (key ? o.csvDelimiter : "") + val.toString();
                     });
                     data += o.csvNewLine;
                 }
             }
 
             if (Metro.utils.isValue(filename)) {
-                return this.createDownload(this.base64(`\uFEFF${data}`), 'application/csv', filename);
+                return this.createDownload(this.base64(`\uFEFF${data}`), "application/csv", filename);
             }
 
             return data;
-        }
+        },
     };
 
     Metro.export = Export.init();

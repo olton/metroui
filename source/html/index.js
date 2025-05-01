@@ -1,11 +1,11 @@
 import {
+    HTML,
     addCssRule,
     addStyle,
     clearViewStorageHolder,
     createStyleElement,
     createStyleSheet,
     cssLoader,
-    HTML,
     info,
     jsLoader,
     render,

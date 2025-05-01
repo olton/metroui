@@ -1,2 +1,2 @@
-import "./hint.js"
-import "./hint.less"
+import "./hint.js";
+import "./hint.less";

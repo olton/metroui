@@ -1,2 +1,2 @@
-import "./sidenav.js"
-import "./sidenav.less"
+import "./sidenav.js";
+import "./sidenav.less";

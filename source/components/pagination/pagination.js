@@ -1,7 +1,7 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
-    Metro.pagination = (c)=> {
+    "use strict";
+    Metro.pagination = (c) => {
         const defConf = {
             length: 0, //total rows
             rows: 0, // page size
@@ -16,33 +16,34 @@
         };
 
         const strings = Metro.locales[$("html").attr("lang") || "en"];
-        
+
         let i;
         let prev;
         let next;
 
-        const conf = $.extend({}, defConf, c)
+        const conf = $.extend({}, defConf, c);
         const distance = Number.parseInt(conf.distance);
         const shortTrack = Number.parseInt(conf.shortTrack);
-        const islandSize = Number.parseInt(conf.islandSize)
-        const totalRows = Number.parseInt(conf.length)
-        const pageSize = Number.parseInt(conf.rows)
-        const totalPages = Math.ceil(totalRows/pageSize)
-        const current = Number.parseInt(conf.current)
-        const pagination_wrapper = $(conf.target); pagination_wrapper.html("");
+        const islandSize = Number.parseInt(conf.islandSize);
+        const totalRows = Number.parseInt(conf.length);
+        const pageSize = Number.parseInt(conf.rows);
+        const totalPages = Math.ceil(totalRows / pageSize);
+        const current = Number.parseInt(conf.current);
+        const pagination_wrapper = $(conf.target);
+        pagination_wrapper.html("");
         const pagination = $("<ul>").addClass("pagination").addClass(conf.clsPagination).appendTo(pagination_wrapper);
 
         if (totalRows === 0) {
-            return ;
+            return;
         }
 
         if (pageSize === -1) {
-            return ;
+            return;
         }
 
-        const add_item = (item_title, item_type, data)=> {
-            const li = $("<li>").addClass("page-item").addClass(item_type)
-            const a = $("<a>").addClass("page-link").html(item_title)
+        const add_item = (item_title, item_type, data) => {
+            const li = $("<li>").addClass("page-item").addClass(item_type);
+            const a = $("<a>").addClass("page-link").html(item_title);
             a.data("page", data);
             a.appendTo(li);
 
@@ -78,21 +79,22 @@
             } else {
                 pagination.append(add_item("...", "no-link", null));
 
-                for(let i = islandSize; i > 0; i--) {
-                    pagination.append(add_item(current - i, "", current - i))
+                for (let i = islandSize; i > 0; i--) {
+                    pagination.append(add_item(current - i, "", current - i));
                 }
 
                 pagination.append(add_item(current, "active", current));
 
-                for(let i = 1; i <= islandSize; i++) {
-                    pagination.append(add_item(current + i, "", current + i))
+                for (let i = 1; i <= islandSize; i++) {
+                    pagination.append(add_item(current + i, "", current + i));
                 }
 
                 pagination.append(add_item("...", "no-link", null));
             }
         }
 
-        if (totalPages > 1 || current < totalPages) pagination.append(add_item(totalPages, current === totalPages ? "active" : "", totalPages));
+        if (totalPages > 1 || current < totalPages)
+            pagination.append(add_item(totalPages, current === totalPages ? "active" : "", totalPages));
 
         next = add_item(conf.nextTitle || strings.label_next, "service next-page", "next");
         pagination.append(next);

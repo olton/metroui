@@ -1,6 +1,6 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
+    "use strict";
 
     let WizardDefaultConfig = {
         wizardDeferred: 0,
@@ -34,7 +34,7 @@
         onFinishClick: Metro.noop,
         onBeforePrev: Metro.noop_true,
         onBeforeNext: Metro.noop_true,
-        onWizardCreate: Metro.noop
+        onWizardCreate: Metro.noop,
     };
 
     Metro.wizardSetup = (options) => {
@@ -45,56 +45,84 @@
         Metro.wizardSetup(globalThis.metroWizardSetup);
     }
 
-    Metro.Component('wizard', {
-        init: function( options, elem ) {
+    Metro.Component("wizard", {
+        init: function (options, elem) {
             this._super(elem, options, WizardDefaultConfig, {
-                id: Metro.utils.elementId('wizard')
+                id: Metro.utils.elementId("wizard"),
             });
 
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             const element = this.element;
 
             this._createWizard();
             this._createEvents();
 
             this._fireEvent("wizard-create", {
-                element: element
+                element: element,
             });
         },
 
-        _createWizard: function(){
+        _createWizard: function () {
             const element = this.element;
             const o = this.options;
 
             element.addClass("wizard").addClass(o.view).addClass(o.clsWizard);
 
-            const bar = $("<div>").addClass("action-bar").addClass(o.clsActions).appendTo(element)
+            const bar = $("<div>").addClass("action-bar").addClass(o.clsActions).appendTo(element);
             let buttonMode = o.buttonMode === "button" ? "" : o.buttonMode;
             if (o.buttonOutline === true) {
                 buttonMode += " outline";
             }
 
-            if (o.iconHelp !== false) $("<button>").attr("type", "button").addClass("button wizard-btn-help").addClass(buttonMode).addClass(o.clsHelp).html(o.iconHelp).appendTo(bar);
-            if (o.iconPrev !== false) $("<button>").attr("type", "button").addClass("button wizard-btn-prev").addClass(buttonMode).addClass(o.clsPrev).html(o.iconPrev).appendTo(bar);
-            if (o.iconNext !== false) $("<button>").attr("type", "button").addClass("button wizard-btn-next").addClass(buttonMode).addClass(o.clsNext).html(o.iconNext).appendTo(bar);
-            if (o.iconFinish !== false) $("<button>").attr("type", "button").addClass("button wizard-btn-finish").addClass(buttonMode).addClass(o.clsFinish).html(o.iconFinish).appendTo(bar);
+            if (o.iconHelp !== false)
+                $("<button>")
+                    .attr("type", "button")
+                    .addClass("button wizard-btn-help")
+                    .addClass(buttonMode)
+                    .addClass(o.clsHelp)
+                    .html(o.iconHelp)
+                    .appendTo(bar);
+            if (o.iconPrev !== false)
+                $("<button>")
+                    .attr("type", "button")
+                    .addClass("button wizard-btn-prev")
+                    .addClass(buttonMode)
+                    .addClass(o.clsPrev)
+                    .html(o.iconPrev)
+                    .appendTo(bar);
+            if (o.iconNext !== false)
+                $("<button>")
+                    .attr("type", "button")
+                    .addClass("button wizard-btn-next")
+                    .addClass(buttonMode)
+                    .addClass(o.clsNext)
+                    .html(o.iconNext)
+                    .appendTo(bar);
+            if (o.iconFinish !== false)
+                $("<button>")
+                    .attr("type", "button")
+                    .addClass("button wizard-btn-finish")
+                    .addClass(buttonMode)
+                    .addClass(o.clsFinish)
+                    .html(o.iconFinish)
+                    .appendTo(bar);
 
             this.toPage(o.start);
 
             this._setHeight();
         },
 
-        _setHeight: function(){
+        _setHeight: function () {
             const element = this.element;
             const pages = element.children("section");
             let max_height = 0;
 
             pages.children(".page-content").css("max-height", "none");
 
-            $.each(pages, function(){
+            $.each(pages, function () {
                 const h = $(this).height();
                 if (max_height < Number.parseInt(h)) {
                     max_height = h;
@@ -104,70 +132,77 @@
             element.height(max_height);
         },
 
-        _createEvents: function(){
+        _createEvents: function () {
             const that = this;
             const element = this.element;
 
-            element.on(Metro.events.click, ".wizard-btn-help", ()=> {
+            element.on(Metro.events.click, ".wizard-btn-help", () => {
                 const pages = element.children("section");
                 const page = pages.get(that.current - 1);
 
                 that._fireEvent("help-click", {
                     index: that.current,
-                    page: page
+                    page: page,
                 });
             });
 
-            element.on(Metro.events.click, ".wizard-btn-prev", ()=> {
+            element.on(Metro.events.click, ".wizard-btn-prev", () => {
                 that.prev();
                 const pages = element.children("section");
                 const page = pages.get(that.current - 1);
 
                 that._fireEvent("prev-click", {
                     index: that.current,
-                    page: page
+                    page: page,
                 });
             });
 
-            element.on(Metro.events.click, ".wizard-btn-next", ()=> {
+            element.on(Metro.events.click, ".wizard-btn-next", () => {
                 that.next();
                 const pages = element.children("section");
                 const page = pages.get(that.current - 1);
 
                 that._fireEvent("next-click", {
                     index: that.current,
-                    page: page
+                    page: page,
                 });
             });
 
-            element.on(Metro.events.click, ".wizard-btn-finish", ()=> {
+            element.on(Metro.events.click, ".wizard-btn-finish", () => {
                 const pages = element.children("section");
                 const page = pages.get(that.current - 1);
 
                 that._fireEvent("finish-click", {
                     index: that.current,
-                    page: page
+                    page: page,
                 });
             });
 
-            element.on(Metro.events.click, ".complete", function(){
+            element.on(Metro.events.click, ".complete", function () {
                 const index = $(this).index() + 1;
                 that.toPage(index);
             });
 
-            $(globalThis).on(Metro.events.resize, ()=> {
-                that._setHeight();
-            }, {ns: this.id});
+            $(globalThis).on(
+                Metro.events.resize,
+                () => {
+                    that._setHeight();
+                },
+                { ns: this.id },
+            );
         },
 
-        next: function(){
+        next: function () {
             const element = this.element;
             const o = this.options;
             const pages = element.children("section");
             let page = $(element.children("section").get(this.current - 1));
 
-            if (this.current + 1 > pages.length || Metro.utils.exec(o.onBeforeNext, [this.current, page, element]) === false) {
-                return ;
+            if (
+                this.current + 1 > pages.length ||
+                Metro.utils.exec(o.onBeforeNext, [this.current, page, element]) === false
+            ) {
+                return;
             }
 
             this.current++;
@@ -178,17 +213,17 @@
 
             this._fireEvent("next-page", {
                 index: this.current,
-                page: page[0]
+                page: page[0],
             });
         },
 
-        prev: function(){
+        prev: function () {
             const element = this.element;
             const o = this.options;
             let page = $(element.children("section").get(this.current - 1));
 
             if (this.current - 1 === 0 || Metro.utils.exec(o.onBeforePrev, [this.current, page, element]) === false) {
-                return ;
+                return;
             }
 
             this.current--;
@@ -199,35 +234,35 @@
 
             this._fireEvent("prev-page", {
                 index: this.current,
-                page: page[0]
+                page: page[0],
             });
         },
 
-        last: function(){
+        last: function () {
             const element = this.element;
 
             this.toPage(element.children("section").length);
 
-            const page = $(element.children("section").get(this.current - 1))
+            const page = $(element.children("section").get(this.current - 1));
             this._fireEvent("last-page", {
                 index: this.current,
-                page: page[0]
+                page: page[0],
             });
         },
 
-        first: function(){
+        first: function () {
             const element = this.element;
 
             this.toPage(1);
 
-            const page = $(element.children("section").get(0))
+            const page = $(element.children("section").get(0));
             this._fireEvent("first-page", {
                 index: this.current,
-                page: page[0]
+                page: page[0],
             });
         },
 
-        toPage: function(page){
+        toPage: function (page) {
             const element = this.element;
             const o = this.options;
             const target = $(element.children("section").get(page - 1));
@@ -235,7 +270,7 @@
             const actions = element.find(".action-bar");
 
             if (target.length === 0) {
-                return ;
+                return;
             }
 
             const finish = element.find(".wizard-btn-finish").addClass("disabled");
@@ -244,7 +279,8 @@
 
             this.current = page;
 
-            element.children("section")
+            element
+                .children("section")
                 .removeClass("complete current")
                 .removeClass(o.clsCurrent)
                 .removeClass(o.clsComplete);
@@ -252,26 +288,28 @@
             target.addClass("current").addClass(o.clsCurrent);
             target.prevAll().addClass("complete").addClass(o.clsComplete);
 
-            const border_size = element.children("section.complete").length === 0 ? 0 : Number.parseInt(Metro.utils.getStyleOne(element.children("section.complete")[0], "border-left-width"));
+            const border_size =
+                element.children("section.complete").length === 0
+                    ? 0
+                    : Number.parseInt(
+                          Metro.utils.getStyleOne(element.children("section.complete")[0], "border-left-width"),
+                      );
 
             actions.animate({
                 draw: {
-                    left: element.children("section.complete").length * border_size + 41
+                    left: element.children("section.complete").length * border_size + 41,
                 },
-                dur: o.duration
+                dur: o.duration,
             });
 
-            if (
-                (this.current === sections.length) || (o.finish > 0 && this.current >= o.finish)
-            ) {
+            if (this.current === sections.length || (o.finish > 0 && this.current >= o.finish)) {
                 finish.removeClass("disabled");
             }
 
             if (Number.parseInt(o.finish) > 0 && this.current === Number.parseInt(o.finish)) {
-
                 this._fireEvent("finish-page", {
                     index: this.current,
-                    page: target[0]
+                    page: target[0],
                 });
             }
 
@@ -285,14 +323,13 @@
 
             this._fireEvent("page", {
                 index: this.current,
-                page: target[0]
+                page: target[0],
             });
         },
 
-        changeAttribute: ()=> {
-        },
+        changeAttribute: () => {},
 
-        destroy: function(){
+        destroy: function () {
             const element = this.element;
 
             element.off(Metro.events.click, ".wizard-btn-help");
@@ -300,9 +337,9 @@
             element.off(Metro.events.click, ".wizard-btn-next");
             element.off(Metro.events.click, ".wizard-btn-finish");
             element.off(Metro.events.click, ".complete");
-            $(globalThis).off(Metro.events.resize,{ns: this.id});
+            $(globalThis).off(Metro.events.resize, { ns: this.id });
 
             element.remove();
-        }
+        },
     });
 })(Metro, Dom);

@@ -1,6 +1,6 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
+    "use strict";
 
     let LightboxDefaultConfig = {
         loop: true,
@@ -19,7 +19,7 @@
         clsLightbox: "",
 
         onDrawImage: Metro.noop,
-        onLightboxCreate: Metro.noop
+        onLightboxCreate: Metro.noop,
     };
 
     Metro.lightboxSetup = (options) => {
@@ -30,19 +30,19 @@
         Metro.lightboxSetup(globalThis.metroLightboxSetup);
     }
 
-    Metro.Component('lightbox', {
-        init: function( options, elem ) {
+    Metro.Component("lightbox", {
+        init: function (options, elem) {
             this._super(elem, options, LightboxDefaultConfig, {
                 // define instance vars here
                 overlay: null,
                 lightbox: null,
                 current: null,
-                items: []
+                items: [],
             });
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             const o = this.options;
 
             if (!o.source) {
@@ -52,10 +52,10 @@
             this._createStructure();
             this._createEvents();
 
-            this._fireEvent('lightbox-create');
+            this._fireEvent("lightbox-create");
         },
 
-        _createStructure: function(){
+        _createStructure: function () {
             const o = this.options;
             let overlay;
 
@@ -65,7 +65,7 @@
                 overlay = $("<div>").addClass("lightbox-overlay").appendTo("body").hide();
             }
 
-            const lightbox = $("<div>").addClass("lightbox").addClass(o.clsLightbox).appendTo("body").hide()
+            const lightbox = $("<div>").addClass("lightbox").addClass(o.clsLightbox).appendTo("body").hide();
             $("<span>").addClass("lightbox__prev").addClass(o.clsPrev).html(o.iconPrev).appendTo(lightbox);
             $("<span>").addClass("lightbox__next").addClass(o.clsNext).html(o.iconNext).appendTo(lightbox);
             $("<span>").addClass("lightbox__closer").addClass(o.clsClose).html(o.iconClose).appendTo(lightbox);
@@ -76,59 +76,59 @@
             this.overlay = overlay;
         },
 
-        _createEvents: function(){
+        _createEvents: function () {
             const that = this;
             const element = this.element;
             const o = this.options;
             const lightbox = $(this.component);
 
-            element.on(Metro.events.click, o.source, function(){
+            element.on(Metro.events.click, o.source, function () {
                 that.open(this);
             });
 
-            lightbox.on(Metro.events.click, ".lightbox__closer", ()=> {
+            lightbox.on(Metro.events.click, ".lightbox__closer", () => {
                 that.close();
             });
 
-            lightbox.on(Metro.events.click, ".lightbox__prev", ()=> {
+            lightbox.on(Metro.events.click, ".lightbox__prev", () => {
                 that.prev();
             });
 
-            lightbox.on(Metro.events.click, ".lightbox__next", ()=> {
+            lightbox.on(Metro.events.click, ".lightbox__next", () => {
                 that.next();
             });
         },
 
-        _setupItems: function(){
+        _setupItems: function () {
             const element = this.element;
             const o = this.options;
             const items = element.find(o.source);
 
             if (items.length === 0) {
-                return ;
+                return;
             }
 
             this.items = items;
         },
 
-        _goto: function(el){
+        _goto: function (el) {
             const that = this;
             const o = this.options;
             const $el = $(el);
             const img = $("<img>");
             let src;
 
-            const imageContainer = this.lightbox.find(".lightbox__image")
+            const imageContainer = this.lightbox.find(".lightbox__image");
             imageContainer.find(".lightbox__image-wrapper").remove();
             const imageWrapper = $("<div>")
-              .addClass("lightbox__image-wrapper")
-              .addClass(o.clsImageWrapper)
-              .attr("data-title", ($el.attr("alt") || $el.attr("data-title") || ""))
-              .appendTo(imageContainer)
-            const activity = $("<div>").appendTo(imageWrapper)
+                .addClass("lightbox__image-wrapper")
+                .addClass(o.clsImageWrapper)
+                .attr("data-title", $el.attr("alt") || $el.attr("data-title") || "")
+                .appendTo(imageContainer);
+            const activity = $("<div>").appendTo(imageWrapper);
             Metro.makePlugin(activity, "activity", {
                 type: "cycle",
-                style: "color"
+                style: "color",
             });
 
             this.current = el;
@@ -136,7 +136,7 @@
             if (el.tagName === "IMG" || el.tagName === "DIV") {
                 src = $el.attr("data-original") || $el.attr("src");
                 img.attr("src", src);
-                img[0].onload = function(){
+                img[0].onload = function () {
                     const port = this.height > this.width;
                     img.addClass(port ? "lightbox__image-portrait" : "lightbox__image-landscape").addClass(o.clsImage);
                     img.attr("alt", $el.attr("alt"));
@@ -144,16 +144,16 @@
                     activity.remove();
                     that._fireEvent("draw-image", {
                         image: img[0],
-                        item: imageWrapper[0]
+                        item: imageWrapper[0],
                     });
-                }
+                };
             }
         },
 
-        _index: function(el){
+        _index: function (el) {
             let index = -1;
 
-            this.items.each(function(i){
+            this.items.each(function (i) {
                 if (this === el) {
                     index = i;
                 }
@@ -162,7 +162,7 @@
             return index;
         },
 
-        next: function(){
+        next: function () {
             let index;
             const current = this.current;
 
@@ -179,7 +179,7 @@
             this._goto(this.items[index + 1]);
         },
 
-        prev: function(){
+        prev: function () {
             let index;
             const current = this.current;
 
@@ -196,7 +196,7 @@
             this._goto(this.items[index - 1]);
         },
 
-        open: function(el){
+        open: function (el) {
             this._setupItems();
 
             this._goto(el);
@@ -207,16 +207,15 @@
             return this;
         },
 
-        close: function(){
+        close: function () {
             this.overlay.hide();
             this.lightbox.hide();
         },
 
-        changeAttribute: (attr, val)=> {
-        },
+        changeAttribute: (attr, val) => {},
 
-        destroy: function(){
+        destroy: function () {
             this.element.remove();
-        }
+        },
     });
 })(Metro, Dom);

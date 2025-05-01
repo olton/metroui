@@ -105,7 +105,7 @@
                     hamburger.addClass("hidden");
                 }
             }
-            
+
             if (o.checkHamburgerColor === true) {
                 // TODO: if true, hamburger color will be set dependent on app-bar background color
             }

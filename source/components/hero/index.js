@@ -1,1 +1,1 @@
-import "./hero.less"
+import "./hero.less";

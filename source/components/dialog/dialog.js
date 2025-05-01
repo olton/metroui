@@ -1,12 +1,12 @@
 /*
-* customButtons: [
-*    {
-*        text: "Button",
-*        cls: "",
-*        onclick: () => {},
-*    }
-* ]
-* */
+ * customButtons: [
+ *    {
+ *        text: "Button",
+ *        cls: "",
+ *        onclick: () => {},
+ *    }
+ * ]
+ * */
 
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
@@ -108,7 +108,10 @@
 
                 if (o.defaultActions === true && element.find(".dialog-actions > *").length === 0) {
                     for (const b of o.defaultActionButtons.toArray(",")) {
-                        button = $("<button>").addClass(b !== "help" ? ".js-dialog-close" : "").addClass(o.clsDefaultAction).html(strings[`label_${b}`]);
+                        button = $("<button>")
+                            .addClass(b !== "help" ? ".js-dialog-close" : "")
+                            .addClass(o.clsDefaultAction)
+                            .html(strings[`label_${b}`]);
                         button.appendTo(buttons);
                         if (b === "ok") {
                             button.on(Metro.events.click, () => {
@@ -127,7 +130,7 @@
                         }
                     }
                 }
-                
+
                 const customButtons = Metro.utils.isObject(o.customButtons);
                 if (Array.isArray(customButtons))
                     $.each(customButtons, function () {
@@ -171,7 +174,7 @@
                     width: o.width,
                 });
             }
-            
+
             element.addClass(o.clsDialog);
             element.find(".dialog-title").addClass(o.clsTitle);
             element.find(".dialog-content").addClass(o.clsContent);
@@ -199,7 +202,7 @@
         _overlay: function () {
             const o = this.options;
             const overlay = $("<div>");
-            
+
             overlay.addClass("overlay").addClass(o.clsOverlay);
 
             if (o.overlayColor === "transparent") {
@@ -274,7 +277,7 @@
         setContent: function (c) {
             const element = this.element;
             let content = element.find(".dialog-content");
-            
+
             if (content.length === 0) {
                 content = $("<div>").addClass("dialog-content");
                 content.appendTo(element);
@@ -289,7 +292,6 @@
                     content.html(c);
                 }
             }
-
         },
 
         setTitle: function (t) {
@@ -421,8 +423,7 @@
         },
 
         create: (options) => {
-
-            const dlg = $("<div>").appendTo($("body"))
+            const dlg = $("<div>").appendTo($("body"));
             const dlg_options = $.extend(
                 {},
                 {

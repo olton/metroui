@@ -111,19 +111,21 @@
 
             const id = Metro.utils.elementId("datepicker");
 
-            picker = $("<div>")
-                .addClass(`wheel-picker date-picker ${element[0].className}`)
-                .addClass(o.clsPicker);
+            picker = $("<div>").addClass(`wheel-picker date-picker ${element[0].className}`).addClass(o.clsPicker);
 
             if (!picker.attr("id")) {
                 picker.attr("id", Hooks.useId(element[0]));
             }
-            
+
             picker.insertBefore(element);
             element.appendTo(picker);
 
             if (o.label) {
-                const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(picker);
+                const label = $("<label>")
+                    .addClass("label-for-input")
+                    .addClass(o.clsLabel)
+                    .html(o.label)
+                    .insertBefore(picker);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
                 }
@@ -144,7 +146,7 @@
                 year = $("<div>").addClass("year").addClass(o.clsPart).addClass(o.clsYear).appendTo(dateWrapper);
             }
 
-            const selectWrapper = $("<div>").addClass("select-wrapper").appendTo(picker)
+            const selectWrapper = $("<div>").addClass("select-wrapper").appendTo(picker);
             selectBlock = $("<div>").addClass("select-block").appendTo(selectWrapper);
 
             if (o.month === true) {
@@ -178,18 +180,14 @@
                 year = $("<ul>").addClass("sel-year").appendTo(selectBlock);
                 for (i = 0; i < o.distance; i++) $("<li>").html("&nbsp;").data("value", -1).appendTo(year);
                 for (i = o.minYear, j = 0; i <= o.maxYear; i++, j++) {
-                    $("<li>")
-                        .addClass(`js-year-${j} js-year-real-${i}`)
-                        .html(i)
-                        .data("value", i)
-                        .appendTo(year);
+                    $("<li>").addClass(`js-year-${j} js-year-real-${i}`).html(i).data("value", i).appendTo(year);
                 }
                 for (i = 0; i < o.distance; i++) $("<li>").html("&nbsp;").data("value", -1).appendTo(year);
             }
 
             selectBlock.height((o.distance * 2 + 1) * 40);
 
-            const actionBlock = $("<div>").addClass("action-block").appendTo(selectWrapper)
+            const actionBlock = $("<div>").addClass("action-block").appendTo(selectWrapper);
             $("<button>")
                 .attr("type", "button")
                 .addClass("button action-today")
@@ -267,14 +265,14 @@
                 const sd = picker.find(".sel-day li.active");
                 const sy = picker.find(".sel-year li.active");
 
-                const m = sm.length === 0 ? that.value.value.getMonth() : sm.data("value")
-                const d = sd.length === 0 ? that.value.value.getDate() : sd.data("value")
-                const y = sy.length === 0 ? that.value.value.getFullYear() : sy.data("value")
+                const m = sm.length === 0 ? that.value.value.getMonth() : sm.data("value");
+                const d = sd.length === 0 ? that.value.value.getDate() : sd.data("value");
+                const y = sy.length === 0 ? that.value.value.getFullYear() : sy.data("value");
                 that.value = datetime(y, m, d);
                 // that._correct();
                 that._set();
                 that.close();
-                
+
                 e.preventDefault();
                 e.stopPropagation();
             });
@@ -290,52 +288,51 @@
                 const list = picker.find(`.sel-${this}`);
 
                 const scrollFn = Hooks.useDebounce((e) => {
-
                     that.listTimer[this] = null;
 
-                    const target = Math.round(Math.ceil(list.scrollTop()) / 40)
-                    const targetElement = list.find(`.js-${this}-${target}`)
-                    const scrollTop = targetElement.position().top - o.distance * 40
+                    const target = Math.round(Math.ceil(list.scrollTop()) / 40);
+                    const targetElement = list.find(`.js-${this}-${target}`);
+                    const scrollTop = targetElement.position().top - o.distance * 40;
                     list.find(".active").removeClass("active");
 
                     list[0].scrollTop = scrollTop;
                     targetElement.addClass("active");
                     Metro.utils.exec(o.onScroll, [targetElement, list, picker], list[0]);
-                }, scrollLatency)
+                }, scrollLatency);
 
-                list.on("scroll", scrollFn)
+                list.on("scroll", scrollFn);
             });
-            
+
             picker.on(Metro.events.click, "ul li", function (e) {
-                const target = $(this)
-                const list = target.closest("ul")
+                const target = $(this);
+                const list = target.closest("ul");
                 const scrollTop = target.position().top - o.distance * 40;
                 list.find(".active").removeClass("active");
                 $.animate({
                     el: list[0],
                     draw: {
-                        scrollTop
+                        scrollTop,
                     },
                     dur: 300,
-                })
+                });
                 list[0].scrollTop = scrollTop;
                 target.addClass("active");
                 Metro.utils.exec(o.onScroll, [target, list, picker], list[0]);
-            })
-            
+            });
+
             picker.on(Metro.events.click, ".action-today", (e) => {
-                const now = datetime()
-                const month = now.month()
-                const day = now.day()
-                const year = now.year()
-                
+                const now = datetime();
+                const month = now.month();
+                const day = now.day();
+                const year = now.year();
+
                 picker.find(`.sel-month li.js-month-${month}`).click();
                 picker.find(`.sel-day li.js-day-real-${day}`).click();
                 picker.find(`.sel-year li.js-year-real-${year}`).click();
 
                 e.preventDefault();
                 e.stopPropagation();
-            })
+            });
         },
 
         _correct: function () {
@@ -388,7 +385,7 @@
                         Metro.getPlugin(this, "datepicker").close();
                     });
             });
-            
+
             select_wrapper.show(0);
             picker.find("li").removeClass("active");
 
@@ -407,45 +404,31 @@
                     select_wrapper.parent().addClass("drop-up-select");
                 }
             }
-            
+
             if (o.month === true) {
-                const m_list = picker.find(".sel-month")
+                const m_list = picker.find(".sel-month");
                 m_list.scrollTop(0).animate({
                     draw: {
-                        scrollTop:
-                            m_list
-                                .find(`li.js-month-${m}`)
-                                .addClass("active")
-                                .position().top -
-                            40 * o.distance,
+                        scrollTop: m_list.find(`li.js-month-${m}`).addClass("active").position().top - 40 * o.distance,
                     },
                     dur: 100,
                 });
             }
             if (o.day === true) {
-                const d_list = picker.find(".sel-day")
+                const d_list = picker.find(".sel-day");
                 d_list.scrollTop(0).animate({
                     draw: {
-                        scrollTop:
-                            d_list
-                                .find(`li.js-day-${d}`)
-                                .addClass("active")
-                                .position().top -
-                            40 * o.distance,
+                        scrollTop: d_list.find(`li.js-day-${d}`).addClass("active").position().top - 40 * o.distance,
                     },
                     dur: 100,
                 });
             }
             if (o.year === true) {
-                const y_list = picker.find(".sel-year")
+                const y_list = picker.find(".sel-year");
                 y_list.scrollTop(0).animate({
                     draw: {
                         scrollTop:
-                            y_list
-                                .find(`li.js-year-real-${y}`)
-                                .addClass("active")
-                                .position().top -
-                            40 * o.distance,
+                            y_list.find(`li.js-year-real-${y}`).addClass("active").position().top - 40 * o.distance,
                     },
                     dur: 100,
                 });

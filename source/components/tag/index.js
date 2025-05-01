@@ -1,1 +1,1 @@
-import "./tag.less"
+import "./tag.less";

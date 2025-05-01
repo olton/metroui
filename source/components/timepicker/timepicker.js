@@ -142,10 +142,8 @@
             let selectBlock;
 
             const id = Hooks.useId(element[0]);
-            
-            picker = $("<div>")
-                .addClass(`wheel-picker time-picker ${element[0].className}`)
-                .addClass(o.clsPicker);
+
+            picker = $("<div>").addClass(`wheel-picker time-picker ${element[0].className}`).addClass(o.clsPicker);
 
             if (!picker.attr("id")) {
                 picker.attr("id", id);
@@ -155,7 +153,11 @@
             element.attr("readonly", true).appendTo(picker);
 
             if (o.label) {
-                const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(picker);
+                const label = $("<label>")
+                    .addClass("label-for-input")
+                    .addClass(o.clsLabel)
+                    .html(o.label)
+                    .insertBefore(picker);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
                 }
@@ -167,7 +169,12 @@
             timeWrapper = $("<div>").addClass("time-wrapper").appendTo(picker);
 
             if (o.hours === true) {
-                hours = $("<div>").attr("data-title", strings.label_hours).addClass("hours").addClass(o.clsPart).addClass(o.clsHours).appendTo(timeWrapper);
+                hours = $("<div>")
+                    .attr("data-title", strings.label_hours)
+                    .addClass("hours")
+                    .addClass(o.clsPart)
+                    .addClass(o.clsHours)
+                    .appendTo(timeWrapper);
             }
             if (o.minutes === true) {
                 minutes = $("<div>")
@@ -186,7 +193,7 @@
                     .appendTo(timeWrapper);
             }
 
-            const selectWrapper = $("<div>").addClass("select-wrapper").appendTo(picker)
+            const selectWrapper = $("<div>").addClass("select-wrapper").appendTo(picker);
             selectBlock = $("<div>").addClass("select-block").appendTo(selectWrapper);
             if (o.hours === true) {
                 hours = $("<ul>").addClass("sel-hours").appendTo(selectBlock);
@@ -227,7 +234,7 @@
 
             selectBlock.height((o.distance * 2 + 1) * 40);
 
-            const actionBlock = $("<div>").addClass("action-block").appendTo(selectWrapper)
+            const actionBlock = $("<div>").addClass("action-block").appendTo(selectWrapper);
             $("<button>")
                 .attr("type", "button")
                 .addClass("button action-now")
@@ -309,9 +316,9 @@
                 const sm = picker.find(".sel-minutes li.active");
                 const ss = picker.find(".sel-seconds li.active");
 
-                const h = sh.length === 0 ? 0 : sh.data("value")
-                const m = sm.length === 0 ? 0 : sm.data("value")
-                const s = ss.length === 0 ? 0 : ss.data("value")
+                const h = sh.length === 0 ? 0 : sh.data("value");
+                const m = sm.length === 0 ? 0 : sm.data("value");
+                const s = ss.length === 0 ? 0 : ss.data("value");
                 that.value = [h, m, s];
                 that._normalizeValue();
                 that._set();
@@ -346,40 +353,40 @@
                         target *= Number.parseInt(o.secondsStep);
                     }
 
-                    const targetElement = list.find(`.js-${this}-${target}`)
-                    const scrollTop = targetElement.position().top - o.distance * 40
+                    const targetElement = list.find(`.js-${this}-${target}`);
+                    const scrollTop = targetElement.position().top - o.distance * 40;
                     list.find(".active").removeClass("active");
 
                     list[0].scrollTop = scrollTop;
                     targetElement.addClass("active");
                     Metro.utils.exec(o.onScroll, [targetElement, list, picker], list[0]);
                 }, scrollLatency);
-                
+
                 list.on("scroll", scrollFn);
             });
 
             picker.on(Metro.events.click, "ul li", function (e) {
-                const target = $(this)
-                const list = target.closest("ul")
+                const target = $(this);
+                const list = target.closest("ul");
                 const scrollTop = target.position().top - o.distance * 40;
                 list.find(".active").removeClass("active");
                 $.animate({
                     el: list[0],
                     draw: {
-                        scrollTop
+                        scrollTop,
                     },
                     dur: 300,
-                })
+                });
                 list[0].scrollTop = scrollTop;
                 target.addClass("active");
                 Metro.utils.exec(o.onScroll, [target, list, picker], list[0]);
-            })
+            });
 
             picker.on(Metro.events.click, ".action-now", (e) => {
-                const now = datetime()
-                const hour = now.hour()
-                const minute = now.minute()
-                const second = now.second()
+                const now = datetime();
+                const hour = now.hour();
+                const minute = now.minute();
+                const second = now.second();
 
                 picker.find(`.sel-hours li.js-hours-${hour}`).click();
                 picker.find(`.sel-minutes li.js-minutes-${minute}`).click();
@@ -387,7 +394,7 @@
 
                 e.preventDefault();
                 e.stopPropagation();
-            })
+            });
         },
 
         _set: function () {
@@ -441,7 +448,7 @@
                         Metro.getPlugin(this, "timepicker").close();
                     });
             });
-            
+
             select_wrapper.show(0);
             items.removeClass("active");
 
@@ -460,7 +467,7 @@
                     select_wrapper.parent().addClass("drop-up-select");
                 }
             }
-            
+
             const animateList = (list, item) => {
                 list.scrollTop(0).animate({
                     draw: {

@@ -2,7 +2,7 @@
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
 
-    const toggleImage = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path></svg>`
+    const toggleImage = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path></svg>`;
 
     let PanelDefaultConfig = {
         panelDeferred: 0,
@@ -70,9 +70,7 @@
             buttonsContainer = title.find(".custom-buttons");
 
             if (buttonsContainer.length === 0) {
-                buttonsContainer = $("<div>")
-                    .addClass("custom-buttons")
-                    .appendTo(title);
+                buttonsContainer = $("<div>").addClass("custom-buttons").appendTo(title);
             } else {
                 buttonsContainer.find(".btn-custom").off(Metro.events.click);
                 buttonsContainer.html("");
@@ -122,31 +120,17 @@
             element.appendTo(panel);
 
             element[0].className = "";
-            element
-                .addClass("panel-content")
-                .addClass(o.clsContent)
-                .appendTo(panel);
+            element.addClass("panel-content").addClass(o.clsContent).appendTo(panel);
 
-            if (
-                o.titleCaption !== "" ||
-                o.titleIcon !== "" ||
-                o.collapsible === true
-            ) {
+            if (o.titleCaption !== "" || o.titleIcon !== "" || o.collapsible === true) {
                 title = $("<div>").addClass("panel-title").addClass(o.clsTitle);
 
                 if (o.titleCaption !== "") {
-                    $("<span>")
-                        .addClass("caption")
-                        .addClass(o.clsTitleCaption)
-                        .html(o.titleCaption)
-                        .appendTo(title);
+                    $("<span>").addClass("caption").addClass(o.clsTitleCaption).html(o.titleCaption).appendTo(title);
                 }
 
                 if (o.titleIcon !== "") {
-                    $(o.titleIcon)
-                        .addClass("icon")
-                        .addClass(o.clsTitleIcon)
-                        .appendTo(title);
+                    $(o.titleIcon).addClass("icon").addClass(o.clsTitleIcon).appendTo(title);
                 }
 
                 if (o.collapsible === true) {
@@ -154,9 +138,9 @@
                         .addClass("dropdown-toggle marker-center active-toggle")
                         .addClass(o.clsCollapseToggle)
                         .appendTo(title);
-                    
+
                     collapseToggle.append(toggleImage);
-                    
+
                     Metro.makePlugin(element, "collapse", {
                         toggleElement: collapseToggle,
                         duration: o.collapseDuration,

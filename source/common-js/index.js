@@ -1,2 +1,2 @@
-import "../common-js/utilities.js"
-import "../components/carousel/animations.js"
+import "../common-js/utilities.js";
+import "../components/carousel/animations.js";

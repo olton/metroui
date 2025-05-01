@@ -1,1 +1,1 @@
-import "./remark.less"
+import "./remark.less";

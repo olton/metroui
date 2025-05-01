@@ -8,10 +8,10 @@
         requiredButton: false,
         mode: Metro.groupMode.ONE,
         onButtonClick: Metro.noop,
-        onButtonGroupCreate: Metro.noop
+        onButtonGroupCreate: Metro.noop,
     };
 
-    Metro.buttonGroupSetup = (options)=> {
+    Metro.buttonGroupSetup = (options) => {
         ButtonGroupDefaultConfig = $.extend({}, ButtonGroupDefaultConfig, options);
     };
 
@@ -19,35 +19,35 @@
         Metro.buttonGroupSetup(globalThis.metroButtonGroupSetup);
     }
 
-    Metro.Component('button-group', {
-        init: function( options, elem ) {
+    Metro.Component("button-group", {
+        init: function (options, elem) {
             this._super(elem, options, ButtonGroupDefaultConfig, {
                 active: null,
-                id: Metro.utils.elementId("button-group")
+                id: Metro.utils.elementId("button-group"),
             });
 
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             const element = this.element;
 
             this._createGroup();
             this._createEvents();
 
             this._fireEvent("button-group-create", {
-                element: element
-            })
+                element: element,
+            });
         },
 
-        _createGroup: function(){
+        _createGroup: function () {
             const element = this.element;
             const o = this.options;
 
             element.addClass("button-group");
 
-            const buttons = element.find( o.targets );
-            const buttons_active = element.find( ".active" );
+            const buttons = element.find(o.targets);
+            const buttons_active = element.find(".active");
 
             if (o.mode === Metro.groupMode.ONE && buttons_active.length === 0 && o.requiredButton === true) {
                 $(buttons[0]).addClass("active");
@@ -58,26 +58,23 @@
                 $(buttons[0]).addClass("active");
             }
 
-            element
-                .find( ".active" )
-                .addClass("js-active")
-                .addClass(o.clsActive);
+            element.find(".active").addClass("js-active").addClass(o.clsActive);
         },
 
-        _createEvents: function(){
+        _createEvents: function () {
             const that = this;
             const element = this.element;
             const o = this.options;
 
-            element.on(Metro.events.click, o.targets, function(){
+            element.on(Metro.events.click, o.targets, function () {
                 const el = $(this);
 
                 that._fireEvent("button-click", {
-                    button: this
-                })
+                    button: this,
+                });
 
                 if (o.mode === Metro.groupMode.ONE && el.hasClass("active")) {
-                    return ;
+                    return;
                 }
 
                 if (o.mode === Metro.groupMode.ONE) {
@@ -86,18 +83,16 @@
                 } else {
                     el.toggleClass("active").toggleClass(o.clsActive).toggleClass("js-active");
                 }
-
             });
         },
 
-        changeAttribute: (attributeName)=> {  },
+        changeAttribute: (attributeName) => {},
 
-        destroy: function(){
+        destroy: function () {
             const element = this.element;
             const o = this.options;
             element.off(Metro.events.click, o.targets);
             element.remove();
-        }
-
+        },
     });
 })(Metro, Dom);

@@ -152,7 +152,7 @@
             const that = this;
             const element = this.element;
             const o = this.options;
-            const clsTemplateTag = (`${o.clsTemplateTag}`).toArray(",");
+            const clsTemplateTag = `${o.clsTemplateTag}`.toArray(",");
 
             this.items = [];
 
@@ -164,7 +164,9 @@
                         tagChildren.addClass(clsTemplateTag[0]);
                     } else {
                         tagChildren.each((i, child) => {
-                            $(child).addClass(clsTemplateTag[i] ? clsTemplateTag[i] : clsTemplateTag[clsTemplateTag.length - 1]);
+                            $(child).addClass(
+                                clsTemplateTag[i] ? clsTemplateTag[i] : clsTemplateTag[clsTemplateTag.length - 1],
+                            );
                         });
                     }
                 }
@@ -175,7 +177,7 @@
         _createItemsFromJSON: function (source) {
             const that = this;
             const o = this.options;
-            const clsTemplateTag = (`${o.clsTemplateTag}`).toArray(",");
+            const clsTemplateTag = `${o.clsTemplateTag}`.toArray(",");
 
             this.items = [];
 
@@ -213,7 +215,9 @@
                             tagChildren.addClass(clsTemplateTag[0]);
                         } else {
                             tagChildren.each((i, child) => {
-                                $(child).addClass(clsTemplateTag[i] ? clsTemplateTag[i] : clsTemplateTag[clsTemplateTag.length - 1]);
+                                $(child).addClass(
+                                    clsTemplateTag[i] ? clsTemplateTag[i] : clsTemplateTag[clsTemplateTag.length - 1],
+                                );
                             });
                         }
                     }
@@ -234,7 +238,7 @@
                 ? this.wrapperSearch
                 : $("<div>").addClass("list-search-block").addClass(o.clsSearch).appendTo(top_block);
 
-            const search_input = $("<input>").attr("type", "text").appendTo(search_block)
+            const search_input = $("<input>").attr("type", "text").appendTo(search_block);
             Metro.makePlugin(search_input, "input", {
                 prepend: o.listSearchTitle,
             });
@@ -247,7 +251,7 @@
                 ? this.wrapperRows
                 : $("<div>").addClass("list-rows-block").addClass(o.clsItemsCount).appendTo(top_block);
 
-            const rows_select = $("<select>").appendTo(rows_block)
+            const rows_select = $("<select>").appendTo(rows_block);
             $.each(o.itemsSteps.toArray(), function () {
                 const option = $("<option>")
                     .attr("value", this === "all" ? -1 : this)
@@ -393,7 +397,7 @@
                 }
                 that.currentPage = 1;
                 that._draw();
-            }
+            };
 
             searchItem = Hooks.useDebounce(searchItem, o.searchThreshold);
 
@@ -482,7 +486,9 @@
                 length: length,
                 rows: o.items,
                 current: this.currentPage,
-                target: Metro.utils.isValue(this.wrapperPagination) ? this.wrapperPagination : component.find(".list-pagination"),
+                target: Metro.utils.isValue(this.wrapperPagination)
+                    ? this.wrapperPagination
+                    : component.find(".list-pagination"),
                 claPagination: o.clsPagination,
                 prevTitle: o.paginationPrevTitle,
                 nextTitle: o.paginationNextTitle,
@@ -611,13 +617,16 @@
                 format = item.getAttribute("data-format");
             }
 
-            data = (`${data}`)
+            data = `${data}`
                 .toLowerCase()
                 .replace(/[\n\r]+|[\s]{2,}/g, " ")
                 .trim();
 
             if (Metro.utils.isValue(format)) {
-                if (["number", "int", "integer", "float", "money"].indexOf(format) !== -1 && (o.thousandSeparator !== "," || o.decimalSeparator !== ".")) {
+                if (
+                    ["number", "int", "integer", "float", "money"].indexOf(format) !== -1 &&
+                    (o.thousandSeparator !== "," || o.decimalSeparator !== ".")
+                ) {
                     data = Metro.utils.parseNumber(data, o.thousandSeparator, o.decimalSeparator);
                 }
 
@@ -839,7 +848,7 @@
 
         page: function (num) {
             let _num = Number.parseInt(num);
-            
+
             if (_num <= 0) {
                 _num = 1;
             }

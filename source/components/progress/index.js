@@ -1,2 +1,2 @@
-import "./progress.js"
-import "./progress.less"
+import "./progress.js";
+import "./progress.less";

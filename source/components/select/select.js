@@ -24,7 +24,7 @@
         openMode: "auto",
         showGroupName: false,
         shortTag: true, // tag with name max width 120px
-        
+
         source: null,
         sourceMethod: "GET",
         sourceType: "json",
@@ -53,7 +53,7 @@
         onItemSelect: Metro.noop,
         onItemDeselect: Metro.noop,
         onSelectCreate: Metro.noop,
-        onData: f => f,
+        onData: (f) => f,
     };
 
     Metro.selectSetup = (options) => {
@@ -103,14 +103,14 @@
             const o = this.options;
             let tagSize;
             const container = element.closest(".select");
-            const html = `<span class='title'>${val}</span>`
+            const html = `<span class='title'>${val}</span>`;
 
             const tag = $("<div>")
                 .addClass("tag")
                 .addClass(o.shortTag ? "short-tag" : "")
                 .addClass(o.clsSelectedItem)
                 .html(html)
-                .data("option", data)
+                .data("option", data);
             $("<span>")
                 .addClass("action unselect-option")
                 .addClass(o.clsSelectedItemAction)
@@ -146,11 +146,11 @@
                 .attr("data-value", item.value ? item.value : "");
             a = $("<a>").html(html);
 
-            const optionIcon = option.attr("data-icon")
+            const optionIcon = option.attr("data-icon");
             if (optionIcon) {
                 a.prepend($("<span>").addClass("icon").html(optionIcon));
             }
-            
+
             if (displayValue) {
                 l.attr("data-display", displayValue);
                 html = displayValue;
@@ -165,8 +165,8 @@
             }
 
             if (option.is(":selected")) {
-                let g = ""
-                
+                let g = "";
+
                 if (o.showGroupName && group) {
                     g = `&nbsp;<span class='selected-item__group-name ${o.clsGroupName}'>${group}</span>`;
                 }
@@ -175,7 +175,7 @@
                     l.addClass("d-none");
                     input.append(this._addTag(a.html() + g, l));
                 } else {
-                    html = a.html() + g
+                    html = a.html() + g;
                     element.val(item.value);
                     input.html(html);
                     element.fire("change", {
@@ -193,11 +193,7 @@
             const o = this.options;
             const group = $(item);
 
-            $("<li>")
-                .html(item.label)
-                .addClass("group-title")
-                .addClass(o.clsOptionGroup)
-                .appendTo(parent);
+            $("<li>").html(item.label).addClass("group-title").addClass(o.clsOptionGroup).appendTo(parent);
 
             $.each(group.children(), function () {
                 that._addOption(this, parent, input, multiple, item.label);
@@ -242,17 +238,11 @@
             let drop_container;
             let drop_container_input;
             const checkboxID = Metro.utils.elementId("select-focus-trigger");
-            const checkbox = $("<input type='checkbox'>")
-                .addClass("select-focus-trigger")
-                .attr("id", checkboxID);
+            const checkbox = $("<input type='checkbox'>").addClass("select-focus-trigger").attr("id", checkboxID);
 
-            this.placeholder = $("<span>")
-                .addClass("placeholder")
-                .html(o.placeholder);
+            this.placeholder = $("<span>").addClass("placeholder").html(o.placeholder);
 
-            container
-                .attr("id", o.id ? o.id : select_id)
-                .attr("for", checkboxID);
+            container.attr("id", o.id ? o.id : select_id).attr("for", checkboxID);
             container[0].className = Metro.utils.classNames(
                 element[0].className,
                 `input-${o.size}`,
@@ -260,7 +250,7 @@
                 o.clsSelect,
             );
 
-            const dropdown_toggle = $("<span>").addClass("dropdown-toggle")
+            const dropdown_toggle = $("<span>").addClass("dropdown-toggle");
             dropdown_toggle.appendTo(container);
 
             if (multiple) {
@@ -273,10 +263,8 @@
             const input = $("<div>")
                 .addClass("select-input")
                 .addClass(o.clsSelectInput)
-                .attr("name", `__${select_id}__`)
-            drop_container = $("<div>")
-                .addClass("drop-container")
-                .addClass(o.clsDropContainer);
+                .attr("name", `__${select_id}__`);
+            drop_container = $("<div>").addClass("drop-container").addClass(o.clsDropContainer);
 
             if (o.dropFullSize === false) {
                 if (o.dropWidth) {
@@ -289,19 +277,16 @@
             }
 
             drop_container_input = $("<div>").appendTo(drop_container);
-            const list = $("<ul>")
-                .addClass("option-list")
-                .addClass(o.clsDropList)
-                .css({
-                    "max-height": o.dropHeight,
-                })
+            const list = $("<ul>").addClass("option-list").addClass(o.clsDropList).css({
+                "max-height": o.dropHeight,
+            });
             const filter_input = $(
                 `<input type='text' data-role='input' data-clear-button-icon="${o.clearButtonIcon}">`,
             )
                 .attr("placeholder", o.filterPlaceholder || `${this.strings.label_filter}...`)
-                .appendTo(drop_container_input)
+                .appendTo(drop_container_input);
             filter_input.addClass(o.clsFilterInput);
-            
+
             container.append(input);
             container.append(drop_container);
 
@@ -314,14 +299,14 @@
             drop_container.append(list);
 
             if (o.source) {
-                await this.fetch(o.source,  {
+                await this.fetch(o.source, {
                     method: o.sourceMethod || "GET",
                     headers: {
                         "Content-Type": `application/${o.sourceType || "json"}`,
                     },
-                })
+                });
             }
-            
+
             this._createOptions();
 
             this._setPlaceholder();
@@ -344,18 +329,12 @@
 
             if (o.prepend !== "" && !multiple) {
                 const prepend = $("<div>").html(o.prepend);
-                prepend
-                    .addClass("prepend")
-                    .addClass(o.clsPrepend)
-                    .appendTo(container);
+                prepend.addClass("prepend").addClass(o.clsPrepend).appendTo(container);
             }
 
             if (o.append !== "" && !multiple) {
                 const append = $("<div>").html(o.append);
-                append
-                    .addClass("append")
-                    .addClass(o.clsAppend)
-                    .appendTo(container);
+                append.addClass("append").addClass(o.clsAppend).appendTo(container);
             }
 
             if (element.attr("dir") === "rtl") {
@@ -397,7 +376,7 @@
             const container = this.element.closest(".select");
             const dropdown_toggle = drop_container.siblings(".dropdown-caret");
             const list = drop_container.find("ul");
-            
+
             Metro.makePlugin(drop_container, "dropdown", {
                 dropFilter: ".select",
                 duration: o.duration,
@@ -406,7 +385,7 @@
                 onDrop: () => {
                     let target;
                     dropdown_toggle.addClass("active-toggle");
-                    const dropped = $(".select .drop-container")
+                    const dropped = $(".select .drop-container");
                     $.each(dropped, function () {
                         const drop = $(this);
                         if (drop.is(drop_container)) {
@@ -420,14 +399,9 @@
 
                     filter_input.val("").trigger(Metro.events.keyup); //.focus();
 
-                    target =
-                        list.find("li.active").length > 0
-                            ? $(list.find("li.active")[0])
-                            : undefined;
+                    target = list.find("li.active").length > 0 ? $(list.find("li.active")[0]) : undefined;
                     if (target !== undefined) {
-                        list[0].scrollTop =
-                            target.position().top -
-                            (list.height() - target.height()) / 2;
+                        list[0].scrollTop = target.position().top - (list.height() - target.height()) / 2;
                     }
 
                     this._fireEvent("drop", {
@@ -443,14 +417,11 @@
                 },
             });
         },
-        
+
         _updateSelect: function (mutation) {
             for (const record of mutation) {
                 if (record.type === "childList") {
-                    if (
-                        record.addedNodes.length ||
-                        record.removedNodes.length
-                    ) {
+                    if (record.addedNodes.length || record.removedNodes.length) {
                         this._createOptions();
                     }
                 }
@@ -519,9 +490,7 @@
                 const displayValue = leaf.attr("data-display");
                 const val = leaf.data("value");
                 const group = leaf.data("group");
-                let html = displayValue
-                    ? displayValue
-                    : leaf.children("a").html();
+                let html = displayValue ? displayValue : leaf.children("a").html();
                 const option = leaf.data("option");
                 const options = element.find("option");
 
@@ -533,9 +502,7 @@
                     leaf.addClass("d-none");
                     input.append(that._addTag(html, leaf));
                 } else {
-                    list.find("li.active")
-                        .removeClass("active")
-                        .removeClass(o.clsOptionActive);
+                    list.find("li.active").removeClass("active").removeClass(o.clsOptionActive);
                     leaf.addClass("active").addClass(o.clsOptionActive);
                     input.html(html);
                     Metro.getPlugin(drop_container, "dropdown").close();
@@ -553,7 +520,7 @@
                     leaf: leaf[0],
                 });
 
-                const selected = that.getSelected()
+                const selected = that.getSelected();
                 that._fireEvent("change", {
                     selected: selected,
                 });
@@ -576,7 +543,7 @@
                     option: option,
                 });
 
-                const selected = that.getSelected()
+                const selected = that.getSelected();
                 that._fireEvent("change", {
                     selected: selected,
                 });
@@ -585,19 +552,23 @@
                 e.stopPropagation();
             });
 
-            const filter_input_change = Hooks.useDebounce(async (e)=>{
+            const filter_input_change = Hooks.useDebounce(async (e) => {
                 const o = this.options;
                 const list = this.list;
                 const filter = e.target.value.toLowerCase();
-                const filterSource = `${o.filterSource}${filter}`
-                
+                const filterSource = `${o.filterSource}${filter}`;
+
                 if (o.filterSource) {
-                    await this.fetch(filterSource,  {
-                        method: o.sourceMethod || "GET",
-                        headers: {
-                            "Content-Type": `application/${o.sourceType || "json"}`,
-                        }                        
-                    }, true)
+                    await this.fetch(
+                        filterSource,
+                        {
+                            method: o.sourceMethod || "GET",
+                            headers: {
+                                "Content-Type": `application/${o.sourceType || "json"}`,
+                            },
+                        },
+                        true,
+                    );
                 } else {
                     const li = list.find("li");
                     let i;
@@ -607,16 +578,16 @@
                         if ($(li[i]).hasClass("group-title")) continue;
                         a = li[i].getElementsByTagName("a")[0];
                         t = a.innerHTML || a.innerText;
-                        
+
                         if (t.toLowerCase().includes(filter)) {
                             li[i].style.display = "";
                         } else {
                             li[i].style.display = "none";
                         }
                     }
-                }                
+                }
             }, o.filterThreshold);
-            
+
             filter_input.on(Metro.events.keyup, filter_input_change.bind(this));
 
             filter_input.on(Metro.events.click, (e) => {
@@ -631,10 +602,10 @@
         },
 
         _clearOptions: function () {
-            this.element.clear()
-            this.list.clear()
+            this.element.clear();
+            this.list.clear();
         },
-        
+
         disable: function () {
             this.element.data("disabled", true);
             this.element.closest(".select").addClass("disabled");
@@ -659,9 +630,7 @@
             const select = element.closest(".select");
 
             $.each(options, function () {
-                this.selected = !Metro.utils.isNull(to_default)
-                    ? this.defaultSelected
-                    : false;
+                this.selected = !Metro.utils.isNull(to_default) ? this.defaultSelected : false;
             });
 
             this.list.find("li").remove();
@@ -669,7 +638,7 @@
 
             this._createOptions();
 
-            const selected = this.getSelected()
+            const selected = this.getSelected();
             this._fireEvent("change", {
                 selected: selected,
             });
@@ -694,7 +663,7 @@
             const options = element.find("option");
             const list_items = this.list.find("li");
             const result = [];
-            const multiple = !!element.attr("multiple")
+            const multiple = !!element.attr("multiple");
             let option;
             let i;
             let html;
@@ -716,14 +685,12 @@
             input.html("");
 
             const _val = Array.isArray(val) ? val : [val];
-            
+
             $.each(_val, function () {
                 for (i = 0; i < options.length; i++) {
                     option = options[i];
                     html = Metro.utils.isValue(option.getAttribute("data-template"))
-                        ? option
-                              .getAttribute("data-template")
-                              .replace("$1", option.text)
+                        ? option.getAttribute("data-template").replace("$1", option.text)
                         : option.text;
                     if (`${option.value}` === `${this}`) {
                         option.selected = true;
@@ -748,9 +715,7 @@
                             // tag.data("option", list_item);
                             // $("<span>").addClass("remover").addClass(o.clsSelectedItemRemover).html("&times;").appendTo(tag);
                         } else {
-                            list_item
-                                .addClass("active")
-                                .addClass(o.clsOptionActive);
+                            list_item.addClass("active").addClass(o.clsOptionActive);
                             input.html(html);
                         }
                         break;
@@ -758,7 +723,7 @@
                 }
             });
 
-            const selected = this.getSelected()
+            const selected = this.getSelected();
             this._fireEvent("change", {
                 selected: selected,
             });
@@ -775,9 +740,9 @@
             const _delimiter = delimiter || ",";
 
             if (typeof selected === "string") {
-                _selected = selected.toArray(_delimiter).map((v) => Number.isNaN(v) ? v : +v);
+                _selected = selected.toArray(_delimiter).map((v) => (Number.isNaN(v) ? v : +v));
             } else if (Array.isArray(selected)) {
-                _selected = selected.slice().map((v) => Number.isNaN(v) ? v : +v);
+                _selected = selected.slice().map((v) => (Number.isNaN(v) ? v : +v));
             } else {
                 _selected = [];
             }
@@ -790,23 +755,15 @@
             } else if (Metro.utils.isObject2(op)) {
                 $.each(op, (key, val) => {
                     if (Metro.utils.isObject2(val)) {
-                        option_group = $("<optgroup label=''>")
-                            .attr("label", key)
-                            .appendTo(element);
+                        option_group = $("<optgroup label=''>").attr("label", key).appendTo(element);
                         $.each(val, (key2, val2) => {
-                            const op = $("<option>")
-                                .attr("value", key2)
-                                .text(val2)
-                                .appendTo(option_group);
+                            const op = $("<option>").attr("value", key2).text(val2).appendTo(option_group);
                             if (_selected.indexOf(+key2) > -1) {
                                 op.prop("selected", true);
                             }
                         });
                     } else {
-                        const op = $("<option>")
-                            .attr("value", key)
-                            .text(val)
-                            .appendTo(element);
+                        const op = $("<option>").attr("value", key).text(val).appendTo(element);
                         if (_selected.indexOf(key) > -1) {
                             op.prop("selected", true);
                         }
@@ -853,7 +810,7 @@
             }
 
             this.observer.disconnect();
-            
+
             if (Array.isArray(values)) {
                 $.each(values, function () {
                     if (Metro.utils.isObject2(this)) {
@@ -869,12 +826,12 @@
             }
 
             this._createOptions();
-            
+
             this.observer.observe(element[0], {
                 childList: true,
                 subtree: true,
-            })
-            
+            });
+
             return this;
         },
 
@@ -884,7 +841,7 @@
 
             options.each(function () {
                 const $el = $(this);
-                if (`${$el.attr("value")}` === '${val}') {
+                if (`${$el.attr("value")}` === "${val}") {
                     $el.remove();
                 }
             });
@@ -915,35 +872,40 @@
 
             return this;
         },
-        
-        fetch: async function(source, options, clearOptions = false) {
+
+        fetch: async function (source, options, clearOptions = false) {
             const element = this.element;
             const o = this.options;
-            
-            const _options = Object.assign({
-                method: "GET",
-                headers: {
-                    "Content-Type": `application/${o.sourceType}`,
+
+            const _options = Object.assign(
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": `application/${o.sourceType}`,
+                    },
                 },
-            }, options);
-            
-            const result = await fetch(source, _options)
-            
-            if (result.ok === false) { return; }
+                options,
+            );
+
+            const result = await fetch(source, _options);
+
+            if (result.ok === false) {
+                return;
+            }
 
             if (clearOptions) {
-                this._clearOptions()
+                this._clearOptions();
             }
-            
+
             let data = o.sourceType === "json" ? await result.json() : await result.text();
-            data = Metro.utils.exec(o.onData, [data], element[0])
+            data = Metro.utils.exec(o.onData, [data], element[0]);
 
             $.each(data, function () {
                 const option = $("<option>").attr("value", this.value).html(this.text);
                 if (this.icon) {
                     option.attr("data-icon", this.icon);
                 }
-                option.appendTo(element)
+                option.appendTo(element);
             });
         },
 
@@ -978,7 +940,7 @@
             if (o.label) {
                 container.prev("label").remove();
             }
-            
+
             container.remove();
         },
     });

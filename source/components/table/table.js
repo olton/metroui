@@ -2,7 +2,7 @@ const TABLE_COL_OPTIONS = {
     title: undefined,
     format: undefined,
     formatMask: undefined,
-    name: undefined, 
+    name: undefined,
     colspan: null,
     size: undefined,
     sortable: false,
@@ -10,21 +10,20 @@ const TABLE_COL_OPTIONS = {
     clsColumn: undefined,
     cls: undefined,
     show: true,
-    required: true, 
+    required: true,
     field: undefined,
     fieldType: undefined,
     validator: undefined,
     template: undefined,
     type: "data",
-}
-
-;((Metro, $) => {
+};
+((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
-    
+
     let TableDefaultConfig = {
         caption: "",
-        cardMode: "", 
+        cardMode: "",
         useCurrentSlice: false,
         showInspectorButton: false,
         inspectorButtonIcon: "🔧",
@@ -255,10 +254,13 @@ const TABLE_COL_OPTIONS = {
                 o.rows = -1;
             }
 
-            const table_component = $("<div>").addClass("table-component")
+            const table_component = $("<div>").addClass("table-component");
             table_component.insertBefore(element);
 
-            table_container = $("<div>").addClass("table-container").addClass(o.clsTableContainer).appendTo(table_component);
+            table_container = $("<div>")
+                .addClass("table-container")
+                .addClass(o.clsTableContainer)
+                .appendTo(table_component);
             element.appendTo(table_container);
 
             if (o.horizontalScroll === true) {
@@ -272,7 +274,7 @@ const TABLE_COL_OPTIONS = {
 
             this.activity = $("<div>").addClass("table-progress").appendTo(table_component);
 
-            const activity = $("<div>").appendTo(this.activity)
+            const activity = $("<div>").appendTo(this.activity);
             Metro.makePlugin(activity, "activity", {
                 type: o.activityType,
                 style: o.activityStyle,
@@ -374,7 +376,10 @@ const TABLE_COL_OPTIONS = {
 
             if (o.viewSaveMode.toLowerCase() === "client") {
                 view = Metro.storage.getItem(viewPath);
-                if (Metro.utils.isValue(view) && Metro.utils.objectLength(view) === Metro.utils.objectLength(this.view)) {
+                if (
+                    Metro.utils.isValue(view) &&
+                    Metro.utils.objectLength(view) === Metro.utils.objectLength(this.view)
+                ) {
                     this.view = view;
 
                     this._fireEvent("view-get", {
@@ -388,7 +393,10 @@ const TABLE_COL_OPTIONS = {
                     .then(Metro.fetch.status)
                     .then(Metro.fetch.json)
                     .then((view) => {
-                        if (Metro.utils.isValue(view) && Metro.utils.objectLength(view) === Metro.utils.objectLength(this.view)) {
+                        if (
+                            Metro.utils.isValue(view) &&
+                            Metro.utils.objectLength(view) === Metro.utils.objectLength(this.view)
+                        ) {
                             this.view = view;
                             this._fireEvent("view-get", {
                                 source: "server",
@@ -498,7 +506,9 @@ const TABLE_COL_OPTIONS = {
                     .appendTo(row);
                 $("<td>").html(`<div>${this.title}</div>`).appendTo(row);
                 $("<td>")
-                    .html(`<input type='number' data-role='spinner' name='column_size' value='${that.view[i].size}' data-index='${i}'>`)
+                    .html(
+                        `<input type='number' data-role='spinner' name='column_size' value='${that.view[i].size}' data-index='${i}'>`,
+                    )
                     .appendTo(row);
                 $("<td>")
                     .html(
@@ -521,22 +531,32 @@ const TABLE_COL_OPTIONS = {
             const o = this.options;
             const strings = this.strings;
 
-            const inspector = $("<div data-role='draggable' data-drag-element='.table-inspector-header' data-drag-area='body'>").addClass("table-inspector")
+            const inspector = $(
+                "<div data-role='draggable' data-drag-element='.table-inspector-header' data-drag-area='body'>",
+            ).addClass("table-inspector");
             inspector.attr("for", this.element.attr("id"));
 
-            $(`<div class='table-inspector-header'>${o.inspectorTitle || strings.label_inspector}</div>`).appendTo(inspector);
+            $(`<div class='table-inspector-header'>${o.inspectorTitle || strings.label_inspector}</div>`).appendTo(
+                inspector,
+            );
 
-            const table_wrap = $("<div>").addClass("table-wrap").appendTo(inspector)
-            const table = $("<table>").addClass("table subcompact")
-            const tbody = $("<tbody>").appendTo(table)
+            const table_wrap = $("<div>").addClass("table-wrap").appendTo(inspector);
+            const table = $("<table>").addClass("table subcompact");
+            const tbody = $("<tbody>").appendTo(table);
             table.appendTo(table_wrap);
 
             this._createInspectorItems(tbody);
 
-            const actions = $("<div class='table-inspector-actions'>").appendTo(inspector)
-            $("<button class='button primary js-table-inspector-save' type='button'>").html(strings.label_save).appendTo(actions);
-            $("<button class='button secondary js-table-inspector-reset ml-2 mr-2' type='button'>").html(strings.label_reset).appendTo(actions);
-            $("<button class='button link js-table-inspector-cancel place-right' type='button'>").html(strings.label_cancel).appendTo(actions);
+            const actions = $("<div class='table-inspector-actions'>").appendTo(inspector);
+            $("<button class='button primary js-table-inspector-save' type='button'>")
+                .html(strings.label_save)
+                .appendTo(actions);
+            $("<button class='button secondary js-table-inspector-reset ml-2 mr-2' type='button'>")
+                .html(strings.label_reset)
+                .appendTo(actions);
+            $("<button class='button link js-table-inspector-cancel place-right' type='button'>")
+                .html(strings.label_cancel)
+                .appendTo(actions);
 
             inspector.data("open", false);
             this.inspector = inspector;
@@ -586,8 +606,12 @@ const TABLE_COL_OPTIONS = {
                     const head_item = {
                         type: "data",
                         title: item.html(),
-                        name: Metro.utils.isValue(item.data("name")) ? item.data("name") : item.text().replace(" ", "_"),
-                        sortable: item.hasClass("sortable-column") || (Metro.utils.isValue(item.data("sortable")) && JSON.parse(item.data("sortable")) === true),
+                        name: Metro.utils.isValue(item.data("name"))
+                            ? item.data("name")
+                            : item.text().replace(" ", "_"),
+                        sortable:
+                            item.hasClass("sortable-column") ||
+                            (Metro.utils.isValue(item.data("sortable")) && JSON.parse(item.data("sortable")) === true),
                         sortDir: dir,
                         format: Metro.utils.isValue(item.data("format")) ? item.data("format") : "string",
                         formatMask: Metro.utils.isValue(item.data("format-mask")) ? item.data("format-mask") : null,
@@ -595,15 +619,20 @@ const TABLE_COL_OPTIONS = {
                         cls: item_class,
                         colspan: item.attr("colspan"),
                         size: Metro.utils.isValue(item.data("size")) ? item.data("size") : "",
-                        show: !(item.hasClass("hidden") || (Metro.utils.isValue(item.data("show")) && JSON.parse(item.data("show")) === false)),
+                        show: !(
+                            item.hasClass("hidden") ||
+                            (Metro.utils.isValue(item.data("show")) && JSON.parse(item.data("show")) === false)
+                        ),
 
-                        required: Metro.utils.isValue(item.data("required")) ? JSON.parse(item.data("required")) === true : false,
+                        required: Metro.utils.isValue(item.data("required"))
+                            ? JSON.parse(item.data("required")) === true
+                            : false,
                         field: Metro.utils.isValue(item.data("field")) ? item.data("field") : "input",
                         fieldType: Metro.utils.isValue(item.data("field-type")) ? item.data("field-type") : "text",
                         validator: Metro.utils.isValue(item.data("validator")) ? item.data("validator") : null,
 
                         template: Metro.utils.isValue(item.data("template")) ? item.data("template") : null,
-                    }
+                    };
                     that.heads.push(head_item);
                 });
                 // head.clear();
@@ -624,7 +653,7 @@ const TABLE_COL_OPTIONS = {
                         name: Metro.utils.isValue(item.data("name")) ? item.data("name") : false,
                         cls: item[0].className,
                         colspan: item.attr("colspan"),
-                    }
+                    };
                     that.foots.push(foot_item);
                 });
         },
@@ -697,7 +726,7 @@ const TABLE_COL_OPTIONS = {
             if (o.caption) {
                 $("<caption>").html(o.caption).insertBefore(head);
             }
-            
+
             if (this.heads.length === 0) {
                 return head;
             }
@@ -852,7 +881,7 @@ const TABLE_COL_OPTIONS = {
                 return;
             }
 
-            const tr = $("<tr>").addClass(o.clsHeadRow).appendTo(foot)
+            const tr = $("<tr>").addClass(o.clsHeadRow).appendTo(foot);
             $.each(this.foots, function () {
                 th = $("<th>").appendTo(tr);
 
@@ -889,7 +918,10 @@ const TABLE_COL_OPTIONS = {
                 : $("<div>").addClass("table-search-block").addClass(o.clsSearch).appendTo(top_block);
             search_block.addClass(o.clsSearch);
 
-            const search_input = $("<input>").attr("type", "text").attr("placeholder", o.tableSearchPlaceholder).appendTo(search_block)
+            const search_input = $("<input>")
+                .attr("type", "text")
+                .attr("placeholder", o.tableSearchPlaceholder)
+                .appendTo(search_block);
             Metro.makePlugin(search_input, "input", {
                 prepend: o.tableSearchTitle || strings.label_search,
             });
@@ -898,10 +930,12 @@ const TABLE_COL_OPTIONS = {
                 search_block.hide();
             }
 
-            rows_block = Metro.utils.isValue(this.wrapperRows) ? this.wrapperRows : $("<div>").addClass("table-rows-block").appendTo(top_block);
+            rows_block = Metro.utils.isValue(this.wrapperRows)
+                ? this.wrapperRows
+                : $("<div>").addClass("table-rows-block").appendTo(top_block);
             rows_block.addClass(o.clsRowsCount);
 
-            const rows_select = $("<select>").appendTo(rows_block)
+            const rows_select = $("<select>").appendTo(rows_block);
             $.each(o.rowsSteps.toArray(), function () {
                 const val = Number.parseInt(this);
                 const option = $("<option>")
@@ -931,7 +965,11 @@ const TABLE_COL_OPTIONS = {
             });
 
             if (o.showInspectorButton) {
-                $("<button>").addClass("button inspector-button").attr("type", "button").html(o.inspectorButtonIcon).insertAfter(rows_block);
+                $("<button>")
+                    .addClass("button inspector-button")
+                    .attr("type", "button")
+                    .html(o.inspectorButtonIcon)
+                    .insertAfter(rows_block);
             }
 
             if (o.showRowsSteps !== true) {
@@ -945,18 +983,25 @@ const TABLE_COL_OPTIONS = {
             const element = this.element;
             const o = this.options;
             const strings = this.strings;
-            const bottom_block = $("<div>").addClass("table-bottom").addClass(o.clsTableBottom).insertAfter(element.parent());
+            const bottom_block = $("<div>")
+                .addClass("table-bottom")
+                .addClass(o.clsTableBottom)
+                .insertAfter(element.parent());
             let info;
             let pagination;
             let skip;
 
-            info = Metro.utils.isValue(this.wrapperInfo) ? this.wrapperInfo : $("<div>").addClass("table-info").appendTo(bottom_block);
+            info = Metro.utils.isValue(this.wrapperInfo)
+                ? this.wrapperInfo
+                : $("<div>").addClass("table-info").appendTo(bottom_block);
             info.addClass(o.clsTableInfo);
             if (o.showTableInfo !== true) {
                 info.hide();
             }
 
-            pagination = Metro.utils.isValue(this.wrapperPagination) ? this.wrapperPagination : $("<div>").addClass("table-pagination").appendTo(bottom_block);
+            pagination = Metro.utils.isValue(this.wrapperPagination)
+                ? this.wrapperPagination
+                : $("<div>").addClass("table-pagination").appendTo(bottom_block);
             pagination.addClass(o.clsTablePagination);
             if (o.showPagination !== true) {
                 pagination.hide();
@@ -965,7 +1010,10 @@ const TABLE_COL_OPTIONS = {
             skip = Metro.utils.isValue(this.wrapperSkip) ? this.wrapperSkip : $("<div>").appendTo(bottom_block);
             skip.addClass("table-skip").addClass(o.clsTableSkip);
 
-            $(`<input type='text' data-role='input' placeholder="${strings.label_enter_page}">`).addClass("table-skip-input").addClass(o.clsTableSkipInput).appendTo(skip);
+            $(`<input type='text' data-role='input' placeholder="${strings.label_enter_page}">`)
+                .addClass("table-skip-input")
+                .addClass(o.clsTableSkipInput)
+                .appendTo(skip);
             $("<button>")
                 .addClass("button table-skip-button")
                 .addClass(o.clsTableSkipButton)
@@ -1059,8 +1107,12 @@ const TABLE_COL_OPTIONS = {
             const component = element.closest(".table-component");
             const table_container = component.find(".table-container");
             const search = component.find(".table-search-block input");
-            const skip_button = o.skipWrapper ? $(o.skipWrapper).find(".table-skip-button") : component.find(".table-skip-button");
-            const skip_input = o.skipWrapper ? $(o.skipWrapper).find(".table-skip-input") : component.find(".table-skip-input");
+            const skip_button = o.skipWrapper
+                ? $(o.skipWrapper).find(".table-skip-button")
+                : component.find(".table-skip-button");
+            const skip_input = o.skipWrapper
+                ? $(o.skipWrapper).find(".table-skip-input")
+                : component.find(".table-skip-input");
             let customSearch;
             const id = element.attr("id");
             const inspectorButton = component.find(".inspector-button");
@@ -1091,7 +1143,10 @@ const TABLE_COL_OPTIONS = {
                 Metro.events.resize,
                 () => {
                     if (o.horizontalScroll === true) {
-                        if (!Metro.utils.isNull(o.horizontalScrollStop) && Metro.utils.mediaExist(o.horizontalScrollStop)) {
+                        if (
+                            !Metro.utils.isNull(o.horizontalScrollStop) &&
+                            Metro.utils.mediaExist(o.horizontalScrollStop)
+                        ) {
                             table_container.removeClass("horizontal-scroll");
                         } else {
                             table_container.addClass("horizontal-scroll");
@@ -1357,14 +1412,18 @@ const TABLE_COL_OPTIONS = {
 
                 if (status) {
                     $.each(op, function () {
-                        const a = Metro.utils.isValue(that.heads[index][this]) ? that.heads[index][this].toArray(" ") : []
+                        const a = Metro.utils.isValue(that.heads[index][this])
+                            ? that.heads[index][this].toArray(" ")
+                            : [];
                         Metro.utils.arrayDelete(a, "hidden");
                         that.heads[index][this] = a.join(" ");
                         that.view[index].show = true;
                     });
                 } else {
                     $.each(op, function () {
-                        const a = Metro.utils.isValue(that.heads[index][this]) ? that.heads[index][this].toArray(" ") : [];
+                        const a = Metro.utils.isValue(that.heads[index][this])
+                            ? that.heads[index][this].toArray(" ")
+                            : [];
                         if (a.indexOf("hidden") === -1) {
                             a.push("hidden");
                         }
@@ -1470,7 +1529,7 @@ const TABLE_COL_OPTIONS = {
             const info = Metro.utils.isValue(this.wrapperInfo) ? this.wrapperInfo : component.find(".table-info");
             let text;
             let _start = start;
-            let _stop = stop; 
+            let _stop = stop;
             let _length = length;
 
             if (info.length === 0) {
@@ -1502,7 +1561,9 @@ const TABLE_COL_OPTIONS = {
                 length: length,
                 rows: o.rows,
                 current: this.currentPage,
-                target: Metro.utils.isValue(this.wrapperPagination) ? this.wrapperPagination : component.find(".table-pagination"),
+                target: Metro.utils.isValue(this.wrapperPagination)
+                    ? this.wrapperPagination
+                    : component.find(".table-pagination"),
                 claPagination: o.clsPagination,
                 prevTitle: o.paginationPrevTitle || strings.label_prev,
                 nextTitle: o.paginationNextTitle || strings.label_next,
@@ -1515,7 +1576,10 @@ const TABLE_COL_OPTIONS = {
         _filter: function () {
             const o = this.options;
             let items;
-            if ((Metro.utils.isValue(this.searchString) && this.searchString.length >= o.searchMinLength) || this.filters.length > 0) {
+            if (
+                (Metro.utils.isValue(this.searchString) && this.searchString.length >= o.searchMinLength) ||
+                this.filters.length > 0
+            ) {
                 items = this.items.filter((row) => {
                     let row_data = "";
                     let result;
@@ -1552,7 +1616,10 @@ const TABLE_COL_OPTIONS = {
                         .replace(/[\n\r]+|[\s]{2,}/g, " ")
                         .trim()
                         .toLowerCase();
-                    const search_result = Metro.utils.isValue(this.searchString) && this.searchString.length >= o.searchMinLength ? ~row_data.indexOf(this.searchString) : true
+                    const search_result =
+                        Metro.utils.isValue(this.searchString) && this.searchString.length >= o.searchMinLength
+                            ? ~row_data.indexOf(this.searchString)
+                            : true;
                     result = result && search_result;
 
                     if (result) {
@@ -1638,10 +1705,8 @@ const TABLE_COL_OPTIONS = {
                     td.appendTo(tr);
 
                     // Checkbox
-                    td = $("<td>")
-                        .attr("data-label", "CHK")
-                        .attr("aria-label", "CHK")
-                    
+                    td = $("<td>").attr("data-label", "CHK").attr("aria-label", "CHK");
+
                     if (o.checkType === "checkbox") {
                         check = $(
                             `<input type='checkbox' data-style='${o.checkStyle}' data-role='checkbox' name='${Metro.utils.isValue(o.checkName) ? o.checkName : "table_row_check"}[]' value='${items[i][o.checkColIndex]}'>`,
@@ -1652,7 +1717,11 @@ const TABLE_COL_OPTIONS = {
                         );
                     }
 
-                    if (Metro.utils.isValue(stored_keys) && Array.isArray(stored_keys) && stored_keys.indexOf(`${items[i][o.checkColIndex]}`) > -1) {
+                    if (
+                        Metro.utils.isValue(stored_keys) &&
+                        Array.isArray(stored_keys) &&
+                        stored_keys.indexOf(`${items[i][o.checkColIndex]}`) > -1
+                    ) {
                         check.prop("checked", true);
                         checkedItems.push(cells);
                     }
@@ -1786,7 +1855,9 @@ const TABLE_COL_OPTIONS = {
             const col = row[this.sort.colIndex];
             const format = this.heads[this.sort.colIndex].format;
             const formatMask =
-                !Metro.utils.isNull(this.heads) && !Metro.utils.isNull(this.heads[this.sort.colIndex]) && Metro.utils.isValue(this.heads[this.sort.colIndex].formatMask)
+                !Metro.utils.isNull(this.heads) &&
+                !Metro.utils.isNull(this.heads[this.sort.colIndex]) &&
+                Metro.utils.isValue(this.heads[this.sort.colIndex].formatMask)
                     ? this.heads[this.sort.colIndex].formatMask
                     : "%Y-%m-%d";
             const thousandSeparator =
@@ -1798,7 +1869,7 @@ const TABLE_COL_OPTIONS = {
                     ? this.heads[this.sort.colIndex].decimalSeparator
                     : o.decimalSeparator;
 
-            result = (`${col}`)
+            result = `${col}`
                 .toLowerCase()
                 .replace(/[\n\r]+|[\s]{2,}/g, " ")
                 .trim();
@@ -2177,8 +2248,8 @@ const TABLE_COL_OPTIONS = {
         },
 
         page: function (num) {
-            let _num = num
-            
+            let _num = num;
+
             if (_num <= 0) {
                 _num = 1;
             }
@@ -2389,7 +2460,7 @@ const TABLE_COL_OPTIONS = {
                     items = this.getSelectedItems();
                     start = 0;
                     stop = items.length - 1;
-                    break;                    
+                    break;
                 }
                 case "view": {
                     items = this._filter();

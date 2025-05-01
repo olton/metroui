@@ -1,10 +1,10 @@
 /*
-* TODO:
-*  1. Add keyboard support to autocomplete list
-* */
+ * TODO:
+ *  1. Add keyboard support to autocomplete list
+ * */
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
+    "use strict";
 
     let InputDefaultConfig = {
         inputDeferred: 0,
@@ -35,7 +35,7 @@
         searchButtonIcon: "🔍",
         randomButtonIcon: "🎲",
         customButtons: [],
-        searchButtonClick: 'submit',
+        searchButtonClick: "submit",
         randomSymbols: "0123456789;abcdefghijklmnopqrstuvwxyz;ABCDEFGHIJKLMNOPQRSTUVWXYZ;<>!?@#$%^&*()_+",
         randomLength: 12,
         prependOptions: "",
@@ -64,7 +64,7 @@
         onRevealClick: Metro.noop,
         onSearchButtonClick: Metro.noop,
         onEnterClick: Metro.noop,
-        onInputCreate: Metro.noop
+        onInputCreate: Metro.noop,
     };
 
     Metro.inputSetup = (options) => {
@@ -75,31 +75,31 @@
         Metro.inputSetup(globalThis.metroInputSetup);
     }
 
-    Metro.Component('input', {
-        init: function( options, elem ) {
+    Metro.Component("input", {
+        init: function (options, elem) {
             this._super(elem, options, InputDefaultConfig, {
                 history: [],
                 historyIndex: -1,
                 autocomplete: [],
                 prependOptionsList: null,
-                appendOptionsList: null
+                appendOptionsList: null,
             });
 
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             const element = this.element;
 
             this._createStructure();
             this._createEvents();
 
             this._fireEvent("input-create", {
-                element: element
+                element: element,
             });
         },
 
-        _createStructure: function(){
+        _createStructure: function () {
             const that = this;
             const element = this.element;
             const o = this.options;
@@ -111,7 +111,7 @@
             let randomButton;
 
             if (Metro.utils.isValue(o.historyPreset)) {
-                $.each(o.historyPreset.toArray(o.historyDivider), function(){
+                $.each(o.historyPreset.toArray(o.historyDivider), function () {
                     that.history.push(this);
                 });
                 that.historyIndex = that.history.length - 1;
@@ -128,34 +128,58 @@
             }
 
             if (o.clearButton === true && !element[0].readOnly) {
-                clearButton = $("<button>").addClass("button input-clear-button").addClass(o.clsClearButton).attr("tabindex", -1).attr("type", "button").html(o.clearButtonIcon).attr("title", this.strings.label_clear_input);
+                clearButton = $("<button>")
+                    .addClass("button input-clear-button")
+                    .addClass(o.clsClearButton)
+                    .attr("tabindex", -1)
+                    .attr("type", "button")
+                    .html(o.clearButtonIcon)
+                    .attr("title", this.strings.label_clear_input);
                 clearButton.appendTo(buttons);
             }
-            if (element.attr('type') === 'password' && o.revealButton === true) {
-                revealButton = $("<button>").addClass("button input-reveal-button").addClass(o.clsRevealButton).attr("tabindex", -1).attr("type", "button").html(o.revealButtonIcon).attr("title", this.strings.label_reveal_password);
+            if (element.attr("type") === "password" && o.revealButton === true) {
+                revealButton = $("<button>")
+                    .addClass("button input-reveal-button")
+                    .addClass(o.clsRevealButton)
+                    .attr("tabindex", -1)
+                    .attr("type", "button")
+                    .html(o.revealButtonIcon)
+                    .attr("title", this.strings.label_reveal_password);
                 revealButton.appendTo(buttons);
             }
             if (o.searchButton === true) {
-                searchButton = $("<button>").addClass("button input-search-button").addClass(o.clsSearchButton).attr("tabindex", -1).attr("type", o.searchButtonClick === 'submit' ? "submit" : "button").html(o.searchButtonIcon).attr("title", this.strings.label_search_input);
+                searchButton = $("<button>")
+                    .addClass("button input-search-button")
+                    .addClass(o.clsSearchButton)
+                    .attr("tabindex", -1)
+                    .attr("type", o.searchButtonClick === "submit" ? "submit" : "button")
+                    .html(o.searchButtonIcon)
+                    .attr("title", this.strings.label_search_input);
                 searchButton.appendTo(buttons);
             }
             if (o.randomButton === true) {
-                randomButton = $("<button>").addClass("button input-random-button").addClass(o.clsRandomButton).attr("tabindex", -1).attr("type", "button").html(o.randomButtonIcon).attr("title", this.strings.label_generate_random);
+                randomButton = $("<button>")
+                    .addClass("button input-random-button")
+                    .addClass(o.clsRandomButton)
+                    .attr("tabindex", -1)
+                    .attr("type", "button")
+                    .html(o.randomButtonIcon)
+                    .attr("title", this.strings.label_generate_random);
                 randomButton.appendTo(buttons);
             }
 
-            let opt
-            let ul
-            
+            let opt;
+            let ul;
+
             if (o.prepend) {
                 $("<div>").html(o.prepend).addClass("prepend").addClass(o.clsPrepend).appendTo(container);
             }
             if (o.prependOptions) {
                 opt = $("<div>").addClass("prepend-options").appendTo(container);
-                ul = $("<select data-role='select'>").addClass("options-list")
-                opt.append(ul)
+                ul = $("<select data-role='select'>").addClass("options-list");
+                opt.append(ul);
                 for (const item of o.prependOptions.toArray(o.prependOptionsSep)) {
-                    $("<option>").attr("value", item).html(item).appendTo(ul)
+                    $("<option>").attr("value", item).html(item).appendTo(ul);
                 }
                 this.prependOptionsList = ul;
             }
@@ -165,65 +189,68 @@
             }
             if (o.appendOptions) {
                 opt = $("<div>").addClass("append-options").appendTo(container);
-                ul = $("<select data-role='select'>").addClass("options-list")
-                opt.append(ul)
+                ul = $("<select data-role='select'>").addClass("options-list");
+                opt.append(ul);
                 for (const item of o.appendOptions.toArray(o.appendOptionsSep)) {
-                    $("<option>").attr("value", item).html(item).appendTo(ul)
+                    $("<option>").attr("value", item).html(item).appendTo(ul);
                 }
                 this.appendOptionsList = ul;
             }
 
             const customButtons = Metro.utils.isObject(o.customButtons);
             if (Array.isArray(customButtons)) {
-                $.each(customButtons, function(){
+                $.each(customButtons, function () {
                     const btn = $("<button>");
 
-                    btn
-                        .addClass("button input-custom-button")
+                    btn.addClass("button input-custom-button")
                         .addClass(o.clsCustomButton)
                         .addClass(this.cls)
                         .attr("tabindex", -1)
                         .attr("type", "button")
                         .html(this.text);
 
-                    if (this.attr && typeof this.attr === 'object') {
-                        $.each(this.attr, (k, v)=> {
+                    if (this.attr && typeof this.attr === "object") {
+                        $.each(this.attr, (k, v) => {
                             btn.attr(Str.dashedName(k), v);
                         });
                     }
 
-                    if (this.onclick) btn.on("click", () => {
-                        this.onclick.apply(btn, [element.valueOf(), element]);
-                    });
-                    
+                    if (this.onclick)
+                        btn.on("click", () => {
+                            this.onclick.apply(btn, [element.valueOf(), element]);
+                        });
+
                     btn.appendTo(buttons);
                 });
             }
 
-            if (Metro.utils.isValue(element.attr('data-exclaim'))) {
-                container.attr('data-exclaim', element.attr('data-exclaim'));
+            if (Metro.utils.isValue(element.attr("data-exclaim"))) {
+                container.attr("data-exclaim", element.attr("data-exclaim"));
             }
 
-            if (element.attr('dir') === 'rtl' ) {
+            if (element.attr("dir") === "rtl") {
                 container.addClass("rtl").attr("dir", "rtl");
             }
 
-            element[0].className = '';
+            element[0].className = "";
 
             container.addClass(o.clsComponent);
             element.addClass(o.clsInput);
 
             if (o.size !== "default") {
                 container.css({
-                    width: o.size
+                    width: o.size,
                 });
             }
 
             if (!Metro.utils.isNull(o.autocomplete) || !Metro.utils.isNull(o.autocompleteUrl)) {
-                $("<div>").addClass("autocomplete-list").css({
-                    maxHeight: o.autocompleteListHeight,
-                    display: "none"
-                }).appendTo(container);
+                $("<div>")
+                    .addClass("autocomplete-list")
+                    .css({
+                        maxHeight: o.autocompleteListHeight,
+                        display: "none",
+                    })
+                    .appendTo(container);
             }
 
             if (Metro.utils.isValue(o.autocomplete)) {
@@ -238,30 +265,36 @@
 
             if (Metro.utils.isValue(o.autocompleteUrl)) {
                 fetch(o.autocompleteUrl, {
-                    method: o.autocompleteUrlMethod
-                }).then((response)=> response.text()).then((data)=> {
-                    let newData = [];
+                    method: o.autocompleteUrlMethod,
+                })
+                    .then((response) => response.text())
+                    .then((data) => {
+                        let newData = [];
 
-                    try {
-                        newData = JSON.parse(data);
-                        if (o.autocompleteUrlKey) {
-                            newData = newData[o.autocompleteUrlKey];
+                        try {
+                            newData = JSON.parse(data);
+                            if (o.autocompleteUrlKey) {
+                                newData = newData[o.autocompleteUrlKey];
+                            }
+                        } catch (e) {
+                            newData = data.split("\n");
                         }
-                    } catch (e) {
-                        newData = data.split("\n");
-                    }
 
-                    that.autocomplete = that.autocomplete.concat(newData);
-                });
+                        that.autocomplete = that.autocomplete.concat(newData);
+                    });
             }
 
             if (o.label) {
-                const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(container);
+                const label = $("<label>")
+                    .addClass("label-for-input")
+                    .addClass(o.clsLabel)
+                    .html(o.label)
+                    .insertBefore(container);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
                 } else {
-                    const id = Hooks.useId(element[0])
-                    element.id (id)
+                    const id = Hooks.useId(element[0]);
+                    element.id(id);
                     label.attr("for", id);
                 }
                 if (element.attr("dir") === "rtl") {
@@ -270,7 +303,7 @@
             }
 
             if (o.badge) {
-                container.append($("<div>").addClass("badge").html(o.badge))
+                container.append($("<div>").addClass("badge").html(o.badge));
             }
 
             if (element.is(":disabled")) {
@@ -278,24 +311,29 @@
             } else {
                 this.enable();
             }
-            
-            this.component = container
+
+            this.component = container;
         },
 
-        _createEvents: function(){
+        _createEvents: function () {
             const that = this;
             const element = this.element;
             const o = this.options;
             const container = element.closest(".input");
             const autocompleteList = container.find(".autocomplete-list");
 
-            container.on(Metro.events.click, ".input-clear-button", ()=> {
+            container.on(Metro.events.click, ".input-clear-button", () => {
                 const curr = element.val();
-                element.val(Metro.utils.isValue(o.defaultValue) ? o.defaultValue : "").fire('clear').fire('change').fire('keyup').focus();
+                element
+                    .val(Metro.utils.isValue(o.defaultValue) ? o.defaultValue : "")
+                    .fire("clear")
+                    .fire("change")
+                    .fire("keyup")
+                    .focus();
                 if (autocompleteList.length > 0) {
                     autocompleteList.css({
-                        display: "none"
-                    })
+                        display: "none",
+                    });
                 }
 
                 that._fireEvent("clear-click", {
@@ -303,40 +341,39 @@
                 });
             });
 
-            container.on(Metro.events.click, ".input-reveal-button", ()=> {
-                if (element.attr('type') === 'password') {
-                    element.attr('type', 'text');
+            container.on(Metro.events.click, ".input-reveal-button", () => {
+                if (element.attr("type") === "password") {
+                    element.attr("type", "text");
                 } else {
-                    element.attr('type', 'password');
+                    element.attr("type", "password");
                 }
 
                 that._fireEvent("reveal-click", {
-                    val: element.val()
+                    val: element.val(),
                 });
-
             });
 
-            container.on(Metro.events.click, ".input-search-button", function(){
-                if (o.searchButtonClick !== 'submit') {
+            container.on(Metro.events.click, ".input-search-button", function () {
+                if (o.searchButtonClick !== "submit") {
                     console.log("Search button clicked");
                     that._fireEvent("search-button-click", {
                         val: that.val(),
-                        button: this
+                        button: this,
                     });
                 } else {
                     if (this.form) this.form.submit();
                 }
             });
 
-            container.on(Metro.events.click, ".input-random-button", ()=> {
+            container.on(Metro.events.click, ".input-random-button", () => {
                 const val = that._generateRandomValue();
-                element.val(val).fire('change').fire('keyup').focus();
+                element.val(val).fire("change").fire("keyup").focus();
                 that._fireEvent("random-click", {
                     val,
                 });
             });
 
-            element.on(Metro.events.keyup, (e)=> {
+            element.on(Metro.events.keyup, (e) => {
                 const val = element.val().trim();
 
                 if (o.history && e.keyCode === Metro.keyCode.ENTER && val !== "") {
@@ -347,8 +384,8 @@
                     that._fireEvent("history-change", {
                         val: val,
                         history: that.history,
-                        historyIndex: that.historyIndex
-                    })
+                        historyIndex: that.historyIndex,
+                    });
 
                     if (o.preventSubmit === true) {
                         e.preventDefault();
@@ -364,8 +401,8 @@
                         that._fireEvent("history-down", {
                             val: element.val(),
                             history: that.history,
-                            historyIndex: that.historyIndex
-                        })
+                            historyIndex: that.historyIndex,
+                        });
                     } else {
                         that.historyIndex = 0;
                     }
@@ -381,8 +418,8 @@
                         that._fireEvent("history-up", {
                             val: element.val(),
                             history: that.history,
-                            historyIndex: that.historyIndex
-                        })
+                            historyIndex: that.historyIndex,
+                        });
                     } else {
                         that.historyIndex = that.history.length - 1;
                     }
@@ -390,58 +427,58 @@
                 }
             });
 
-            element.on(Metro.events.keydown, (e)=> {
+            element.on(Metro.events.keydown, (e) => {
                 if (e.keyCode === Metro.keyCode.ENTER) {
                     that._fireEvent("enter-click", {
-                        val: element.val()
+                        val: element.val(),
                     });
                 }
             });
 
-            element.on(Metro.events.blur, ()=> {
+            element.on(Metro.events.blur, () => {
                 container.removeClass("focused");
             });
 
-            element.on(Metro.events.focus, ()=> {
+            element.on(Metro.events.focus, () => {
                 container.addClass("focused");
             });
 
-            element.on(Metro.events.input, function(){
+            element.on(Metro.events.input, function () {
                 const val = this.value.toLowerCase();
                 that._drawAutocompleteList(val);
             });
 
-            container.on(Metro.events.click, ".autocomplete-list .item", function(){
+            container.on(Metro.events.click, ".autocomplete-list .item", function () {
                 const val = $(this).attr("data-autocomplete-value");
                 element.val(val);
                 autocompleteList.css({
-                    display: "none"
+                    display: "none",
                 });
                 element.trigger("change");
                 that._fireEvent("autocomplete-select", {
-                    value: val
+                    value: val,
                 });
             });
         },
 
-        _generateRandomValue: function(){
+        _generateRandomValue: function () {
             const o = this.options;
             const groups = o.randomSymbols.split(";");
-            const symbolsPerGroup = Math.round(o.randomLength / groups.length)
+            const symbolsPerGroup = Math.round(o.randomLength / groups.length);
             const val = [];
-            
+
             for (const g of groups) {
                 const symbols = g.split("");
                 const len = symbols.length;
-                for(let i = 0; i < symbolsPerGroup; i++) {
-                    val.push( symbols[Math.floor(Math.random() * len)] );
-                }                
+                for (let i = 0; i < symbolsPerGroup; i++) {
+                    val.push(symbols[Math.floor(Math.random() * len)]);
+                }
             }
 
             return val.shuffle().join("");
         },
-        
-        _drawAutocompleteList: function(val){
+
+        _drawAutocompleteList: function (val) {
             const that = this;
             const element = this.element;
             const container = element.closest(".input");
@@ -453,12 +490,12 @@
 
             autocompleteList.html("");
 
-            const items = this.autocomplete.filter((item) => item.toLowerCase().indexOf(val) > -1)
+            const items = this.autocomplete.filter((item) => item.toLowerCase().indexOf(val) > -1);
             autocompleteList.css({
-                display: items.length > 0 ? "block" : "none"
+                display: items.length > 0 ? "block" : "none",
             });
 
-            $.each(items, function(){
+            $.each(items, function () {
                 const index = this.toLowerCase().indexOf(val);
                 let content;
                 const item = $("<div>").addClass("item").attr("data-autocomplete-value", this);
@@ -472,64 +509,64 @@
                 item.html(content).appendTo(autocompleteList);
 
                 that._fireEvent("draw-autocomplete-item", {
-                    item: item
-                })
+                    item: item,
+                });
             });
         },
 
-        getHistory: function(){
+        getHistory: function () {
             return this.history;
         },
 
-        getHistoryIndex: function(){
+        getHistoryIndex: function () {
             return this.historyIndex;
         },
 
-        setHistoryIndex: function(val){
+        setHistoryIndex: function (val) {
             this.historyIndex = val >= this.history.length ? this.history.length - 1 : val;
         },
 
-        setHistory: function(history, append) {
+        setHistory: function (history, append) {
             const that = this;
             const o = this.options;
-            
+
             if (!history) return;
             if (typeof history !== "string" && !Array.isArray(history)) {
                 console.error("History must be a string or an array!");
-                console.dir(history)
+                console.dir(history);
             }
-            
-            const _history = typeof history === 'string' ? history.toArray(o.historyDivider) : history;
-            
+
+            const _history = typeof history === "string" ? history.toArray(o.historyDivider) : history;
+
             if (append === true) {
                 $.each(_history, function () {
                     that.history.push(this);
-                })
-            } else{
+                });
+            } else {
                 this.history = history;
             }
             this.historyIndex = this.history.length - 1;
         },
 
-        clear: function(){
-            this.element.val('');
+        clear: function () {
+            this.element.val("");
         },
 
-        toDefault: function(){
+        toDefault: function () {
             this.element.val(Metro.utils.isValue(this.options.defaultValue) ? this.options.defaultValue : "");
         },
 
-        disable: function(){
+        disable: function () {
             this.element.data("disabled", true);
             this.element.parent().addClass("disabled");
         },
 
-        enable: function(){
+        enable: function () {
             this.element.data("disabled", false);
             this.element.parent().removeClass("disabled");
         },
 
-        toggleState: function(){
+        toggleState: function () {
             if (this.elem.disabled) {
                 this.disable();
             } else {
@@ -537,7 +574,7 @@
             }
         },
 
-        setAutocompleteList: function(l){
+        setAutocompleteList: function (l) {
             const autocomplete_list = Metro.utils.isObject(l);
             if (autocomplete_list !== false) {
                 this.autocomplete = autocomplete_list;
@@ -546,7 +583,7 @@
             }
         },
 
-        val: function(v, splitter = ";"){
+        val: function (v, splitter = ";") {
             const element = this.element;
             const o = this.options;
             if (!Metro.utils.isValue(v)) {
@@ -557,48 +594,54 @@
                 if (o.appendOptions) {
                     val = val + this.appendOptionsList.val();
                 }
-                return val
+                return val;
             }
-            
-            const groups = v.split(splitter)
+
+            const groups = v.split(splitter);
             let prepend = "";
             let append = "";
             if (o.prependOptions) {
                 prepend = groups.shift();
                 Metro.getPlugin(this.prependOptionsList, "select").val(prepend);
-                console.log(prepend)
+                console.log(prepend);
             }
             if (o.appendOptions) {
                 append = groups.pop();
                 Metro.getPlugin(this.appendOptionsList, "select").val(append);
             }
-            const val = groups.join("")
+            const val = groups.join("");
             element.val(val);
         },
-        
-        prependOptionsVal: function(v){
-            if (!this.options.prependOptions) { return; }
+
+        prependOptionsVal: function (v) {
+            if (!this.options.prependOptions) {
+                return;
+            }
             if (!Metro.utils.isValue(v)) {
                 this.prependOptionsList.val();
             }
             this.prependOptionsList.val(v);
         },
-        
-        appendOptionsVal: function(v){
-            if (!this.options.appendOptions) { return; }
+
+        appendOptionsVal: function (v) {
+            if (!this.options.appendOptions) {
+                return;
+            }
             if (!Metro.utils.isValue(v)) {
                 return this.appendOptionsList.val();
             }
             this.appendOptionsList.val(v);
         },
-        
-        changeAttribute: function(attributeName){
+
+        changeAttribute: function (attributeName) {
             switch (attributeName) {
-                case 'disabled': this.toggleState(); break;
+                case "disabled":
+                    this.toggleState();
+                    break;
             }
         },
 
-        destroy: function(){
+        destroy: function () {
             const element = this.element;
             const o = this.options;
             const parent = element.parent();
@@ -621,13 +664,13 @@
             element.off(Metro.events.focus);
 
             if (o.label) {
-                parent.prev("label").remove()
+                parent.prev("label").remove();
             }
-            parent.remove()
-        }
+            parent.remove();
+        },
     });
 
-    $(document).on(Metro.events.click, ()=> {
-        $('.input .autocomplete-list').hide();
+    $(document).on(Metro.events.click, () => {
+        $(".input .autocomplete-list").hide();
     });
 })(Metro, Dom);

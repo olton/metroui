@@ -108,7 +108,7 @@
 
     Metro.Component("calendar", {
         init: function (options, elem) {
-            const time = datetime()
+            const time = datetime();
             const now = this._correctDate(datetime());
 
             this._super(elem, options, CalendarDefaultConfig, {
@@ -169,7 +169,7 @@
             }
 
             if (Metro.utils.isValue(o.excludeDay)) {
-                this.excludeDay = (`${o.excludeDay}`).toArray(",", "int");
+                this.excludeDay = `${o.excludeDay}`.toArray(",", "int");
             }
 
             if (Metro.utils.isValue(o.preset)) {
@@ -188,11 +188,17 @@
                 this._dates2array(o.events, "events");
             }
 
-            this.min = o.minDate ? (o.inputFormat ? Datetime.from(o.minDate, o.inputFormat) : datetime(o.minDate)).align("day") : null;
-            this.max = o.maxDate ? (o.inputFormat ? Datetime.from(o.maxDate, o.inputFormat) : datetime(o.maxDate)).align("day") : null;
+            this.min = o.minDate
+                ? (o.inputFormat ? Datetime.from(o.minDate, o.inputFormat) : datetime(o.minDate)).align("day")
+                : null;
+            this.max = o.maxDate
+                ? (o.inputFormat ? Datetime.from(o.maxDate, o.inputFormat) : datetime(o.maxDate)).align("day")
+                : null;
 
             if (o.show) {
-                this.show = (!o.show ? datetime() : o.inputFormat ? Datetime.from(o.show, o.inputFormat) : datetime(o.show)).align("day");
+                this.show = (
+                    !o.show ? datetime() : o.inputFormat ? Datetime.from(o.show, o.inputFormat) : datetime(o.show)
+                ).align("day");
                 this.current = {
                     year: this.show.year(),
                     month: this.show.month(),
@@ -218,12 +224,12 @@
                 });
             }
 
-            const id = element.id()
-            
+            const id = element.id();
+
             if (id) {
                 if (Metro.storage.getItem(`METRO:CALENDAR:${id}:COLLAPSED`, element.hasClass("calendar-collapsed"))) {
-                    element.addClass("calendar-collapsed")
-                }                
+                    element.addClass("calendar-collapsed");
+                }
             }
 
             this._fireEvent("calendar-create");
@@ -240,9 +246,11 @@
             const dates = typeof val === "string" ? val.toArray() : Array.isArray(val) ? val : [];
 
             $.each(dates, function () {
-                let _d
+                let _d;
                 try {
-                    _d = that._correctDate(o.inputFormat ? Datetime.from(this, o.inputFormat) : datetime(this)).format("YYYY-MM-DD");
+                    _d = that
+                        ._correctDate(o.inputFormat ? Datetime.from(this, o.inputFormat) : datetime(this))
+                        .format("YYYY-MM-DD");
                 } catch (e) {
                     return;
                 }
@@ -250,7 +258,7 @@
                 that[category].push(_d);
             });
         },
-        
+
         _correctDate: (date) => datetime(date).addDay(1).align("day").addMinute(new Date().getTimezoneOffset()),
 
         _createEvents: function () {
@@ -273,13 +281,13 @@
             );
 
             element.on(Metro.events.click, ".button-collapse", () => {
-                const id = element.id() 
+                const id = element.id();
                 element.toggleClass("calendar-collapsed");
                 if (id) {
                     Metro.storage.setItem(`METRO:CALENDAR:${id}:COLLAPSED`, element.hasClass("calendar-collapsed"));
                 }
-            })
-            
+            });
+
             element.on(Metro.events.click, ".prev-year-group, .next-year-group", function () {
                 if (o.static) {
                     return;
@@ -451,7 +459,10 @@
                         days = element.find(".day").filter((el) => {
                             const $el = $(el);
                             const elIndex = $el.index();
-                            return Metro.utils.between(elIndex, index, index + 8, false) && !$el.hasClass("outside disabled excluded");
+                            return (
+                                Metro.utils.between(elIndex, index, index + 8, false) &&
+                                !$el.hasClass("outside disabled excluded")
+                            );
                         });
 
                         $.each(days, function () {
@@ -601,23 +612,26 @@
 
             $("<div>").addClass("header-year").html(this.today.year()).appendTo(header);
             $("<div>").addClass("header-day").html(this.today.format(o.headerFormat, this.locale)).appendTo(header);
-            
+
             const headerActions = $("<div>").addClass("header-actions").appendTo(header);
 
             // $("<button>").addClass("square small button-today").html(`
-            //     <svg aria-hidden="true" class="caret" width="16" height="16"  viewBox="0 0 24 24"> 
+            //     <svg aria-hidden="true" class="caret" width="16" height="16"  viewBox="0 0 24 24">
             //         <path d="M15 17C16.1046 17 17 16.1046 17 15C17 13.8954 16.1046 13 15 13C13.8954 13 13 13.8954 13 15C13 16.1046 13.8954 17 15 17Z"/>
             //         <path d="M6 3C4.34315 3 3 4.34315 3 6V18C3 19.6569 4.34315 21 6 21H18C19.6569 21 21 19.6569 21 18V6C21 4.34315 19.6569 3 18 3H6ZM5 18V7H19V18C19 18.5523 18.5523 19 18 19H6C5.44772 19 5 18.5523 5 18Z" />
             //     </svg>
             // `).attr("title", this.strings.label_today).appendTo(headerActions)
 
-            $("<button>").addClass("square small button-collapse").html(`
+            $("<button>")
+                .addClass("square small button-collapse")
+                .html(`
                 <svg aria-hidden="true" class="caret toggle-collapsed" width="16" height="16" viewBox="0 0 24 24">
                     <path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path>
                 </svg>
-            `).attr("title", this.strings.label_collapse).appendTo(headerActions)
-           
-            
+            `)
+                .attr("title", this.strings.label_collapse)
+                .appendTo(headerActions);
+
             if (o.showHeader === false) {
                 header.hide();
             }
@@ -691,25 +705,37 @@
             };
 
             // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            time.append(inner = $("<div>").addClass("calendar-time__inner"));
+            time.append((inner = $("<div>").addClass("calendar-time__inner")));
             // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            inner.append(row = $("<div>").addClass("calendar-time__inner-row"));
-            row.append($("<div>").addClass("calendar-time__inner-cell").append($("<span>").html(str(strings.label_hours).capitalize())));
-            row.append($("<div>").addClass("calendar-time__inner-cell").append($("<span>").html(str(strings.label_minutes).capitalize())));
+            inner.append((row = $("<div>").addClass("calendar-time__inner-row")));
+            row.append(
+                $("<div>")
+                    .addClass("calendar-time__inner-cell")
+                    .append($("<span>").html(str(strings.label_hours).capitalize())),
+            );
+            row.append(
+                $("<div>")
+                    .addClass("calendar-time__inner-cell")
+                    .append($("<span>").html(str(strings.label_minutes).capitalize())),
+            );
 
             // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            time.append(inner = $("<div>").addClass("calendar-time__inner spinners").addClass(o.clsTime));
+            time.append((inner = $("<div>").addClass("calendar-time__inner spinners").addClass(o.clsTime)));
             inner.append(
                 // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-                hours = $(`<input type='text' data-cls-spinner-input='${o.clsTimeHours}' data-time-part='hours' data-buttons-position='right' data-min-value='0' data-max-value='23'>`)
+                (hours = $(
+                    `<input type='text' data-cls-spinner-input='${o.clsTimeHours}' data-time-part='hours' data-buttons-position='right' data-min-value='0' data-max-value='23'>`,
+                )
                     .addClass("hours")
-                    .addClass(o.compact ? "input-small" : "input-normal"),
+                    .addClass(o.compact ? "input-small" : "input-normal")),
             );
             inner.append(
                 // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-                minutes = $(`<input type='text' data-cls-spinner-input='${o.clsTimeMinutes}' data-time-part='minutes' data-buttons-position='right' data-min-value='0' data-max-value='59'>`)
+                (minutes = $(
+                    `<input type='text' data-cls-spinner-input='${o.clsTimeMinutes}' data-time-part='minutes' data-buttons-position='right' data-min-value='0' data-max-value='59'>`,
+                )
                     .addClass("minutes")
-                    .addClass(o.compact ? "input-small" : "input-normal"),
+                    .addClass(o.compact ? "input-small" : "input-normal")),
             );
 
             h = Str.lpad(h, "0", 2);
@@ -740,7 +766,9 @@
             let content = element.find(".calendar-content");
             let weekDays;
 
-            const calendar = datetime(this.current.year, this.current.month, this.current.day).useLocale(this.locale, true).calendar(Metro.utils.isValue(o.weekStart) ? o.weekStart : strings.weekStart);
+            const calendar = datetime(this.current.year, this.current.month, this.current.day)
+                .useLocale(this.locale, true)
+                .calendar(Metro.utils.isValue(o.weekStart) ? o.weekStart : strings.weekStart);
             const showDay = this.show.format("YYYY-MM-DD");
             const now = datetime();
 
@@ -757,7 +785,10 @@
             const toolbar = $("<div>").addClass("calendar-toolbar").appendTo(content);
 
             $("<span>").addClass("prev-month").html(o.prevMonthIcon).appendTo(toolbar);
-            $("<span>").addClass("curr-month").html(Datetime.getLocale(this.locale).months[this.current.month]).appendTo(toolbar);
+            $("<span>")
+                .addClass("curr-month")
+                .html(Datetime.getLocale(this.locale).months[this.current.month])
+                .appendTo(toolbar);
             $("<span>").addClass("next-month").html(o.nextMonthIcon).appendTo(toolbar);
 
             $("<span>").addClass("prev-year").html(o.prevYearIcon).appendTo(toolbar);
@@ -788,7 +819,10 @@
 
                 const _day = date.day();
                 const _data = date.format("YYYY-MM-DD");
-                const cell = $("<span>").addClass("day").html(`<span class="day-content">${_day}</span>`).appendTo(calendarDays);
+                const cell = $("<span>")
+                    .addClass("day")
+                    .html(`<span class="day-content">${_day}</span>`)
+                    .appendTo(calendarDays);
 
                 cell.attr("data-day", _data);
 
@@ -900,17 +934,17 @@
             $("<span>").addClass("next-year").html(o.nextYearIcon).appendTo(toolbar);
 
             // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            content.append(months = $("<div>").addClass("months"));
+            content.append((months = $("<div>").addClass("months")));
 
             let index = 0;
             for (const m of Datetime.getLocale(locale).months) {
                 months.append(
                     // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-                    month = $("<div>")
+                    (month = $("<div>")
                         .attr("data-month", index)
                         .addClass("month")
                         .addClass(index === monthToday && this.current.year === yearToday ? "today" : "")
-                        .html(m),
+                        .html(m)),
                 );
 
                 if (o.animationContent) {
@@ -956,16 +990,16 @@
             $("<span>").addClass("next-year-group").html(o.nextYearIcon).appendTo(toolbar);
 
             // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            content.append(years = $("<div>").addClass("years"));
+            content.append((years = $("<div>").addClass("years")));
 
             for (let i = this.yearGroupStart; i <= this.yearGroupStart + this.yearDistance; i++) {
                 years.append(
                     // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-                    year = $("<div>")
+                    (year = $("<div>")
                         .attr("data-year", i)
                         .addClass("year")
                         .addClass(i === this.current.year ? "today" : "")
-                        .html(i),
+                        .html(i)),
                 );
 
                 if (o.animationContent) {
@@ -1065,7 +1099,7 @@
         },
 
         toDay: function () {
-            const time = datetime()
+            const time = datetime();
             this.today = datetime().align("day");
             this.current = {
                 year: this.today.year(),
@@ -1082,13 +1116,13 @@
         setExclude: function (exclude) {
             const element = this.element;
             const o = this.options;
-            
+
             if (Metro.utils.isNull(exclude) && Metro.utils.isNull(element.attr("data-exclude"))) {
                 return;
             }
-            
+
             o.exclude = exclude ? exclude : element.attr("data-exclude");
-            
+
             this._dates2array(o.exclude, "exclude");
             this._drawContent();
         },
@@ -1110,13 +1144,13 @@
         setSpecial: function (special) {
             const element = this.element;
             const o = this.options;
-            
+
             if (Metro.utils.isNull(special) && Metro.utils.isNull(element.attr("data-special"))) {
                 return;
             }
-            
+
             o.special = special ? special : element.attr("data-special");
-            
+
             this._dates2array(o.exclude, "special");
             this._drawContent();
         },
@@ -1168,7 +1202,9 @@
 
             o.minDate = date ? date : attr;
 
-            this.min = o.minDate ? (o.inputFormat ? Datetime.from(o.minDate, o.inputFormat) : datetime(o.minDate)).align("day") : null;
+            this.min = o.minDate
+                ? (o.inputFormat ? Datetime.from(o.minDate, o.inputFormat) : datetime(o.minDate)).align("day")
+                : null;
 
             this._drawContent();
         },
@@ -1180,7 +1216,9 @@
 
             o.maxDate = date ? date : attr;
 
-            this.max = o.maxDate ? (o.inputFormat ? Datetime.from(o.maxDate, o.inputFormat) : datetime(o.maxDate)).align("day") : null;
+            this.max = o.maxDate
+                ? (o.inputFormat ? Datetime.from(o.maxDate, o.inputFormat) : datetime(o.maxDate)).align("day")
+                : null;
 
             this._drawContent();
         },

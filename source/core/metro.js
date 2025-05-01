@@ -3,7 +3,7 @@ import { Props } from "./props.js";
 (($) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
-    
+
     if (typeof Dom === "undefined") {
         throw new Error("Metro UI requires Dom library!");
     }
@@ -110,7 +110,6 @@ import { Props } from "./props.js";
                         const nodes = mutation.addedNodes;
 
                         if (nodes.length) {
-
                             for (const node of $(nodes).find("[data-hotkey]")) {
                                 hotkeys.push($(node));
                             }
@@ -138,8 +137,8 @@ import { Props } from "./props.js";
                         //console.log(mutation);
                     }
                 });
-            }
-            const observer = new MutationObserver(observerCallback)
+            };
+            const observer = new MutationObserver(observerCallback);
             observer.observe($("html")[0], observerConfig);
         },
 
@@ -246,7 +245,7 @@ import { Props } from "./props.js";
                     return;
                 }
 
-                const roles = $this.attr("data-role").split(/\s*,\s*/)
+                const roles = $this.attr("data-role").split(/\s*,\s*/);
                 roles.map((func) => {
                     const $$ = Metro.utils.$();
                     const _func = normalizeComponentName(func);
@@ -311,7 +310,7 @@ import { Props } from "./props.js";
             const el = $(element);
             const _name = normalizeComponentName(name);
 
-            const p = Metro.getPlugin(el, _name)
+            const p = Metro.getPlugin(el, _name);
             if (typeof p === "undefined") {
                 console.warn(`Component ${name} can not be destroyed: the element is not a Metro UI component.`);
                 return;
@@ -323,7 +322,7 @@ import { Props } from "./props.js";
             }
 
             p.destroy();
-            const mc = el.data("metroComponent")
+            const mc = el.data("metroComponent");
             Metro.utils.arrayDelete(mc, _name);
             el.data("metroComponent", mc);
             $.removeData(el[0], _name);
@@ -407,7 +406,7 @@ import { Props } from "./props.js";
                 return $el.data(_name);
             });
         },
-        
+
         makePlugin: (el, name, options) => {
             const _name = normalizeComponentName(name);
             const $el = Metro.get$elements(el);
@@ -533,7 +532,7 @@ import { Props } from "./props.js";
                             return;
                         }
 
-                        const _events = Array.isArray(events) ? events : events.toArray(",")
+                        const _events = Array.isArray(events) ? events : events.toArray(",");
                         $.each(_events, function () {
                             that._fireEvent(this, data, log, noFire, context);
                         });
@@ -566,7 +565,8 @@ import { Props } from "./props.js";
         },
 
         fetch: {
-            status: (response) => response.ok ? Promise.resolve(response) : Promise.reject(new Error(response.statusText)),
+            status: (response) =>
+                response.ok ? Promise.resolve(response) : Promise.reject(new Error(response.statusText)),
             json: (response) => response.json(),
             text: (response) => response.text(),
             form: (response) => response.formData(),
@@ -591,14 +591,14 @@ import { Props } from "./props.js";
             },
 
             updateUI(from, lang) {
-                const _lang = lang || $.html().attr("lang") || "en"
+                const _lang = lang || $.html().attr("lang") || "en";
                 const _from = from || document;
                 if (!Metro.locales[_lang]) {
                     return;
                 }
                 Metro.i18n.load(lang);
                 $.html().attr("lang", lang);
-                
+
                 for (const el of _from.querySelectorAll("[data-i18n]")) {
                     const key = el.getAttribute("data-i18n");
                     el.innerHTML = Metro.i18n.get(key, lang);
@@ -631,6 +631,6 @@ import { Props } from "./props.js";
             Metro.init();
         });
     }
-    
+
     return Metro;
 })(Dom);

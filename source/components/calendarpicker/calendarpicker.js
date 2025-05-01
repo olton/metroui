@@ -71,9 +71,9 @@
         _correctTime: (time) => {
             const h = Str.lpad(time[0], "0", 2);
             const m = Str.lpad(time[1], "0", 2);
-            return `${h}:${m}`
+            return `${h}:${m}`;
         },
-        
+
         _createStructure: function () {
             const element = this.element;
             const o = this.options;
@@ -82,11 +82,11 @@
             const buttons = $("<div>").addClass("button-group");
             let clearButton;
             const cal = $("<div>");
-            let curr
-            let _curr
-            let initHours
-            let initMinutes
-            let elementValue
+            let curr;
+            let _curr;
+            let initHours;
+            let initMinutes;
+            let elementValue;
             const body = $("body");
 
             element.attr("type", "text");
@@ -105,8 +105,8 @@
                 this.time[1] = Number.parseInt(o.initialMinutes);
             }
 
-            curr = (`${o.value}`).trim() !== "" ? o.value : element.val().trim();
-            const preset = curr ? curr : ""
+            curr = `${o.value}`.trim() !== "" ? o.value : element.val().trim();
+            const preset = curr ? curr : "";
             if (!Metro.utils.isValue(curr)) {
                 if (o.useNow) {
                     this.value = datetime().addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
@@ -114,7 +114,10 @@
                 }
             } else {
                 _curr = curr.split(" ");
-                this.value = (!o.inputFormat ? datetime(_curr[0]) : Datetime.from(_curr[0], o.inputFormat, locale)).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
+                this.value = (!o.inputFormat ? datetime(_curr[0]) : Datetime.from(_curr[0], o.inputFormat, locale))
+                    .addDay(1)
+                    .align("day")
+                    .addMinute(new Date().getTimezoneOffset());
                 if (_curr[1]) {
                     this.time = _curr[1].trim().split(":");
                 }
@@ -123,7 +126,7 @@
             elementValue = !curr && o.nullValue === true ? "" : datetime(this.value).format(o.format, locale);
 
             if (o.showTime && this.time && elementValue) {
-                elementValue += ` ${this._correctTime(this.time)}`
+                elementValue += ` ${this._correctTime(this.time)}`;
             }
 
             element.val(elementValue);
@@ -138,7 +141,7 @@
                 if (typeof this.time[1] !== "undefined") initMinutes = this.time[1];
             }
 
-            const initTime = o.initialTime
+            const initTime = o.initialTime;
             if (o.initialHours) {
                 initHours = o.initialHours;
             }
@@ -267,11 +270,19 @@
             this.calendar = cal;
 
             if (o.clearButton === true) {
-                clearButton = $("<button>").addClass("button input-clear-button").attr("tabindex", -1).attr("type", "button").html(o.clearButtonIcon);
+                clearButton = $("<button>")
+                    .addClass("button input-clear-button")
+                    .attr("tabindex", -1)
+                    .attr("type", "button")
+                    .html(o.clearButtonIcon);
                 clearButton.appendTo(buttons);
             }
 
-            const calendarButton = $("<button>").addClass("button input-calendar-button").attr("tabindex", -1).attr("type", "button").html(o.calendarButtonIcon)
+            const calendarButton = $("<button>")
+                .addClass("button input-calendar-button")
+                .attr("tabindex", -1)
+                .attr("type", "button")
+                .html(o.calendarButtonIcon);
             calendarButton.appendTo(buttons);
 
             if (o.prepend !== "") {
@@ -318,11 +329,15 @@
             }
 
             if (o.label) {
-                const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(container);
+                const label = $("<label>")
+                    .addClass("label-for-input")
+                    .addClass(o.clsLabel)
+                    .html(o.label)
+                    .insertBefore(container);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
                 } else {
-                    const id = Hooks.useId(element[0])
+                    const id = Hooks.useId(element[0]);
                     label.attr("for", id);
                     element.attr("id", id);
                 }
@@ -373,7 +388,9 @@
 
             // datetime(day).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
             container.on(Metro.events.click, "button, input", (e) => {
-                const value = this.value ? this.value : datetime().addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
+                const value = this.value
+                    ? this.value
+                    : datetime().addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
                 const presetValue = value.format("YYYY/MM/DD");
 
                 value.align("day");
@@ -389,10 +406,10 @@
                     }
                     cal.addClass("open");
                     if (o.openMode === "auto") {
-                        if ( !Metro.utils.inViewport(cal[0]) ) {
+                        if (!Metro.utils.inViewport(cal[0])) {
                             cal.addClass("open-up");
                         }
-                        if ( !Metro.utils.inViewport(cal[0]) ) {
+                        if (!Metro.utils.inViewport(cal[0])) {
                             cal.removeClass("open-up");
                         }
                     } else {
@@ -493,7 +510,7 @@
             elementValue = this.value.format(o.format);
 
             if (o.showTime && this.time && elementValue) {
-                elementValue += ` ${this._correctTime(this.time)}`
+                elementValue += ` ${this._correctTime(this.time)}`;
             }
 
             element.val(elementValue);
@@ -569,9 +586,9 @@
             Metro.getPlugin(this.calendar, "calendar").destroy();
 
             if (o.label) {
-                container.prev("label").remove()
+                container.prev("label").remove();
             }
-            container.remove()
+            container.remove();
         },
     });
 

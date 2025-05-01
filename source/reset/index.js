@@ -1,1 +1,1 @@
-import "./reset.less"
+import "./reset.less";

@@ -1,1 +1,1 @@
-import "./shortcut.less"
+import "./shortcut.less";

@@ -1,3 +1,3 @@
 import Router from "@olton/router";
 
-globalThis.Router = Router
+globalThis.Router = Router;

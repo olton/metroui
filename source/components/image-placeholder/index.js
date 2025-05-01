@@ -1,1 +1,1 @@
-import "./image-placeholder.js"
+import "./image-placeholder.js";

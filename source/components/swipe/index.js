@@ -1,1 +1,1 @@
-import "./swipe.js"
+import "./swipe.js";

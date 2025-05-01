@@ -1,6 +1,6 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
+    "use strict";
 
     let CubeDefaultConfig = {
         cubeDeferred: 0,
@@ -10,7 +10,7 @@
         flashInterval: 1000,
         numbers: false,
         offBefore: true,
-        attenuation: .3,
+        attenuation: 0.3,
         stopOnBlur: false,
         cells: 4,
         margin: 8,
@@ -35,7 +35,7 @@
 
         custom: Metro.noop,
         onTick: Metro.noop,
-        onCubeCreate: Metro.noop
+        onCubeCreate: Metro.noop,
     };
 
     Metro.cubeSetup = (options) => {
@@ -48,54 +48,54 @@
 
     Metro.cubeDefaultRules = [
         {
-            on: {'top': [16],      'left': [4],         'right': [1]},
-            off: {'top': [13, 4],   'left': [1, 16],     'right': [13, 4]}
+            on: { top: [16], left: [4], right: [1] },
+            off: { top: [13, 4], left: [1, 16], right: [13, 4] },
         },
         {
-            on: {'top': [12, 15],  'left': [3, 8],      'right': [2, 5]},
-            off: {'top': [9, 6, 3], 'left': [5, 10, 15], 'right': [14, 11, 8]}
+            on: { top: [12, 15], left: [3, 8], right: [2, 5] },
+            off: { top: [9, 6, 3], left: [5, 10, 15], right: [14, 11, 8] },
         },
         {
-            on: {'top': [11],      'left': [7],         'right': [6]},
-            off: {'top': [1, 2, 5], 'left': [9, 13, 14], 'right': [15, 12, 16]}
+            on: { top: [11], left: [7], right: [6] },
+            off: { top: [1, 2, 5], left: [9, 13, 14], right: [15, 12, 16] },
         },
         {
-            on: {'top': [8, 14],   'left': [2, 12],     'right': [9, 3]},
-            off: {'top': [16],      'left': [4],         'right': [1]}
+            on: { top: [8, 14], left: [2, 12], right: [9, 3] },
+            off: { top: [16], left: [4], right: [1] },
         },
         {
-            on: {'top': [10, 7],   'left': [6, 11],     'right': [10, 7]},
-            off: {'top': [12, 15],  'left': [3, 8],      'right': [2, 5]}
+            on: { top: [10, 7], left: [6, 11], right: [10, 7] },
+            off: { top: [12, 15], left: [3, 8], right: [2, 5] },
         },
         {
-            on: {'top': [13, 4],   'left': [1, 16],     'right': [13, 4]},
-            off: {'top': [11],      'left': [7],         'right': [6]}
+            on: { top: [13, 4], left: [1, 16], right: [13, 4] },
+            off: { top: [11], left: [7], right: [6] },
         },
         {
-            on: {'top': [9, 6, 3], 'left': [5, 10, 15], 'right': [14, 11, 8]},
-            off: {'top': [8, 14],   'left': [2, 12],     'right': [9, 3]}
+            on: { top: [9, 6, 3], left: [5, 10, 15], right: [14, 11, 8] },
+            off: { top: [8, 14], left: [2, 12], right: [9, 3] },
         },
         {
-            on: {'top': [1, 2, 5], 'left': [9, 13, 14], 'right': [15, 12, 16]},
-            off: {'top': [10, 7],   'left': [6, 11],     'right': [10, 7]}
-        }
+            on: { top: [1, 2, 5], left: [9, 13, 14], right: [15, 12, 16] },
+            off: { top: [10, 7], left: [6, 11], right: [10, 7] },
+        },
     ];
 
-    Metro.Component('cube', {
-        init: function( options, elem ) {
+    Metro.Component("cube", {
+        init: function (options, elem) {
             this._super(elem, options, CubeDefaultConfig, {
                 id: Metro.utils.elementId("cube"),
                 rules: null,
                 interval: false,
                 ruleInterval: false,
                 running: false,
-                intervals: []
+                intervals: [],
             });
 
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             const element = this.element;
             const o = this.options;
 
@@ -109,12 +109,11 @@
             this._createEvents();
 
             this._fireEvent("cube-create", {
-                element: element
+                element: element,
             });
         },
 
-        _parseRules: function(rules){
-
+        _parseRules: function (rules) {
             if (rules === undefined || rules === null) {
                 return false;
             }
@@ -132,35 +131,44 @@
             }
         },
 
-        _createCube: function(){
+        _createCube: function () {
             const element = this.element;
             const o = this.options;
-            const sides = ['left', 'right', 'top'];
+            const sides = ["left", "right", "top"];
             const id = Metro.utils.elementId("cube");
             const cells_count = o.cells ** 2;
 
             element.addClass("cube").addClass(o.clsCube);
 
-            if (!element.attr('id')) {
-                element.attr('id', id);
+            if (!element.attr("id")) {
+                element.attr("id", id);
             }
 
-            this.id = element.attr('id');
+            this.id = element.attr("id");
 
             this._createCssForFlashColor();
             this._createCssForCellSize();
 
-            $.each(sides, function(){
+            $.each(sides, function () {
                 let side;
 
                 side = $("<div>").addClass(`side ${this}-side`).addClass(o.clsSide).appendTo(element);
 
-                if (this === 'left') {side.addClass(o.clsSideLeft);}
-                if (this === 'right') {side.addClass(o.clsSideRight);}
-                if (this === 'top') {side.addClass(o.clsSideTop);}
+                if (this === "left") {
+                    side.addClass(o.clsSideLeft);
+                }
+                if (this === "right") {
+                    side.addClass(o.clsSideRight);
+                }
+                if (this === "top") {
+                    side.addClass(o.clsSideTop);
+                }
 
-                for(let i = 0; i < cells_count; i++) {
-                    const cell = $("<div>").addClass("cube-cell").addClass(`cell-id-${i + 1}`).addClass(o.clsCell)
+                for (let i = 0; i < cells_count; i++) {
+                    const cell = $("<div>")
+                        .addClass("cube-cell")
+                        .addClass(`cell-id-${i + 1}`)
+                        .addClass(o.clsCell);
                     cell.data("id", i + 1).data("side", this);
                     cell.appendTo(side);
                     if (o.numbers === true) {
@@ -169,20 +177,20 @@
                 }
             });
 
-            const cells  = element.find(".cube-cell");
+            const cells = element.find(".cube-cell");
             if (o.color !== null) {
                 if (Farbe.Routines.isColor(o.color)) {
                     cells.css({
                         backgroundColor: o.color,
-                        borderColor: o.color
-                    })
+                        borderColor: o.color,
+                    });
                 } else {
                     cells.addClass(o.color);
                 }
             }
 
-            const axis = ['x', 'y', 'z'];
-            $.each(axis, function(){
+            const axis = ["x", "y", "z"];
+            $.each(axis, function () {
                 const ax = $("<div>").addClass(`axis ${o.axisStyle}`).addClass(`axis-${this}`).addClass(o.clsAxis);
                 if (this === "x") ax.addClass(o.clsAxisX);
                 if (this === "y") ax.addClass(o.clsAxisY);
@@ -197,7 +205,7 @@
             this._run();
         },
 
-        _run: function(){
+        _run: function () {
             const element = this.element;
             const o = this.options;
             let interval = 0;
@@ -208,34 +216,37 @@
             if (o.custom !== Metro.noop) {
                 Metro.utils.exec(o.custom, [element]);
             } else {
-
                 element.find(".cube-cell").removeClass("light");
 
                 this._start();
 
                 interval = Metro.utils.isObject(this.rules) ? Metro.utils.objectLength(this.rules) : 0;
 
-                this.interval = setInterval(()=> {
+                this.interval = setInterval(() => {
                     this._start();
                 }, interval * o.flashInterval);
             }
         },
 
-        _createCssForCellSize: function(){
+        _createCssForCellSize: function () {
             const element = this.element;
             const o = this.options;
             const sheet = Metro.sheet;
 
             if (o.margin === 8 && o.cells === 4) {
-                return ;
+                return;
             }
 
-            const width = Number.parseInt(Metro.utils.getStyleOne(element, 'width'))
-            const cell_size = Math.ceil((width / 2 - o.margin * o.cells * 2) / o.cells)
-            Metro.utils.addCssRule(sheet, `#${element.attr('id')} .side .cube-cell`, `width: ${cell_size}px!important; height: ${cell_size}px!important; margin: ${o.margin}px!important;`);
+            const width = Number.parseInt(Metro.utils.getStyleOne(element, "width"));
+            const cell_size = Math.ceil((width / 2 - o.margin * o.cells * 2) / o.cells);
+            Metro.utils.addCssRule(
+                sheet,
+                `#${element.attr("id")} .side .cube-cell`,
+                `width: ${cell_size}px!important; height: ${cell_size}px!important; margin: ${o.margin}px!important;`,
+            );
         },
 
-        _createCssForFlashColor: function(){
+        _createCssForFlashColor: function () {
             const element = this.element;
             const o = this.options;
             const sheet = Metro.sheet;
@@ -246,71 +257,87 @@
             let i;
 
             if (o.flashColor === null) {
-                return ;
+                return;
             }
 
             rule1 = `0 0 10px ${Farbe.Routines.toRGBA(Farbe.Routines.parse(o.flashColor), 1)}`;
             rule2 = `0 0 10px ${Farbe.Routines.toRGBA(Farbe.Routines.parse(o.flashColor), o.attenuation)}`;
 
-            for(i = 0; i < 3; i++) {
+            for (i = 0; i < 3; i++) {
                 rules1.push(rule1);
                 rules2.push(rule2);
             }
 
-            Metro.utils.addCssRule(sheet, `@keyframes pulsar-cell-${element.attr('id')}`, `0%, 100% { box-shadow: ${rules1.join(",")}} 50% { box-shadow: ${rules2.join(",")} }`);
-            Metro.utils.addCssRule(sheet, `#${element.attr('id')} .side .cube-cell.light`, `animation: pulsar-cell-${element.attr('id')} 2.5s 0s ease-out infinite; background-color: ${o.flashColor}!important; border-color: ${o.flashColor}!important;`);
+            Metro.utils.addCssRule(
+                sheet,
+                `@keyframes pulsar-cell-${element.attr("id")}`,
+                `0%, 100% { box-shadow: ${rules1.join(",")}} 50% { box-shadow: ${rules2.join(",")} }`,
+            );
+            Metro.utils.addCssRule(
+                sheet,
+                `#${element.attr("id")} .side .cube-cell.light`,
+                `animation: pulsar-cell-${element.attr("id")} 2.5s 0s ease-out infinite; background-color: ${o.flashColor}!important; border-color: ${o.flashColor}!important;`,
+            );
         },
 
-        _createEvents: function(){
+        _createEvents: function () {
             const element = this.element;
             const o = this.options;
 
-            $(globalThis).on(Metro.events.blur, ()=> {
-                if (o.stopOnBlur === true && this.running === true) {
-                    this._stop();
-                }
-            }, {ns: element.attr("id")});
+            $(globalThis).on(
+                Metro.events.blur,
+                () => {
+                    if (o.stopOnBlur === true && this.running === true) {
+                        this._stop();
+                    }
+                },
+                { ns: element.attr("id") },
+            );
 
-            $(globalThis).on(Metro.events.focus, ()=> {
-                if (o.stopOnBlur === true && this.running === false) {
-                    this._start();
-                }
-            }, {ns: element.attr("id")});
+            $(globalThis).on(
+                Metro.events.focus,
+                () => {
+                    if (o.stopOnBlur === true && this.running === false) {
+                        this._start();
+                    }
+                },
+                { ns: element.attr("id") },
+            );
 
-            element.on(Metro.events.click, ".cube-cell", function(){
+            element.on(Metro.events.click, ".cube-cell", function () {
                 if (o.cellClick === true) {
                     $(this).toggleClass("light");
                 }
             });
         },
 
-        _start: function(){
+        _start: function () {
             const element = this.element;
 
             element.find(".cube-cell").removeClass("light");
 
             this.running = true;
 
-            $.each(this.rules, (index, rule)=> {
+            $.each(this.rules, (index, rule) => {
                 this._execRule(index, rule);
             });
         },
 
-        _stop: function(){
+        _stop: function () {
             this.running = false;
             clearInterval(this.interval);
-            $.each(this.intervals, function(){
+            $.each(this.intervals, function () {
                 clearInterval(this);
-            })
+            });
         },
 
-        _tick: function(index, speed){
+        _tick: function (index, speed) {
             const o = this.options;
             const _speed = speed || o.flashInterval * index;
 
-            const interval = setTimeout(()=> {
+            const interval = setTimeout(() => {
                 this._fireEvent("tick", {
-                    index: index
+                    index: index,
                 });
 
                 clearInterval(interval);
@@ -319,31 +346,31 @@
             this.intervals.push(interval);
         },
 
-        _toggle: function(cell, func, time, speed){
+        _toggle: function (cell, func, time, speed) {
             const _speed = speed || this.options.flashInterval * time;
-            const interval = setTimeout(()=> {
-                cell[func === 'on' ? 'addClass' : 'removeClass']("light");
+            const interval = setTimeout(() => {
+                cell[func === "on" ? "addClass" : "removeClass"]("light");
                 clearInterval(interval);
                 Metro.utils.arrayDelete(this.intervals, interval);
             }, _speed);
             this.intervals.push(interval);
         },
 
-        start: function(){
+        start: function () {
             this._start();
         },
 
-        stop: function(){
+        stop: function () {
             this._stop();
         },
 
-        toRule: function(index, speed){
+        toRule: function (index, speed) {
             const element = this.element;
             const o = this.options;
             const rules = this.rules;
 
             if (rules === null || rules === undefined || rules[index] === undefined) {
-                return ;
+                return;
             }
             clearInterval(this.ruleInterval);
             this.ruleInterval = false;
@@ -353,45 +380,47 @@
                 this._execRule(i, rules[i], speed);
             }
             if (Metro.utils.isInt(o.autoRestart) && o.autoRestart > 0) {
-                this.ruleInterval = setTimeout(()=> {
+                this.ruleInterval = setTimeout(() => {
                     this._run();
                 }, o.autoRestart);
             }
         },
 
-        _execRule: function(index, rule, speed){
+        _execRule: function (index, rule, speed) {
             const that = this;
             const element = this.element;
-            const sides = ['left', 'right', 'top'];
+            const sides = ["left", "right", "top"];
 
             this._tick(index, speed);
 
-            $.each(sides, function(){
+            $.each(sides, function () {
                 const side_class = `.${this}-side`;
                 const cells_on = rule.on?.[this] ? rule.on[this] : false;
                 const cells_off = rule.off?.[this] ? rule.off[this] : false;
 
-                if (cells_on !== false) $.each(cells_on, function(){
-                    const cell = element.find(`${side_class} .cell-id-${this}`);
+                if (cells_on !== false)
+                    $.each(cells_on, function () {
+                        const cell = element.find(`${side_class} .cell-id-${this}`);
 
-                    that._toggle(cell, 'on', index, speed);
-                });
+                        that._toggle(cell, "on", index, speed);
+                    });
 
-                if (cells_off !== false) $.each(cells_off, function(){
-                    const cell = element.find(`${side_class} .cell-id-${this}`);
+                if (cells_off !== false)
+                    $.each(cells_off, function () {
+                        const cell = element.find(`${side_class} .cell-id-${this}`);
 
-                    that._toggle(cell, 'off', index, speed);
-                });
+                        that._toggle(cell, "off", index, speed);
+                    });
             });
         },
 
-        rule: function(r){
+        rule: function (r) {
             if (r === undefined) {
                 return this.rules;
             }
 
             if (this._parseRules(r) !== true) {
-                return ;
+                return;
             }
             this.options.rules = r;
             this.stop();
@@ -399,17 +428,17 @@
             this._run();
         },
 
-        axis: function(show){
+        axis: function (show) {
             const func = show ? "show" : "hide";
             this.element.find(".axis")[func]();
         },
 
-        changeRules: function(){
+        changeRules: function () {
             const element = this.element;
             const o = this.options;
             const rules = element.attr("data-rules");
             if (this._parseRules(rules) !== true) {
-                return ;
+                return;
             }
             this.stop();
             element.find(".cube-cell").removeClass("light");
@@ -417,40 +446,46 @@
             this._run();
         },
 
-        changeAxisVisibility: function(){
+        changeAxisVisibility: function () {
             const element = this.element;
             const visibility = JSON.parse(element.attr("data-show-axis")) === true;
             const func = visibility ? "show" : "hide";
             element.find(".axis")[func]();
         },
 
-        changeAxisStyle: function(){
+        changeAxisStyle: function () {
             const element = this.element;
             const style = element.attr("data-axis-style");
 
             element.find(".axis").removeClass("arrow line no-style").addClass(style);
         },
 
-        changeAttribute: function(attributeName){
+        changeAttribute: function (attributeName) {
             switch (attributeName) {
-                case "data-rules": this.changeRules(); break;
-                case "data-show-axis": this.changeAxisVisibility(); break;
-                case "data-axis-style": this.changeAxisStyle(); break;
+                case "data-rules":
+                    this.changeRules();
+                    break;
+                case "data-show-axis":
+                    this.changeAxisVisibility();
+                    break;
+                case "data-axis-style":
+                    this.changeAxisStyle();
+                    break;
             }
         },
 
-        destroy: function(){
+        destroy: function () {
             const element = this.element;
 
             clearInterval(this.interval);
             this.interval = null;
 
-            $(globalThis).off(Metro.events.blur, {ns: element.attr("id")});
-            $(globalThis).off(Metro.events.focus,{ns: element.attr("id")});
+            $(globalThis).off(Metro.events.blur, { ns: element.attr("id") });
+            $(globalThis).off(Metro.events.focus, { ns: element.attr("id") });
 
             element.off(Metro.events.click, ".cube-cell");
 
             return element;
-        }
+        },
     });
 })(Metro, Dom);

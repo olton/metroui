@@ -13,11 +13,7 @@
     };
 
     Metro.gradientBoxSetup = (options) => {
-        GradientBoxDefaultConfig = $.extend(
-            {},
-            GradientBoxDefaultConfig,
-            options,
-        );
+        GradientBoxDefaultConfig = $.extend({}, GradientBoxDefaultConfig, options);
     };
 
     if (typeof globalThis.metroGradientBoxSetup !== "undefined") {
@@ -54,15 +50,9 @@
                     this.position = "to bottom";
                 } else {
                     this.position =
-                        Number.
-                        isNaN(o.gradientPosition) === false
-                            ? `${o.gradientPosition}deg`
-                            : o.gradientPosition;
+                        Number.isNaN(o.gradientPosition) === false ? `${o.gradientPosition}deg` : o.gradientPosition;
 
-                    if (
-                        this.position.indexOf("deg") === -1 &&
-                        this.position.indexOf("to ") === -1
-                    ) {
+                    if (this.position.indexOf("deg") === -1 && this.position.indexOf("to ") === -1) {
                         this.position = `to ${this.position}`;
                     }
                 }
@@ -98,9 +88,9 @@
                 //gradientOptions.push((this.position.indexOf("at") === -1 ? "at " : "") + this.position);
             }
 
-            const gradientRule = `${this.func}(${gradientOptions.length
-                ? `${gradientOptions.join(" ")}, `
-                : ""}${this.colors.join(", ")})`
+            const gradientRule = `${this.func}(${
+                gradientOptions.length ? `${gradientOptions.join(" ")}, ` : ""
+            }${this.colors.join(", ")})`;
             element.css({
                 background: gradientRule,
             });
@@ -117,9 +107,7 @@
                     this.func = `${newValue.toLowerCase()}-gradient`;
                     break;
                 case "data-gradient-colors-css":
-                    this.colors = newValue
-                        ? newValue.toArray(",")
-                        : ["#fff", "#000"];
+                    this.colors = newValue ? newValue.toArray(",") : ["#fff", "#000"];
                     break;
                 case "data-gradient-shape":
                     this.shape = newValue.toLowerCase();

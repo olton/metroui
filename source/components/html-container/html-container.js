@@ -1,6 +1,6 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
+    "use strict";
 
     let HtmlContainerDefaultConfig = {
         htmlContainerDeferred: 0,
@@ -12,7 +12,7 @@
         onHtmlLoad: Metro.noop,
         onHtmlLoadFail: Metro.noop,
         onHtmlLoadDone: Metro.noop,
-        onHtmlContainerCreate: Metro.noop
+        onHtmlContainerCreate: Metro.noop,
     };
 
     Metro.htmlContainerSetup = (options) => {
@@ -23,22 +23,22 @@
         Metro.htmlContainerSetup(globalThis.metroHtmlContainerSetup);
     }
 
-    Metro.Component('html-container', {
-        init: function( options, elem ) {
+    Metro.Component("html-container", {
+        init: function (options, elem) {
             this._super(elem, options, HtmlContainerDefaultConfig, {
                 data: null,
                 opt: {},
-                htmlSource: ''
+                htmlSource: "",
             });
 
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             const element = this.element;
             const o = this.options;
 
-            if (typeof o.requestData === 'string') {
+            if (typeof o.requestData === "string") {
                 o.requestData = JSON.parse(o.requestData);
             }
 
@@ -46,7 +46,7 @@
                 this.data = Metro.utils.isObject(o.requestData);
             }
 
-            if (typeof o.requestOptions === 'string') {
+            if (typeof o.requestOptions === "string") {
                 o.requestOptions = JSON.parse(o.requestOptions);
             }
 
@@ -62,53 +62,60 @@
             }
 
             this._fireEvent("html-container-create", {
-                element: element
+                element: element,
             });
         },
 
-        _load: function(){
+        _load: function () {
             const element = this.element;
             const o = this.options;
             const fetchData = {
-                method: o.method
+                method: o.method,
             };
 
             if (this.data) fetchData.body = this.data;
             if (this.opt) fetchData.headers = this.opt;
 
             fetch(this.htmlSource, fetchData)
-            .then(Metro.fetch.status)
-            .then(Metro.fetch.text)
-            .then((data)=> {
-                let _data = $(data);
+                .then(Metro.fetch.status)
+                .then(Metro.fetch.text)
+                .then((data) => {
+                    let _data = $(data);
 
-                if (_data.length === 0) {
-                    _data = $("<div>").html(data);
-                }
-
-                switch (o.insertMode.toLowerCase()) {
-                    case "prepend": element.prepend(_data); break;
-                    case "append": element.append(_data); break;
-                    case "replace": _data.insertBefore(element).script(); element.remove(); break;
-                    default: {
-                        element.html(_data);
+                    if (_data.length === 0) {
+                        _data = $("<div>").html(data);
                     }
-                }
-                this._fireEvent("html-load", {
-                    data: data,
-                    source: o.htmlSource,
-                    requestData: this.data,
-                    requestOptions: this.opt
+
+                    switch (o.insertMode.toLowerCase()) {
+                        case "prepend":
+                            element.prepend(_data);
+                            break;
+                        case "append":
+                            element.append(_data);
+                            break;
+                        case "replace":
+                            _data.insertBefore(element).script();
+                            element.remove();
+                            break;
+                        default: {
+                            element.html(_data);
+                        }
+                    }
+                    this._fireEvent("html-load", {
+                        data: data,
+                        source: o.htmlSource,
+                        requestData: this.data,
+                        requestOptions: this.opt,
+                    });
+                })
+                .catch((error) => {
+                    this._fireEvent("html-load-fail", {
+                        error: error,
+                    });
                 });
-            })
-            .catch((error)=> {
-                this._fireEvent("html-load-fail", {
-                    error: error
-                });
-            });
         },
 
-        load: function(source, data, opt){
+        load: function (source, data, opt) {
             if (source) {
                 this.htmlSource = source;
             }
@@ -124,14 +131,14 @@
             this._load();
         },
 
-        changeAttribute: function(attributeName){
+        changeAttribute: function (attributeName) {
             const element = this.element;
             const o = this.options;
 
-            const changeHTMLSource = ()=> {
+            const changeHTMLSource = () => {
                 const html = element.attr("data-html-source");
                 if (Metro.utils.isNull(html)) {
-                    return ;
+                    return;
                 }
                 if (html.trim() === "") {
                     element.html("");
@@ -140,27 +147,31 @@
                 this._load();
             };
 
-            const changeInsertMode = ()=> {
+            const changeInsertMode = () => {
                 const attr = element.attr("data-insert-mode");
                 if (Metro.utils.isValue(attr)) {
                     o.insertMode = attr;
                 }
             };
 
-            const changeRequestData = ()=> {
+            const changeRequestData = () => {
                 const data = element.attr("data-request-data");
                 this.load(o.htmlSource, data);
             };
 
             switch (attributeName) {
-                case "data-html-source": changeHTMLSource(); break;
-                case "data-insert-mode": changeInsertMode(); break;
-                case "data-request-data": changeRequestData(); break;
+                case "data-html-source":
+                    changeHTMLSource();
+                    break;
+                case "data-insert-mode":
+                    changeInsertMode();
+                    break;
+                case "data-request-data":
+                    changeRequestData();
+                    break;
             }
         },
 
-        destroy: ()=> {
-            
-        }
+        destroy: () => {},
     });
 })(Metro, Dom);

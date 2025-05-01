@@ -1,6 +1,4 @@
-/** @format */
-
-(function () {
+(() => {
     Metro.i18n.add("es-ES", {
         weekStart: 0,
 
@@ -16,7 +14,7 @@
         october: "Octubre",
         november: "Noviembre",
         december: "Diciembre",
-    
+
         january_short: "Ene",
         february_short: "Feb",
         march_short: "Mar",
@@ -29,7 +27,7 @@
         october_short: "Oct",
         november_short: "Nov",
         december_short: "Dic",
-    
+
         sunday: "Domingo",
         monday: "Lunes",
         tuesday: "Martes",
@@ -37,7 +35,7 @@
         thursday: "Jueves",
         friday: "Viernes",
         saturday: "Sábado",
-    
+
         sunday_short: "Dom",
         monday_short: "Lun",
         tuesday_short: "Mar",
@@ -45,7 +43,7 @@
         thursday_short: "Jue",
         friday_short: "Vie",
         saturday_short: "Sáb",
-    
+
         sunday_short_2: "D",
         monday_short_2: "L",
         tuesday_short_2: "M",
@@ -53,7 +51,7 @@
         thursday_short_2: "J",
         friday_short_2: "V",
         saturday_short_2: "S",
-    
+
         label_ok: "OK",
         label_cancel: "Cancelar",
         label_done: "Listo",
@@ -75,7 +73,7 @@
         label_choose_file: "Elegir archivo(s)",
         label_drop_file: "Haz clic o suelta archivo(s) aquí",
         label_files_selected: "{n} archivo(s) seleccionado(s)",
-    
+
         label_days: "días",
         label_hours: "horas",
         label_minutes: "min",
@@ -85,7 +83,7 @@
         label_day: "día",
         label_year: "año",
         label_years: "años",
-    
+
         label_rows_count: "Mostrar:",
         label_search: "Buscar:",
         label_table_info: "Mostrando de $1 a $2 de un total de $3 registros",
@@ -112,10 +110,10 @@
         label_sell: "Vender",
         label_details: "Detalles",
         label_sorting: "Ordenar",
-    
+
         label_on: "encendido",
         label_off: "apagado",
-    
+
         label_rename_tab: "Renombrar pestaña",
         label_close_tab: "Cerrar pestaña",
         label_close_other_tabs: "Cerrar otras pestañas",
@@ -123,13 +121,13 @@
         label_close_tabs_right: "Cerrar pestañas a la derecha",
         label_close_all_tabs: "Cerrar todas las pestañas",
         label_close_inactive_tabs: "Cerrar pestañas inactivas",
-        
+
         label_clear_input: "Limpiar",
         label_reveal_password: "Mostrar contraseña",
         label_hide_password: "Ocultar contraseña",
         label_generate_random: "Generar valor aleatorio",
         label_search_input: "Buscar por valor",
-        
+
         label_note: "Nota",
         label_tip: "Consejo",
         label_info: "Información",

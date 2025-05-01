@@ -1,6 +1,6 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
+    "use strict";
 
     let ImagePlaceholderDefaultConfig = {
         size: "100x100",
@@ -11,7 +11,7 @@
         font: "12px sans-serif",
         text: "",
         showText: true,
-        onImagePlaceholderCreate: Metro.noop
+        onImagePlaceholderCreate: Metro.noop,
     };
 
     Metro.imagePlaceholderSetup = (options) => {
@@ -22,24 +22,24 @@
         Metro.imagePlaceholderSetup(globalThis.metroImagePlaceholderSetup);
     }
 
-    Metro.Component('image-placeholder', {
-        init: function( options, elem ) {
+    Metro.Component("image-placeholder", {
+        init: function (options, elem) {
             this._super(elem, options, ImagePlaceholderDefaultConfig, {
                 // define instance vars here
                 width: 0,
-                height: 0
+                height: 0,
             });
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             this._createStructure();
             this._createEvents();
 
-            this._fireEvent('image-placeholder-create');
+            this._fireEvent("image-placeholder-create");
         },
 
-        _createStructure: function(){
+        _createStructure: function () {
             const element = this.element;
             const o = this.options;
             const size = o.size.toArray("x");
@@ -50,10 +50,9 @@
             element.attr("src", this._createPlaceholder());
         },
 
-        _createEvents: ()=> {
-        },
+        _createEvents: () => {},
 
-        _createPlaceholder: function(){
+        _createPlaceholder: function () {
             const o = this.options;
             const canvas = document.createElement("canvas");
             const context = canvas.getContext("2d");
@@ -73,20 +72,18 @@
             context.font = o.font;
 
             context.translate(width / 2, height / 2);
-            context.textAlign = 'center';
-            context.textBaseline = 'middle';
+            context.textAlign = "center";
+            context.textBaseline = "middle";
 
-            if (o.showText)
-                context.fillText(o.text ? o.text : `${width} \u00d7 ${height}`, 0, 0);
+            if (o.showText) context.fillText(o.text ? o.text : `${width} \u00d7 ${height}`, 0, 0);
 
             return canvas.toDataURL();
         },
 
-        changeAttribute: (attr, val)=> {
-        },
+        changeAttribute: (attr, val) => {},
 
-        destroy: function(){
+        destroy: function () {
             this.element.remove();
-        }
+        },
     });
 })(Metro, Dom);

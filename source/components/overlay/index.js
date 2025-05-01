@@ -1,1 +1,1 @@
-import "./overlay.less"
+import "./overlay.less";

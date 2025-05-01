@@ -1,1 +1,1 @@
-import "./collapse.js"
+import "./collapse.js";

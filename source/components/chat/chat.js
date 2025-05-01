@@ -84,10 +84,10 @@
                 $("<div>").addClass("title").html(o.title).appendTo(element);
             }
 
-            const messages = $("<div>").addClass("messages")
+            const messages = $("<div>").addClass("messages");
             messages.appendTo(element);
-            const messageInput = $("<div>").addClass("message-input").appendTo(element)
-            const input = $("<input type='text'>").addClass("chat-input")
+            const messageInput = $("<div>").addClass("message-input").appendTo(element);
+            const input = $("<input type='text'>").addClass("chat-input");
             input.appendTo(messageInput);
             setTimeout(() => {
                 Metro.makePlugin(input[0], "input", {
@@ -110,7 +110,11 @@
                 o.messages = Metro.utils.isObject(o.messages);
             }
 
-            if (!Metro.utils.isNull(o.messages) && typeof o.messages === "object" && Metro.utils.objectLength(o.messages) > 0) {
+            if (
+                !Metro.utils.isNull(o.messages) &&
+                typeof o.messages === "object" &&
+                Metro.utils.objectLength(o.messages) > 0
+            ) {
                 $.each(o.messages, function () {
                     that.add(this);
                 });
@@ -121,7 +125,7 @@
 
         _createEvents: function () {
             const element = this.element;
-            const o = this.options;            
+            const o = this.options;
 
             const send = () => {
                 const input = element.find(".chat-input input");
@@ -136,7 +140,7 @@
                     text: msg,
                     position: "right",
                     time: datetime(),
-                }
+                };
                 this.add(m);
                 input.val("");
                 this._fireEvent("send", {
@@ -167,26 +171,36 @@
             let text;
             const messages = element.find(".messages");
 
-            const messageDate = o.inputTimeFormat ? Datetime.from(msg.time, o.inputTimeFormat, locale) : datetime(msg.time)
+            const messageDate = o.inputTimeFormat
+                ? Datetime.from(msg.time, o.inputTimeFormat, locale)
+                : datetime(msg.time);
             message = $("<div>").addClass("message").addClass(msg.position).appendTo(messages);
             item = $("<div>").addClass("message-item").appendTo(message);
-            
+
             if (Metro.utils.isUrl(msg.avatar) || msg.avatar.includes("data:image")) {
-                avatar = $("<img>").attr("src", msg.avatar).attr("alt", msg.avatar).addClass("message-avatar").appendTo(item);
+                avatar = $("<img>")
+                    .attr("src", msg.avatar)
+                    .attr("alt", msg.avatar)
+                    .addClass("message-avatar")
+                    .appendTo(item);
             } else if (msg.avatar) {
-                const _el = $(msg.avatar)
-                if (_el.length ) {
+                const _el = $(msg.avatar);
+                if (_el.length) {
                     avatar = _el.addClass("message-avatar").appendTo(item);
                 } else {
                     avatar = $("<span>").addClass("message-avatar").html(msg.avatar).appendTo(item);
-                }                
+                }
             }
-            
+
             text = $("<div>")
                 .addClass("message-text")
                 .append($("<div>").addClass("message-text-inner").html(Str.escapeHtml(msg.text)))
                 .appendTo(item);
-            const time = $("<div>").addClass("message-time").addClass(o.clsTime).text(messageDate.format(o.timeFormat)).appendTo(text)
+            const time = $("<div>")
+                .addClass("message-time")
+                .addClass(o.clsTime)
+                .text(messageDate.format(o.timeFormat))
+                .appendTo(text);
             sender = $("<div>").addClass("message-sender").addClass(o.clsName).text(msg.name).appendTo(text);
 
             if (Metro.utils.isValue(msg.id)) {
@@ -250,10 +264,7 @@
         delMessage: function (id) {
             const element = this.element;
 
-            element
-                .find(".messages")
-                .find(`#${id}`)
-                .remove();
+            element.find(".messages").find(`#${id}`).remove();
 
             return this;
         },
@@ -266,7 +277,9 @@
 
             if (message.length === 0) return this;
 
-            const messageDate = o.inputTimeFormat ? Datetime.from(msg.time, o.inputTimeFormat, locale) : datetime(msg.time);
+            const messageDate = o.inputTimeFormat
+                ? Datetime.from(msg.time, o.inputTimeFormat, locale)
+                : datetime(msg.time);
 
             message.find(".message-text-inner").html(msg.text);
             message.find(".message-time").html(messageDate.format(o.timeFormat));

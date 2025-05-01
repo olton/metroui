@@ -1,6 +1,4 @@
-/** @format */
-
-(function () {
+(() => {
     Metro.i18n.add("pt-BR", {
         weekStart: 0,
 
@@ -123,13 +121,13 @@
         label_close_tabs_right: "Fechar abas a direita",
         label_close_all_tabs: "Fechar todas as abas",
         label_close_inactive_tabs: "Fechar abas inativas",
-        
+
         label_clear_input: "Limpar",
         label_reveal_password: "Mostrar senha",
         label_hide_password: "Ocultar senha",
         label_generate_random: "Gerar valor aleatório",
         label_search_input: "Pesquisar pelo valor",
-        
+
         label_note: "Nota",
         label_tip: "Dica",
         label_info: "Informação",

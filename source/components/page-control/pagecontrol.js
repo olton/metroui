@@ -98,7 +98,9 @@
             }
 
             if (o.appendButton) {
-                const appendButton = $("<li>").addClass("page-control__tab__append").html(`<span class="toggle">+</span>`);
+                const appendButton = $("<li>")
+                    .addClass("page-control__tab__append")
+                    .html(`<span class="toggle">+</span>`);
 
                 if (o.appendActions) {
                     const appendItems = Metro.utils.exec(o.appendActions, null, this);
@@ -113,33 +115,49 @@
                 element.append(appendButton);
             }
 
-            const services = $("<li>").addClass("page-control__tab__service").addClass("invisible-tabs").appendTo(element);
+            const services = $("<li>")
+                .addClass("page-control__tab__service")
+                .addClass("invisible-tabs")
+                .appendTo(element);
             services.append(
-                $("<div>").addClass("page-control__service-button").html(`
+                $("<div>")
+                    .addClass("page-control__service-button")
+                    .html(`
                     <span class="toggle">↧</span>
                     <ul class="d-menu place-right context page-control__invisible_tabs_holder"></ul>
                 `),
             );
 
-            this.invisibleTabsHolderToggle = services.find(".page-control__tab__service.invisible-tabs > .page-control__service-button");
-            this.invisibleTabsHolder = Metro.makePlugin(services.find(".page-control__invisible_tabs_holder"), "dropdown", {
-                onClick: (e) => {
-                    const parent = $(e.target.parentNode);
-                    if (parent.hasClass("page-control__tab__closer")) {
-                        this.closeButtonClick(e);
-                    } else {
-                        this.activateTab(parent[0]);
-                    }
-                    e.preventDefault();
-                    e.stopPropagation();
+            this.invisibleTabsHolderToggle = services.find(
+                ".page-control__tab__service.invisible-tabs > .page-control__service-button",
+            );
+            this.invisibleTabsHolder = Metro.makePlugin(
+                services.find(".page-control__invisible_tabs_holder"),
+                "dropdown",
+                {
+                    onClick: (e) => {
+                        const parent = $(e.target.parentNode);
+                        if (parent.hasClass("page-control__tab__closer")) {
+                            this.closeButtonClick(e);
+                        } else {
+                            this.activateTab(parent[0]);
+                        }
+                        e.preventDefault();
+                        e.stopPropagation();
+                    },
                 },
-            });
+            );
             this.invisibleTabsHolderToggle.hide();
             this.organizeTabs();
 
-            const tabsServices = $("<li>").addClass("page-control__tab__service").addClass("tabs-menu").appendTo(element);
+            const tabsServices = $("<li>")
+                .addClass("page-control__tab__service")
+                .addClass("tabs-menu")
+                .appendTo(element);
             tabsServices.append(
-                $("<div>").addClass("page-control__service-button").html(`
+                $("<div>")
+                    .addClass("page-control__service-button")
+                    .html(`
                     <span class="toggle">︙</span>
                     <ul class="d-menu place-right context" data-role="dropdown"></ul>
                 `),
@@ -247,7 +265,11 @@
             const an = $("<a>");
 
             if (el.icon || el.image) {
-                an.append(el.icon ? $("<span class='icon'>").addClass(el.icon) : $("<img class='icon'>").attr("src", el.image).attr("alt", ""));
+                an.append(
+                    el.icon
+                        ? $("<span class='icon'>").addClass(el.icon)
+                        : $("<img class='icon'>").attr("src", el.image).attr("alt", ""),
+                );
             }
 
             if (el.title) {
@@ -269,7 +291,9 @@
 
             if (hasMenu) {
                 tab.append(
-                    $("<div>").addClass("page-control__tab__menu__holder").html(`
+                    $("<div>")
+                        .addClass("page-control__tab__menu__holder")
+                        .html(`
                         <span class="">︙</span>
                         <ul class="d-menu context page-control__tab__menu" data-role="dropdown">
                             <li><a data-action="rename">${this.strings.label_rename_tab}</a></li>
@@ -329,7 +353,10 @@
 
             this.closeTab(tab[0]);
 
-            if (parent.hasClass("page-control__invisible_tabs_holder") && parent.children(".page-control__tab").length === 0) {
+            if (
+                parent.hasClass("page-control__invisible_tabs_holder") &&
+                parent.children(".page-control__tab").length === 0
+            ) {
                 Metro.getPlugin(this.invisibleTabsHolder, "dropdown").close();
                 this.invisibleTabsHolderToggle.hide();
             }
@@ -347,7 +374,10 @@
                     this.activateTab(prev[0]);
                 } else if (next.length) {
                     this.activateTab(next[0]);
-                } else if ($tab.parent().hasClass("page-control__invisible_tabs_holder") && parent.children(".page-control__tab").length === 1) {
+                } else if (
+                    $tab.parent().hasClass("page-control__invisible_tabs_holder") &&
+                    parent.children(".page-control__tab").length === 1
+                ) {
                     if (element.children(".page-control__tab").length) {
                         this.activateTab(element.children(".page-control__tab").last()[0]);
                     }
@@ -434,7 +464,7 @@
         addTab: function ({ caption, icon, image, canClose = true, hasMenu = true, data, ref }, insert = "before") {
             const o = this.options;
 
-            const newTab = this.createTab({caption, icon, image, canClose, hasMenu, data, ref});
+            const newTab = this.createTab({ caption, icon, image, canClose, hasMenu, data, ref });
 
             if (o.activateNewTab) {
                 this.activateTab(newTab);

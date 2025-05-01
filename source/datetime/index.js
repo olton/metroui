@@ -2,50 +2,50 @@
 
 import { Datetime, datetime } from "@olton/datetime";
 
-Datetime.correctDate = function (date){
-    return datetime(date).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
-} 
+Datetime.correctDate = (date) => datetime(date).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
 
 globalThis.Datetime = Datetime;
 globalThis.datetime = datetime;
 
-(function () {
+(() => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
 
-    const MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+    const MONTHS = [
+        "january",
+        "february",
+        "march",
+        "april",
+        "may",
+        "june",
+        "july",
+        "august",
+        "september",
+        "october",
+        "november",
+        "december",
+    ];
     const DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
-    var getLocale = Datetime.getLocale;
+    const getLocale = Datetime.getLocale;
 
-    Datetime.getLocale = function (locale) {
-        var data;
+    Datetime.getLocale = function (locale = "en") {
+        let _locale = locale;
 
         if (!Metro) {
-            locale = "en";
             return getLocale.call(this, locale);
         }
 
-        if (!Metro.locales[locale]) {
-            locale = "en";
+        if (!Metro.locales[_locale]) {
+            _locale = "en";
         }
 
-        data = Metro.locales[locale];
-
-        const months = MONTHS.map(function (el, i) {
-            return data[el];
-        });
-        const monthsShort = MONTHS.map(function (el, i) {
-            return data[`${el}_short`];
-        });
-        const weekdays = DAYS.map(function (el, i) {
-            return data[el];
-        });
-        const weekdaysShort = DAYS.map(function (el, i) {
-            return data[`${el}_short`];
-        });
-        const weekdaysMin = DAYS.map(function (el, i) {
-            return data[`${el}_short_2`];
-        });
+        const data = Metro.locales[_locale];
+        const months = MONTHS.map((el, i) => data[el]);
+        const monthsShort = MONTHS.map((el, i) => data[`${el}_short`]);
+        const weekdays = DAYS.map((el, i) => data[el]);
+        const weekdaysShort = DAYS.map((el, i) => data[`${el}_short`]);
+        const weekdaysMin = DAYS.map((el, i) => data[`${el}_short_2`]);
 
         return {
             months,

@@ -1,2 +1,2 @@
-import "./context-menu.less"
-import "./context-menu.js"
+import "./context-menu.less";
+import "./context-menu.js";

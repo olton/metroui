@@ -54,7 +54,7 @@
             element.attr("data-dark-symbol", o.darkSymbol);
 
             Metro.makePlugin(element, "switch");
-            
+
             this.container = element.wrap($("<label>").addClass("theme-switcher"));
             this.container.addClass(`mode-${o.mode}`);
 
@@ -96,15 +96,15 @@
         },
 
         _updateState: function () {
-            const usingMeta = $.meta("metro:theme").length > 0
+            const usingMeta = $.meta("metro:theme").length > 0;
             const o = this.options;
             const elem = this.elem;
             const target = this.target;
 
             if (usingMeta) {
-                return
+                return;
             }
-            
+
             if (elem.checked) {
                 target.addClass("dark-side").addClass(this.options.clsDark);
             } else {

@@ -5,7 +5,7 @@
     let SwitchDefaultConfig = {
         switchDeferred: 0,
         material: false,
-        prepend:"",
+        prepend: "",
         append: "",
         clsSwitch: "",
         clsCheck: "",
@@ -37,7 +37,11 @@
             const o = this.options;
             const strings = this.strings;
 
-            const container = element.wrap("<label>").addClass("switch").addClass(element[0].className).addClass(o.clsSwitch);
+            const container = element
+                .wrap("<label>")
+                .addClass("switch")
+                .addClass(element[0].className)
+                .addClass(o.clsSwitch);
 
             element.attr("type", "checkbox");
 
@@ -52,13 +56,21 @@
             element[0].className = "";
 
             if (o.prepend) {
-                container.prepend($("<span>").addClass("caption-prepend").addClass(o.clsPrepend).addClass(o.clsCaption).html(o.prepend));
+                container.prepend(
+                    $("<span>")
+                        .addClass("caption-prepend")
+                        .addClass(o.clsPrepend)
+                        .addClass(o.clsCaption)
+                        .html(o.prepend),
+                );
             }
-            
+
             if (o.append) {
-                container.append($("<span>").addClass("caption-append").addClass(o.clsAppend).addClass(o.clsCaption).html(o.append));
+                container.append(
+                    $("<span>").addClass("caption-append").addClass(o.clsAppend).addClass(o.clsCaption).html(o.append),
+                );
             }
-            
+
             if (o.onoff === true) {
                 element.attr("data-on", o.on || strings.label_on);
                 element.attr("data-off", o.off || strings.label_off);
@@ -70,7 +82,7 @@
             if (o.material === true) {
                 container.addClass("material");
             }
-            
+
             this._fireEvent("switch-create");
         },
 

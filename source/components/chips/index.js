@@ -1,1 +1,1 @@
-import "./chips.less"
+import "./chips.less";

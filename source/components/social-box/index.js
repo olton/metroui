@@ -1,1 +1,1 @@
-import "./social-box.less"
+import "./social-box.less";

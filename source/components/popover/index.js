@@ -1,2 +1,2 @@
-import "./popover.js"
-import "./popover.less"
+import "./popover.js";
+import "./popover.less";

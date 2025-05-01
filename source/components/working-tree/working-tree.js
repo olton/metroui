@@ -1,10 +1,10 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
+    "use strict";
 
     let WorkingTreeDefaultConfig = {
         onStateChange: Metro.noop,
-        onWorkingTreeCreate: Metro.noop
+        onWorkingTreeCreate: Metro.noop,
     };
 
     Metro.workingTreeSetup = (options) => {
@@ -15,22 +15,22 @@
         Metro.workingTreeSetup(globalThis.metroWorkingTreeSetup);
     }
 
-    Metro.Component('working-tree', {
-        init (options, elem) {
+    Metro.Component("working-tree", {
+        init(options, elem) {
             this._super(elem, options, WorkingTreeDefaultConfig, {
                 // define instance vars here
             });
             return this;
         },
 
-        _create () {
+        _create() {
             this._createStructure();
             this._createEvents();
 
-            this._fireEvent('tree-create');
+            this._fireEvent("tree-create");
         },
 
-        addNode({id, title = "", value = "", items = []} = {}){
+        addNode({ id, title = "", value = "", items = [] } = {}) {
             const element = this.element;
             const nodeId = (id || Hooks.useId(`working-tree-node-${element.children().length}`)).replace(/:/gi, "");
             const node = `
@@ -41,35 +41,33 @@
                         <div class="value">${value}</div>
                     </div>
                     <ul class="leaves">
-                        ${items.map(i => `<li><div class="title">${i.title}</div><div class="value">${i.value}</div> </li>`).join('\n')}                    
+                        ${items.map((i) => `<li><div class="title">${i.title}</div><div class="value">${i.value}</div> </li>`).join("\n")}                    
                     </ul>
                 </li>
-            `
-            this.element.append(node)
-            return nodeId
+            `;
+            this.element.append(node);
+            return nodeId;
         },
-        
-        setState(id, state = "pending"){
+
+        setState(id, state = "pending") {
             const element = this.element;
             const node = element.find(`#${id}`).clearClasses().addClass(`work-${state}`);
             node.find(".bull").html(`<span data-role="bull" data-type="${state}"></span>`);
-            this._fireEvent('state-change', {id, state, node});
-            return this
+            this._fireEvent("state-change", { id, state, node });
+            return this;
         },
-        
-        _createStructure () {
+
+        _createStructure() {
             const element = this.element;
-            element.addClass("working-tree");            
+            element.addClass("working-tree");
         },
 
-        _createEvents () {
-        },
+        _createEvents() {},
 
-        changeAttribute (attr, newValue) {
-        },
+        changeAttribute(attr, newValue) {},
 
-        destroy () {
+        destroy() {
             this.element.remove();
-        }
+        },
     });
 })(Metro, Dom);

@@ -1,6 +1,6 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
+    "use strict";
 
     let MaterialTabsDefaultConfig = {
         wheelStep: 20,
@@ -19,7 +19,7 @@
         onBeforeTabOpen: Metro.noop_true,
         onTabOpen: Metro.noop,
         onTabsScroll: Metro.noop,
-        onTabsCreate: Metro.noop
+        onTabsCreate: Metro.noop,
     };
 
     Metro.materialTabsSetup = (options) => {
@@ -30,29 +30,29 @@
         Metro.materialTabsSetup(globalThis.metroMaterialTabsSetup);
     }
 
-    Metro.Component('material-tabs', {
-        init: function( options, elem ) {
+    Metro.Component("material-tabs", {
+        init: function (options, elem) {
             this._super(elem, options, MaterialTabsDefaultConfig, {
                 marker: null,
                 scroll: 0,
-                scrollDir: "left"
+                scrollDir: "left",
             });
 
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             const element = this.element;
 
             this._createStructure();
             this._createEvents();
 
             this._fireEvent("tabs-create", {
-                element: element
+                element: element,
             });
         },
 
-        _createStructure: function(){
+        _createStructure: function () {
             const element = this.element;
             const o = this.options;
             const tabs = element.find("li");
@@ -87,12 +87,12 @@
             this.openTab(active_tab.length === 0 ? tabs[0] : active_tab[0]);
         },
 
-        _createEvents: function(){
+        _createEvents: function () {
             const that = this;
             const element = this.element;
             const o = this.options;
 
-            element.on(Metro.events.click, "li", function(e){
+            element.on(Metro.events.click, "li", function (e) {
                 const tab = $(this);
                 const active_tab = element.find("li.active");
                 const tab_next = tab.index() > active_tab.index();
@@ -108,7 +108,7 @@
                 }
             });
 
-            element.on(Metro.events.scroll, ()=> {
+            element.on(Metro.events.scroll, () => {
                 const oldScroll = that.scroll;
 
                 that.scrollDir = that.scroll < element[0].scrollLeft ? "left" : "right";
@@ -117,27 +117,30 @@
                 that._fireEvent("tabs-scroll", {
                     scrollLeft: element[0].scrollLeft,
                     oldScroll: oldScroll,
-                    scrollDir: that.scrollDir
+                    scrollDir: that.scrollDir,
                 });
-
             });
 
-            element.on(Metro.events.mousewheel, function(e){
-                if (e.deltaY === undefined) {
-                    return ;
-                }
+            element.on(
+                Metro.events.mousewheel,
+                function (e) {
+                    if (e.deltaY === undefined) {
+                        return;
+                    }
 
-                const scrollable = $(this);
-                const dir = e.deltaY > 0 ? -1 : 1;
-                const step = o.wheelStep;
-                const scroll = scrollable.scrollLeft() - (dir * step)
-                scrollable.scrollLeft(scroll);
-            }, {
-                passive: true
-            })
+                    const scrollable = $(this);
+                    const dir = e.deltaY > 0 ? -1 : 1;
+                    const step = o.wheelStep;
+                    const scroll = scrollable.scrollLeft() - dir * step;
+                    scrollable.scrollLeft(scroll);
+                },
+                {
+                    passive: true,
+                },
+            );
         },
 
-        openTab: function(tab_to_open, tab_next){
+        openTab: function (tab_to_open, tab_next) {
             const element = this.element;
             const o = this.options;
             const tabs = element.find("li");
@@ -149,7 +152,7 @@
 
             const tab = $(tab_to_open);
 
-            $.each(tabs, function(){
+            $.each(tabs, function () {
                 const target = $(this).find("a").attr("href");
                 if (!Metro.utils.isValue(target)) return;
                 if (target[0] === "#" && target.length > 1) {
@@ -157,16 +160,16 @@
                 }
             });
 
-            const width = element.width()
+            const width = element.width();
             scroll = element.scrollLeft();
             tab_left = tab.position().left;
-            const tab_width = tab.width()
-            const shift = tab_left + tab_width
+            const tab_width = tab.width();
+            const shift = tab_left + tab_width;
             tabs.removeClass("active").removeClass(o.clsTabActive);
             tab.addClass("active").addClass(o.clsTabActive);
 
             if (shift + magic > width + scroll) {
-                scrollLeft = scroll + (magic * 2);
+                scrollLeft = scroll + magic * 2;
             } else if (tab_left < scroll) {
                 scrollLeft = tab_left - magic * 2;
             } else {
@@ -175,17 +178,17 @@
 
             element.animate({
                 draw: {
-                    scrollLeft: scrollLeft
+                    scrollLeft: scrollLeft,
                 },
-                dur: o.duration
+                dur: o.duration,
             });
 
             this.marker.animate({
                 draw: {
                     left: tab_left,
-                    width: tab_width
+                    width: tab_width,
                 },
-                dur: o.duration
+                dur: o.duration,
             });
 
             target = tab.find("a").attr("href");
@@ -198,11 +201,11 @@
             this._fireEvent("tab-open", {
                 tab: tab[0],
                 target: target,
-                tab_next: tab_next
+                tab_next: tab_next,
             });
         },
 
-        open: function(tab_num){
+        open: function (tab_num) {
             const element = this.element;
             const tabs = element.find("li");
             const active_tab = element.find("li.active");
@@ -211,16 +214,15 @@
             this.openTab(tab, tab_next);
         },
 
-        changeAttribute: ()=> {
-        },
+        changeAttribute: () => {},
 
-        destroy: function(){
+        destroy: function () {
             const element = this.element;
 
             element.off(Metro.events.click, "li");
             element.off(Metro.events.scroll);
 
             element.remove();
-        }
+        },
     });
 })(Metro, Dom);

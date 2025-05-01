@@ -50,12 +50,12 @@
             const element = this.element;
             let elements_height = 0;
 
-            const pane = element.children(".navview-pane")
+            const pane = element.children(".navview-pane");
             if (pane.length === 0) {
                 return;
             }
 
-            const menu_container = pane.children(".navview-menu-container")
+            const menu_container = pane.children(".navview-menu-container");
             if (menu_container.length === 0) {
                 return;
             }
@@ -107,9 +107,9 @@
                 element.addClass("compacted handmade");
             }
 
-            const pane = element.children(".navview-pane")
-            const content = element.children(".navview-content")
-            const toggle = $(o.toggle)
+            const pane = element.children(".navview-pane");
+            const content = element.children(".navview-content");
+            const toggle = $(o.toggle);
             menu = pane.children(".navview-menu");
             if (menu.length) {
                 menu.prevAll().reverse().wrapAll($("<div>").addClass("navview-container"));
@@ -294,10 +294,10 @@
             this._recalc();
         },
 
-        state(){
-            return this.element.hasClass("expanded") ? "expand" : "compact";    
+        state() {
+            return this.element.hasClass("expanded") ? "expand" : "compact";
         },
-        
+
         changeAttribute: (attr, val) => {},
 
         destroy: function () {

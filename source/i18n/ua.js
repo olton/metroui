@@ -1,6 +1,4 @@
-/** @format */
-
-(function () {
+(() => {
     Metro.i18n.add("ua", {
         weekStart: 1,
 
@@ -71,7 +69,8 @@
         label_send: "Відправити",
         label_accept: "Прийняти",
         label_cookies_title: "Цей сайт використовує файли cookie",
-        label_cookies_text: "Цей веб-сайт використовує файли cookie, щоб забезпечити вам найкращий досвід використання нашого веб-сайту.",
+        label_cookies_text:
+            "Цей веб-сайт використовує файли cookie, щоб забезпечити вам найкращий досвід використання нашого веб-сайту.",
         label_choose_file: "Виберіть файл(и)",
         label_drop_file: "Натисніть або перетягніть файл(и) сюди",
         label_files_selected: "Вибрано {n} файл(ів)",

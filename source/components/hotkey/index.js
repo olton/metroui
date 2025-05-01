@@ -1,1 +1,1 @@
-import "./hotkey.js"
+import "./hotkey.js";

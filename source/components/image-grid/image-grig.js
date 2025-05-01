@@ -1,6 +1,6 @@
 ((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-    'use strict';
+    "use strict";
 
     let ImageGridDefaultConfig = {
         useBackground: false,
@@ -13,7 +13,7 @@
 
         onItemClick: Metro.noop,
         onDrawItem: Metro.noop,
-        onImageGridCreate: Metro.noop
+        onImageGridCreate: Metro.noop,
     };
 
     Metro.imageGridSetup = (options) => {
@@ -24,23 +24,23 @@
         Metro.imageGridSetup(globalThis.metroImageGridSetup);
     }
 
-    Metro.Component('image-grid', {
-        init: function( options, elem ) {
+    Metro.Component("image-grid", {
+        init: function (options, elem) {
             this._super(elem, options, ImageGridDefaultConfig, {
                 // define instance vars here
-                items: []
+                items: [],
             });
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             this.items = this.element.children("img");
             this._createStructure();
             this._createEvents();
-            this._fireEvent('image-grid-create');
+            this._fireEvent("image-grid-create");
         },
 
-        _createStructure: function(){
+        _createStructure: function () {
             const element = this.element;
             const o = this.options;
 
@@ -49,18 +49,18 @@
             this._createItems();
         },
 
-        _createEvents: function(){
+        _createEvents: function () {
             const that = this;
             const element = this.element;
 
-            element.on(Metro.events.click, ".image-grid__item", function(){
+            element.on(Metro.events.click, ".image-grid__item", function () {
                 that._fireEvent("item-click", {
-                    item: this
+                    item: this,
                 });
             });
         },
 
-        _createItems: function(){
+        _createItems: function () {
             const that = this;
             const element = this.element;
             const o = this.options;
@@ -68,14 +68,14 @@
 
             element.clear();
 
-            items.each(function(){
+            items.each(function () {
                 const el = $(this);
                 const src = this.src;
                 const wrapper = $("<div>").addClass("image-grid__item").addClass(o.clsImageGridItem).appendTo(element);
                 const img = new Image();
 
                 img.src = src;
-                img.onload = function(){
+                img.onload = function () {
                     const port = this.height >= this.width;
                     wrapper.addClass(port ? "image-grid__item-portrait" : "image-grid__item-landscape");
                     el.addClass(o.clsImageGridImage).appendTo(wrapper);
@@ -86,7 +86,7 @@
                                 background: `url(${src})`,
                                 backgroundRepeat: "no-repeat",
                                 backgroundSize: o.backgroundSize,
-                                backgroundPosition: o.backgroundPosition
+                                backgroundPosition: o.backgroundPosition,
                             })
                             .attr("data-original", el.attr("data-original") || src)
                             .attr("data-title", el.attr("alt") || el.attr("data-title") || "");
@@ -95,13 +95,13 @@
 
                     that._fireEvent("draw-item", {
                         item: wrapper[0],
-                        image: el[0]
+                        image: el[0],
                     });
-                }
+                };
             });
         },
 
-        changeAttribute: function(attr, val){
+        changeAttribute: function (attr, val) {
             const o = this.options;
 
             if (attr === "data-use-background") {
@@ -120,8 +120,8 @@
             }
         },
 
-        destroy: function(){
+        destroy: function () {
             this.element.remove();
-        }
+        },
     });
 })(Metro, Dom);

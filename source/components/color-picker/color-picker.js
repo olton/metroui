@@ -3,7 +3,8 @@
     "use strict";
 
     let ColorPickerDefaultConfig = {
-        defaultSwatches: "#FFFFFF,#000000,#FFFB0D,#0532FF,#FF9300,#00F91A,#FF2700,#686868,#EE5464,#D27AEE,#5BA8C4,#E64AA9,#1ba1e2,#6a00ff,#bebebe,#f8f8f8",
+        defaultSwatches:
+            "#FFFFFF,#000000,#FFFB0D,#0532FF,#FF9300,#00F91A,#FF2700,#686868,#EE5464,#D27AEE,#5BA8C4,#E64AA9,#1ba1e2,#6a00ff,#bebebe,#f8f8f8",
         duration: 100,
         prepend: "",
         append: "",
@@ -63,7 +64,11 @@
                 throw new Error("Color selector component required!");
             }
 
-            this.value = Farbe.Routines.isColor(current) ? current : Farbe.Routines.isColor(o.defaultValue) ? o.defaultValue : "rgba(0,0,0,0)";
+            this.value = Farbe.Routines.isColor(current)
+                ? current
+                : Farbe.Routines.isColor(o.defaultValue)
+                  ? o.defaultValue
+                  : "rgba(0,0,0,0)";
 
             this._createStructure();
             this._createEvents();
@@ -77,7 +82,7 @@
             const picker = element.wrap($("<div>").addClass("color-picker").addClass(element[0].className));
             let buttons;
 
-            const colorExample = $("<div>").addClass("color-example-box").insertBefore(element)
+            const colorExample = $("<div>").addClass("color-example-box").insertBefore(element);
             buttons = $("<div>").addClass("buttons").appendTo(picker);
 
             buttons.append(
@@ -107,8 +112,8 @@
                 picker.append($("<div>").html(o.append).addClass("append").addClass(o.clsAppend));
             }
 
-            const colorSelectorBox = $("<div>").addClass("color-selector-box").appendTo(picker)
-            const colorSelector = $("<div>").appendTo(colorSelectorBox)
+            const colorSelectorBox = $("<div>").addClass("color-selector-box").appendTo(picker);
+            const colorSelector = $("<div>").appendTo(colorSelectorBox);
             this.picker = picker;
             this.colorExample = colorExample;
             this.colorSelector = colorSelector;
@@ -146,11 +151,15 @@
             element[0].className = "";
 
             if (o.label) {
-                const label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(picker);
+                const label = $("<label>")
+                    .addClass("label-for-input")
+                    .addClass(o.clsLabel)
+                    .html(o.label)
+                    .insertBefore(picker);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
                 } else {
-                    const id = Hooks.useId(element[0])
+                    const id = Hooks.useId(element[0]);
                     label.attr("for", id);
                     element.attr("id", id);
                 }
@@ -158,7 +167,7 @@
                     label.addClass("rtl");
                 }
             }
-            
+
             this._setColor();
         },
 
@@ -176,7 +185,7 @@
             }
 
             console.log(color);
-            
+
             colorExample.css({
                 backgroundColor: color,
             });
@@ -229,9 +238,9 @@
             const o = this.options;
             const parent = element.parent();
             if (o.label) {
-                parent.prev("label").remove()
+                parent.prev("label").remove();
             }
-            parent.remove()
+            parent.remove();
         },
     });
 

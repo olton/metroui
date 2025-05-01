@@ -1,5 +1,4 @@
 ((Metro, $) => {
-
     let CountdownDefaultConfig = {
         countdownDeferred: 0,
         stopOnBlur: true,
@@ -115,7 +114,7 @@
 
             this._setBreakpoint();
 
-            const delta_days = Math.round((this.breakpoint - now) / dm)
+            const delta_days = Math.round((this.breakpoint - now) / dm);
             $.each(parts, function () {
                 const part = $("<div>")
                     .addClass(`part ${this}`)
@@ -146,7 +145,7 @@
                 }
             });
 
-            const digit = element.find(".digit")
+            const digit = element.find(".digit");
             digit.append($("<span class='digit-placeholder'>").html("0"));
             digit.append($("<span class='digit-value'>").html("0"));
 
@@ -159,7 +158,7 @@
             } else {
                 this.tick();
             }
-            
+
             this.fontSize = Number.parseInt(element.css("font-size"));
         },
 
@@ -318,7 +317,7 @@
                 const height = digit.height();
 
                 digit.siblings(".-old-digit").remove();
-                const digit_copy = digit.clone().appendTo(digit.parent())
+                const digit_copy = digit.clone().appendTo(digit.parent());
                 digit_copy.css({
                     top: `${-1 * height}px`,
                 });
@@ -347,7 +346,7 @@
 
             const fadeDigit = (digit, value) => {
                 digit.siblings(".-old-digit").remove();
-                const digit_copy = digit.clone().appendTo(digit.parent())
+                const digit_copy = digit.clone().appendTo(digit.parent());
                 digit_copy.css({
                     opacity: 0,
                 });
@@ -374,10 +373,10 @@
 
             const zoomDigit = (digit, value) => {
                 const height = element.height();
-                const fs = fontSize; 
+                const fs = fontSize;
 
                 digit.siblings(".-old-digit").remove();
-                const digit_copy = digit.clone().appendTo(digit.parent())
+                const digit_copy = digit.clone().appendTo(digit.parent());
                 digit_copy.css({
                     top: 0,
                     left: 0,
@@ -431,7 +430,7 @@
                     continue;
                 }
 
-                switch ((`${o.animate}`).toLowerCase()) {
+                switch (`${o.animate}`.toLowerCase()) {
                     case "slide":
                         slideDigit(digit, digit_value);
                         break;
