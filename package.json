@@ -53,8 +53,8 @@
         "shx": "^0.4.0"
     },
     "dependencies": {
-        "@olton/datetime": "^3.2.2",
-        "@olton/dom": "^1.4.0",
+        "@olton/datetime": "^3.2.3",
+        "@olton/dom": "^1.4.1",
         "@olton/farbe": "^1.0.4",
         "@olton/guardian": "^0.7.1",
         "@olton/hooks": "^0.13.0",
