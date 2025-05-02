@@ -62,6 +62,7 @@ import "./hamburger/index.js";
 import "./hero/index.js";
 import "./hint/index.js";
 import "./hotkey/index.js";
+import "./hover-box/index.js";
 import "./html-container/index.js";
 import "./icon-box/index.js";
 import "./image-box/index.js";

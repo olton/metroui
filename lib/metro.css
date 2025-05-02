@@ -59094,6 +59094,40 @@ label:has(input) {
   box-shadow: 2px 2px 5px 0 var(--shadow-color);
 }
 
+/* source/components/hover-box/hover-box.less */
+:root {
+  --hover-box-effect-color: hsla(0, 0%, 80%, 0.56);
+}
+.dark-side {
+  --hover-box-effect-color: hsla(234, 78%, 62%, 0.26);
+}
+.hover-box {
+  --x: 0;
+  --y: 0;
+  --size: 0;
+  position: relative;
+  overflow: hidden;
+  border-color: var(--hover-box-effect-color);
+  transition: border-color 0.5s ease;
+}
+@media (hover: hover) {
+  .hover-box:hover {
+    border-color: var(--hover-box-effect-color);
+  }
+  .hover-box:hover::before {
+    content: "";
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: calc(4 * var(--size));
+    height: calc(4 * var(--size));
+    background: radial-gradient(var(--hover-box-effect-color), transparent 40%);
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease;
+    pointer-events: none;
+  }
+}
+
 /* source/components/icon-box/icon-box.less */
 :root {
   --icon-box-border-radius: 6px;
