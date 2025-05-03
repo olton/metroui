@@ -387,7 +387,6 @@ import { Props } from "./props.js";
 
         get$elements: (el) => Metro.$()($(el)),
 
-        // TODO: add if name is not defined, return one or array of plugins
         getPlugin: (el, name) => {
             const _name = normalizeComponentName(name);
             const $el = Metro.get$el(el);

@@ -3,10 +3,7 @@
     "use strict";
 
     Metro.utils = {
-        nothing: () => {},
-
-        noop: () => {},
-
+        // Deprecated, use Hooks.useId()
         elementId: (prefix) => `${prefix}-${new Date().getTime()}${$.random(1, 1000)}`,
 
         secondsToTime: (s) => {

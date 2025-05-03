@@ -50,7 +50,7 @@ import "./dropdown/index.js";
 import "./dropdown-button/index.js";
 import "./eval/index.js";
 import "./export/index.js";
-import "./file/index.js";
+import "./file-input/index.js";
 import "./flip-card/index.js";
 import "./form/index.js";
 import "./gauge/index.js";

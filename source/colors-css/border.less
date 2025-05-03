@@ -12,8 +12,13 @@ each(@colors, {
     .bd-@{value}-active {&:active {border-color: @@value !important;}}
     .bd-@{value}-hover {&:hover {border-color: @@value !important;}}
     .bd-@{value}-focus {&:focus {border-color: @@value !important;}}
-    .tg-@{value} {
+    .bd-before-@{value} {
         &::before {
+            border-color: @@value!important;
+        }
+    }
+    .bd-after-@{value} {
+        &::after {
             border-color: @@value!important;
         }
     }
