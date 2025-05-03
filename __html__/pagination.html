@@ -6,13 +6,13 @@
     <link href="../lib/metro.css" rel="stylesheet">
 
     <title>Test Pagination - Metro UI :: Popular HTML, CSS and JS library</title>
-
+    <meta name="metro:jquery" content="false">
 </head>
 <body class="m4-cloak">
 <div class="container">
     <h1>Pagination test page</h1>
 
-    <div class="example1"></div>
+    <div class="example1" lang="ua"></div>
     <div class="example2"></div>
     <div class="example3"></div>
     <div class="example4"></div>
@@ -20,36 +20,34 @@
 
 <script src="../lib/metro.js"></script>
 <script>
-    $(function(){
-        Metro.pagination({
-            length: 60,
-            rows: 10,
-            current: 5,
-            target: ".example1"
-        });
+    console.log($(() => {}))
+    Metro.pagination({
+        length: 60,
+        rows: 10,
+        current: 5,
+        target: ".example1"
+    });
 
-        Metro.pagination({
-            length: 1000,
-            rows: 10,
-            current: 3,
-            target: ".example2"
-        });
+    Metro.pagination({
+        length: 1000,
+        rows: 10,
+        current: 3,
+        target: ".example2"
+    });
 
-        Metro.pagination({
-            length: 1000,
-            rows: 10,
-            current: 25,
-            target: ".example3"
-        });
+    Metro.pagination({
+        length: 1000,
+        rows: 10,
+        current: 25,
+        target: ".example3"
+    });
 
-        Metro.pagination({
-            length: 1000,
-            rows: 10,
-            current: 98,
-            target: ".example4"
-        });
-
-    })
+    Metro.pagination({
+        length: 1000,
+        rows: 10,
+        current: 98,
+        target: ".example4"
+    });
 </script>
 </body>
 </html>

@@ -2,11 +2,15 @@
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
 
+    const NOTIFY_TIMEOUT = 3000;
+    const NOTIFY_WIDTH = 220;
+    const NOTIFY_DURATION = 200;
+
     let NotifyDefaultConfig = {
         container: null,
-        width: 220,
-        timeout: 3000,
-        duration: METRO_ANIMATION_DURATION,
+        width: NOTIFY_WIDTH,
+        timeout: NOTIFY_TIMEOUT,
+        duration: NOTIFY_DURATION,
         distance: "max",
         animation: "linear",
         clsNotify: "",
@@ -37,9 +41,9 @@
 
         reset: function () {
             const reset_options = {
-                width: 220,
-                timeout: METRO_TIMEOUT,
-                duration: METRO_ANIMATION_DURATION,
+                width: NOTIFY_WIDTH,
+                timeout: NOTIFY_TIMEOUT,
+                duration: NOTIFY_DURATION,
                 distance: "max",
                 animation: "linear",
             };

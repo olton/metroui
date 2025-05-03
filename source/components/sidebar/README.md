@@ -66,17 +66,17 @@ The Sidebar component provides a collapsible side panel for navigation, settings
 
 ## Component Parameters
 
-| Parameter | Default | Description |
-| --------- | ------- | ----------- |
-| menuScrollbar | false | Whether to show scrollbars in the menu |
-| sidebarDeferred | 0 | Delay before initialization (in milliseconds) |
-| position | "left" | Position of the sidebar ("left" or "right") |
-| shift | null | Selector for elements to be shifted when the sidebar opens |
-| staticShift | null | Selector for elements to be shifted when the sidebar is in static mode |
-| toggle | null | Selector for the element that toggles the sidebar |
-| duration | METRO_ANIMATION_DURATION | Duration of the animation when opening/closing |
-| static | null | Breakpoint at which the sidebar becomes static (e.g., "lg", "md") |
-| closeOutside | true | Whether to close the sidebar when clicking outside |
+| Parameter | Default    | Description |
+| --------- |------------| ----------- |
+| menuScrollbar | false      | Whether to show scrollbars in the menu |
+| sidebarDeferred | 0          | Delay before initialization (in milliseconds) |
+| position | "left"     | Position of the sidebar ("left" or "right") |
+| shift | null       | Selector for elements to be shifted when the sidebar opens |
+| staticShift | null       | Selector for elements to be shifted when the sidebar is in static mode |
+| toggle | null       | Selector for the element that toggles the sidebar |
+| duration | 200        | Duration of the animation when opening/closing |
+| static | null       | Breakpoint at which the sidebar becomes static (e.g., "lg", "md") |
+| closeOutside | true       | Whether to close the sidebar when clicking outside |
 | onOpen | Metro.noop | Callback function when the sidebar opens |
 | onClose | Metro.noop | Callback function when the sidebar closes |
 | onToggle | Metro.noop | Callback function when the sidebar toggles |

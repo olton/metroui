@@ -2,11 +2,21 @@
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
 
+    const TOAST_TIMEOUT = 3000;
+    const TOAST_DISTANCE = 20;
+    const TOAST_DURATION = 200;
+
+    Metro.TOAST_POSITION = {
+        TOP: "top",
+        BOTTOM: "bottom",
+        CENTER: "center",
+    };
+
     let ToastDefaultConfig = {
         callback: Metro.noop,
-        timeout: METRO_TIMEOUT,
-        distance: 20,
-        position: "bottom", // top, bottom, center
+        timeout: TOAST_TIMEOUT,
+        distance: TOAST_DISTANCE,
+        position: Metro.TOAST_POSITION.BOTTOM, // top, bottom, center
         clsToast: "",
     };
 
@@ -54,7 +64,7 @@
                     "margin-left": -(width / 2),
                 })
                 .addClass(o.clsToast)
-                .fadeIn(METRO_ANIMATION_DURATION, () => {
+                .fadeIn(TOAST_DURATION, () => {
                     setTimeout(() => {
                         Toast.remove(toast, o.callback);
                     }, o.timeout);
@@ -63,7 +73,7 @@
 
         remove: (toast, cb) => {
             if (!toast.length) return;
-            toast.fadeOut(METRO_ANIMATION_DURATION, () => {
+            toast.fadeOut(TOAST_DURATION, () => {
                 toast.remove();
                 Metro.utils.exec(cb, null, toast[0]);
             });

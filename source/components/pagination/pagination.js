@@ -13,9 +13,8 @@
             distance: 5,
             islandSize: 3,
             shortTrack: 10,
+            lang: undefined,
         };
-
-        const strings = Metro.locales[$("html").attr("lang") || "en"];
 
         let i;
         let prev;
@@ -29,9 +28,14 @@
         const pageSize = Number.parseInt(conf.rows);
         const totalPages = Math.ceil(totalRows / pageSize);
         const current = Number.parseInt(conf.current);
-        const pagination_wrapper = $(conf.target);
-        pagination_wrapper.html("");
+        const pagination_wrapper = $(conf.target).html("");
         const pagination = $("<ul>").addClass("pagination").addClass(conf.clsPagination).appendTo(pagination_wrapper);
+
+        let lang = conf.lang || pagination_wrapper.closest("[lang]").attr("lang") || "en";
+        if (Metro.locales[lang] === undefined) {
+            lang = "en";
+        }
+        const strings = Metro.locales[lang];
 
         if (totalRows === 0) {
             return;

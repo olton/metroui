@@ -6,32 +6,32 @@ The Streamer Component is a timeline-based UI element for displaying events in s
 
 The Streamer Component accepts the following parameters:
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| streamerDeferred | Number | 0 | Deferred initialization time in milliseconds |
-| wheel | Boolean | true | Enable mouse wheel scrolling |
-| wheelStep | Number | 20 | Scroll step for mouse wheel |
-| duration | Number | METRO_ANIMATION_DURATION | Animation duration |
-| defaultClosedIcon | String | "" | Default icon for closed state |
-| defaultOpenIcon | String | "" | Default icon for open state |
-| changeUri | Boolean | true | Change URI when selecting events |
-| encodeLink | Boolean | true | Encode links in URI |
-| closed | Boolean | false | Initial state (closed or open) |
-| chromeNotice | Boolean | false | Show Chrome browser notice |
-| startFrom | String | null | Start time point |
-| slideToStart | Boolean | true | Slide to start position |
-| startSlideSleep | Number | 1000 | Delay before sliding to start position |
-| source | String | null | Data source URL |
-| data | Object | null | Data object |
+| Parameter | Type | Default  | Description |
+|-----------|------|----------|-------------|
+| streamerDeferred | Number | 0        | Deferred initialization time in milliseconds |
+| wheel | Boolean | true     | Enable mouse wheel scrolling |
+| wheelStep | Number | 20       | Scroll step for mouse wheel |
+| duration | Number | 200      | Animation duration |
+| defaultClosedIcon | String | ""       | Default icon for closed state |
+| defaultOpenIcon | String | ""       | Default icon for open state |
+| changeUri | Boolean | true     | Change URI when selecting events |
+| encodeLink | Boolean | true     | Encode links in URI |
+| closed | Boolean | false    | Initial state (closed or open) |
+| chromeNotice | Boolean | false    | Show Chrome browser notice |
+| startFrom | String | null     | Start time point |
+| slideToStart | Boolean | true     | Slide to start position |
+| startSlideSleep | Number | 1000     | Delay before sliding to start position |
+| source | String | null     | Data source URL |
+| data | Object | null     | Data object |
 | eventClick | String | "select" | Event click behavior |
-| selectGlobal | Boolean | true | Global event selection |
-| streamSelect | Boolean | false | Enable stream selection |
-| excludeSelectElement | String | null | Selector for elements to exclude from selection |
-| excludeClickElement | String | null | Selector for elements to exclude from click |
-| excludeElement | String | null | Selector for elements to exclude from both selection and click |
-| excludeSelectClass | String | "" | Class for elements to exclude from selection |
-| excludeClickClass | String | "" | Class for elements to exclude from click |
-| excludeClass | String | "" | Class for elements to exclude from both selection and click |
+| selectGlobal | Boolean | true     | Global event selection |
+| streamSelect | Boolean | false    | Enable stream selection |
+| excludeSelectElement | String | null     | Selector for elements to exclude from selection |
+| excludeClickElement | String | null     | Selector for elements to exclude from click |
+| excludeElement | String | null     | Selector for elements to exclude from both selection and click |
+| excludeSelectClass | String | ""       | Class for elements to exclude from selection |
+| excludeClickClass | String | ""       | Class for elements to exclude from click |
+| excludeClass | String | ""       | Class for elements to exclude from both selection and click |
 
 ## Events
 

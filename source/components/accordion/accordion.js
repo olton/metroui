@@ -5,7 +5,7 @@
         accordionDeferred: 0,
         showMarker: true,
         material: false,
-        duration: METRO_ANIMATION_DURATION,
+        duration: 100,
         oneFrame: true,
         showActive: true,
 

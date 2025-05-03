@@ -2,7 +2,7 @@
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
     const AnimationDefaultConfig = {
-        duration: METRO_ANIMATION_DURATION,
+        duration: 300,
         ease: "linear",
     };
 

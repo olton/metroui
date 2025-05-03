@@ -22,13 +22,13 @@ Metro.toast.create("Operation completed", function(){
 
 ## Component Parameters
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
+| Parameter | Type | Default      | Description |
+| --- | --- |--------------| --- |
 | `callback` | Function | `Metro.noop` | Function called after toast is closed |
-| `timeout` | Number | `METRO_TIMEOUT` | Time in milliseconds before toast auto-closes |
-| `distance` | Number | `20` | Distance from the edge of the screen in pixels |
-| `position` | String | `"bottom"` | Position of the toast: "bottom", "top", or "center" |
-| `clsToast` | String | `""` | Additional CSS class(es) for toast element |
+| `timeout` | Number | `3000`       | Time in milliseconds before toast auto-closes |
+| `distance` | Number | `20`         | Distance from the edge of the screen in pixels |
+| `position` | String | `"bottom"`   | Position of the toast: "bottom", "top", or "center" |
+| `clsToast` | String | `""`         | Additional CSS class(es) for toast element |
 
 ## Methods
 

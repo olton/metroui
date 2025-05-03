@@ -26,20 +26,20 @@ The Accordion component provides a way to organize content into collapsible sect
 The Accordion component can be configured with the following options:
 
 | Option | Type | Default | Description |
-| ------ | ---- | ------- | ----------- |
-| accordionDeferred | number | 0 | Deferred initialization time in milliseconds |
-| showMarker | boolean | true | Show/hide marker (arrow) in the heading |
-| material | boolean | false | Use material design style |
-| duration | number | METRO_ANIMATION_DURATION | Animation duration for expanding/collapsing |
-| oneFrame | boolean | true | Allow only one frame to be open at a time |
-| showActive | boolean | true | Show active frames on initialization |
-| clsFrame | string | "" | Additional CSS class for frames |
-| clsHeading | string | "" | Additional CSS class for headings |
-| clsContent | string | "" | Additional CSS class for content |
-| clsAccordion | string | "" | Additional CSS class for the accordion container |
-| clsActiveFrame | string | "" | Additional CSS class for active frames |
-| clsActiveFrameHeading | string | "" | Additional CSS class for active frame headings |
-| clsActiveFrameContent | string | "" | Additional CSS class for active frame content |
+| ------ | ---- |---------| ----------- |
+| accordionDeferred | number | 0       | Deferred initialization time in milliseconds |
+| showMarker | boolean | true    | Show/hide marker (arrow) in the heading |
+| material | boolean | false   | Use material design style |
+| duration | number | 100     | Animation duration for expanding/collapsing |
+| oneFrame | boolean | true    | Allow only one frame to be open at a time |
+| showActive | boolean | true    | Show active frames on initialization |
+| clsFrame | string | ""      | Additional CSS class for frames |
+| clsHeading | string | ""      | Additional CSS class for headings |
+| clsContent | string | ""      | Additional CSS class for content |
+| clsAccordion | string | ""      | Additional CSS class for the accordion container |
+| clsActiveFrame | string | ""      | Additional CSS class for active frames |
+| clsActiveFrameHeading | string | ""      | Additional CSS class for active frame headings |
+| clsActiveFrameContent | string | ""      | Additional CSS class for active frame content |
 
 ## Events
 

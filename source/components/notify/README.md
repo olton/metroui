@@ -50,15 +50,15 @@ Metro.notify.kill($("#notification-id"));
 
 The Notify component accepts the following configuration options:
 
-| Parameter | Type | Default | Description |
-| --------- | ---- | ------- | ----------- |
-| `container` | element | `null` | Container element for notifications (created automatically if null) |
-| `width` | number | `220` | Width of notification in pixels |
-| `timeout` | number | `3000` | Time in milliseconds before notification automatically closes |
-| `duration` | number | `METRO_ANIMATION_DURATION` | Animation duration in milliseconds |
-| `distance` | string/number | `"max"` | Animation distance ("max" or specific pixel value) |
+| Parameter | Type | Default    | Description |
+| --------- | ---- |------------| ----------- |
+| `container` | element | `null`     | Container element for notifications (created automatically if null) |
+| `width` | number | `220`      | Width of notification in pixels |
+| `timeout` | number | `3000`     | Time in milliseconds before notification automatically closes |
+| `duration` | number | `200`      | Animation duration in milliseconds |
+| `distance` | string/number | `"max"`    | Animation distance ("max" or specific pixel value) |
 | `animation` | string | `"linear"` | Animation easing function |
-| `clsNotify` | string | `""` | Additional CSS class(es) for notification element |
+| `clsNotify` | string | `""`       | Additional CSS class(es) for notification element |
 
 ### Event Callbacks
 

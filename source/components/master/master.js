@@ -6,7 +6,7 @@
         masterDeferred: 0,
         effect: "slide", // slide, fade, switch, slowdown, custom
         effectFunc: "linear",
-        duration: METRO_ANIMATION_DURATION,
+        duration: 200,
 
         controlPrev: "🡐",
         controlNext: "🡒",

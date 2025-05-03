@@ -8,7 +8,7 @@
         shift: null,
         staticShift: null,
         toggle: null,
-        duration: METRO_ANIMATION_DURATION,
+        duration: 300,
         static: null,
         closeOutside: true,
         onOpen: Metro.noop,

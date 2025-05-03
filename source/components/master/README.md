@@ -23,23 +23,23 @@ The Master component provides a multi-page container with navigation controls, a
 
 ## Parameters
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| masterDeferred | number | 0 | Deferred initialization time in milliseconds |
-| effect | string | "slide" | Animation effect ("slide", "fade", "switch") |
-| effectFunc | string | "linear" | Easing function for the animation |
-| duration | number | METRO_ANIMATION_DURATION | Duration of the animation in milliseconds |
-| controlPrev | string | "🡐" | Previous control icon |
-| controlNext | string | "🡒" | Next control icon |
+| Parameter | Type | Default                 | Description |
+| --- | --- |-------------------------| --- |
+| masterDeferred | number | 0                       | Deferred initialization time in milliseconds |
+| effect | string | "slide"                 | Animation effect ("slide", "fade", "switch") |
+| effectFunc | string | "linear"                | Easing function for the animation |
+| duration | number | 200                     | Duration of the animation in milliseconds |
+| controlPrev | string | "🡐"                    | Previous control icon |
+| controlNext | string | "🡒"                    | Next control icon |
 | controlTitle | string | "Master, page $1 of $2" | Title template ($1 = current page, $2 = total pages) |
-| backgroundImage | string | "" | Background image URL |
-| clsMaster | string | "" | Additional CSS class for the master container |
-| clsControls | string | "" | Additional CSS class for controls |
-| clsControlPrev | string | "" | Additional CSS class for previous control |
-| clsControlNext | string | "" | Additional CSS class for next control |
-| clsControlTitle | string | "" | Additional CSS class for title |
-| clsPages | string | "" | Additional CSS class for pages container |
-| clsPage | string | "" | Additional CSS class for page |
+| backgroundImage | string | ""                      | Background image URL |
+| clsMaster | string | ""                      | Additional CSS class for the master container |
+| clsControls | string | ""                      | Additional CSS class for controls |
+| clsControlPrev | string | ""                      | Additional CSS class for previous control |
+| clsControlNext | string | ""                      | Additional CSS class for next control |
+| clsControlTitle | string | ""                      | Additional CSS class for title |
+| clsPages | string | ""                      | Additional CSS class for pages container |
+| clsPage | string | ""                      | Additional CSS class for page |
 
 ## Methods
 

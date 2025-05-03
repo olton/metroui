@@ -9,7 +9,7 @@
 
 </head>
 <body class="cloak">
-<nav data-role="appbar" class="border-bottom bd-default">
+<nav data-role="appbar" class="border-bottom bd-default" lang="ua">
     <span class="app-bar-item">Any</span>
     <div class="app-bar-item-static no-hover">
         <input type="checkbox" data-role="theme-switcher"/>
@@ -21,7 +21,14 @@
 
 <script src="../lib/metro.js"></script>
 <script>
-    Metro.welcome()
+    $(() => {
+        console.log($("html").attr("lang"))
+    })
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("DOMContentLoaded");
+        console.log(document.querySelector("html"))
+        console.log(document.documentElement.outerHTML)
+    });
 </script>
 </body>
 </html>

@@ -6,7 +6,7 @@
         streamerDeferred: 0,
         wheel: true,
         wheelStep: 20,
-        duration: METRO_ANIMATION_DURATION,
+        duration: 200,
         defaultClosedIcon: "",
         defaultOpenIcon: "",
         changeUri: true,
