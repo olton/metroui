@@ -42,7 +42,9 @@
 
     if (typeof Array.prototype.pack !== "function") {
         Array.prototype.pack = function () {
-            return this.map((n) => n.trim()).filter(Boolean);
+            return this.filter((value) => {
+                return value !== undefined && value !== null && `${value}`.trim() !== "";
+            });
         };
     }
 })();

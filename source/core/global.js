@@ -11,7 +11,7 @@
     const meta_cloak = $.meta("metro:cloak").attr("content");
     const meta_cloak_duration = $.meta("metro:cloak_duration").attr("content");
     const meta_blur_image = $.meta("metro:blur").attr("content");
-    const meta_smooth_scroll = $.meta("metro:smooth_scroll").attr("content");
+    const meta_smooth_scroll = $.meta("metro:smooth").attr("content");
     const meta_theme = $.meta("metro:theme").attr("content");
     const meta_info = $.meta("metro:info").attr("content");
     const meta_jquery = $.meta("metro:jquery").attr("content");

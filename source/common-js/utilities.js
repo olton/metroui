@@ -587,6 +587,7 @@
         },
 
         bool: (value) => {
+            let result;
             switch (value) {
                 case true:
                 case "true":
@@ -595,10 +596,12 @@
                 case "on":
                 case "yes":
                 case "+":
-                    return true;
+                    result = true;
+                    break;
                 default:
-                    return false;
+                    result = false;
             }
+            return result;
         },
 
         decCount: (v) => (v % 1 === 0 ? 0 : v.toString().split(".")[1].length),

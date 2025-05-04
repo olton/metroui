@@ -55,10 +55,10 @@
     "dependencies": {
         "@olton/datetime": "^3.2.3",
         "@olton/dom": "^1.4.1",
-        "@olton/farbe": "^1.0.5",
+        "@olton/farbe": "^1.0.7",
         "@olton/guardian": "^0.7.2",
         "@olton/hooks": "^0.13.0",
-        "@olton/html": "^0.14.1",
+        "@olton/html": "^0.14.2",
         "@olton/model": "^0.17.1",
         "@olton/router": "^0.4.0",
         "@olton/string": "^0.10.1"
