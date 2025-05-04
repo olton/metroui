@@ -121,6 +121,11 @@
             "tel",
         ],
 
+        // Змінні для комбінованих хоткеїв
+        pendingKey: null,
+        pendingTimeout: 1000,
+        pendingTimer: null,
+
         getKey: (e) => {
             let key;
             const k = e.keyCode;
@@ -147,6 +152,54 @@
             }
             return m;
         },
+
+        // Метод для формування комбінованого хоткея
+        createChordKey: (firstPart, secondPart) => {
+            return `${firstPart} ${secondPart}`;
+        },
+
+        // Метод для перевірки, чи є ключ в Metro.hotkeys як частина комбінованого хоткея
+        isPartOfChordKey: (key) => {
+            return Object.keys(Metro.hotkeys).some((hotkey) => hotkey.split(" ")[0] === key);
+        },
+
+        // Спільна функція для виконання дії хоткея
+        executeHotkeyAction: (hotkeyConfig, e) => {
+            const el = $(hotkeyConfig[0]);
+            const fn = hotkeyConfig[1];
+            const href = `${el.attr("href")}`.trim();
+
+            if (e.repeat && !el.attr("data-repeat")) {
+                return false;
+            }
+
+            e.preventDefault();
+
+            if (fn) {
+                Metro.utils.exec(fn);
+            } else {
+                if (el.is("a") && href && href.length > 0 && href.trim() !== "#") {
+                    globalThis.location.href = href;
+                } else {
+                    el[0].click();
+                }
+            }
+
+            return true;
+        },
+
+        // Функція для очищення очікування для комбінованого хоткея
+        clearPending: () => {
+            clearTimeout(Hotkey.pendingTimer);
+            Hotkey.pendingKey = null;
+        },
+
+        // Функція для встановлення очікування другої частини комбінованого хоткея
+        setPending: (key) => {
+            Hotkey.pendingKey = key;
+            clearTimeout(Hotkey.pendingTimer);
+            Hotkey.pendingTimer = setTimeout(Hotkey.clearPending, Hotkey.pendingTimeout);
+        },
     };
 
     function bindKey(key, fn) {
@@ -157,6 +210,27 @@
                 const _key = Hotkey.getKey(e);
                 const el = $(this);
                 const href = `${el.attr("href")}`;
+
+                // Перевіряємо, чи це комбінований хоткей
+                if (key.includes(" ")) {
+                    const keyParts = key.split(" ");
+
+                    // Якщо ми вже очікуємо другу частину
+                    if (Hotkey.pendingKey === keyParts[0] && _key === keyParts[1]) {
+                        Hotkey.clearPending();
+
+                        // Виконуємо дію
+                        if (el.is("a")) {
+                            if (href && href.trim() !== "#") {
+                                globalThis.location.href = href;
+                            }
+                        }
+
+                        Metro.utils.exec(fn, [e, _key, key], this);
+                        e.preventDefault();
+                    }
+                    return;
+                }
 
                 if (key !== _key) {
                     return;
@@ -180,41 +254,34 @@
     }
 
     $(document).on(`${Metro.events.keydown}.hotkey-data`, (e) => {
-        let el;
-        let fn;
-        let key;
-        let href;
+        const key = Hotkey.getKey(e);
 
-        // if (
-        //     (METRO_HOTKEYS_FILTER_INPUT_ACCEPTING_ELEMENTS && /textarea|input|select/i.test(e.target.nodeName)) ||
-        //     (METRO_HOTKEYS_FILTER_CONTENT_EDITABLE && $(e.target).attr("contenteditable")) ||
-        //     (METRO_HOTKEYS_FILTER_TEXT_INPUTS && Hotkey.textAcceptingInputTypes.indexOf(e.target.type) > -1)
-        // ) {
-        //     return;
-        // }
+        // Перевіряємо, чи є вже очікування для комбінованого хоткея
+        if (Hotkey.pendingKey !== null) {
+            // Шукаємо комбінований ключ
+            const chordKey = Hotkey.createChordKey(Hotkey.pendingKey, key);
 
-        key = Hotkey.getKey(e);
-
-        if (Metro.utils.keyInObject(Metro.hotkeys, key)) {
-            el = $(Metro.hotkeys[key][0]);
-            fn = Metro.hotkeys[key][1];
-            href = `${el.attr("href")}`.trim();
-
-            if (e.repeat && !el.attr("data-repeat")) {
-                return;
-            }
-
-            e.preventDefault();
-
-            if (fn) {
-                Metro.utils.exec(fn);
-            } else {
-                if (el.is("a") && href && href.length > 0 && href.trim() !== "#") {
-                    globalThis.location.href = href;
-                } else {
-                    el[0].click();
+            // Якщо знайдено комбінований хоткей
+            if (Metro.utils.keyInObject(Metro.hotkeys, chordKey)) {
+                if (Hotkey.executeHotkeyAction(Metro.hotkeys[chordKey], e)) {
+                    Hotkey.clearPending();
+                    return;
                 }
             }
+            // Якщо другої частини комбінації не знайдено, продовжуємо обробку поточного ключа
+        }
+
+        // Перевіряємо, чи поточний ключ є першою частиною комбінованого хоткея
+        const isPartOfChord = Hotkey.isPartOfChordKey(key);
+
+        // Якщо ключ є частиною комбінованого хоткея, встановлюємо очікування
+        if (isPartOfChord) {
+            Hotkey.setPending(key);
+        }
+
+        // Перевіряємо, чи є для поточного ключа окремий хоткей
+        if (Metro.utils.keyInObject(Metro.hotkeys, key)) {
+            Hotkey.executeHotkeyAction(Metro.hotkeys[key], e);
         }
     });
 })(Metro, Dom);
