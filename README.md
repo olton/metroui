@@ -95,28 +95,41 @@ Latest 2 ✔ | Latest 2 ✔ | Latest 2 ✔ | Latest 2 ✔ | Latest 2 ✔ |
 
 </div>
 
-<div align="center">
+---
+### Previous versions
 
-### Old version
-Metro UI CSS 3.x you can find in a repo [Metro-UI-CSS-3](https://github.com/olton-archive/Metro-UI-CSS-3)     
-Metro UI CSS 2.x you can find in a repo [Metro-UI-CSS-2](https://github.com/olton-archive/Metro-UI-CSS-2)     
-Metro UI CSS 0.x you can find in a repo [Metro-UI-CSS-095](https://github.com/olton-archive/Metro-UI-CSS-095) 
-
-### Thanks
-Thanks to all. Special thanks to all those who financially supported the project.    
++ `Metro-UI-CSS-4` - [Repository](https://github.com/olton/Metro-UI-CSS-4), [Documentation](https://v4.metroui.org.ua/)     
++ `Metro-UI-CSS-3` - [Repository](https://github.com/olton-archive/Metro-UI-CSS-3), [Documentation](https://v3.metroui.org.ua/)     
++ `Metro-UI-CSS-2` - [Repository](https://github.com/olton-archive/Metro-UI-CSS-2), [Documentation](https://v2.metroui.org.ua/)     
++ `Metro-UI-CSS-1` - [Repository](https://github.com/olton-archive/Metro-UI-CSS-085) 
 
 ### Credits
-You can read about credits [here](CREDITS.md)
+
+- Styles created using the [less](http://lesscss.org) preprocessor by [Alexis Sellier](https://github.com/cloudhead)
+- preCode by Leon Sorokin [preCode](https://github.com/leeoniya/preCode.js)
+- strftime by Tom Doan [strftime](https://github.com/thdoan/strftime)
+- function b64toBlob by [Jeremy Banks](http://stackoverflow.com/users/1114/jeremy-banks)
+- Date.getWeek by [Nick Baicoianu](http://www.epoch-calendar.com)
+- Data source processor by [jQuery](https://jquery.com)
+- All who brought something good
+
+### Thanks
+Thanks to all. Special thanks to all those who financially supported the project.
 
 ---
 
-### Support my work
-You can support my work
-+ [x] Patreon - https://www.patreon.com/metroui
-+ [x] PayPal - serhii@pimenov.com.ua
+## Support
+
+If you like this project, please consider supporting it by:
+
++ Star this repository on GitHub
++ Sponsor this project on GitHub Sponsors
++ **PayPal** to `serhii@pimenov.com.ua`.
++ [**Patreon**](https://www.patreon.com/metroui)
++ [**Buy me a coffee**](https://buymeacoffee.com/pimenov)
 
 ---
 
-2012-2024 © Copyright by Serhii Pimenov. All Rights Reserved.
+Copyright (c) 2012-2025 by [Serhii Pimenov](https://pimenov.com.ua). All Rights Reserved.
 
-</div>
+
