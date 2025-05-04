@@ -185,13 +185,13 @@
         let key;
         let href;
 
-        if (
-            (METRO_HOTKEYS_FILTER_INPUT_ACCEPTING_ELEMENTS && /textarea|input|select/i.test(e.target.nodeName)) ||
-            (METRO_HOTKEYS_FILTER_CONTENT_EDITABLE && $(e.target).attr("contenteditable")) ||
-            (METRO_HOTKEYS_FILTER_TEXT_INPUTS && Hotkey.textAcceptingInputTypes.indexOf(e.target.type) > -1)
-        ) {
-            return;
-        }
+        // if (
+        //     (METRO_HOTKEYS_FILTER_INPUT_ACCEPTING_ELEMENTS && /textarea|input|select/i.test(e.target.nodeName)) ||
+        //     (METRO_HOTKEYS_FILTER_CONTENT_EDITABLE && $(e.target).attr("contenteditable")) ||
+        //     (METRO_HOTKEYS_FILTER_TEXT_INPUTS && Hotkey.textAcceptingInputTypes.indexOf(e.target.type) > -1)
+        // ) {
+        //     return;
+        // }
 
         key = Hotkey.getKey(e);
 
