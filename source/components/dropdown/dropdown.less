@@ -5,46 +5,24 @@
     //display: block;
 }
 
+.dropdown {
+    position: fixed!important;
+    z-index: @zindex-fixed!important;
+}
+
 .dropdown-toggle {
+    padding-right: 4px!important;
 
-    .toggle();
-
-    &.drop-marker-light, &.marker-light  {
-        &::before {
-            border-color: @white;
-        }
+    svg {
+        fill: var(--drop-menu-toggle-color);
+        transform: rotate(90deg);
+        margin-left: auto;
+        transition: transform .3s;
     }
 
-    &.no-marker {
-        &::before {
-            display: none;
-        }
-    }
-
-    &.active-toggle, &.active-container {
-        &::before {
-            .rotate(135deg);
-            transition: @transition-short;
-        }
-    }
-
-    &.marker-center {
-        &::before {
-            left: 50%;
-            top: 50%;
-            margin-left: 0;
-            margin-top: 0;
-            .translateX(-50%);
-            .translateY(-50%);
-            .rotate(-45deg);
-        }
-        &.active-toggle, &.active-container {
-            &::before {
-                .translateX(-50%);
-                .translateY(-50%);
-                .rotate(135deg);
-                transition: @transition-short;
-            }
+    &.active-toggle {
+        svg {
+            transform: rotate(270deg);
         }
     }
 }

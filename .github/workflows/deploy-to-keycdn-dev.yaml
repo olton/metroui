@@ -1,0 +1,29 @@
+name: Deploy to KeyCDN
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Push files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ftp.keycdn.com
+          username: metro4
+          password: ${{ secrets.FTP_PASSWORD_KEYCDN }}
+          dangerous-clean-slate: true
+          local-dir: ./lib/
+          server-dir: dev/
+          

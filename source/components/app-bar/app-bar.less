@@ -2,39 +2,37 @@
 @import (once) "../../include/mixins";
 
 :root {
+    --appbar-border-radius: 4px;
+    --appbar-z-index: @zindex-fixed;
+}
+
+:root {
     --appbar-background: #ffffff;
     --appbar-color: #191919;
-    --appbar-item-background: inherit;
-    --appbar-item-color: inherit;
+    --appbar-item-background: transparent;
+    --appbar-item-color: #191919;
     --appbar-item-color-disabled: #ccc;
     --appbar-item-color-hover: #000000;
     --appbar-item-background-hover: #e8e8e8;
-    --appbar-dropdown-toggle-color: #191919;
-    --appbar-border-radius: 4px;
-    --appbar-z-index: @zindex-fixed;
-    --appbar-hamburger-background: transparent;
-    --appbar-hamburger-color: #000000;
 }
 
 .dark-side {
     --appbar-background: #1e1f22;
     --appbar-color: #dbdfe7;
-    --appbar-item-background: inherit;
-    --appbar-item-color: inherit;
+    --appbar-item-background: transparent;
+    --appbar-item-color: #dbdfe7;
     --appbar-item-color-disabled: #a8a8a8;
     --appbar-item-color-hover: #ffffff;
     --appbar-item-background-hover: #2b2d30;
-    --appbar-dropdown-toggle-color: #ffffff;
-    --appbar-hamburger-background: transparent;
-    --appbar-hamburger-color: #ffffff;
 }
 
 .app-bar {
     display: flex;
-    position: fixed;
+    position: sticky;
+    align-self: flex-start!important;
+    justify-self: flex-start!important;
     top: 0;
-    left: 0;
-    right: 0;
+    width: 100%;
     height: auto;
     min-height: 52px;
     z-index: var(--appbar-z-index);
@@ -46,7 +44,6 @@
 }
 
 .app-bar {
-
     .app-bar-container {
         background-color: inherit;
         color: inherit;
@@ -56,11 +53,11 @@
         justify-content: center;
     }
 
-    .app-bar-item, .app-bar-menu > li {
+    .app-bar-item, .app-bar-item-static, .app-bar-menu > li {
         position: relative;
     }
 
-    .app-bar-item, .app-bar-item-static, .app-bar-menu > li > a {
+    .app-bar-item, .app-bar-item-static, .app-bar-menu a {
         display: flex;
         align-items: center;
         font-size: 13px;
@@ -74,10 +71,20 @@
         line-height: 20px;
         overflow: hidden;
 
-        &:hover {
-            color: var(--appbar-item-color-hover);
-            text-decoration: none;
-            background-color: var(--appbar-item-background-hover);
+        @media (hover: hover) {
+            &:hover {
+                color: var(--appbar-item-color-hover);
+                text-decoration: none;
+                background-color: var(--appbar-item-background-hover);
+            }
+        }
+        
+        @media (hover: none) {
+            &:active {
+                color: var(--appbar-item-color-hover);
+                text-decoration: none;
+                background-color: var(--appbar-item-background-hover);
+            }
         }
 
         &:focus {
@@ -90,16 +97,44 @@
     }
 
     .app-bar-item-static {
-        &:hover {
-            background-color: var(--appbar-item-background);
-            color: var(--appbar-item-color);
+        @media (hover: hover) {
+            &:hover {
+                background-color: var(--appbar-item-background);
+                color: var(--appbar-item-color);
+            }
+        }
+        @media (hover: none) {
+            &:active {
+                background-color: var(--appbar-item-background);
+                color: var(--appbar-item-color);
+            }
         }
     }
 
     .brand {
         flex-shrink: 0;
+        font-size: 20px;
+        line-height: .8;
         &:hover {
-            background-color: var(--appbar-item-background);
+            background-color: transparent;
+        }
+        
+        .icon {
+            font-size: 20px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            object-fit: cover;
+        }
+        
+        .icon + * {
+            margin-left: 6px;
+        }
+        
+        .caption {
+            margin-bottom: 3px;
         }
     }
 
@@ -123,9 +158,12 @@
     }
 
     .app-bar-menu > li > a {
+        &:focus {
+            outline: 1px solid var(--appbar-item-background-hover);
+        }
         &.dropdown-toggle {
             &::before {
-                border-color: var(--appbar-dropdown-toggle-color)!important;
+                border-color: var(--appbar-item-color)!important;
             }
         }
     }
@@ -138,10 +176,10 @@
         height: 52px;
         width: 52px;
         margin-top: -27px;
-        background: var(--appbar-hamburger-background);
+        background: transparent;
 
         .line {
-            background-color: var(--appbar-hamburger-color);
+            background-color: var(--appbar-item-color);
         }
 
         &.menu-down {
@@ -150,6 +188,10 @@
                     margin: -4px 16px;
                 }
             }
+        }
+
+        &:focus {
+            outline: 1px solid var(--appbar-item-background-hover);
         }
     }
 
@@ -215,14 +257,8 @@
     }
 }
 
-.p-ab {
-    padding-top: 52px!important;
-}
-
-.m-ab {
-    margin-top: 52px!important;
-}
-
-.h-ab {
-    height: calc(100% - 52px);
+.container-fluid, .container {
+    & > .app-bar {
+        position: relative;
+    }
 }

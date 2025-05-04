@@ -1,0 +1,114 @@
+@import (once) "../../include/vars";
+@import (once) "../../include/mixins";
+
+:root {
+    --shadow-color-small: rgba(0, 0, 0, 0.05);
+    --shadow-color-normal: rgba(0, 0, 0, 0.1);
+    --shadow-color-medium: rgba(0, 0, 0, 0.1);
+    --shadow-color-large: rgba(0, 0, 0, 0.1);
+    --shadow-color-large-extra: rgba(0, 0, 0, 0.25);
+    --shadow-color-3d: rgba(0, 0, 0, 1);
+    --shadow-color-border1: rgba(9, 30, 66, 0.25);
+    --shadow-color-border2: rgba(9, 30, 66, 0.13);
+    --shadow-color-solid-1: rgba(9, 30, 66, 0.25);
+    --shadow-color-solid-2: rgba(9, 30, 66, 0.08);
+    
+    --shadow-color-text: rgb(46, 46, 46);
+}
+
+.dark-side {
+    --shadow-color-small: rgba(0, 0, 0, 0.55);
+    --shadow-color-normal: rgba(0, 0, 0, 0.75);
+    --shadow-color-medium: rgba(0, 0, 0, 0.75);
+    --shadow-color-large: rgba(0, 0, 0, 0.75);
+    --shadow-color-large-extra: rgba(0, 0, 0, 0.75);
+    --shadow-color-3d: rgb(17, 18, 21);
+    --shadow-color-border1: rgba(0, 0, 0, 0.45);
+    --shadow-color-border2: rgba(0, 0, 0, 0.25);
+    --shadow-color-solid-1: rgba(0, 0, 0, 0.55);
+    --shadow-color-solid-2: rgba(0, 0, 0, 0.25);
+
+    --shadow-color-text: rgba(0, 0, 0, 0.55);
+}
+
+.no-shadow-box { box-shadow: none !important;}
+.no-shadow-text { text-shadow: none !important;}
+.no-shadow { text-shadow: none !important; box-shadow: none !important;}
+
+.shadow-small {
+    box-shadow: 0 1px 2px 0 var(--shadow-color-small);
+}
+
+.shadow-normal {
+    box-shadow: 0 1px 3px 0 var(--shadow-color-normal), 0 1px 2px -1px var(--shadow-color-normal);
+}
+
+.shadow-medium {
+    box-shadow: 0 10px 15px -3px var(--shadow-color-medium), 0 4px 6px -4px var(--shadow-color-medium);
+}
+
+.shadow-large {
+    box-shadow: 0 20px 25px -5px var(--shadow-color-large), 0 8px 10px -6px var(--shadow-color-large);
+}
+
+.shadow-large-extra {
+    box-shadow: 0 25px 50px -12px var(--shadow-color-large-extra);
+}
+
+.shadow-3d {
+    box-shadow: 8px 8px 0 var(--shadow-color-3d);
+}
+
+.shadow-3d-border {
+    box-shadow: 0 0 0 2px var(--shadow-color-3d), 8px 8px 0 0 var(--shadow-color-3d);
+}
+
+.shadow-border {
+    box-shadow: 0 1px 1px var(--shadow-color-border1), 0 0 1px 1px var(--shadow-color-border2);
+}
+
+.shadow-solid {
+    box-shadow: 0 4px 8px -2px var(--shadow-color-solid-1), 0 0 0 1px var(--shadow-color-solid-2);
+}
+
+each(@normalColors, {
+    @softColor: "light-@{value}";
+    
+    .shadow-3d-@{value} {
+        box-shadow: 8px 8px 0 @@value;
+    }
+    .shadow-3d-border-@{value} {
+        box-shadow: 0 0 0 2px @@value, 8px 8px 0 0 @@value;
+    }
+    .shadow-glow-@{value} {
+        box-shadow: 0 0px 30px @@value;
+    }
+    .shadow-glow-soft-@{value} {
+        box-shadow: 0 9px 30px @@softColor;
+    }
+})
+
+.text-shadow {
+    text-shadow: 1px 2px 2px rgba(0,0,0,0.5);    
+}
+
+// TODO need refactoring
+.text-emboss {
+    //text-shadow: -1px -1px 1px #fff, 1px 1px 1px #000;
+}
+
+// TODO need refactoring colors for light theme
+.text-retro {
+    text-shadow: 3px 3px 0 #2c2e38, 5px 5px 0 #5c5f72;
+    letter-spacing: .1em;
+}
+
+.text-3d {
+    text-shadow: 0 1px 0 #999, 0 2px 0 #888, 0 3px 0 #777, 0 4px 0 #666, 0 5px 0 #555, 0 6px 0 #444, 0 7px 0 #333, 0 8px 7px #001135;
+}
+
+each(@normalColors, {
+    .text-shadow-glow-@{value} {
+        text-shadow: 0 0 10px @@value;
+    }
+})

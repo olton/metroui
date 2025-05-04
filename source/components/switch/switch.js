@@ -1,112 +1,98 @@
-/* global Metro, METRO_LOCALE, Cake */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var SwitchDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    let SwitchDefaultConfig = {
         switchDeferred: 0,
         material: false,
-        transition: true,
-        caption: "",
-        captionPosition: "right",
+        prepend: "",
+        append: "",
         clsSwitch: "",
         clsCheck: "",
         clsCaption: "",
-        textOn: "",
-        textOff: "",
-        locale: METRO_LOCALE,
+        onoff: false,
+        on: "",
+        off: "",
         showOnOff: false,
-        onSwitchCreate: Metro.noop
+        onSwitchCreate: Metro.noop,
     };
 
-    Metro.switchSetup = function (options) {
+    Metro.switchSetup = (options) => {
         SwitchDefaultConfig = $.extend({}, SwitchDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSwitchSetup"] !== undefined) {
-        Metro.switchSetup(globalThis["metroSwitchSetup"]);
+    if (typeof globalThis.metroSwitchSetup !== "undefined") {
+        Metro.switchSetup(globalThis.metroSwitchSetup);
     }
 
-    Metro.Component('switch', {
-        init: function( options, elem ) {
-            this._super(elem, options, SwitchDefaultConfig, {
-                locale: null
-            });
+    Metro.Component("switch", {
+        init: function (options, elem) {
+            this._super(elem, options, SwitchDefaultConfig, {});
 
             return this;
         },
 
-        _create: function(){
-            var element = this.element, o = this.options;
-            var container ;
-            var check = $("<span>").addClass("check");
-            var caption = $("<span>").addClass("caption").html(o.caption);
+        _create: function () {
+            const element = this.element;
+            const o = this.options;
+            const strings = this.strings;
+
+            const container = element
+                .wrap("<label>")
+                .addClass("switch")
+                .addClass(element[0].className)
+                .addClass(o.clsSwitch);
 
             element.attr("type", "checkbox");
 
-            if (element.attr("readonly") !== undefined) {
-                element.on("click", function(e){
+            if (element.attr("readonly")) {
+                element.on("click", (e) => {
                     e.preventDefault();
-                })
+                });
             }
-
-            container = element.wrap(
-                $("<label>").addClass((o.material === true ? " switch-material " : " switch ") + element[0].className)
-            );
 
             this.component = container;
 
-            check.appendTo(container);
-            caption.appendTo(container);
+            element[0].className = "";
 
-            if (o.transition === true) {
-                container.addClass("transition-on");
+            if (o.prepend) {
+                container.prepend(
+                    $("<span>")
+                        .addClass("caption-prepend")
+                        .addClass(o.clsPrepend)
+                        .addClass(o.clsCaption)
+                        .html(o.prepend),
+                );
             }
 
-            if (o.captionPosition === 'left') {
-                container.addClass("caption-left");
+            if (o.append) {
+                container.append(
+                    $("<span>").addClass("caption-append").addClass(o.clsAppend).addClass(o.clsCaption).html(o.append),
+                );
             }
 
-            element[0].className = '';
-
-            container.addClass(o.clsSwitch);
-            caption.addClass(o.clsCaption);
-            check.addClass(o.clsCheck);
-
-            if (element.is(':disabled')) {
-                this.disable();
+            if (o.onoff === true) {
+                element.attr("data-on", o.on || strings.label_on);
+                element.attr("data-off", o.off || strings.label_off);
             } else {
-                this.enable();
+                element.removeAttr("data-on");
+                element.removeAttr("data-off");
             }
 
-            this.i18n(o.locale);
+            if (o.material === true) {
+                container.addClass("material");
+            }
+
             this._fireEvent("switch-create");
         },
 
-        disable: function(){
-            this.element.prop("disabled", true);
-        },
-
-        enable: function(){
-            this.element.prop("disabled", false);
-        },
-
-        toggleState: function(){
-            var element = this.element;
-
-            if (!element.is(":disabled")) {
-                this.disable();
-            } else {
-                this.enable();
-            }
-        },
-
-        toggle: function(v){
-            var element = this.element;
+        toggle: function (v) {
+            const element = this.element;
 
             if (element.is(":disabled")) return this;
 
-            if (!Utils.isValue(v)) {
-                element.prop("checked", !Utils.bool(element.prop("checked")));
+            if (!Metro.utils.isValue(v)) {
+                element.prop("checked", !Metro.utils.bool(element.prop("checked")));
             } else {
                 element.prop("checked", v === 1);
             }
@@ -114,46 +100,10 @@
             return this;
         },
 
-        changeLocale: function(where, val){
-            var element = this.element, o = this.options;
-            var check = element.siblings(".check");
+        changeAttribute: (attr, newVal) => {},
 
-            o["text"+Str.capitalize(where)] = val
-
-            check.attr("data-"+where, val);
-        },
-
-        i18n: function(locale){
-            var element = this.element, o = this.options;
-            var check = element.siblings(".check");
-            var on, off;
-
-            o.locale = locale;
-            this.locale = Metro.locales[o.locale] !== undefined ? Metro.locales[o.locale] : Metro.locales["en-US"];
-
-            if (o.showOnOff) {
-                on = element.attr("data-on") || o.textOn || this.locale.switch.on;
-                off = element.attr("data-off") || o.textOff || this.locale.switch.off;
-
-                check.attr("data-on", on);
-                check.attr("data-off", off);
-            } else {
-                check.removeAttr("data-on");
-                check.removeAttr("data-off");
-            }
-        },
-
-        changeAttribute: function(attr, newVal){
-            switch (attr) {
-                case 'data-on':
-                case 'data-text-on': this.changeLocale('on', newVal); break;
-                case 'data-off':
-                case 'data-text-off': this.changeLocale('off', newVal); break;
-            }
-        },
-
-        destroy: function(){
+        destroy: function () {
             return this.element;
-        }
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

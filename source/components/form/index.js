@@ -1,1 +1,1 @@
-import "./form.less"
+import "./form.less";

@@ -1,78 +1,95 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-
-    var Utils = Metro.utils;
-    var AppBarDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+    let AppBarDefaultConfig = {
         appbarDeferred: 0,
         expand: false,
         expandPoint: null,
         duration: 100,
+        checkHamburgerColor: false,
         onMenuOpen: Metro.noop,
         onMenuClose: Metro.noop,
         onBeforeMenuOpen: Metro.noop,
         onBeforeMenuClose: Metro.noop,
         onMenuCollapse: Metro.noop,
         onMenuExpand: Metro.noop,
-        onAppBarCreate: Metro.noop
+        onAppBarCreate: Metro.noop,
     };
 
-    Metro.appBarSetup = function (options) {
+    Metro.appBarSetup = (options) => {
         AppBarDefaultConfig = $.extend({}, AppBarDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroAppBarSetup"] !== undefined) {
-        Metro.appBarSetup(globalThis["metroAppBarSetup"]);
+    if (typeof globalThis.metroAppBarSetup !== "undefined") {
+        Metro.appBarSetup(globalThis.metroAppBarSetup);
     }
 
-    Metro.Component('app-bar', {
+    Metro.Component("app-bar", {
         init: function (options, elem) {
             this._super(elem, options, AppBarDefaultConfig, {
-                id: Utils.elementId('app-bar')
+                id: null,
             });
 
             return this;
         },
 
         _create: function () {
-            var element = this.element;
+            const element = this.element;
+
+            this.id = element.attr("id") || Hooks.useId(this.elem);
 
             this._createStructure();
             this._createEvents();
 
             this._fireEvent("app-bar-create", {
-                element: element
-            })
+                element: element,
+            });
         },
 
         _createStructure: function () {
-            var element = this.element, o = this.options;
-            var hamburger, menu, elementColor = Utils.getStyleOne(element, "background-color");
+            const element = this.element;
+            const o = this.options;
+            let hamburger;
+            let menu;
+            const elementColor = Metro.utils.getStyleOne(element, "background-color");
 
-            element.addClass("app-bar");
-            // console.log(elementColor)
+            element.addClass("app-bar").attr("role", "navigation");
+
             hamburger = element.find(".hamburger");
             if (hamburger.length === 0) {
-                hamburger = $("<button>").attr("type", "button").addClass("hamburger menu-down");
-                for (var i = 0; i < 3; i++) {
-                    $("<span>").addClass("line").appendTo(hamburger);
-                }
+                hamburger = $("<button>")
+                    .attr("type", "button")
+                    .addClass("hamburger menu-down")
+                    .attr("aria-label", "Toggle menu")
+                    .attr("aria-expanded", "false")
+                    .attr("aria-controls", `app-bar-menu-${this.id}`);
 
-                if (elementColor === "rgba(0, 0, 0, 0)" || Farbe.Routines.isLight(elementColor) === true) {
-                    // hamburger.addClass("dark");
+                for (let i = 0; i < 3; i++) {
+                    $("<span>").addClass("line").appendTo(hamburger);
                 }
             }
 
             element.prepend(hamburger);
             menu = element.find(".app-bar-menu");
 
+            if (menu.length > 0) {
+                menu.attr("id", `app-bar-menu-${this.id}`);
+                menu.attr("role", "menubar");
+            }
+
             if (menu.length === 0) {
                 hamburger.css("display", "none");
             } else {
-                Utils.addCssRule(Metro.sheet, ".app-bar-menu li", "list-style: none!important;"); // This special for IE11 and Edge
+                // Додаємо атрибути доступності для меню
+                menu.find("li").attr("role", "menuitem");
+                menu.find("li a").attr("tabindex", "0");
+
+                // Додаємо атрибути для вкладених меню
+                menu.find("li:has(ul)").attr("aria-haspopup", "true");
+                menu.find("li ul").attr("role", "menu").attr("aria-hidden", "true");
             }
 
-            if (hamburger.css('display') === 'block') {
+            if (hamburger.css("display") === "block") {
                 menu.hide().addClass("collapsed");
                 hamburger.removeClass("hidden");
             } else {
@@ -83,23 +100,27 @@
                 element.addClass("app-bar-expand");
                 hamburger.addClass("hidden");
             } else {
-                if (Utils.isValue(o.expandPoint) && Utils.mediaExist(o.expandPoint)) {
+                if (Metro.utils.isValue(o.expandPoint) && Metro.utils.mediaExist(o.expandPoint)) {
                     element.addClass("app-bar-expand");
                     hamburger.addClass("hidden");
                 }
             }
 
-            // $("body").addClass("p-ab")
+            if (o.checkHamburgerColor === true) {
+                // TODO: if true, hamburger color will be set dependent on app-bar background color
+            }
         },
 
         _createEvents: function () {
-            var that = this, element = this.element, o = this.options;
-            var menu = element.find(".app-bar-menu");
-            var hamburger = element.find(".hamburger");
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const menu = element.find(".app-bar-menu");
+            const hamburger = element.find(".hamburger");
 
-            element.on(Metro.events.click, ".hamburger", function () {
+            element.on(Metro.events.click, ".hamburger", () => {
                 if (menu.length === 0) return;
-                var collapsed = menu.hasClass("collapsed");
+                const collapsed = menu.hasClass("collapsed");
                 if (collapsed) {
                     that.open();
                 } else {
@@ -107,86 +128,120 @@
                 }
             });
 
-            $(globalThis).on(Metro.events.resize, function () {
+            // Додаємо підтримку клавіатурної навігації
+            hamburger.on("keydown", (e) => {
+                if (e.keyCode === 13 || e.keyCode === 32) {
+                    // Enter або Space
+                    e.preventDefault();
+                    hamburger.trigger("click");
+                }
+            });
 
-                if (o.expand !== true) {
-                    if (Utils.isValue(o.expandPoint) && Utils.mediaExist(o.expandPoint)) {
-                        element.addClass("app-bar-expand");
-                        that._fireEvent("menu-expand");
-                    } else {
-                        element.removeClass("app-bar-expand");
-                        that._fireEvent("menu-collapse");
+            // Додаємо обробку клавіш для пунктів меню
+            menu.find("li a").on("keydown", function (e) {
+                if (e.keyCode === 13 || e.keyCode === 32) {
+                    // Enter або Space
+                    e.preventDefault();
+                    $(this).trigger("click");
+                }
+
+                if (e.keyCode === 27) {
+                    // Escape
+                    e.preventDefault();
+                    that.close();
+                    hamburger.focus();
+                }
+            });
+
+            $(globalThis).on(
+                Metro.events.resize,
+                () => {
+                    if (o.expand !== true) {
+                        if (Metro.utils.isValue(o.expandPoint) && Metro.utils.mediaExist(o.expandPoint)) {
+                            element.addClass("app-bar-expand");
+                            that._fireEvent("menu-expand");
+                        } else {
+                            element.removeClass("app-bar-expand");
+                            that._fireEvent("menu-collapse");
+                        }
                     }
-                }
 
-                if (menu.length === 0) {
-                    hamburger.addClass("hidden")
-                    return
-                }
-
-                menu.removeClass("opened").removeClass("collapsed")
-
-                if (hamburger.css('display') !== 'block') {
-                    hamburger.addClass("hidden");
-                    menu.show()
-                } else {
-                    hamburger.removeClass("hidden");
-                    if (hamburger.hasClass("active")) {
-                        menu.removeClass("collapsed").addClass("opened");
-                    } else {
-                        menu.addClass("collapsed").removeClass("opened");
+                    if (menu.length === 0) {
+                        hamburger.addClass("hidden");
+                        return;
                     }
-                }
-            }, {ns: this.id});
+
+                    menu.removeClass("opened").removeClass("collapsed");
+
+                    if (hamburger.css("display") !== "block") {
+                        hamburger.addClass("hidden");
+                        menu.show();
+                    } else {
+                        hamburger.removeClass("hidden");
+                        if (hamburger.hasClass("active")) {
+                            menu.removeClass("collapsed").addClass("opened");
+                        } else {
+                            menu.addClass("collapsed").removeClass("opened");
+                        }
+                    }
+                },
+                { ns: this.id },
+            );
         },
 
         close: function () {
-            var that = this, element = this.element, o = this.options;
-            var menu = element.find(".app-bar-menu");
-            var hamburger = element.find(".hamburger");
+            const element = this.element;
+            const o = this.options;
+            const menu = element.find(".app-bar-menu");
+            const hamburger = element.find(".hamburger");
 
-            that._fireEvent("before-menu-close", {
-                menu: menu[0]
+            this._fireEvent("before-menu-close", {
+                menu: menu[0],
             });
 
-            menu.slideUp(o.duration, function () {
+            hamburger.attr("aria-expanded", "false");
+            menu.find("ul").attr("aria-hidden", "true");
+
+            menu.slideUp(o.duration, () => {
                 menu.addClass("collapsed").removeClass("opened");
                 hamburger.removeClass("active");
 
-                that._fireEvent("menu-close", {
-                    menu: menu[0]
+                this._fireEvent("menu-close", {
+                    menu: menu[0],
                 });
             });
         },
 
         open: function () {
-            var that = this, element = this.element, o = this.options;
-            var menu = element.find(".app-bar-menu");
-            var hamburger = element.find(".hamburger");
+            const element = this.element;
+            const o = this.options;
+            const menu = element.find(".app-bar-menu");
+            const hamburger = element.find(".hamburger");
 
-            that._fireEvent("before-menu-open", {
-                menu: menu[0]
+            this._fireEvent("before-menu-open", {
+                menu: menu[0],
             });
 
-            menu.slideDown(o.duration, function () {
+            hamburger.attr("aria-expanded", "true");
+            menu.find("ul").attr("aria-hidden", "false");
+
+            menu.slideDown(o.duration, () => {
                 menu.removeClass("collapsed").addClass("opened");
                 hamburger.addClass("active");
 
-                that._fireEvent("menu-open", {
-                    menu: menu[0]
+                this._fireEvent("menu-open", {
+                    menu: menu[0],
                 });
             });
         },
 
-        /* eslint-disable-next-line */
-        changeAttribute: function (attributeName) {
-        },
+        changeAttribute: (attr, val) => {},
 
         destroy: function () {
-            var element = this.element;
+            const element = this.element;
             element.off(Metro.events.click, ".hamburger");
-            $(globalThis).off(Metro.events.resize, {ns: this.id});
-            return element;
-        }
+            $(globalThis).off(Metro.events.resize, { ns: this.id });
+            element.remove();
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

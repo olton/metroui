@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../lib/metro.css">
+    <link rel="stylesheet" href="core/style.css">
+    <title>Metro Icons Viewer 1.0</title>
+    <style>
+        #icon-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #icon-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 260px;
+            color: #676767;
+            cursor: pointer;
+
+            &:hover {
+                color: #000;
+            }
+
+            .icon {
+                font-size: 22px;
+                border: 1px solid #ccc;
+                border-radius: 12px;
+                padding: 4px;
+                width: 32px;
+                height: 32px;
+                text-align: center;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .label {
+                margin-left: 1rem;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body class="cloak">
+
+<div class="container-fluid">
+    <div class="container">
+        <h1>Metro Icons Viewer ( <small id="icon-count">0</small> )</h1>
+        <hr/>
+        <div class="p-1-sm p-3-md bg-light">
+            <div id="icon-search"></div>
+        </div>
+
+        <div class="remark">
+            <span class="icon mif-report"></span>
+            <div>
+                Clip to icon to copy icon name to clipboard.
+            </div>
+        </div>
+
+        <div id="icon_list_wrapper" class="mt-4">
+            <ul class="unstyled-list list icon-list" id="icon-list" data-search-wrapper="#icon-search" data-show-search="true" data-sort-target="li" data-sort-class="label" data-sort-dir="asc">
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    $(async () => {
+        const res = await fetch('core/selection.json')
+        if (!res.ok) {
+            return
+        }
+        const icons = (await res.json()).icons
+        $("#icon-count").html(icons.length);
+        const list = $("#icon-list")
+        for (let item of icons) {
+            const li = $("<li>").html(`
+                    <span class='icon mif-${item.properties.name}'></span>
+                    <span class='label'>${item.properties.name}</span>
+                `)
+            li.attr('data-copy-to-clipboard', "mif-"+item.properties.name)
+            li.appendTo(list)
+        }
+        Metro.makePlugin(list, 'list')
+    })
+</script>
+
+</body>
+</html>

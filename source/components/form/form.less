@@ -1,20 +1,34 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
-form {
-    display: block;
+form, .form {
+    display: flex;
     position: relative;
+    flex-flow: column nowrap;
 }
 
 .form-actions {
-    margin: 10px 0;
-    display: block;
+    margin: 1rem 0;
+    display: flex;
     position: relative;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+    
+    *:not(:last-child) {
+        margin-right: .25rem;
+    }
 }
 
 .form-group {
-    display: block;
+    display: flex;
     position: relative;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .form-group + .form-group {
@@ -23,46 +37,46 @@ form {
 
 .inline-form {
     display: flex;
-    flex-flow: row wrap;
-    align-items: center;
+    flex-flow: row nowrap;
+    align-items: flex-end;
     justify-content: flex-start;
 
-    input[type=text],
-    input[type=password],
-    input[type=tel],
-    input[type=datetime-local],
-    input[type=email],
-    input[type=file],
-    input[type=month],
-    input[type=number],
-    input[type=search],
-    input[type=time],
-    input[type=url],
-    input[type=week],
-    input[type=file],
-    select,
-    textarea,
-    .file,
-    .input,
-    .textarea,
-    .select,
-    .tag-input,
-    .spinner {
-        width: auto;
-        margin-left: .5rem;
-        margin-right: .5rem;
+    & > * {
+        width: auto!important;
+        margin: 0 .5rem!important;
+        flex-shrink: 1;
     }
-
-    .form-group {
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-        justify-content: flex-start;
+    
+    & > *:first-child {
+        margin-left: 0!important;
+    }
+    
+    .form-actions {
+        border-top: none;
+        padding-top: 0;
     }
 }
 
-form, fieldset, .form-group {
-    &:disabled, &.disabled {
-        pointer-events: none;
+:root {
+    --form-column-min-width: 200px;
+    --form-gap-size: 1rem;
+}
+
+.grid-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--form-column-min-width), 1fr));
+    grid-gap: var(--form-gap-size);
+
+    .form-group {
+        margin: 0;
     }
+    
+    .form-actions {
+        border-top: none;
+        padding-top: 0;
+    }
+}
+
+label:has(input) {
+    cursor: pointer;
 }

@@ -1,16 +1,28 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --wheel-picker-border-radius: 4px;
+    --wheel-picker-color: #191919;
+    --wheel-picker-selected-background: rgba(175, 175, 175, 0.5);
+}
+
+.dark-side {
+    --wheel-picker-color: #dbdfe7;
+    --wheel-picker-selected-background: rgba(78,81,88, .5);
+}
+
 .wheel-picker {
     display: block;
     position: relative;
     width: 100%;
     min-width: 220px;
     cursor: default;
-    background-color: @white;
-    color: @dark;
-    height: 38px;
+    background: var(--input-background);
+    color: var(--wheel-picker-color);
+    height: 36px;
     user-select: none;
+    border-radius: var(--wheel-picker-border-radius);
 }
 
 .wheel-picker {
@@ -23,6 +35,10 @@
         height: auto;
         z-index: 3;
         width: 100%;
+        background: var(--input-background);
+        border-radius: var(--wheel-picker-border-radius);
+        overflow: hidden;
+        box-shadow: 0 1px 3px 0 var(--shadow-color-normal), 0 1px 2px -1px var(--shadow-color-normal);
     }
 
     .select-block {
@@ -31,7 +47,7 @@
         flex-flow: row nowrap;
         width: 100%;
         flex-shrink: 0;
-        background-color: #f2f2f2;
+        background: transparent;
 
         &::before {
             content: "";
@@ -39,7 +55,7 @@
             position: absolute;
             z-index: 0;
             height: 40px;
-            background-color: rgba(red(@cyan), green(@cyan), blue(@cyan), .5);
+            background: var(--wheel-picker-selected-background);
             top: 50%;
             left: 0;
             .translateY(-50%);
@@ -78,31 +94,21 @@
         flex-flow: row nowrap;
         position: relative;
         width: 100%;
-        background-color: @white;
+        background: transparent;
 
         & > * {
             flex: 1;
-
-            &:not(:last-child) {
-                border-right: 1px solid var(--border-color);
-            }
         }
     }
 
-    .select-wrapper {
-        .translate3d(0, -50%, 0);
-    }
-
-    &.for-top, &.for-top-a {
-        .select-wrapper {
-            .translate3d(0, 0, 0);
-        }
-    }
-
-    &.for-bottom, &.for-bottom-a {
+    &.drop-up-select {
         .select-wrapper {
             .translate3d(0, -100%, 0);
         }
     }
-
+    
+    &.drop-as-dialog {
+        .select-wrapper {
+        }
+    }
 }

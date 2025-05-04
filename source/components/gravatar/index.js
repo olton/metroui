@@ -1,2 +1,2 @@
-import "../md5"
-import "./gravatar.js"
+import "../md5/index.js";
+import "./gravatar.js";

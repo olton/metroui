@@ -1,0 +1,20 @@
+@import (once) "../include/vars";
+
+:root {
+    --ribbed-size: 20px;
+    --ribbed-alpha: .15;
+    --ribbed-angle: -45deg;
+}
+
+each(@colors, {
+    .ribbed-@{value} {
+        background: @@value
+        linear-gradient(var(--ribbed-angle), rgba(255,255,255,var(--ribbed-alpha)) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255,255,255,var(--ribbed-alpha)) 50%,
+        rgba(255,255,255,var(--ribbed-alpha)) 75%,
+        transparent 75%, transparent) !important;
+        background-size: var(--ribbed-size) var(--ribbed-size) !important;
+    }
+})

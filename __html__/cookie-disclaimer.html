@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ua">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
 
-    <title>Test Tag input - Metro 4 :: Popular HTML, CSS and JS library</title>
-    <style>
-        .cookie-disclaimer {
-            box-shadow: 0 -1px 5px 0 rgba(0,0,0,0.35);
-        }
-    </style>
+    <title>Test Tag input - Metro UI :: Popular HTML, CSS and JS library</title>
 </head>
 <body class="m4-cloak">
 <div class="container">
@@ -22,10 +18,17 @@
 <script>
     $(function(){
         Metro.cookieDisclaimer.init({
-            clsCancelButton: "ml-2",
-            clsContainer: "cookie-disclaimer",
             duration: "1day",
-            template: "../data/data.txt"
+            clsAcceptButton: "success",
+            customButtons: [
+                {
+                    text: `<span class="mif-info mr-2"></span>View details`,
+                    cls: "info ml-auto",
+                    onclick: () => {
+                        alert("Details");
+                    }
+                }
+            ],
         });
     });
 </script>

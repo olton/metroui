@@ -6,7 +6,7 @@
     <link href="../lib/metro.css" rel="stylesheet">
     <link href="../lib/icons.css" rel="stylesheet">
 
-    <title>Test Select - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Select - Metro UI :: Popular HTML, CSS and JS library</title>
 
 </head>
 <body class="m4-cloak p-ab">
@@ -20,16 +20,23 @@
     <h1>Select test page</h1>
 
     <div class="example">
-        <select data-role="select" multiple  data-clear-button="true" data-clear-button-icon="<span class='mif-cross'></span>">
-            <OPTION value = "arknoid2" data-display = "arknoid2"> Arkanoid - Revenge of DOH (World) </OPTION>
-            <OPTION value = "arkanoid" data-display = "arkanoid"> Arkanoid (World, older) </OPTION>
-            <OPTION value = "astrob" data-display = "astrob"> Astro Blaster (version 3) </OPTION>
-            <OPTION value = "bankp" data-display = "bankp"> Bank Panic </OPTION>
+        <select data-role="select" data-filter="false">
+            <option data-icon="<span class='mif-rocket'>" value="rocket" >Rocket</option>
+            <option data-icon="<span class='mif-star-empty'>" value="star" >Star</option>
+            <option data-icon="<img src='images/gerb-ukraine.svg' alt=''/>" value="Ukraine" selected>Ukraine</option>
         </select>
     </div>
 
-    <br>
-    <div class="example">
+    <div class="example mt-4">
+        <select data-role="select" multiple data-clear-button="true">
+            <OPTION data-icon="<span class='mif-rocket'>" value="arknoid2" data-display="arknoid2"> Arkanoid - Revenge of DOH (World)</OPTION>
+            <OPTION value="arkanoid" data-display="arkanoid"> Arkanoid (World, older)</OPTION>
+            <OPTION value="astrob" data-display="astrob"> Astro Blaster (version 3)</OPTION>
+            <OPTION value="bankp" data-display="bankp"> Bank Panic</OPTION>
+        </select>
+    </div>
+
+    <div class="example mt-4">
         <select data-role="select" data-show-group-name="true" data-clear-button="true">
             <optgroup label="Microsoft">
                 <option value="microsoft-usa">USA</option>
@@ -45,8 +52,7 @@
         </select>
     </div>
 
-    <br>
-    <div class="example">
+    <div class="example mt-4">
         <select data-role="select" data-show-group-name="true" data-clear-button="true" class="input-large">
             <optgroup label="Microsoft">
                 <option value="microsoft-usa">USA</option>
@@ -62,8 +68,7 @@
         </select>
     </div>
 
-    <br>
-    <div class="example">
+    <div class="example mt-4">
         <select data-role="select" id="select1" data-show-group-name="true">
             <optgroup label="Physical servers">
                 <option value="dedicated_corei3_hp">Core i3 (hp)</option>
@@ -83,15 +88,11 @@
         </select>
     </div>
 
-    <br>
-
-    <div class="example">
+    <div class="example mt-4">
         <select data-role="select" multiple id="select2"
                 data-clear-button="true"
-                data-cls-option-group="text-bold fg-orange"
                 data-show-group-name="true"
-                data-cls-group-name="fg-red"
-                data-short-tag="false">
+                data-short-tag="true">
             <optgroup label="Physical servers">
                 <option value="dedicated_corei3_hp">Core i3 (hp)</option>
                 <option value="dedicated_pentium_hp">Pentium (hp)</option>
@@ -110,9 +111,7 @@
         </select>
     </div>
 
-    <br>
-    <br>
-    <div class="example">
+    <div class="example mt-4">
         <div class="row">
             <div class="cell-md-6">
                 <div class="d-flex flex-row no-wrap flex-align-start">
@@ -130,27 +129,23 @@
         </div>
     </div>
 
-    <br>
-    <br>
-    <div class="example">
+    <div class="example mt-4">
         <div>
             <BUTTON id="SET_2"
                     class="button rounded bg-grayBlue bg-darkGrayBlue-hover text-bold fg-white"
-                    data-id="2">Ball & Paddle</BUTTON>
+                    data-id="2">Ball & Paddle
+            </BUTTON>
             <BUTTON id="SET_6"
                     class="button rounded bg-grayBlue bg-darkGrayBlue-hover text-bold fg-white"
-                    data-id="6">Board Game</BUTTON>
+                    data-id="6">Board Game
+            </BUTTON>
         </div>
         <SELECT id="CATEGORIES" name="categories"
-                class="input-small text-bold"
                 data-role="select"
                 data-show-group-name="true"
-                data-cls-option-group="text-bold bg-white fg-grayBlue"
                 data-label="Categories"
-                data-cls-label="text-bold fg-grayBlue"
                 data-clear-button="true"
                 data-use-placeholder="true"
-                data-placeholder="Select Placeholder"
                 size="1">
             <OPTION value="">&nbsp;</OPTION>
             <OPTGROUP label="Arcade">
@@ -179,7 +174,7 @@
     var sel = $("@select");
     var Utils = Metro.utils;
 
-    function fillSelect(){
+    function fillSelect() {
         var select = Metro.getPlugin("#select3", "select");
         var options = {
             "0": "NEW DIPSWITCH",
@@ -193,7 +188,7 @@
         select.val("");
     }
 
-    function fillSelect3_1(){
+    function fillSelect3_1() {
         const select = $("#select3_1")
         select.append($("<option>").attr("value", "value_1").text(`value_1`))
         select.append($("<option>").attr("value", "value_2").attr("selected", "selected").text(`value_2`))
@@ -222,10 +217,10 @@
     //     console.log("up");
     // });
 
-    $(document).on("click", "[id^='SET_']", function(e) {
+    $(document).on("click", "[id^='SET_']", function (e) {
         e.preventDefault();
 
-        var tID=$(this).attr("data-id");
+        var tID = $(this).attr("data-id");
 
         Metro.getPlugin("#CATEGORIES", "select").val(tID);
         $("#CATEGORIES").focus();

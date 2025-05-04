@@ -3,6 +3,15 @@
 
 @taginput-item-size: 26px;
 
+:root {
+    --taginput-border-radius: 4px;
+    --taginput-color: var(--input-color);
+}
+
+.dark-side {
+    --taginput-color: var(--input-color);
+}
+
 .tag-input {
     display: flex;
     flex-flow: row wrap;
@@ -13,7 +22,9 @@
     cursor: text;
     position: relative;
     height: auto;
-    min-height: @inputHeight;
+    min-height: 36px;
+    border-radius: var(--taginput-border-radius);
+    overflow: hidden;
 
     .original-input {
         width: 1px;
@@ -31,23 +42,23 @@
         line-height: @taginput-item-size;
         font-size: 14px;
         padding: 0 4px;
+        background: transparent;
+        color: var(--taginput-color);        
+        
         &:focus {
             box-shadow: none!important;
         }
     }
 
     .input-clear-button {
+        font-family: "Segoe UI Symbol", serif;
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 2px;
+        right: 2px;
         z-index: 2;
         background-color: transparent;
-        height: 34px;
-        min-width: 34px;
-        &:hover {
-            background-color: @light;
-            text-shadow: rgba(0,0,0,.25) 0.1em 0.1em 0.2em;
-        }
+        height: 30px;
+        width: 30px;
     }
 
     &.padding-for-clear {
@@ -77,11 +88,6 @@
                 font-size: 1.3rem;
             }
 
-            [class*=default-icon-] {
-                width: 21px;
-                height: 21px;
-            }
-
             .input-clear-button {
                 width: @input-lx - 2;
                 padding: 0;
@@ -108,16 +114,12 @@
             [class*=mif-] {
                 font-size: .9rem;
             }
-
-            [class*=default-icon-] {
-                width: 14px;
-                height: 14px;
-            }
         }
 
         .input-clear-button {
             width: @input-sx - 2;
             padding: 0;
+            font-family: "Segoe UI Symbol", serif;
         }
     }
 }

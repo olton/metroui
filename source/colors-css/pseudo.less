@@ -1,0 +1,11 @@
+@import (once) "../include/vars";
+
+each(@colors, {
+    .before-bg-@{value} {&::before {background: @@value !important;}}
+    .before-fg-@{value} {&::before {color: @@value !important;}}
+    .before-bd-@{value} {&::before {border-color: @@value !important;}}
+
+    .after-bg-@{value} {&::after {background: @@value !important;}}
+    .after-fg-@{value} {&::after {color: @@value !important;}}
+    .after-bd-@{value} {&::after {border-color: @@value !important;}}
+})

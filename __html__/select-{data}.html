@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Test Select - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="m4-cloak p-ab">
+<nav data-role="appbar">
+    <span class="app-bar-item">Select</span>
+    <div class="app-bar-item-static">
+        <input type="checkbox" data-role="theme-switcher" data-state="dark"/>
+    </div>
+</nav>
+<div class="container">
+    <h1>Select test page</h1>
+
+    <div class="example">
+        <select data-role="select" id="select" data-filter="true"></select>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    $(() => {
+        let options = {};
+        let i = 0;
+        for (const tz of Intl.supportedValuesOf('timeZone')) {
+            options[tz] = tz;
+        }
+        const select = Metro.getPlugin("#select", 'select');
+        select.data(options);
+    })
+</script>
+</body>
+</html>

@@ -1,1 +1,1 @@
-import "./d-menu.less"
+import "./d-menu.less";

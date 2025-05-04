@@ -1,3 +1,3 @@
-import "./checkbox.js"
-import "./checkbox-three-state.js"
-import "./checkbox.less"
+import "./checkbox.js";
+// import "./checkbox-three-state.js"
+import "./checkbox.less";

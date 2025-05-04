@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>T-Menu - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">T-Menu Test</div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="container">
+        <h3 id="_t_menu">Tool menu</h3>
+        <p>
+            If you need to create cool compact tool menu, you can user class <code>.t-menu</code>.
+        </p>
+        <div class="example clear">
+            <ul class="t-menu open m-1">
+                <li><a href="#"><span class="mif-apps"></span></a></li>
+                <li><a href="#"><span class="mif-laptop"></span></a></li>
+                <li><a href="#"><span class="mif-bubbles"></span></a></li>
+                <li><a href="#"><span class="mif-bubble"></span></a></li>
+                <li><a href="#"><span class="mif-person"></span></a></li>
+            </ul>
+            <ul class="t-menu open compact m-1">
+                <li><a href="#"><span class="mif-apps"></span></a></li>
+                <li><a href="#"><span class="mif-laptop"></span></a></li>
+                <li><a href="#"><span class="mif-bubbles"></span></a></li>
+                <li><a href="#"><span class="mif-bubble"></span></a></li>
+                <li><a href="#"><span class="mif-person"></span></a></li>
+            </ul>
+            <ul class="t-menu open horizontal m-1">
+                <li><a href="#"><span class="mif-apps"></span></a></li>
+                <li><a href="#"><span class="mif-laptop"></span></a></li>
+                <li><a href="#"><span class="mif-bubbles"></span></a></li>
+                <li><a href="#"><span class="mif-bubble"></span></a></li>
+                <li><a href="#"><span class="mif-person"></span></a></li>
+            </ul>
+            <ul class="t-menu open horizontal compact m-1">
+                <li><a href="#"><span class="mif-apps"></span></a></li>
+                <li><a href="#"><span class="mif-laptop"></span></a></li>
+                <li><a href="#"><span class="mif-bubbles"></span></a></li>
+                <li><a href="#"><span class="mif-bubble"></span></a></li>
+                <li><a href="#"><span class="mif-person"></span></a></li>
+            </ul>
+        </div>
+
+        <h4 id="_t_menu_dropdown">Tools menu dropdown</h4>
+        <div class="example clear">
+            <ul class="t-menu open m-1">
+                <li><a href="#"><span class="mif-home"></span></a></li>
+                <li><a href="#" class="dropdown-toggle"><span class="mif-compass"></span></a>
+                    <ul class="t-menu horizontal" data-role="dropdown">
+                        <li><a href="#"><span class="mif-home"></span></a></li>
+                        <li><a href="#" class="dropdown-toggle"><span class="icon mif-compass"></span></a>
+                            <ul class="t-menu" data-role="dropdown">
+                                <li><a href="#"><span class="mif-home"></span></a></li>
+                                <li><a href="#"><span class="mif-compass"></span></a></li>
+                                <li><a href="#"><span class="mif-bubbles"></span></a></li>
+                                <li><a href="#"><span class="mif-file-empty"></span></a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#"><span class="mif-bubbles"></span></a></li>
+                        <li><a href="#"><span class="mif-bubbles"></span></a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><span class="mif-bubbles"></span></a></li>
+                <li><a href="#"><span class="mif-file-empty"></span></a></li>
+            </ul>
+
+            <ul class="t-menu horizontal compact open m-1">
+                <li><a href="#"><span class="mif-home"></span></a></li>
+                <li><a href="#" class="dropdown-toggle"><span class="mif-compass"></span></a>
+                    <ul class="t-menu compact" data-role="dropdown">
+                        <li><a href="#"><span class="mif-home"></span></a></li>
+                        <li><a href="#" class="dropdown-toggle"><span class="mif-compass"></span></a>
+                            <ul class="t-menu compact horizontal" data-role="dropdown">
+                                <li><a href="#"><span class="mif-home"></span></a></li>
+                                <li><a href="#"><span class="mif-compass"></span></a></li>
+                                <li><a href="#"><span class="mif-bubbles"></span></a></li>
+                                <li><a href="#"><span class="mif-file-empty"></span></a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#"><span class="mif-bubbles"></span></a></li>
+                        <li><a href="#"><span class="mif-bubbles"></span></a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><span class="mif-bubbles"></span></a></li>
+                <li><a href="#"><span class="mif-file-empty"></span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+</script>
+</body>
+</html>

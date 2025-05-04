@@ -1,0 +1,69 @@
+:root {
+    --remote-dataset-gap: 10px;
+}
+.remote-dataset {
+    .dataset-body {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .dataset-item {
+    }
+    .dataset-actions {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+    }    
+    .dataset-load-more {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 2rem 0;
+        
+        .button {
+            text-decoration: none!important;
+        }
+        
+        .icon {
+            font-size: 64px;
+        }
+    }
+    
+    .service-block {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 6px;
+        
+        .search-block {
+            flex-basis: 100%;
+            flex-shrink: 1;
+            flex-grow: 1;
+        }
+        
+        .order-block {
+            flex-basis: 220px;
+            flex-shrink: 0;
+            flex-grow: 0;
+        }
+        
+        .count-block {
+            flex-basis: 100px;
+            flex-shrink: 0;
+            flex-grow: 0;
+            
+            .option-list {
+                li {
+                    a {
+                        justify-content: flex-end;
+                        padding-right: 32px;
+                    }
+                }
+            }
+        }
+    }
+    
+    .hide-block {
+        display: none;
+    }
+}

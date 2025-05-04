@@ -5,34 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Counter - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Counter - Metro UI :: Popular HTML, CSS and JS library</title>
 
 </head>
-<body class="m4-cloak">
+<body class="m4-cloak1">
 <div class="container h-vh-100">
     <h1>Counter test page</h1>
 
     <div>
-        <button class="button" onclick="start()">Start</button>
+        <h4 class="text-center">Metro UI Stats:</h4>
+        <div class="row">
+            <div class="cell-md-4">
+                <div>Ready Components</div>
+                <div data-role="counter" data-value="100" data-suffix="+" data-start-on-viewport="true" data-size="48">0</div>
+            </div>
+            <div class="cell-md-4">
+                <div>Built-in Icons</div>
+                <div data-role="counter" data-value="800" data-suffix="+" data-start-on-viewport="true" data-size="48">0</div>
+            </div>
+            <div class="cell-md-4">
+                <div>Stars on GitHub</div>
+                <div data-role="counter" data-value="7000" data-suffix="+" data-start-on-viewport="true" data-size="48">0</div>
+            </div>
+        </div>
     </div>
+    
+<!--    <div>-->
+<!--        <button class="button" onclick="start()">Start</button>-->
+<!--    </div>-->
 
-    <div style="font-size: 72px;" class="fg-red text-bold" data-role="counter" data-value="1000" id="counter" data-start-on-viewport="true" data-prefix="$">0</div>
+<!--    <div style="font-size: 72px;" class="fg-red text-bold" data-role="counter" data-value="1000" id="counter" data-start-on-viewport="false" data-prefix="$">0</div>-->
 </div>
 
 <script src="../lib/metro.js"></script>
 <script>
-    function start() {
-        Metro.utils.github("olton/Metro-UI-CSS", function(data){
-            Metro.getPlugin("#counter", "counter").start(data.stargazers_count);
-        });
-    }
-
-    $("#counter").on("start", function(){
-        console.log("event start");
-    })
-    $("#counter").on("attr-change", function(e){
-        console.log("attr change");
-    })
+    // function start() {
+    //     Metro.utils.github("olton/metroui", function(data){
+    //         Metro.getPlugin("#counter", "counter").start(data.stargazers_count);
+    //     });
+    // }
+    //
+    // $("#counter").on("start", function(){
+    //     console.log("event start");
+    // })
+    // $("#counter").on("attr-change", function(e){
+    //     console.log("attr change");
+    // })
 </script>
 </body>
 </html>

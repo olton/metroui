@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Test Remote Dataset - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        body {
+            padding-top: 60px;
+        }
+        
+        .product-image {
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            img {
+                object-fit: cover;
+                height: 100%;
+                /*mix-blend-mode: darken;*/
+            }
+        }
+        
+        .product-title {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.1;
+            margin: 1rem 0;
+        }
+        
+        .product-desc {
+            font-size: 12px;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+        
+        .product-price {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .product-brand {
+            font-size: 10px;
+            font-weight: 500;
+            top: 10px;
+            left: 10px;
+            padding: 4px 8px;
+            border-radius: 2px;
+            display: inline-flex;
+            color: #0a0a0a;
+        }
+        
+        .product-qrcode {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 64px;
+            height: 64px;
+        }
+    </style>
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher" data-mode="button"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Remote Dataset Test</div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="container">
+        
+        <div data-role="remote-dataset"
+             data-caption="Products"
+             data-offset-key="skip"
+             data-data-key="products"
+             data-url='https://dummyjson.com/products'
+             data-search-url='https://dummyjson.com/products/search'
+             data-search-key="q"
+             data-template="datasetTemplate"
+             data-cls-body="row"
+             data-cls-item="cell-ld-6 cell-md-4"
+             data-cls-pagination="mt-4 d-flex flex-justify-center"
+             data-sort="rating:desc"
+             data-sort-rules="price:asc:Price:<span class='mif-arrow-up'>,price:desc:Price:<span class='mif-arrow-down'>,rating:desc:By rating:<span class='mif-star-empty'>"
+        ></div>
+        
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    function datasetTemplate(data) {
+        return data ? `
+        <div class="card p-4 h-100">
+            <div class="product-image"><img src="${data.thumbnail}" alt="${data.title}"/></div>
+            <div class="product-title">${data.title}</div>
+            <div>
+                <span class="product-brand bg-sand">${data.brand ? data.brand : 'Noname'}</span>
+                ${data.tags.map(sel => `<span class="mr-1 product-brand bg-light-sand">${sel}</span>`).join('')}
+            </div>
+            <div><span class="product-desc">${data.description}</span></div>
+            <div class="row mt-auto">
+                <div class="cell-4">
+                    <div class="product-price"><span class="">$${data.price}</span></div>
+                </div>
+                <div class="cell-8">
+                    <div class="product-rating text-right">
+                        <input data-role="rating" data-static="true" data-value="${data.rating}" data-stared-color="#f2c313" data-message="(${data.rating})"/>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row gap-2 mt-4">
+                <button class="button success"><span data-role="eval">{{ Metro.locale.label_buy}}</span> <span class="mif-add-shopping-cart icon"></span></button>
+           
+                <button class="ml-auto button square outline fg-orange"><span class="mif-star-empty"></span></button>
+                <button class="button info"><span data-role="eval">{{ Metro.locale.label_details}}</span></button>
+            </div>
+        </div>   
+        ` : ``;
+    }
+</script>
+</body>
+</html>

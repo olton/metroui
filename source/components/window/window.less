@@ -1,15 +1,55 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --window-scrollbar-size: 6px;
+    --window-scrollbar-track-radius: 0;
+    --window-border-size: 4px;
+    --window-border-radius: 6px;
+    --window-border-color: #f3f3f3;
+    --window-background: #fff;
+    --window-color: #191919;
+    //--window-caption-background: #f3f3f3;
+    --window-caption-color: #191919;
+    --window-scrollbar-thumb-color: #a8a8a8;
+    --window-scrollbar-track-color: #f1f1f1;
+    --window-resize-element-color: #a8a8a8;
+    --window-sys-button-color: #191919;
+    --window-sys-button-backgroud-hover: #d8d8d8;
+    --window-close-button-backgroud-hover: #C75050FF;
+    --window-close-button-color-hover: #ffffff;
+}
+
+.dark-side {
+    --window-border-color: #484b4c;
+    --window-background: #1e1f22;
+    --window-color: #dbdfe7;
+    //--window-caption-background: #484b4c;
+    --window-caption-color: #dbdfe7;
+    --window-scrollbar-thumb-color: #d1d1d1;
+    --window-scrollbar-track-color: #2c2c2c;
+    --window-resize-element-color: #2c2c2c;
+    --window-sys-button-color: #ffffff;
+    --window-sys-button-backgroud-hover: #2c2c2c;
+    --window-close-button-backgroud-hover: #C75050FF;
+    --window-close-button-color-hover: #ffffff;
+}
+
 .window {
     display: flex;
     flex-direction: column;
     position: relative;
     height: auto;
-    background-color: @winFlatBackgroundColor;
-    color: @dark;
-    border: 1px @winFlatBorderColor solid;
+    background-color: var(--window-background);
+    color: var(--window-color);
+    border: 1px var(--window-border-color) solid;
     z-index: 1;
+    border-radius: var(--window-border-radius);
+    overflow: hidden;
+    
+    &.shadowed {
+        box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    }
 }
 
 .window-caption {
@@ -21,11 +61,11 @@
     height: 2.25rem;
     line-height: 2.25rem;
     padding: 0;
-    border-bottom: 1px @transparent solid;
+    border-bottom: 1px transparent solid;
     cursor: default;
     vertical-align: middle;
-    background-color: @winCaptionBackground;
-    color: @winCaptionColor;
+    background-color: var(--window-border-color);
+    color: var(--window-caption-color);
     user-select: none;
 }
 
@@ -62,13 +102,17 @@
     * + .title {
         padding-left: 0;
     }
+}
 
+.window-caption {
     .buttons {
         height: 100%;
         margin-left: auto;
         display: flex;
         flex-wrap: nowrap;
         flex-direction: row;
+        margin-right: 2px;
+        margin-top: 2px;
     }
 
     .btn-custom {
@@ -76,97 +120,65 @@
             box-shadow: none!important;
         }
     }
-}
 
-.window-caption {
     .buttons {
-        .btn-min, .btn-max, .btn-close, .btn-custom {
-            position: relative;
-            height: 34px;
-            width: 34px;
-            text-align: center;
-            vertical-align: middle;
-            font-size: 1rem;
-            font-weight: normal;
-            padding: 0 0 .625rem 0;
-            outline: none;
-            cursor: pointer;
-            display: block;
-            border: 1px solid @transparent;
-            margin: 1px 0;
-        }
-
         .sys-button {
-            background-color: @transparent;
-            color: @white;
+            background-color: transparent;
+            color: var(--window-sys-button-color);
+            border-radius: 0;
+            border: none;
             &:hover {
-                background-color: @hoverBackgroundLight1;
-
-                &::before {
-                    border-color: @white;
-                    color: @white;
-                }
+                background-color: var(--window-sys-button-backgroud-hover);
             }
             &:active {
-                background-color: @hoverBackgroundLight3;
-                color: @white;
+                background-color: var(--window-sys-button-backgroud-hover);
+            }
+        }
+
+        .btn-min, .btn-max, .btn-close {
+            &::before {
+                display: block;
+                position: absolute;
+                content: '';
+            }
+        }
+
+        .btn-min {
+            &::before {
+                content: "🗕";
+            }
+        }
+        
+        .btn-max {
+            &::before {
+                content: "🗖";
             }
         }
 
         .btn-close {
-            &:hover {
-                background-color: @winCloseButtonColor;
-                color: @white;
-                &::before {
-                    color: @white;
-                }
-            }
-            &:active {
-                background-color: @winCloseButtonActiveColor;
-                color: @white;
-            }
             &::before {
-                border-color: @winFlatSystemButtonRestColor;
-                content: '\D7';
-                position: absolute;
-                line-height: 34px;
-                vertical-align: middle;
-                left: 50%;
-                top: -4px;
-                margin-left: -.32em;
-                color: #fff;
-                font-size: 1.5rem;
+                content: "✕";
             }
         }
-
-        .btn-min, .btn-max {
-            &::before {
-                display: block;
-                position: absolute;
-                width: .625rem;
-                height: .625rem;
-                border: 0 #fff solid;
-                border-bottom-width: 2px;
-                content: ' ';
-                bottom: .72rem;
-                left: 50%;
-                margin-left: -.3rem;
-                top: auto;
-            }
-        }
-
-        .btn-max {
-            &::before {
-                height: .575rem;
-                border: 1px #fff solid;
-                border-top-width: 2px;
-            }
-        }
-
+        
         .btn-custom {
             min-width: 34px;
             width: auto;
             flex-shrink: 0;
+        }
+
+        .btn-close {
+            &:hover {
+                background-color: var(--window-close-button-backgroud-hover);
+                color: var(--window-close-button-color-hover);
+                &::before {
+                    color: var(--window-close-button-color-hover);
+                }
+            }
+            &:active {
+                background-color: var(--window-close-button-backgroud-hover);
+                color: var(--window-close-button-color-hover);
+            }
         }
 
         .btn-custom {order: 1;}
@@ -178,50 +190,73 @@
 
 .window-content {
     overflow: auto;
-    height: ~"calc(100% - 2.25rem)";
+    height: calc(100% - 2.25rem);
+    border: var(--window-border-size) var(--window-border-color) solid;
+    background-color: transparent;
+    padding: calc(var(--window-border-size) * 2);
+    font-size: 14px;
+    
+    & > * {
+        height: 100%;
+    }
+    
+    &::-webkit-scrollbar {
+        height: var(--window-scrollbar-size);
+        width: var(--window-scrollbar-size);
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: var(--window-scrollbar-track-radius);
+        background-color: var(--window-scrollbar-track-color);
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: var(--window-scrollbar-thumb-color);
+        border-radius: 10px;
+    }
 }
 
 .window-status {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    padding: .1rem .5rem;
-    background-color: @light;
-    color: @dark;
-    height: 1.2rem;
-    font-size: .8rem;
+    background-color: var(--window-border-color);
+    color: var(--window-color);
+    height: 18px;
+    font-size: 12px;
+    align-items: center;
+    padding: 0 .5rem .25rem;
 }
 
 .window {
-    &.info {
-        .window-caption {
-            background-color: @cyan;
-            color: @white;
-        }
+    &.info-window {
+        --window-border-color: @infoColor;
+        --window-caption-background: @infoColor;
+        --window-caption-color: @white;
+        --window-sys-button-color: @white;
     }
-    &.alert {
-        .window-caption {
-            background-color: @red;
-            color: @white;
-        }
+    &.alert-window {
+        --window-border-color: @alertColor;
+        --window-caption-background: @alertColor;
+        --window-caption-color: @white;
+        --window-sys-button-color: @white;
     }
-    &.warning {
-        .window-caption {
-            background-color: @orange;
-            color: @white;
-        }
+    &.warning-window {
+        --window-border-color: @warningColor;
+        --window-caption-background: @warningColor;
+        --window-caption-color: @white;
+        --window-sys-button-color: @white;
     }
-    &.success {
-        .window-caption {
-            background-color: @green;
-            color: @white;
-        }
+    &.success-window {
+        --window-border-color: @successColor;
+        --window-caption-color: @white;
+        --window-sys-button-color: @white;
     }
 }
 
 .window {
     &.focused {
-        .win-shadow();
+        box-shadow: 0 25px 50px -12px var(--shadow-color-large-extra);
     }
 }
 
@@ -256,24 +291,11 @@
         height: 100% !important;
         max-height: none !important;
         max-width: none !important;
+        border-radius: 0!important;
 
         .btn-max {
             &::before {
-                border: 1px #fff solid;
-                z-index: 2;
-            }
-            &::after {
-                display: block;
-                position: absolute;
-                width: .625rem;
-                height: .625rem;
-                border-top: 1px #fff solid;
-                border-right: 1px #fff solid;
-                content: ' ';
-                bottom: .375rem;
-                right: 7px;
-                top: 8px;
-                z-index: 1;
+                content: "🗗";
             }
         }
     }
@@ -281,6 +303,14 @@
     &.resizable {
         min-width: 12rem;
         min-height: 2.25rem;
+    }
+    
+    .resize-element {
+        bottom: 2px;
+        right: 2px;
+        &::after {
+            border-bottom-color: var(--window-resize-element-color);
+        }
     }
 }
 

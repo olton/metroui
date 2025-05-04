@@ -16,6 +16,7 @@
     --input-required-color: #468cff;
     --input-invalid-color: #ad2a14;
     --input-valid-color: #4cad14;
+    --input-border-radius: 6px;
 }
 
 .dark-side {
@@ -32,6 +33,18 @@
     --input-append-color: #bac1cf;
 }
 
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=date],
+input[type=datetime-local],
+input[type=search],
+input[type=tel],
+input[type=time],
+input[type=url],
+input[type=week],
+textarea,
+select,
 .metro-input,
 .file,
 .input,
@@ -43,6 +56,7 @@
 {
     position: relative;
     border: 1px var(--input-border-color) solid;
+    border-radius: var(--input-border-radius);
     color: var(--input-color);
     width: 100%;
     font-size: 16px;
@@ -148,10 +162,26 @@
     }
 }
 
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=date],
+input[type=datetime-local],
+input[type=search],
+input[type=tel],
+input[type=time],
+input[type=url],
+input[type=week],
+select,
 .metro-input {
     padding: 0 8px;
+    font-size: var(--input-font-size, 14px);
 }
 
+textarea {
+    padding: 8px;
+    font-size: var(--input-font-size, 14px);
+}
 textarea.metro-input {
     height: auto;
     padding: 0 .75rem;

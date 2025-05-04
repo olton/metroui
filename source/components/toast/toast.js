@@ -1,79 +1,85 @@
-/* global Metro, METRO_TIMEOUT, METRO_ANIMATION_DURATION */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var ToastDefaultConfig = {
-        callback: Metro.noop,
-        timeout: METRO_TIMEOUT,
-        distance: 20,
-        showTop: false,
-        clsToast: ""
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    const TOAST_TIMEOUT = 3000;
+    const TOAST_DISTANCE = 20;
+    const TOAST_DURATION = 200;
+
+    Metro.TOAST_POSITION = {
+        TOP: "top",
+        BOTTOM: "bottom",
+        CENTER: "center",
     };
 
-    Metro.toastSetup = function(options){
+    let ToastDefaultConfig = {
+        callback: Metro.noop,
+        timeout: TOAST_TIMEOUT,
+        distance: TOAST_DISTANCE,
+        position: Metro.TOAST_POSITION.BOTTOM, // top, bottom, center
+        clsToast: "",
+    };
+
+    Metro.toastSetup = (options) => {
         ToastDefaultConfig = $.extend({}, ToastDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroToastSetup"] !== undefined) {
-        Metro.toastSetup(globalThis["metroToastSetup"]);
+    if (typeof globalThis.metroToastSetup !== "undefined") {
+        Metro.toastSetup(globalThis.metroToastSetup);
     }
 
-    var Toast = {
-        create: function(message, /*callback, timeout, cls, */options){
-            var o, toast, width;
-            var args = Array.from(arguments);
-            var timeout, callback, cls;
+    /**
+     * @param {string} message
+     * @param {object || function} options {callback, timeout, distance, position, clsToast}
+     */
+    const Toast = {
+        create: (message, opt) => {
+            let o;
+            let toast;
+            let options;
 
-            if (!$.isPlainObject(options)) {
-                options = args[4];
-                callback = args[1];
-                timeout = args[2];
-                cls = args[3];
+            if (typeof opt === "function") {
+                options = Object.assign({}, ToastDefaultConfig, { callback: opt });
             }
 
             o = $.extend({}, ToastDefaultConfig, options);
 
             toast = $("<div>").addClass("toast").html(message).appendTo($("body"));
-            width = toast.outerWidth();
-            // toast.hide();
-
-            timeout = timeout || o.timeout;
-            callback = callback || o.callback;
-            cls = cls || o.clsToast;
-
-            if (o.showTop === true) {
+            const width = toast.outerWidth();
+            if (o.position === "top") {
                 toast.addClass("show-top").css({
-                    top: o.distance
+                    top: o.distance,
                 });
+            } else if (o.position === "center") {
+                toast.addClass("show-center");
             } else {
                 toast.css({
-                    bottom: o.distance
-                })
+                    bottom: o.distance,
+                });
             }
 
             toast
                 .css({
-                    'left': '50%',
-                    'margin-left': -(width / 2)
+                    left: "50%",
+                    "margin-left": -(width / 2),
                 })
                 .addClass(o.clsToast)
-                .addClass(cls)
-                .fadeIn(METRO_ANIMATION_DURATION, function(){
-                    setTimeout(function(){
-                        Toast.remove(toast, callback);
-                    }, timeout);
+                .fadeIn(TOAST_DURATION, () => {
+                    setTimeout(() => {
+                        Toast.remove(toast, o.callback);
+                    }, o.timeout);
                 });
         },
 
-        remove: function(toast, cb){
-            if (!toast.length) return ;
-            toast.fadeOut(METRO_ANIMATION_DURATION, function(){
+        remove: (toast, cb) => {
+            if (!toast.length) return;
+            toast.fadeOut(TOAST_DURATION, () => {
                 toast.remove();
-                Utils.exec(cb, null, toast[0]);
+                Metro.utils.exec(cb, null, toast[0]);
             });
-        }
+        },
     };
 
-    Metro['toast'] = Toast;
-    Metro['createToast'] = Toast.create;
-}(Metro, m4q));
+    Metro.toast = Toast;
+    Metro.createToast = Toast.create;
+})(Metro, Dom);

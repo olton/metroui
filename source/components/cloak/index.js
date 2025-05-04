@@ -1,1 +1,1 @@
-import "./cloak.less"
+import "./cloak.less";

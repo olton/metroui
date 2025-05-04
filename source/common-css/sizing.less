@@ -4,37 +4,36 @@
 .w-auto {width: auto!important;}
 .h-auto {height: auto!important;}
 
-each(@mediaBreakpointListMobile, {
-    .w-@{value} {width: @@value!important;}
+each(@media-rules, {
+    .w-@{key} {width: @value!important;}
 })
 
 each(@percents, {
-    .h-vh-@{value} {height: unit(@value, vh)!important;}
-    .h-vw-@{value} {height: unit(@value, vw)!important;}
-    .w-vh-@{value} {width: unit(@value, vh)!important;}
-    .w-vw-@{value} {width: unit(@value, vw)!important;}
+    .h-@{value}-vh {height: unit(@value, vh)!important;}
+    .w-@{value}-vw {width: unit(@value, vw)!important;}
     .h-@{value} {height: unit(@value, %)!important;}
     .w-@{value} {width: unit(@value, %)!important;}
-    .mh-@{value} {max-height: unit(@value, %)!important;}
-    .mw-@{value} {max-width: unit(@value, %)!important;}
+    .h-max-@{value} {max-height: unit(@value, %)!important;}
+    .w-max-@{value} {max-width: unit(@value, %)!important;}
+    .h-min-@{value} {min-height: unit(@value, %)!important;}
+    .w-min-@{value} {min-width: unit(@value, %)!important;}
 })
 
-each(@mediaBreakpointListMobile, .(@m) {
-    @media screen and (min-width: @@m) {
-
-        .w-auto-@{m} {width: auto!important;}
-        .h-auto-@{m} {height: auto!important;}
-
+each(@media-rules, {
+    @container (min-width: @value) {
+        .w-auto-@{key} {width: auto!important;}
+        .h-auto-@{key} {height: auto!important;}
 
         each(@percents, .(@p) {
-            .h-vh-@{p}-@{m} {height: unit(@p, vh)!important;}
-            .h-vw-@{p}-@{m} {height: unit(@p, vw)!important;}
-            .w-vh-@{p}-@{m} {width: unit(@p, vh)!important;}
-            .w-vw-@{p}-@{m} {width: unit(@p, vw)!important;}
-            .h-@{p}-@{m} {height: unit(@p, %)!important;}
-            .w-@{p}-@{m} {width: unit(@p, %)!important;}
-            .mh-@{p}-@{m} {max-height: unit(@p, %)!important;}
-            .mw-@{p}-@{m} {max-width: unit(@p, %)!important;}
+            .h-@{p}-@{key}-vh {height: unit(@p, vh)!important;}
+            .w-@{p}-@{key}-vw {width: unit(@p, vw)!important;}
+            .h-@{p}-@{key} {height: unit(@p, %)!important;}
+            .w-@{p}-@{key} {width: unit(@p, %)!important;}
+            .h-max-@{p}-@{key} {max-height: unit(@p, %)!important;}
+            .w-max-@{p}-@{key} {min-width: unit(@p, %)!important;}
+            .h-min-@{p}-@{key} {min-height: unit(@p, %)!important;}
+            .w-min-@{p}-@{key} {min-width: unit(@p, %)!important;}
         })
     }
 })
+

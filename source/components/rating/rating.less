@@ -5,11 +5,15 @@
 @ratingStarOff: @gray;
 @ratingStarOn: @dark;
 
-.rating-star(@size) {
-    width: @size;
-    height: @size;
-    line-height: @size;
-    font-size: @size;
+:root {
+    --rating-star-size: 24px;
+    --rating-off-color: var(--color-light-blue);
+    --rating-on-color: var(--color-blue);
+    --rating-background: transparent;
+}
+
+.dark-side {
+    
 }
 
 .rating {
@@ -17,7 +21,7 @@
     flex-flow: row;
     align-items: center;
     position: relative;
-    background-color: @transparent;
+    background: transparent;
     cursor: default;
     font-size: 16px;
 }
@@ -49,13 +53,16 @@
         li {
             display: block;
             position: relative;
-            color: @ratingStarOff;
-            .rating-star(@ratingStarSize);
+            color: var(--rating-off-color);
+            width: var(--rating-star-size);
+            height: var(--rating-star-size);
+            line-height: var(--rating-star-size);
+            font-size: var(--rating-star-size);
             transition: @transition-color;
 
             &::before {
                 position: absolute;
-                content: '\2605';
+                content: attr(data-symbol);
                 display: block;
                 z-index: 1;
                 left: 0;
@@ -66,7 +73,7 @@
                     left: 0;
                     display: block;
                     position: absolute;
-                    content: '\2605';
+                    content: attr(data-symbol);
                     width: .42em;
                     z-index: 2;
                     overflow: hidden;
@@ -99,7 +106,7 @@
     cursor: default;
 
     li.on, li.half::after {
-        color: @ratingStarOn
+        color: var(--rating-on-color);
     }
 }
 
@@ -108,12 +115,12 @@
 
     &:hover {
         li {
-            color: @ratingStarOn;
+            color: var(--rating-on-color);
         }
     }
 
     li:hover ~ li {
-        color: @ratingStarOff!important;
+        color: var(--rating-off-color)!important;
     }
 
     li.scale {

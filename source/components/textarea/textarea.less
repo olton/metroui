@@ -1,6 +1,18 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --textarea-color: #191919;
+    --textarea-border-color: var(--border-color);
+    --textarea-font-size: 14px;
+    --textarea-border-radius: 4px;
+}
+
+.dark-side {
+    --textarea-color: #dbdfe7;
+    --textarea-border-color: #444444;
+}
+
 .textarea, textarea {
     height: auto;
 }
@@ -15,6 +27,8 @@ textarea {
     justify-content: space-between;
     width: auto;
     padding: 0;
+    background: var(--input-background);
+    border-radius: var(--textarea-border-radius);
 
     .fake-textarea {
         opacity: 0;
@@ -23,6 +37,7 @@ textarea {
         top: 0;
         left: 0;
         right: 0;
+        font-size: var(--textarea-font-size);
     }
 
     textarea {
@@ -35,7 +50,9 @@ textarea {
         resize: none;
         border: none!important;
         transition: height .1s linear;
-        //box-sizing: border-box;
+        font-size: var(--textarea-font-size);
+        background: transparent;
+        color: var(--textarea-color);
 
         &:focus {
             box-shadow: none;
@@ -46,16 +63,19 @@ textarea {
         overflow-y: hidden!important;
     }
 
+    .button {
+        width: 30px;
+        height: 30px;
+        color: var(--textarea-color);
+    }
+    
     .input-clear-button {
+        font-family: "Segoe UI Symbol", serif;
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 2px;
+        right: 2px;
         z-index: 2;
         background-color: transparent;
-        &:hover {
-            background-color: @light;
-            text-shadow: rgba(0,0,0,.25) 0.1em 0.1em 0.2em;
-        }
     }
 
     &:not(.no-scroll-vertical) {
@@ -76,6 +96,16 @@ textarea {
 
     .input-clear-button ~ textarea {
         padding-right: 48px;
+    }
+    
+    .prepend {
+        border-top-left-radius: var(--textarea-border-radius);
+        border-bottom-left-radius: var(--textarea-border-radius);
+    }
+    
+    .append {
+        border-top-right-radius: var(--textarea-border-radius);
+        border-bottom-right-radius: var(--textarea-border-radius);
     }
 }
 

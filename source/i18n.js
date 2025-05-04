@@ -1,1 +1,1 @@
-import "./i18n/index.js"
+import "./i18n/index.js";

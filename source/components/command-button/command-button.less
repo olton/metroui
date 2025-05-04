@@ -1,26 +1,55 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
-.command-button, .image-button {
+:root {
+    --command-button-border-radius: 6px;
+    --command-button-background: #F8F8F8;
+    --command-button-color: #191919;
+    --command-button-background-hover: #eaeaea;
+    --command-button-color-hover: #000000;
+}
+
+.dark-side {
+    --command-button-background: #2e2e2e;
+    --command-button-color: #F8F8F8;
+    --command-button-background-hover: #4b4b4b;
+    --command-button-color-hover: #F8F8F8;
+}
+
+.command-button {
     padding: .5rem .75rem;
     display: inline-flex;
-    font-size: 1.5rem;
+    align-items: center;
     transition: @transition-short;
-    background-color: darken(@light, 5%);
-    color: @dark;
+    background: var(--command-button-background);
+    color: var(--command-button-color);
     cursor: pointer;
     white-space: nowrap;
     vertical-align: middle;
     user-select: none;
     border: 1px solid transparent;
+    border-radius: var(--command-button-border-radius);
     outline: none;
     position: relative;
     font-weight: 500;
+    margin: .5rem;
+    height: auto;
+
+    &:first-child {
+        margin-left: 0;
+    }
+    &:last-child {
+        margin-right: 0;
+    }
+
+    .icon, .caption {
+        transition: @transition-base;
+    }
 
     .icon {
-        .px2rem(width, 43px);
-        .px2rem(height, 43px);
-        .px2rem(line-height, 43px);
+        width: 43px;
+        height: 43px;
+        line-height: 43px;
         font-size: 2rem;
         color: inherit;
         order: 1;
@@ -31,8 +60,14 @@
         text-align: left;
         color: inherit;
         order: 2;
+        font-size: 20px;
         font-weight: 400;
         line-height: 1.2;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        transform: translateY(-2px);
 
         small {
             display: block;
@@ -57,26 +92,18 @@
         border-width: 1px;
         border-color: var(--border-color);
     }
-
-    &:hover {
-        background-color: @hoverBackground;
+    
+    @media (hover: hover) {
+        &:hover {
+            background: var(--command-button-background-hover);
+            color: var(--command-button-color-hover);
+        }
     }
-
-    &:active, &.focus, &:focus {
-        .focus-show(@lightGray);
-    }
-
-    &:focus, &:hover, &.focus {
-        text-decoration: none;
-    }
-
-    &:active {
-        box-shadow: none;
-        outline: 0;
-        .focus-show(@gray);
-    }
-
-    &.disabled, &:disabled {
-        opacity: .65;
+    
+    @media (hover: none) {
+        &:active {
+            background: var(--command-button-background-hover);
+            color: var(--command-button-color-hover);
+        }
     }
 }

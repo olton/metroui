@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+
+    <title>Test Any - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
+    <span class="app-bar-item">Model</span>
+    <div class="app-bar-item-static ml-auto">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div id="root" class="h-100 d-flex flex-center flex-column">
+    <div class="h1">Counter</div>
+    <div class="m-2">Counter: {{ counter }}</div>
+    <div class="m-2"><input class="text-center" type="text" data-model="counter"></div>
+    <div>Статус: {{ status }}</div>
+    <div class="m-2 d-flex flex-row gap-2">
+        <button @click="this.counter++">+</button>
+        <button @click="this.counter--">-</button>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+    
+    const model = new Model({
+        counter: 0,
+        status(){
+            return this.counter === 0 ? "Zero" : this.counter > 0 ? "Positive" : "Negative";
+        },
+    }, {
+        debug: false,
+    })
+    
+    model.init("#root")
+    
+    model.runDevTools({
+        enabled: true,
+        timeTravel: true,
+        maxSnapshots: 50
+    });
+</script>
+</body>
+</html>

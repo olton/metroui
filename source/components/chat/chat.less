@@ -1,11 +1,29 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --chat-border-color: var(--border-color);
+    --chat-background: #ffffff;
+    --chat-color: #191919;
+    --chat-message-background: #f5f5f5;
+    --chat-message-color: #191919;
+}
+
+.dark-side {
+    --chat-background: #343637;
+    --chat-color: #dbdfe7;
+    --chat-message-background: #4a4d51;
+    --chat-message-color: #dbdfe7;
+}
+
 .chat {
     display: flex;
     flex-flow: column;
     border: 1px solid var(--border-color);
-    background-color: @white;
+    background: var(--chat-background);
+    color: var(--chat-color);
+    position: relative;
+    border-radius: 6px;
 }
 
 .chat {
@@ -59,6 +77,7 @@
             flex-flow: row nowrap;
             margin: 2px 0 0;
             order: 3;
+            
         }
 
         .message-item {
@@ -68,13 +87,17 @@
                 height: 40px;
                 border-radius: 50%;
                 flex-shrink: 0;
-                display: block;
+                display: flex;
                 order: 1;
+                font-size: 36px;
+                align-items: center;
+                justify-content: center;
+                object-fit: cover;
             }
             .message-text {
                 display: flex;
                 align-items: center;
-                border: 1px solid @lightGray;
+                border: 1px solid var(--chat-border-color);
                 margin-left: 8px;
                 order: 2;
                 font-size: 14px;
@@ -82,14 +105,15 @@
                 padding: 30px 10px;
                 min-width: 100px;
                 max-width: 100%;
-                background-color: @lightGray;
+                background: var(--chat-message-background);
+                color: var(--chat-message-color);
                 position: relative;
+                border-radius: 4px;
             }
 
             .message-text-inner {
                 width: 100%;
                 overflow: hidden;
-
             }
 
             .message-text {
@@ -167,6 +191,11 @@
         &.disabled {
             opacity: .5;
         }
+    }
+    
+    .input-custom-button {
+        width: auto;
+        padding: 0 10px;
     }
 }
 

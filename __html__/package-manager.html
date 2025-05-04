@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Test Package Manager - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Package Manager</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="container pt-10">
+    <div data-role="package-manager" data-package="@olton/metroui"></div>
+</div>
+
+<div class="container pt-10">
+    <code class="p-10">&lt;div data-role="package-manager" data-package="@olton/metroui"&gt;&lt;/div&gt;</code>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+</script>
+</body>
+</html>

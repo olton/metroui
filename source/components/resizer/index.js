@@ -1,1 +1,1 @@
-import "./resizer.js"
+import "./resizer.js";

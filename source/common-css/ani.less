@@ -1,0 +1,515 @@
+@import (once) "../include/vars";
+@import (once) "../include/mixins";
+
+:root {
+    --base-duration-0: 0ms;
+    --base-duration-100: 100ms;
+    --base-duration-1000: 1s;
+    --base-duration-200: 200ms;
+    --base-duration-300: 300ms;
+    --base-duration-400: 400ms;
+    --base-duration-500: 500ms;
+    --base-duration-600: 600ms;
+    --base-duration-700: 700ms;
+    --base-duration-800: 800ms;
+    --base-duration-900: 900ms;
+    --base-easing-easeIn: cubic-bezier(0.7, 0.1, 0.75, 0.9);
+    --base-easing-easeInOut: cubic-bezier(0.6, 0, 0.2, 1);
+    --base-easing-easeOut: cubic-bezier(0.3, 0.8, 0.6, 1);
+    --base-easing-linear: cubic-bezier(0, 0, 1, 1);
+}
+
+.ani-spin, .ani-hover-spin:hover {
+    .animate( ani-spin 1.5s linear infinite);
+}
+
+.ani-spin-reverse, .ani-hover-spin-reverse:hover {
+    .animate( ani-spin-reverse 1.5s linear infinite);
+}
+
+.ani-pulse, .ani-hover-pulse:hover {
+    .animate(ani-pulse 1.7s infinite);
+}
+
+.ani-spanner, .ani-hover-spanner:hover {
+    transform-origin: 90% 35%;
+    .animate( ani-wrench 2.5s ease infinite );
+}
+
+.ani-ring, .ani-hover-ring:hover {
+    transform-origin: 50% 0;
+    .animate(ani-ring 2s ease infinite);
+}
+
+.ani-vertical, .ani-hover-vertical:hover {
+    .animate(ani-vertical 2s ease infinite);
+}
+
+.ani-horizontal, .ani-hover-horizontal:hover {
+    .animate(ani-horizontal 2s ease infinite);
+}
+
+.ani-flash, .ani-hover-flash:hover {
+    .animate(ani-flash 2s ease infinite);
+}
+
+.ani-bounce, .ani-hover-bounce:hover {
+    .animate(ani-bounce 2s ease infinite);
+}
+
+.ani-float, .ani-hover-float:hover {
+    .animate(ani-float 2s linear infinite);
+}
+
+.ani-heartbeat, .ani-hover-heartbeat:hover {
+    .animate(ani-heartbeat 2s linear infinite);
+}
+
+.ani-shake, .ani-hover-shake:hover {
+    .animate(ani-wrench 2.5s ease infinite);
+}
+
+.ani-shuttle, .ani-hover-shuttle:hover {
+    .animate(ani-shuttle 2s linear infinite);
+}
+
+.ani-pass, .ani-hover-pass:hover {
+    .animate(ani-pass 2s linear infinite);
+}
+
+.ani-ripple, .ani-hover-ripple:hover {
+    .animate(ani-ripple 2s infinite linear);
+}
+
+@keyframes swinging{
+    0% { .rotate(0deg); }
+    5% { .rotate(10deg); }
+    10% { .rotate(-9deg); }
+    15% { .rotate(8deg); }
+    20% { .rotate(-7deg); }
+    25% { .rotate(6deg); }
+    30% { .rotate(-5deg); }
+    35% { .rotate(4deg); }
+    40% { .rotate(-3deg); }
+    45% { .rotate(2deg); }
+    50% { .rotate(0deg); }
+    100% { .rotate(0deg); }
+}
+
+@keyframes scaleout {
+    0% {
+        .scale(0.0);
+    }
+    100% {
+        .scale(1.0);
+        opacity: 0;
+    }
+}
+
+@keyframes cubemove {
+    25% {
+        transform: translateX(10px) rotate(-90deg);
+    }
+    50% {
+        transform: translateX(10px) translateY(10px) rotate(-179deg);
+    }
+    50.1% {
+        transform: translateX(10px) translateY(10px) rotate(-180deg);
+    }
+    75% {
+        transform: translateX(0px) translateY(10px) rotate(-270deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes orbit {
+    0% {
+        opacity: 1;
+        animation-timing-function: ease-out;
+        .rotate(225deg);
+    }
+
+    7% {
+        .rotate(345deg);
+        animation-timing-function: linear;
+    }
+
+    35% {
+        .rotate(495deg);
+        animation-timing-function: ease-in-out;
+    }
+
+    42% {
+        .rotate(690deg);
+        animation-timing-function: linear;
+    }
+
+    70% {
+        opacity: 1;
+        .rotate(835deg);
+        animation-timing-function: linear;
+    }
+
+    76% {
+        opacity: 1;
+    }
+
+    77% {
+        .rotate(955deg);
+        animation-timing-function: ease-in;
+    }
+
+    78% {
+        .rotate(955deg);
+        opacity: 0;
+    }
+
+    100% {
+        .rotate(955deg);
+        opacity: 0;
+    }
+}
+
+@keyframes metro-slide {
+    0% {
+        left: -50%;
+    }
+    100% {
+        left: 150%;
+    }
+}
+
+@keyframes metro-opacity {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: .5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes ani-spin {
+    0% {
+        .rotate(0deg);
+    }
+    100% {
+        .rotate(359deg);
+    }
+}
+
+@keyframes ani-spin-reverse {
+    0% {
+        .rotate(359deg);
+    }
+    100% {
+        .rotate(0deg);
+    }
+}
+
+@keyframes ani-pulse {
+    0% {
+        .rotate(0deg);
+    }
+    100% {
+        .rotate(359deg);
+    }
+}
+
+@keyframes ani-wrench {
+    0% {
+        transform: rotate(-12deg)
+    }
+    8% {
+        transform: rotate(12deg)
+    }
+    10% {
+        transform: rotate(24deg)
+    }
+    18% {
+        transform: rotate(-24deg)
+    }
+    20% {
+        transform: rotate(-24deg)
+    }
+    28% {
+        transform: rotate(24deg)
+    }
+    30% {
+        transform: rotate(24deg)
+    }
+    38% {
+        transform: rotate(-24deg)
+    }
+    40% {
+        transform: rotate(-24deg)
+    }
+    48% {
+        transform: rotate(24deg)
+    }
+    50% {
+        transform: rotate(24deg)
+    }
+    58% {
+        transform: rotate(-24deg)
+    }
+    60% {
+        transform: rotate(-24deg)
+    }
+    68% {
+        transform: rotate(24deg)
+    }
+    75% {
+        transform: rotate(0deg)
+    }
+}
+
+@keyframes ani-ring {
+    0% {
+        transform: rotate(-15deg);
+    }
+
+    2% {
+        transform: rotate(15deg);
+    }
+
+    4% {
+        transform: rotate(-18deg);
+    }
+
+    6% {
+        transform: rotate(18deg);
+    }
+
+    8% {
+        transform: rotate(-22deg);
+    }
+
+    10% {
+        transform: rotate(22deg);
+    }
+
+    12% {
+        transform: rotate(-18deg);
+    }
+
+    14% {
+        transform: rotate(18deg);
+    }
+
+    16% {
+        transform: rotate(-12deg);
+    }
+
+    18% {
+        transform: rotate(12deg);
+    }
+
+    20% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes ani-vertical {
+    0% {
+        transform: translate(0,-3px);
+    }
+
+    4% {
+        transform: translate(0,3px);
+    }
+
+    8% {
+        transform: translate(0,-3px);
+    }
+
+    12% {
+        transform: translate(0,3px);
+    }
+
+    16% {
+        transform: translate(0,-3px);
+    }
+
+    20% {
+        transform: translate(0,3px);
+    }
+
+    22% {
+        transform: translate(0,0);
+    }
+}
+
+@keyframes ani-horizontal {
+    0% {
+        transform: translate(0,0);
+    }
+
+    6% {
+        transform: translate(5px,0);
+    }
+
+    12% {
+        transform: translate(0,0);
+    }
+
+    18% {
+        transform: translate(5px,0);
+    }
+
+    24% {
+        transform: translate(0,0);
+    }
+
+    30% {
+        transform: translate(5px,0);
+    }
+
+    36% {
+        transform: translate(0,0);
+    }
+}
+
+@keyframes ani-flash {
+    0%, 100%, 50% {
+        opacity: 1;
+    }
+
+    25%, 75% {
+        opacity: 0;
+    }
+}
+
+@keyframes ani-bounce {
+    0%, 10%, 20%, 50%, 80% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-15px);
+    }
+
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes ani-float {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes ani-heartbeat {
+    0% {
+        transform: scale(1.1);
+    }
+
+    50% {
+        transform: scale(0.8);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes ani-shuttle {
+    0% {
+        transform: scale(1);
+    }
+
+    10%, 20% {
+        transform: scale(.9) rotate(-8deg);
+    }
+
+    30%, 50%, 70% {
+        transform: scale(1.3) rotate(8deg);
+    }
+
+    40%, 60% {
+        transform: scale(1.3) rotate(-8deg);
+    }
+
+    80% {
+        transform: scale(1) rotate(0);
+    }
+}
+
+@keyframes ani-pass {
+    0% {
+        transform: translateX(-50%);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(50%);
+        opacity: 0;
+    }
+}
+
+@keyframes ani-ripple {
+    0% {
+        opacity: .6;
+    }
+
+    50% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes ani-shrink {
+    0% {
+        transform: scale(1);
+    }
+    90% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0.5);
+    }
+}
+
+@keyframes ani-pre-spin {
+    0%   {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes ani-bg-stripes {
+    from  { background-position: 40px 0; }
+    to    { background-position: 0 0; }
+}
+
+@keyframes slideUp {
+
+}
+
+@keyframes slideDown {
+
+}

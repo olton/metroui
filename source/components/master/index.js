@@ -1,3 +1,2 @@
-import "../default-icons"
-import "./master.js"
-import "./master.less"
+import "./master.js";
+import "./master.less";

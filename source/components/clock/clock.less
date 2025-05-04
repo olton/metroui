@@ -1,0 +1,32 @@
+
+:root {
+    --clock-background: transparent;
+    --clock-color: #191919;
+    --clock-font-size: 14px;
+}
+
+.dark-side {
+    --clock-background: transparent;
+    --clock-color: #dbdfe7;
+}
+
+.clock {
+    font-size: var(--clock-font-size);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px;
+    background: var(--clock-background);
+    color: var(--clock-color);
+    
+    &.show-column {
+        align-items: flex-end !important;
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .clock-time, .clock-date {
+        white-space: nowrap;
+    }
+}

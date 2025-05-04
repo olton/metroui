@@ -1,107 +1,125 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var cookieDisclaimerDefaults = {
-        name: 'cookies_accepted',
-        template: null,
-        templateSource: null,
-        acceptButton: '.cookie-accept-button',
-        cancelButton: '.cookie-cancel-button',
-        message: 'Our website uses cookies to monitor traffic on our website and ensure that we can provide our customers with the best online experience possible.',
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    const cookieDisclaimerDefaults = {
+        name: "cookies_accepted",
+        templateUrl: null,
+        title: "",
+        message: "",
         duration: "30days",
         clsContainer: "",
         clsMessage: "",
         clsButtons: "",
-        clsAcceptButton: "alert",
+        clsAcceptButton: "",
         clsCancelButton: "",
         onAccept: Metro.noop,
-        onDecline: Metro.noop
+        onDecline: Metro.noop,
     };
 
     Metro.cookieDisclaimer = {
-        init: function(options){
-            var that = this, cookie = Metro.cookie;
+        init: function (options) {
+            const cookie = Metro.cookie;
 
             this.options = $.extend({}, cookieDisclaimerDefaults, options);
             this.disclaimer = $("<div>");
 
             if (cookie.getCookie(this.options.name)) {
-                return ;
+                return;
             }
 
-            if (this.options.template) {
-                fetch(this.options.template)
+            this.locale = $("html").attr("lang") || "en";
+            this.strings = $.extend({}, Metro.locales.en, Metro.locales[this.locale]);
+
+            if (this.options.templateUrl) {
+                fetch(this.options.templateUrl)
                     .then(Metro.fetch.text)
-                    .then(function(data){
-                        that.create(data)
+                    .then((data) => {
+                        this.create(data);
                     });
-            } else if (this.options.templateSource) {
-                this.create($(this.options.templateSource));
             } else {
                 this.create();
             }
         },
 
-        create: function(html){
-            var cookie = Metro.cookie;
-            var o = this.options, wrapper = this.disclaimer, buttons;
+        create: function (html) {
+            const cookie = Metro.cookie;
+            const o = this.options;
+            const wrapper = this.disclaimer;
 
-            wrapper
-                .addClass("cookie-disclaimer-block")
-                .addClass(o.clsContainer);
+            wrapper.addClass("cookie-disclaimer").addClass(o.clsContainer);
 
             if (!html) {
-                buttons = $("<div>")
-                    .addClass("cookie-disclaimer-actions")
-                    .addClass(o.clsButtons)
-                    .append( $('<button>').addClass('button cookie-accept-button').addClass(o.clsAcceptButton).html('Accept') )
-                    .append( $('<button>').addClass('button cookie-cancel-button').addClass(o.clsCancelButton).html('Cancel') );
-
-                wrapper
-                    .html( $("<div>").addClass(o.clsMessage).html(o.message) )
-                    .append( $("<hr>").addClass('thin') )
-                    .append(buttons);
-
-            } else if (html instanceof $) {
-                wrapper.append(html);
+                wrapper.html(
+                    $("<div class='disclaimer-message'>")
+                        .addClass(o.clsMessage)
+                        .html(`
+                                <div class="disclaimer-title">${o.title || this.strings.label_cookies_title}</div>
+                                <div class="disclaimer-text">${o.message || this.strings.label_cookies_text}</div>
+                            `),
+                );
             } else {
-                wrapper.html(html);
+                wrapper.append(html);
             }
 
-            wrapper.appendTo($('body'));
+            const buttons = $("<div>")
+                .addClass("disclaimer-actions")
+                .addClass(o.clsButtons)
+                .append(
+                    $("<button>")
+                        .addClass("button cookie-accept-button")
+                        .addClass(o.clsAcceptButton)
+                        .html(this.strings.label_accept),
+                )
+                .append(
+                    $("<button>")
+                        .addClass("button cookie-cancel-button")
+                        .addClass(o.clsCancelButton)
+                        .html(this.strings.label_cancel),
+                );
+            buttons.appendTo(wrapper);
+            if (o.customButtons) {
+                $.each(o.customButtons, function () {
+                    const btn = $("<button>")
+                        .addClass("button cookie-custom-button")
+                        .addClass(this.cls)
+                        .html(this.text);
+                    btn.on("click", () => {
+                        Metro.utils.exec(this.onclick);
+                    });
+                    btn.appendTo(buttons);
+                });
+            }
+            wrapper.appendTo($("body"));
 
-            wrapper.on(Metro.events.click, o.acceptButton, function(){
-                var dur = 0;
-                var durations = (""+o.duration).toArray(" ");
+            wrapper.on(Metro.events.click, ".cookie-accept-button", () => {
+                let dur = 0;
+                const durations = `${o.duration}`.toArray(" ");
 
-                $.each(durations, function(){
-                    var d = ""+this;
+                $.each(durations, function () {
+                    const d = `${this}`;
                     if (d.includes("day")) {
-                        dur += parseInt(d)*24*60*60*1000;
-                    } else
-                    if (d.includes("hour")) {
-                        dur += parseInt(d)*60*60*1000;
-                    } else
-                    if (d.includes("min")) {
-                        dur += parseInt(d)*60*1000;
-                    } else
-                    if (d.includes("sec")) {
-                        dur += parseInt(d)*1000;
+                        dur += Number.parseInt(d) * 24 * 60 * 60 * 1000;
+                    } else if (d.includes("hour")) {
+                        dur += Number.parseInt(d) * 60 * 60 * 1000;
+                    } else if (d.includes("min")) {
+                        dur += Number.parseInt(d) * 60 * 1000;
+                    } else if (d.includes("sec")) {
+                        dur += Number.parseInt(d) * 1000;
                     } else {
-                        dur += parseInt(d);
+                        dur += Number.parseInt(d);
                     }
-                })
+                });
 
                 cookie.setCookie(o.name, true, dur);
-                Utils.exec(o.onAccept);
+                Metro.utils.exec(o.onAccept);
                 wrapper.remove();
             });
 
-            wrapper.on(Metro.events.click, o.cancelButton, function(){
-                Utils.exec(o.onDecline);
+            wrapper.on(Metro.events.click, ".cookie-cancel-button", () => {
+                Metro.utils.exec(o.onDecline);
                 wrapper.remove();
             });
-        }
+        },
     };
-}(Metro, m4q));
+})(Metro, Dom);

@@ -1,5 +1,5 @@
-import "../button"
-import "../draggable"
-import "../collapse"
-import "./panel.js"
-import "./panel.less"
+import "../button/index.js";
+import "../draggable/index.js";
+import "../collapse/index.js";
+import "./panel.js";
+import "./panel.less";

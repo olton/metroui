@@ -1,1 +1,1 @@
-import "./icons/index.js"
+import "./icons/index.js";

@@ -5,7 +5,7 @@
     .hideElement(input);
 
     input:focus ~ .time-wrapper {
-        .focus-show(@lightGray);
+        .focus-show(@light-gray);
     }
 
     .time-wrapper {
@@ -14,18 +14,20 @@
         position: relative;
         border: 1px solid var(--border-color);
         width: 100%;
+        overflow: hidden;
+        height: 100%;
+        border-radius: var(--wheel-picker-border-radius);
     }
 
     .hours, .minutes, .seconds {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         flex: 1;
-        border: 1px solid;
-        border-color: inherit;
+        border: 1px solid var(--border-color);
         text-align: center;
-        height: 38px;
-        line-height: 34px;
+        height: 100%;
         position: relative;
-        font-size: 1.2em;
     }
 
     &.show-labels {
@@ -44,8 +46,20 @@
         }
     }
 
-    &.disabled {
-        pointer-events: none!important;
-        color: @lightGray!important;
+    .action-block {
+        border: 1px solid var(--border-color);
+        border-radius: var(--datepicker-border-radius);
+    }
+
+    .button {
+        margin: 2px;
+
+        .icon {
+            font-family: "Segoe UI Symbol", serif;
+        }
+    }
+
+    li {
+        cursor: pointer;
     }
 }

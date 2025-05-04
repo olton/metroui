@@ -1,135 +1,130 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var RadioDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    let RadioDefaultConfig = {
         radioDeferred: 0,
-        transition: true,
-        style: 1,
+        prepend: "",
+        append: "",
         caption: "",
-        captionPosition: "right",
         clsRadio: "",
-        clsCheck: "",
         clsCaption: "",
-        onRadioCreate: Metro.noop
+        clsPrepend: "",
+        clsAppend: "",
+        onRadioCreate: Metro.noop,
     };
 
-    Metro.radioSetup = function (options) {
+    Metro.metroRadioSetup = (options) => {
         RadioDefaultConfig = $.extend({}, RadioDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroRadioSetup"] !== undefined) {
-        Metro.radioSetup(globalThis["metroRadioSetup"]);
+    if (typeof globalThis.metroRadioSetup !== "undefined") {
+        Metro.metroRadioSetup(globalThis.metroRadioSetup);
     }
 
-    Metro.Component('radio', {
-        init: function( options, elem ) {
+    Metro.Component("radio", {
+        init: function (options, elem) {
             this._super(elem, options, RadioDefaultConfig, {
                 origin: {
-                    className: ""
-                }
+                    className: "",
+                },
             });
 
             return this;
         },
 
-        _create: function(){
-            var element = this.element;
-
+        _create: function () {
             this._createStructure();
             this._createEvents();
-
-            this._fireEvent("radio-create", {
-                element: element
-            });
+            this._fireEvent("radio-create");
         },
 
-        _createStructure: function(){
-            var element = this.element, o = this.options;
-            var radio = $("<label>").addClass("radio " + element[0].className).addClass(o.style === 2 ? "style2" : "");
-            var check = $("<span>").addClass("check");
-            var caption = $("<span>").addClass("caption").html(o.caption);
+        _createStructure: function () {
+            const element = this.element;
+            const o = this.options;
+
+            const container = element.wrap("<label>").addClass("radio").addClass(o.clsCheckbox);
 
             element.attr("type", "radio");
 
-            radio.insertBefore(element);
-            element.appendTo(radio);
-            check.appendTo(radio);
-            caption.appendTo(radio);
-
-            if (o.transition === true) {
-                radio.addClass("transition-on");
+            if (o.prepend) {
+                container.prepend(
+                    $("<span>")
+                        .addClass("caption-prepend")
+                        .addClass(o.clsPrepend)
+                        .addClass(o.clsCaption)
+                        .html(o.prepend),
+                );
+            }
+            if (o.append) {
+                container.append(
+                    $("<span>").addClass("caption-append").addClass(o.clsAppend).addClass(o.clsCaption).html(o.append),
+                );
             }
 
-            if (o.captionPosition === 'left') {
-                radio.addClass("caption-left");
+            if (element.attr("readonly")) {
+                element.on("click", (e) => {
+                    e.preventDefault();
+                });
             }
 
-            this.origin.className = element[0].className;
-            element[0].className = '';
-
-            radio.addClass(o.clsRadio);
-            caption.addClass(o.clsCaption);
-            check.addClass(o.clsCheck);
-
-            if (element.is(':disabled')) {
-                this.disable();
-            } else {
-                this.enable();
+            if (this.elem.checked) {
+                this.state = true;
             }
+
+            this._drawState();
         },
 
-        _createEvents: function(){
-            var element = this.element, check = element.siblings(".check");
+        _drawState: () => {},
 
-            element.on("focus", function(){
-                check.addClass("focused");
+        _createEvents: function () {
+            const element = this.element;
+
+            element.on("click", () => {
+                this._drawState();
             });
-
-            element.on("blur", function(){
-                check.removeClass("focused");
-            });
         },
 
-        disable: function(){
-            this.element.data("disabled", true);
-            this.element.parent().addClass("disabled");
+        check: function () {
+            this.setCheckState(CHECKBOX_STATE.CHECKED);
         },
 
-        enable: function(){
-            this.element.data("disabled", false);
-            this.element.parent().removeClass("disabled");
+        uncheck: function () {
+            this.setCheckState(CHECKBOX_STATE.UNCHECKED);
         },
 
-        toggleState: function(){
-            if (this.elem.disabled) {
-                this.disable();
-            } else {
-                this.enable();
+        setCheckState: function (state = true) {
+            this.elem.checked = state;
+            this._drawState();
+            return this;
+        },
+
+        getCheckState: function (asString = false) {
+            const state = this.elem.checked;
+
+            if (!asString) {
+                return state;
+            }
+
+            switch (this.state) {
+                case false:
+                    return "unchecked";
+                case true:
+                    return "checked";
             }
         },
 
-        changeAttribute: function(attributeName){
-            var element = this.element, o = this.options;
-            var parent = element.parent();
-
-            var changeStyle = function(){
-                var new_style = parseInt(element.attr("data-style"));
-
-                if (!Utils.isInt(new_style)) return;
-
-                o.style = new_style;
-                parent.removeClass("style1 style2").addClass("style"+new_style);
-            };
-
-            switch (attributeName) {
-                case 'disabled': this.toggleState(); break;
-                case 'data-style': changeStyle(); break;
-            }
+        toggle: function () {
+            this.elem.checked = !this.elem.checked;
+            this._drawState();
         },
 
-        destroy: function(){
-            return this.element;
-        }
+        changeAttribute: (attr, newVal) => {},
+
+        destroy: function () {
+            const element = this.element;
+            element.off("click");
+            element.parent().remove();
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

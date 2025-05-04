@@ -6,77 +6,43 @@
     <link href="../lib/metro.css" rel="stylesheet">
     <link href="../lib/icons.css" rel="stylesheet">
 
-    <title>Test D-Menu - Metro 4 :: Popular HTML, CSS and JS library</title>
-    <style>
-        body {
-            background: #191f2a;
-        }
-        * + .example {
-            margin-top: 10px;
-        }
-    </style>
+    <title>Test D-Menu - Metro UI :: Popular HTML, CSS and JS library</title>
 </head>
-<body class="m4-cloak">
+<body class="cloak">
+<nav data-role="appbar">
+    <span class="app-bar-item">D-Menu</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
     <div class="container">
         <h1>D-Menu test page</h1>
 
-        <div class="row">
-            <div class="cell-lg-6 bg-white">
-                <div class="example">
-                    <ul class="d-menu pos-relative">
-                        <li><a href="#">
-                            <span class="icon mif-codepen"></span>
-                            <span class="caption">Go to Definition</span>
-                            <span class="hotkey">Ctrl+F12</span>
-                        </a></li>
-                        <li><a href="#">Go to Type Definition</a></li>
-                        <li class="disabled"><a href="#">
-                            <span class="caption">Go to Type Implementation</span>
-                            <span class="hotkey">Ctrl+F12</span></a></li>
-                        <li><a href="#">Go to References<span class="hotkey">Alt+Shift+F12</span></a></li>
-                        <li>
-                            <a href="#" class="dropdown-toggle">Peek</a>
-                            <ul class="d-menu" data-role="dropdown">
-                                <li><a href="#"><span class="caption">Find All References</span></a></li>
-                                <li><a href="#"><span class="caption">Find All Implementations</span></a></li>
-                                <li><a href="#"><span class="caption">Show Call Hierarchy</span></a></li>
-                            </ul>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="#">Find All References</a></li>
-                        <li><a href="#">Find All Implementations</a></li>
-                        <li><a href="#">Show Call Hierarchy</a></li>
+        <div class="example">
+            <ul class="d-menu pos-relative">
+                <li><a href="#">
+                    <span class="icon mif-codepen"></span>
+                    <span class="caption">Go to Definition</span>
+                    <span class="hotkey">Ctrl+F12</span>
+                </a></li>
+                <li><a href="#">Go to Type Definition</a></li>
+                <li class="disabled"><a href="#">
+                    <span class="caption">Go to Type Implementation</span>
+                    <span class="hotkey">Ctrl+F12</span></a></li>
+                <li><a href="#">Go to References<span class="hotkey">Alt+Shift+F12</span></a></li>
+                <li>
+                    <a href="#" class="dropdown-toggle">Peek</a>
+                    <ul class="d-menu" data-role="dropdown">
+                        <li><a href="#"><span class="caption">Find All References</span></a></li>
+                        <li><a href="#"><span class="caption">Find All Implementations</span></a></li>
+                        <li><a href="#"><span class="caption">Show Call Hierarchy</span></a></li>
                     </ul>
-                </div>
-            </div>
-            <div class="cell-lg-6">
-                <div class="example dark-side">
-                    <ul class="d-menu">
-                        <li><a href="#">
-                            <span class="icon mif-codepen"></span>
-                            <span class="caption">Go to Definition</span>
-                            <span class="hotkey">Ctrl+F12</span>
-                        </a></li>
-                        <li><a href="#">Go to Type Definition</a></li>
-                        <li class="disabled"><a href="#">
-                            <span class="caption">Go to Type Implementation</span>
-                            <span class="hotkey">Ctrl+F12</span></a></li>
-                        <li><a href="#">Go to References<span class="hotkey">Alt+Shift+F12</span></a></li>
-                        <li>
-                            <a href="#" class="dropdown-toggle">Peek</a>
-                            <ul class="d-menu" data-role="dropdown">
-                                <li><a href="#"><span class="caption">Find All References</span></a></li>
-                                <li><a href="#"><span class="caption">Find All Implementations</span></a></li>
-                                <li><a href="#"><span class="caption">Show Call Hierarchy</span></a></li>
-                            </ul>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="#">Find All References</a></li>
-                        <li><a href="#">Find All Implementations</a></li>
-                        <li><a href="#">Show Call Hierarchy</a></li>
-                    </ul>
-                </div>
-            </div>
+                </li>
+                <li class="divider"></li>
+                <li><a href="#">Find All References</a></li>
+                <li><a href="#">Find All Implementations</a></li>
+                <li><a href="#">Show Call Hierarchy</a></li>
+            </ul>
         </div>
 
     </div>

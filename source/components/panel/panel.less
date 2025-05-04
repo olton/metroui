@@ -2,6 +2,10 @@
 @import (once) "../../include/mixins";
 
 :root {
+    --panel-header-background: #fbfbfb;
+    --panel-header-color: #191919;
+    --panel-header-icon-background: #fbfbfb;
+    --panel-header-icon-color: #191919;
     --panel-background: #ffffff;
     --panel-color: #191919;
     --panel-border-color: #e8e8e8;
@@ -10,6 +14,10 @@
 }
 
 .dark-side {
+    --panel-header-background: #282c35;
+    --panel-header-color: #fbfbfb;
+    --panel-header-icon-background: #282c35;
+    --panel-header-icon-color: #fbfbfb;
     --panel-background: #2b2d30;
     --panel-color: #dbdfe7;
     --panel-border-color: #4a4d51;
@@ -20,7 +28,7 @@
     display: flex;
     flex-flow: column nowrap;
     position: relative;
-    background-color: var(--panel-background);
+    background: var(--panel-background);
     color: var(--panel-color);
     border: 1px solid var(--panel-border-color);
     border-radius: var(--panel-border-radius);
@@ -48,6 +56,12 @@
         cursor: default;
         flex-shrink: 0;
         font-size: 16px;
+        background: var(--panel-header-background);
+        color: var(--panel-header-color);
+        border-top-left-radius: var(--panel-border-radius);
+        border-top-right-radius: var(--panel-border-radius);
+        overflow: hidden;
+        user-select: none;
 
         .icon {
             order: 1;
@@ -56,8 +70,9 @@
             width: 2.625rem;
             border-right: 1px solid var(--panel-border-color);
             flex-shrink: 0;
-            color: inherit;
             text-align: center;
+            background: var(--panel-header-icon-background);
+            color: var(--panel-header-icon-color);
         }
 
         img.icon {
@@ -78,31 +93,37 @@
             width: 2.625rem;
             border-left: 1px solid var(--panel-border-color);
             flex-shrink: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            
+            svg {
+                margin: 0;
+            }
         }
 
         .custom-buttons {
             order: 3;
             display: flex;
             flex-flow: row nowrap;
+            margin-right: .5rem;
         }
 
         .btn-custom {
-            width: 42px;
-            height: 42px;
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            border: 1px solid var(--card-button-border-color);
+            padding: 0;
+            margin-right: 2px;
             display: flex;
-            position: relative;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
 
-            & > * {
-                line-height: 1;
-                width: 16px;
-                height: 16px;
-                font-size: 16px;
-            }
-
-            &:focus, &:active {
-                box-shadow: none!important;
+            &:last-child {
+                margin-right: 0;
             }
         }
     }

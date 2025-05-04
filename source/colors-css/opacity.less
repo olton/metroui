@@ -1,0 +1,11 @@
+@import (once) "../include/vars";
+
+.op-default {
+    background-color: rgba(red(@cyan), green(@cyan), blue(@cyan), .5) !important;
+}
+
+each(@colors, {
+    .op-@{value} {background-color: rgba(red(@@value), green(@@value), blue(@@value), .5) !important;}
+    .op-@{value}-hi {background-color: rgba(red(@@value), green(@@value), blue(@@value), .2) !important;}
+    .op-@{value}-low {background-color: rgba(red(@@value), green(@@value), blue(@@value), .8) !important;}
+})

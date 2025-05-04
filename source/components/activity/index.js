@@ -1,3 +1,3 @@
-import "../dialog"
-import "./activity.js"
-import "./activity.less"
+import "../dialog/index.js";
+import "./activity.js";
+import "./activity.less";

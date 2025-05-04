@@ -32,6 +32,8 @@
     height: 32px;
     background: rgba(248,248,248,.5);
     color: @dark;
+    font-family: "Segoe UI Symbol", serif;
+    border-radius: 4px;
 
     * {
         line-height: 32px;
@@ -42,6 +44,7 @@
 }
 
 .lightbox__prev, .lightbox__next {
+    font-family: "Segoe UI Symbol", serif;
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -49,17 +52,21 @@
     color: @dark;
     flex-grow: 0;
     flex-shrink: 0;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 50%;
     margin-top: -24px;
     left: 20px;
+    font-size: 36px;
 
     * {
-        line-height: 48px;
-        font-size: 40px;
+        line-height: 40px;
+        font-size: 36px;
         height: 40px;
         width: 40px;
+        object-fit: cover;
     }
 }
 
@@ -88,8 +95,8 @@
 .lightbox__image-wrapper {
     display: block;
     width: auto;
-    max-height: ~"calc(100vh - 80px)";
-    max-width: ~"calc(100vw - 20px)";
+    max-height: calc(100vh - 80px);
+    max-width: calc(100vw - 20px);
 
     &::before {
         content: attr(data-title);
@@ -98,6 +105,8 @@
         top: 100%;
         left: 0;
         right: 0;
+        display: flex;
+        justify-content: center;
     }
 
     &.no-title {
@@ -109,7 +118,7 @@
     img {
         display: block;
         width: auto;
-        max-height: ~"calc(100vh - 80px)";
-        max-width: ~"calc(100vw - 20px)";
+        max-height: calc(100vh - 80px);
+        max-width: calc(100vw - 20px);
     }
 }

@@ -1,8 +1,9 @@
-(function(Metro, $) {
-    'use strict';
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
 
-    var TyperDefaultConfig = {
-        splitter: ',',
+    let TyperDefaultConfig = {
+        splitter: ",",
         variance: 0,
         delay: 100,
         blinkDelay: 400,
@@ -11,19 +12,19 @@
         cursor: "_",
         colors: "",
         onType: Metro.noop,
-        onTyperCreate: Metro.noop
+        onTyperCreate: Metro.noop,
     };
 
-    Metro.typerSetup = function (options) {
+    Metro.typerSetup = (options) => {
         TyperDefaultConfig = $.extend({}, TyperDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTyperSetup"] !== undefined) {
-        Metro.typerSetup(globalThis["metroTyperSetup"]);
+    if (typeof globalThis.metroTyperSetup !== "undefined") {
+        Metro.typerSetup(globalThis.metroTyperSetup);
     }
 
-    Metro.Component('typer', {
-        init: function( options, elem ) {
+    Metro.Component("typer", {
+        init: function (options, elem) {
             this._super(elem, options, TyperDefaultConfig, {
                 // define instance vars here
                 original: null,
@@ -38,48 +39,49 @@
             return this;
         },
 
-        _create: function(){
-            const element = this.element, o = this.options;
+        _create: function () {
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("typer");
 
-            this.original = element.text()
+            this.original = element.text();
             this.words = this.original.split(o.splitter).pack();
             this.colors = o.colors.split(",").pack();
             this.cursor = $("<span>").addClass("typer-cursor").html(o.cursor).insertAfter(element);
-            this.interval = setInterval(() => this._blink(), +o.blinkDelay)
+            this.interval = setInterval(() => this._blink(), +o.blinkDelay);
             this.progress = { word: 0, char: 0, building: true, looped: 0 };
             element.clear();
-            this.start()
+            this.start();
         },
 
-        _blink: function(){
+        _blink: function () {
             if (this.on) {
                 this.cursor[0].style.opacity = 0;
-                this.on = false
+                this.on = false;
             } else {
                 this.cursor[0].style.opacity = 1;
-                this.on = true
+                this.on = true;
             }
         },
 
-        doTyping: function(){
-            const that = this, element = this.element, elem = this.elem, o = this.options;
-            let atWordEnd
+        doTyping: function () {
+            const element = this.element;
+            const elem = this.elem;
+            const o = this.options;
+            let atWordEnd;
             const p = this.progress;
-            const w = p.word
-            const c = p.char
-            const curr = [...this.words[w]].slice(0, c).join("")
-            const timeout = ((2 * Math.random() - 1) * o.variance) + o.delay
+            const w = p.word;
+            const c = p.char;
+            const curr = [...this.words[w]].slice(0, c).join("");
+            const timeout = (2 * Math.random() - 1) * o.variance + o.delay;
 
-            {
-                this.cursor[0].style.opacity = "1"
-                this.on = true
-                clearInterval(this.interval);
-                this.interval = setInterval(() => this._blink(), +o.blinkDelay);
-            }
+            this.cursor[0].style.opacity = "1";
+            this.on = true;
+            clearInterval(this.interval);
+            this.interval = setInterval(() => this._blink(), +o.blinkDelay);
 
-            element.html(curr)
+            element.html(curr);
 
             if (p.building) {
                 atWordEnd = p.char === this.words[w].length;
@@ -105,28 +107,33 @@
                 p.looped += 1;
             }
 
-            if (!p.building && this.loop <= p.looped){
+            if (!p.building && this.loop <= p.looped) {
                 this.typing = false;
             }
 
-            setTimeout(() => {
-                if (this.typing) { this.doTyping() }
-            }, atWordEnd ? o.deleteDelay : timeout);
+            setTimeout(
+                () => {
+                    if (this.typing) {
+                        this.doTyping();
+                    }
+                },
+                atWordEnd ? o.deleteDelay : timeout,
+            );
         },
 
-        start: function(){
+        start: function () {
             if (!this.typing) {
                 this.typing = true;
-                this.doTyping()
+                this.doTyping();
             }
         },
 
-        stop: function(){
-            this.typing = false
+        stop: function () {
+            this.typing = false;
         },
 
-        destroy: function(){
+        destroy: function () {
             this.element.remove();
-        }
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

@@ -1,3 +1,3 @@
-import "../../farbe"
-import "./ripple.js"
-import "./ripple.less"
+import "../../farbe/index.js";
+import "./ripple.js";
+import "./ripple.less";

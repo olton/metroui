@@ -5,65 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Shadow - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Shadow - Metro UI :: Popular HTML, CSS and JS library</title>
     <style>
+        body {
+            padding-top: 50px;
+        }
         .box {
-            width: 100px;
+            width: 200px;
             height: 100px;
-            background: red;
+            background: white;
+            margin: 10px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+        }
+        
+        .dark-side {
+            .box {
+                background: #404249;
+            }
         }
     </style>
 </head>
-<body class="m4-cloak">
+<body class="cloak">
+<nav data-role="appbar">
+    <span class="app-bar-item">Inputs</span>
+    <div class="app-bar-item no-hover">
+        <input type="checkbox" data-role="theme-switcher" data-state="light"/>
+    </div>
+</nav>
 <div class="container">
     <h1>Shadow test page</h1>
 
-    <div class="row p-4">
-        <div class="cell-lg-3">
-            <div class="box simple-shadow"></div>
-        </div>
-        <div class="cell-lg-3">
-            <div class="box shadow-1"></div>
-        </div>
-        <div class="cell-lg-3">
-            <div class="box shadow-2"></div>
-        </div>
-        <div class="cell-lg-3">
-            <div class="box shadow-3"></div>
-        </div>
-        <div class="cell-lg-3">
-            <div class="box shadow-4"></div>
-        </div>
-        <div class="cell-lg-3">
-            <div class="box shadow-5"></div>
-        </div>
-    </div>
-
-    <div class="row p-4 dark-side">
-        <div class="cell-lg-3">
-            <div class="box simple-shadow"></div>
-        </div>
-        <div class="cell-lg-3">
-            <div class="box shadow-1"></div>
-        </div>
-        <div class="cell-lg-3">
-            <div class="box shadow-2"></div>
-        </div>
-        <div class="cell-lg-3">
-            <div class="box shadow-3"></div>
-        </div>
-        <div class="cell-lg-3">
-            <div class="box shadow-4"></div>
-        </div>
-        <div class="cell-lg-3">
-            <div class="box shadow-5"></div>
-        </div>
-    </div>
+    <div id="light" class="d-flex flex-wrap p-10" style="background: #fafafa"></div>
+    <div id="dark" class="d-flex flex-wrap dark-side p-10" style="background: var(--default-background)"></div>
+    <div class="d-flex flex-wrap p-10" id="_3d" style="background: #fafafa"></div>
+    <div class="d-flex flex-wrap p-10" id="_3d-border" style="background: #fafafa"></div>
+    <div class="d-flex flex-wrap p-10" id="glow" style="background: #fafafa"></div>
+    <div class="d-flex flex-wrap p-10" id="glow-soft" style="background: #fafafa"></div>
 </div>
 
 <script src="../lib/metro.js"></script>
 <script>
-
+    const shadows = [
+        "small", "normal", "medium", "large", "large-extra", "3d", "3d-border", "border", "solid"
+    ]
+    
+    const colors = [
+        "lime", "green", "emerald", "blue", "teal", "cyan", "cobalt", "indigo", "violet", "pink", "magenta",
+        "crimson", "red", "orange", "amber", "yellow", "brown", "olive", "steel", "mauve", "taupe",
+        "champagne", "khaki", "charcoal", "bronze", "windstorm", "nude", "terracotta", "coral", "army", "seashell", "sand"
+    ];
+    
+    for (let s of shadows) {
+        $("#light").append(`<div class="box shadow-${s}">.shadow-${s}</div>`)
+        $("#dark").append(`<div class="box shadow-${s}">.shadow-${s}</div>`)
+    }
+    
+    for (let c of colors) {
+        $("#_3d").append(`<div class="box shadow-3d-${c}">.shadow-3d-${c}</div>`)
+        $("#_3d-border").append(`<div class="box shadow-3d-border-${c}">.shadow-3d-border-${c}</div>`)
+        $("#glow").append(`<div class="box shadow-glow-${c}">.shadow-glow-${c}</div>`)
+        $("#glow-soft").append(`<div class="box shadow-glow-soft-${c}">.shadow-glow-soft-${c}</div>`)
+    }
 </script>
 </body>
 </html>

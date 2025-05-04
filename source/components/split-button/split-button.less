@@ -1,6 +1,23 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --split-button-border-radius: 4px;
+    --split-button-background: #ebebeb;
+    --split-button-color: #191919;
+    --split-button-background-hover: #dcdcdc;
+    --split-button-color-hover: #474747;
+    --split-button-border-color: #E8E8E8;
+}
+
+.dark-side {
+    --split-button-background: #2e2e2e;
+    --split-button-color: #F8F8F8;
+    --split-button-background-hover: #373737;
+    --split-button-color-hover: #bfbfbf;
+    --split-button-border-color: #4A4D51;
+}
+
 .split-button {
     display: inline-flex;
     flex-flow: row nowrap;
@@ -8,6 +25,7 @@
     width: auto;
     height: 36px;
     line-height: 1;
+    gap: 4px;
 
     & > *:nth-child(1) {
         order: 1
@@ -15,30 +33,43 @@
 
     & > *:nth-child(2) {
         order: 2;
-        margin-left: 4px;
+        //margin-left: 4px;
     }
 
     .split {
         padding: 0 .75rem;
         text-align: center;
         vertical-align: middle ;
-        background-color: @lightGray;
-        border: 1px @transparent solid;
-        color: @dark;
+        background: var(--split-button-background);
+        color: var(--split-button-color);
+        border: 1px var(--button-border-color) solid;
+        border-radius: var(--split-button-border-radius);
         cursor: pointer;
         outline: none;
-        font-size: .875rem;
+        font-size: 14px;
         position: relative;
-        line-height: 36px;
         height: 36px;
         min-width: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         &.dropdown-toggle {
-            &::before {margin-left: -1.25rem;}
+            padding: 0 .75rem!important;
         }
 
-        &:hover {
-            background-color: darken(@lightGray, 10%);
+        @media (hover: hover) {
+            &:hover {
+                background: var(--split-button-background-hover);
+                color: var(--split-button-color-hover);
+            }
+        }
+        
+        @media (hover: none) {
+            &:active {
+                background: var(--split-button-background-hover);
+                color: var(--split-button-color-hover);
+            }
         }
     }
 
@@ -59,7 +90,7 @@
         &.outline {
             background: transparent none;
             border-width: 1px;
-            border-color: var(--border-color);
+            border-color: var(--split-button-border-color);
         }
 
         &:active {
@@ -67,14 +98,22 @@
         }
     }
 
-    [data-role*=dropdown], .drop-object {
-        left: 0;
+    [data-role-dropdown], .drop-object {
+        right: 0;
         top: 100%;
     }
 
     &.no-gap {
+        gap: 0;
+        
+        button, .button {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        
         .split {
-            margin-left: -2px;
+            border-radius: 0 var(--split-button-border-radius) var(--split-button-border-radius) 0;
+            border-left: 1px solid var(--split-button-background-hover);
         }
     }
 }

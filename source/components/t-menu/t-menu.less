@@ -1,50 +1,85 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --t-menu-border-radius: 6px;
+    --t-menu-border-color: #ececec;
+    --t-menu-background: #fefefe;
+    --t-menu-color: #191919;
+}
+
+.dark-side {
+    --t-menu-border-color: #484b4c;
+    --t-menu-background: #343637;
+    --t-menu-color: #dbdfe7;
+}
+
 .t-menu {
-    .reset-list();
+    list-style: none inside;
+    margin: 0;
+    padding: 0;
+    position: relative;
     width: auto;
     float: left;
-    background-color: @white;
-    color: @dark;
-    border-collapse: separate;
+    background-color: var(--t-menu-background);
+    color: var(--t-menu-color);
     display: none;
+    border: 1px var(--t-menu-border-color) solid;
+    border-radius: var(--t-menu-border-radius);
 
     &.open {
         display: block;
     }
 
+    & > li:first-child, & > li:first-child a {
+        border-top-left-radius: var(--t-menu-border-radius);
+        border-top-right-radius: var(--t-menu-border-radius);
+    }
+    & > li:last-child, & > li:last-child a {
+        border-bottom-left-radius: var(--t-menu-border-radius);
+        border-bottom-right-radius: var(--t-menu-border-radius);
+    }
+    
     & > li {
         position: relative;
         background-color: inherit;
         color: inherit;
         display: block;
+        height: 60px;
+        width: 60px;
 
         & > a {
-            display: block;
-            padding: 0 1rem;
-            border-bottom: 1px var(--border-color) solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px var(--t-menu-border-color) solid;
             position: relative;
             color: inherit;
             background-color: inherit;
-            height: 60px;
-            width: 60px;
-            line-height: 60px;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
 
-            .icon {
+            * {
                 width: 1.5rem;
                 height: 1.5rem;
                 font-size: 1.5rem;
-                line-height: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
 
-        &:hover {
-            background-color: @hoverBackground;
+        @media (hover: hover) {
+            &:hover {
+                background-color: @hoverBackground;
+            }
         }
 
-        &:last-child {
-            a {border-bottom: 0;}
+        @media (hover: none) {
+            &:active {
+                background-color: @hoverBackground;
+            }
         }
     }
 
@@ -54,14 +89,18 @@
             text-decoration: none!important;
         }
     }
-
-    .default-shadow();
 }
 
 .t-menu {
     &.horizontal {
         & > li {
             float: left;
+        }
+        & > li:first-child a {
+            border-radius: var(--t-menu-border-radius) 0 0 var(--t-menu-border-radius);
+        }
+        & > li:last-child a {
+            border-radius: 0 var(--t-menu-border-radius) var(--t-menu-border-radius) 0;
         }
     }
 }
@@ -87,7 +126,7 @@
 
 .t-menu {
     .dropdown-toggle {
-        padding-right: 1rem!important;
+        padding-right: 0!important;
         &:after {
             content: "";
             background-color: @transparent;
@@ -100,7 +139,7 @@
             height: 0;
             border-style: solid;
             border-width: 0 0 8px 8px;
-            border-color: transparent transparent @hoverBackground2 transparent;
+            border-color: transparent transparent var(--t-menu-border-color) transparent;
             .rotate(0);
         }
 
@@ -114,7 +153,7 @@
     & > li {
 
         & > a {
-            border-right: 1px var(--border-color) solid;
+            border-right: 1px var(--t-menu-border-color) solid;
             border-bottom: 0;
         }
 
@@ -145,23 +184,16 @@
 .t-menu {
     &.compact {
         li {
-            a {
-                padding: 0 .7rem;
-                width: 40px;
-                height: 40px;
-                line-height: 40px;
+            width: 40px;
+            height: 40px;
 
-                .icon {
+            a {
+                * {
                     width: 1rem;
                     height: 1rem;
                     font-size: 1rem;
-                    line-height: 40px;
                 }
             }
-        }
-
-        .dropdown-toggle {
-            padding-right: .7rem!important;
         }
     }
 }

@@ -1,14 +1,12 @@
-*,
-*::before,
-*::after {
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 html {
-    -ms-overflow-style: scrollbar;
     -webkit-tap-highlight-color: transparent;
     -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
     font-family: sans-serif;
     scroll-behavior: smooth;
 }
@@ -16,34 +14,13 @@ html {
 body {
     line-height: 1.5;
     overflow-x: hidden;
-    background-color: #ffffff;
     min-height: 100vh;
-    height: 100vh;
     text-rendering: optimizeSpeed;
-}
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     padding: 0;
-    border: 0;
-    vertical-align: baseline;
-}
-
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-    display: block;
+    margin: 0;
 }
 
 blockquote, q {
@@ -58,11 +35,6 @@ q:before, q:after {
 table {
     border-collapse: collapse;
     border-spacing: 0;
-}
-
-base, basefont, datalist, head, meta, script, style, title,
-noembed, param, template {
-    display: none;
 }
 
 [tabindex="-1"]:focus {
@@ -95,33 +67,6 @@ input[type="month"] {
     -webkit-appearance: listbox;
 }
 
-button::-moz-focus-inner,
-[type="button"]::-moz-focus-inner,
-[type="reset"]::-moz-focus-inner,
-[type="submit"]::-moz-focus-inner {
-    padding: 0;
-    border-style: none;
-}
-
-button,
-html [type="button"],
-[type="reset"],
-[type="submit"] {
-    -webkit-appearance: button;
-}
-
-a,
-area,
-button,
-input,
-label,
-select,
-summary,
-textarea {
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-}
-
 svg:not(:root) {
     overflow: hidden;
 }
@@ -130,21 +75,16 @@ img {
     vertical-align: middle;
     border-style: none;
     max-width: 100%;
+    object-fit: cover;
+    height: auto;
 }
 
-div {
-    position: relative;
+img:not([alt]) {
+    filter: blur(2px);
 }
 
 article > * + * {
     margin-top: 1em;
-}
-
-input,
-button,
-textarea,
-select {
-    font: inherit;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -156,7 +96,7 @@ select {
     }
 }
 
-[disabled] {
+[disabled], .disabled {
     pointer-events: none!important;
     color: lightgray!important;
 }

@@ -27,7 +27,7 @@
     position: fixed;
     display: flex;
     flex-flow: column;
-    width: auto;
+    width: min(90%, 600px);
     max-width: calc(100vw - 100px);
     max-height: calc(100vh - 100px);
     height: auto;
@@ -36,12 +36,6 @@
     z-index: @zindex-modal;
     border: 1px solid var(--dialog-border-color);
     border-radius: var(--dialog-border-radius);
-}
-
-.dialog {
-    &.shadow-on {
-        .shadow(3);
-    }
 }
 
 .dialog-title, .dialog-content, .dialog-actions {
@@ -120,6 +114,7 @@
         background-color: var(--dialog-closer-background);
         color: var(--dialog-closer-color);
         cursor: pointer;
+        border-radius: 4px;
         &::before {
             display: block;
             content: "\00d7";

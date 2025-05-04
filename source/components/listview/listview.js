@@ -1,15 +1,21 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var ListViewDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    const file_icon = `
+    <svg width="800px" height="800px" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <path class="a" d="M39.5,15.5h-9a2,2,0,0,1-2-2v-9h-18a2,2,0,0,0-2,2v35a2,2,0,0,0,2,2h27a2,2,0,0,0,2-2Z"/>
+        <line class="a" x1="28.5" y1="4.5" x2="39.5" y2="15.5"/>
+    </svg>`;
+    const toggleImage = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path></svg>`;
+
+    let ListViewDefaultConfig = {
         listviewDeferred: 0,
         selectable: false,
-        checkStyle: 1,
         duration: 100,
         view: Metro.listView.LIST,
         selectCurrent: true,
-        structure: {},
+        defaultIcon: file_icon,
         onNodeInsert: Metro.noop,
         onNodeDelete: Metro.noop,
         onNodeClean: Metro.noop,
@@ -18,219 +24,161 @@
         onGroupNodeClick: Metro.noop,
         onNodeClick: Metro.noop,
         onNodeDblclick: Metro.noop,
-        onListViewCreate: Metro.noop
+        onListViewCreate: Metro.noop,
     };
 
-    Metro.listViewSetup = function (options) {
+    Metro.listViewSetup = (options) => {
         ListViewDefaultConfig = $.extend({}, ListViewDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroListViewSetup"] !== undefined) {
-        Metro.listViewSetup(globalThis["metroListViewSetup"]);
+    if (typeof globalThis.metroListViewSetup !== "undefined") {
+        Metro.listViewSetup(globalThis.metroListViewSetup);
     }
 
-    Metro.Component('listview', {
-        init: function( options, elem ) {
+    Metro.Component("listview", {
+        init: function (options, elem) {
             this._super(elem, options, ListViewDefaultConfig);
 
             return this;
         },
 
-        _create: function(){
-            var element = this.element;
+        _create: function () {
+            const element = this.element;
 
-            this._createView();
+            this._createStructure();
             this._createEvents();
 
             this._fireEvent("listview-create", {
-                element: element
+                element: element,
             });
         },
 
-        _createIcon: function(data){
-            var icon, src;
+        _createIcon: (data) => $("<div>").addClass("icon").html(data),
+        _createCaption: (data = "") => $("<div>").addClass("caption").html(data),
+        _createContent: (data = "") => $("<div>").addClass("content").html(data),
+        _createDesc: (data = "") => $("<div>").addClass("desc").html(data),
+        _createDate: (data = "") => $("<div>").addClass("date").html(data),
+        _createToggle: () => $("<span>").addClass("node-toggle").html(toggleImage),
+        _createNode: function (data) {
+            const o = this.options;
+            const node = $("<li>");
 
-            src = Utils.isTag(data) ? $(data) : $("<img>").attr("src", data);
-            icon = $("<span>").addClass("icon");
-            icon.html(src.outerHTML());
-
-            return icon;
-        },
-
-        _createCaption: function(data){
-            return $("<div>").addClass("caption").html(data);
-        },
-
-        _createContent: function(data){
-            return $("<div>").addClass("content").html(data);
-        },
-
-        _createToggle: function(){
-            return $("<span>").addClass("node-toggle");
-        },
-
-        _createNode: function(data){
-            var that = this, o = this.options;
-            var node;
-
-            node = $("<li>");
-
-            if (data.caption !== undefined || data.content !== undefined ) {
-                var d = $("<div>").addClass("data");
-                node.prepend(d);
-                if (data.caption !== undefined) d.append(that._createCaption(data.caption));
-                if (data.content !== undefined) d.append(that._createContent(data.content));
-            }
-
-            if (data.icon !== undefined) {
-                node.prepend(this._createIcon(data.icon));
-            }
-
-            if (Utils.objectLength(o.structure) > 0) $.each(o.structure, function(key, val){
-                if (data[key] !== undefined) {
-                    $("<div>").addClass("node-data item-data-"+key).addClass(data[val]).html(data[key]).appendTo(node);
-                }
-            });
-
-            if (data.attributes && Utils.isObject(data.attributes)) {
-                for(let key in data.attributes) {
-                    node.attr(`data-${key}`, data.attributes[key])
-                }
-            }
-
-            if (data.class) {
-                node.addClass(data.class)
-            }
-
-            if (data.badge) {
-                node.append(
-                    $("<span>").addClass("badge").html(data.badge)
-                )
-            }
-
-            if (data.badges) {
-                const badges = $("<div>").addClass("badges").appendTo(node);
-                data.badges.map(b => {
-                    if (!b) return;
-                    badges.append(
-                        $(b).addClass("badge")
-                    )
-                })
-            }
+            node.append($("<input type='checkbox' data-role='checkbox'>").data("node", node));
+            node.append(this._createIcon(data.icon ?? o.defaultIcon));
+            node.append(this._createCaption(data.caption));
+            node.append(this._createDesc(data.desc));
+            node.append(this._createDate(data.date));
+            node.append(this._createContent(data.content));
 
             return node;
         },
 
-        _createView: function(){
-            var that = this, element = this.element, o = this.options;
-            var nodes = element.find("li");
-            var struct_length = Utils.objectLength(o.structure);
+        _createStructure: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const nodes = element.find("li");
 
             element.addClass("listview");
             element.find("ul").addClass("listview");
+            if (o.selectable) {
+                element.addClass("selectable");
+            }
 
-            $.each(nodes, function(){
-                var node = $(this);
-
-                if (node.data("caption") !== undefined || node.data("content") !== undefined) {
-                    var data = $("<div>").addClass("data");
-                    node.prepend(data);
-                    if (node.data("caption") !== undefined) data.append(that._createCaption(node.data("caption")));
-                    if (node.data("content") !== undefined) data.append(that._createContent(node.data("content")));
-                }
-
-                if (node.data('icon') !== undefined) {
-                    node.prepend(that._createIcon(node.data('icon')));
-                }
+            $.each(nodes, function (index) {
+                const node = $(this);
+                const nodeContent = node.html();
+                const defaultFileName = `Item_${index + 1}`;
 
                 if (node.children("ul").length > 0) {
+                    node.prepend(that._createCaption(node.data("caption") ?? defaultFileName));
                     node.addClass("node-group");
                     node.append(that._createToggle());
                     if (node.data("collapsed") !== true) node.addClass("expanded");
                 } else {
-                    node.addClass("node");
-                }
-
-                if (node.hasClass("node")) {
-                    var cb = $("<input type='checkbox' data-role='checkbox' data-style='"+o.checkStyle+"'>");
-                    cb.data("node", node);
-                    node.prepend(cb);
-                }
-
-                if (struct_length > 0) $.each(o.structure, function(key){
-                    if (node.data(key) !== undefined) {
-                        $("<div>").addClass("node-data item-data-"+key).addClass(node.data(key)).html(node.data(key)).appendTo(node);
-                    }
-                });
-
-                if (node.data("class") !== undefined) {
-                    node.addClass(node.data("class"))
+                    node.clear().addClass("node");
+                    node.append($("<input type='checkbox' data-role='checkbox'>").data("node", node));
+                    node.append(that._createIcon(node.data("icon") ?? o.defaultIcon));
+                    node.append(that._createCaption(node.data("caption") ?? defaultFileName));
+                    node.append(that._createDesc(node.data("desc")));
+                    node.append(that._createDate(node.data("date")));
+                    node.append(that._createContent(nodeContent));
                 }
             });
 
-            this.toggleSelectable();
+            if (o.selectable) {
+                element.addClass("selectable");
+            }
 
             this.view(o.view);
         },
 
-        _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+        _createEvents: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
-            element.on(Metro.events.dblclick, ".node", function(){
-                var node = $(this);
+            element.on(Metro.events.dblclick, ".node", function () {
+                const node = $(this);
                 that._fireEvent("node-dblclick", {
-                    node: node
+                    node: node,
                 });
             });
 
-            element.on(Metro.events.click, ".node", function(){
-                var node = $(this);
-                var href = $(this).attr("href");
+            element.on(Metro.events.click, ".node", function () {
+                const node = $(this);
+                const href = $(this).attr("href");
 
                 if (href) {
                     globalThis.location.href = href;
                     return;
                 }
 
+                const isCurrent = node.hasClass("current");
+
                 element.find(".node").removeClass("current");
-                node.toggleClass("current");
+                if (!isCurrent) {
+                    node.addClass("current");
+                }
                 if (o.selectCurrent === true) {
                     element.find(".node").removeClass("current-select");
-                    node.toggleClass("current-select");
+                    if (!isCurrent) {
+                        node.addClass("current-select");
+                    }
                 }
                 that._fireEvent("node-click", {
-                    node: node
+                    node: node,
                 });
             });
 
-            element.on(Metro.events.click, ".node-toggle", function(){
-                var node = $(this).closest("li");
+            element.on(Metro.events.click, ".node-toggle", function () {
+                const node = $(this).closest("li");
                 that.toggleNode(node);
             });
 
-            element.on(Metro.events.click, ".node-group > .data > .caption", function(){
-                var node = $(this).closest("li");
+            element.on(Metro.events.click, ".node-group > .caption", function () {
+                const node = $(this).closest("li");
                 element.find(".node-group").removeClass("current-group");
                 node.addClass("current-group");
 
                 that._fireEvent("group-node-click", {
-                    node: node
+                    node: node,
                 });
-
             });
 
-            element.on(Metro.events.dblclick, ".node-group > .data > .caption", function(){
-                var node = $(this).closest("li");
+            element.on(Metro.events.dblclick, ".node-group > .caption", function () {
+                const node = $(this).closest("li");
                 that.toggleNode(node);
 
                 that._fireEvent("node-dbl-click", {
-                    node: node
+                    node: node,
                 });
             });
         },
 
-        view: function(v){
-            var element = this.element, o = this.options;
+        view: function (v) {
+            const element = this.element;
+            const o = this.options;
 
             if (v === undefined) {
                 return o.view;
@@ -238,73 +186,72 @@
 
             o.view = v;
 
-            $.each(Metro.listView, function(i, v){
-                element.removeClass("view-"+v);
-                element.find("ul").removeClass("view-"+v);
+            $.each(Metro.listView, (i, v) => {
+                element.removeClass(`view-${v}`);
+                element.find("ul").removeClass(`view-${v}`);
             });
 
-            element.addClass("view-" + o.view);
-            element.find("ul").addClass("view-" + o.view);
+            element.addClass(`view-${o.view}`);
+            element.find("ul").addClass(`view-${o.view}`);
         },
 
-        toggleNode: function(node){
-            var o = this.options;
-            var func;
+        toggleNode: function (node) {
+            const o = this.options;
+            const n = $(node);
 
-            node=$(node);
-
-            if (!node.hasClass("node-group")) {
-                return ;
+            if (!n.hasClass("node-group")) {
+                return;
             }
 
-            node.toggleClass("expanded");
+            n.toggleClass("expanded");
 
-            func = node.hasClass("expanded") !== true ? "slideUp" : "slideDown";
-
+            const func = n.hasClass("expanded") !== true ? "slideUp" : "slideDown";
             this._fireEvent("collapse-node", {
-                node: node
+                node: n,
             });
 
-            node.children("ul")[func](o.duration);
+            n.children("ul")[func](o.duration);
         },
 
-        toggleSelectable: function(){
-            var element = this.element, o = this.options;
-            var func = o.selectable === true ? "addClass" : "removeClass";
+        toggleSelectable: function () {
+            const element = this.element;
+            const o = this.options;
+            o.selectable = !o.selectable;
+            const func = o.selectable === true ? "addClass" : "removeClass";
+            console.log(func);
             element[func]("selectable");
             element.find("ul")[func]("selectable");
         },
 
-        add: function(node, data){
-            var element = this.element, o = this.options;
-            var target;
-            var new_node;
-            var toggle;
+        add: function (data, node = null) {
+            const element = this.element;
+            const o = this.options;
+            let target;
+            let toggle;
+            let n;
 
             if (node === null) {
                 target = element;
             } else {
+                n = $(node);
 
-                node=$(node);
-
-                if (!node.hasClass("node-group")) {
-                    return ;
+                if (!n.hasClass("node-group")) {
+                    return;
                 }
 
-                target = node.children("ul");
+                target = n.children("ul");
                 if (target.length === 0) {
-                    target = $("<ul>").addClass("listview").addClass("view-"+o.view).appendTo(node);
+                    target = $("<ul>").addClass("listview").addClass(`view-${o.view}`).appendTo(n);
                     toggle = this._createToggle();
-                    toggle.appendTo(node);
-                    node.addClass("expanded");
+                    toggle.appendTo(n);
+                    n.addClass("expanded");
                 }
             }
 
-            new_node = this._createNode(data);
-
+            const new_node = this._createNode(data);
             new_node.addClass("node").appendTo(target);
 
-            var cb = $("<input type='checkbox'>");
+            const cb = $("<input type='checkbox'>");
             cb.data("node", new_node);
             new_node.prepend(cb);
             Metro.makePlugin(cb, "checkbox", {});
@@ -312,85 +259,85 @@
             this._fireEvent("node-insert", {
                 newNode: new_node,
                 parentNode: node,
-                list: target
+                list: target,
             });
 
             return new_node;
         },
 
-        addGroup: function(data){
-            var element = this.element, o = this.options;
-            var node;
+        addGroup: function (data) {
+            const element = this.element;
+            const o = this.options;
 
-            delete data['icon'];
+            // biome-ignore lint/performance/noDelete: <explanation>
+            if (data.icon) delete data.icon;
 
-            node = this._createNode(data);
+            const node = this._createNode(data);
             node.addClass("node-group").appendTo(element);
             node.append(this._createToggle());
             node.addClass("expanded");
-            node.append($("<ul>").addClass("listview").addClass("view-"+o.view));
+            node.append($("<ul>").addClass("listview").addClass(`view-${o.view}`));
 
             this._fireEvent("node-insert", {
                 newNode: node,
                 parentNode: null,
-                list: element
-            })
+                list: element,
+            });
 
             return node;
         },
 
-        insertBefore: function(node, data){
-            var new_node, parent_node, list;
+        insertBefore: function (data, node) {
+            const n = $(node);
 
-            node=$(node);
+            if (!n.length) {
+                return;
+            }
 
-            if (!node.length) {return;}
-
-            new_node = this._createNode(data);
-            new_node.addClass("node").insertBefore(node);
-            parent_node = new_node.closest(".node");
-            list = new_node.closest("ul");
-
+            const new_node = this._createNode(data);
+            new_node.addClass("node").insertBefore(n);
+            const parent_node = new_node.closest(".node");
+            const list = new_node.closest("ul");
             this._fireEvent("node-insert", {
                 newNode: new_node,
                 parentNode: parent_node,
-                list: list
+                list: list,
             });
 
             return new_node;
         },
 
-        insertAfter: function(node, data){
-            var new_node, parent_node, list;
+        insertAfter: function (data, node) {
+            const n = $(node);
 
-            node=$(node);
+            if (!n.length) {
+                return;
+            }
 
-            if (!node.length) {return;}
-
-            new_node = this._createNode(data);
-            new_node.addClass("node").insertAfter(node);
-            parent_node = new_node.closest(".node");
-            list = new_node.closest("ul");
-
+            const new_node = this._createNode(data);
+            new_node.addClass("node").insertAfter(n);
+            const parent_node = new_node.closest(".node");
+            const list = new_node.closest("ul");
             this._fireEvent("node-insert", {
                 newNode: new_node,
                 parentNode: parent_node,
-                list: list
+                list: list,
             });
 
             return new_node;
         },
 
-        del: function(node){
-            var element = this.element;
+        del: function (node) {
+            const element = this.element;
+            const n = $(node);
 
-            node=$(node);
+            if (!n.length) {
+                return;
+            }
 
-            if (!node.length) {return;}
-
-            var parent_list = node.closest("ul");
-            var parent_node = parent_list.closest("li");
-            node.remove();
+            const parent_list = n.closest("ul");
+            const parent_node = parent_list.closest("li");
+            n.remove();
             if (parent_list.children().length === 0 && !parent_list.is(element)) {
                 parent_list.remove();
                 parent_node.removeClass("expanded");
@@ -398,82 +345,86 @@
             }
 
             this._fireEvent("node-delete", {
-                node: node
+                node: n,
             });
         },
 
-        clean: function(node){
-            node=$(node);
+        clean: function (node) {
+            const n = $(node);
 
-            if (!node.length) {return;}
+            if (!n.length) {
+                return;
+            }
 
-            node.children("ul").remove();
-            node.removeClass("expanded");
-            node.children(".node-toggle").remove();
+            n.children("ul").remove();
+            n.removeClass("expanded");
+            n.children(".node-toggle").remove();
 
             this._fireEvent("node-clean", {
-                node: node
+                node: n,
             });
         },
 
-        getSelected: function(){
-            var element = this.element;
-            var nodes = [];
+        getSelected: function () {
+            const element = this.element;
+            const nodes = [];
 
-            $.each(element.find(":checked"), function(){
-                var check = $(this);
-                nodes.push(check.closest(".node")[0])
+            $.each(element.find(":checked"), function () {
+                const check = $(this);
+                nodes.push(check.closest(".node")[0]);
             });
 
             return nodes;
         },
 
-        clearSelected: function(){
+        clearSelected: function () {
             this.element.find(":checked").prop("checked", false);
-            this.element.trigger('change');
+            this.element.trigger("change");
         },
 
-        selectAll: function(mode){
-            this.element.find(".node > .checkbox input").prop("checked", mode !== false);
-            this.element.trigger('change');
+        selectAll: function (mode = true) {
+            this.element.find(".checkbox input").prop("checked", mode);
+            this.element.trigger("change");
         },
 
-        selectByAttribute: function(attributeName, attributeValue, select) {
-            if (select !== false) {
-                select = true;
-            }
-            this.element.find('li[' + attributeName + '="' + attributeValue + '"]' + ' > .checkbox input').prop("checked", select);
-            this.element.trigger('change');
+        selectByAttribute: function (attributeName, attributeValue, select = true) {
+            this.element.find(`li[${attributeName}="${attributeValue}"] > .checkbox input`).prop("checked", select);
+            this.element.trigger("change");
         },
 
-        changeAttribute: function(attributeName){
-            var that = this, element = this.element, o = this.options;
+        changeAttribute: function (attributeName) {
+            const element = this.element;
+            const o = this.options;
 
-            var changeView = function(){
-                var new_view = "view-"+element.attr("data-view");
-                that.view(new_view);
+            const changeView = () => {
+                const new_view = `view-${element.attr("data-view")}`;
+                this.view(new_view);
             };
 
-            var changeSelectable = function(){
+            const changeSelectable = () => {
                 o.selectable = JSON.parse(element.attr("data-selectable")) === true;
-                that.toggleSelectable();
+                this.toggleSelectable();
             };
 
             switch (attributeName) {
-                case "data-view": changeView(); break;
-                case "data-selectable": changeSelectable(); break;
+                case "data-view":
+                    changeView();
+                    break;
+                case "data-selectable":
+                    changeSelectable();
+                    break;
             }
         },
 
-        destroy: function(){
-            var element = this.element;
+        destroy: function () {
+            const element = this.element;
 
             element.off(Metro.events.click, ".node");
             element.off(Metro.events.click, ".node-toggle");
-            element.off(Metro.events.click, ".node-group > .data > .caption");
-            element.off(Metro.events.dblclick, ".node-group > .data > .caption");
+            element.off(Metro.events.click, ".node-group > .caption");
+            element.off(Metro.events.dblclick, ".node-group > .caption");
 
-            return element;
-        }
+            element.remove();
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

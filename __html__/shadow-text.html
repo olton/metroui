@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+
+    <title>Text Shadow - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        body {
+            padding-top: 50px;
+            background: #fafafa;
+        }
+        .box {
+            width: 280px;
+            height: 100px;
+            background: transparent;
+            margin: 10px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        
+        .dark-side {
+            .box {
+                background: #404249;
+                color: #e8e8e8;
+            }
+        }
+    </style>
+</head>
+<body class="cloak">
+<nav data-role="appbar">
+    <span class="app-bar-item">Inputs</span>
+    <div class="app-bar-item no-hover">
+        <input type="checkbox" data-role="theme-switcher" data-state="light"/>
+    </div>
+</nav>
+<div class="container">
+    <h1>Shadow test page</h1>
+
+    <div id="light" class="d-flex flex-wrap p-10" style="background: #fafafa">
+        <div class="box fg-dark-sand"><span class="text-shadow">Example</span></div>
+        <div class="box bg-sand fg-sand"><span class="text-emboss">Example</span></div>
+        <div class="box fg-champagne" style="background: #2c2f38;"><span class="text-retro">Example</span></div>
+        <div class="box fg-white"><span class="text-3d">Example</span></div>
+    </div>
+    <div class="d-flex flex-wrap p-10" id="glow" style="background: #fafafa"></div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    const shadows = [
+        "text-shadow", "text-emboss",
+    ]
+    
+    const colors = [
+        "lime", "green", "emerald", "blue", "teal", "cyan", "cobalt", "indigo", "violet", "pink", "magenta",
+        "crimson", "red", "orange", "amber", "yellow", "brown", "olive", "steel", "mauve", "taupe",
+        "champagne", "khaki", "charcoal", "bronze", "windstorm", "nude", "terracotta", "coral", "army", "seashell", "sand"
+    ];
+    
+    // for (let s of shadows) {
+    //     $("#light").append(`<div class="box"><span class="${s}">Example</span></div>`)
+    //     $("#dark").append(`<div class="box"><span class="${s}">Example</span></div>`)
+    // }
+    
+    for (let c of colors) {
+        // $("#color").append(`<div class="box"><span class="fg-white text-shadow-${c}">Example</span></div>`)
+        // $("#strong").append(`<div class="box"><span class="fg-light-${c} text-shadow-strong-${c}">Example</span></div>`)
+        $("#glow").append(`<div class="box"><span class="fg-white text-shadow-glow-${c}">Example</span></div>`)
+        // $("#glow-soft").append(`<div class="box shadow-glow-soft-${c}">.shadow-glow-soft-${c}</div>`)
+    }
+</script>
+</body>
+</html>

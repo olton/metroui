@@ -1,2 +1,2 @@
-import "./drag-items.js"
-import "./drag-items.less"
+import "./drag-items.js";
+import "./drag-items.less";

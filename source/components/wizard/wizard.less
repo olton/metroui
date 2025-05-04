@@ -1,15 +1,29 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --wizard-height: 200px;
+    --wizard-background: #ffffff;
+    --wizard-color: #191919;
+    --wizard-border-color: #f3f3f3;
+    --wizard-number-color: #a8a8a8;
+}
+
+.dark-side {
+    --wizard-background: #1e1f22;
+    --wizard-color: #dbdfe7;
+    --wizard-border-color: #484b4c;
+}
+
 .wizard {
     display: flex;
     flex-flow: row nowrap;
     align-items: stretch;
-    background-color: @white;
-    color: @dark;
-    min-height: 200px;
+    background-color: var(--wizard-background);
+    color: var(--wizard-color);
+    min-height: var(--wizard-height);
     height: auto;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--wizard-border-color);
     counter-reset: wizard-step;
     position: relative;
 }
@@ -20,7 +34,7 @@
         counter-increment: wizard-step;
         display: block;
         position: relative;
-        border-left: @gray solid;
+        border-left: var(--wizard-border-color) solid;
         border-left-width: 4px;
         width: 0;
         transition: @transition-width;
@@ -34,7 +48,9 @@
             text-align: center;
             left: -25px;
             z-index: 1;
-            color: @white;
+            color: var(--wizard-number-color);
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
         }
 
         .page-content {
@@ -80,6 +96,14 @@
         & > * {
             margin: 1px;
         }
+        
+        .wizard-btn-help, 
+        .wizard-btn-next, 
+        .wizard-btn-prev, 
+        .wizard-btn-finish 
+        {
+            font-size: 20px!important;
+        }
     }
 }
 
@@ -98,26 +122,26 @@
         &:nth-child(10) {border-color: darken(@cyan, 50%);}
 
         &.complete {
-            border-color: darken(@lightGray, 50%);
-            &:nth-child(1) {border-color: @lightGray;}
-            &:nth-child(2) {border-color: darken(@lightGray, 5%);}
-            &:nth-child(3) {border-color: darken(@lightGray, 10%);}
-            &:nth-child(4) {border-color: darken(@lightGray, 15%);}
-            &:nth-child(5) {border-color: darken(@lightGray, 20%);}
-            &:nth-child(6) {border-color: darken(@lightGray, 25%);}
-            &:nth-child(7) {border-color: darken(@lightGray, 30%);}
-            &:nth-child(8) {border-color: darken(@lightGray, 35%);}
-            &:nth-child(9) {border-color: darken(@lightGray, 40%);}
-            &:nth-child(10) {border-color: darken(@lightGray, 50%);}
+            border-color: darken(@light-gray, 50%);
+            &:nth-child(1) {border-color: @light-gray;}
+            &:nth-child(2) {border-color: darken(@light-gray, 5%);}
+            &:nth-child(3) {border-color: darken(@light-gray, 10%);}
+            &:nth-child(4) {border-color: darken(@light-gray, 15%);}
+            &:nth-child(5) {border-color: darken(@light-gray, 20%);}
+            &:nth-child(6) {border-color: darken(@light-gray, 25%);}
+            &:nth-child(7) {border-color: darken(@light-gray, 30%);}
+            &:nth-child(8) {border-color: darken(@light-gray, 35%);}
+            &:nth-child(9) {border-color: darken(@light-gray, 40%);}
+            &:nth-child(10) {border-color: darken(@light-gray, 50%);}
         }
     }
 }
 
 .wizard {
     [class*=wizard-btn] {
-        &.disabled {
-            opacity: .1;
-        }
+        //&.disabled {
+        //    opacity: .1;
+        //}
     }
 }
 
@@ -133,17 +157,13 @@
     }
 }
 
-.generate-wizard-media-options(@mediaBreakpointListMobileLength);
-.generate-wizard-media-options(@name, @i: 1) when (@i <= @mediaBreakpointListMobileLength) {
-    @m: extract(@mediaBreakpointListMobile, @i);
-
-    @media screen and (min-width: @@m) {
+each(@media-rules, {
+    @container (min-width: @value) {
         .wizard {
-            &.wizard-wide-@{m} {
+            &.wizard-wide-@{key} {
                 .wide-wizard();
             }
         }
     }
+})
 
-    .generate-wizard-media-options(@name, @i + 1);
-}

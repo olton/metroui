@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Carousel - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Carousel - Metro UI :: Popular HTML, CSS and JS library</title>
     <style>
         .slide {
             display: flex!important;
@@ -19,7 +19,7 @@
         }
     </style>
 </head>
-<body class="m4-cloak" style="padding-top: 50px">
+<body class="cloak">
 <nav data-role="appbar">
     <span class="app-bar-item">Any</span>
     <div class="app-bar-item no-hover">
@@ -30,25 +30,49 @@
     <h1>Carousel test page</h1>
 
     <div>
-        <div class="mt-4 mb-4 border bd-default">
-            <input type="radio" name="r1" data-role="radio" value="slide" data-caption="slide">
-            <input type="radio" name="r1" data-role="radio" value="slide-v" data-caption="slide-v">
-            <input type="radio" name="r1" data-role="radio" value="fade" data-caption="fade">
-            <input type="radio" name="r1" data-role="radio" value="switch" data-caption="switch">
-            <input type="radio" name="r1" data-role="radio" value="zoom" data-caption="zoom">
-            <input type="radio" name="r1" data-role="radio" value="swirl" data-caption="swirl" checked>
+        <div class="mt-4 mb-4 border bd-default d-flex flex-row p-4 gap-4">
+            <label class="d-flex flex-align-center gap-1">
+                Slide
+                <input type="radio" name="r1" value="slide">
+            </label>
+            <label class="d-flex flex-align-center gap-1">
+                Slide Vertical
+                <input type="radio" name="r1" value="slide-v">
+            </label>
+            <label class="d-flex flex-align-center gap-1">
+                Fade
+                <input type="radio" name="r1" value="fade">
+            </label>
+            <label class="d-flex flex-align-center gap-1">
+                Switch
+                <input type="radio" name="r1" value="switch">
+            </label>
+            <label class="d-flex flex-align-center gap-1">
+                Zoom
+                <input type="radio" name="r1" value="zoom">
+            </label>
+            <label class="d-flex flex-align-center gap-1">
+                Swirl
+                <input type="radio" name="r1" value="swirl" checked>
+            </label>
         </div>
         <div class="d-flex flex-align-center flex-justify-center">
             <div style="width: 600px;">
                 <div data-role="carousel" data-effect="swirl" data-duration="1000" id="carousel" data-auto-start="true">
                     <div class="slide">
-                        <div data-role="image-box" data-image="https://picsum.photos/id/237/200/300"></div>
+                        <img src="https://picsum.photos/id/237/800" alt=""/>
                     </div>
                     <div class="slide">
-                        <div data-role="image-box" data-image="https://picsum.photos/id/238/200/300"></div>
+                        <img src="https://picsum.photos/id/238/800" alt=""/>
                     </div>
                     <div class="slide">
-                        <div data-role="image-box" data-image="https://picsum.photos/id/239/200/300"></div>
+                        <img src="https://picsum.photos/id/239/800" alt=""/>
+                    </div>
+                    <div class="slide">
+                        <img src="https://picsum.photos/id/240/800" alt=""/>
+                    </div>
+                    <div class="slide">
+                        <img src="https://picsum.photos/id/241/800" alt=""/>
                     </div>
                 </div>
             </div>

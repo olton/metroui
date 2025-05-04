@@ -2,9 +2,21 @@
 @import (once) "../include/mixins";
 
 :root {
+    --h1-size: 2rem;
+    --h2-size: 1.5rem;
+    --h3-size: 1.25rem;
+    --h4-size: 1rem;
+    --h5-size: 0.875rem;
+    --h6-size: 0.75rem;
+    --base-text-weight-ultralight: 100;
+    --base-text-weight-light: 300;
+    --base-text-weight-medium: 500;
+    --base-text-weight-normal: 400;
+    --base-text-weight-semibold: 600;
+    
     --mark-background: #a6d2ff;
     --mark-color: #191919;
-    --code-background: #f8f8f8;
+    --code-background: #99a1b31a;
     --code-color: #191919;
     --kbd-background: #004D6FFF;
     --kbd-color: #ffffff;
@@ -13,29 +25,28 @@
 .dark-side {
     --mark-background: #c0c0c0;
     --mark-color: #000000;
-    --code-background: #26282e;
-    --code-color: #ffffff;
+    --code-background: #2b2d30;
+    --code-color: #b3b3aa;
     --kbd-background: #004D6FFF;
     --kbd-color: #ffffff;
 }
 
-.text {
-    &-ultralight {
-        font-weight: 100 !important;
-    }
-    &-light {
-        font-weight: 200 !important;
-    }
-    &-normal {
-        font-weight: 400 !important;
-    }
-    &-medium {
-        font-weight: 500 !important;
-    }
-    &-bold {
-        font-weight: 700 !important;
-    }
-}
+.text-ultralight { font-weight: var(--base-text-weight-ultralight) !important;}
+.text-light { font-weight: var(--base-text-weight-light) !important;}
+.text-normal { font-weight: var(--base-text-weight-normal) !important;}
+.text-medium {font-weight: var(--base-text-weight-medium) !important;}
+.text-bold { font-weight: var(--base-text-weight-semibold) !important;}
+
+.text-weight-1 {font-weight: 100 !important;}
+.text-weight-2 {font-weight: 200 !important;}
+.text-weight-3 {font-weight: 300 !important;}
+.text-weight-4 {font-weight: 400 !important;}
+.text-weight-5 {font-weight: 500 !important;}
+.text-weight-6 {font-weight: 600 !important;}
+.text-weight-7 {font-weight: 700 !important;}
+.text-weight-8 {font-weight: 800 !important;}
+.text-weight-9 {font-weight: 900 !important;}
+.text-weight-10 {font-weight: 1000 !important;}
 
 .display4 {
     font-size: 112px;
@@ -57,34 +68,59 @@
     font-weight: 400;
 }
 
+h1, .h1 {
+    font-size: var(--h1-size);
+    font-weight: var(--base-text-weight-semibold);
+}
+h2, .h2 {
+    font-size: var(--h2-size);
+    font-weight: var(--base-text-weight-semibold);
+}
+h3, .h3 {
+    font-size: var(--h3-size);
+    font-weight: var(--base-text-weight-semibold);
+}
+h4, .h4 {
+    font-size: var(--h4-size);
+    font-weight: var(--base-text-weight-semibold);
+}
+h5, .h5 {
+    font-size: var(--h5-size);
+    font-weight: var(--base-text-weight-semibold);
+}
+h6, .h6 {
+    font-size: var(--h6-size);
+    font-weight: var(--base-text-weight-semibold);
+}
+
 .display1, .display2, .display3, .display4 {
     margin-top: 20px;
     margin-bottom: 20px;
     line-height: 1;
 }
 
-.leader, .h1, h1 {
-    font-weight: 100;
+.leader {
+    font-weight: var(--base-text-weight-light);
     font-size: 48px;
 }
-.sub-leader, .h2, h2 {
-    font-weight: 400;
+.sub-leader {
+    font-weight: var(--base-text-weight-normal);
     font-size: 38px;
 }
-.header, .h3, h3 {
-    font-weight: 500;
+.header {
+    font-weight: var(--base-text-weight-medium);
     font-size: 30px;
 }
-.sub-header, .h4, h4 {
-    font-weight: 500;
+.sub-header {
+    font-weight: var(--base-text-weight-medium);
     font-size: 24px;
 }
-.alt-header, .h5, h5 {
-    font-weight: 500;
+.alt-header {
+    font-weight: var(--base-text-weight-medium);
     font-size: 20px;
 }
-.sub-alt-header, .h6, h6 {
-    font-weight: 500;
+.sub-alt-header {
+    font-weight: var(--base-text-weight-medium);
     font-size: 16px;
 }
 
@@ -121,6 +157,7 @@
     color: inherit;
     margin: 1rem 0;
     line-height: 1.1;
+    text-wrap: balance;
 
     & > small, & > .small {
         font-weight: 400;
@@ -197,7 +234,7 @@ code,
 kbd,
 samp {
     font-family: monospace, monospace;
-    font-size: 16px;
+    font-size: 13px;
 }
 
 pre {
@@ -205,13 +242,38 @@ pre {
     overflow: auto;
 }
 
-code {
-    white-space: nowrap;
-}
-
-
 pre code {
     white-space: inherit;
+}
+
+code, kbd {
+    display: inline-flex;
+    font-size: 13px;
+    align-items: center;
+    white-space: nowrap;
+    border-radius: .5rem;
+    overflow-wrap: break-word;
+    padding: 0 6px;
+
+    a & {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+code {
+    color: var(--code-color);
+    background-color: var(--code-background);
+    font-weight: 600;
+}
+
+kbd {
+    background-color: var(--kbd-background);
+    color: var(--kbd-color);
+}
+
+pre code {
+    height: auto;
 }
 
 a {
@@ -219,7 +281,7 @@ a {
     color: var(--link-color);
     text-decoration: none;
     background-color: transparent;
-    -webkit-text-decoration-skip: objects;
+    text-decoration-skip: auto;
     box-shadow: none;
 
     &:hover {
@@ -254,6 +316,10 @@ mark {
 del {
     color: var(--body-color-secondary);
     text-decoration: line-through;
+}
+
+p {
+    text-wrap: pretty;
 }
 
 * + p {
@@ -340,11 +406,9 @@ dl {
             font-weight: bold;
             float: left;
             padding: 0;
-            .px2rem(line-height, 40px);
-            .px2rem(font-size, 48px);
-            .px2rem(margin-right, 8px);
-            .px2rem(margin-left, -2px);
-            .px2rem(margin-top, 2px);
+            line-height: 40px;
+            font-size: 48px;
+            margin: 2px 8px 0 -2px;
         }
     }
 }
@@ -393,35 +457,6 @@ hr {
     }
 }
 
-.tally, code, kbd {
-    display: inline-block;
-    padding: 0 6px;
-    font-size: 90%;
-    color: var(--code-color);
-    background-color: var(--code-background);
-    border-radius: 4px;
-    vertical-align: middle;
-
-    a & {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-}
-
-kbd {
-    background-color: var(--kbd-background);
-    color: var(--kbd-color);
-}
-
-.tally {
-    line-height: 16px;
-}
-
-pre code {
-    background-color: inherit;
-    height: auto;
-}
-
 .reduce-1 {font-size: .9em!important;}
 .reduce-2 {font-size: .8em!important;}
 .reduce-3 {font-size: .7em!important;}
@@ -453,50 +488,50 @@ pre code {
     text-decoration: underline;
 }
 
-each(@mediaBreakpointListMobile, .(@m) {
-    @media screen and (min-width: @@m) {
-        .text-upper-@{m} {text-transform: uppercase !important;}
-        .text-lower-@{m} {text-transform: lowercase !important;}
-        .text-cap-@{m}   {text-transform: capitalize !important;}
+each(@media-rules, {
+    @container (min-width: @value) {
+        .text-upper-@{key} {text-transform: uppercase !important;}
+        .text-lower-@{key} {text-transform: lowercase !important;}
+        .text-cap-@{key}   {text-transform: capitalize !important;}
 
-        .text-left-@{m} {text-align: left !important;}
-        .text-right-@{m} {text-align: right !important;}
-        .text-center-@{m} {text-align: center !important;}
-        .text-just-@{m} {text-align: justify !important;}
+        .text-left-@{key} {text-align: left !important;}
+        .text-right-@{key} {text-align: right !important;}
+        .text-center-@{key} {text-align: center !important;}
+        .text-just-@{key} {text-align: justify !important;}
 
-        .va-top-@{m} {vertical-align: top !important;}
-        .va-bottom-@{m} {vertical-align: bottom !important;}
-        .va-baseline-@{m} {vertical-align: baseline !important;}
-        .va-middle-@{m} {vertical-align: middle !important;}
-        .va-sub-@{m} {vertical-align: sub !important;}
-        .va-super-@{m} {vertical-align: super !important;}
-        .va-text-top-@{m} {vertical-align: text-top !important;}
-        .va-text-bottom-@{m} {vertical-align: text-bottom !important;}
+        .va-top-@{key} {vertical-align: top !important;}
+        .va-bottom-@{key} {vertical-align: bottom !important;}
+        .va-baseline-@{key} {vertical-align: baseline !important;}
+        .va-middle-@{key} {vertical-align: middle !important;}
+        .va-sub-@{key} {vertical-align: sub !important;}
+        .va-super-@{key} {vertical-align: super !important;}
+        .va-text-top-@{key} {vertical-align: text-top !important;}
+        .va-text-bottom-@{key} {vertical-align: text-bottom !important;}
 
-        .reduce-1-@{m} {font-size: .9em!important;}
-        .reduce-2-@{m} {font-size: .8em!important;}
-        .reduce-3-@{m} {font-size: .7em!important;}
-        .reduce-4-@{m} {font-size: .6em!important;}
-        .reduce-5-@{m} {font-size: .5em!important;}
-        .reduce-6-@{m} {font-size: .4em!important;}
-        .reduce-7-@{m} {font-size: .3em!important;}
-        .reduce-8-@{m} {font-size: .2em!important;}
-        .reduce-9-@{m} {font-size: .1em!important;}
+        .reduce-1-@{key} {font-size: .9em!important;}
+        .reduce-2-@{key} {font-size: .8em!important;}
+        .reduce-3-@{key} {font-size: .7em!important;}
+        .reduce-4-@{key} {font-size: .6em!important;}
+        .reduce-5-@{key} {font-size: .5em!important;}
+        .reduce-6-@{key} {font-size: .4em!important;}
+        .reduce-7-@{key} {font-size: .3em!important;}
+        .reduce-8-@{key} {font-size: .2em!important;}
+        .reduce-9-@{key} {font-size: .1em!important;}
 
-        .enlarge-@{m} {font-size: 1em!important;}
+        .enlarge-@{key} {font-size: 1em!important;}
 
-        .enlarge-1-@{m} {font-size: 1.1em!important;}
-        .enlarge-2-@{m} {font-size: 1.2em!important;}
-        .enlarge-3-@{m} {font-size: 1.3em!important;}
-        .enlarge-4-@{m} {font-size: 1.4em!important;}
-        .enlarge-5-@{m} {font-size: 1.5em!important;}
-        .enlarge-6-@{m} {font-size: 1.6em!important;}
-        .enlarge-7-@{m} {font-size: 1.7em!important;}
-        .enlarge-8-@{m} {font-size: 1.8em!important;}
-        .enlarge-9-@{m} {font-size: 1.9em!important;}
-        .enlarge-2x-@{m} {font-size: 2em!important;}
-        .enlarge-3x-@{m} {font-size: 3em!important;}
-        .enlarge-4x-@{m} {font-size: 4em!important;}
+        .enlarge-1-@{key} {font-size: 1.1em!important;}
+        .enlarge-2-@{key} {font-size: 1.2em!important;}
+        .enlarge-3-@{key} {font-size: 1.3em!important;}
+        .enlarge-4-@{key} {font-size: 1.4em!important;}
+        .enlarge-5-@{key} {font-size: 1.5em!important;}
+        .enlarge-6-@{key} {font-size: 1.6em!important;}
+        .enlarge-7-@{key} {font-size: 1.7em!important;}
+        .enlarge-8-@{key} {font-size: 1.8em!important;}
+        .enlarge-9-@{key} {font-size: 1.9em!important;}
+        .enlarge-2x-@{key} {font-size: 2em!important;}
+        .enlarge-3x-@{key} {font-size: 3em!important;}
+        .enlarge-4x-@{key} {font-size: 4em!important;}
     }
 })
 
@@ -508,4 +543,8 @@ each(@mediaBreakpointListMobile, .(@m) {
 
 .error {
     text-decoration: underline wavy red;
+}
+
+.mono {
+    font-family: monospace!important;
 }

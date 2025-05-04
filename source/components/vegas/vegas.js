@@ -1,5 +1,3 @@
-/* global Metro, Cake */
-
 /**
  * Component Vegas based on Vegas by Jay Salvat (http://jaysalvat.com/)
  * Original code https://github.com/jaysalvat/vegas
@@ -9,10 +7,11 @@
  * Copyright 2020 Serhii Pimenov
  */
 
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var VegasDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    let VegasDefaultConfig = {
         duration: 4000,
         animationDuration: null,
         transitionDuration: null,
@@ -38,32 +37,40 @@
         onNext: Metro.noop,
         onPrev: Metro.noop,
         onJump: Metro.noop,
-        onVegasCreate: Metro.noop
+        onVegasCreate: Metro.noop,
     };
 
-    Metro.vegasSetup = function (options) {
+    Metro.vegasSetup = (options) => {
         VegasDefaultConfig = $.extend({}, VegasDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroVegasSetup"] !== undefined) {
-        Metro.vegasSetup(globalThis["metroVegasSetup"]);
+    if (typeof globalThis.metroVegasSetup !== "undefined") {
+        Metro.vegasSetup(globalThis.metroVegasSetup);
     }
 
-    Metro.Component('vegas', {
-
+    Metro.Component("vegas", {
         videoCache: {},
 
-        init: function( options, elem ) {
+        init: function (options, elem) {
             this.transitions = [
-                "fade", "fade2",
-                "slideLeft", "slideLeft2",
-                "slideRight", "slideRight2",
-                "slideUp", "slideUp2",
-                "slideDown", "slideDown2",
-                "zoomIn", "zoomIn2",
-                "zoomOut", "zoomOut2",
-                "swirlLeft", "swirlLeft2",
-                "swirlRight", "swirlRight2"
+                "fade",
+                "fade2",
+                "slideLeft",
+                "slideLeft2",
+                "slideRight",
+                "slideRight2",
+                "slideUp",
+                "slideUp2",
+                "slideDown",
+                "slideDown2",
+                "zoomIn",
+                "zoomIn2",
+                "zoomOut",
+                "zoomOut2",
+                "swirlLeft",
+                "swirlLeft2",
+                "swirlRight",
+                "swirlRight2",
             ];
             this.animations = [
                 "kenburns",
@@ -74,13 +81,13 @@
                 "kenburnsUpLeft",
                 "kenburnsUpRight",
                 "kenburnsDownLeft",
-                "kenburnsDownRight"
+                "kenburnsDownRight",
             ];
 
             this.support = {
-                objectFit:  'objectFit'  in document.body.style,
-                video: !/(Android|webOS|Phone|iPad|iPod|BlackBerry|Windows Phone)/i.test(navigator.userAgent)
-            }
+                objectFit: "objectFit" in document.body.style,
+                video: !/(Android|webOS|Phone|iPad|iPod|BlackBerry|Windows Phone)/i.test(navigator.userAgent),
+            };
 
             this._super(elem, options, VegasDefaultConfig, {
                 slide: 0,
@@ -92,16 +99,17 @@
                 timer: null,
                 overlay: null,
                 first: true,
-                timeout: false
+                timeout: false,
             });
 
             return this;
         },
 
-        _create: function(){
-            var element = this.element, o = this.options;
+        _create: function () {
+            const element = this.element;
+            const o = this.options;
 
-            this.slides = Utils.isObject(o.slides) || [];
+            this.slides = Metro.utils.isObject(o.slides) || [];
             this.total = this.slides.length;
             this.noshow = this.total < 2;
             this.paused = !o.autoplay || this.noshow;
@@ -118,28 +126,29 @@
             this._createEvents();
 
             this._fireEvent("vegas-create", {
-                element: element
+                element: element,
             });
         },
 
-        _createStructure: function(){
-            var that = this, element = this.element, o = this.options;
-            var isBody = element[0].tagName === 'BODY';
-            var wrapper;
+        _createStructure: function () {
+            const element = this.element;
+            const o = this.options;
+            const isBody = element[0].tagName === "BODY";
+            let wrapper;
 
             if (!isBody) {
-                element.css('height', element.css('height')); // it is not clear why this line
+                element.css("height", element.css("height")); // it is not clear why this line
 
                 wrapper = $('<div class="vegas-wrapper">')
-                    .css('overflow', element.css('overflow'))
-                    .css('padding',  element.css('padding'));
+                    .css("overflow", element.css("overflow"))
+                    .css("padding", element.css("padding"));
 
-                if (!element.css('padding')) {
+                if (!element.css("padding")) {
                     wrapper
-                        .css('padding-top',    element.css('padding-top'))
-                        .css('padding-bottom', element.css('padding-bottom'))
-                        .css('padding-left',   element.css('padding-left'))
-                        .css('padding-right',  element.css('padding-right'));
+                        .css("padding-top", element.css("padding-top"))
+                        .css("padding-bottom", element.css("padding-bottom"))
+                        .css("padding-left", element.css("padding-left"))
+                        .css("padding-right", element.css("padding-right"));
                 }
 
                 element.children().appendTo(wrapper);
@@ -158,25 +167,26 @@
             }
 
             if (o.overlay) {
-                this.overlay = $('<div class="vegas-overlay">').addClass('overlay' + (typeof o.overlay === 'boolean' || isNaN(o.overlay) ? 2 : +o.overlay));
+                this.overlay = $('<div class="vegas-overlay">').addClass(
+                    `overlay${typeof o.overlay === "boolean" || Number.isNaN(o.overlay) ? 2 : +o.overlay}`,
+                );
                 element.append(this.overlay);
             }
 
-            setTimeout(function(){
-                Utils.exec(o.onPlay, null, element[0]);
-                that._goto(that.slide);
-            },1)
+            setTimeout(() => {
+                Metro.utils.exec(o.onPlay, null, element[0]);
+                this._goto(this.slide);
+            }, 1);
         },
 
-        _createEvents: function(){
-        },
+        _createEvents: () => {},
 
-        _preload: function(){
-            var img, i;
+        _preload: function () {
+            let img;
+            let i;
 
             for (i = 0; i < this.slides.length; i++) {
-
-                var obj = this.slides[i];
+                const obj = this.slides[i];
 
                 if (obj.src) {
                     img = new Image();
@@ -184,7 +194,7 @@
                 }
 
                 if (obj.video) {
-                    if (obj.video instanceof Array) {
+                    if (Array.isArray(obj.video)) {
                         this._video(obj.video);
                     } else {
                         this._video(obj.video.src);
@@ -194,17 +204,17 @@
         },
 
         _slideShow: function () {
-            var that = this, o = this.options;
+            const o = this.options;
 
             if (this.total > 1 && !this.ended && !this.paused && !this.noshow) {
-                this.timeout = setTimeout(function () {
-                    that.next();
+                this.timeout = setTimeout(() => {
+                    this.next();
                 }, o.duration);
             }
         },
 
         _timer: function (state) {
-            var that = this, o = this.options;
+            const o = this.options;
 
             clearTimeout(this.timeout);
 
@@ -212,108 +222,113 @@
                 return;
             }
 
-            this.timer
-                .removeClass('vegas-timer-running')
-                .find('div')
-                .css('transition-duration', '0ms');
+            this.timer.removeClass("vegas-timer-running").find("div").css("transition-duration", "0ms");
 
             if (this.ended || this.paused || this.noshow) {
                 return;
             }
 
             if (state) {
-                setTimeout(function () {
-                    that.timer
-                        .addClass('vegas-timer-running')
-                        .find('div')
-                        .css('transition-duration', +o.duration - 100 + 'ms');
+                setTimeout(() => {
+                    this.timer
+                        .addClass("vegas-timer-running")
+                        .find("div")
+                        .css("transition-duration", `${+o.duration - 100}ms`);
                 }, 100);
             }
         },
 
-        _fadeSoundIn: function(video, duration){
-            var o = this.options;
+        _fadeSoundIn: function (video, duration) {
+            const o = this.options;
 
             $.animate({
                 el: video,
                 draw: {
-                    volume: +o.volume
+                    volume: +o.volume,
                 },
-                dur: duration
-            })
+                dur: duration,
+            });
         },
 
-        _fadeSoundOut: function(video, duration){
+        _fadeSoundOut: (video, duration) => {
             $.animate({
                 el: video,
                 draw: {
-                    volume: 0
+                    volume: 0,
                 },
-                dur: duration
-            })
+                dur: duration,
+            });
         },
 
-        _video: function(sources){
-            var video, source;
-            var cacheKey = sources.toString();
+        _video: function (sources) {
+            let source;
+            const cacheKey = sources.toString();
+            const srcArray = Array.isArray(sources) ? sources : [sources];
 
             if (this.videoCache[cacheKey]) {
                 return this.videoCache[cacheKey];
             }
 
-            if (!Array.isArray(sources)) {
-                sources = [sources];
-            }
+            const video = document.createElement("video");
 
-            video = document.createElement("video");
+            // TODO: check it
             video.preload = true;
 
-            sources.forEach(function(src){
+            for (const src of srcArray) {
                 source = document.createElement("source");
                 source.src = src;
                 video.appendChild(source);
-            });
+            }
 
             this.videoCache[cacheKey] = video;
 
             return video;
         },
 
-        _goto: function(n){
-            var that = this, element = this.element, o = this.options;
+        _goto: function (n) {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            let _n = n;
 
-            if (typeof this.slides[n] === 'undefined') {
-                n = 0;
+            if (typeof this.slides[_n] === "undefined") {
+                _n = 0;
             }
 
-            this.slide = n;
+            this.slide = _n;
 
-            var $slide, $inner, video, img, $video;
-            var slides = element.children(".vegas-slide");
-            var obj = this.slides[n];
-            var cover = o.cover;
-            var transition, animation;
-            var transitionDuration, animationDuration;
+            let $slide;
+            let $inner;
+            let video;
+            let img;
+            let $video;
+            const slides = element.children(".vegas-slide");
+            const obj = this.slides[n];
+            let cover = o.cover;
+            let transition;
+            let animation;
+            let transitionDuration;
+            let animationDuration;
 
             if (this.first) {
                 this.first = false;
             }
 
-            if (cover !== 'repeat') {
+            if (cover !== "repeat") {
                 if (cover === true) {
-                    cover = 'cover';
+                    cover = "cover";
                 } else if (cover === false) {
-                    cover = 'contain';
+                    cover = "contain";
                 }
             }
 
-            if (o.transition === 'random') {
+            if (o.transition === "random") {
                 transition = $.random(this.transitions);
             } else {
                 transition = o.transition ? o.transition : this.transitions[0];
             }
 
-            if (o.animation === 'random') {
+            if (o.animation === "random") {
                 animation = $.random(this.animations);
             } else {
                 animation = o.animation ? o.animation : this.animations[0];
@@ -321,7 +336,7 @@
 
             if (!o.transitionDuration) {
                 transitionDuration = +o.duration;
-            } else if (o.transitionDuration === 'auto' || +o.transitionDuration > +o.duration) {
+            } else if (o.transitionDuration === "auto" || +o.transitionDuration > +o.duration) {
                 transitionDuration = +o.duration;
             } else {
                 transitionDuration = +o.transitionDuration;
@@ -329,16 +344,16 @@
 
             if (!o.animationDuration) {
                 animationDuration = +o.duration;
-            } else if (o.animationDuration === 'auto' || +o.animationDuration > +o.duration) {
+            } else if (o.animationDuration === "auto" || +o.animationDuration > +o.duration) {
                 animationDuration = +o.duration;
             } else {
                 animationDuration = +o.animationDuration;
             }
 
-            $slide = $("<div>").addClass("vegas-slide").addClass('vegas-transition-' + transition);
+            $slide = $("<div>").addClass("vegas-slide").addClass(`vegas-transition-${transition}`);
 
             if (this.support.video && obj.video) {
-                video = obj.video instanceof Array ? this._video(obj.video) : this._video(obj.video.src);
+                video = Array.isArray(obj.video) ? this._video(obj.video) : this._video(obj.video.src);
                 video.loop = obj.video.loop ? obj.video.loop : o.loop;
                 video.muted = obj.video.mute ? obj.video.mute : o.mute;
 
@@ -349,41 +364,38 @@
                 }
 
                 $video = $(video)
-                    .addClass('vegas-video')
-                    .css('background-color', o.color || '#000000');
+                    .addClass("vegas-video")
+                    .css("background-color", o.color || "#000000");
 
                 if (this.support.objectFit) {
                     $video
-                        .css('object-position', o.align + ' ' + o.valign)
-                        .css('object-fit', cover)
-                        .css('width',  '100%')
-                        .css('height', '100%');
-                } else if (cover === 'contain') {
-                    $video
-                        .css('width',  '100%')
-                        .css('height', '100%');
+                        .css("object-position", `${o.align} ${o.valign}`)
+                        .css("object-fit", cover)
+                        .css("width", "100%")
+                        .css("height", "100%");
+                } else if (cover === "contain") {
+                    $video.css("width", "100%").css("height", "100%");
                 }
 
                 $slide.append($video);
             } else {
                 img = new Image();
-                $inner = $("<div>").addClass('vegas-slide-inner')
+                $inner = $("<div>")
+                    .addClass("vegas-slide-inner")
                     .css({
-                        backgroundImage: 'url("'+obj.src+'")',
-                        backgroundColor: o.color || '#000000',
-                        backgroundPosition: o.align + ' ' + o.valign
+                        backgroundImage: `url("${obj.src}")`,
+                        backgroundColor: o.color || "#000000",
+                        backgroundPosition: `${o.align} ${o.valign}`,
                     });
 
-                if (cover === 'repeat') {
-                    $inner.css('background-repeat', 'repeat');
+                if (cover === "repeat") {
+                    $inner.css("background-repeat", "repeat");
                 } else {
-                    $inner.css('background-size', cover);
+                    $inner.css("background-size", cover);
                 }
 
                 if (animation) {
-                    $inner
-                        .addClass('vegas-animation-' + animation)
-                        .css('animation-duration',  animationDuration + 'ms');
+                    $inner.addClass(`vegas-animation-${animation}`).css("animation-duration", `${animationDuration}ms`);
                 }
 
                 $slide.append($inner);
@@ -395,33 +407,30 @@
                 element.prepend($slide);
             }
 
-            slides
-                .css('transition', 'all 0ms')
-                .each(function(){
-                    this.className  = 'vegas-slide';
+            slides.css("transition", "all 0ms").each(function () {
+                this.className = "vegas-slide";
 
-                    if (this.tagName === 'VIDEO') {
-                        this.className += ' vegas-video';
-                    }
-
-                    if (transition) {
-                        this.className += ' vegas-transition-' + transition;
-                        this.className += ' vegas-transition-' + transition + '-in';
-                    }
+                if (this.tagName === "VIDEO") {
+                    this.className += " vegas-video";
                 }
-            );
+
+                if (transition) {
+                    this.className += ` vegas-transition-${transition}`;
+                    this.className += ` vegas-transition-${transition}-in`;
+                }
+            });
 
             this._timer(false);
 
-            function go(){
+            function go() {
                 that._timer(true);
-                setTimeout(function () {
+                setTimeout(() => {
                     slides
-                        .css('transition', 'all ' + transitionDuration + 'ms')
-                        .addClass('vegas-transition-' + transition + '-out');
+                        .css("transition", `all ${transitionDuration}ms`)
+                        .addClass(`vegas-transition-${transition}-out`);
 
-                    slides.each(function () {
-                        var video = slides.find('video').get(0);
+                    slides.each(() => {
+                        const video = slides.find("video").get(0);
 
                         if (video) {
                             video.volume = 1;
@@ -430,15 +439,15 @@
                     });
 
                     $slide
-                        .css('transition', 'all ' + transitionDuration + 'ms')
-                        .addClass('vegas-transition-' + transition + '-in');
+                        .css("transition", `all ${transitionDuration}ms`)
+                        .addClass(`vegas-transition-${transition}-in`);
 
-                    for (var i = 0; i < slides.length - 1; i++) {
+                    for (let i = 0; i < slides.length - 1; i++) {
                         slides.eq(i).remove();
                     }
 
                     that._fireEvent("walk", {
-                        slide: that.current(true)
+                        slide: that.current(true),
                     });
 
                     that._slideShow();
@@ -463,42 +472,42 @@
             }
         },
 
-        _end: function(){
+        _end: function () {
             this.ended = this.options.autoplay;
             this._timer(false);
 
             this._fireEvent("end", {
-                slide: this.current(true)
+                slide: this.current(true),
             });
         },
 
-        play: function(){
+        play: function () {
             if (!this.paused) {
-                return ;
+                return;
             }
 
             this._fireEvent("play", {
-                slide: this.current(true)
+                slide: this.current(true),
             });
 
             this.paused = false;
             this.next();
         },
 
-        pause: function(){
+        pause: function () {
             this._timer(false);
             this.paused = true;
 
             this._fireEvent("pause", {
-                slide: this.current(true)
+                slide: this.current(true),
             });
         },
 
-        toggle: function(){
+        toggle: function () {
             this.paused ? this.play() : this.pause();
         },
 
-        playing: function(){
+        playing: function () {
             return !this.paused && !this.noshow;
         },
 
@@ -506,13 +515,13 @@
             if (advanced) {
                 return {
                     slide: this.slide,
-                    data:  this.slides[this.slide]
+                    data: this.slides[this.slide],
                 };
             }
             return this.slide;
         },
 
-        jump: function(n){
+        jump: function (n) {
             if (n <= 0 || n > this.slides.length || n === this.slide + 1) {
                 return this;
             }
@@ -520,14 +529,14 @@
             this.slide = n - 1;
 
             this._fireEvent("jump", {
-                slide: this.current(true)
-            })
+                slide: this.current(true),
+            });
 
             this._goto(this.slide);
         },
 
-        next: function(){
-            var o = this.options;
+        next: function () {
+            const o = this.options;
 
             this.slide++;
 
@@ -540,14 +549,14 @@
             }
 
             this._fireEvent("next", {
-                slide: this.current(true)
+                slide: this.current(true),
             });
 
             this._goto(this.slide);
         },
 
-        prev: function(){
-            var o = this.options;
+        prev: function () {
+            const o = this.options;
 
             this.slide--;
 
@@ -561,36 +570,37 @@
             }
 
             this._fireEvent("prev", {
-                slide: this.current(true)
+                slide: this.current(true),
             });
 
             this._goto(this.slide);
         },
 
-        changeAttribute: function(attr){
-            var element = this.element, o = this.options;
-            var propName = Str.camelCase(attr.replace("data-", ""));
+        changeAttribute: function (attr) {
+            const element = this.element;
+            const o = this.options;
+            const propName = Str.camelCase(attr.replace("data-", ""));
 
-            if (propName === 'slides') {
-                o.slides = element.attr('data-slides');
-                this.slides = Utils.isObject(o.slides) || [];
+            if (propName === "slides") {
+                o.slides = element.attr("data-slides");
+                this.slides = Metro.utils.isObject(o.slides) || [];
                 this.total = this.slides.length;
                 this.noshow = this.total < 2;
                 this.paused = !this.options.autoplay || this.noshow;
             } else {
-                if (typeof VegasDefaultConfig[propName] !== 'undefined')
-                    o[propName] = JSON.parse(element.attr(attr));
+                if (typeof VegasDefaultConfig[propName] !== "undefined") o[propName] = JSON.parse(element.attr(attr));
             }
         },
 
-        destroy: function(){
-            var element = this.element, o = this.options;
+        destroy: function () {
+            const element = this.element;
+            const o = this.options;
 
             clearTimeout(this.timeout);
-            element.removeClass('vegas-container');
-            element.find('> .vegas-slide').remove();
-            element.find('> .vegas-wrapper').children().appendTo(element);
-            element.find('> .vegas-wrapper').remove();
+            element.removeClass("vegas-container");
+            element.find("> .vegas-slide").remove();
+            element.find("> .vegas-wrapper").children().appendTo(element);
+            element.find("> .vegas-wrapper").remove();
 
             if (o.timer) {
                 this.timer.remove();
@@ -600,7 +610,7 @@
                 this.overlay.remove();
             }
 
-            return element[0];
-        }
+            element.remove();
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

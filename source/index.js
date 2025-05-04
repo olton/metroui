@@ -1,2 +1,2 @@
-import "./default.js"
-import "./icons/index.js"
+import "./default.js";
+import "./icons/index.js";

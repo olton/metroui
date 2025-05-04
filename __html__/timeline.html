@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Timeline - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Timeline & Working Tree</div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="row mt-10">
+            <div class="cell-md-4">
+                <div class="box">
+                    <div class="h5">Latest Changes</div>
+                    <ul class="timeline">
+                        <li>
+                            <span class="time">Yesterday</span>
+                            <p class="data">
+                                Deprecation of real-time GitHub Actions workflow job events in Slack and...
+                            </p>
+                        </li>
+                        <li>
+                            <span class="time">13:00</span>
+                            <p class="data">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, nemo!
+                            </p>
+                        </li>
+                        <li>
+                            <span class="time">14:00</span>
+                            <p class="data">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, nemo!
+                            </p>
+                        </li>
+                        <li class="timeline-end">
+                            <a href="#" class="time">View changelog →</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cell-md-4">
+                <div class="box">
+                    <div class="h5">Working Tree</div>
+                    <ul data-role="working-tree" id="wt"></ul>
+                </div>
+            </div>
+            <div class="cell-md-4">
+                <div class="box">
+                    <div class="h5">Working Tree</div>
+                    <ul class="working-tree">
+                        <li>
+                            <div class="node">
+                                <div class="title">Staking Ledger</div>
+                                <div class="value">100%</div>
+                            </div>
+                            <ul class="leaves">
+                                <li>
+                                    <div class="title">Fetch hashes</div>
+                                    <div class="value">2m</div>
+                                </li>
+                                <li>
+                                    <div class="title">Fetch accounts</div>
+                                    <div class="value">2m</div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="work-pending">
+                            <div class="bull"><span data-role="bull" data-type="pending"></span></div>
+                            <div class="node">
+                                <div class="title">Next Epoch Ledger</div>
+                                <div class="value">100%</div>
+                            </div>
+                            <ul class="leaves">
+                                <li>
+                                    <div class="title">Fetch hashes</div>
+                                    <div class="value">2m</div>
+                                </li>
+                                <li>
+                                    <div class="title">Fetch accounts</div>
+                                    <div class="value">2m</div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="work-fail">
+                            <div class="bull"><span data-role="bull" data-type="fail"></span></div>
+                            <div class="node">
+                                <div class="title">Next Epoch Ledger</div>
+                                <div class="value">100%</div>
+                            </div>
+                            <ul class="leaves">
+                                <li>
+                                    <div class="title">Fetch hashes</div>
+                                    <div class="value">2m</div>
+                                </li>
+                                <li>
+                                    <div class="title">Fetch accounts</div>
+                                    <div class="value">2m</div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="work-success">
+                            <div class="bull"><span data-role="bull" data-type="success"></span></div>
+                            <div class="node">
+                                <div class="title">Next Epoch Ledger</div>
+                                <div class="value">100%</div>
+                            </div>
+                            <ul class="leaves">
+                                <li>
+                                    <div class="title">Fetch hashes</div>
+                                    <div class="value">2m</div>
+                                </li>
+                                <li>
+                                    <div class="title">Fetch accounts</div>
+                                    <div class="value">2m</div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+    $(()=>{
+        const tree = Metro.getPlugin("#wt", "working-tree");
+        tree.addNode({
+            title: "Staking Ledger",
+            value: "100%",
+            items: [
+                {title: "Fetch hashes", value: "2m"},
+                {title: "Fetch accounts", value: "2m"}
+            ]
+        })
+
+        const nextEpochLedgerNodeID = tree.addNode({
+            title: "Next Epoch Ledger",
+            value: "100%",
+            items: [
+                {title: "Fetch hashes", value: "2m"},
+                {title: "Fetch accounts", value: "2m"}
+            ]
+        })
+        tree.setState(nextEpochLedgerNodeID, "pending")
+
+        const prevEpochLedgerNodeID = tree.addNode({
+            title: "Prev Epoch Ledger",
+            value: "100%",
+            items: [
+                {title: "Fetch hashes", value: "2m"},
+                {title: "Fetch accounts", value: "2m"}
+            ]
+        })
+        tree.setState(prevEpochLedgerNodeID, "fail")
+
+        const genesisEpochLedgerNodeID = tree.addNode({
+            title: "Prev Epoch Ledger",
+            value: "100%",
+            items: [
+                {title: "Fetch hashes", value: "2m"},
+                {title: "Fetch accounts", value: "2m"}
+            ]
+        })
+        tree.setState(genesisEpochLedgerNodeID, "success")
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Test Select - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="m4-cloak p-ab">
+<nav data-role="appbar">
+    <span class="app-bar-item">Select</span>
+    <div class="app-bar-item-static">
+        <input type="checkbox" data-role="theme-switcher" data-state="dark"/>
+    </div>
+</nav>
+<div class="container">
+    <h1>Select Remote Options</h1>
+    <p class="mb-10">
+        In this example we use <code>data-source</code> and <code>data-filter-source</code> attributes to get options from the remote source and filter them by the user input also from remote.
+    </p>
+
+    <div class="example">
+        <select data-role="select" id="select" data-filter="true" data-source="https://dummyjson.com/products" data-filter-source="https://dummyjson.com/products/search?q=" data-on-data="updateData"></select>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    function updateData(data){
+        const products = [...data.products]
+        const result = []
+        for (const p of products) {
+            result.push({
+                value: p.id,
+                text: p.title
+            })
+        }
+        return result
+    }
+</script>
+</body>
+</html>

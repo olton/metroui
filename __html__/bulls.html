@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+
+    <title>Test Bulls - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Bulls</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="container">
+        <ul>
+            <li><span data-role="bull" data-type="success"></span></li>
+            <li><span data-role="bull" data-type="pending"></span></li>
+            <li><span data-role="bull" data-type="fail"></span></li>
+            <li><span data-role="bull" data-type="warning"></span></li>
+            <li><span data-role="bull" data-type="bulb"></span></li>
+        </ul>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+</script>
+</body>
+</html>

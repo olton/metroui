@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Tokenizer - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Tokenizer - Metro UI :: Popular HTML, CSS and JS library</title>
     <style>
         #example1 {
             display: flex;
@@ -185,12 +185,12 @@
         <br>
         <br>
         <div id="example2" data-cls-token="char" data-role="tokenizer">
-            Metro 4
+            Metro UI
         </div>
         <br>
         <br>
         <div id="example3" data-role="tokenizer" data-cls-token="char">
-            Metro 4
+            Metro UI
         </div>
         <br>
         <br>
@@ -232,7 +232,7 @@
     function a(){
         setTimeout(function(){
             $('#example1').tokenizer({
-                textToTokenize: "Build impressive web site with a Metro 4!"
+                textToTokenize: "Build impressive web site with a Metro UI!"
             });
             b();
         }, 5000)
@@ -241,7 +241,7 @@
     function b(){
         setTimeout(function(){
             $('#example1').tokenizer({
-                textToTokenize: "Metro 4 is awesome!"
+                textToTokenize: "Metro UI is awesome!"
             });
             a();
         }, 5000)
@@ -249,7 +249,7 @@
 
     $(function(){
         $('#example1').tokenizer({
-            textToTokenize: "Metro 4 is awesome!",
+            textToTokenize: "Metro UI is awesome!",
             onTokenizerCreate: function(){
                 a();
             }

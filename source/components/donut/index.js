@@ -1,2 +1,2 @@
-import "./donut.js"
-import "./donut.less"
+import "./donut.js";
+import "./donut.less";

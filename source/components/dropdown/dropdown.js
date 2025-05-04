@@ -1,114 +1,152 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var DropdownDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    const participants = "[data-role-dropmenu], [data-role-dropdown]";
+    const toggleImage = `<svg class="dropdown-caret" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path></svg>`;
+
+    let DropdownDefaultConfig = {
         dropdownDeferred: 0,
         dropFilter: null,
         toggleElement: null,
+        align: "left",
         noClose: false,
         duration: 50,
-        checkDropUp: false,
-        dropUp: false,
+        openMode: "auto",
+        openFunc: "show",
+        closeFunc: "hide",
+        height: "auto",
         onDrop: Metro.noop,
         onUp: Metro.noop,
-        onDropdownCreate: Metro.noop
+        onDropdownCreate: Metro.noop,
     };
 
-    Metro.dropdownSetup = function (options) {
+    Metro.dropdownSetup = (options) => {
         DropdownDefaultConfig = $.extend({}, DropdownDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDropdownSetup"] !== undefined) {
-        Metro.dropdownSetup(globalThis["metroDropdownSetup"]);
+    if (typeof globalThis.metroDropdownSetup !== "undefined") {
+        Metro.dropdownSetup(globalThis.metroDropdownSetup);
     }
 
-    Metro.Component('dropdown', {
-        init: function( options, elem ) {
+    Metro.Component("dropdown", {
+        init: function (options, elem) {
             this._super(elem, options, DropdownDefaultConfig, {
-                _toggle: null,
+                toggle: null,
                 displayOrigin: null,
-                isOpen: false
+                isOpen: false,
+                level: 0,
             });
 
             return this;
         },
 
-        _create: function(){
-            var that = this, element = this.element;
+        _create: function () {
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
 
             this._fireEvent("dropdown-create", {
-                element: element
+                element: element,
             });
 
             if (element.hasClass("open")) {
                 element.removeClass("open");
-                setTimeout(function(){
-                    that.open(true);
-                },0);
+                setTimeout(() => {
+                    this.open(true);
+                }, 0);
             }
         },
 
-        _createStructure: function(){
-            var element = this.element, o = this.options;
-            var toggle;
+        _toggle: function () {
+            const element = this.element;
+            let toggle = element.siblings(".menu-toggle, .dropdown-toggle, a");
+            if (toggle.length === 0) {
+                toggle = element.prev();
+                if (toggle.length === 0) {
+                    throw new Error("Menu toggle not found");
+                }
+            }
+            return toggle[0];
+        },
 
-            if (o.dropUp) {
+        _createStructure: function () {
+            const element = this.element;
+            const o = this.options;
+            const level = element.parents("[data-role-dropdown]").length;
+            let toggle;
+
+            if (o.openMode === "up") {
                 element.addClass("drop-up");
             }
 
-            toggle = o.toggleElement !== null ? $(o.toggleElement) : element.siblings('.dropdown-toggle').length > 0 ? element.siblings('.dropdown-toggle') : element.prev();
+            toggle = o.toggleElement ? $(o.toggleElement) : $(this._toggle());
 
-            this.displayOrigin = Utils.getStyleOne(element, "display");
+            if (toggle.length) {
+                toggle.append(toggleImage);
+            }
 
+            this.displayOrigin = Metro.utils.getStyleOne(element, "display");
+
+            if (o.height !== "auto") {
+                element.css({
+                    height: o.height,
+                    "overflow-y": "auto",
+                });
+            }
             element.css("display", "none");
 
-            this._toggle = toggle;
+            this.toggle = toggle;
+            this.level = level;
         },
 
-        _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var toggle = this._toggle, parent = element.parent();
+        _createEvents: function () {
+            const element = this.element;
+            const o = this.options;
+            const toggle = this.toggle;
+            const parent = element.parent();
 
-            toggle.on(Metro.events.click, function(e){
+            toggle.on(Metro.events.click, (e) => {
                 $(".active-container").removeClass("active-container");
 
                 // parent.siblings(parent[0].tagName).removeClass("active-container");
 
-                if (element.css('display') !== 'none' && !element.hasClass('keep-open')) {
-                    that._close(element);
+                if (element.css("display") !== "none" && !element.hasClass("keep-open")) {
+                    this.close(true, element);
                 } else {
-                    $('[data-role*=dropdown]').each(function(i, el){
-                        if (!element.parents('[data-role*=dropdown]').is(el) && !$(el).hasClass('keep-open') && $(el).css('display') !== 'none') {
-                            if (!Utils.isValue(o.dropFilter)) {
-                                that._close(el);
+                    $(participants).each((i, el) => {
+                        if (
+                            !element.parents("[data-role-dropdown]").is(el) &&
+                            !$(el).hasClass("keep-open") &&
+                            $(el).css("display") !== "none"
+                        ) {
+                            if (!Metro.utils.isValue(o.dropFilter)) {
+                                this.close(true, el);
                             } else {
                                 if ($(el).closest(o.dropFilter).length > 0) {
-                                    that._close(el);
+                                    this.close(true, el);
                                 }
                             }
                         }
                     });
-                    if (element.hasClass('horizontal')) {
+                    if (element.hasClass("horizontal")) {
                         element.css({
-                            'visibility': 'hidden',
-                            'display': 'block'
+                            visibility: "hidden",
+                            display: "block",
                         });
-                        var children_width = 0;
-                        $.each(element.children('li'), function(){
+                        let children_width = 0;
+                        $.each(element.children("li"), function () {
                             children_width += $(this).outerWidth(true);
                         });
 
                         element.css({
-                            'visibility': 'visible',
-                            'display': 'none'
+                            visibility: "visible",
+                            display: "none",
                         });
-                        element.css('width', children_width);
+                        element.css("width", children_width + 2);
                     }
-                    that._open(element);
+                    this.open(false, element);
                     parent.addClass("active-container");
                 }
                 e.preventDefault();
@@ -116,64 +154,69 @@
             });
 
             if (o.noClose === true) {
-                element.addClass("keep-open").on(Metro.events.click, function (e) {
-                    //e.preventDefault();
+                element.addClass("keep-open").on(Metro.events.click, (e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                 });
             }
 
-            $(element).find('li.disabled a').on(Metro.events.click, function(e){
-                e.preventDefault();
-            });
+            $(element)
+                .find("li.disabled a")
+                .on(Metro.events.click, (e) => {
+                    e.preventDefault();
+                });
         },
 
-        _close: function(el, immediate){
-            el = $(el);
+        _close: function (el, immediate) {
+            const _el = $(el);
 
-            var dropdown  = Metro.getPlugin(el, "dropdown");
-            var toggle = dropdown._toggle;
-            var options = dropdown.options;
-            var func = "slideUp";
+            const dropdown = Metro.getPlugin(_el, "dropdown");
+            const toggle = dropdown.toggle;
+            const options = dropdown.options;
+            let func = options.closeFunc;
 
-            toggle.removeClass('active-toggle').removeClass("active-control");
+            toggle.removeClass("active-toggle").removeClass("active-control");
             dropdown.element.parent().removeClass("active-container");
 
             if (immediate) {
-                func = 'hide'
+                func = "hide";
             }
 
-            el[func](immediate ? 0 : options.duration, function(){
+            _el[func](immediate ? 0 : options.duration, () => {
                 dropdown._fireEvent("close");
                 dropdown._fireEvent("up");
 
-                if (!options.dropUp && options.checkDropUp) {
-                    dropdown.element.removeClass("drop-up");
+                if (options.openMode === "auto") {
+                    dropdown.element.removeClass("drop-up drop-as-dialog");
                 }
             });
 
             this.isOpen = false;
         },
 
-        // TODO Add control: if no space for drop-down and no space for drop-up, element will must drop-down
-        _open: function(el, immediate){
-            el = $(el);
+        _open: function (el, immediate) {
+            const dropdown = Metro.getPlugin(el, "dropdown");
+            const options = dropdown.options;
+            const func = options.openFunc;
 
-            var dropdown  = Metro.getPlugin(el, "dropdown");
-            var toggle = dropdown._toggle;
-            var options = dropdown.options;
-            var func = "slideDown";
+            dropdown.toggle.addClass("active-toggle").addClass("active-control");
+            dropdown.element.parent().addClass("active-container");
 
-            toggle.addClass('active-toggle').addClass("active-control");
+            dropdown.element[func](immediate ? 0 : options.duration, function () {
+                const $el = $(this);
+                const wOut = Metro.utils.viewportOutByWidth(this);
+                const hOut = Metro.utils.viewportOutByHeight(this);
 
-            el[func](immediate ? 0 : options.duration, function(){
-                if (!options.dropUp && options.checkDropUp) {
-                    // dropdown.element.removeClass("drop-up");
-                    if (!Utils.inViewport(dropdown.element[0])) {
-                        dropdown.element.addClass("drop-up");
+                if (options.openMode === "auto") {
+                    if (hOut) {
+                        $el.addClass("drop-up");
+                    }
+                    if (wOut) {
+                        $el.addClass("place-right");
+                    }
 
-                        if (!Utils.inViewport(dropdown.element[0])) {
-                            dropdown.element.removeClass("drop-up");
-                        }
+                    if (Metro.utils.viewportOut(this)) {
+                        $el.removeClass("drop-up place-right").addClass("drop-as-dialog");
                     }
                 }
 
@@ -181,42 +224,44 @@
                 dropdown._fireEvent("drop");
             });
 
-            // this._fireEvent("drop");
-
             this.isOpen = true;
         },
 
-        close: function(immediate){
-            this._close(this.element, immediate);
+        close: function (immediate, el) {
+            this._close(el || this.element, immediate);
         },
 
-        open: function(immediate){
-            this._open(this.element, immediate);
+        open: function (immediate, el) {
+            this._open(el || this.element, immediate);
         },
 
-        toggle: function(){
-            if (this.isOpen)
-                this.close();
-            else
-                this.open();
+        toggle: function () {
+            if (this.isOpen) this.close();
+            else this.open();
         },
 
-        /* eslint-disable-next-line */
-        changeAttribute: function(){
-        },
+        changeAttribute: (attr, val) => {},
 
-        destroy: function(){
-            this._toggle.off(Metro.events.click);
-        }
+        destroy: function () {
+            this.toggle.off(Metro.events.click);
+        },
     });
 
-    $(document).on(Metro.events.click, function(){
-        $('[data-role*=dropdown]').each(function(){
-            var el = $(this);
+    $(document).on(Metro.events.click, () => {
+        $(participants).each(function () {
+            const el = $(this);
 
-            if (el.css('display')!=='none' && !el.hasClass('keep-open') && !el.hasClass('stay-open') && !el.hasClass('ignore-document-click')) {
-                Metro.getPlugin(el, 'dropdown').close();
+            if (el.hasClass("keep-open") || el.hasClass("stay-open") || el.hasClass("ignore-document-click")) return;
+
+            const dd = Metro.getPlugin(el, "dropdown");
+            const dm = Metro.getPlugin(el, "dropmenu");
+
+            if (dd) {
+                dd.close();
+            }
+            if (dm) {
+                dm.close();
             }
         });
     });
-}(Metro, m4q));
+})(Metro, Dom);

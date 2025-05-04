@@ -5,16 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Audio player - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Audio player - Metro UI :: Popular HTML, CSS and JS library</title>
 </head>
-<body class="m4-cloak">
+<body class="cloak flex-center">
+<nav data-role="appbar">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher" data-mode="button"/>
+    </div>
+</nav>
 <div class="container">
     <h1>Audio-player test page</h1>
-
-    <audio data-role="audio-player" data-src="./data/modem.mp3"></audio>
-    <br>
-    <audio data-role="audio-player" data-src="./data/modem.mp3" class="light"></audio>
-
+    <div>
+        <audio data-role="audio-player" data-src="./data/modem.mp3"></audio>
+    </div>
 </div>
 
 <script src="../lib/metro.js"></script>

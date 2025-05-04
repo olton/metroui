@@ -5,10 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Toast - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Toast - Metro UI :: Popular HTML, CSS and JS library</title>
 
 </head>
-<body class="m4-cloak">
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Component Test</div>
+    </div>
+</nav>
 <div class="container">
     <h1>Toast test page</h1>
     <div>
@@ -20,7 +29,7 @@
 <script src="../lib/metro.js"></script>
 <script>
     function cb(){
-        alert("This is callback");
+        console.log("This is callback");
     }
 
     function oldCall(){

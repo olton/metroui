@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+
+    <title>Test Remote Table - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        .data-cell-id {
+            text-align: center;
+        }
+        .data-cell-price {
+            text-align: right;
+        }
+        .data-cell-discountPercentage {
+            text-align: right;
+        }
+    </style>
+</head>
+<body class="cloak">
+
+<div class="container-fluid">
+    <div class="container">
+        <h1>Remote Table Test</h1>
+        <div data-role="remote-table"
+             data-caption="Products"
+             data-offset-key="skip"
+             data-search-key="q"
+             data-limit-key="limit"
+             data-data-key="products"
+             data-total-key="total"
+             data-sort-key="sortBy"
+             data-order-key="order"
+             data-fields="id, title, price, discountPercentage"
+             data-sortable-fields="id, title, price, discountPercentage"
+             data-col-size="30,,150,150"
+             data-captions="ID, Title, Price, Discount Price"
+             data-sort="id"
+             data-url='https://dummyjson.com/products'
+             data-search-url='https://dummyjson.com/products/search'
+             data-on-draw-cell="drawCell"
+             data-cls-table="table-border striped row-hover responsive-sm"
+             data-cls-pagination="mt-4 d-flex flex-justify-center"
+        ></div>
+        
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    function drawCell(cell, value, name, record, index){
+        if (name === 'price') {
+            cell.innerHTML = ( `<span class="${value > 100 ? "fg-red" : ""}">$${value}</span>` )
+        }
+        if (name === 'discountPercentage') {
+            cell.innerHTML = ( `${value}%` )
+        }
+    }
+</script>
+</body>
+</html>

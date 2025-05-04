@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Scrollbar - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Scrollbar - Metro UI :: Popular HTML, CSS and JS library</title>
     <style>
         .scrollbar {
             height: 300px;
-            background: #F5F5F5;
+            background: var(--default-background);
+            border: 1px solid var(--border-color);
             overflow-y: scroll;
             margin-bottom: 25px;
         }
@@ -19,7 +20,16 @@
         }
     </style>
 </head>
-<body class="m4-cloak">
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Component Test</div>
+    </div>
+</nav>
     <div class="container">
         <h1>Scrollbar test page</h1>
         <div class="example">
@@ -45,6 +55,11 @@
                     </div>
                 </div>
                 <div class="cell-md-2 scrollbar-type-4 sb-green">
+                    <div class="scrollbar">
+                        <div class="force-overflow"></div>
+                    </div>
+                </div>
+                <div class="cell-md-2 scrollbar-type-4 sb-sand">
                     <div class="scrollbar">
                         <div class="force-overflow"></div>
                     </div>

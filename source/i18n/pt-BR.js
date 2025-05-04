@@ -1,61 +1,153 @@
-/* global Metro */
-(function(Metro, $) {
-    $.extend(Metro.locales, {
-        'pt-BR': {
-            "calendar": {
-                "months": [
-                    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
-                    "Jan", "Fev", "Mar", "Abr", "Maio", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"
-                ],
-                "days": [
-                    "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado",
-                    "Do", "Se", "Te", "Qa", "Qi", "Se", "Sa",
-                    "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"
-                ],
-                "time": {
-                    "days": "DIAS",
-                    "hours": "HORAS",
-                    "minutes": "MINUTOS",
-                    "seconds": "SEGUNDOS",
-                    "month": "MÊS",
-                    "day": "DIA",
-                    "year": "ANO"
-                },
-                "weekStart": 1
-            },
-            "buttons": {
-                "ok": "OK",
-                "cancel": "Cancelar",
-                "done": "Feito",
-                "today": "Hoje",
-                "now": "Agora",
-                "clear": "Limpar",
-                "help": "Ajuda",
-                "yes": "Sim",
-                "no": "Não",
-                "random": "Aleatório",
-                "save": "Salvar",
-                "reset": "Restaurar"
-            },
-            "table": {
-                "rowsCount": "Show entries:",
-                "search": "Search:",
-                "info": "Showing $1 to $2 of $3 entries",
-                "prev": "Prev",
-                "next": "Next",
-                "all": "All",
-                "inspector": "Inspector",
-                "skip": "Goto page",
-                "empty": "Nothing to show"
-            },
-            "colorSelector": {
-                addUserColorButton: "ADD TO SWATCHES",
-                userColorsTitle: "USER COLORS"
-            },
-            "switch": {
-                on: "on",
-                off: "off"
-            }
-        }
+(() => {
+    Metro.i18n.add("pt-BR", {
+        weekStart: 0,
+
+        january: "Janeiro",
+        february: "Fevereiro",
+        march: "Março",
+        april: "Abril",
+        may: "Maio",
+        june: "Junho",
+        july: "Julho",
+        august: "Agosto",
+        september: "Setembro",
+        october: "Outubro",
+        november: "Novembro",
+        december: "Dezembro",
+
+        january_short: "Jan",
+        february_short: "Fev",
+        march_short: "Mar",
+        april_short: "Abr",
+        may_short: "Mai",
+        june_short: "Jun",
+        july_short: "Jul",
+        august_short: "Ago",
+        september_short: "Set",
+        october_short: "Out",
+        november_short: "Nov",
+        december_short: "Dez",
+
+        sunday: "Domingo",
+        monday: "Segunda",
+        tuesday: "Terça",
+        wednesday: "Quarta",
+        thursday: "Quinta",
+        friday: "Sexta",
+        saturday: "Sábado",
+
+        sunday_short: "Dom",
+        monday_short: "Seg",
+        tuesday_short: "Ter",
+        wednesday_short: "Qua",
+        thursday_short: "Qui",
+        friday_short: "Sex",
+        saturday_short: "Sáb",
+
+        sunday_short_2: "D",
+        monday_short_2: "S",
+        tuesday_short_2: "T",
+        wednesday_short_2: "Q",
+        thursday_short_2: "Q",
+        friday_short_2: "S",
+        saturday_short_2: "S",
+
+        label_ok: "OK",
+        label_cancel: "Cancelar",
+        label_done: "Pronto",
+        label_today: "Hoje",
+        label_now: "Agora",
+        label_clear: "Limpar",
+        label_help: "Ajuda",
+        label_yes: "Sim",
+        label_no: "Não",
+        label_random: "Aleatório",
+        label_save: "Salvar",
+        label_reset: "Resetar",
+        label_submit: "Enviar",
+        label_add_user_color: "Adicionar às amostras",
+        label_send: "Enviar",
+        label_accept: "Aceitar",
+        label_cookies_title: "Este site usa cookis",
+        label_cookies_text: "Este site utiliza cookies para garantir que você tenha a melhor experiência.",
+        label_choose_file: "Escolher arquivo(s)",
+        label_drop_file: "Clique ou solte arquivo(s) aqui",
+        label_files_selected: "{n} arquivo(s) selecionado(s)",
+
+        label_days: "dias",
+        label_hours: "horas",
+        label_minutes: "min",
+        label_seconds: "seg",
+        label_month: "mês",
+        label_months: "meses",
+        label_day: "dia",
+        label_year: "ano",
+        label_years: "anos",
+
+        label_rows_count: "Exibir:",
+        label_search: "Pesquisar:",
+        label_table_info: "Exibindo de $1 até $2 de um total de $3 registros",
+        label_prev: "Anterior",
+        label_next: "Próximo",
+        label_all: "Todos",
+        label_inspector: "Inspetor",
+        label_goto_page: "Ir para",
+        label_enter_page: "Digite a página...",
+        label_empty: "Nada para exibir",
+        label_user_colors: "Cores do usuário",
+        label_tiles: "Blocos",
+        label_list: "Lista",
+        label_load_more: "Carregar mais",
+        label_buy: "Comprar",
+        label_buy_now: "Comprar agora",
+        label_buy_today: "Comprar hoje",
+        label_download: "Download",
+        label_search_results: "Pesquisar resultados",
+        label_add: "Adicionar",
+        label_edit: "Editar",
+        label_delete: "Excluir",
+        label_new: "Novo",
+        label_sell: "Vender",
+        label_details: "Detalhes",
+        label_sorting: "Ordenar",
+
+        label_on: "lig",
+        label_off: "deslig",
+
+        label_rename_tab: "Renomear aba",
+        label_close_tab: "Fechar aba",
+        label_close_other_tabs: "Fechar outras abas",
+        label_close_tabs_left: "Fechar abas a esquerda",
+        label_close_tabs_right: "Fechar abas a direita",
+        label_close_all_tabs: "Fechar todas as abas",
+        label_close_inactive_tabs: "Fechar abas inativas",
+
+        label_clear_input: "Limpar",
+        label_reveal_password: "Mostrar senha",
+        label_hide_password: "Ocultar senha",
+        label_generate_random: "Gerar valor aleatório",
+        label_search_input: "Pesquisar pelo valor",
+
+        label_note: "Nota",
+        label_tip: "Dica",
+        label_info: "Informação",
+        label_warning: "Aviso",
+        label_question: "Questão",
+        label_error: "Erro",
+        label_success: "Sucesso",
+        label_caution: "Cuidado",
+        label_alert: "Alerta",
+        label_bug: "Bug",
+        label_fuck: "Falha catastrótico",
+        label_important: "Importante",
+        label_shit: "Shit",
+        label_air: "Air",
+
+        label_select_all: "Select all",
+        label_select_more: "Select...",
+        label_select: "Select",
+        label_filter: "Filter",
+
+        label_collapse: "Collapse",
     });
-}(Metro, m4q));
+})();

@@ -1,0 +1,46 @@
+:root {
+    --box-border-radius: 10px;
+    --box-border-color: var(--border-color);
+    --box-background: #ffffff;
+    --box-color: #191919;
+}
+
+.dark-side {
+    --box-border-color: var(--border-color);
+    --box-background: var(--default-background);
+    --box-color: var(--default-color);
+}
+
+.box {
+    padding: 1.5rem;
+    background: var(--box-background);
+    border: 1px solid var(--box-border-color);
+    border-radius: var(--box-border-radius);
+    margin: 0;
+    font-size: 14px;
+    position: relative;
+
+    .box-title, .box-title-secondary {
+        font-size: 20px;
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+
+    .box-title {
+        border-bottom: 1px solid var(--box-border-color);
+        padding-bottom: 0.5rem;
+    }
+    
+    * + .box-title, * + .box-title-secondary {
+        margin-top: 2rem;
+    }
+
+    .box-title-secondary {
+        font-size: 16px;
+    }
+}
+
+* + .box {
+    margin-top: 1rem;
+}

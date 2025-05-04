@@ -1,2 +1,2 @@
-import "./toast.js"
-import "./toast.less"
+import "./toast.js";
+import "./toast.less";

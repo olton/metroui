@@ -1,3 +1,3 @@
-import "./mif-font.less"
-import "./mif-base.less"
-import "./mif-icons.less"
+import "./font.less";
+import "./base.less";
+import "./icons.less";

@@ -1,53 +1,72 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --chip-background: #F4F4F4;
+    --chip-color: #191919;
+    --chip-background-hover: #dadada;
+    --chip-color-hover: #191919;
+    --chip-action-background: #c1c1c1;
+    --chip-action-color: #191919;
+}
+
+.dark-side {
+    --chip-background: #2b2d30;
+    --chip-color: #f3fcff;
+    --chip-background-hover: #333439;
+    --chip-color-hover: #f3fcff;
+    --chip-action-background: #43444a;
+    --chip-action-color: #f3fcff;
+}
+
 .chip {
-    display: inline-block;
-    float: left;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
     height: 32px;
     font-size: 14px;
-    padding: 0 12px;
+    padding: 0 8px;
     line-height: 32px;
-    background: @gray;
+    background: var(--chip-background);
+    color: var(--chip-color);
     cursor: default;
+    border-radius: 4px;
+    position: relative;
 
     .label {
         white-space: nowrap;
+        order: 2;
+        margin: 0 1rem 0 .5rem;
     }
 
     .icon {
-        position: absolute;
-        left: 0;
-        top: 0;
+        order: 1;
         .square(32,px);
-        text-align: center;
         line-height: 32px;
         vertical-align: middle;
         font-size: 24px;
         overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         img {
-            width: 100%;
-            max-height: 100%;
+            width: 24px;
+            max-height: 24px;
             vertical-align: initial;
         }
     }
 
-    .icon + .label {
-        margin-left: 30px;
-    }
-
     .action {
+        order: 3;
         display: block;
-        float: right;
-        margin-left: 10px;
         cursor: pointer;
         .square(24,px);
+        margin-left: auto;
 
-        margin-right: -8px;
-        margin-top: 4px;
-        background-color: #ccc;
-        overflow: hidden;
+        background: var(--chip-action-background);
+        color: var(--chip-action-color);
+        border-radius: 4px;
 
         &:before {
             content: "\2716";
@@ -58,19 +77,20 @@
 
     }
 
+    &.pill-chip {
+        border-radius: 1rem;
+        .action {
+            border-radius: 50%;
+        }
+    }
+
     &:hover {
         background-color: @hoverBackground;
     }
 
-    &.material {
-        border-radius: 16px;
-
-        .icon {
-            border-radius: 32px;
-        }
-
+    &.readonly, &.disabled {
         .action {
-            border-radius: 24px;
+            display: none;
         }
     }
 }
@@ -78,3 +98,23 @@
 .chip + .chip {
     margin-left: 8px;
 }
+
+each(@accentColors, {
+    @color: "@{value}Color";
+
+    .@{value} {
+        .action {
+            background: darken(@@color, 10%);
+            color: #ffffff;
+        }
+    }
+})
+
+each(@normalColors, {
+    .soft-@{value} {
+        .action {
+            background: darken(@@value, 10%);
+            color: #ffffff;
+        }
+    }
+})

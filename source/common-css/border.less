@@ -1,5 +1,7 @@
+@import "../include/vars";
+
 :root {
-    --border-radius: 4px;
+    --border-radius: 6px;
 }
 
 .no-border {border: 0 !important;}
@@ -22,71 +24,23 @@
 .border-top {border-top: 1px solid transparent;}
 .border-bottom {border-bottom: 1px solid transparent;}
 
-.border-top-left, .border-left-top {
-    border-top: 1px solid transparent;
-    border-left: 1px solid transparent;
-}
-.border-top-right, .border-right-top {
-    border-top: 1px solid transparent;
-    border-right: 1px solid transparent;
-}
-.border-bottom-right, .border-right-bottom {
-    border-bottom: 1px solid transparent;
-    border-right: 1px solid transparent;
-}
-.border-bottom-left, .border-left-bottom {
-    border-bottom: 1px solid transparent;
-    border-left: 1px solid transparent;
-}
-.border-top-bottom, .border-bottom-top {
-    border-bottom: 1px solid transparent;
-    border-top: 1px solid transparent;
-}
-.border-right-left, .border-left-right {
-    border-right: 1px solid transparent;
-    border-left: 1px solid transparent;
-}
+.border-radius, .rounded {border-radius: var(--border-radius);}
+.border-radius-half, .to-cycle {border-radius: 50%;}
 
-.border-top-right-bottom {
-    border-top: 1px solid transparent;
-    border-right: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-}
-.border-right-bottom-left {
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-}
-.border-bottom-left-top {
-    border-left: 1px solid transparent;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-}
-.border-left-top-right {
-    border-left: 1px solid transparent;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-}
+each(range(1, 20), .(@i) {
+    .border-size-@{i} {border-width: unit(@i, px)!important;}
+    .border-radius-@{i} {border-radius: unit(@i, px)!important;}
+});
 
-.border-radius {border-radius: var(--border-radius);}
-.border-radius-half {border-radius: 50%;}
-
-.generate-border-width(20);
-.generate-border-width(@i) when (@i > 0) {
-
-    .border-@{i} {border-width: unit(@i, px);}
-    .border-size-@{i} {border-width: unit(@i, px);}
-    .border-radius-@{i} {border-radius: unit(@i, px);}
-
-    .generate-border-width(@i - 1);
-}
-
-.rounded {
-    border-radius: var(--border-radius) !important;
-}
-.border-50 {
-    border-radius: 50% !important;
-}
+each(@media-rules, {
+    @container (min-width: @value) {
+        .border-none-@{key} {border: none!important;}
+        .border-top-none-@{key} {border-top: none!important;}
+        .border-right-none-@{key} {border-right: none!important;}
+        .border-bottom-none-@{key} {border-bottom: none!important;}
+        .border-left-none-@{key} {border-left: none!important;}
+    }
+})
 
 .border-solid {border-style: solid!important;}
 .border-dashed {border-style: dashed!important;}
@@ -96,3 +50,127 @@
 .border-inset {border-style: inset!important;}
 .border-outset {border-style: outset!important;}
 .border-ridge {border-style: ridge!important;}
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: true;
+}
+
+:root {
+    --animated-border-speed: 3s;
+    --animated-border-size: 2px;
+    --animated-border-color: #50a8ff;
+    --animated-border-color-1: #ff4545;
+    --animated-border-color-2: #00ff99;
+    --animated-border-color-3: #006aff;
+    --animated-border-color-4: #ff0095;
+    --animated-border-color-5: #ff4545;
+}
+
+.rainbow-border, [class*=rainbow-border-] {
+    &::after, &::before {
+        content: '';
+        position: absolute;
+        background-image: conic-gradient(
+                from var(--angle),
+                var(--animated-border-color-1),
+                var(--animated-border-color-2),
+                var(--animated-border-color-3),
+                var(--animated-border-color-4),
+                var(--animated-border-color-5)
+        );
+        top: calc(var(--animated-border-size) * -1);
+        left: calc(var(--animated-border-size) * -1);
+        z-index: -1;
+        padding: 4px;
+        border-radius: inherit;
+        width: calc(100% + var(--animated-border-size) * 2);
+        height: calc(100% + var(--animated-border-size) * 2);
+        animation: var(--animated-border-speed) spin-angle linear infinite;
+    }
+    &::before {
+        filter: blur(.5rem);
+        opacity: .5;
+    }
+}
+
+.rainbow-border-hover {
+    &::after, &::before {
+        background-image: initial;
+        transition: opacity .5s;
+        opacity: 0;
+    }
+    &:hover {
+        &::after, &::before {
+            opacity: 1;
+            background-image: conic-gradient(
+                    from var(--angle),
+                    #ff4545,
+                    #00ff99,
+                    #006aff,
+                    #ff0095,
+                    #ff4545
+            );
+        }
+    }
+}
+
+.animated-border, [class*=animated-border-] {
+    &::before {
+        content: "";
+        position: absolute;
+        width: calc(100% + var(--animated-border-size) * 2);
+        height: calc(100% + var(--animated-border-size) * 2);
+        background: repeating-conic-gradient(
+                from var(--angle),
+                var(--animated-border-color) 0%,
+                var(--animated-border-color) 5%,
+                transparent 5%,
+                transparent 40%,
+                var(--animated-border-color) 50%
+        );
+        border-radius: inherit;
+        animation: spin-angle var(--animated-border-speed) linear infinite;
+        inset: calc(-1 * var(--animated-border-size));
+        z-index: -1;
+    }
+}
+
+.animated-border-hover, [class*=animated-border-hover-] {
+    &::before {
+        background: initial;
+        transition: opacity .5s;
+        opacity: 0;
+    }
+    &:hover {
+        &::before {
+            opacity: 1;
+            background: repeating-conic-gradient(
+                    from var(--angle),
+                    var(--animated-border-color) 0%,
+                    var(--animated-border-color) 5%,
+                    transparent 5%,
+                    transparent 40%,
+                    var(--animated-border-color) 50%
+            );
+        }
+    }
+}
+
+each(@normalColors, {
+    .animated-border-@{value}, .animated-border-hover-@{value} {
+        --animated-border-color: @@value;
+    }
+})
+
+@keyframes spin-angle {
+    to{
+        --angle: 360deg;
+    }
+}
+
+*:has([class*="animated-border-"], [class*="rainbow-border"]) {
+    position: relative;
+    z-index: 1;
+}

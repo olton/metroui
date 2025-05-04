@@ -1,3 +1,3 @@
-import "../../farbe"
-import "./charms.js"
-import "./charms.less"
+import "../../farbe/index.js";
+import "./charms.js";
+import "./charms.less";

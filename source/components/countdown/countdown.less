@@ -2,7 +2,8 @@
 @import (once) "../../include/mixins";
 
 .countdown {
-    display: flex;
+    font-family: digital, sans-serif;
+    display: flex!important;
     flex-flow: row nowrap;
     position: relative;
     width: 100%;
@@ -47,7 +48,7 @@
         content: "";
         display: block;
         position: absolute;
-        height: ~"calc(100% - 8px)";
+        height: calc(100% - 8px);
         width: 1px;
         background: radial-gradient(at left, var(--border-color), transparent);
     }
@@ -87,5 +88,25 @@
 
 .countdown {
     &.blink {
+    }
+}
+
+.countdown {
+    &.animate-slide {
+        .digit {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin: 0 1px;
+            padding: 0 4px;
+            
+            .digit-value {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        .-old-digit .digit-value{
+            border-top: 1px solid var(--border-color);
+        }
     }
 }

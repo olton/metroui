@@ -15,12 +15,15 @@
     width: 306px;
     background-color: var(--color-selector-background);
     flex-shrink: 0;
+    display: block;
+    position: relative;
 }
 
 .color-selector {
     .color-box {
         display: block;
         border: 1px solid var(--border-color);
+        border-radius: 6px;
         padding: 10px;
     }
 
@@ -37,37 +40,24 @@
         padding: 4px 10px;
         text-align: center;
         font-size: 11px;
-        color: @dark;
     }
 
     .default-swatches, .user-colors, .user-colors-actions  {
         display: block;
         width: auto;
+        max-width: initial;
 
         .swatch, .user-swatch {
-            display: inline-block;
-            width: 32px;
-            height: 32px;
+            display: inline-flex;
+            width: 24px!important;
+            height: 24px!important;
             background: #ccc;
-            border-radius: 0;
-            margin-left: 4px;
-            margin-bottom: 4px;
+            margin: 2px;
             box-sizing: border-box;
             border: 1px solid var(--border-color);
             cursor: pointer;
-
-            &:not(.user-swatch):nth-child(8n+1) {
-                margin-left: 0;
-            }
-        }
-
-        .user-swatch {
-            width: 24px;
-            height: 24px;
-
-            &:nth-child(10n+1) {
-                margin-left: 0;
-            }
+            border-radius: 4px;
+            padding: 0;
         }
     }
 
@@ -81,10 +71,6 @@
 
         .user-swatch {
             margin: 0;
-        }
-
-        .button {
-            padding: 0 20px;
         }
     }
 
@@ -142,11 +128,13 @@
         .hue-cursor {
             top: 0;
             left: 50%;
-            height: 20px;
-            width: 20px;
+            height: 20px!important;
+            width: 20px!important;
             margin-top: -10px;
             margin-left: -10px;
             pointer-events: none;
+            min-width: 0;
+            padding: 0;
         }
 
         canvas {
@@ -164,11 +152,13 @@
         .alpha-cursor {
             top: 0;
             left: 50%;
-            height: 20px;
-            width: 20px;
+            height: 20px!important;
+            width: 20px!important;
             margin-top: -10px;
             margin-left: -10px;
             pointer-events: none;
+            min-width: 0;
+            padding: 0;
         }
 
         canvas {
@@ -224,6 +214,15 @@
         width: 100%;
         display: flex;
         flex-flow: row nowrap;
+        margin-left: 4px;
+        
+        .input {
+            border-radius: 0;
+        }
+        
+        input {
+            padding: 0;
+        }
     }
 
     .color-block.as-string {

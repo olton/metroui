@@ -1,23 +1,19 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
 
-    var MarqueeDefaultConfig = {
+    let MarqueeDefaultConfig = {
         items: null,
-        backgroundColor: "#fff",
-        color: "#000",
-        borderSize: 0,
-        borderColor: "transparent",
         loop: true,
         height: "auto",
-        width: "auto",
+        width: "100%",
         duration: 10000,
         direction: "left",
         ease: "linear",
         mode: "default", // default || accent
         accentPause: 2000,
         firstPause: 1000,
-        stopOnHover: false,
+        stopOnHover: true,
 
         clsMarquee: "",
         clsMarqueeItem: "",
@@ -25,197 +21,218 @@
         onMarqueeItem: Metro.noop,
         onMarqueeItemComplete: Metro.noop,
         onMarqueeComplete: Metro.noop,
-        onMarqueeCreate: Metro.noop
+        onMarqueeCreate: Metro.noop,
     };
 
-    Metro.marqueeSetup = function (options) {
+    Metro.marqueeSetup = (options) => {
         MarqueeDefaultConfig = $.extend({}, MarqueeDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroMarqueeSetup"] !== undefined) {
-        Metro.marqueeSetup(globalThis["metroMarqueeSetup"]);
+    if (typeof globalThis.metroMarqueeSetup !== "undefined") {
+        Metro.marqueeSetup(globalThis.metroMarqueeSetup);
     }
 
-    Metro.Component('marquee', {
-        init: function( options, elem ) {
+    Metro.Component("marquee", {
+        init: function (options, elem) {
             this._super(elem, options, MarqueeDefaultConfig, {
                 // define instance vars here
+                origin: null,
                 items: [],
                 running: false,
-                current: -1
+                current: -1,
+                chain: [],
             });
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             this._createStructure();
             this._createEvents();
 
-            this._fireEvent('marquee-create');
+            this._fireEvent("marquee-create");
         },
 
-        _createStructure: function(){
-            var element = this.element, o = this.options;
+        _createStructure: function () {
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("marquee").addClass(o.clsMarquee);
 
             element.css({
                 height: o.height,
                 width: o.width,
-                backgroundColor: Farbe.Routines.isColor(o.backgroundColor) ? o.backgroundColor : MarqueeDefaultConfig.backgroundColor,
-                color: Farbe.Routines.isColor(o.color) ? o.color : MarqueeDefaultConfig.color,
-                borderStyle: "solid",
-                borderWidth: o.borderSize,
-                borderColor: Farbe.Routines.isColor(o.borderColor) ? o.borderColor : MarqueeDefaultConfig.borderColor
             });
 
-            this.setItems(o.items);
+            const items = element
+                .html()
+                .split("\n")
+                .map((a) => a.trim())
+                .filter((a) => a.length);
+            const itemsFromOptions = Metro.utils.isObject(o.items) || [];
+
+            this.origin = [...items, ...itemsFromOptions];
+            this.setItems(this.origin, true);
 
             if (this.items.length) {
                 this.current = 0;
+                this.createChain();
+                console.log(this.chain);
+                this.start();
             }
-
-            if (this.items.length) this.start();
         },
 
-        setItems: function(items, replace){
-            var element = this.element, o = this.options;
-            var dir = o.direction.toLowerCase(), h;
+        setItems: function (items, replace = true) {
+            const element = this.element;
+            const o = this.options;
+            const dir = o.direction.toLowerCase();
 
-            items = Metro.utils.isObject(items);
-
-            if (items && replace) {
-                element.clear();
+            if (replace) {
+                this.items.length = 0;
             }
 
-            if (items !== false) {
-                $.each(items, function(){
-                    var el = $(this);
+            element.clear();
 
-                    if (el.length)
-                        el.appendTo(element);
-                    else
-                        element.append( $("<div>").html(this) );
-                })
-            }
+            this.items = items.map((item) => {
+                return $("<div>").html(item).addClass("marquee__item").addClass(o.clsMarqueeItem).appendTo(element)[0];
+            });
 
-            this.items = element.children("*").addClass("marquee__item").addClass(o.clsMarqueeItem).items();
-
-            if (dir === "left" || dir === "right") {
-                $(this.items).addClass("moveLeftRight");
-            } else {
-                $(this.items).addClass("moveUpDown");
-            }
+            $(this.items).addClass(dir === "left" || dir === "right" ? "moveLeftRight" : "moveUpDown");
 
             if (o.height === "auto") {
-                h = 0;
-                $(this.items).each(function(){
-                    if ( +$(this).outerHeight(true) > h) {
-                        h = +$(this).outerHeight(true);
+                let h = 0;
+                $(this.items).each(function () {
+                    const el = $(this);
+                    const eh = +el.outerHeight(true);
+                    if (eh > h) {
+                        h = eh;
                     }
                 });
                 element.height(h);
             }
-            return this
+            return this;
         },
 
-
-        setItem: function(index, value){
-            var target = $(this.items[index]), h, o = this.options, element = this.element;
+        setItem: function (index, value) {
+            const target = $(this.items[index]);
+            let h;
+            const o = this.options;
+            const element = this.element;
 
             if (!target.length) {
                 return;
             }
 
-            target.html(value)
+            target.html(value);
 
-            if (o.height === "auto") {
-                h = 0;
-                $(this.items).each(function(){
-                    if ( +$(this).outerHeight(true) > h) {
-                        h = +$(this).outerHeight(true);
-                    }
-                });
+            h = target.outerHeight(true);
+
+            if (o.height === "auto" && element.height() < h) {
                 element.height(h);
             }
-            return this
+
+            return this;
         },
 
-        addItem: function(item, index){
-            var element = this.element;
-            var ins, $item = $(item), trg;
+        addItem: function (item, index = -1) {
+            const element = this.element;
+            const o = this.options;
+            let ins;
+            const $item = $(item);
+            let trg;
+            let h;
 
             ins = $item.length ? $item : $("<div>").html(item);
 
-            if (Metro.utils.isNull(index)) {
+            if (index < 0) {
                 element.append(ins);
             } else {
-                trg = this.items[index]
+                trg = this.items[index];
                 if (trg) {
                     ins.insertBefore(trg);
                 } else {
                     element.append(ins);
                 }
             }
-            return this
+
+            h = ins.outerHeight(true);
+
+            if (o.height === "auto" && element.height() < h) {
+                element.height(h);
+            }
+
+            return this;
         },
 
-        _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+        createChain: function () {
+            const element = this.element;
+            const o = this.options;
+            const magic = 20;
+            let dir = o.direction;
+            let ease = o.ease;
+            let dur = +o.duration;
+            let i = 0;
+            const rect = element[0].getBoundingClientRect();
 
-            element.on(Metro.events.enter, function(){
-                if (o.stopOnHover)
-                    $.pauseAll(that.items);
-            })
+            this.chain.length = 0;
 
-            element.on(Metro.events.leave, function(){
-                if (o.stopOnHover)
-                    $.resumeAll(that.items);
-            })
-        },
+            if (o.mode === "default") {
+                for (const item of this.items) {
+                    const el = $(item);
+                    const elRect = item.getBoundingClientRect();
+                    const half = (rect.width - elRect.width) / 2;
 
-        start: function(){
-            var element = this.element, o = this.options;
-            var chain = [], dir = o.direction.toLowerCase(), mode = o.mode.toLowerCase();
-            var magic = 20;
-            var ease = o.ease.toArray(",");
-            var dur = +o.duration;
-
-            if (mode === "default") {
-                $.each(this.items, function (i) {
-                    var el = $(this);
-                    var draw;
+                    let draw;
 
                     if (el.attr("data-direction")) {
-                        dir = el.attr("data-direction").toLowerCase();
+                        dir = el.attr("data-direction");
                     }
 
                     if (el.attr("data-duration")) {
                         dur = +el.attr("data-duration");
                     }
 
-                    if (["left", "right"].indexOf(dir) > -1) {
-                        draw = {
-                            left: dir === "left" ? [element.width(), -$(this).width() - magic] : [-$(this).width() - magic, element.width()]
-                        }
+                    if (el.attr("data-ease")) {
+                        ease = el.attr("data-ease");
                     } else {
-                        draw = {
-                            top: dir === "up" ? [element.height(), -$(this).height() - magic] : [-$(this).height() - magic, element.height()]
-                        }
+                        ease = o.ease;
                     }
 
-                    chain.push({
-                        el: this,
+                    if (["left", "right"].indexOf(dir) > -1) {
+                        draw = {
+                            left:
+                                dir === "left"
+                                    ? [rect.width, -elRect.width - magic]
+                                    : [-elRect.width - magic, rect.width],
+                        };
+                    } else {
+                        draw = {
+                            top:
+                                dir === "up"
+                                    ? [rect.height, -elRect.height - magic]
+                                    : [-elRect.height - magic, rect.height],
+                        };
+                    }
+
+                    this.chain.push({
+                        el: el[0],
                         draw: draw,
                         dur: dur,
-                        ease: "linear",
-                        defer: i === 0 ? +o.firstPause : 0
+                        ease,
+                        defer: i === 0 ? +o.firstPause : 0,
                     });
-                });
+
+                    i++;
+                }
             } else {
-                $.each(this.items, function(i){
-                    var el = $(this);
-                    var half, draw1, draw2;
+                for (const item of this.items) {
+                    const el = $(item);
+                    const elRect = item.getBoundingClientRect();
+                    const halfW = (rect.width - elRect.width) / 2;
+                    const halfH = (rect.height - elRect.height) / 2;
+
+                    let draw1;
+                    let draw2;
+
                     dur = o.duration / 2;
 
                     if (el.attr("data-direction")) {
@@ -226,67 +243,94 @@
                         dur = +el.attr("data-duration") / 2;
                     }
 
+                    let _ease = ease ? ease.split(" ") : ["linear"];
                     if (el.attr("data-ease")) {
-                        ease = el.attr("data-ease").toArray(",");
+                        _ease = el.attr("data-ease").split(" ");
                     }
 
-                    if (["left", "right"].indexOf(dir) > -1) {
-                        half = element.width() / 2 - $(this).width() / 2;
+                    if (["left", "right"].includes(dir)) {
                         draw1 = {
-                            left: dir === "left" ? [element.width(), half] : [-$(this).width() - magic, half]
-                        }
+                            left: dir === "left" ? [rect.width, halfW] : [-elRect.width - magic, halfW],
+                        };
                         draw2 = {
-                            left: dir === "left" ? [half, -$(this).width() - magic] : [half, element.width() + magic]
-                        }
+                            left: dir === "left" ? [halfW, -elRect.width - magic] : [halfW, rect.width + magic],
+                        };
                     } else {
-                        half = element.height() / 2 - $(this).height() / 2;
                         draw1 = {
-                            top: dir === "up" ? [element.height(), half] : [-$(this).height() - magic, half]
-                        }
+                            top: dir === "up" ? [rect.height, halfH] : [-elRect.height - magic, halfH],
+                        };
                         draw2 = {
-                            top: dir === "up" ? [half, -$(this).height() - magic] : [half, element.height() + magic]
-                        }
+                            top: dir === "up" ? [halfH, -elRect.height - magic] : [halfH, rect.height + magic],
+                        };
                     }
 
-                    chain.push({
-                        el: this,
+                    this.chain.push({
+                        el: el[0],
                         draw: draw1,
                         dur: dur,
-                        ease: ease[0] || "linear",
-                        defer: i === 0 ? +o.firstPause : 0
+                        ease: _ease[0] || "linear",
+                        defer: i === 0 ? +o.firstPause : 0,
                     });
-                    chain.push({
-                        el: this,
+                    this.chain.push({
+                        el: el[0],
                         draw: draw2,
                         dur: dur,
-                        ease: ease[1] ? ease[1] : ease[0] ? ease[0] : "linear",
-                        defer: +o.accentPause
+                        ease: _ease[1] ? _ease[1] : _ease[0] ? _ease[0] : "linear",
+                        defer: +o.accentPause,
                     });
-                });
+
+                    i++;
+                }
             }
+        },
+
+        _createEvents: function () {
+            const element = this.element;
+            const o = this.options;
+
+            element.on(Metro.events.enter, () => {
+                if (o.stopOnHover) $.pauseAll(this.items);
+            });
+
+            element.on(Metro.events.leave, () => {
+                if (o.stopOnHover) $.resumeAll(this.items);
+            });
+
+            const resize = Hooks.useDebounce((e) => {
+                this.stop();
+                this.setItems(this.items, true);
+                this.createChain();
+                this.start();
+            }, 1000);
+
+            $(window).on(Metro.events.resize, resize);
+        },
+
+        start: function () {
+            const o = this.options;
 
             this.running = true;
 
-            $.chain(chain, {
+            $.chain(this.chain, {
                 loop: o.loop,
                 onChainItem: Metro.utils.isFunc(o.onMarqueeItem),
                 onChainItemComplete: Metro.utils.isFunc(o.onMarqueeItemComplete),
-                onChainComplete: Metro.utils.isFunc(o.onMarqueeComplete)
+                onChainComplete: Metro.utils.isFunc(o.onMarqueeComplete),
             });
-            return this
+
+            return this;
         },
 
-        stop: function(){
+        stop: function () {
             this.running = false;
-            $.stopAll(this.items);
-            return this
+            $.stopAll(false);
+            return this;
         },
 
-        changeAttribute: function(){
-        },
+        changeAttribute: (attr, val) => {},
 
-        destroy: function(){
+        destroy: function () {
             this.element.remove();
-        }
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

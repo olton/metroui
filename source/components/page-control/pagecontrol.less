@@ -2,15 +2,24 @@
 
 :root {
     --page-control-background: #ffffff;
-    --page-control-background-hover: rgba(red(@gray), green(@gray), blue(@gray), .1);
-    --page-control-closer-hover-background: rgba(red(@dark), green(@dark), blue(@dark), .1);
+    --page-control-background-hover: rgba(137, 137, 137, .1);
+    --page-control-closer-hover-background: #e1e1e1;
     --page-control-border-color: #e0e0e0;
+    --page-control-border-radius: 6px;
+}
+
+.dark-side {
+    --page-control-background: #222222;
+    --page-control-background-hover: rgba(137, 137, 137, .1);
+    --page-control-closer-hover-background: #444444;
+    --page-control-border-color: #444444;
 }
 
 .page-control {
     position: relative;
     display: block;
     user-select: none;
+    z-index: 10;
 }
 
 .page-control__tabs {
@@ -20,6 +29,7 @@
     flex-wrap: nowrap;
     list-style: none inside;
     min-height: 32px;
+    margin: 1rem 0 0;
     //overflow: hidden;
 
     &::after {
@@ -56,6 +66,8 @@
     &.active {
         border: 1px solid var(--page-control-border-color);
         border-bottom-color: var(--page-control-background);
+        border-top-left-radius: var(--page-control-border-radius);
+        border-top-right-radius: var(--page-control-border-radius);
     }
 
     &:not(:first-child)::before {
@@ -79,8 +91,16 @@
         }
     }
 
-    &:not(.active):hover {
-        background: var(--page-control-background-hover);
+    @media (hover: hover) {
+        &:not(.active):hover {
+            background: var(--page-control-background-hover);
+        }
+    }
+
+    @media (hover: none) {
+        &:not(.active):active {
+            background: var(--page-control-background-hover);
+        }
     }
 
     &-custom {
@@ -132,13 +152,12 @@
 .page-control__tab__menu {
     border: 1px solid var(--page-control-border-color);
     left: -6px;
-    top: ~"calc(100% + 4px)";
+    top: calc(100% + 4px);
 }
 
 .page-control__tab__menu__holder {
     cursor: pointer;
     margin-right: 10px;
-    visibility: hidden;
 }
 
 .page-control__tab.active, .page-control__tab:hover {
@@ -207,7 +226,7 @@
     }
 
     ul {
-        top: ~"calc(100% + 1px)";
+        top: calc(100% + 1px);
         left: 0;
         border: 1px solid var(--page-control-border-color);
     }
@@ -261,7 +280,7 @@
 
     .page-control__tab__menu {
         left: auto;
-        right: ~"calc(100% + 8px)";
+        right: calc(100% + 8px);
         z-index: 1001;
     }
 }

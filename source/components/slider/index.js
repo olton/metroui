@@ -1,2 +1,2 @@
-import "./slider.js"
-import "./slider.less"
+import "./slider.js";
+import "./slider.less";

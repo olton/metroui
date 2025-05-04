@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Action Button - Metro UI :: Popular HTML, CSS and JS library</title>
+</head>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Action Button</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="d-flex flex-center h-100">
+    <div data-role="action-button">
+        <button class="main-action">
+            <span class="icon"><span class="mif-git"></span></span>
+        </button>
+        <ul class="actions">
+            <li><a href="#"><span class="mif-git-branch"></span></a></li>
+            <li><a href="#"><span class="mif-git-clone"></span></a></li>
+            <li><a href="#"><span class="mif-git-commit"></span></a></li>
+            <li><a href="#"><span class="mif-git-compare"></span></a></li>
+        </ul>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+</script>
+</body>
+</html>

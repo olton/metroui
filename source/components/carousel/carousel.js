@@ -1,11 +1,9 @@
-/* global Metro, METRO_ANIMATION_DURATION */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var effects = [
-        "slide", "slide-v", "fade", "switch", "zoom", "swirl"
-    ];
-    var CarouselDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    const effects = ["slide", "slide-v", "fade", "switch", "zoom", "swirl"];
+    let CarouselDefaultConfig = {
         carouselDeferred: 0,
         autoStart: false,
         width: "100%",
@@ -13,15 +11,15 @@
         effect: effects[0],
         effectFunc: "linear",
         direction: "left", //left, right
-        duration: globalThis.METRO_ANIMATION_DURATION || 300,
+        duration: 300,
         period: 5000,
         stopOnMouse: true,
 
         controls: true,
         controlsOnMouse: false,
         controlsOutside: false,
-        controlPrev: '&larr;',
-        controlNext: '&rarr;',
+        controlPrev: "&larr;",
+        controlNext: "&rarr;",
 
         bullets: true,
         bulletsStyle: "square", // square, circle, rect, diamond
@@ -51,19 +49,19 @@
         onPrevClick: Metro.noop,
         onSlideShow: Metro.noop,
         onSlideHide: Metro.noop,
-        onCarouselCreate: Metro.noop
+        onCarouselCreate: Metro.noop,
     };
 
-    Metro.carouselSetup = function (options) {
+    Metro.carouselSetup = (options) => {
         CarouselDefaultConfig = $.extend({}, CarouselDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCarouselSetup"] !== undefined) {
-        Metro.carouselSetup(globalThis["metroCarouselSetup"]);
+    if (typeof globalThis.metroCarouselSetup !== "undefined") {
+        Metro.carouselSetup(globalThis.metroCarouselSetup);
     }
 
-    Metro.Component('carousel', {
-        init: function( options, elem ) {
+    Metro.Component("carousel", {
+        init: function (options, elem) {
             this._super(elem, options, CarouselDefaultConfig, {
                 height: 0,
                 width: 0,
@@ -73,25 +71,25 @@
                 dir: "left",
                 interval: false,
                 isAnimate: false,
-                id: Utils.elementId("carousel")
+                id: Metro.utils.elementId("carousel"),
             });
 
             return this;
         },
 
-        _create: function(){
-            var element = this.element, o = this.options;
-            var slides = element.find(".slide");
-            var slides_container = element.find(".slides");
+        _create: function () {
+            const element = this.element;
+            const o = this.options;
+            const slides = element.find(".slide");
+            let slides_container = element.find(".slides");
 
             this.dir = this.options.direction;
 
             element.addClass("carousel").addClass(o.clsCarousel);
 
             element.css({
-                maxWidth: o.width
+                maxWidth: o.width,
             });
-
 
             if (o.controlsOutside === true) {
                 element.addClass("controls-outside");
@@ -105,7 +103,6 @@
             slides.addClass(o.clsSlides);
 
             if (slides.length > 0) {
-
                 this._createSlides();
                 this._createControls();
                 this._createBullets();
@@ -122,85 +119,90 @@
                 } else {
                     this._fireEvent("slide-show", {
                         current: this.slides[this.currentIndex][0],
-                        prev: undefined
+                        prev: undefined,
                     });
                 }
-
             }
 
             this._fireEvent("carousel-create", {
-                element: element
+                element: element,
             });
         },
 
-        _start: function(){
-            var that = this, element = this.element, o = this.options;
-            var period = o.period;
-            var current = this.slides[this.currentIndex];
+        _start: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            let period = o.period;
+            const current = this.slides[this.currentIndex];
 
             if (current.data("period") !== undefined) {
                 period = current.data("period");
             }
 
             if (this.slides.length <= 1) {
-                return ;
+                return;
             }
 
-            if (this.interval === false) this.interval = setTimeout(function run() {
-                var t = o.direction === 'left' ? 'next' : 'prior';
-                that._slideTo(t, true);
-            }, period);
+            if (this.interval === false)
+                this.interval = setTimeout(function run() {
+                    const t = o.direction === "left" ? "next" : "prior";
+                    that._slideTo(t, true);
+                }, period);
 
             this._fireEvent("start", {
-                element: element
+                element: element,
             });
         },
 
-        _stop: function(){
+        _stop: function () {
             clearInterval(this.interval);
             this.interval = false;
         },
 
-        _resize: function(){
-            var element = this.element, o = this.options;
-            var width = element.outerWidth();
-            var height;
-            var medias = [];
+        _resize: function () {
+            const element = this.element;
+            const o = this.options;
+            const width = element.outerWidth();
+            let height;
+            let medias = [];
 
             if (["16/9", "21/9", "4/3"].indexOf(o.height) > -1) {
-                height = Utils.aspectRatioH(width, o.height);
+                height = Metro.utils.aspectRatioH(width, o.height);
             } else {
                 if (String(o.height).indexOf("@") > -1) {
-                    medias = o.height.substr(1).toArray("|");
-                    $.each(medias, function(){
-                        var media = this.toArray(",");
+                    medias = o.height.substring(1).toArray("|");
+                    $.each(medias, function () {
+                        const media = this.toArray(",");
                         if (globalThis.matchMedia(media[0]).matches) {
                             if (["16/9", "21/9", "4/3"].indexOf(media[1]) > -1) {
-                                height = Utils.aspectRatioH(width, media[1]);
+                                height = Metro.utils.aspectRatioH(width, media[1]);
                             } else {
-                                height = parseInt(media[1]);
+                                height = Number.parseInt(media[1]);
                             }
                         }
                     });
                 } else {
-                    height = parseInt(o.height);
+                    height = Number.parseInt(o.height);
                 }
             }
 
             element.css({
-                height: height
+                height: height,
             });
         },
 
-        _createSlides: function(){
-            var that = this, element = this.element, o = this.options;
-            var slides = element.find(".slide");
+        _createSlides: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const slides = element.find(".slide");
 
-            $.each(slides, function(i){
-                var slide = $(this);
+            $.each(slides, function (i) {
+                const slide = $(this);
                 if (slide.data("cover") !== undefined) {
                     slide.css({
-                        backgroundImage: "url("+slide.data('cover')+")"
+                        backgroundImage: `url(${slide.data("cover")})`,
                     });
                 }
 
@@ -232,16 +234,26 @@
             this.current = this.slides[this.currentIndex];
         },
 
-        _createControls: function(){
-            var element = this.element, o = this.options;
-            var next, prev;
+        _createControls: function () {
+            const element = this.element;
+            const o = this.options;
+            let next;
+            let prev;
 
             if (o.controls === false) {
-                return ;
+                return;
             }
 
-            next = $('<span>').addClass('carousel-switch-next').addClass(o.clsControls).addClass(o.clsControlNext).html(`<div></div>`);
-            prev = $('<span>').addClass('carousel-switch-prev').addClass(o.clsControls).addClass(o.clsControlPrev).html(`<div></div>`);
+            next = $("<span>")
+                .addClass("carousel-switch-next")
+                .addClass(o.clsControls)
+                .addClass(o.clsControlNext)
+                .html("<div></div>");
+            prev = $("<span>")
+                .addClass("carousel-switch-prev")
+                .addClass(o.clsControls)
+                .addClass(o.clsControlPrev)
+                .html("<div></div>");
 
             if (o.controlNext) {
                 next.children("div").html(o.controlNext);
@@ -255,27 +267,33 @@
             prev.appendTo(element);
         },
 
-        _createBullets: function(){
-            var element = this.element, o = this.options;
-            var bullets, i;
+        _createBullets: function () {
+            const element = this.element;
+            const o = this.options;
+            let bullets;
+            let i;
 
             if (o.bullets === false) {
-                return ;
+                return;
             }
 
-            bullets = $('<div>').addClass("carousel-bullets").addClass(o.bulletsSize+"-size").addClass("bullet-style-"+o.bulletsStyle).addClass(o.clsBullets);
-            if (o.bulletsPosition === 'default' || o.bulletsPosition === 'center') {
+            bullets = $("<div>")
+                .addClass("carousel-bullets")
+                .addClass(`${o.bulletsSize}-size`)
+                .addClass(`bullet-style-${o.bulletsStyle}`)
+                .addClass(o.clsBullets);
+            if (o.bulletsPosition === "default" || o.bulletsPosition === "center") {
                 bullets.addClass("flex-justify-center");
-            } else if (o.bulletsPosition === 'left') {
+            } else if (o.bulletsPosition === "left") {
                 bullets.addClass("flex-justify-start");
             } else {
                 bullets.addClass("flex-justify-end");
             }
 
             for (i = 0; i < this.slides.length; i++) {
-                var bullet = $('<span>').addClass("carousel-bullet").addClass(o.clsBullet).data("slide", i);
+                const bullet = $("<span>").addClass("carousel-bullet").addClass(o.clsBullet).data("slide", i);
                 if (i === 0) {
-                    bullet.addClass('bullet-on').addClass(o.clsBulletOn);
+                    bullet.addClass("bullet-on").addClass(o.clsBulletOn);
                 }
                 bullet.appendTo(bullets);
             }
@@ -283,108 +301,121 @@
             bullets.appendTo(element);
         },
 
-        _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+        _createEvents: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
-            element.on(Metro.events.click, ".carousel-bullet", function(){
-                var bullet = $(this);
+            element.on(Metro.events.click, ".carousel-bullet", function () {
+                const bullet = $(this);
                 if (that.isAnimate === false) {
-                    that._slideToSlide(bullet.data('slide'));
+                    that._slideToSlide(bullet.data("slide"));
                     that._fireEvent("bullet-click", {
-                        bullet: bullet
+                        bullet: bullet,
                     });
                 }
             });
 
-            element.on(Metro.events.click, ".carousel-switch-next", function(){
+            element.on(Metro.events.click, ".carousel-switch-next", function () {
                 if (that.isAnimate === false) {
                     that._slideTo("next", false);
                     that._fireEvent("next-click", {
-                        button: this
+                        button: this,
                     });
                 }
             });
 
-            element.on(Metro.events.click, ".carousel-switch-prev", function(){
+            element.on(Metro.events.click, ".carousel-switch-prev", function () {
                 if (that.isAnimate === false) {
                     that._slideTo("prev", false);
                     that._fireEvent("prev-click", {
-                        button: this
+                        button: this,
                     });
                 }
             });
 
             if (o.stopOnMouse === true && o.autoStart === true) {
-                element.on(Metro.events.enter, function () {
+                element.on(Metro.events.enter, () => {
                     that._stop();
-                    that._fireEvent("mouse-enter", {
-                        element: element
-                    }, false, true);
+                    that._fireEvent(
+                        "mouse-enter",
+                        {
+                            element: element,
+                        },
+                        false,
+                        true,
+                    );
                 });
-                element.on(Metro.events.leave, function () {
+                element.on(Metro.events.leave, () => {
                     that._start();
-                    that._fireEvent("mouse-leave", {
-                        element: element
-                    }, false, true);
+                    that._fireEvent(
+                        "mouse-leave",
+                        {
+                            element: element,
+                        },
+                        false,
+                        true,
+                    );
                 });
             }
 
             if (o.controlsOnMouse === true) {
-                element.on(Metro.events.enter, function () {
+                element.on(Metro.events.enter, () => {
                     element.find("[class*=carousel-switch]").fadeIn();
                     element.find(".carousel-bullets").fadeIn();
                 });
-                element.on(Metro.events.leave, function () {
+                element.on(Metro.events.leave, () => {
                     element.find("[class*=carousel-switch]").fadeOut();
                     element.find(".carousel-bullets").fadeOut();
                 });
             }
 
-            element.on(Metro.events.click, ".slide", function(){
-                var slide = $(this);
+            element.on(Metro.events.click, ".slide", function () {
+                const slide = $(this);
                 that._fireEvent("slide-click", {
-                    slide: slide
+                    slide: slide,
                 });
             });
 
-            $(globalThis).on(Metro.events.resize, function(){
-                that._resize();
-            }, {ns: this.id});
+            $(globalThis).on(
+                Metro.events.resize,
+                () => {
+                    that._resize();
+                },
+                { ns: this.id },
+            );
         },
 
-        _slideToSlide: function(index){
-            var element = this.element, o = this.options;
-            var current, next, to;
+        _slideToSlide: function (index) {
+            const element = this.element;
+            const o = this.options;
 
             if (this.slides[index] === undefined) {
-                return ;
+                return;
             }
 
             if (this.currentIndex === index) {
-                return ;
+                return;
             }
 
-            to = index > this.currentIndex ? "next" : "prev";
-            current = this.slides[this.currentIndex];
-            next = this.slides[index];
-
+            const to = index > this.currentIndex ? "next" : "prev";
+            const current = this.slides[this.currentIndex];
+            const next = this.slides[index];
             this.currentIndex = index;
 
             this._effect(current, next, o.effect, to);
 
             element.find(".carousel-bullet").removeClass("bullet-on").removeClass(o.clsBulletOn);
-            element.find(".carousel-bullet:nth-child("+(this.currentIndex+1)+")").addClass("bullet-on").addClass(o.clsBulletOn);
+            element
+                .find(`.carousel-bullet:nth-child(${this.currentIndex + 1})`)
+                .addClass("bullet-on")
+                .addClass(o.clsBulletOn);
         },
 
-        _slideTo: function(to, interval){
-            var element = this.element, o = this.options;
-            var current, next;
-
-            if (to === undefined) {
-                to = "next";
-            }
-
-            current = this.slides[this.currentIndex];
+        _slideTo: function (to = "next", interval = false) {
+            const element = this.element;
+            const o = this.options;
+            const current = this.slides[this.currentIndex];
 
             if (to === "next") {
                 this.currentIndex++;
@@ -398,33 +429,37 @@
                 }
             }
 
-            next = this.slides[this.currentIndex];
-
+            const next = this.slides[this.currentIndex];
             this._effect(current, next, o.effect, to, interval);
 
             element.find(".carousel-bullet").removeClass("bullet-on").removeClass(o.clsBulletOn);
-            element.find(".carousel-bullet:nth-child("+(this.currentIndex+1)+")").addClass("bullet-on").addClass(o.clsBulletOn);
+            element
+                .find(`.carousel-bullet:nth-child(${this.currentIndex + 1})`)
+                .addClass("bullet-on")
+                .addClass(o.clsBulletOn);
         },
 
-        _effect: function(current, next, effect, to, interval){
-            var that = this, o = this.options;
-            var duration = o.duration;
-            var func, effectFunc = o.effectFunc;
-            var period = o.period;
+        _effect: function (current, next, effect, to, interval) {
+            const that = this;
+            const o = this.options;
+            let duration = o.duration;
+            let func;
+            let effectFunc = o.effectFunc;
+            let period = o.period;
 
-            var run = function(f, c, n, o){
-                Metro.animations[f](c, n, o);
+            const run = (f, c, n, o) => {
+                Metro.Effects[f](c[0], n[0], o);
+            };
+
+            if (next.data("duration") !== undefined) {
+                duration = next.data("duration");
             }
 
-            if (next.data('duration') !== undefined) {
-                duration = next.data('duration');
+            if (next.data("effectFunc") !== undefined) {
+                effectFunc = next.data("effectFunc");
             }
 
-            if (next.data('effectFunc') !== undefined) {
-                effectFunc = next.data('effectFunc');
-            }
-
-            if (effect === 'switch') {
+            if (effect === "switch") {
                 duration = 0;
             }
 
@@ -432,13 +467,14 @@
             next.stop(true);
             this.isAnimate = true;
 
-            setTimeout(function(){that.isAnimate = false;}, duration + 100);
+            setTimeout(() => {
+                that.isAnimate = false;
+            }, duration + 100);
 
-            if (effect === 'slide') {
-                func = to === 'next' ? 'slideLeft': 'slideRight';
-            } else
-            if (effect === 'slide-v') {
-                func = to === 'next' ? 'slideUp': 'slideDown';
+            if (effect === "slide") {
+                func = to === "next" ? "slideLeft" : "slideRight";
+            } else if (effect === "slide-v") {
+                func = to === "next" ? "slideUp" : "slideDown";
             } else {
                 func = effect;
             }
@@ -447,47 +483,46 @@
                 func = "switch";
             }
 
-            run(func, current, next, {duration: duration, ease: effectFunc});
+            run(func, current, next, { duration: duration, ease: effectFunc });
 
             current.removeClass("active-slide");
             next.addClass("active-slide");
 
-            setTimeout(function(){
+            setTimeout(() => {
                 that._fireEvent("slide-show", {
                     current: next[0],
-                    prev: current[0]
-                })
+                    prev: current[0],
+                });
             }, duration);
 
-            setTimeout(function(){
+            setTimeout(() => {
                 that._fireEvent("slide-hide", {
                     current: current[0],
-                    next: next[0]
-                })
+                    next: next[0],
+                });
             }, duration);
 
             if (interval === true) {
-
-                if (next.data('period') !== undefined) {
-                    period = next.data('period');
+                if (next.data("period") !== undefined) {
+                    period = next.data("period");
                 }
 
                 this.interval = setTimeout(function run() {
-                    var t = o.direction === 'left' ? 'next' : 'prior';
+                    const t = o.direction === "left" ? "next" : "prior";
                     that._slideTo(t, true);
                 }, period);
             }
         },
 
-        toSlide: function(index){
+        toSlide: function (index) {
             this._slideToSlide(index);
         },
 
-        next: function(){
+        next: function () {
             this._slideTo("next");
         },
 
-        prev: function(){
+        prev: function () {
             this._slideTo("prev");
         },
 
@@ -496,34 +531,35 @@
             this._fireEvent("stop");
         },
 
-        play: function(){
+        play: function () {
             this._start();
             this._fireEvent("play");
         },
 
-        setEffect: function(effect){
-            var element = this.element, o = this.options;
-            var slides = element.find(".slide");
+        setEffect: function (effect) {
+            const element = this.element;
+            const o = this.options;
+            const slides = element.find(".slide");
 
-            if (!effects.includes(effect)) return ;
+            if (!effects.includes(effect)) return;
 
             o.effect = effect;
 
             slides.removeStyleProperty("transform").css({
                 top: 0,
-                left: 0
+                left: 0,
             });
         },
 
-        /* eslint-disable-next-line */
-        changeAttribute: function(attributeName, newValue){
-            if (attributeName === 'data-effect') {
+        changeAttribute: function (attributeName, newValue) {
+            if (attributeName === "data-effect") {
                 this.setEffect(newValue);
             }
         },
 
-        destroy: function(){
-            var element = this.element, o = this.options;
+        destroy: function () {
+            const element = this.element;
+            const o = this.options;
 
             element.off(Metro.events.click, ".carousel-bullet");
             element.off(Metro.events.click, ".carousel-switch-next");
@@ -540,9 +576,9 @@
             }
 
             element.off(Metro.events.click, ".slide");
-            $(globalThis).off(Metro.events.resize, {ns: this.id});
+            $(globalThis).off(Metro.events.resize, { ns: this.id });
 
             return element;
-        }
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

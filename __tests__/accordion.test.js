@@ -1,5 +1,5 @@
 
-import {beforeAll, afterAll, describe, it, expect, delay, getFileUrl, B} from "@olton/easytest";
+import {beforeAll, afterAll, describe, it, expect, getFileUrl, B} from "@olton/latte";
 
 beforeAll(async () => {
     await B.create({
@@ -15,6 +15,7 @@ afterAll(async () => {
 
 describe("accordion.html tests", () => {
     it("accordion.html", async () => {
+        debugger
         await B.visit(`${getFileUrl(`./__html__/accordion.html`)}`)
         expect(B.error).toBeNull(B.error)
     })

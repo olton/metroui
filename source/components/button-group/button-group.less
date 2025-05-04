@@ -7,13 +7,28 @@
 }
 
 .dark-side {
-    --button-group-active-background: #1a1f23;
+    --button-group-active-background: #4b4b4b;
     --button-group-active-color: #fff;
 }
 
 .button-group {
+    display: inline-flex;
+    position: relative;
+
     .active {
         background-color: var(--button-group-active-background);
         color: var(--button-group-active-color);
     }
+
+    & > * {
+        margin-right: 2px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+.button-group + .button-group {
+    margin-left: .5rem;
 }

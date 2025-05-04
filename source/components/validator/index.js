@@ -1,2 +1,2 @@
-import "../../farbe"
-import "./validator.js"
+import "../../farbe/index.js";
+import "./validator.js";

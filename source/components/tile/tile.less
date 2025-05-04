@@ -1,17 +1,36 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --tile-background: #ededed;
+    --tile-color: #191919;
+    --tile-border-color: var(--border-color);
+    --tile-border-radius: 6px;
+    --tile-badge-background: rgba(red(@dark), green(@dark), blue(@dark), .1);
+    --tile-badge-color: #191919;
+    --tile-grid-gap: 10px;
+}
+
+.dark-side {
+    --tile-background: #26282e;
+    --tile-color: #ffffff;
+    --tile-border-color: var(--border-color);
+    --tile-badge-background: rgba(red(@dark), green(@dark), blue(@dark), .1);
+    --tile-badge-color: #ffffff;
+}
+
 .tile-small,
 .tile-medium,
 .tile-wide,
 .tile-large,
 .tile-app {
     display: block;
-    background-color: @cyan;
-    color: @white;
+    background: var(--tile-background);
+    color: var(--tile-color);
     width: extract(@tileMedium, 1);
     height: extract(@tileMedium, 2);
-    box-shadow: inset 0 0 1px #FFFFCC;
+    box-shadow: inset 0 0 1px var(--tile-border-color);
+    border-radius: var(--tile-border-radius);
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -95,7 +114,7 @@
     }
 
     &:hover {
-        outline: @tileOutlineColor solid 4px;
+        //outline: @tileOutlineColor solid 4px;
     }
 }
 
@@ -218,7 +237,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, 70px);
     grid-template-rows: repeat(auto-fit, 70px);
-    grid-gap: 10px;
+    grid-gap: var(--tile-grid-gap);
 
     .tile-small {
         grid-column: span 1;
@@ -293,7 +312,7 @@
 
         .create-tiles-grid-size(@i; @k + 1);
     }
-    .create-tiles-grid-size(10);
+    .create-tiles-grid-size(12);
 }
 
 .tiles-grid {

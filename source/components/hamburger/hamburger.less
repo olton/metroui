@@ -1,6 +1,16 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --hamburger-background: transparent;
+    --hamburger-color: #191919;
+}
+
+.dark-side {
+    --hamburger-background: transparent;
+    --hamburger-color: #ffffff;
+}
+
 .hamburger, .nav-button {
     display: inline-block;
     font-weight: 400;
@@ -13,8 +23,8 @@
     font-size: 14px;
     line-height: 36px;
     transition: @transition-short;
-    background-color: transparent;
-    color: @white;
+    background: var(--hamburger-background);
+    color: var(--hamburger-color);
     cursor: pointer;
     outline: none;
     width: 36px;
@@ -22,17 +32,11 @@
 
     .line {
         width: 30px;
-        background-color: @white;
+        background: var(--hamburger-color);
         display: block;
         transition: all 0.3s ease-in-out;
         height: 3px;
         margin: 4px auto;
-    }
-
-    &.dark {
-        .line {
-            background-color: @dark;
-        }
     }
 }
 

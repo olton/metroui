@@ -1,1 +1,4 @@
-import "./list.js"
+/** @format */
+
+import "./list.less";
+import "./list.js";

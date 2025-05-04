@@ -1,1 +1,1 @@
-import "./viewport-check.js"
+import "./viewport-check.js";

@@ -170,12 +170,12 @@
     .translateY(-50%);
 }
 
-each(@mediaBreakpointListMobile, {
-    @media screen and (min-width: @@value) {
-        .put-left-@{value} {left: 0!important; right: auto!important;}
-        .put-right-@{value} {left: auto!important; right: 0!important;}
+each(@media-rules, {
+    @container (min-width: @value) {
+        .put-left-@{key} {left: 0!important; right: auto!important;}
+        .put-right-@{key} {left: auto!important; right: 0!important;}
 
-        .put-n-@{value} {
+        .put-n-@{key} {
             right: auto!important;
             bottom: auto!important;
             left: 50%!important;
@@ -184,7 +184,7 @@ each(@mediaBreakpointListMobile, {
             .translateY(-100%);
         }
 
-        .put-nw-@{value} {
+        .put-nw-@{key} {
             right: auto!important;
             bottom: auto!important;
             left: 0!important;
@@ -192,7 +192,7 @@ each(@mediaBreakpointListMobile, {
             .translateY(-100%);
         }
 
-        .put-ne-@{value} {
+        .put-ne-@{key} {
             left: auto!important;
             bottom: auto!important;
             top: 0!important;
@@ -200,7 +200,7 @@ each(@mediaBreakpointListMobile, {
             .translateY(-100%);
         }
 
-        .put-wn-@{value} {
+        .put-wn-@{key} {
             bottom: auto!important;
             right: auto!important;
             top: 0!important;
@@ -208,7 +208,7 @@ each(@mediaBreakpointListMobile, {
             .translateX(-100%);
         }
 
-        .put-w-@{value} {
+        .put-w-@{key} {
             bottom: auto!important;
             right: auto!important;
             top: 50%!important;
@@ -217,7 +217,7 @@ each(@mediaBreakpointListMobile, {
             .translateY(-50%);
         }
 
-        .put-ws-@{value} {
+        .put-ws-@{key} {
             top: auto!important;
             right: auto!important;
             bottom: 0!important;
@@ -225,7 +225,7 @@ each(@mediaBreakpointListMobile, {
             .translateX(-100%);
         }
 
-        .put-en-@{value} {
+        .put-en-@{key} {
             bottom: auto!important;
             left: auto!important;
             top: 0!important;
@@ -233,7 +233,7 @@ each(@mediaBreakpointListMobile, {
             .translateX(100%);
         }
 
-        .put-e-@{value} {
+        .put-e-@{key} {
             bottom: auto!important;
             left: auto!important;
             top: 50%!important;
@@ -242,7 +242,7 @@ each(@mediaBreakpointListMobile, {
             .translateY(-50%);
         }
 
-        .put-es-@{value} {
+        .put-es-@{key} {
             top: auto!important;
             left: auto!important;
             bottom: 0!important;
@@ -250,14 +250,14 @@ each(@mediaBreakpointListMobile, {
             .translateX(100%);
         }
 
-        .put-s-@{value} {
+        .put-s-@{key} {
             bottom: auto!important;
             right: auto!important;
             top: 100%!important;
             left: 0!important;
         }
 
-        .put-sw-@{value} {
+        .put-sw-@{key} {
             bottom: auto!important;
             right: auto!important;
             top: 100%!important;
@@ -265,7 +265,7 @@ each(@mediaBreakpointListMobile, {
             .translateX(-50%);
         }
 
-        .put-se-@{value} {
+        .put-se-@{key} {
             bottom: auto!important;
             left: auto!important;
             top: 100%!important;

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Context Menu - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak h-100-vh">
+<nav id="appbar" data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Context Menu</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="h-100 d-flex flex-center">
+    Right click on body or app bar to see context menu.
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+    Metro.contextMenu([
+        {
+            text: "Home",
+            href: "index.html",
+            icon: "<span class='mif-home'>"
+        },
+        {
+            text: "About",
+            href: "about.html",
+            icon: "<span class='mif-person'>"
+        },
+        {
+            type: "divider",
+        },
+        {
+            text: "Sub-Menu",
+            items: [
+                {
+                    text: "Sub-Item 1",
+                    onclick: "alert('Sub-Item 1')"
+                },
+                {
+                    text: "Sub-Item 2",
+                    onclick: "alert('Sub-Item 2')"
+                }
+            ]
+        },
+        {
+            text: "Click",
+            onclick: "alert('Click!')",
+        },
+    ]);
+    Metro.contextMenu([
+        {
+            text: "AppBar",
+            href: "index.html",
+            icon: "<span class='mif-home'>"
+        },
+    ], $("#appbar")[0]);
+</script>
+</body>
+</html>

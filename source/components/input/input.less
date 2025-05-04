@@ -6,6 +6,8 @@
     --input-autocomplete-color: #191919;
     --input-autocomplete-selected-color: #468cff;
     --input-autocomplete-selected-background: transparent;
+    --input-border-radius: 4px;
+    --input-font-size: 14px;
 }
 
 .dark-side {
@@ -21,6 +23,7 @@
     justify-content: space-between;
     width: 100%;
     padding: 0;
+    border-radius: var(--input-border-radius);
 
     &:hover {
         input {
@@ -40,38 +43,44 @@
         flex-basis: 0;
         height: 34px;
         padding: 0 .75rem;
-        background-color: transparent;
+        background: transparent;
         color: inherit;
+        font-size: var(--input-font-size);
 
         &:focus {
             box-shadow: none;
         }
     }
 
+    input[placeholder] {font-size: var(--input-font-size);}
+
     .button-group {
         display: flex;
         flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+        padding: 0 2px;
     }
 
     .button {
         background-color: transparent;
         border-color: transparent;
         color: var(--input-color);
-        height: 34px;
-        min-width: 34px;
+        height: 30px;
+        width: 30px;
+        border: 1px solid var(--input-border-color);
+        font-size: var(--input-font-size);
+        padding: 0;
+        
         &:focus, &:active {
             box-shadow: none!important;
-        }
-        &:hover {
-            //background-color: @light;
-            text-shadow: rgba(0,0,0,.25) 0.1em 0.1em 0.2em;
         }
     }
 
     .input-clear-button, .input-reveal-button, .input-search-button {
-        font-family: "Segoe UI Symbol", serif;
+        font-family: "Segoe UI Symbol", sans-serif;
         background-color: transparent;
-        font-size: 18px;
+        font-size: var(--input-font-size);
         &:hover {
             background-color: transparent;
         }
@@ -85,14 +94,38 @@
     }
 
     .prepend {order: 1}
-    .append {order: 4}
-    input {order: 2;}
-    .button-group {order: 3;}
+    .prepend-options {order: 2}
+    input {order: 3;}
+    .append-options {order: 4}
+    .button-group {order: 5;}
+    .append {order: 6}
 
     .prepend, .append {
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: var(--input-font-size);
+        padding: 0 var(--input-font-size);
+    }
+    
+    .prepend {
+        border-top-left-radius: var(--input-border-radius);
+        border-bottom-left-radius: var(--input-border-radius);
+    }
+    
+    .append {
+        border-top-right-radius: var(--input-border-radius);
+        border-bottom-right-radius: var(--input-border-radius);
+    }
+}
+
+.input, input {
+    &.pill-input {
+        --input-border-radius: 1rem;
+        
+        .button {
+            border-radius: 50%;
+        }
     }
 }
 
@@ -138,124 +171,6 @@
 }
 
 .input {
-    &.input-large {
-        height: @input-lx;
-
-        input {
-            height: @input-lx - 2;
-            font-size: 1.3rem;
-            padding: 0 10px;
-            line-height: @input-lx - 2;
-        }
-
-        .button {
-            height: @input-lx - 2;
-            min-width: @input-lx - 2;
-
-            font-size: 1.3rem;
-
-            [class*=mif-] {
-                font-size: 1.3rem;
-            }
-
-            .default-icon-cross, .default-icon-eye {
-                width: 21px;
-                height: 21px;
-            }
-
-            .input-clear-button, .input-reveal-button {
-                width: @input-lx - 2;
-                padding: 0;
-            }
-        }
-
-        input[placeholder]          {font-size: 1.1rem;}
-        input::-moz-placeholder     {font-size: 1.1rem;}
-        input:-moz-placeholder      {font-size: 1.1rem;}
-        input:-ms-input-placeholder {font-size: 1.1rem;}
-
-        .append, .prepend {
-            height: @input-lx - 2;
-            line-height: @input-lx - 2;
-            padding: 0 .5rem;
-            font-size: 1.3rem;
-        }
-    }
-}
-
-input {
-    &.input-large {
-        height:  @input-lx - 2;
-        font-size: 1.3rem;
-        padding: 0 10px;
-    }
-}
-
-input.input-large[placeholder]          {font-size: 1.1rem;}
-input.input-large::-moz-placeholder     {font-size: 1.1rem;}
-input.input-large:-moz-placeholder      {font-size: 1.1rem;}
-input.input-large:-ms-input-placeholder {font-size: 1.1rem;}
-
-.input {
-    &.input-small {
-        height: @input-sx;
-
-        input {
-            height: @input-sx - 2;
-            font-size: .9rem;
-            padding: 0 4px;
-            line-height: @input-sx - 2;
-        }
-
-        .button {
-            height: @input-sx - 2;
-            min-width: @input-sx - 2;
-            font-size: .9rem;
-            padding: 0;
-
-            [class*=mif-] {
-                font-size: .9rem;
-            }
-
-            .default-icon-cross, .default-icon-eye {
-                width: 14px;
-                height: 14px;
-            }
-        }
-
-        .input-clear-button, .input-reveal-button {
-            width: @input-sx - 2;
-            padding: 0;
-        }
-
-        input[placeholder]          {font-size: .8rem;}
-        input::-moz-placeholder     {font-size: .8rem;}
-        input:-moz-placeholder      {font-size: .8rem;}
-        input:-ms-input-placeholder {font-size: .8rem;}
-
-        .append, .prepend {
-            height: @input-sx - 2;
-            line-height: @input-sx - 2;
-            padding: 0 .5rem;
-            font-size: .9rem;
-        }
-    }
-}
-
-input {
-    &.input-small {
-        height:  @input-sx - 2;
-        font-size: .9rem;
-        padding: 0 4px;
-    }
-}
-
-input.input-small[placeholder]          {font-size: .8rem;}
-input.input-small::-moz-placeholder     {font-size: .8rem;}
-input.input-small:-moz-placeholder      {font-size: .8rem;}
-input.input-small:-ms-input-placeholder {font-size: .8rem;}
-
-.input {
     &[dir=rtl], &.rtl {
         input {
             order: 3;
@@ -294,5 +209,33 @@ input.input-small:-ms-input-placeholder {font-size: .8rem;}
     }
     &:hover .badge {
         display: none;
+    }
+}
+
+.label-for-input {
+    font-size: 12px;
+    text-transform: uppercase;
+    
+    &.rtl {
+        text-align: right;
+    }
+}
+
+.input {
+    .prepend-options, .append-options {
+        .options-list {
+            border: none;
+            border-right: 1px solid var(--input-border-color);
+            height: 100%;
+            border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
+        }
+    }
+    
+    .append-options {
+        .options-list {
+            border-right: none;
+            border-left: 1px solid var(--input-border-color);
+            border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
+        }
     }
 }

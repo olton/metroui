@@ -6,8 +6,12 @@
     <link href="../lib/metro.css" rel="stylesheet">
     <link href="../lib/icons.css" rel="stylesheet">
 
-    <title>Test dialog - Metro 4 :: Popular HTML, CSS and JS library</title>
-
+    <title>Test dialog - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        body {
+            padding-top: 50px;
+        }
+    </style>
 </head>
 <body class="cloak">
 <nav data-role="appbar">
@@ -19,22 +23,55 @@
 
 <div class="container">
     <h1>Dialog test page</h1>
-    <button class="button" onclick="OpenDialog()">Load dialog</button>
+    <button class="button" onclick="OpenDialog()">Open dialog</button>
+    <button class="button" onclick="LoadDialog()">Load dialog</button>
     <div  data-role="dialog"
             data-overlay="true"
-            data-default-action="true"
+            data-default-actions="false"
             data-close-button="true"
             data-overlay-click-close="true"
-            id="IdDialog"
-            class="dialog"></div>
+            data-custom-buttons="customButtons"
+            id="dialog"></div>
 </div>
 
 <script src="../lib/metro.js"></script>
 <script>
+    var customButtons = [
+        {
+            text: "Yes, of course!",
+            cls: "js-dialog-close alert",
+            onclick: async function(){
+                const res = await fetch(postRef, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                window.location.reload()
+            }
+        },
+        {
+            text: "No, cancel",
+            cls: "js-dialog-close",
+            onclick: function(){
+            }
+        }
+    ]
+    
     function OpenDialog() {
+        Metro.dialog.create({
+            title: "Dialog title",
+            content: "Do you want to continue?",
+            closeButton: true,
+            defaultActions: false,
+            customButtons,
+        })
+    }
+    
+    function LoadDialog() {
         const content = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. A delectus dignissimos dolore error, est excepturi facilis fuga nesciunt nulla quibusdam quisquam reprehenderit, voluptate. Aliquid ea, inventore iste labore necessitatibus nihil?`
-        var dialog = Metro.getPlugin('#IdDialog', 'dialog');
-        dialog.setTitle('<span class="default-icon-calendar icon"></span>My Dialog Title');
+        var dialog = Metro.getPlugin('#dialog', 'dialog');
+        dialog.setTitle('<span class="mif-calendar icon"></span>My Dialog Title');
         dialog.setContent(content);
         dialog.open();
     }

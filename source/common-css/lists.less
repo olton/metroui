@@ -2,7 +2,7 @@
 @import (once) "../include/mixins";
 
 :root {
-    --step-list-number-color: #75757500;
+    --step-list-number-color: #757575;
 }
 
 .dark-side {
@@ -18,19 +18,19 @@
     & > li {
         border-left: 1px var(--border-color) solid;
         position: relative;
-        padding: 0 .625rem;
-        margin: .625rem;
+        padding: 0 1rem;
+        margin: 1rem;
         vertical-align: top;
     }
 
     & > li::before {
         position: absolute;
-        content:counter(li);
-        counter-increment:li;
+        content: counter(li);
+        counter-increment: li;
         font-size: 2rem;
         color: var(--step-list-number-color);
-        left: 0;
-        top: .3125rem;
+        left: -.5rem;
+        top: 0;
         margin-left: -2em;
         width: 1.8em;
         text-align: right;
@@ -38,7 +38,6 @@
 }
 
 .custom-list-marker {
-
     list-style: none inside;
 
     li {
@@ -105,7 +104,7 @@
 
         .second-label {
             font-size: .9em;
-            color: @darkGray;
+            color: @dark-gray;
             line-height: 1;
         }
 
@@ -125,7 +124,6 @@
 }
 
 .feed-list {
-
     .title {
         padding: 0 16px;
         font-size: 18px;
@@ -137,7 +135,7 @@
 
     .item + .title,
     li + .title {
-        margin-top: 32px;
+        margin-top: 1rem;
     }
 
     .title + .item, .title + li, li + .title {
@@ -155,8 +153,10 @@
             left: 16px;
             width: 96px;
             height: 72px;
-            border-radius: 0;
+            border-radius: 4px;
+            overflow: hidden;
             margin-top: 0;
+            object-fit: cover;
         }
 
         .second-label {

@@ -2,7 +2,7 @@
 @import (once) "../../include/mixins";
 
 :root {
-    --select-focus-color: rgba(red(@lightGray), green(@lightGray), blue(@lightGray), 0.45);
+    --select-focus-color: rgba(red(@light-gray), green(@light-gray), blue(@light-gray), 0.45);
     --select-disabled-color: #ccc;
     --select-options-background: #ffffff;
     --select-options-color: #191919;
@@ -10,8 +10,8 @@
     --select-option-color: inherit;
     --select-option-background-hover: rgba(29,29,29,0.1);
     --select-option-color-hover: inherit;
-    --select-option-background-selected: #468cff;
-    --select-option-color-selected: #ffffff;
+    --select-option-background-selected: #e8e8e8;
+    --select-option-color-selected: #191919;
     --select-button-background: transparent;
     --select-button-color: #191919;
     --select-button-background-hover: transparent;
@@ -25,10 +25,11 @@
     --select-tag-color: #191919;
     --select-tag-button-background: #f6f7f8;
     --select-tag-button-color: #191919;
+    --select-border-radius: 4px;
 }
 
 .dark-side {
-    --select-focus-color: rgba(red(@lightGray), green(@lightGray), blue(@lightGray), 0.2);
+    --select-focus-color: rgba(red(@light-gray), green(@light-gray), blue(@light-gray), 0.2);
     --select-disabled-color: #ccc;
     --select-options-background: #2b2d30;
     --select-options-color: #dbdfe7;
@@ -63,6 +64,7 @@
     position: relative;
     margin: 0;
     user-select: none;
+    border-radius: var(--select-border-radius);
 
     &:hover, &.focused {
         .button {
@@ -73,21 +75,36 @@
 }
 
 .select {
-    .dropdown-toggle {
-        width: 36px;
-        height: 36px;
-        display: block;
-        position: relative;
-
-        &::before {
-            margin-left: -1.1rem;
-            border-color: var(--select-dropdown-toggle-color);
+    .dropdown-caret {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 16px;
+        height: 16px;
+        transform: rotate(90deg);
+        transition: transform 0.2s ease-in-out;
+    }
+    
+    &.active-toggle {
+        .dropdown-caret {
+            transform: rotate(270deg);
         }
     }
+    
+    //.dropdown-toggle {
+    //    width: 34px;
+    //    height: 34px;
+    //    display: block;
+    //    position: relative;
+    //
+    //    &::before {
+    //        margin-left: -1.1rem;
+    //        border-color: var(--select-dropdown-toggle-color);
+    //    }
+    //}
 
     .option-list {
         margin: 0;
-        padding: 0;
         list-style: none inside;
         overflow-y: auto;
         position: relative;
@@ -95,30 +112,51 @@
         background-color: var(--select-options-background);
         color: var(--select-options-color);
         font-size: 0.875rem;
-
-        li, a {
+        border-radius: var(--select-border-radius);
+        padding: 4px 0;
+        
+        li {
             display: block;
+            margin: 0 4px;
+            border-radius: var(--select-border-radius);
+            overflow: hidden;
         }
-
+        
         a {
             min-width: auto;
             height: 32px;
             line-height: 32px;
-            overflow: hidden;
             text-overflow: ellipsis;
-            padding: 0 2rem 0 2.5rem;
+            padding: 0 10px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            white-space: nowrap;
         }
 
         .icon {
-            font-size: 20px;
-            width: 20px;
-            height: 20px;
-            left: 8px;
             position: absolute;
-            vertical-align: middle;
-            text-align: center;
+            left: 8px;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+            display: flex;
+            object-fit: cover;
+            
+            * {
+                object-fit: cover;
+                font-size: 16px;
+                width: 100%;
+                height: 100%;
+            }
         }
 
+        a:has(.icon) {
+            padding-left: 32px;
+        }
+        
         li:hover {
             background-color: var(--select-option-background-hover);
             color: var(--select-option-color-hover);
@@ -144,8 +182,13 @@
     .button-group {
         display: flex;
         flex-wrap: nowrap;
+        margin-right: 1rem;
     }
 
+    select[multiple] ~ .button-group {
+        margin-right: 0;        
+    }
+    
     .button {
         background-color: var(--select-button-background);
         color: var(--select-button-color);
@@ -159,6 +202,7 @@
     }
 
     .input-clear-button {
+        font-family: "Segoe UI Symbol", serif;
         background-color: transparent;
         &:hover {
             background-color: transparent;
@@ -170,13 +214,24 @@
         flex-flow: row wrap;
         align-items: center;
         cursor: pointer;
-        width: ~"calc(100% - .1rem)";
+        width: calc(100% - .1rem);
         height: 34px;
         padding-left: 10px;
+        white-space: nowrap;
         .text-ellipsis();
 
         .icon {
-            margin: 0 4px
+            margin: 0 4px;
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+            display: flex;
+            object-fit: cover;
+            
+            * {
+                object-fit: cover;
+                font-size: 16px;
+            }
         }
 
         &:focus {
@@ -204,7 +259,7 @@
         position: absolute;
         top: 100%;
         left: 0;
-        width: ~"calc(100% + 2px)";
+        width: calc(100% + 2px);
         height: auto;
         border: 1px solid var(--border-color);
         padding: 2px;
@@ -212,11 +267,11 @@
         z-index: @zindex-dropdown;
         background-color: var(--select-options-background);
         color: var(--select-options-color);
-        box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.3);
+        box-shadow: 0 10px 15px -3px var(--shadow-color-medium), 0 4px 6px -4px var(--shadow-color-medium);
 
         .input {
             margin: 4px 2px 6px;
-            width: ~"calc(100% - 4px)";
+            width: calc(100% - 4px);
         }
     }
 
@@ -230,24 +285,24 @@
         box-shadow: 0 0 0 3px var(--select-focus-color);
     }
 
-    &.dropdown-toggle {
-        &::before {
-            margin-left: -1.1rem;
-            left: 100%;
-            top: 14px;
-            margin-top: 0;
-            width: .4rem;
-            height: .4rem;
-        }
-    }
+    //&.dropdown-toggle {
+    //    &::before {
+    //        margin-left: -1.1rem;
+    //        left: 100%;
+    //        top: 14px;
+    //        margin-top: 0;
+    //        width: .4rem;
+    //        height: .4rem;
+    //    }
+    //}
 
-    &.disabled {
-        &.dropdown-toggle {
-            &:before {
-                border-color: var(--select-disabled-color);
-            }
-        }
-    }
+    //&.disabled {
+    //    &.dropdown-toggle {
+    //        &:before {
+    //            border-color: var(--select-disabled-color);
+    //        }
+    //    }
+    //}
 
     .group-title {
         background-color: var(--select-group-title-background);
@@ -276,11 +331,11 @@
         height: auto;
         min-height: 36px;
 
-        .dropdown-toggle {
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
+        //.dropdown-toggle {
+        //    position: absolute;
+        //    top: 0;
+        //    right: 0;
+        //}
 
         & > .button-group {
             position: absolute;
@@ -302,102 +357,10 @@
     .append {order: 3}
     .select-input {order: 2;}
     .button-group {order: 3;}
-    .dropdown-toggle {order: 4;}
-}
-
-.select {
-    &.input-large {
-        height: @input-lx;
-
-        .dropdown-toggle, & > .button-group .button {
-            height: @input-lx;
-            width: @input-lx;
-        }
-
-        .dropdown-toggle {
-            &::before {
-                margin-left: -1.5rem;
-            }
-        }
-
-        .select-input, .prepend, .append {
-            height: @input-lx - 2;
-            font-size: 1.3rem;
-            padding: 2px 10px;
-            line-height: @input-lx - 2;
-        }
-
-        &.multiple {
-            min-height: @input-lx;
-            height: auto;
-            .select-input {
-                height: auto;
-                min-height: @input-lx - 2;
-            }
-            & > .button-group {
-                right: @input-lx;
-            }
-            & > .button-group:not(.d-none) ~ .select-input {
-                margin-right: @input-lx * 2;
-            }
-        }
-
-        &.dropdown-toggle::before {
-            top: 18px;
-            width: .6rem;
-            height: .6rem;
-            margin-left: -1.3rem;
-        }
-    }
-
-    &.input-small {
-        height: @input-sx;
-
-        .dropdown-toggle, & > .button-group .button {
-            height: @input-sx;
-            width: @input-sx;
-        }
-
-        .dropdown-toggle {
-            &::before {
-                margin-left: -1rem;
-            }
-        }
-
-        .select-input, .prepend, .append {
-            height: @input-sx - 2;
-            font-size: .9rem;
-            padding: 0 4px;
-            line-height: @input-sx - 2;
-        }
-
-        &.multiple {
-            min-height: @input-sx;
-            height: auto;
-            .select-input {
-                height: auto;
-                min-height: @input-sx - 2;
-            }
-            & > .button-group {
-                right: @input-sx;
-            }
-            & > .button-group:not(.d-none) ~ .select-input {
-                margin-right: @input-sx * 2;
-            }
-        }
-
-        &.dropdown-toggle::before {
-            top: 10px;
-            width: .325rem;
-            height: .325rem;
-            margin-left: -.9rem;
-        }
-
-        .button-group {
-            .button {
-                padding: 0;
-            }
-        }
+    
+    .prepend {
+        border-top-left-radius: var(--select-border-radius);
+        border-bottom-left-radius: var(--select-border-radius);
     }
 }
 
@@ -409,13 +372,9 @@
         .append {order: 1;}
         .button-group {order: 2}
 
-        &.dropdown-toggle {
-            padding-right: 0!important;
-            padding-left: .9rem;
-            &::before {
-                margin-left: .9rem;
-                left: 0;
-            }
+        .dropdown-caret {
+            right: auto;
+            left: 8px;
         }
     }
 }
@@ -435,5 +394,24 @@
             background-color: var(--select-tag-button-background);
             color: var(--select-tag-button-color);
         }
+    }
+}
+
+.select {
+    &.no-icons {
+        .option-list {
+            a {
+                padding: 0 1rem;
+            }
+            .icon {
+                display: none;
+            }
+        }
+    }
+}
+
+.select {
+    .unselect-option {
+        margin-left: 6px;
     }
 }

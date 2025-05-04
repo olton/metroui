@@ -1,3 +1,2 @@
-import "../input-common"
-import "./radio.js"
-import "./radio.less"
+import "./radio.less";
+import "./radio.js";

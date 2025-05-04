@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Table - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Table - Metro UI :: Popular HTML, CSS and JS library</title>
 
 </head>
 <body class="m4-cloak" style="padding-top: 50px;">
@@ -18,11 +18,12 @@
 <div class="container">
     <h1>Table test page</h1>
 
-    <div class="example">
-        <table id="table1" class="table striped row-hover border"
+    <div class="example" lang="ua">
+        <table class="table striped row-hover border responsive-md fixed-header"
                data-role="table"
-               data-rows="10"
-               data-rows-steps="5, 10, 20"
+               data-caption="Table caption"
+               data-rows="50"
+               data-rows-steps="5, 10, 50, 100"
                data-show-activity="false"
                data-source="data/table.json"
                data-show-skip="true"
@@ -33,12 +34,10 @@
                data-check="true"
                data-check-style="2"
                data-use-current-slice="true"
-               data-locale="uk-UA"
                data-show-inspector-button="true"
                data-horizontal-scroll="true"
                data-horizontal-scroll-stop="xxl"
                data-cell-wrapper="true"
-               data-on-draw-cell="drawCell"
         >
             <thead id="head1"></thead>
             <tbody id="body1"></tbody>
@@ -48,7 +47,7 @@
                 <div id="pagination"></div>
             </div>
             <div class="cell-md-4">
-                <div id="skip" class="d-flex"></div>
+                <div id="skip"></div>
             </div>
         </div>
 

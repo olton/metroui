@@ -5,21 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Wizard - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Wizard - Metro UI :: Popular HTML, CSS and JS library</title>
 </head>
-<body class="m4-cloak">
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Component Test</div>
+    </div>
+</nav>
+<div class="container-fluid">
     <div class="container">
         <h1>Wizard test page</h1>
         <div class="example">
-            <div data-role="wizard" class="wizard-wide-sm">
+            <div data-role="wizard" class="wizard-wide-sm" style="--wizard-next-h: 100;">
                 <section><div class="page-content">Page 1</div></section>
                 <section><div class="page-content">Page 2</div></section>
                 <section><div class="page-content">Page 3</div></section>
                 <section><div class="page-content">Page 4</div></section>
                 <section><div class="page-content">Page 5</div></section>
+                <section><div class="page-content">Page 6</div></section>
+                <section><div class="page-content">Page 7</div></section>
+                <section><div class="page-content">Page 8</div></section>
+                <section><div class="page-content">Page 9</div></section>
+                <section><div class="page-content">Page 10</div></section>
             </div>
         </div>
     </div>
+</div>
 
 <script src="../lib/metro.js"></script>
 <script>

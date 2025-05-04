@@ -2,7 +2,7 @@
 @import (once) "../../include/mixins";
 
 :root {
-
+    --spinner-border-radius: 4px;
 }
 
 .dark-side {
@@ -20,6 +20,7 @@
     position: relative;
     height: @inputHeight;
     line-height: @inputHeight;
+    border-radius: var(--spinner-border-radius);
 
     input {
         border: none!important;
@@ -53,12 +54,12 @@
     input {order: 2}
 
     &.buttons-left {
-        .spinner-button-plus {order: 2}
+        .spinner-button-plus {order: 2; margin-left: 2px;}
         .spinner-button-minus {order: 1}
         input {order: 3; text-align: right;}
     }
     &.buttons-right {
-        .spinner-button-plus {order: 3}
+        .spinner-button-plus {order: 3; margin-left: 2px;}
         .spinner-button-minus {order: 2}
         input {order: 1; text-align: left;}
     }
@@ -85,11 +86,6 @@
                 font-size: 1.3rem;
             }
         }
-
-        .default-icon-plus, .default-icon-minus {
-            width: 21px;
-            height: 21px;
-        }
     }
 
     &.input-small {
@@ -101,10 +97,10 @@
         }
 
         .spinner-button {
-            height: @input-sx - 2;
-            width: @input-sx - 2;
-            min-width: @input-sx - 2;
-            line-height: @input-sx - 2;
+            height: @input-sx - 6;
+            width: @input-sx - 6 ;
+            min-width: @input-sx - 6;
+            line-height: @input-sx - 6;
 
             font-size: .9rem;
 
@@ -112,11 +108,5 @@
                 font-size: .9rem;
             }
         }
-
-        .default-icon-plus, .default-icon-minus {
-            width: 14px;
-            height: 14px;
-        }
-
     }
 }

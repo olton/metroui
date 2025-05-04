@@ -1,3 +1,5 @@
+@import "../../include/vars";
+
 .donut {
     display: block;
     position: relative;
@@ -6,5 +8,51 @@
     & > svg {
         width: 100%;
         height: 100%;
+        
+        * {
+            transition: all 1s;
+        }
     }
 }
+
+each(@normalColors, {
+    @fillColor: "@{value}";
+    @strokeColor: @value;
+    @lightColor: "light-@{value}";
+    @textColor: "dark-@{value}";
+    
+    .donut-@{value} {
+        svg {
+            .donut-back {
+                stroke: darken(@@lightColor, 10%);
+            }
+            .donut-fill {
+                stroke: @@fillColor;
+            }
+            .donut-title {
+                fill: @@textColor;
+            }
+        }
+    }
+})
+
+each(@accentColors, {
+    @color: "@{value}Color";
+    @fillColor: "@{color}";
+    @strokeColor: "@{color}Light";
+    @textColor: "@{color}Dark}";
+
+    .donut-@{value} {
+        svg {
+            .donut-back {
+                stroke: lighten(@@strokeColor, 15%);
+            }
+            .donut-fill {
+                stroke: @@fillColor;
+            }
+            .donut-title {
+                fill: @@color;
+            }
+        }
+    }
+})

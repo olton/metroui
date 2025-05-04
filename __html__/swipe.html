@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+
+    <title>Test Touch - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: #ff0000;
+            color: #fff;
+            text-align: center;
+            line-height: 200px;
+        }
+    </style>
+</head>
+<body class="cloak" data-role="swipe" data-on-swipe="swipe">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Touch Test</div>
+    </div>
+</nav>
+
+<script src="../lib/metro.js"></script>
+<script>
+    function swipe(start, swipe, direction){
+        console.log(direction);
+    }
+</script>
+</body>
+</html>

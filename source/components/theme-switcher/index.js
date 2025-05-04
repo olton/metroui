@@ -1,3 +1,3 @@
-import "../storage"
-import "./theme-switcher.less"
-import "./theme-switcher.js"
+import "../storage/index.js";
+import "./theme-switcher.less";
+import "./theme-switcher.js";

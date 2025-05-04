@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Checkbox - Metro 4 :: Popular HTML, CSS and JS library</title>
-
+    <title>Test Checkbox - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        body {
+            padding-top: 50px;
+        }
+    </style>
 </head>
 <body class="m4-cloak">
 <nav data-role="appbar">
@@ -19,15 +23,21 @@
 <div class="container">
     <h1>Checkbox test page</h1>
 
-    <div style="--checkbox-check-color: red; --checkbox-checked-background: transaprent; --checkbox-border-color: red;">
+    <div class="mt-4">
         <input type="checkbox" data-role="checkbox" data-caption="Checkbox">
         <input type="checkbox" data-role="checkbox" data-caption="Checkbox" checked>
         <input type="checkbox" data-role="checkbox" data-caption="Checkbox" disabled>
         <input type="checkbox" data-role="checkbox" data-caption="Checkbox" disabled checked>
     </div>
 
-    <br>
-    <div>
+    <div class="mt-4" style="--checkbox-color: red; --checkbox-background: transaprent;">
+        <input type="checkbox" data-role="checkbox" data-caption="Checkbox">
+        <input type="checkbox" data-role="checkbox" data-caption="Checkbox" checked>
+        <input type="checkbox" data-role="checkbox" data-caption="Checkbox" disabled>
+        <input type="checkbox" data-role="checkbox" data-caption="Checkbox" disabled checked>
+    </div>
+
+    <div class="mt-4">
         <div>
             <button class="button" onclick="Metro.getPlugin('#chk1', 'checkbox').toggle(-1)">Indeterminate</button>
             <button class="button" onclick="Metro.getPlugin('#chk1', 'checkbox').toggle(1)">Checked</button>
@@ -42,8 +52,8 @@
 
     <h3>Three state</h3>
     <div>
-        <input type="checkbox" data-role="checkbox-three-state" data-caption="Checkbox1">
-        <input type="checkbox" data-role="checkbox-three-state" data-caption="Checkbox2" checked>
+        <input type="checkbox" data-role="checkbox" data-three-state="true" data-append="Checkbox1">
+        <input type="checkbox" data-role="checkbox" data-three-state="true" data-append="Checkbox2" checked>
     </div>
     <div>
         <input type="checkbox" data-role="checkbox-three-state" data-caption="Checked" data-state="checked">

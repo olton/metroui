@@ -1,2 +1,2 @@
-import "./notify.js"
-import "./notify.less"
+import "./notify.js";
+import "./notify.less";

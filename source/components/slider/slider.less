@@ -1,6 +1,25 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --slider-thumb-size: 18px;
+    --slider-thumb-color: var(--color-blue);
+    --slider-bar-color: #191919;
+    --slider-buffer-color: #fefefe;
+    --slider-back-color: #d5d5d5;
+    --slider-fill-color: var(--color-cyan);
+    --slider-thumb-border-color: var(--color-light-cyan);
+}
+
+.dark-side {
+    --slider-thumb-color: var(--color-crimson);
+    --slider-bar-color: #191919;
+    --slider-buffer-color: #fefefe;
+    --slider-back-color: #4e5055;
+    --slider-fill-color: #ff145c;
+    --slider-thumb-border-color: #ffffff;
+}
+
 .slider {
     display: block;
     position: relative;
@@ -8,6 +27,7 @@
     background: transparent;
     cursor: default;
     width: 100%;
+    border-radius: 4px;
 }
 
 .slider {
@@ -27,10 +47,17 @@
         left: 0;
         top: 50%;
         transform: translateY(-50%);
+        border-radius: 4px;
     }
 
+    .marker {
+        border-radius: 50%;
+        padding: 0;
+        transition: none;
+    }
+    
     .backside {
-        background-color: @gray;
+        background-color: var(--slider-back-color);
         width: 100%;
         z-index: 1;
         height: .6rem;
@@ -39,26 +66,27 @@
     .buffer {
         z-index: 2;
         height: .3rem;
-        background-color: @white;
+        background-color: var(--slider-buffer-color);
     }
 
     .complete {
         z-index: 3;
         height: .6rem;
-        background-color: @green;
+        background-color: var(--slider-fill-color);
     }
 
     .marker {
-        .square(1, rem);
-        background-color: @dark;
+        width: var(--slider-thumb-size);
+        height: var(--slider-thumb-size);
+        background: var(--slider-thumb-color);
         z-index: 4;
         outline: none;
-        border: 1px solid transparent;
+        border: 2px solid var(--slider-thumb-border-color);
         cursor: pointer;
         overflow: visible;
 
         &:focus {
-            .focus-show(@lightGray);
+            .focus-show(@light-gray);
         }
 
         &:active {
@@ -73,7 +101,7 @@
         width: auto!important;
         height: auto!important;
         padding: .25rem .5rem;
-        background-color: @darkGray;
+        background-color: @dark-gray;
         color: @white;
         white-space: nowrap;
 

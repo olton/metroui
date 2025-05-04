@@ -6,9 +6,12 @@
     <link href="../lib/metro.css" rel="stylesheet">
     <link href="../lib/icons.css" rel="stylesheet">
 
-    <title>Test Breadcrumbs - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Breadcrumbs - Metro UI :: Popular HTML, CSS and JS library</title>
 
     <style>
+        body {
+            padding-top: 50px;
+        }
         .calendar {
             margin: 10px;
         }
@@ -24,18 +27,30 @@
 
 <div class="container">
     <h1>Breadcrumbs test page</h1>
-    <ul class="breadcrumbs default">
-        <li><a href="#"><span class="mif-home"></span></a></li>
-        <li><a href="#">Item 2</a></li>
-        <li><a href="#">Item 3</a></li>
-        <li><a href="#">Item 4</a></li>
-    </ul>
-    <ul class="breadcrumbs arrow">
-        <li><a href="#"><span class="mif-home"></span></a></li>
-        <li><a href="#">Item 2</a></li>
-        <li class="active"><a href="#">Item 3</a></li>
-        <li><a href="#">Item 4</a></li>
-    </ul>
+
+    <div class="box">
+        <div class="title">Default</div>
+        <div class="mt-4">
+            <ul class="breadcrumbs default">
+                <li><a href="#"><span class="icon mif-home"></span>Home</a></li>
+                <li><a href="#">Library</a></li>
+                <li><a href="#">Data</a></li>
+                <li class="active"><a href="#">Bootstrap</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="title">Arrow</div>
+        <div class="mt-4">
+            <ul class="breadcrumbs arrow">
+                <li><a href="#"><span class="icon mif-home"></span></a></li>
+                <li><a href="#">Library</a></li>
+                <li><a href="#">Data</a></li>
+                <li class="active"><a href="#">Bootstrap</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <script src="../lib/metro.js"></script>

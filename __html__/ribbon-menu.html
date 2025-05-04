@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
 
-    <title>Test Ribbon menu - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Ribbon menu - Metro UI :: Popular HTML, CSS and JS library</title>
 
 </head>
-<body class="m4-cloak">
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Component Test</div>
+    </div>
+</nav>
+
 <div class="container">
     <h1>Ribbon menu test page</h1>
 
@@ -16,7 +27,7 @@
         <div class="window">
             <div class="window-caption">
                 <span class="icon mif-windows"></span>
-                <span class="title">Metro 4</span>
+                <span class="title">Metro UI</span>
                 <div class="buttons">
                     <span class="btn-min"></span>
                     <span class="btn-max"></span>
@@ -36,7 +47,7 @@
                     <div class="section" id="section_main">
                         <div class="group">
                             <button class="ribbon-button"><span class="icon"><span class="mif-share"></span></span><span class="caption">Share</span></button>
-                            <button class="ribbon-button"><span class="icon"><span class="mif-envelop"></span></span><span class="caption">Email</span></button>
+                            <button class="ribbon-button"><span class="icon"><span class="mif-email"></span></span><span class="caption">Email</span></button>
                             <div>
                                 <button class="ribbon-button dropdown-toggle">
                                     <span class="icon">
@@ -142,9 +153,9 @@
                             </div>
 
                             <div class="ribbon-toggle-group">
-                                <button class="ribbon-icon-button" disabled>
+                                <button class="ribbon-icon-button">
                                     <span class="icon">
-                                        <span class="mif-list"></span>
+                                        <span class="mif-list-bulleted"></span>
                                     </span>
                                     <span class="caption">List</span>
                                 </button>

@@ -1,1 +1,1 @@
-import "./adblock.js"
+import "./adblock.js";

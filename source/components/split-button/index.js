@@ -1,1 +1,1 @@
-import "./split-button.less"
+import "./split-button.less";

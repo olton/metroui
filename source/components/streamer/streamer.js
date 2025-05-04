@@ -1,12 +1,12 @@
-/* global Metro, METRO_ANIMATION_DURATION, Cake */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var StreamerDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    let StreamerDefaultConfig = {
         streamerDeferred: 0,
         wheel: true,
         wheelStep: 20,
-        duration: METRO_ANIMATION_DURATION,
+        duration: 200,
         defaultClosedIcon: "",
         defaultOpenIcon: "",
         changeUri: true,
@@ -41,36 +41,37 @@
         onEventClick: Metro.noop,
         onEventSelect: Metro.noop,
         onEventsScroll: Metro.noop,
-        onStreamerCreate: Metro.noop
+        onStreamerCreate: Metro.noop,
     };
 
-    Metro.streamerSetup = function (options) {
+    Metro.streamerSetup = (options) => {
         StreamerDefaultConfig = $.extend({}, StreamerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroStreamerSetup"] !== undefined) {
-        Metro.streamerSetup(globalThis["metroStreamerSetup"]);
+    if (typeof globalThis.metroStreamerSetup !== "undefined") {
+        Metro.streamerSetup(globalThis.metroStreamerSetup);
     }
 
-    Metro.Component('streamer', {
-        init: function( options, elem ) {
+    Metro.Component("streamer", {
+        init: function (options, elem) {
             this._super(elem, options, StreamerDefaultConfig, {
                 data: null,
                 scroll: 0,
                 scrollDir: "left",
-                events: null
+                events: null,
             });
 
             return this;
         },
 
-        _create: function(){
-            var element = this.element, o = this.options;
+        _create: function () {
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("streamer");
 
             if (element.attr("id") === undefined) {
-                element.attr("id", Utils.elementId("streamer"));
+                element.attr("id", Metro.utils.elementId("streamer"));
             }
 
             if (o.source === null && o.data === null) {
@@ -81,9 +82,8 @@
             $("<div>").addClass("events-area").appendTo(element);
 
             if (o.source !== null) {
-
                 this._fireEvent("data-load", {
-                    source: o.source
+                    source: o.source,
                 });
 
                 this._loadSource();
@@ -93,59 +93,62 @@
             }
 
             // TODO Fix mouse scroll
-            // if (o.chromeNotice === true && Utils.detectChrome() === true && $.touchable === false) {
+            // if (o.chromeNotice === true && Metro.utils.detectChrome() === true && $.touchable === false) {
             //     $("<p>").addClass("text-small text-muted").html("*) In Chrome browser please press and hold Shift and turn the mouse wheel.").insertAfter(element);
             // }
         },
 
-        _loadSource: function(){
-            var that = this, o = this.options;
+        _loadSource: function () {
+            const o = this.options;
 
             fetch(o.source)
                 .then(Metro.fetch.status)
                 .then(Metro.fetch.json)
-                .then(function(data){
-                    that._fireEvent("data-loaded", {
+                .then((data) => {
+                    this._fireEvent("data-loaded", {
                         source: o.source,
-                        data: data
+                        data: data,
                     });
 
-                    that.data = data;
-                    that.build();
+                    this.data = data;
+                    this.build();
                 })
-                .catch(function (error) {
-                    that._fireEvent("data-load-error", {
+                .catch((error) => {
+                    this._fireEvent("data-load-error", {
                         source: o.source,
-                        error: error
+                        error: error,
                     });
                 });
         },
 
-        build: function(){
-            var that = this, element = this.element, o = this.options, data = this.data;
-            var streams = element.find(".streams").html("");
-            var events_area = element.find(".events-area").html("");
-            var fake_timeline;
-            var timeline = $("<ul>").addClass("streamer-timeline").html("").appendTo(events_area);
-            var streamer_events = $("<div>").addClass("streamer-events").appendTo(events_area);
-            var event_group_main = $("<div>").addClass("event-group").appendTo(streamer_events);
-            var StreamerIDS = Utils.getURIParameter(null, "StreamerIDS");
+        build: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const data = this.data;
+            const streams = element.find(".streams").html("");
+            const events_area = element.find(".events-area").html("");
+            let fake_timeline;
+            const timeline = $("<ul>").addClass("streamer-timeline").html("").appendTo(events_area);
+            const streamer_events = $("<div>").addClass("streamer-events").appendTo(events_area);
+            const event_group_main = $("<div>").addClass("event-group").appendTo(streamer_events);
+            let StreamerIDS = Metro.utils.getURIParameter(null, "StreamerIDS");
 
             if (StreamerIDS !== null && o.encodeLink === true) {
                 StreamerIDS = atob(StreamerIDS);
             }
 
-            var StreamerIDS_i = StreamerIDS ? StreamerIDS.split("|")[0] : null;
-            var StreamerIDS_a = StreamerIDS ? StreamerIDS.split("|")[1].split(",") : [];
+            const StreamerIDS_i = StreamerIDS ? StreamerIDS.split("|")[0] : null;
+            const StreamerIDS_a = StreamerIDS ? StreamerIDS.split("|")[1].split(",") : [];
 
             if (data.actions !== undefined) {
-                var actions = $("<div>").addClass("streamer-actions").appendTo(streams);
-                $.each(data.actions, function(){
-                    var item = this;
-                    var button = $("<button>").addClass("streamer-action").addClass(item.cls).html(item.html);
-                    if (item.onclick !== undefined) button.on(Metro.events.click, function(){
-                        Utils.exec(item.onclick, [element]);
-                    });
+                const actions = $("<div>").addClass("streamer-actions").appendTo(streams);
+                $.each(data.actions, function () {
+                    const button = $("<button>").addClass("streamer-action").addClass(this.cls).html(this.html);
+                    if (this.onclick)
+                        button.on(Metro.events.click, () => {
+                            Metro.utils.exec(this.onclick, [element]);
+                        });
                     button.appendTo(actions);
                 });
             }
@@ -158,14 +161,15 @@
                 data.timeline = {
                     start: "09:00",
                     stop: "18:00",
-                    step: 20
-                }
+                    step: 20,
+                };
             }
 
-            var start = new Date(), stop = new Date();
-            var start_time_array = data.timeline.start ? data.timeline.start.split(":") : [9,0];
-            var stop_time_array = data.timeline.stop ? data.timeline.stop.split(":") : [18,0];
-            var step = data.timeline.step ? parseInt(data.timeline.step) * 60 : 1200;
+            const start = new Date();
+            const stop = new Date();
+            const start_time_array = data.timeline.start ? data.timeline.start.split(":") : [9, 0];
+            const stop_time_array = data.timeline.stop ? data.timeline.stop.split(":") : [18, 0];
+            const step = data.timeline.step ? Number.parseInt(data.timeline.step) * 60 : 1200;
 
             start.setHours(start_time_array[0]);
             start.setMinutes(start_time_array[1]);
@@ -175,65 +179,79 @@
             stop.setMinutes(stop_time_array[1]);
             stop.setSeconds(0);
 
-            var i, t, h, v, m, j, fm, li, fli, fli_w;
+            let i;
+            let t;
+            let h;
+            let v;
+            let m;
+            let j;
+            let fm;
+            let li;
+            let fli;
+            let fli_w;
 
-            for (i = start.getTime()/1000; i <= stop.getTime()/1000; i += step) {
+            for (i = start.getTime() / 1000; i <= stop.getTime() / 1000; i += step) {
                 t = new Date(i * 1000);
                 h = t.getHours();
                 m = t.getMinutes();
-                v = Str.lpad(h, "0", 2)+":"+Str.lpad(m, "0", 2);
+                v = `${Str.lpad(h, "0", 2)}:${Str.lpad(m, "0", 2)}`;
+                li = $("<li>")
+                    .data("time", v)
+                    .addClass(`js-time-point-${v.replace(":", "-")}`)
+                    .html(`<em>${v}</em>`)
+                    .appendTo(timeline);
 
-                li = $("<li>").data("time", v).addClass("js-time-point-" + v.replace(":", "-")).html("<em>"+v+"</em>").appendTo(timeline);
-
-                fli_w = li.width() / parseInt(data.timeline.step);
+                fli_w = li.width() / Number.parseInt(data.timeline.step);
                 fake_timeline = $("<ul>").addClass("streamer-fake-timeline").html("").appendTo(li);
-                for(j = 0; j < parseInt(data.timeline.step); j++) {
+                for (j = 0; j < Number.parseInt(data.timeline.step); j++) {
                     fm = m + j;
-                    v = Str.lpad(h, "0", 2)+":"+Str.lpad(fm, "0", 2);
-                    fli = $("<li>").data("time", v).addClass("js-fake-time-point-" + v.replace(":", "-")).html("|").appendTo(fake_timeline);
+                    v = `${Str.lpad(h, "0", 2)}:${Str.lpad(fm, "0", 2)}`;
+                    fli = $("<li>")
+                        .data("time", v)
+                        .addClass(`js-fake-time-point-${v.replace(":", "-")}`)
+                        .html("|")
+                        .appendTo(fake_timeline);
                     fli.css({
-                        width: fli_w
-                    })
+                        width: fli_w,
+                    });
                 }
             }
 
             // -- End timeline creator
 
             if (data.streams !== undefined) {
-                $.each(data.streams, function(stream_index){
-                    var stream_height = 75, rows = 0;
-                    var stream_item = this;
-                    var stream = $("<div>").addClass("stream").addClass(this.cls).appendTo(streams);
-                    stream
-                        .addClass(stream_item.cls)
-                        .data("one", false)
-                        .data("data", stream_item.data);
+                $.each(data.streams, function (stream_index, stream_item) {
+                    const stream_height = 75;
+                    let rows = 0;
+                    const stream = $("<div>").addClass("stream").addClass(this.cls).appendTo(streams);
+                    stream.addClass(stream_item.cls).data("one", false).data("data", stream_item.data);
 
                     $("<div>").addClass("stream-title").html(stream_item.title).appendTo(stream);
                     $("<div>").addClass("stream-secondary").html(stream_item.secondary).appendTo(stream);
                     $(stream_item.icon).addClass("stream-icon").appendTo(stream);
 
-                    var bg = Farbe.Routines.toHEX(Utils.getStyleOne(stream, "background-color"));
-                    var fg = Farbe.Routines.toHEX(Utils.getStyleOne(stream, "color"));
+                    const bg = Farbe.Routines.toHEX(Metro.utils.getStyleOne(stream, "background-color"));
+                    const fg = Farbe.Routines.toHEX(Metro.utils.getStyleOne(stream, "color"));
 
-                    var stream_events = $("<div>").addClass("stream-events")
+                    const stream_events = $("<div>")
+                        .addClass("stream-events")
                         .data("background-color", bg)
                         .data("text-color", fg)
                         .appendTo(event_group_main);
 
                     if (stream_item.events !== undefined) {
-                        $.each(stream_item.events, function(event_index){
-                            var event_item = this;
-                            var row = event_item.row === undefined ? 1 : parseInt(event_item.row);
-                            var _icon;
-                            var sid = stream_index+":"+event_index;
-                            var custom_html = event_item.custom !== undefined ? event_item.custom : "";
-                            var custom_html_open = event_item.custom_open !== undefined ? event_item.custom_open : "";
-                            var custom_html_close = event_item.custom_close !== undefined ? event_item.custom_close : "";
-                            var event;
+                        $.each(stream_item.events, function (event_index, event_item) {
+                            const row = event_item.row === undefined ? 1 : Number.parseInt(event_item.row);
+                            let _icon;
+                            const sid = `${stream_index}:${event_index}`;
+                            const custom_html = event_item.custom !== undefined ? event_item.custom : "";
+                            const custom_html_open = event_item.custom_open !== undefined ? event_item.custom_open : "";
+                            const custom_html_close =
+                                event_item.custom_close !== undefined ? event_item.custom_close : "";
+                            let event;
 
-                            if (event_item.skip !== undefined && Utils.bool(event_item.skip)) {
-                                return ;
+                            if (event_item.skip !== undefined && Metro.utils.bool(event_item.skip)) {
+                                return;
                             }
 
                             event = $("<div>")
@@ -243,14 +261,15 @@
                                 .data("time", event_item.time)
                                 .data("target", event_item.target)
                                 .addClass("stream-event")
-                                .addClass("size-"+event_item.size+(["half", "one-third"].includes(event_item.size) ? "" : "x"))
+                                .addClass(
+                                    `size-${event_item.size}${["half", "one-third"].includes(event_item.size) ? "" : "x"}`,
+                                )
                                 .addClass(event_item.cls)
                                 .appendTo(stream_events);
 
-
-                            var time_point = timeline.find(".js-fake-time-point-"+this.time.replace(":", "-"));
-                            var left = time_point.offset().left - stream_events.offset().left;
-                            var top = 75 * (row - 1);
+                            const time_point = timeline.find(`.js-fake-time-point-${this.time.replace(":", "-")}`);
+                            const left = time_point.offset().left - stream_events.offset().left;
+                            const top = 75 * (row - 1);
 
                             if (row > rows) {
                                 rows = row;
@@ -259,49 +278,76 @@
                             event.css({
                                 position: "absolute",
                                 left: left,
-                                top: top
+                                top: top,
                             });
 
-
-                            if (Utils.isNull(event_item.html)) {
-
-                                var slide = $("<div>").addClass("stream-event-slide").appendTo(event);
-                                var slide_logo = $("<div>").addClass("slide-logo").appendTo(slide);
-                                var slide_data = $("<div>").addClass("slide-data").appendTo(slide);
+                            if (Metro.utils.isNull(event_item.html)) {
+                                const slide = $("<div>").addClass("stream-event-slide").appendTo(event);
+                                const slide_logo = $("<div>").addClass("slide-logo").appendTo(slide);
+                                const slide_data = $("<div>").addClass("slide-data").appendTo(slide);
 
                                 if (event_item.icon !== undefined) {
-                                    if (Utils.isTag(event_item.icon)) {
+                                    if (Metro.utils.isTag(event_item.icon)) {
                                         $(event_item.icon).addClass("icon").appendTo(slide_logo);
                                     } else {
-                                        $("<img>").addClass("icon").attr("src", event_item.icon).appendTo(slide_logo);
+                                        $("<img>")
+                                            .addClass("icon")
+                                            .attr("src", event_item.icon)
+                                            .attr("alt", "")
+                                            .appendTo(slide_logo);
                                     }
                                 }
 
-                                $("<span>").addClass("time").css({
-                                    backgroundColor: bg,
-                                    color: fg
-                                }).html(event_item.time).appendTo(slide_logo);
+                                $("<span>")
+                                    .addClass("time")
+                                    .css({
+                                        backgroundColor: bg,
+                                        color: fg,
+                                    })
+                                    .html(event_item.time)
+                                    .appendTo(slide_logo);
 
                                 $("<div>").addClass("title").html(event_item.title).appendTo(slide_data);
                                 $("<div>").addClass("subtitle").html(event_item.subtitle).appendTo(slide_data);
                                 $("<div>").addClass("desc").html(event_item.desc).appendTo(slide_data);
 
-                                if (o.closed === false && (element.attr("id") === StreamerIDS_i && StreamerIDS_a.indexOf(sid) !== -1) || event_item.selected === true || parseInt(event_item.selected) === 1) {
+                                if (
+                                    (o.closed === false &&
+                                        element.attr("id") === StreamerIDS_i &&
+                                        StreamerIDS_a.indexOf(sid) !== -1) ||
+                                    event_item.selected === true ||
+                                    Number.parseInt(event_item.selected) === 1
+                                ) {
                                     event.addClass("selected");
                                 }
 
-                                if (o.closed === true || event_item.closed === true || parseInt(event_item.closed) === 1) {
-                                    _icon = event_item.closedIcon !== undefined ? Utils.isTag(event_item.closedIcon) ? event_item.closedIcon : "<span>" + event_item.closedIcon + "</span>" : Utils.isTag(o.defaultClosedIcon) ? o.defaultClosedIcon : "<span>" + o.defaultClosedIcon + "</span>";
+                                if (
+                                    o.closed === true ||
+                                    event_item.closed === true ||
+                                    Number.parseInt(event_item.closed) === 1
+                                ) {
+                                    _icon =
+                                        event_item.closedIcon !== undefined
+                                            ? Metro.utils.isTag(event_item.closedIcon)
+                                                ? event_item.closedIcon
+                                                : `<span>${event_item.closedIcon}</span>`
+                                            : Metro.utils.isTag(o.defaultClosedIcon)
+                                              ? o.defaultClosedIcon
+                                              : `<span>${o.defaultClosedIcon}</span>`;
                                     $(_icon).addClass("state-icon").addClass(event_item.clsClosedIcon).appendTo(slide);
-                                    event
-                                        .data("closed", true)
-                                        .data("target", event_item.target);
+                                    event.data("closed", true).data("target", event_item.target);
                                     event.append(custom_html_open);
                                 } else {
-                                    _icon = event_item.openIcon !== undefined ? Utils.isTag(event_item.openIcon) ? event_item.openIcon : "<span>" + event_item.openIcon + "</span>" : Utils.isTag(o.defaultOpenIcon) ? o.defaultOpenIcon : "<span>" + o.defaultOpenIcon + "</span>";
+                                    _icon =
+                                        event_item.openIcon !== undefined
+                                            ? Metro.utils.isTag(event_item.openIcon)
+                                                ? event_item.openIcon
+                                                : `<span>${event_item.openIcon}</span>`
+                                            : Metro.utils.isTag(o.defaultOpenIcon)
+                                              ? o.defaultOpenIcon
+                                              : `<span>${o.defaultOpenIcon}</span>`;
                                     $(_icon).addClass("state-icon").addClass(event_item.clsOpenIcon).appendTo(slide);
-                                    event
-                                        .data("closed", false);
+                                    event.data("closed", false);
                                     event.append(custom_html_close);
                                 }
 
@@ -311,40 +357,44 @@
                             }
 
                             that._fireEvent("draw-event", {
-                                event: event[0]
+                                event: event[0],
                             });
-
                         });
 
-                        var last_child = stream_events.find(".stream-event").last();
-                        if (last_child.length > 0) stream_events.outerWidth(last_child[0].offsetLeft + last_child.outerWidth());
+                        const last_child = stream_events.find(".stream-event").last();
+                        if (last_child.length > 0)
+                            stream_events.outerWidth(last_child[0].offsetLeft + last_child.outerWidth());
                     }
 
                     stream_events.css({
-                        height: stream_height * rows
+                        height: stream_height * rows,
                     });
 
-                    element.find(".stream").eq(stream_events.index()).css({
-                        height: stream_height * rows
-                    });
+                    element
+                        .find(".stream")
+                        .eq(stream_events.index())
+                        .css({
+                            height: stream_height * rows,
+                        });
 
                     that._fireEvent("draw-stream", {
-                        stream: stream[0]
+                        stream: stream[0],
                     });
-
                 });
             }
 
             if (data.global !== undefined) {
-                var streamer_events_left = streamer_events.offset().left;
-                $.each(['before', 'after'], function(){
-                    var global_item = this;
+                const streamer_events_left = streamer_events.offset().left;
+                $.each(["before", "after"], (_, global_item) => {
                     if (data.global[global_item] !== undefined) {
-                        $.each(data.global[global_item], function(){
-                            var event_item = this;
-                            var group = $("<div>").addClass("event-group").addClass("size-"+event_item.size+(["half", "one-third"].includes(event_item.size) ? "" : "x"));
-                            var events = $("<div>").addClass("stream-events global-stream").appendTo(group);
-                            var event = $("<div>").addClass("stream-event").appendTo(events);
+                        $.each(data.global[global_item], function (_, event_item) {
+                            const group = $("<div>")
+                                .addClass("event-group")
+                                .addClass(
+                                    `size-${event_item.size}${["half", "one-third"].includes(event_item.size) ? "" : "x"}`,
+                                );
+                            const events = $("<div>").addClass("stream-events global-stream").appendTo(group);
+                            const event = $("<div>").addClass("stream-event").appendTo(events);
                             event
                                 .addClass("global-event")
                                 .addClass(event_item.cls)
@@ -356,22 +406,24 @@
                             $("<div>").addClass("event-subtitle").html(event_item.subtitle).appendTo(event);
                             $("<div>").addClass("event-html").html(event_item.html).appendTo(event);
 
-                            var left, t = timeline.find(".js-fake-time-point-"+this.time.replace(":", "-"));
+                            let left;
+                            const t = timeline.find(`.js-fake-time-point-${this.time.replace(":", "-")}`);
 
                             if (t.length > 0) {
                                 // left = t[0].offsetLeft - streams.find(".stream").outerWidth();
                                 left = t.offset().left - streamer_events_left;
                             }
-                            group.css({
-                                position: "absolute",
-                                left: left,
-                                height: "100%"
-                            }).appendTo(streamer_events);
+                            group
+                                .css({
+                                    position: "absolute",
+                                    left: left,
+                                    height: "100%",
+                                })
+                                .appendTo(streamer_events);
 
                             that._fireEvent("draw-global-event", {
-                                event: event[0]
+                                event: event[0],
                             });
-
                         });
                     }
                 });
@@ -385,7 +437,7 @@
             this._createEvents();
 
             if (o.startFrom !== null && o.slideToStart === true) {
-                setTimeout(function(){
+                setTimeout(() => {
                     that.slideTo(o.startFrom);
                 }, o.startSlideSleep);
             }
@@ -395,10 +447,10 @@
             this._fireScroll();
         },
 
-        _fireScroll: function(){
-            var that = this, element = this.element;
-            var scrollable = element.find(".events-area");
-            var oldScroll = this.scroll;
+        _fireScroll: function () {
+            const element = this.element;
+            const scrollable = element.find(".events-area");
+            const oldScroll = this.scroll;
 
             if (scrollable.length === 0) {
                 return undefined;
@@ -410,46 +462,46 @@
             this._fireEvent("events-scroll", {
                 scrollLeft: scrollable[0].scrollLeft,
                 oldScroll: oldScroll,
-                scrollDir: that.scrollDir,
-                events: $.toArray(this.events)
+                scrollDir: this.scrollDir,
+                events: $.toArray(this.events),
             });
         },
 
-        _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+        _createEvents: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
             function disableScroll() {
-                var scrollTop = globalThis.pageYOffset || document.documentElement.scrollTop;
-                var scrollLeft = globalThis.pageXOffset || document.documentElement.scrollLeft;
+                const scrollTop = globalThis.pageYOffset || document.documentElement.scrollTop;
+                const scrollLeft = globalThis.pageXOffset || document.documentElement.scrollLeft;
 
-                globalThis.onscroll = function() {
+                globalThis.onscroll = () => {
                     globalThis.scrollTo(scrollLeft, scrollTop);
                 };
             }
 
             function enableScroll() {
-                globalThis.onscroll = function() {};
+                globalThis.onscroll = () => {};
             }
 
-            element.off(Metro.events.click, ".stream-event").on(Metro.events.click, ".stream-event", function(e){
-                var event = $(this);
+            element.off(Metro.events.click, ".stream-event").on(Metro.events.click, ".stream-event", function (e) {
+                const event = $(this);
 
                 if (o.excludeClass !== "" && event.hasClass(o.excludeClass)) {
-                    return ;
+                    return;
                 }
 
                 if (o.excludeElement !== null && $(e.target).is(o.excludeElement)) {
-                    return ;
+                    return;
                 }
 
-                if (o.closed === false && event.data("closed") !== true && o.eventClick === 'select') {
+                if (o.closed === false && event.data("closed") !== true && o.eventClick === "select") {
                     if (o.excludeSelectClass !== "" && event.hasClass(o.excludeSelectClass)) {
                         /* eslint-disable-next-line */
-
                     } else {
                         if (o.excludeSelectElement !== null && $(e.target).is(o.excludeSelectElement)) {
                             /* eslint-disable-next-line */
-
                         } else {
                             if (event.hasClass("global-event")) {
                                 if (o.selectGlobal === true) {
@@ -464,40 +516,35 @@
 
                             that._fireEvent("event-select", {
                                 event: event[0],
-                                selected: event.hasClass("selected")
+                                selected: event.hasClass("selected"),
                             });
                         }
                     }
                 } else {
                     if (o.excludeClickClass !== "" && event.hasClass(o.excludeClickClass)) {
                         /* eslint-disable-next-line */
-
                     } else {
-
                         if (o.excludeClickElement !== null && $(e.target).is(o.excludeClickElement)) {
                             /* eslint-disable-next-line */
-
                         } else {
-
                             that._fireEvent("event-click", {
-                                event: event[0]
+                                event: event[0],
                             });
 
                             if (o.closed === true || event.data("closed") === true) {
-                                var target = event.data("target");
+                                const target = event.data("target");
                                 if (target) {
                                     globalThis.location.href = target;
                                 }
                             }
-
                         }
                     }
                 }
             });
 
-            element.off(Metro.events.click, ".stream").on(Metro.events.click, ".stream", function(){
-                var stream = $(this);
-                var index = stream.index();
+            element.off(Metro.events.click, ".stream").on(Metro.events.click, ".stream", function () {
+                const stream = $(this);
+                const index = stream.index();
 
                 if (o.streamSelect === false) {
                     return;
@@ -511,100 +558,111 @@
                     element.find(".stream-event").addClass("disabled");
                     that.enableStream(stream);
                     that._fireEvent("stream-select", {
-                        stream: stream
+                        stream: stream,
                     });
                 }
 
                 that._fireEvent("stream-click", {
-                    stream: stream
+                    stream: stream,
                 });
             });
 
             if (o.wheel === true) {
-                element.find(".events-area")
+                element
+                    .find(".events-area")
                     .off(Metro.events.mousewheel)
-                    .on(Metro.events.mousewheel, function(e) {
+                    .on(
+                        Metro.events.mousewheel,
+                        function (e) {
+                            if (e.deltaY === undefined) {
+                                return;
+                            }
 
-                        if (e.deltaY === undefined) {
-                            return ;
-                        }
+                            const scrollable = $(this);
+                            const dir = e.deltaY > 0 ? -1 : 1;
+                            const step = o.wheelStep;
 
-                        var scroll, scrollable = $(this);
-                        var dir = e.deltaY > 0 ? -1 : 1;
-                        var step = o.wheelStep;
+                            const scroll = scrollable.scrollLeft() - dir * step;
+                            scrollable.scrollLeft(scroll);
+                        },
+                        {
+                            passive: true,
+                        },
+                    );
 
-
-                        scroll = scrollable.scrollLeft() - ( dir * step);
-                        scrollable.scrollLeft(scroll);
-
-                    }, {
-                        passive: true
+                element
+                    .find(".events-area")
+                    .off("mouseenter")
+                    .on("mouseenter", () => {
+                        disableScroll();
                     });
 
-                element.find(".events-area").off("mouseenter").on("mouseenter", function() {
-                    disableScroll();
-                });
-
-                element.find(".events-area").off("mouseleave").on("mouseleave", function() {
-                    enableScroll();
-                });
-            }
-
-            element.find(".events-area").last().off("scroll").on("scroll", function(){
-                that._fireScroll();
-            });
-
-            if ($.touchable === true) {
-                element.off(Metro.events.click, ".stream").on(Metro.events.click, ".stream", function(){
-                    var stream = $(this);
-                    stream.toggleClass("focused");
-                    $.each(element.find(".stream"), function () {
-                        if ($(this).is(stream)) return ;
-                        $(this).removeClass("focused");
-                    })
-                })
-            }
-        },
-
-        _changeURI: function(){
-            var link = this.getLink();
-            history.pushState({}, document.title, link);
-        },
-
-        slideTo: function(time){
-            var element = this.element, o = this.options;
-            var target;
-            if (time === undefined) {
-                target = $(element.find(".streamer-timeline li")[0]);
-            } else {
-                target = $(element.find(".streamer-timeline .js-time-point-" + time.replace(":", "-"))[0]);
+                element
+                    .find(".events-area")
+                    .off("mouseleave")
+                    .on("mouseleave", () => {
+                        enableScroll();
+                    });
             }
 
             element
                 .find(".events-area")
-                .animate({
-                    draw: {
-                        scrollLeft: target[0].offsetLeft - element.find(".streams .stream").outerWidth()
-                    },
-                    dur: o.duration
+                .last()
+                .off("scroll")
+                .on("scroll", () => {
+                    that._fireScroll();
                 });
+
+            if ($.touchable === true) {
+                element.off(Metro.events.click, ".stream").on(Metro.events.click, ".stream", function () {
+                    const stream = $(this);
+                    stream.toggleClass("focused");
+                    $.each(element.find(".stream"), function () {
+                        if ($(this).is(stream)) return;
+                        $(this).removeClass("focused");
+                    });
+                });
+            }
         },
 
-        enableStream: function(stream){
-            var element = this.element;
-            var index = stream.index()-1;
+        _changeURI: function () {
+            const link = this.getLink();
+            history.pushState({}, document.title, link);
+        },
+
+        slideTo: function (time) {
+            const element = this.element;
+            const o = this.options;
+            let target;
+            if (time === undefined) {
+                target = $(element.find(".streamer-timeline li")[0]);
+            } else {
+                target = $(element.find(`.streamer-timeline .js-time-point-${time.replace(":", "-")}`)[0]);
+            }
+
+            element.find(".events-area").animate({
+                draw: {
+                    scrollLeft: target[0].offsetLeft - element.find(".streams .stream").outerWidth(),
+                },
+                dur: o.duration,
+            });
+        },
+
+        enableStream: function (stream) {
+            const element = this.element;
+            const index = stream.index() - 1;
             stream.removeClass("disabled").data("streamDisabled", false);
             element.find(".stream-events").eq(index).find(".stream-event").removeClass("disabled");
         },
 
-        disableStream: function(stream){
-            var element = this.element;
-            var index = stream.index()-1;
+        disableStream: function (stream) {
+            const element = this.element;
+            const index = stream.index() - 1;
             stream.addClass("disabled").data("streamDisabled", true);
             element.find(".stream-events").eq(index).find(".stream-event").addClass("disabled");
         },
 
-        toggleStream: function(stream){
+        toggleStream: function (stream) {
             if (stream.data("streamDisabled") === true) {
                 this.enableStream(stream);
             } else {
@@ -612,15 +670,16 @@
             }
         },
 
-        getLink: function(){
-            var element = this.element, o = this.options;
-            var events = element.find(".stream-event");
-            var a = [];
-            var link;
-            var origin = globalThis.location.href;
+        getLink: function () {
+            const element = this.element;
+            const o = this.options;
+            const events = element.find(".stream-event");
+            const a = [];
+            let link;
+            const origin = globalThis.location.href;
 
-            $.each(events, function(){
-                var event = $(this);
+            $.each(events, function () {
+                const event = $(this);
                 if (event.data("sid") === undefined || !event.hasClass("selected")) {
                     return;
                 }
@@ -628,51 +687,53 @@
                 a.push(event.data("sid"));
             });
 
-            link = element.attr("id") + "|" + a.join(",");
+            link = `${element.attr("id")}|${a.join(",")}`;
 
             if (o.encodeLink === true) {
                 link = btoa(link);
             }
 
-            return Utils.updateURIParameter(origin, "StreamerIDS", link);
+            return Metro.utils.updateURIParameter(origin, "StreamerIDS", link);
         },
 
-        getTimes: function(){
-            var element = this.element;
-            var times = element.find(".streamer-timeline > li");
-            var result = [];
-            $.each(times, function(){
+        getTimes: function () {
+            const element = this.element;
+            const times = element.find(".streamer-timeline > li");
+            const result = [];
+            $.each(times, function () {
                 result.push($(this).data("time"));
             });
             return result;
         },
 
-        getEvents: function(event_type, include_global){
-            var element = this.element;
-            var items, events = [];
+        getEvents: function (event_type, include_global) {
+            const element = this.element;
+            let items;
+            const events = [];
 
             switch (event_type) {
-                case "selected": items = element.find(".stream-event.selected"); break;
-                case "non-selected": items = element.find(".stream-event:not(.selected)"); break;
-                default: items = element.find(".stream-event");
+                case "selected":
+                    items = element.find(".stream-event.selected");
+                    break;
+                case "non-selected":
+                    items = element.find(".stream-event:not(.selected)");
+                    break;
+                default:
+                    items = element.find(".stream-event");
             }
 
-            $.each(items, function(){
-                var item = $(this);
-                var origin;
-
-                if (include_global !== true && item.parent().hasClass("global-stream")) return ;
-
-                origin = item.data("origin");
-
+            $.each(items, function () {
+                const item = $(this);
+                if (include_global !== true && item.parent().hasClass("global-stream")) return;
+                const origin = item.data("origin");
                 events.push(origin);
             });
 
             return events;
         },
 
-        source: function(s){
-            var element = this.element;
+        source: function (s) {
+            const element = this.element;
 
             if (s === undefined) {
                 return this.options.source;
@@ -684,7 +745,7 @@
             this.changeSource();
         },
 
-        dataSet: function(s){
+        dataSet: function (s) {
             if (s === undefined) {
                 return this.options.data;
             }
@@ -693,60 +754,59 @@
             this.changeData(s);
         },
 
-        getStreamerData: function(){
+        getStreamerData: function () {
             return this.data;
         },
 
-        toggleEvent: function(event){
-            var o = this.options;
-            event = $(event);
+        toggleEvent: function (event) {
+            const o = this.options;
+            const _event = $(event);
 
-            if (event.hasClass("global-event") && o.selectGlobal !== true) {
-                return ;
+            if (_event.hasClass("global-event") && o.selectGlobal !== true) {
+                return;
             }
 
-            if (event.hasClass("selected")) {
+            if (_event.hasClass("selected")) {
                 this.selectEvent(event, false);
             } else {
                 this.selectEvent(event, true);
             }
         },
 
-        selectEvent: function(event, state){
-            var that = this, o = this.options;
-            if (state === undefined) {
-                state = true;
-            }
-            event = $(event);
+        selectEvent: function (event, state = true) {
+            const o = this.options;
+            const _event = $(event);
 
-            if (event.hasClass("global-event") && o.selectGlobal !== true) {
-                return ;
+            if (_event.hasClass("global-event") && o.selectGlobal !== true) {
+                return;
             }
 
-            if (state === true) event.addClass("selected"); else event.removeClass("selected");
+            if (state === true) _event.addClass("selected");
+            else _event.removeClass("selected");
 
             if (o.changeUri === true) {
-                that._changeURI();
+                this._changeURI();
             }
 
             this._fireEvent("event-select", {
-                event: event[0],
-                selected: state
+                event: _event[0],
+                selected: state,
             });
         },
 
-        changeSource: function(){
-            var element = this.element, o = this.options;
-            var new_source = element.attr("data-source");
+        changeSource: function () {
+            const element = this.element;
+            const o = this.options;
+            const new_source = element.attr("data-source");
 
             if (String(new_source).trim() === "") {
-                return ;
+                return;
             }
 
             o.source = new_source;
 
             this._fireEvent("data-load", {
-                source: o.source
+                source: o.source,
             });
 
             this._loadSource();
@@ -771,11 +831,12 @@
             this._fireEvent("source-change");
         },
 
-        changeData: function(data){
-            var element = this.element, o = this.options;
-            var old_data = this.data;
+        changeData: function (data) {
+            const element = this.element;
+            const o = this.options;
+            const old_data = this.data;
 
-            o.data =  typeof data === 'object' ? data : JSON.parse(element.attr("data-data"));
+            o.data = typeof data === "object" ? data : JSON.parse(element.attr("data-data"));
 
             this.data = o.data;
 
@@ -783,34 +844,40 @@
 
             this._fireEvent("data-change", {
                 oldData: old_data,
-                newData: o.data
+                newData: o.data,
             });
         },
 
-        changeStreamSelectOption: function(){
-            var element = this.element, o = this.options;
+        changeStreamSelectOption: function () {
+            const element = this.element;
+            const o = this.options;
 
             o.streamSelect = element.attr("data-stream-select").toLowerCase() === "true";
         },
 
-        changeAttribute: function(attributeName){
+        changeAttribute: function (attributeName) {
             switch (attributeName) {
-                case 'data-source': this.changeSource(); break;
-                case 'data-data': this.changeData(); break;
-                case 'data-stream-select': this.changeStreamSelectOption(); break;
+                case "data-source":
+                    this.changeSource();
+                    break;
+                case "data-data":
+                    this.changeData();
+                    break;
+                case "data-stream-select":
+                    this.changeStreamSelectOption();
+                    break;
             }
         },
 
-        destroy: function(){
-            var element = this.element;
+        destroy: function () {
+            const element = this.element;
 
             element.off(Metro.events.click, ".stream-event");
             element.off(Metro.events.click, ".stream");
             element.find(".events-area").off(Metro.events.mousewheel);
             element.find(".events-area").last().off("scroll");
-            // element.off(Metro.events.click, ".stream");
 
-            return element;
-        }
+            element.remove();
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

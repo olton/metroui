@@ -1,30 +1,27 @@
 import {
-    htmljs,
+    HTML,
+    addCssRule,
+    addStyle,
+    clearViewStorageHolder,
+    createStyleElement,
+    createStyleSheet,
+    cssLoader,
+    info,
+    jsLoader,
+    render,
+    viewLoader,
+} from "@olton/html";
+
+globalThis.HTML = {
     addStyle,
     addCssRule,
     cssLoader,
     jsLoader,
-    Router,
-    router,
     viewLoader,
     clearViewStorageHolder,
     createStyleElement,
     createStyleSheet,
     render,
-} from "@olton/html"
-
-globalThis.htmljs = {
-    addStyle,
-    addCssRule,
-    cssLoader,
-    jsLoader,
-    viewLoader,
-    clearViewStorageHolder,
-    createStyleElement,
-    createStyleSheet,
-    render,
-    ...htmljs
-}
-
-globalThis.Router = Router
-globalThis.Router.create = router
+    ...HTML,
+    info,
+};

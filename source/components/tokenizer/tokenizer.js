@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
 
-    var TokenizerDefaultConfig = {
+    let TokenizerDefaultConfig = {
         textToTokenize: "",
         spaceSymbol: "",
         spaceClass: "space",
@@ -17,51 +17,61 @@
         clsTokenEven: "",
         onTokenCreate: Metro.noop,
         onTokenize: Metro.noop,
-        onTokenizerCreate: Metro.noop
+        onTokenizerCreate: Metro.noop,
     };
 
-    Metro.tokenizerSetup = function (options) {
+    Metro.tokenizerSetup = (options) => {
         TokenizerDefaultConfig = $.extend({}, TokenizerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTokenizerSetup"] !== undefined) {
-        Metro.tokenizerSetup(globalThis["metroTokenizerSetup"]);
+    if (typeof globalThis.metroTokenizerSetup !== "undefined") {
+        Metro.tokenizerSetup(globalThis.metroTokenizerSetup);
     }
 
-    Metro.Component('tokenizer', {
-        init: function( options, elem ) {
+    Metro.Component("tokenizer", {
+        init: function (options, elem) {
             this._super(elem, options, TokenizerDefaultConfig, {
                 // define instance vars here
-                originalText: ""
+                originalText: "",
             });
             return this;
         },
 
-        _create: function(){
-            var element = this.element, o = this.options;
-            this.originalText = o.textToTokenize ? o.textToTokenize.trim() : element.text().trim().replace(/[\r\n\t]/gi, '').replace(/\s\s+/g, " ");
+        _create: function () {
+            const element = this.element;
+            const o = this.options;
+            this.originalText = o.textToTokenize
+                ? o.textToTokenize.trim()
+                : element
+                      .text()
+                      .trim()
+                      .replace(/[\r\n\t]/gi, "")
+                      .replace(/\s\s+/g, " ");
 
             this._createStructure();
-            this._fireEvent('tokenizer-create');
+            this._fireEvent("tokenizer-create");
         },
 
-        _tokenize: function(){
-            var that = this, element = this.element, o = this.options;
-            var index = 0, append, prepend;
+        _tokenize: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            let index = 0;
+            let append;
+            let prepend;
 
             element.clear().attr("aria-label", this.originalText);
 
-            $.each(this.originalText.split(o.splitter), function(i){
-                var symbol = this;
-                var isSpace = symbol === " ";
-                var token;
+            $.each(this.originalText.split(o.splitter), function (i) {
+                const isSpace = this === " ";
+                let token;
 
-                token = $("<"+o.tokenElement+">")
-                    .html(isSpace ? o.spaceSymbol : symbol)
+                token = $(`<${o.tokenElement}>`)
+                    .html(isSpace ? o.spaceSymbol : this)
                     .attr("aria-hidden", true)
                     .addClass(isSpace ? o.spaceClass : "")
-                    .addClass(isSpace && o.useTokenSymbol ? "" : "ts-"+symbol.replace(" ", "_"))
-                    .addClass(isSpace && o.useTokenIndex ? "" : "ti-" + (i + 1))
+                    .addClass(isSpace && o.useTokenSymbol ? "" : `ts-${this.replace(" ", "_")}`)
+                    .addClass(isSpace && o.useTokenIndex ? "" : `ti-${i + 1}`)
                     .addClass(o.tokenClass ? o.tokenClass : "")
                     .addClass(!isSpace ? o.clsToken : "");
 
@@ -84,29 +94,30 @@
                 element.append(token);
 
                 that._fireEvent("token-create", {
-                    token: token[0]
+                    token: token[0],
                 });
             });
 
             that._fireEvent("tokenize", {
                 tokens: element.children().items(),
-                originalText: this.originalText
+                originalText: this.originalText,
             });
         },
 
-        _createStructure: function(){
-            var element = this.element,  o = this.options;
+        _createStructure: function () {
+            const element = this.element;
+            const o = this.options;
             element.addClass(o.clsTokenizer);
             this._tokenize();
         },
 
-        tokenize: function(v){
+        tokenize: function (v) {
             this.originalText = v;
             this._tokenize();
         },
 
-        destroy: function(){
+        destroy: function () {
             this.element.remove();
-        }
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Calendar picker - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Calendar picker - Metro UI :: Popular HTML, CSS and JS library</title>
     <style>
-        body {
-            padding-top: 50px;
-        }
         .prepend {
             background: red!important;
         }
@@ -26,23 +23,23 @@
     <h1>Calendar picker test page</h1>
 
     <div>
-        <input data-role="calendar-picker" data-prepend="prepend" data-dialog-mode="true" data-overlay-color="#ff00ff">
-        <input data-role="calendar-picker" data-label="Select date:">
+<!--        <input data-role="calendar-picker" data-prepend="prepend" data-dialog-mode="true" data-overlay-color="#ff00ff">-->
+<!--        <input data-role="calendar-picker" data-label="Select date:">-->
     </div>
 
     <div class="example">
         <div class="row">
             <div class="cell-md-4">
-                <p>Default</p>
-                <input type="text" data-role="calendarpicker"  data-dialog-point="360">
+                <p>Calendar</p>
+                <div data-role="calendar" id="cal1"></div>
             </div>
             <div class="cell-md-4">
-                <p>%d %b %Y</p>
-                <input type="text" data-role="calendarpicker" value="1972/12/21" data-format="DD/MM/YYYY" data-dialog-point="360">
+                <p>DD, MMM YYYY</p>
+                <input type="text" data-role="calendar-picker" value="1972/12/21" data-format="DD, MMM YYYY" data-dialog-point="360">
             </div>
-            <div class="cell-md-4">
-                <p>%d %B %Y</p>
-                <input type="text" data-role="calendarpicker" data-format="%d %M %Y" data-dialog-point="360">
+            <div class="cell-md-4" lang="ua">
+                <p>DD/MM/YYYY</p>
+                <input type="text" data-role="calendar-picker" data-format="DD, MMM YYYY" data-dialog-point="360">
             </div>
         </div>
     </div>

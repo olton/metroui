@@ -8,20 +8,20 @@
     --pagination-page-item-color-hover: var(--default-color);
     --pagination-page-item-background-disabled: var(--default-background-disabled);
     --pagination-page-item-color-disabled: var(--default-color-disabled);
-    --pagination-page-item-background-active: #d4e2ff;
+    --pagination-page-item-background-active: rgba(217, 217, 217, 0.44);
     --pagination-page-item-color-active: var(--default-color);
     --pagination-page-item-border-color: var(--border-color);
-    --pagination-page-item-border-radius: 6px;
+    --pagination-page-item-border-radius: 4px;
 }
 
 .dark-side {
     --pagination-page-item-background: var(--default-background);
     --pagination-page-item-color: var(--default-color);
-    --pagination-page-item-background-hover: #2e436e;
+    --pagination-page-item-background-hover: rgba(106, 106, 106, 0.44);
     --pagination-page-item-color-hover: var(--default-color);
     --pagination-page-item-background-disabled: var(--default-background-disabled);
     --pagination-page-item-color-disabled: var(--default-color-disabled);
-    --pagination-page-item-background-active: #50a8ff;
+    --pagination-page-item-background-active: rgba(106, 106, 106, 0.44);
     --pagination-page-item-color-active: var(--default-color);
     --pagination-page-item-border-color: var(--border-color);
     --pagination-page-item-border-radius: 6px;
@@ -37,6 +37,7 @@
 }
 
 .pagination {
+    gap: 6px;
 
     .page-item {
         cursor: pointer;
@@ -44,8 +45,9 @@
         background-color: var(--pagination-page-item-background);
         color: var(--pagination-page-item-color);
         border: 1px solid var(--pagination-page-item-border-color);
-        margin: .25rem;
+        border-radius: var(--pagination-page-item-border-radius);
         transition: @transition-short;
+        overflow: hidden;
     }
 
     .page-link {
@@ -60,9 +62,17 @@
     }
 
     .page-item, .page-item.service {
-        &:hover {
-            background-color: var(--pagination-page-item-background-hover);
-            color: var(--pagination-page-item-color-hover);
+        @media (hover: hover) {
+            &:hover {
+                background-color: var(--pagination-page-item-background-hover);
+                color: var(--pagination-page-item-color-hover);
+            }
+        }
+        @media (hover: hover) {
+            &:active {
+                background-color: var(--pagination-page-item-background-hover);
+                color: var(--pagination-page-item-color-hover);
+            }
         }
     }
 
@@ -71,10 +81,20 @@
         cursor: default;
         border-color: @transparent;
 
-        &:hover {
-            background-color: var(--pagination-page-item-background);
-            color: var(--pagination-page-item-color);
-            border-color: @transparent;
+        @media (hover: hover) {
+            &:hover {
+                background-color: var(--pagination-page-item-background);
+                color: var(--pagination-page-item-color);
+                border-color: @transparent;
+            }
+        }
+
+        @media (hover: none) {
+            &:active {
+                background-color: var(--pagination-page-item-background);
+                color: var(--pagination-page-item-color);
+                border-color: @transparent;
+            }
         }
     }
 
@@ -98,7 +118,7 @@
 
 .pagination {
     &.no-gap {
-        margin: 0 0 1rem 0;
+        gap: 0;
         .page-item {
             margin: -1px;
         }
@@ -138,3 +158,40 @@
         }
     }
 }
+
+.short-pagination {
+    display: flex;
+    gap: 6px;
+}
+
+each(@normalColors, {
+    @lightColor: "light-@{value}";
+    @activeColor: "sat-@{value}";
+    
+    .pagination.@{value} {
+        .page-item {
+            --pagination-page-item-background: @@lightColor;
+            --pagination-page-item-color: @@activeColor;
+            --pagination-page-item-border-color: @@activeColor;
+            
+            @media (hover: hover) {
+                &:hover {
+                    --pagination-page-item-background-hover: @@activeColor;
+                    --pagination-page-item-color-hover: #ffffff;
+                }
+            }
+            
+            @media (hover: none) {
+                &:active {
+                    --pagination-page-item-background-hover: @@activeColor;
+                    --pagination-page-item-color-hover: #ffffff;
+                }
+            }
+            
+            &.active {
+                --pagination-page-item-background-active: @@activeColor;
+                --pagination-page-item-color-active: #ffffff;
+            }
+        }
+    }
+})

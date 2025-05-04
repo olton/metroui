@@ -8,21 +8,19 @@
 }
 
 .dark-side {
-    --badge-background: #F8F8F8;
-    --badge-color: #191919;
+    --badge-background: #2b2d30;
+    --badge-color: #F8F8F8;
 }
 
 .badge {
-    position: absolute;
+    position: relative;
     z-index: 1;
-    top: 0;
-    right: 0;
     background-color: var(--badge-background);
     color: var(--badge-color);
     border-radius: var(--badge-border-radius);
-    padding: .25em .4em;
-    font-size: 75%;
-    font-weight: 700;
+    padding: .2em .4em .3em;
+    font-size: 10px;
+    font-weight: 500;
     line-height: 1;
     text-align: center;
     white-space: nowrap;
@@ -30,41 +28,17 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    cursor: default;
 
-    .translateY(-50%);
-    .translateX(50%);
-}
-
-.brand,
-.app-bar-item,
-.app-bar-menu > li > a,
-.h-menu > li > a,
-.v-menu > li > a
-{
-    .badge {
-        .translateY(0);
-        .translateX(0);
+    &.corner {
+        position: absolute;
+        top: 2px;
+        right: 2px;
     }
-}
-
-.d-menu > li > a {
-    .badge {
-        transform: translateX(10px);
-    }
-}
-
-.badge {
-    &.inline {
-        position: relative;
-        display: inline-block;
-        right: auto;
-        top: -1px;
-        .translateY(0);
-        .translateX(0);
-    }
-
-    &.inside {
-        .translateY(0);
-        .translateX(0);
+    &.corner-outside {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
     }
 }

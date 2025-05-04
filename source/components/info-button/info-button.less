@@ -1,80 +1,89 @@
 @import (once) "../../include/vars";
-@import (once) "../../include/mixins";
+
+:root {
+    --info-button-border-radius: 4px;
+    --info-button-border-color: var(--border-color);
+    --info-button-background: #F8F8F8;
+    --info-button-color: #191919;
+    --info-button-background-secondary: #ffffff;
+    --info-button-color-secondary: #000000;
+    --info-button-background-hover: #dcdcdc;
+    --info-button-color-hover: #474747;
+}
+
+.dark-side {
+    --info-button-background: #2e2e2e;
+    --info-button-color: #F8F8F8;
+    --info-button-background-secondary: var(--default-background);
+    --info-button-color-secondary: var(--default-color);
+    --info-button-background-hover: #373737;
+    --info-button-color-hover: #bfbfbf;
+}
 
 .info-button {
     border: 1px solid var(--border-color);
-    background-color: darken(@light, 5%);
+    border-radius: var(--info-button-border-radius);
+    background: var(--info-button-background);
+    color: var(--info-button-color);
     overflow: hidden;
     position: relative;
+    display: inline-flex;
     align-items: center;
-    display: inline-block;
     width: auto;
     height: 36px;
-    line-height: 1;
-    .clear();
-
-    .button {
-        font-weight: 400;
-        text-align: center;
-        white-space: nowrap;
-        vertical-align: middle;
-        user-select: none;
-        border: 1px solid transparent;
-        padding: 0 .75rem;
-        font-size: .875rem;
-        line-height: 34px;
-        height: 36px;
-        transition: @transition-short;
-        background-color: darken(@light, 5%);
-        color: @dark;
-        cursor: pointer;
-        outline: none;
-        position: relative;
-    }
-
-    .button, .info {
-        display: block;
-        float: left;
-        border-right: none;
-        height: 100%;
-        line-height: 32px;
-        position: relative;
-
-        &:active, &:focus {
-            box-shadow: none!important;
-        }
-    }
-
-    .button {
-        background-color: inherit;
-        color: inherit;
-        &:hover {
-            background-color: @hoverBackground;
-        }
-    }
-    .info {
-        font-size: 12px;
-        background-color: #FEFEFE;
-        color: @dark;
-        padding: 0 .625rem;
-        text-decoration: none;
-        font-weight: 600;
-        line-height: 34px;
-
-        &:hover {
-            color: @linkColorHover;
-        }
-    }
-
-    a.info:hover {
-        color: @dark;
-    }
-
-    .button .icon {
-        margin-right: 4px;
-    }
-}
-
-a.info-button {
     text-decoration: none;
+    line-height: 1;
+    transition: @transition-base;
+    padding: 0;
+    cursor: pointer;
+    gap: 0;
+
+    .title, .value {
+        font-size: 14px;
+        font-weight: 400;
+        text-decoration: none;
+        height: 100%;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        padding: 0 .75rem;
+        margin: 0;
+        color: inherit;
+        transition: @transition-base;
+    }
+
+    .icon {
+        margin: 0 .5rem 0 0;
+    }
+
+    .value {
+        background: var(--info-button-background-secondary);
+        color: var(--info-button-color-secondary);
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    &:hover {
+        .title {
+            background: var(--info-button-background-hover);
+            color: var(--info-button-color-hover);
+        }
+    }
 }
+
+each(@accentColors, {
+    @color: "@{value}Color";
+    @dark-color: "@{value}ColorDark";
+
+    .info-button.@{value} {
+        .title {
+            background: @@color;
+            color: #ffffff;
+        }
+        &:hover {
+            .title {
+                background: @@dark-color!important;
+            }
+        }
+    }
+})

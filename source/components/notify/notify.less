@@ -1,5 +1,19 @@
 @import (once) "../../include/vars";
-@import (once) "../../include/mixins";
+
+:root {
+    --notify-container-background: transparent;
+    --notify-border-radius: 4px;
+    --notify-border-color: #e8e8e8;
+    --notify-background: #ffffff;
+    --notify-color: #191919;
+}
+
+.dark-side {
+    --notify-container-background: transparent;
+    --notify-border-color: #4a4d51;
+    --notify-background: #26282e;
+    --notify-color: #dbdfe7;
+}
 
 .notify-container {
     background-color: @transparent;
@@ -29,19 +43,22 @@
 }
 
 .notify {
-    display: block;
-    background-color: @white;
-    color: @dark;
-    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+    background-color:var(--notify-background);
+    color: var(--notify-color);
+    padding: .5rem 1rem;
     margin: .25rem;
     border: 1px solid var(--border-color);
     cursor: pointer;
+    border-radius: var(--notify-border-radius);
+    box-shadow: 0 1px 3px 0 var(--shadow-color-normal), 0 1px 2px -1px var(--shadow-color-normal);
 }
 
 .notify-title {
     font-size: 1rem;
     font-weight: 500;
-    margin-bottom: .5rem;
+    margin-bottom: 4px;
 }
 
 .notify-message {

@@ -1,46 +1,45 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
 
-    var SidenavCounterDefaultConfig = {
+    let SidenavCounterDefaultConfig = {
         compacted: false,
         toggle: null,
         expandPoint: "fs",
         onMenuItemClick: Metro.noop,
         onCollapse: Metro.noop,
         onExpand: Metro.noop,
-        onSidenavCreate: Metro.noop
+        onSidenavCreate: Metro.noop,
     };
 
-    Metro.sidenavCounterSetup = function (options) {
+    Metro.sidenavCounterSetup = (options) => {
         SidenavCounterDefaultConfig = $.extend({}, SidenavCounterDefaultConfig, options);
     };
 
-    if (typeof window["metroSidenavCounterSetup"] !== undefined) {
-        Metro.sidenavCounterSetup(window["metroSidenavCounterSetup"]);
+    if (typeof globalThis.metroSidenavCounterSetup !== "undefined") {
+        Metro.sidenavCounterSetup(globalThis.metroSidenavCounterSetup);
     }
 
-    Metro.Component('sidenav-counter', {
-        init: function( options, elem ) {
+    Metro.Component("sidenav-counter", {
+        init: function (options, elem) {
             this._super(elem, options, SidenavCounterDefaultConfig, {
                 // define instance vars here
             });
             return this;
         },
 
-        _create: function(){
-            var that = this, element = this.element, o = this.options;
-
+        _create: function () {
             this._createStructure();
             this._createEvents();
 
-            this._fireEvent('sidenav-create');
+            this._fireEvent("sidenav-create");
         },
 
-        _createStructure: function(){
-            var that = this, element = this.element, o = this.options;
+        _createStructure: function () {
+            const element = this.element;
+            const o = this.options;
 
-            element.addClass("sidenav-counter")
+            element.addClass("sidenav-counter");
             if (Metro.utils.mediaExist(o.expandPoint)) {
                 element.addClass("expanded");
             }
@@ -51,34 +50,38 @@
             }
         },
 
-        _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+        _createEvents: function () {
+            const element = this.element;
+            const o = this.options;
 
             if (o.toggle) {
-                $(o.toggle).on("click", function() {
+                $(o.toggle).on("click", () => {
                     element.toggleClass("expanded");
                     element.toggleClass("handmade");
                     Metro.storage.setItem("sidenav-counter:compacted", !element.hasClass("expanded"));
-                })
+                });
             }
 
-            $(globalThis).on(Metro.events.resize, () => {
-                if (element.hasClass("handmade")) {
-                    return
-                }
-                if (Metro.utils.mediaExist(o.expandPoint)) {
-                    element.addClass("expanded");
-                } else {
-                    element.removeClass("expanded");
-                }
-            }, {ns: this.id})
+            $(globalThis).on(
+                Metro.events.resize,
+                () => {
+                    if (element.hasClass("handmade")) {
+                        return;
+                    }
+                    if (Metro.utils.mediaExist(o.expandPoint)) {
+                        element.addClass("expanded");
+                    } else {
+                        element.removeClass("expanded");
+                    }
+                },
+                { ns: this.id },
+            );
         },
 
-        changeAttribute: function(attr, newValue){
-        },
+        changeAttribute: (attr, newValue) => {},
 
-        destroy: function(){
+        destroy: function () {
             this.element.remove();
-        }
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

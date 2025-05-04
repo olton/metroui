@@ -1,1 +1,1 @@
-import "./cards.less"
+import "./cards.less";

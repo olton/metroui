@@ -1,6 +1,18 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --tabs-material-background: #ffffff;
+    --tabs-material-color: #191919;
+    --tabs-material-marker-color: #000000;
+}
+
+.dark-side {
+    --tabs-material-background: #343637;
+    --tabs-material-color: #dbdfe7;
+    --tabs-material-marker-color: #ff6211;
+}
+
 .tabs-material-wrapper {
     overflow: hidden;
     height: 48px;
@@ -19,8 +31,8 @@
     overflow-y: hidden;
     width: 100%;
     z-index: @zindex-fixed;
-    background-color: @white;
-    color: @dark;
+    background-color: var(--tabs-material-background);
+    color: var(--tabs-material-color);
     white-space: nowrap;
     list-style: none inside;
     line-height: 1;
@@ -95,7 +107,7 @@
         color: transparent;
         opacity: 1;
         z-index: 1;
-        background-color: @dark;
+        background-color: var(--tabs-material-marker-color);
     }
 
     .tab-badge {

@@ -30,8 +30,7 @@
 .mx-0 {margin-left: 0!important; margin-right: 0!important;}
 .my-0 {margin-top: 0!important; margin-bottom: 0!important;}
 
-.generate-padding-and-margin(@i, @k: 1) when (@k =< @i) {
-
+each(range(1, 20), .(@k) {
     @calculatedSize: unit(@k * @mpStep, @mpUnit);
     @calculatedSizeNegative: unit(-1 * @k * @mpStep, @mpUnit);
 
@@ -55,66 +54,54 @@
     .ml-@{k}-minus {margin-left: @calculatedSizeNegative !important;}
     .mt-@{k}-minus {margin-top: @calculatedSizeNegative !important;}
     .mb-@{k}-minus {margin-bottom: @calculatedSizeNegative !important;}
+})
 
-    .generate-padding-and-margin(@i, @k + 1);
-}
-.generate-padding-and-margin(20);
+each(@media-rules, {
+    @container (min-width: @value) {
+        .mx-auto-@{key} { margin-left: auto!important; margin-right: auto!important; }
+        .my-auto-@{key} { margin-top: auto!important; margin-bottom: auto!important; }
+        .ml-auto-@{key} {margin-left: auto!important;}
+        .mr-auto-@{key} {margin-right: auto!important;}
+        .mt-auto-@{key} {margin-top: auto!important;}
+        .mb-auto-@{key} {margin-bottom: auto!important;}
 
-each(@mediaBreakpointListMobile, .(@m){
-    @media screen and (min-width: @@m) {
+        .p-0-@{key} {padding: 0!important;}
+        .pl-0-@{key} {padding-left: 0!important;}
+        .pr-0-@{key} {padding-right: 0!important;}
+        .pt-0-@{key} {padding-top: 0!important;}
+        .pb-0-@{key} {padding-bottom: 0!important;}
+        .m-0-@{key} {margin: 0!important;}
+        .ml-0-@{key} {margin-left: 0!important;}
+        .mr-0-@{key} {margin-right: 0!important;}
+        .mt-0-@{key} {margin-top: 0!important;}
+        .mb-0-@{key} {margin-bottom: 0!important;}
 
-        .mx-auto-@{m} {
-            margin-left: auto!important;
-            margin-right: auto!important;
-        }
-
-        .ml-auto-@{m} {margin-left: auto!important;}
-        .mr-auto-@{m} {margin-right: auto!important;}
-        .mt-auto-@{m} {margin-top: auto!important;}
-        .mb-auto-@{m} {margin-bottom: auto!important;}
-
-        .p-0-@{m} {padding: 0!important;}
-        .pl-0-@{m} {padding-left: 0!important;}
-        .pr-0-@{m} {padding-right: 0!important;}
-        .pt-0-@{m} {padding-top: 0!important;}
-        .pb-0-@{m} {padding-bottom: 0!important;}
-        .m-0-@{m} {margin: 0!important;}
-        .ml-0-@{m} {margin-left: 0!important;}
-        .mr-0-@{m} {margin-right: 0!important;}
-        .mt-0-@{m} {margin-top: 0!important;}
-        .mb-0-@{m} {margin-bottom: 0!important;}
-
-        .generate-indents(@j, @k: 0) when (@k =< @j) {
-
+        each(range(1, 20), .(@k) {
             @calculatedSize: unit(@k * @mpStep, @mpUnit);
             @calculatedSizeNegative: unit(-1 * @k * @mpStep, @mpUnit);
 
+            .p-@{k}-@{key} {padding: @calculatedSize !important;}
+            .pr-@{k}-@{key} {padding-right: @calculatedSize !important;}
+            .pl-@{k}-@{key} {padding-left: @calculatedSize !important;}
+            .pt-@{k}-@{key} {padding-top: @calculatedSize !important;}
+            .pb-@{k}-@{key} {padding-bottom: @calculatedSize !important;}
+            .px-@{k}-@{key} {padding-left: @calculatedSize!important; padding-right: @calculatedSize!important;}
+            .py-@{k}-@{key} {padding-top: @calculatedSize!important; padding-bottom: @calculatedSize!important;}
 
-            .p-@{k}-@{m} {padding: @calculatedSize !important;}
-            .pr-@{k}-@{m} {padding-right: @calculatedSize !important;}
-            .pl-@{k}-@{m} {padding-left: @calculatedSize !important;}
-            .pt-@{k}-@{m} {padding-top: @calculatedSize !important;}
-            .pb-@{k}-@{m} {padding-bottom: @calculatedSize !important;}
-            .px-@{k}-@{m} {padding-left: @calculatedSize!important; padding-right: @calculatedSize!important;}
-            .py-@{k}-@{m} {padding-top: @calculatedSize!important; padding-bottom: @calculatedSize!important;}
+            .m-@{k}-@{key} {margin: @calculatedSize !important;}
+            .mr-@{k}-@{key} {margin-right: @calculatedSize !important;}
+            .ml-@{k}-@{key} {margin-left: @calculatedSize !important;}
+            .mt-@{k}-@{key} {margin-top: @calculatedSize !important;}
+            .mb-@{k}-@{key} {margin-bottom: @calculatedSize !important;}
+            .mx-@{k}-@{key} {margin-left: @calculatedSize!important; margin-right: @calculatedSize!important;}
+            .my-@{k}-@{key} {margin-top: @calculatedSize!important; margin-bottom: @calculatedSize!important;}
 
-            .m-@{k}-@{m} {margin: @calculatedSize !important;}
-            .mr-@{k}-@{m} {margin-right: @calculatedSize !important;}
-            .ml-@{k}-@{m} {margin-left: @calculatedSize !important;}
-            .mt-@{k}-@{m} {margin-top: @calculatedSize !important;}
-            .mb-@{k}-@{m} {margin-bottom: @calculatedSize !important;}
-            .mx-@{k}-@{m} {margin-left: @calculatedSize!important; margin-right: @calculatedSize!important;}
-            .my-@{k}-@{m} {margin-top: @calculatedSize!important; margin-bottom: @calculatedSize!important;}
-
-            .m-@{k}-@{m}-minus {margin: @calculatedSizeNegative !important;}
-            .mr-@{k}-@{m}-minus {margin-right: @calculatedSizeNegative !important;}
-            .ml-@{k}-@{m}-minus {margin-left: @calculatedSizeNegative !important;}
-            .mt-@{k}-@{m}-minus {margin-top: @calculatedSizeNegative !important;}
-            .mb-@{k}-@{m}-minus {margin-bottom: @calculatedSizeNegative !important;}
-
-            .generate-indents(@j, (@k + 1));
-        }
-        .generate-indents(20);
-
+            .m-@{k}-@{key}-minus {margin: @calculatedSizeNegative !important;}
+            .mr-@{k}-@{key}-minus {margin-right: @calculatedSizeNegative !important;}
+            .ml-@{k}-@{key}-minus {margin-left: @calculatedSizeNegative !important;}
+            .mt-@{k}-@{key}-minus {margin-top: @calculatedSizeNegative !important;}
+            .mb-@{k}-@{key}-minus {margin-bottom: @calculatedSizeNegative !important;}
+        })
     }
 })
+

@@ -1,11 +1,25 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --material-input-border-color: var(--border-color);
+    --material-input-border-color-hover: #cacaca;
+    --material-input-color: #191919;
+    --material-input-placeholder-color: #bdbdbd;
+}
+
+.dark-side {
+    --material-input-border-color: var(--border-color);
+    --material-input-border-color-hover: #686c71;
+    --material-input-color: #dbdfe7;
+    --material-input-placeholder-color: #dbdfe7;
+}
+
 .input-material {
     position: relative;
     min-width: 196px;
     height: 48px;
-    display: inline-block;
+    display: flex;
     margin: 0;
     width: 100%;
     border: none;
@@ -17,16 +31,31 @@
         right: 0;
         bottom: 8px;
         border: 0;
-        border-bottom: 2px var(--border-color) solid;
+        border-bottom: 2px var(--material-input-border-color) solid;
         background-color: transparent;
         outline: none;
         font-size: 16px;
-        padding-bottom: 8px;
+        padding-bottom: 4px;
         padding-left: 0;
         width: 100%;
         z-index: 2;
         height: 28px;
         box-shadow: none!important;
+        color: var(--material-input-color);
+        .transition(all, .3s, linear);
+
+        &::-ms-clear {
+            display: none;
+        }
+        &::-ms-reveal {
+            display: none;
+        }
+        &::-webkit-clear-button {
+            display: none;
+        }
+        &::-webkit-inner-spin-button {
+            height: 100%;
+        }
     }
 
     hr {
@@ -36,8 +65,8 @@
         width: 0;
         opacity: 0;
         height: 3px;
-        background-color: @gray;
-        bottom: -4px;
+        background-color: var(--material-input-border-color-hover);
+        bottom: 4px;
         z-index: 2;
         .transition(all, .3s, linear);
     }
@@ -47,20 +76,22 @@
         display: block;
         z-index: 1;
         color: inherit;
-        font-size: 12px;
     }
 
     .label {
         opacity: 0;
-        top: 16px;
+        top: 12px;
         left: 0;
         .transition(all, .3s, linear);
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: 700;
     }
 
     .informer {
         opacity: 0;
         bottom: 12px;
-        font-size: 12px;
+        font-size: 10px;
         .transition(all, .3s, linear);
     }
 
@@ -70,7 +101,7 @@
         left: 0;
         z-index: 1;
         opacity: 1;
-        color: @gray;
+        color: var(--material-input-placeholder-color);
         .transition(all, .3s, linear);
     }
 
@@ -81,16 +112,84 @@
     &.full-size {
         width: 100%;
     }
+    
+    .buttons {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+        padding: 0 2px;
+        margin-left: auto;
+        z-index: 3;
+    }
 
-    input:hover {
-        border-color: var(--border-color);
+    .button {
+        background-color: transparent;
+        border-color: transparent;
+        color: var(--input-color);
+        height: 30px;
+        width: 30px;
+        border: 1px solid var(--input-border-color);
+        font-size: var(--input-font-size);
+        padding: 0;
+
+        &:focus, &:active {
+            box-shadow: none!important;
+        }
+    }
+
+    .input-clear-button, .input-reveal-button, .input-search-button {
+        font-family: "Segoe UI Symbol", serif;
+        background-color: transparent;
+        font-size: var(--input-font-size);
+        .hide-element();
+    }
+
+    &:focus, &.focused, &:hover {
+        input {
+            border-color: var(--material-input-border-color-hover);
+        }
+        .input-clear-button, .input-reveal-button {
+            .show-element();
+        }
+    }
+
+    &.disabled .buttons {
+        button {
+            background-color: transparent;
+            color: var(--input-disabled-color);
+        }
+    }
+    
+    &.invalid {
+        hr {
+            background-color: var(--input-invalid-color);
+        }
+        input {
+            border-color: var(--input-invalid-color);
+        }
+        .informer, .label, .icon {
+            color: var(--input-invalid-color);
+        }
+    }
+    
+    &.valid {
+        hr {
+            background-color: var(--input-valid-color);
+        }
+        input {
+            border-color: var(--input-valid-color);
+        }
+        .informer, .label, .icon {
+            color: var(--input-valid-color);
+        }
     }
 }
 
 .input-material {
     &.with-icon {
         margin-left: 32px;
-        width: ~"calc(100% - 32px)";
+        width: calc(100% - 32px);
 
         .icon {
             width: 24px;
@@ -107,15 +206,13 @@
 
             img {
                 width: 100%;
-                max-width: 100%;
                 height: 100%;
-                max-height: 100%;
+                object-fit: cover;
             }
-
         }
 
         &.full-size {
-            width: ~"calc(100% - 32px) !important";
+            width: calc(100% - 32px) !important;
         }
     }
 }
@@ -125,34 +222,34 @@
         border-bottom: 0;
     }
 
-    input:focus ~ hr {
-        opacity: 1;
-        width: 100%;
-        .transition(all, .3s, linear);
-    }
+    input:focus {
+        & ~ hr {
+            opacity: 1;
+            width: 100%;
+            .transition(all, .3s, linear);
+        }
 
-    input:focus ~ .label {
-        opacity: 1;
-        top: 0;
-        .transition(all, .3s, linear);
-    }
-
-    input:focus  {
         &::-webkit-input-placeholder {
             opacity: 0;
             .translateX(100%);
             .transition(all, .2s, linear);
         }
+        
+        & ~ .informer {
+            opacity: 1;
+            bottom: -.75rem;
+            .transition(all, .3s, linear);
+        }
+        
+        & ~ .icon {
+            opacity: 1;
+            .transition(all, .3s, linear);
+        }
     }
 
-    input:focus ~ .informer {
+    input:focus ~ .label, input:not(:placeholder-shown) ~ .label {
         opacity: 1;
-        bottom: -.75rem;
-        .transition(all, .3s, linear);
-    }
-
-    input:focus ~ .icon {
-        opacity: 1;
+        top: -2px;
         .transition(all, .3s, linear);
     }
 

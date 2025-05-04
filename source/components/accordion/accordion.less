@@ -25,13 +25,15 @@
         margin: 1px 0;
 
         & > .heading {
-            display: block;
+            display: flex;
+            align-items: center;
             position: relative;
             padding: 8px 16px;
             background-color: var(--accordion-heading-background);
             color: var(--accordion-heading-color);
             cursor: pointer;
             .ellipsis();
+            border-radius: 6px;
         }
 
         & > .content {
@@ -46,18 +48,20 @@
 
         &::before {
             line-height: 1;
-            display: block;
-            content: "\203A";
+            display: flex;
+            content: "⯈";
             position: absolute;
             left: 0;
-            top: 0;
-            font-size: 32px;
+            top: 3px;
+            font-size: 16px;
             width: 34px;
             height: 34px;
             text-align: center;
             transform: rotate(0);
             transition: transform @transition-speed;
-            transform-origin: 50% 50%;
+            transform-origin: center center;
+            align-items: center;
+            justify-content: center;
         }
     }
 
@@ -107,13 +111,15 @@
             font-size: 16px;
             background-color: var(--accordion-heading-background);
             color: var(--accordion-heading-color);
+            border-radius: 1rem;
 
             &::after {
                 display: block;
                 content: "\203A";
                 position: absolute;
                 right: 16px;
-                top: 8px;
+                top: 50%;
+                margin-top: -20px;
                 font-size: 32px;
                 width: 40px;
                 height: 40px;
@@ -125,12 +131,7 @@
             }
         }
 
-        .frame + .frame {
-            border-top: 1px var(--border-color) solid;
-        }
-
         & > .frame > .content {
-            padding: 16px;
             font-size: 14px;
         }
 

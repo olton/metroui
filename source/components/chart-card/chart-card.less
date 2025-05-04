@@ -1,0 +1,64 @@
+@import "../../include/vars";
+
+:root {
+    --chart-card-border-radius: 6px;
+    --chart-card-border-color: var(--border-color);
+    --chart-card-background: var(--default-background);
+    --chart-card-color: var(--default-color);
+}
+
+.dark-side {
+    --chart-card-border-color: var(--border-color);
+    --chart-card-background: var(--default-background);
+    --chart-card-color: var(--default-color);
+}
+
+.chart-card {
+    display: flex;
+    border-radius: var(--chart-card-border-radius);
+    flex-flow: row nowrap;
+    background: var(--chart-card-background);
+    color: var(--chart-card-color);
+    border: 1px solid var(--chart-card-border-color);
+    padding: 1rem;
+    position: relative;
+
+    .content, .chart {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        width: 50%;
+    }
+
+    .content {
+        flex-flow: column nowrap;
+    }
+
+    .chart {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .title {
+        font-size: 16px;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .subtitle {
+        font-size: 12px;
+        font-weight: 400;
+        white-space: wrap;
+        border-top: 1px solid var(--chart-card-border-color);
+        padding-top: .5rem;
+    }
+
+    .value {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 0 0 4px 0;
+        white-space: nowrap;
+    }
+}

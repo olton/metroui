@@ -4,72 +4,325 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
 
-    <title>Test Window - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Window - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        body{
+            height: 100vh;
+        }
+        
+        .explorer {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 100px);
+            overflow: hidden;
+            padding: 16px;
+            gap: 0;
+            background: url('images/bg-light.avif') no-repeat center center;
+            background-size: cover;
+        }
+        
+        .dark-side {
+            .explorer {
+                background: url('images/bg-dark.avif') no-repeat center center;
+                background-size: cover;
+            }
+        }
+        
+        .weather {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            
+            .temperature {
+                font-size: 12px;
+                font-weight: 500;
+            }
+            .state {
+                font-size: 12px;
+            }
+        }
+        
+        .shortcut {
+            background: transparent;
+            &:hover {
+                background: rgba(255,255,255,0.5);
+            }
+        }
+        
+        .dark-side {
+            .shortcut {
+                &:hover {
+                    background: rgba(0,0,0,0.5);
+                }
+            }
+        }
+    </style>
 </head>
-<body class="m4-cloak">
+<body class="cloak">
 
-<h1>Window test page</h1>
+<template id="browser">
+    <div class="pos-sticky p-1" style="background: var(--window-caption-background)">
+        <div class="d-flex flex-row flex-nowrap">
+            <div class="toolbar flex-align-center pl-1 pr-1">
+                <button class="tool-button cycle small" onclick="$(this).closest('.window').find('iframe')[0].contentWindow.history.go(-1)"><span class="mif-arrow-left"></span></button>
+                <button class="tool-button cycle small" onclick="$(this).closest('.window').find('iframe')[0].contentWindow.history.go(1)"><span class="mif-arrow-right"></span></button>
+                <button class="tool-button cycle small" onclick="$(this).closest('.window').find('iframe').attr('src', 'https://metroui.org.ua')"><span class="mif-home"></span></button>
+            </div>
+            <input type="text" class="pill-input" data-role="input" data-prepend="<span class='mif-earth2'>" data-search-button="true" placeholder="Enter site address..." data-search-button-click="custom" data-on-search-button-click="browserSearchButtonClick" data-on-enter-click="browserSearchButtonClick">
+        </div>
+    </div>
+    <iframe src="about:blank" sandbox="allow-scripts allow-same-origin allow-modal" style="width: 100%; height: calc(100% - 42px); border: none;"></iframe>
+</template>
 
-<button class="button" onclick="createWindow()">Create window</button>
-<button class="button" onclick="getPosition()">Get position</button>
+<template id="youtube">
+    <iframe src="https://www.youtube.com/embed/Ya6UF1MiaTc?si=sYnSPU2ZMR7it8HS" style="width: 100%; height: 100%; border: none;"></iframe>
+</template>
 
-<!--<div id="win1" data-role="window" class="p-2" data-on-drag-start="dragStart" data-on-resize-start="resizeStart" data-custom-buttons="customButtons">-->
-<!--    This is a simple window-->
-<!--</div>-->
+<nav data-role="appbar" class="border-bottom bd-default" data-expand-point="fs">
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader2">Window and TaskBar Demo</div>
+    </div>
+    <div class="app-bar-item-static ml-auto">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="explorer">
+    <span class="shortcut" data-action="calendar">
+        <span class="icon">
+            <span class="mif-calendar"></span>
+        </span>
+        <span class="caption">Calendar</span>
+    </span>
+
+    <span class="shortcut" data-action="browser">
+        <span class="icon">
+            <span class="mif-chrome"></span>
+        </span>
+        <span class="caption">Browser</span>
+    </span>
+
+    <span class="shortcut" data-action="youtube">
+        <span class="icon">
+            <span class="mif-youtube-play"></span>
+        </span>
+        <span class="caption">Youtube</span>
+    </span>
+
+    <span class="shortcut" data-action="files">
+        <span class="icon">
+            <span class="mif-folder"></span>
+        </span>
+        <span class="caption">Files</span>
+    </span>
+
+    <span class="shortcut" data-action="download">
+        <span class="icon">
+            <span class="mif-folder-download fg-green"></span>
+        </span>
+        <span class="caption">Download</span>
+    </span>
+</div>
+
+<div data-role="task-bar" id="taskbar" data-on-task-click="taskClick"></div>
 
 <script src="../lib/metro.js"></script>
 <script>
-    var customButtonHandler = function(btn){
-        console.log($(btn).attr("data-custom-id"));
-        console.log($(btn).attr("data-special-attr"));
-    }
+    // var customButtonHandler = function(btn){
+    //     console.log($(btn).attr("data-custom-id"));
+    //     console.log($(btn).attr("data-special-attr"));
+    // }
+    //
+    // var customButtons = [
+    //     {
+    //         html: "<span class='mif-cog'></span>",
+    //         onclick: customButtonHandler,
+    //         cls: "alert",
+    //         attr: {
+    //             "data-custom-id": "myID_1",
+    //             dataSpecialAttr: "additional attribute"
+    //         }
+    //     }
+    // ];
 
-    var customButtons = [
-        {
-            html: "<span class='mif-cog'></span>",
-            onclick: customButtonHandler,
-            cls: "alert",
-            attr: {
-                "data-custom-id": "myID_1",
-                dataSpecialAttr: "additional attribute"
-            }
+    function browserSearchButtonClick(address, button){
+        if (!address.startsWith("http")){
+            address = "https://" + address;
         }
-    ];
+        const iframe = $(button).closest(".window").find("iframe");
+        const input = $(button).closest(".input").find("input");
+        input.val(address);
+        iframe.attr("src", address);
+    }
+    
+    function createWindow({title, icon, content, status, place = "center", min = true, max = true, close = true, resize = true, width = 400, height = "auto", clsContent = "", clsWindow = ""} = {}) {
+        $(".window").css({ zIndex: 1 })
 
-    function createWindow() {
-        Metro.window.create({
-            cls         : "p-0",
-            title       : "AGREGAR INFORMACION",
-            clsCaption  : 'bg-orange',
-            btnMin      : true,
+        const window = Metro.window.create({
+            title,
+            btnMin      : min,
+            btnMax      : max,
+            btnClose    : close,
             shadow      : true,
-            resizable   : true,
-            btnMax      : false,
-            icon        : "<span class='mif-file-empty'></spam>",
-            onCaptionDblClick : function(){  } ,
-            btnClose    : true,
-            content     : "<div class='text-bold'>Hello World</div>"
+            resizable   : resize,
+            icon,
+            dragArea    : ".explorer",
+            width,
+            height,
+            place,
+            content     : `
+                <div class="h-100">
+                ${content}
+                </div>
+            `,
+            status: `<div></div>`,
+            closeAction: Metro.actions.NONE,
+            clsContent,
+            clsWindow,
+            onClose: function(){
+                $(window).zoomOut(300, ()=>{
+                    taskBar.removeTask(window);
+                });                
+            },
+            onWindowClick: function(){
+                $(".window").css({ zIndex: 1 })
+                $(window).css({
+                    zIndex: 2
+                });
+                taskBar.activateTask(window);
+            },
+            onMinimize: function(){
+                window
+                    .data("state", "minimized")
+                    .data("top", window.position().top)
+                    .data("left", window.position().left)
+                    .animate({
+                    draw: {
+                        top: window.parent().height(),
+                        left: window.parent().width() / 2 - 100
+                    },
+                    dur: 300,
+                })
+            },
         });
+        
+        window.css({
+            zIndex: 2
+        })
+        
+        taskBar.addTask({
+            title,
+            icon,
+            ref: window
+        }, true);
     }
 
-    function resizeStart(){
-        console.log(arguments);
-    }
-
-    function dragStart(pos, context) {
-        console.log(pos, context);
-    }
-
-    function getPosition(){
-        var pos = Metro.getPlugin("#win1", "window").win.pos();
-        console.log(pos);
-    }
-
+    var taskBar;
+    
     $(function(){
-        createWindow();
+        taskBar = Metro.getPlugin("#taskbar", "taskbar");
+
+        taskBar.addWidget(`
+            <div class="weather">
+                <span class="mif-cloud mif-2x"></span>
+                <div>
+                    <div class="temperature">+25&deg;C</div>                
+                    <div class="state">Mostly Cloudy</div>                
+                </div>                
+            </div>
+        `);
+        
+        taskBar.addTask({
+            title: "Start",
+            icon: "<img src='images/windows.png' alt=''/>",
+            ref: "#start-menu"
+        });
+
+        taskBar.addToSystemTray("<span class='mif-cloud mif-2x'>")
+        taskBar.addToSystemTray("<span class='reduce-1'>ENG</span>")
+        taskBar.addToSystemTray("<span class='mif-network mif-2x'>")
+        taskBar.addToSystemTray("<span data-role='clock' data-show='column' style='--clock-font-size: 12px'>")
+        
+        const clsContent = "p-0 no-overflow";
+        
+        $(".shortcut").on("click", function (){
+            const action = $(this).attr("data-action");
+            switch (action) {
+                case "calendar":
+                    createWindow({
+                        title: "Calendar",
+                        icon: "<span class='mif-calendar'></span>",
+                        content: `<div data-role="calendar" data-wide-point="fs" data-buttons="today, clear"></div>`,
+                        max: false,
+                        resize: false,
+                        width: "auto",
+                    });
+                    break;
+                case "browser":
+                    createWindow({
+                        title: "Browser",
+                        icon: "<span class='mif-chrome'></span>",
+                        content: $("#browser").html(),
+                        clsContent,
+                        clsWindow: "bg-glassmorphism",
+                        width: 800,
+                        height: 600
+                    });
+                    break;
+                case "youtube":
+                    createWindow({
+                        title: "Youtube",
+                        icon: "<span class='mif-youtube-play'></span>",
+                        content: $("#youtube").html(),
+                        clsContent,
+                        width: 800,
+                        height: 600
+                    });
+                    break;
+                case "files":
+                    createWindow({
+                        title: "Files",
+                        icon: "<span class='mif-folder'></span>",
+                        content: "Files content"
+                    });
+                    break;
+                case "download":
+                    createWindow({
+                        title: "Download",
+                        icon: "<span class='mif-folder-download fg-green'></span>",
+                        content: "Download content",
+                        clsWindow: "bg-glassmorphism",
+                        width: 600,
+                        height: 400
+                    });
+                    break;
+            }
+        })
     })
 
+    function taskClick(task, ref){
+        const obj = $(ref);
+        
+        if (obj.hasClass("window")){
+            $(".window").css({ zIndex: 1 })
+            obj.css({ zIndex: 2 });
+            if (obj.data("state") === "minimized"){
+                obj.animate({
+                    draw: {
+                        top: obj.data("top"),
+                        left: obj.data("left")
+                    },
+                    dur: 300,
+                    onDone: function(){
+                        Metro.getPlugin(obj.find("[data-role=window]"), "window").min();
+                    }
+                })
+            }
+        }
+    }
+    
 </script>
 </body>
 </html>

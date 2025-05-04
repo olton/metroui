@@ -1,0 +1,35 @@
+@import "../include/vars"; 
+
+:root {
+    --stroke-width: 1px;
+}
+
+each(@normalColors, {
+    @dark-color: "dark-@{value}";
+    @light-color: "light-@{value}";
+    @sat-color: "sat-@{value}";
+
+
+    .stroke-light-@{value} {
+        color: transparent;
+        -webkit-text-stroke: var(--stroke-width) @@light-color;
+        text-stroke: var(--stroke-width) @@light-color;
+    }
+    .stroke-dark-@{value} {
+        color: transparent;
+        -webkit-text-stroke: var(--stroke-width) @@dark-color;
+        text-stroke: var(--stroke-width) @@dark-color;
+    }
+    .stroke-sat-@{value} {
+        color: transparent;
+        -webkit-text-stroke: var(--stroke-width) @@sat-color;
+        text-stroke: var(--stroke-width) @@sat-color;
+    }
+
+    .stroke-@{value} {
+        color: transparent;
+        -webkit-text-stroke: var(--stroke-width) @@value;
+        text-stroke: var(--stroke-width) @@value;
+    }
+
+})

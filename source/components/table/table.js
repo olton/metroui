@@ -1,12 +1,32 @@
-/* global Metro, setImmediate, METRO_LOCALE, Datetime, datetime */
-(function(Metro, $) {
-    'use strict';
+const TABLE_COL_OPTIONS = {
+    title: undefined,
+    format: undefined,
+    formatMask: undefined,
+    name: undefined,
+    colspan: null,
+    size: undefined,
+    sortable: false,
+    sortDir: undefined,
+    clsColumn: undefined,
+    cls: undefined,
+    show: true,
+    required: true,
+    field: undefined,
+    fieldType: undefined,
+    validator: undefined,
+    template: undefined,
+    type: "data",
+};
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
 
-    var Utils = Metro.utils;
-    var TableDefaultConfig = {
+    let TableDefaultConfig = {
+        caption: "",
+        cardMode: "",
         useCurrentSlice: false,
         showInspectorButton: false,
-        inspectorButtonIcon: "<span class='default-icon-equalizer'>",
+        inspectorButtonIcon: "🔧",
         tableDeferred: 0,
         templateBeginToken: "<%",
         templateEndToken: "%>",
@@ -14,13 +34,10 @@
         paginationIslandSize: 3,
         paginationShortTrack: 10,
 
-        locale: METRO_LOCALE,
-
         horizontalScroll: false,
         horizontalScrollStop: null,
         check: false,
         checkType: "checkbox",
-        checkStyle: 1,
         checkColIndex: 0,
         checkName: null,
         checkStoreKey: "TABLE:$1:KEYS",
@@ -32,8 +49,9 @@
 
         head: null,
         body: null,
-        static: false,
         source: null,
+
+        static: false,
 
         searchMinLength: 1,
         searchThreshold: 500,
@@ -142,19 +160,19 @@
         onViewGet: Metro.noop,
         onViewCreated: Metro.noop,
         onTableCreate: Metro.noop,
-        onSkip: Metro.noop
+        onSkip: Metro.noop,
     };
 
-    Metro.tableSetup = function(options){
+    Metro.tableSetup = (options) => {
         TableDefaultConfig = $.extend({}, TableDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTableSetup"] !== undefined) {
-        Metro.tableSetup(globalThis["metroTableSetup"]);
+    if (typeof globalThis.metroTableSetup !== "undefined") {
+        Metro.tableSetup(globalThis.metroTableSetup);
     }
 
-    Metro.Component('table', {
-        init: function( options, elem ) {
+    Metro.Component("table", {
+        init: function (options, elem) {
             this._super(elem, options, TableDefaultConfig, {
                 currentPage: 1,
                 pagesCount: 1,
@@ -175,13 +193,12 @@
                 inspector: null,
                 view: {},
                 viewDefault: {},
-                locale: Metro.locales["en-US"],
                 input_interval: null,
                 searchFields: [],
-                id: Utils.elementId('table'),
+                id: Metro.utils.elementId("table"),
                 sort: {
                     dir: "asc",
-                    colIndex: 0
+                    colIndex: 0,
                 },
                 service: [],
                 heads: [],
@@ -189,43 +206,41 @@
                 foots: [],
                 filteredItems: [],
                 currentSlice: [],
-                index: {}
+                index: {},
             });
 
             return this;
         },
 
-        _create: function(){
-            var that = this, element = this.element, o = this.options;
-            var id = Utils.elementId("table");
-            var table_component, table_container, activity;
+        _create: function () {
+            const element = this.element;
+            const o = this.options;
+            const id = Metro.utils.elementId("table");
+            let table_container;
 
-            if (!Utils.isValue(element.attr("id"))) {
-                element.attr("id", id);
+            if (!element.id()) {
+                console.warn("To use all table component features, please set an ID for the table element!");
+                element.id(id);
             }
 
-            if (Utils.isValue(Metro.locales[o.locale])) {
-                this.locale = Metro.locales[o.locale];
-            }
-
-            if (Utils.isValue(o.searchFields)) {
+            if (Metro.utils.isValue(o.searchFields)) {
                 this.searchFields = o.searchFields.toArray();
             }
 
-            if (Utils.isValue(o.head)) {
-                var _head = o.head;
-                o.head = Utils.isObject(o.head);
+            if (Metro.utils.isValue(o.head)) {
+                const _head = o.head;
+                o.head = Metro.utils.isObject(o.head);
                 if (!o.head) {
-                    console.warn("Head "+_head+" defined but not exists!");
+                    console.warn(`Head ${_head} defined but not exists!`);
                     o.head = null;
                 }
             }
 
-            if (Utils.isValue(o.body)) {
-                var _body = o.body;
-                o.body = Utils.isObject(o.body);
+            if (Metro.utils.isValue(o.body)) {
+                const _body = o.body;
+                o.body = Metro.utils.isObject(o.body);
                 if (!o.body) {
-                    console.warn("Body "+_body+" defined but not exists!");
+                    console.warn(`Body ${_body} defined but not exists!`);
                     o.body = null;
                 }
             }
@@ -239,92 +254,97 @@
                 o.rows = -1;
             }
 
-            table_component = $("<div>").addClass("table-component");
+            const table_component = $("<div>").addClass("table-component");
             table_component.insertBefore(element);
 
-            table_container = $("<div>").addClass("table-container").addClass(o.clsTableContainer).appendTo(table_component);
+            table_container = $("<div>")
+                .addClass("table-container")
+                .addClass(o.clsTableContainer)
+                .appendTo(table_component);
             element.appendTo(table_container);
 
             if (o.horizontalScroll === true) {
                 table_container.addClass("horizontal-scroll");
             }
-            if (!Utils.isNull(o.horizontalScrollStop) && Utils.mediaExist(o.horizontalScrollStop)) {
+            if (!Metro.utils.isNull(o.horizontalScrollStop) && Metro.utils.mediaExist(o.horizontalScrollStop)) {
                 table_container.removeClass("horizontal-scroll");
             }
 
             table_component.addClass(o.clsComponent);
 
-            this.activity =  $("<div>").addClass("table-progress").appendTo(table_component);
+            this.activity = $("<div>").addClass("table-progress").appendTo(table_component);
 
-            activity = $("<div>").appendTo(this.activity);
+            const activity = $("<div>").appendTo(this.activity);
             Metro.makePlugin(activity, "activity", {
                 type: o.activityType,
-                style: o.activityStyle
+                style: o.activityStyle,
             });
 
             if (o.showActivity !== true) {
                 this.activity.css({
-                    visibility: "hidden"
-                })
+                    visibility: "hidden",
+                });
             }
 
             this.component = table_component[0];
 
             if (o.source !== null) {
-
                 this._fireEvent("data-load", {
-                    source: o.source
+                    source: o.source,
                 });
 
-                var objSource = Utils.isObject(o.source);
+                const objSource = Metro.utils.isObject(o.source);
 
                 if (objSource !== false && $.isPlainObject(objSource)) {
-                    that._build(objSource);
+                    this._build(objSource);
                 } else {
-                    this.activity.show(function () {
+                    this.activity.show(() => {
                         fetch(o.source)
                             .then(Metro.fetch.status)
                             .then(Metro.fetch.json)
-                            .then(function(data){
-                                that.activity.hide();
+                            .then((data) => {
+                                this.activity.hide();
                                 if (typeof data !== "object") {
                                     throw new Error("Data for table is not a object");
                                 }
 
-                                that._fireEvent("data-loaded", {
+                                this._fireEvent("data-loaded", {
                                     source: o.source,
-                                    data: data
+                                    data: data,
                                 });
 
-                                that._build(data);
+                                this._build(data);
                             })
-                            .catch(function(error){
-                                that.activity.hide();
+                            .catch((error) => {
+                                this.activity.hide();
 
-                                that._fireEvent("data-load-error", {
+                                this._fireEvent("data-load-error", {
                                     source: o.source,
-                                    error: error
+                                    error: error,
                                 });
                             });
                     });
                 }
             } else {
-                that._build();
+                this._build();
             }
         },
 
-        _createIndex: function(){
-            var that = this, colIndex = this.options.checkColIndex;
-            setImmediate(function(){
-                that.items.forEach(function(v, i){
-                    that.index[v[colIndex]] = i;
+        _createIndex: function () {
+            const colIndex = this.options.checkColIndex;
+            setImmediate(() => {
+                this.items.forEach((v, i) => {
+                    this.index[v[colIndex]] = i;
                 });
             });
         },
 
-        _build: function(data){
-            var that = this, element = this.element, o = this.options;
-            var view, id = element.attr("id"), viewPath;
+        _build: function (data) {
+            const element = this.element;
+            const o = this.options;
+            let view;
+            const id = element.attr("id");
+            let viewPath;
 
             o.rows = +o.rows;
 
@@ -340,58 +360,62 @@
                 this.items = o.body;
             }
 
-            if (Utils.isValue(data)) {
+            if (Metro.utils.isValue(data)) {
                 this._createItemsFromJSON(data);
             } else {
-                this._createItemsFromHTML()
+                this._createItemsFromHTML();
             }
 
             // Create index
             this._createIndex();
 
             this.view = this._createView();
-            this.viewDefault = Utils.objectClone(this.view);
+            this.viewDefault = Metro.utils.objectClone(this.view);
 
             viewPath = o.viewSavePath.replace("$1", id);
 
             if (o.viewSaveMode.toLowerCase() === "client") {
-
                 view = Metro.storage.getItem(viewPath);
-                if (Utils.isValue(view) && Utils.objectLength(view) === Utils.objectLength(this.view)) {
+                if (
+                    Metro.utils.isValue(view) &&
+                    Metro.utils.objectLength(view) === Metro.utils.objectLength(this.view)
+                ) {
                     this.view = view;
 
                     this._fireEvent("view-get", {
                         source: "client",
-                        view: view
+                        view: view,
                     });
                 }
                 this._final();
-
             } else {
-
                 fetch(viewPath)
                     .then(Metro.fetch.status)
                     .then(Metro.fetch.json)
-                    .then(function(view){
-                        if (Utils.isValue(view) && Utils.objectLength(view) === Utils.objectLength(that.view)) {
-                            that.view = view;
-                            that._fireEvent("view-get", {
+                    .then((view) => {
+                        if (
+                            Metro.utils.isValue(view) &&
+                            Metro.utils.objectLength(view) === Metro.utils.objectLength(this.view)
+                        ) {
+                            this.view = view;
+                            this._fireEvent("view-get", {
                                 source: "server",
-                                view: view
+                                view: view,
                             });
                         }
-                        that._final();
+                        this._final();
                     })
-                    .catch(function(error){
-                        that._final();
-                        console.warn("Warning! Error loading view for table " + element.attr('id') + ": " + error);
+                    .catch((error) => {
+                        this._final();
+                        console.warn(`Warning! Error loading view for table ${element.attr("id")}: ${error}`);
                     });
             }
         },
 
-        _final: function(){
-            var element = this.element, o = this.options;
-            var id = element.attr("id");
+        _final: function () {
+            const element = this.element;
+            const o = this.options;
+            const id = element.attr("id");
 
             Metro.storage.delItem(o.checkStoreKey.replace("$1", id));
 
@@ -401,119 +425,138 @@
             this._createEvents();
 
             this._fireEvent("table-create", {
-                element: element
+                element: element,
             });
         },
 
-        _service: function(){
-            var o = this.options;
+        _service: function () {
+            const o = this.options;
 
             this.service = [
                 {
                     // Rownum
+                    ...TABLE_COL_OPTIONS,
                     title: o.rownumTitle,
-                    format: undefined,
-                    name: undefined,
-                    sortable: false,
-                    sortDir: undefined,
-                    clsColumn: "rownum-cell " + (o.rownum !== true ? "d-none" : ""),
-                    cls: "rownum-cell " + (o.rownum !== true ? "d-none" : ""),
-                    colspan: undefined,
-                    type: "rownum"
+                    clsColumn: `rownum-cell ${o.rownum !== true ? "d-none" : ""}`,
+                    cls: `rownum-cell ${o.rownum !== true ? "d-none" : ""}`,
+                    type: "rownum",
                 },
                 {
-                    // Check
-                    title: o.checkType === "checkbox" ? "<input type='checkbox' data-role='checkbox' class='table-service-check-all' data-style='"+o.checkStyle+"'>" : "",
-                    format: undefined,
-                    name: undefined,
-                    sortable: false,
-                    sortDir: undefined,
-                    clsColumn: "check-cell " + (o.check !== true ? "d-none" : ""),
-                    cls: "check-cell "+(o.check !== true ? "d-none" : ""),
-                    colspan: undefined,
-                    type: "rowcheck"
-                }
+                    // Checkbox
+                    ...TABLE_COL_OPTIONS,
+                    title:
+                        o.checkType === "checkbox"
+                            ? `<input type='checkbox' data-role='checkbox' class='table-service-check-all' data-style='${o.checkStyle}'>`
+                            : "",
+                    clsColumn: `check-cell ${o.check !== true ? "d-none" : ""}`,
+                    cls: `check-cell ${o.check !== true ? "d-none" : ""}`,
+                    type: "rowcheck",
+                },
             ];
         },
 
-        _createView: function(){
-            var view;
+        _createView: function () {
+            const view = {};
 
-            view = {};
-
-            $.each(this.heads, function(i){
-
-                if (Utils.isValue(this.cls)) {this.cls = this.cls.replace("hidden", "");}
-                if (Utils.isValue(this.clsColumn)) {this.clsColumn = this.clsColumn.replace("hidden", "");}
+            $.each(this.heads, function (i) {
+                if (Metro.utils.isValue(this.cls)) {
+                    this.cls = this.cls.replace("hidden", "");
+                }
+                if (Metro.utils.isValue(this.clsColumn)) {
+                    this.clsColumn = this.clsColumn.replace("hidden", "");
+                }
 
                 view[i] = {
-                    "index": i,
+                    index: i,
                     "index-view": i,
-                    "show": !Utils.isValue(this.show) ? true : this.show,
-                    "size": Utils.isValue(this.size) ? this.size : ""
-                }
+                    show: !Metro.utils.isValue(this.show) ? true : this.show,
+                    size: Metro.utils.isValue(this.size) ? this.size : "",
+                };
             });
 
             this._fireEvent("view-created", {
-                view: view
+                view: view,
             });
 
             return view;
         },
 
-        _createInspectorItems: function(table){
-            var that = this, o = this.options;
-            var j, tds = [], row;
-            var cells = this.heads;
+        _createInspectorItems: function (table) {
+            const that = this;
+            const o = this.options;
+            let j;
+            const tds = [];
+            let row;
+            const cells = this.heads;
 
             table.html("");
 
-            for (j = 0; j < cells.length; j++){
+            for (j = 0; j < cells.length; j++) {
                 tds[j] = null;
             }
 
-            $.each(cells, function(i){
+            $.each(cells, function (i) {
                 row = $("<tr>");
-                row.data('index', i);
-                row.data('index-view', i);
-                $("<td>").html("<input type='checkbox' data-style='"+o.checkStyle+"' data-role='checkbox' name='column_show_check[]' value='"+i+"' "+(Utils.bool(that.view[i]['show']) ? "checked" : "")+">").appendTo(row);
+                row.data("index", i);
+                row.data("index-view", i);
+                $("<td>")
+                    .html(
+                        `<input type='checkbox' data-style='${o.checkStyle}' data-role='checkbox' name='column_show_check[]' value='${i}' ${Metro.utils.bool(that.view[i].show) ? "checked" : ""}>`,
+                    )
+                    .appendTo(row);
                 $("<td>").html(`<div>${this.title}</div>`).appendTo(row);
-                $("<td>").html("<input type='number' data-role='spinner' name='column_size' value='"+that.view[i]['size']+"' data-index='"+i+"'>").appendTo(row);
-                $("<td>").html("" +
-                    "<button class='button square js-table-inspector-field-up' type='button'>↑</button>" +
-                    "<button class='button square js-table-inspector-field-down' type='button'>↓</button>" +
-                    "").appendTo(row);
-                tds[that.view[i]['index-view']] = row;
+                $("<td>")
+                    .html(
+                        `<input type='number' data-role='spinner' name='column_size' value='${that.view[i].size}' data-index='${i}'>`,
+                    )
+                    .appendTo(row);
+                $("<td>")
+                    .html(
+                        "" +
+                            "<button class='button square js-table-inspector-field-up' type='button'>↑</button>" +
+                            "<button class='button square js-table-inspector-field-down' type='button'>↓</button>" +
+                            "",
+                    )
+                    .appendTo(row);
+                tds[that.view[i]["index-view"]] = row;
             });
 
             //
-            for (j = 0; j < cells.length; j++){
+            for (j = 0; j < cells.length; j++) {
                 tds[j].appendTo(table);
             }
         },
 
-        _createInspector: function(){
-            var o = this.options;
-            var inspector, table_wrap, table, tbody, actions;
+        _createInspector: function () {
+            const o = this.options;
+            const strings = this.strings;
 
-            inspector = $("<div data-role='draggable' data-drag-element='.table-inspector-header' data-drag-area='body'>").addClass("table-inspector");
+            const inspector = $(
+                "<div data-role='draggable' data-drag-element='.table-inspector-header' data-drag-area='body'>",
+            ).addClass("table-inspector");
             inspector.attr("for", this.element.attr("id"));
 
-            $("<div class='table-inspector-header'>"+(o.inspectorTitle || this.locale.table["inspector"])+"</div>").appendTo(inspector);
+            $(`<div class='table-inspector-header'>${o.inspectorTitle || strings.label_inspector}</div>`).appendTo(
+                inspector,
+            );
 
-            table_wrap = $("<div>").addClass("table-wrap").appendTo(inspector);
-
-            table = $("<table>").addClass("table subcompact");
-            tbody = $("<tbody>").appendTo(table);
-
+            const table_wrap = $("<div>").addClass("table-wrap").appendTo(inspector);
+            const table = $("<table>").addClass("table subcompact");
+            const tbody = $("<tbody>").appendTo(table);
             table.appendTo(table_wrap);
 
             this._createInspectorItems(tbody);
 
-            actions = $("<div class='table-inspector-actions'>").appendTo(inspector);
-            $("<button class='button primary js-table-inspector-save' type='button'>").html(this.locale.buttons.save).appendTo(actions);
-            $("<button class='button secondary js-table-inspector-reset ml-2 mr-2' type='button'>").html(this.locale.buttons.reset).appendTo(actions);
-            $("<button class='button link js-table-inspector-cancel place-right' type='button'>").html(this.locale.buttons.cancel).appendTo(actions);
+            const actions = $("<div class='table-inspector-actions'>").appendTo(inspector);
+            $("<button class='button primary js-table-inspector-save' type='button'>")
+                .html(strings.label_save)
+                .appendTo(actions);
+            $("<button class='button secondary js-table-inspector-reset ml-2 mr-2' type='button'>")
+                .html(strings.label_reset)
+                .appendTo(actions);
+            $("<button class='button link js-table-inspector-cancel place-right' type='button'>")
+                .html(strings.label_cancel)
+                .appendTo(actions);
 
             inspector.data("open", false);
             this.inspector = inspector;
@@ -523,31 +566,33 @@
             this._createInspectorEvents();
         },
 
-        _resetInspector: function(){
-            var inspector = this.inspector;
-            var table = inspector.find("table tbody");
+        _resetInspector: function () {
+            const inspector = this.inspector;
+            const table = inspector.find("table tbody");
             this._createInspectorItems(table);
             this._createInspectorEvents();
         },
 
-        _createHeadsFromHTML: function(){
-            var that = this, element = this.element;
-            var head = element.find("thead");
+        _createHeadsFromHTML: function () {
+            const that = this;
+            const element = this.element;
+            const head = element.find("thead");
 
             if (head.length > 0) {
                 $.each(head.find("tr > *"), function () {
-                    var item = $(this);
-                    var dir, head_item, item_class;
+                    const item = $(this);
+                    let dir;
+                    let item_class;
 
-                    if (item.hasClass('rownum-cell') || item.hasClass('check-cell')) return
+                    if (item.hasClass("rownum-cell") || item.hasClass("check-cell")) return;
 
-                    if (Utils.isValue(item.data('sort-dir'))) {
-                        dir = item.data('sort-dir');
+                    if (Metro.utils.isValue(item.data("sort-dir"))) {
+                        dir = item.data("sort-dir");
                     } else {
                         if (item.hasClass("sort-asc")) {
                             dir = "asc";
                         } else if (item.hasClass("sort-desc")) {
-                            dir = "desc"
+                            dir = "desc";
                         } else {
                             dir = undefined;
                         }
@@ -558,26 +603,35 @@
                     item_class = item_class.replace("sort-desc", "");
                     item_class = item_class.replace("hidden", "");
 
-                    head_item = {
+                    const head_item = {
                         type: "data",
                         title: item.html(),
-                        name: Utils.isValue(item.data("name")) ? item.data("name") : item.text().replace(" ", "_"),
-                        sortable: item.hasClass("sortable-column") || (Utils.isValue(item.data('sortable')) && JSON.parse(item.data('sortable')) === true),
+                        name: Metro.utils.isValue(item.data("name"))
+                            ? item.data("name")
+                            : item.text().replace(" ", "_"),
+                        sortable:
+                            item.hasClass("sortable-column") ||
+                            (Metro.utils.isValue(item.data("sortable")) && JSON.parse(item.data("sortable")) === true),
                         sortDir: dir,
-                        format: Utils.isValue(item.data("format")) ? item.data("format") : "string",
-                        formatMask: Utils.isValue(item.data("format-mask")) ? item.data("format-mask") : null,
-                        clsColumn: Utils.isValue(item.data("cls-column")) ? item.data("cls-column") : "",
+                        format: Metro.utils.isValue(item.data("format")) ? item.data("format") : "string",
+                        formatMask: Metro.utils.isValue(item.data("format-mask")) ? item.data("format-mask") : null,
+                        clsColumn: Metro.utils.isValue(item.data("cls-column")) ? item.data("cls-column") : "",
                         cls: item_class,
                         colspan: item.attr("colspan"),
-                        size: Utils.isValue(item.data("size")) ? item.data("size") : "",
-                        show: !(item.hasClass("hidden") || (Utils.isValue(item.data('show')) && JSON.parse(item.data('show')) === false)),
+                        size: Metro.utils.isValue(item.data("size")) ? item.data("size") : "",
+                        show: !(
+                            item.hasClass("hidden") ||
+                            (Metro.utils.isValue(item.data("show")) && JSON.parse(item.data("show")) === false)
+                        ),
 
-                        required: Utils.isValue(item.data("required")) ? JSON.parse(item.data("required")) === true : false,
-                        field: Utils.isValue(item.data("field")) ? item.data("field") : "input",
-                        fieldType: Utils.isValue(item.data("field-type")) ? item.data("field-type") : "text",
-                        validator: Utils.isValue(item.data("validator")) ? item.data("validator") : null,
+                        required: Metro.utils.isValue(item.data("required"))
+                            ? JSON.parse(item.data("required")) === true
+                            : false,
+                        field: Metro.utils.isValue(item.data("field")) ? item.data("field") : "input",
+                        fieldType: Metro.utils.isValue(item.data("field-type")) ? item.data("field-type") : "text",
+                        validator: Metro.utils.isValue(item.data("validator")) ? item.data("validator") : null,
 
-                        template: Utils.isValue(item.data("template")) ? item.data("template") : null
+                        template: Metro.utils.isValue(item.data("template")) ? item.data("template") : null,
                     };
                     that.heads.push(head_item);
                 });
@@ -585,49 +639,48 @@
             }
         },
 
-        _createFootsFromHTML: function(){
-            var that = this, element = this.element;
-            var foot = element.find("tfoot");
+        _createFootsFromHTML: function () {
+            const that = this;
+            const element = this.element;
+            const foot = element.find("tfoot");
 
-            if (foot.length > 0) $.each(foot.find("tr > *"), function(){
-                var item = $(this);
-                var foot_item;
+            if (foot.length > 0)
+                $.each(foot.find("tr > *"), function () {
+                    const item = $(this);
 
-                foot_item = {
-                    title: item.html(),
-                    name: Utils.isValue(item.data("name")) ? item.data("name") : false,
-                    cls: item[0].className,
-                    colspan: item.attr("colspan")
-                };
-
-                that.foots.push(foot_item);
-            });
+                    const foot_item = {
+                        title: item.html(),
+                        name: Metro.utils.isValue(item.data("name")) ? item.data("name") : false,
+                        cls: item[0].className,
+                        colspan: item.attr("colspan"),
+                    };
+                    that.foots.push(foot_item);
+                });
         },
 
-        _createItemsFromHTML: function(){
-            var that = this, element = this.element;
-            var body = element.find("tbody");
+        _createItemsFromHTML: function () {
+            const that = this;
+            const element = this.element;
+            const body = element.find("tbody");
 
-            if (body.length > 0) $.each(body.find("tr"), function(){
-                var row = $(this);
-                var tr = [];
-                $.each(row.children("td"), function(){
-                    var td = $(this);
-                    tr.push(td.html());
+            if (body.length > 0)
+                $.each(body.find("tr"), function () {
+                    const row = $(this);
+                    const tr = [];
+                    $.each(row.children("td"), function () {
+                        const td = $(this);
+                        tr.push(td.html());
+                    });
+                    that.items.push(tr);
                 });
-                that.items.push(tr);
-            });
 
             this._createHeadsFromHTML();
             this._createFootsFromHTML();
         },
 
-        _createItemsFromJSON: function(source){
-            var that = this;
-
-            if (typeof source === "string") {
-                source = JSON.parse(source);
-            }
+        _createItemsFromJSON: function (src) {
+            const that = this;
+            const source = typeof src === "string" ? JSON.parse(src) : src;
 
             if (source.header !== undefined) {
                 that.heads = source.header;
@@ -636,12 +689,10 @@
             }
 
             if (source.data !== undefined) {
-                $.each(source.data, function(){
-                    var row = this;
-                    var tr = [];
-                    $.each(row, function(){
-                        var td = this;
-                        tr.push(td);
+                $.each(source.data, function () {
+                    const tr = [];
+                    $.each(this, function () {
+                        tr.push(this);
                     });
                     that.items.push(tr);
                 });
@@ -654,11 +705,16 @@
             }
         },
 
-        _createTableHeader: function(){
-            var element = this.element, o = this.options;
-            var head = element.find("thead");
-            var tr, th, tds = [], j, cells;
-            var view = o.staticView ? this._createView() : this.view;
+        _createTableHeader: function () {
+            const element = this.element;
+            const o = this.options;
+            let head = element.find("thead");
+            let tr;
+            let th;
+            const tds = [];
+            let j;
+            let cells;
+            const view = o.staticView ? this._createView() : this.view;
 
             if (head.length === 0) {
                 head = $("<thead>");
@@ -667,92 +723,135 @@
 
             head.clear().addClass(o.clsHead);
 
+            if (o.caption) {
+                $("<caption>").html(o.caption).insertBefore(head);
+            }
+
             if (this.heads.length === 0) {
                 return head;
             }
 
             tr = $("<tr>").addClass(o.clsHeadRow).appendTo(head);
 
-
-            $.each(this.service, function(){
-                var item = this, classes = [];
-                var th = $("<th>");
-                if (Utils.isValue(item.title)) {th.html(item.title);}
-                if (Utils.isValue(item.size)) {th.css({width: item.size});}
-                if (Utils.isValue(item.cls)) {classes.push(item.cls);}
+            $.each(this.service, function () {
+                const classes = [];
+                const th = $("<th>");
+                if (Metro.utils.isValue(this.title)) {
+                    th.html(this.title);
+                }
+                if (Metro.utils.isValue(this.size)) {
+                    th.css({ width: this.size });
+                }
+                if (Metro.utils.isValue(this.cls)) {
+                    classes.push(this.cls);
+                }
                 classes.push(o.clsHeadCell);
                 th.addClass(classes.join(" "));
-                tr.append(th)
+                tr.append(th);
             });
 
             cells = this.heads;
 
-            for (j = 0; j < cells.length; j++){
+            for (j = 0; j < cells.length; j++) {
                 tds[j] = null;
             }
 
-            $.each(cells, function(cell_index){
-                var item = this;
-                var classes = [];
+            $.each(cells, function (cell_index) {
+                const classes = [];
 
-                var th = $("<th>");
+                const th = $("<th>");
                 th.data("index", cell_index);
 
-                if (Utils.isValue(item.title)) {th.html(item.title);}
-                if (Utils.isValue(item.format)) {th.attr("data-format", item.format);}
-                if (Utils.isValue(item.formatMask)) {th.attr("data-format-mask", item.formatMask);}
-                if (Utils.isValue(item.name)) {th.attr("data-name", item.name);}
-                if (Utils.isValue(item.colspan)) {th.attr("colspan", item.colspan);}
-                if (Utils.isValue(item.size)) {th.attr("data-size", item.size);}
-                if (Utils.isValue(item.sortable)) {th.attr("data-sortable", item.sortable);}
-                if (Utils.isValue(item.sortDir)) {th.attr("data-sort-dir", item.sortDir);}
-                if (Utils.isValue(item.clsColumn)) {th.attr("data-cls-column", item.clsColumn);}
-                if (Utils.isValue(item.cls)) {th.attr("data-cls", item.cls);}
-                if (Utils.isValue(item.colspan)) {th.attr("colspan", item.colspan);}
-                if (Utils.isValue(item.show)) {th.attr("data-show", item.show);}
-                if (Utils.isValue(item.required)) {th.attr("data-required", item.required);}
-                if (Utils.isValue(item.field)) {th.attr("data-field", item.field);}
-                if (Utils.isValue(item.fieldType)) {th.attr("data-field-type", item.fieldType);}
-                if (Utils.isValue(item.validator)) {th.attr("data-validator", item.validator);}
-                if (Utils.isValue(item.template)) {th.attr("data-template", item.template);}
-                if (Utils.isValue(view[cell_index]['size'])) {th.css({width: view[cell_index]['size']});}
-                if (item.sortable === true) {
+                if (Metro.utils.isValue(this.title)) {
+                    th.html(this.title);
+                }
+                if (Metro.utils.isValue(this.format)) {
+                    th.attr("data-format", this.format);
+                }
+                if (Metro.utils.isValue(this.formatMask)) {
+                    th.attr("data-format-mask", this.formatMask);
+                }
+                if (Metro.utils.isValue(this.name)) {
+                    th.attr("data-name", this.name);
+                }
+                if (Metro.utils.isValue(this.colspan)) {
+                    th.attr("colspan", this.colspan);
+                }
+                if (Metro.utils.isValue(this.size)) {
+                    th.attr("data-size", this.size);
+                }
+                if (Metro.utils.isValue(this.sortable)) {
+                    th.attr("data-sortable", this.sortable);
+                }
+                if (Metro.utils.isValue(this.sortDir)) {
+                    th.attr("data-sort-dir", this.sortDir);
+                }
+                if (Metro.utils.isValue(this.clsColumn)) {
+                    th.attr("data-cls-column", this.clsColumn);
+                }
+                if (Metro.utils.isValue(this.cls)) {
+                    th.attr("data-cls", this.cls);
+                }
+                if (Metro.utils.isValue(this.show)) {
+                    th.attr("data-show", this.show);
+                }
+                if (Metro.utils.isValue(this.required)) {
+                    th.attr("data-required", this.required);
+                }
+                if (Metro.utils.isValue(this.field)) {
+                    th.attr("data-field", this.field);
+                }
+                if (Metro.utils.isValue(this.fieldType)) {
+                    th.attr("data-field-type", this.fieldType);
+                }
+                if (Metro.utils.isValue(this.validator)) {
+                    th.attr("data-validator", this.validator);
+                }
+                if (Metro.utils.isValue(this.template)) {
+                    th.attr("data-template", this.template);
+                }
+                if (Metro.utils.isValue(view[cell_index].size)) {
+                    th.css({ width: view[cell_index].size });
+                }
+                if (this.sortable === true) {
                     classes.push("sortable-column");
 
-                    if (Utils.isValue(item.sortDir)) {
-                        classes.push("sort-" + item.sortDir);
+                    if (Metro.utils.isValue(this.sortDir)) {
+                        classes.push(`sort-${this.sortDir}`);
                     }
                 }
-                if (Utils.isValue(item.cls)) {
-                    $.each(item.cls.toArray(), function () {
+                if (Metro.utils.isValue(this.cls)) {
+                    $.each(this.cls.toArray(), function () {
                         classes.push(this);
                     });
                 }
-                if (Utils.bool(view[cell_index]['show']) === false) {
-                    if (classes.indexOf('hidden') === -1) classes.push("hidden");
+                if (Metro.utils.bool(view[cell_index].show) === false) {
+                    if (classes.indexOf("hidden") === -1) classes.push("hidden");
                 }
 
                 classes.push(o.clsHeadCell);
 
-                if (Utils.bool(view[cell_index]['show'])) {
-                    Utils.arrayDelete(classes, "hidden");
+                if (Metro.utils.bool(view[cell_index].show)) {
+                    Metro.utils.arrayDelete(classes, "hidden");
                 }
 
                 th.addClass(classes.join(" "));
 
-                tds[view[cell_index]['index-view']] = th;
+                tds[view[cell_index]["index-view"]] = th;
             });
 
-            for (j = 0; j < cells.length; j++){
+            for (j = 0; j < cells.length; j++) {
                 tds[j].appendTo(tr);
             }
         },
 
-        _createTableBody: function(){
-            var body, head, element = this.element;
+        _createTableBody: function () {
+            let body;
+            let head;
+            const element = this.element;
 
-            head  = element.find("thead");
-            body  = element.find("tbody");
+            head = element.find("thead");
+            body = element.find("tbody");
 
             if (body.length === 0) {
                 body = $("<tbody>").addClass(this.options.clsBody);
@@ -766,10 +865,11 @@
             body.clear();
         },
 
-        _createTableFooter: function(){
-            var element = this.element, o = this.options;
-            var foot = element.find("tfoot");
-            var tr, th;
+        _createTableFooter: function () {
+            const element = this.element;
+            const o = this.options;
+            let foot = element.find("tfoot");
+            let th;
 
             if (foot.length === 0) {
                 foot = $("<tfoot>").appendTo(element);
@@ -781,79 +881,95 @@
                 return;
             }
 
-            tr = $("<tr>").addClass(o.clsHeadRow).appendTo(foot);
-            $.each(this.foots, function(){
-                var item = this;
+            const tr = $("<tr>").addClass(o.clsHeadRow).appendTo(foot);
+            $.each(this.foots, function () {
                 th = $("<th>").appendTo(tr);
 
-                if (item.title !== undefined) {
-                    th.html(item.title);
+                if (this.title) {
+                    th.html(this.title);
                 }
 
-                if (item.name !== undefined) {
-                    th.addClass("foot-column-name-" + item.name);
+                if (this.name) {
+                    th.addClass(`foot-column-name-${this.name}`);
                 }
 
-                if (item.cls !== undefined) {
-                    th.addClass(item.cls);
+                if (this.cls) {
+                    th.addClass(this.cls);
                 }
 
-                if (Utils.isValue(item.colspan)) {
-                    th.attr("colspan", item.colspan);
+                if (Metro.utils.isValue(this.colspan)) {
+                    th.attr("colspan", this.colspan);
                 }
 
                 th.appendTo(tr);
             });
         },
 
-        _createTopBlock: function (){
-            var that = this, element = this.element, o = this.options;
-            var top_block = $("<div>").addClass("table-top").addClass(o.clsTableTop).insertBefore(element.parent());
-            var search_block, search_input, rows_block, rows_select;
+        _createTopBlock: function () {
+            const element = this.element;
+            const o = this.options;
+            const strings = this.strings;
+            const top_block = $("<div>").addClass("table-top").addClass(o.clsTableTop).insertBefore(element.parent());
+            let search_block;
+            let rows_block;
 
-            search_block = Utils.isValue(this.wrapperSearch) ? this.wrapperSearch : $("<div>").addClass("table-search-block").addClass(o.clsSearch).appendTo(top_block);
+            search_block = Metro.utils.isValue(this.wrapperSearch)
+                ? this.wrapperSearch
+                : $("<div>").addClass("table-search-block").addClass(o.clsSearch).appendTo(top_block);
             search_block.addClass(o.clsSearch);
 
-            search_input = $("<input>").attr("type", "text").attr("placeholder", o.tableSearchPlaceholder).appendTo(search_block);
+            const search_input = $("<input>")
+                .attr("type", "text")
+                .attr("placeholder", o.tableSearchPlaceholder)
+                .appendTo(search_block);
             Metro.makePlugin(search_input, "input", {
-                prepend: o.tableSearchTitle || that.locale.table["search"]
+                prepend: o.tableSearchTitle || strings.label_search,
             });
 
             if (o.showSearch !== true) {
                 search_block.hide();
             }
 
-            rows_block = Utils.isValue(this.wrapperRows) ? this.wrapperRows : $("<div>").addClass("table-rows-block").appendTo(top_block);
+            rows_block = Metro.utils.isValue(this.wrapperRows)
+                ? this.wrapperRows
+                : $("<div>").addClass("table-rows-block").appendTo(top_block);
             rows_block.addClass(o.clsRowsCount);
 
-            rows_select = $("<select>").appendTo(rows_block);
+            const rows_select = $("<select>").appendTo(rows_block);
             $.each(o.rowsSteps.toArray(), function () {
-                var val = parseInt(this);
-                var option = $("<option>").attr("value", val).text(val === -1 ? (o.allRecordsTitle || that.locale.table["all"]) : val).appendTo(rows_select);
-                if (val === parseInt(o.rows)) {
+                const val = Number.parseInt(this);
+                const option = $("<option>")
+                    .attr("value", val)
+                    .text(val === -1 ? o.allRecordsTitle || strings.label_all : val)
+                    .appendTo(rows_select);
+                if (val === Number.parseInt(o.rows)) {
                     option.attr("selected", "selected");
                 }
             });
-            Metro.makePlugin(rows_select, "select",{
+            Metro.makePlugin(rows_select, "select", {
                 filter: false,
-                prepend: o.tableRowsCountTitle || that.locale.table["rowsCount"],
-                onChange: function (val) {
-                    val = parseInt(val);
-                    if (val === parseInt(o.rows)) {
+                prepend: o.tableRowsCountTitle || strings.label_rows_count,
+                onChange: (val) => {
+                    const _val = Number.parseInt(val);
+                    if (_val === o.rows) {
                         return;
                     }
                     o.rows = val;
-                    that.currentPage = 1;
-                    that._draw();
+                    this.currentPage = 1;
+                    this._draw();
 
-                    that._fireEvent("rows-count-change", {
-                        val: val
+                    this._fireEvent("rows-count-change", {
+                        val: val,
                     });
-                }
+                },
             });
 
             if (o.showInspectorButton) {
-                $("<button>").addClass("button inspector-button").attr("type", "button").html(o.inspectorButtonIcon).insertAfter(rows_block);
+                $("<button>")
+                    .addClass("button inspector-button")
+                    .attr("type", "button")
+                    .html(o.inspectorButtonIcon)
+                    .insertAfter(rows_block);
             }
 
             if (o.showRowsSteps !== true) {
@@ -863,28 +979,46 @@
             return top_block;
         },
 
-        _createBottomBlock: function (){
-            var element = this.element, o = this.options;
-            var bottom_block = $("<div>").addClass("table-bottom").addClass(o.clsTableBottom).insertAfter(element.parent());
-            var info, pagination, skip;
+        _createBottomBlock: function () {
+            const element = this.element;
+            const o = this.options;
+            const strings = this.strings;
+            const bottom_block = $("<div>")
+                .addClass("table-bottom")
+                .addClass(o.clsTableBottom)
+                .insertAfter(element.parent());
+            let info;
+            let pagination;
+            let skip;
 
-            info = Utils.isValue(this.wrapperInfo) ? this.wrapperInfo : $("<div>").addClass("table-info").appendTo(bottom_block);
+            info = Metro.utils.isValue(this.wrapperInfo)
+                ? this.wrapperInfo
+                : $("<div>").addClass("table-info").appendTo(bottom_block);
             info.addClass(o.clsTableInfo);
             if (o.showTableInfo !== true) {
                 info.hide();
             }
 
-            pagination = Utils.isValue(this.wrapperPagination) ? this.wrapperPagination : $("<div>").addClass("table-pagination").appendTo(bottom_block);
+            pagination = Metro.utils.isValue(this.wrapperPagination)
+                ? this.wrapperPagination
+                : $("<div>").addClass("table-pagination").appendTo(bottom_block);
             pagination.addClass(o.clsTablePagination);
             if (o.showPagination !== true) {
                 pagination.hide();
             }
 
-            skip = Utils.isValue(this.wrapperSkip) ? this.wrapperSkip : $("<div>").addClass("table-skip").appendTo(bottom_block);
-            skip.addClass(o.clsTableSkip);
+            skip = Metro.utils.isValue(this.wrapperSkip) ? this.wrapperSkip : $("<div>").appendTo(bottom_block);
+            skip.addClass("table-skip").addClass(o.clsTableSkip);
 
-            $("<input type='text'>").addClass("input table-skip-input").addClass(o.clsTableSkipInput).appendTo(skip);
-            $("<button>").addClass("button table-skip-button").addClass(o.clsTableSkipButton).html(o.tableSkipTitle || this.locale.table["skip"]).appendTo(skip);
+            $(`<input type='text' data-role='input' placeholder="${strings.label_enter_page}">`)
+                .addClass("table-skip-input")
+                .addClass(o.clsTableSkipInput)
+                .appendTo(skip);
+            $("<button>")
+                .addClass("button table-skip-button")
+                .addClass(o.clsTableSkipButton)
+                .html(o.tableSkipTitle || strings.label_goto_page)
+                .appendTo(skip);
 
             if (o.showSkip !== true) {
                 skip.hide();
@@ -893,20 +1027,32 @@
             return bottom_block;
         },
 
-        _createStructure: function(){
-            var that = this, element = this.element, o = this.options;
-            var columns;
-            var w_search = $(o.searchWrapper),
-                w_info = $(o.infoWrapper),
-                w_rows = $(o.rowsWrapper),
-                w_paging = $(o.paginationWrapper),
-                w_skip = $(o.skipWrapper);
+        _createStructure: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            let columns;
+            const w_search = $(o.searchWrapper);
+            const w_info = $(o.infoWrapper);
+            const w_rows = $(o.rowsWrapper);
+            const w_paging = $(o.paginationWrapper);
+            const w_skip = $(o.skipWrapper);
 
-            if (w_search.length > 0) {this.wrapperSearch = w_search;}
-            if (w_info.length > 0) {this.wrapperInfo = w_info;}
-            if (w_rows.length > 0) {this.wrapperRows = w_rows;}
-            if (w_paging.length > 0) {this.wrapperPagination = w_paging;}
-            if (w_skip.length > 0) {this.wrapperSkip = w_skip;}
+            if (w_search.length > 0) {
+                this.wrapperSearch = w_search;
+            }
+            if (w_info.length > 0) {
+                this.wrapperInfo = w_info;
+            }
+            if (w_rows.length > 0) {
+                this.wrapperRows = w_rows;
+            }
+            if (w_paging.length > 0) {
+                this.wrapperPagination = w_paging;
+            }
+            if (w_skip.length > 0) {
+                this.wrapperSkip = w_skip;
+            }
 
             element.addClass(o.clsTable);
 
@@ -917,28 +1063,28 @@
             this._createTopBlock();
             this._createBottomBlock();
 
-            var need_sort = false;
-            if (this.heads.length > 0) $.each(this.heads, function(i){
-                var item = this;
-                if (!need_sort && ["asc", "desc"].indexOf(item.sortDir) > -1) {
-                    need_sort = true;
-                    that.sort.colIndex = i;
-                    that.sort.dir = item.sortDir;
-                }
-            });
+            let need_sort = false;
+            if (this.heads.length > 0)
+                $.each(this.heads, function (i) {
+                    if (!need_sort && ["asc", "desc"].indexOf(this.sortDir) > -1) {
+                        need_sort = true;
+                        that.sort.colIndex = i;
+                        that.sort.dir = this.sortDir;
+                    }
+                });
 
             if (need_sort) {
                 columns = element.find("thead th");
                 this._resetSortClass(columns);
-                $(columns.get(this.sort.colIndex + that.service.length)).addClass("sort-"+this.sort.dir);
+                $(columns.get(this.sort.colIndex + that.service.length)).addClass(`sort-${this.sort.dir}`);
                 this.sorting();
             }
 
-            var filter_func;
+            let filter_func;
 
-            if (Utils.isValue(o.filters) && typeof o.filters === 'string') {
-                $.each(o.filters.toArray(), function(){
-                    filter_func = Utils.isFunc(this);
+            if (Metro.utils.isValue(o.filters) && typeof o.filters === "string") {
+                $.each(o.filters.toArray(), function () {
+                    filter_func = Metro.utils.isFunc(this);
                     if (filter_func !== false) {
                         that.filtersIndexes.push(that.addFilter(filter_func));
                     }
@@ -950,55 +1096,67 @@
             this._draw();
         },
 
-        _resetSortClass: function(el){
+        _resetSortClass: (el) => {
             $(el).removeClass("sort-asc sort-desc");
         },
 
-        _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var component = element.closest(".table-component");
-            var table_container = component.find(".table-container");
-            var search = component.find(".table-search-block input");
-            var skip_button = o.skipWrapper ? $(o.skipWrapper).find('.table-skip-button') : component.find(".table-skip-button");
-            var skip_input = o.skipWrapper ? $(o.skipWrapper).find('.table-skip-input') : component.find(".table-skip-input");
-            var customSearch;
-            var id = element.attr("id");
-            var inspectorButton = component.find(".inspector-button");
+        _createEvents: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const component = element.closest(".table-component");
+            const table_container = component.find(".table-container");
+            const search = component.find(".table-search-block input");
+            const skip_button = o.skipWrapper
+                ? $(o.skipWrapper).find(".table-skip-button")
+                : component.find(".table-skip-button");
+            const skip_input = o.skipWrapper
+                ? $(o.skipWrapper).find(".table-skip-input")
+                : component.find(".table-skip-input");
+            let customSearch;
+            const id = element.attr("id");
+            const inspectorButton = component.find(".inspector-button");
 
-            inspectorButton.on(Metro.events.click, function(){
+            inspectorButton.on(Metro.events.click, () => {
                 that.toggleInspector();
             });
 
-            skip_button.on(Metro.events.click, function(){
-                var skipTo = parseInt(skip_input.val().trim());
+            skip_button.on(Metro.events.click, () => {
+                const skipTo = Number.parseInt(skip_input.val().trim());
 
-                if (isNaN(skipTo) || skipTo <=0 || skipTo > that.pagesCount) {
-                    skip_input.val('');
+                if (Number.isNaN(skipTo) || skipTo <= 0 || skipTo > that.pagesCount) {
+                    skip_input.val("");
                     return false;
                 }
 
-                skip_input.val('');
+                skip_input.val("");
 
                 that._fireEvent("skip", {
                     skipTo: skipTo,
-                    skipFrom: that.currentPage
+                    skipFrom: that.currentPage,
                 });
 
                 that.page(skipTo);
             });
 
-            $(globalThis).on(Metro.events.resize, function(){
-                if (o.horizontalScroll === true) {
-                    if (!Utils.isNull(o.horizontalScrollStop) && Utils.mediaExist(o.horizontalScrollStop)) {
-                        table_container.removeClass("horizontal-scroll");
-                    } else {
-                        table_container.addClass("horizontal-scroll");
+            $(globalThis).on(
+                Metro.events.resize,
+                () => {
+                    if (o.horizontalScroll === true) {
+                        if (
+                            !Metro.utils.isNull(o.horizontalScrollStop) &&
+                            Metro.utils.mediaExist(o.horizontalScrollStop)
+                        ) {
+                            table_container.removeClass("horizontal-scroll");
+                        } else {
+                            table_container.addClass("horizontal-scroll");
+                        }
                     }
-                }
-            }, {ns: this.id});
+                },
+                { ns: this.id },
+            );
 
-            element.on(Metro.events.click, ".sortable-column", function(){
-
+            element.on(Metro.events.click, ".sortable-column", function () {
                 if (o.muteTable === true) element.addClass("disabled");
 
                 if (that.busy) {
@@ -1006,10 +1164,10 @@
                 }
                 that.busy = true;
 
-                var col = $(this);
+                const col = $(this);
 
-                that.activity.show(function(){
-                    setImmediate(function(){
+                that.activity.show(() => {
+                    setImmediate(() => {
                         that.currentPage = 1;
                         that.sort.colIndex = col.data("index");
                         if (!col.hasClass("sort-asc") && !col.hasClass("sort-desc")) {
@@ -1022,9 +1180,9 @@
                             }
                         }
                         that._resetSortClass(element.find(".sortable-column"));
-                        col.addClass("sort-"+that.sort.dir);
+                        col.addClass(`sort-${that.sort.dir}`);
                         that.sorting();
-                        that._draw(function(){
+                        that._draw(() => {
                             that.busy = false;
                             if (o.muteTable === true) element.removeClass("disabled");
                         });
@@ -1032,21 +1190,21 @@
                 });
             });
 
-            element.on(Metro.events.click, ".table-service-check input", function(){
-                var check = $(this);
-                var status = check.is(":checked");
-                var val = ""+check.val();
-                var store_key = o.checkStoreKey.replace("$1", id);
-                var storage = Metro.storage;
-                var data = storage.getItem(store_key);
-                var is_radio = check.attr('type') === 'radio';
+            element.on(Metro.events.click, ".table-service-check input", function () {
+                const check = $(this);
+                const status = check.is(":checked");
+                const val = `${check.val()}`;
+                const store_key = o.checkStoreKey.replace("$1", id);
+                const storage = Metro.storage;
+                let data = storage.getItem(store_key);
+                const is_radio = check.attr("type") === "radio";
 
                 if (is_radio) {
                     data = [];
                 }
 
                 if (status) {
-                    if (!Utils.isValue(data)) {
+                    if (!Metro.utils.isValue(data)) {
                         data = [val];
                     } else {
                         if (Array(data).indexOf(val) === -1) {
@@ -1054,8 +1212,8 @@
                         }
                     }
                 } else {
-                    if (Utils.isValue(data)) {
-                        Utils.arrayDelete(data, val);
+                    if (Metro.utils.isValue(data)) {
+                        Metro.utils.arrayDelete(data, val);
                     } else {
                         data = [];
                     }
@@ -1066,40 +1224,40 @@
                 that._fireEvent("check-click", {
                     check: this,
                     status: status,
-                    data: data
+                    data: data,
                 });
             });
 
-            element.on(Metro.events.click, ".table-service-check-all input", function(){
-                var checked = $(this).is(":checked");
-                var store_key = o.checkStoreKey.replace("$1", id);
-                var storage = Metro.storage;
-                var data = [];
-                var stored_keys;
+            element.on(Metro.events.click, ".table-service-check-all input", function () {
+                const checked = $(this).is(":checked");
+                const store_key = o.checkStoreKey.replace("$1", id);
+                const storage = Metro.storage;
+                let data = [];
+                let stored_keys;
 
                 if (o.useCurrentSlice === true) {
                     stored_keys = storage.getItem(store_key, []);
 
                     if (checked) {
-                        $.each(that.currentSlice, function(){
-                            if (stored_keys.indexOf(""+this[o.checkColIndex]) === -1) {
-                                stored_keys.push(""+this[o.checkColIndex])
+                        $.each(that.currentSlice, function () {
+                            if (stored_keys.indexOf(`${this[o.checkColIndex]}`) === -1) {
+                                stored_keys.push(`${this[o.checkColIndex]}`);
                             }
                         });
                     } else {
-                        $.each(that.currentSlice, function(){
-                            var key = ""+this[o.checkColIndex];
+                        $.each(that.currentSlice, function () {
+                            const key = `${this[o.checkColIndex]}`;
                             if (stored_keys.indexOf(key) !== -1) {
-                                Metro.utils.arrayDelete(stored_keys, key)
+                                Metro.utils.arrayDelete(stored_keys, key);
                             }
                         });
                     }
-                    data = stored_keys
+                    data = stored_keys;
                 } else {
                     if (checked) {
                         $.each(that.filteredItems, function () {
                             if (data.indexOf(this[o.checkColIndex]) !== -1) return;
-                            data.push("" + this[o.checkColIndex]);
+                            data.push(`${this[o.checkColIndex]}`);
                         });
                     } else {
                         data = [];
@@ -1113,36 +1271,36 @@
                 that._fireEvent("check-click-all", {
                     check: this,
                     status: checked,
-                    data: data
+                    data: data,
                 });
             });
 
-            var _search = function(){
+            let _search = function () {
                 that.searchString = this.value.trim().toLowerCase();
                 that.currentPage = 1;
                 that._draw();
             };
 
-            _search = Hooks.useDebounce(_search, o.searchThreshold)
+            _search = Hooks.useDebounce(_search, o.searchThreshold);
 
             search.on(Metro.events.inputchange, _search);
 
-            if (Utils.isValue(this.wrapperSearch)) {
+            if (Metro.utils.isValue(this.wrapperSearch)) {
                 customSearch = this.wrapperSearch.find("input");
                 if (customSearch.length > 0) {
                     customSearch.on(Metro.events.inputchange, _search);
                 }
             }
 
-            function pageLinkClick(l){
-                var link = $(l);
-                var item = link.parent();
+            function pageLinkClick(l) {
+                const link = $(l);
+                const item = link.parent();
                 if (that.filteredItems.length === 0) {
-                    return ;
+                    return;
                 }
 
                 if (item.hasClass("active")) {
-                    return ;
+                    return;
                 }
 
                 if (item.hasClass("service")) {
@@ -1164,111 +1322,113 @@
                 that._draw();
             }
 
-            component.on(Metro.events.click, ".pagination .page-link", function(){
-                pageLinkClick(this)
+            component.on(Metro.events.click, ".pagination .page-link", function () {
+                pageLinkClick(this);
             });
 
-            if (Utils.isValue(this.wrapperPagination)) {
-                this.wrapperPagination.on(Metro.events.click, ".pagination .page-link", function(){
-                    pageLinkClick(this)
+            if (Metro.utils.isValue(this.wrapperPagination)) {
+                this.wrapperPagination.on(Metro.events.click, ".pagination .page-link", function () {
+                    pageLinkClick(this);
                 });
             }
 
             this._createInspectorEvents();
 
-            element.on(Metro.events.click, ".js-table-crud-button", function(){
-
-            });
+            element.on(Metro.events.click, ".js-table-crud-button", () => {});
         },
 
-        _createInspectorEvents: function(){
-            var that = this, inspector = this.inspector;
+        _createInspectorEvents: function () {
+            const that = this;
+            const inspector = this.inspector;
             // Inspector event
 
             this._removeInspectorEvents();
 
-            inspector.on(Metro.events.click, ".js-table-inspector-field-up", function(){
-                var button = $(this), tr = button.closest("tr");
-                var tr_prev = tr.prev("tr");
-                var index = tr.data("index");
-                var index_view;
+            inspector.on(Metro.events.click, ".js-table-inspector-field-up", function () {
+                const button = $(this);
+                const tr = button.closest("tr");
+                const tr_prev = tr.prev("tr");
+                const index = tr.data("index");
+                let index_view;
                 if (tr_prev.length === 0) {
-                    return ;
+                    return;
                 }
                 tr.insertBefore(tr_prev);
                 tr.addClass("flash");
-                setTimeout(function(){
+                setTimeout(() => {
                     tr.removeClass("flash");
                 }, 1000);
                 index_view = tr.index();
 
                 tr.data("index-view", index_view);
-                that.view[index]['index-view'] = index_view;
+                that.view[index]["index-view"] = index_view;
 
-                $.each(tr.nextAll(), function(){
-                    var t = $(this);
+                $.each(tr.nextAll(), function () {
+                    const t = $(this);
                     index_view++;
                     t.data("index-view", index_view);
-                    that.view[t.data("index")]['index-view'] = index_view;
+                    that.view[t.data("index")]["index-view"] = index_view;
                 });
 
                 that._createTableHeader();
                 that._draw();
             });
 
-            inspector.on(Metro.events.click, ".js-table-inspector-field-down", function(){
-                var button = $(this), tr = button.closest("tr");
-                var tr_next = tr.next("tr");
-                var index = tr.data("index");
-                var index_view;
+            inspector.on(Metro.events.click, ".js-table-inspector-field-down", function () {
+                const button = $(this);
+                const tr = button.closest("tr");
+                const tr_next = tr.next("tr");
+                const index = tr.data("index");
+                let index_view;
                 if (tr_next.length === 0) {
-                    return ;
+                    return;
                 }
                 tr.insertAfter(tr_next);
                 tr.addClass("flash");
-                setTimeout(function(){
+                setTimeout(() => {
                     tr.removeClass("flash");
                 }, 1000);
                 index_view = tr.index();
 
                 tr.data("index-view", index_view);
-                that.view[index]['index-view'] = index_view;
+                that.view[index]["index-view"] = index_view;
 
-                $.each(tr.prevAll(), function(){
-                    var t = $(this);
+                $.each(tr.prevAll(), function () {
+                    const t = $(this);
                     index_view--;
                     t.data("index-view", index_view);
-                    that.view[t.data("index")]['index-view'] = index_view;
+                    that.view[t.data("index")]["index-view"] = index_view;
                 });
 
                 that._createTableHeader();
                 that._draw();
             });
 
-            inspector.on(Metro.events.click, "input[type=checkbox]", function(){
-                var check = $(this);
-                var status = check.is(":checked");
-                var index = check.val();
-                var op = ['cls', 'clsColumn'];
+            inspector.on(Metro.events.click, "input[type=checkbox]", function () {
+                const check = $(this);
+                const status = check.is(":checked");
+                const index = check.val();
+                const op = ["cls", "clsColumn"];
 
                 if (status) {
-                    $.each(op, function(){
-                        var a;
-                        a = Utils.isValue(that.heads[index][this]) ? (that.heads[index][this]).toArray(" ") : [];
-                        Utils.arrayDelete(a, "hidden");
+                    $.each(op, function () {
+                        const a = Metro.utils.isValue(that.heads[index][this])
+                            ? that.heads[index][this].toArray(" ")
+                            : [];
+                        Metro.utils.arrayDelete(a, "hidden");
                         that.heads[index][this] = a.join(" ");
-                        that.view[index]['show'] = true;
+                        that.view[index].show = true;
                     });
                 } else {
-                    $.each(op, function(){
-                        var a;
-
-                        a = Utils.isValue(that.heads[index][this]) ? (that.heads[index][this]).toArray(" ") : [];
+                    $.each(op, function () {
+                        const a = Metro.utils.isValue(that.heads[index][this])
+                            ? that.heads[index][this].toArray(" ")
+                            : [];
                         if (a.indexOf("hidden") === -1) {
                             a.push("hidden");
                         }
                         that.heads[index][this] = a.join(" ");
-                        that.view[index]['show'] = false;
+                        that.view[index].show = false;
                     });
                 }
 
@@ -1276,47 +1436,48 @@
                 that._draw();
             });
 
-            inspector.find("input[type=number]").on(Metro.events.inputchange, function(){
-                var input = $(this);
-                var index = input.attr("data-index");
-                var val = parseInt(input.val());
+            inspector.find("input[type=number]").on(Metro.events.inputchange, function () {
+                const input = $(this);
+                const index = input.attr("data-index");
+                const val = Number.parseInt(input.val());
 
-                that.view[index]['size'] = val === 0 ? "" : val;
+                that.view[index].size = val === 0 ? "" : val;
 
                 that._createTableHeader();
             });
 
-            inspector.on(Metro.events.click, ".js-table-inspector-save", function(){
+            inspector.on(Metro.events.click, ".js-table-inspector-save", () => {
                 that._saveTableView();
                 that.openInspector(false);
             });
 
-            inspector.on(Metro.events.click, ".js-table-inspector-cancel", function(){
+            inspector.on(Metro.events.click, ".js-table-inspector-cancel", () => {
                 that.openInspector(false);
             });
 
-            inspector.on(Metro.events.click, ".js-table-inspector-reset", function(){
+            inspector.on(Metro.events.click, ".js-table-inspector-reset", () => {
                 that.resetView();
             });
         },
 
-        _removeInspectorEvents: function(){
-            var inspector = this.inspector;
+        _removeInspectorEvents: function () {
+            const inspector = this.inspector;
             inspector.off(Metro.events.click, ".js-table-inspector-field-up");
             inspector.off(Metro.events.click, ".js-table-inspector-field-down");
             inspector.off(Metro.events.click, "input[type=checkbox]");
             inspector.off(Metro.events.click, ".js-table-inspector-save");
             inspector.off(Metro.events.click, ".js-table-inspector-cancel");
             inspector.off(Metro.events.click, ".js-table-inspector-reset");
-            inspector.find("input[type=number]").off(Metro.events.inputchange);
+            inspector.off(Metro.events.inputchange, "input[type=number]");
         },
 
-        _saveTableView: function(){
-            var that = this, element = this.element, o = this.options;
-            var view = this.view;
-            var id = element.attr("id");
-            var viewPath = o.viewSavePath.replace("$1", id);
-            var storage = Metro.storage;
+        _saveTableView: function () {
+            const element = this.element;
+            const o = this.options;
+            const view = this.view;
+            const id = element.attr("id");
+            const viewPath = o.viewSavePath.replace("$1", id);
+            const storage = Metro.storage;
 
             if (o.viewSaveMode.toLowerCase() === "client") {
                 storage.setItem(viewPath, view);
@@ -1324,103 +1485,116 @@
                 this._fireEvent("view-save", {
                     target: "client",
                     path: o.viewSavePath,
-                    view: view
+                    view: view,
                 });
             } else {
-                var post_data = {
-                    id : element.attr("id"),
-                    view : view
+                const post_data = {
+                    id: element.attr("id"),
+                    view: view,
                 };
 
                 fetch(viewPath, {
-                    method: "POST"
-                    , body: JSON.stringify(post_data)
-                    , header: {
-                        "Content-type": "application/json;charset=utf-8"
-                    }
+                    method: "POST",
+                    body: JSON.stringify(post_data),
+                    header: {
+                        "Content-type": "application/json;charset=utf-8",
+                    },
                 })
                     .then(Metro.fetch.status)
                     .then(Metro.fetch.text)
-                    .then(function(data){
-                        that._fireEvent("view-save", {
+                    .then((data) => {
+                        this._fireEvent("view-save", {
                             target: "server",
                             path: o.viewSavePath,
                             view: view,
                             post_data: post_data,
-                            response: data
+                            response: data,
                         });
                     })
-                    .catch(function(error){
-                        that._fireEvent("data-save-error", {
+                    .catch((error) => {
+                        this._fireEvent("data-save-error", {
                             source: o.viewSavePath,
                             error: error,
-                            post_data: post_data
+                            post_data: post_data,
                         });
                     });
             }
         },
 
-        _info: function(start, stop, length){
-            var element = this.element, o = this.options;
-            var component = element.closest(".table-component");
-            var info = Utils.isValue(this.wrapperInfo) ? this.wrapperInfo : component.find(".table-info");
-            var text;
+        _info: function (start, stop, length) {
+            const element = this.element;
+            const o = this.options;
+            const strings = this.strings;
+            const component = element.closest(".table-component");
+            const info = Metro.utils.isValue(this.wrapperInfo) ? this.wrapperInfo : component.find(".table-info");
+            let text;
+            let _start = start;
+            let _stop = stop;
+            let _length = length;
 
             if (info.length === 0) {
-                return ;
+                return;
             }
 
-            if (stop > length) {
-                stop = length;
+            if (_stop > _length) {
+                _stop = _length;
             }
 
             if (this.items.length === 0) {
-                start = stop = length = 0;
+                _start = _stop = _length = 0;
             }
 
-            text = o.tableInfoTitle || this.locale.table["info"];
-            text = text.replace("$1", start);
-            text = text.replace("$2", stop);
-            text = text.replace("$3", length);
+            text = o.tableInfoTitle || strings.label_table_info;
+            text = text.replace("$1", _start);
+            text = text.replace("$2", _stop);
+            text = text.replace("$3", _length);
             info.html(text);
         },
 
-        _paging: function(length){
-            var element = this.element, o = this.options;
-            var component = element.closest(".table-component");
+        _paging: function (length) {
+            const element = this.element;
+            const o = this.options;
+            const strings = this.strings;
+            const component = element.closest(".table-component");
             this.pagesCount = Math.ceil(length / o.rows); // Костыль
             Metro.pagination({
                 length: length,
                 rows: o.rows,
                 current: this.currentPage,
-                target: Utils.isValue(this.wrapperPagination) ? this.wrapperPagination : component.find(".table-pagination"),
+                target: Metro.utils.isValue(this.wrapperPagination)
+                    ? this.wrapperPagination
+                    : component.find(".table-pagination"),
                 claPagination: o.clsPagination,
-                prevTitle: o.paginationPrevTitle || this.locale.table["prev"],
-                nextTitle: o.paginationNextTitle || this.locale.table["next"],
+                prevTitle: o.paginationPrevTitle || strings.label_prev,
+                nextTitle: o.paginationNextTitle || strings.label_next,
                 distance: o.paginationDistance,
                 islandSize: o.paginationIslandSize,
-                shortTrack: o.paginationShortTrack
+                shortTrack: o.paginationShortTrack,
             });
         },
 
-        _filter: function(){
-            var that = this, o = this.options;
-            var items;
-            if ((Utils.isValue(this.searchString) && that.searchString.length >= o.searchMinLength) || this.filters.length > 0) {
-                items = this.items.filter(function(row){
+        _filter: function () {
+            const o = this.options;
+            let items;
+            if (
+                (Metro.utils.isValue(this.searchString) && this.searchString.length >= o.searchMinLength) ||
+                this.filters.length > 0
+            ) {
+                items = this.items.filter((row) => {
+                    let row_data = "";
+                    let result;
+                    let i;
+                    let j = 0;
 
-                    var row_data = "", result, search_result, i, j = 0;
-
-                    if (that.filters.length > 0) {
-
+                    if (this.filters.length > 0) {
                         result = o.filtersOperator.toLowerCase() === "and";
-                        for (i = 0; i < that.filters.length; i++) {
-                            if (Utils.isNull(that.filters[i])) continue;
+                        for (i = 0; i < this.filters.length; i++) {
+                            if (Metro.utils.isNull(this.filters[i])) continue;
                             j++;
-                            result = o.filtersOperator.toLowerCase() === "and" ?
-                                result && Utils.exec(that.filters[i], [row, that.heads]) :
-                                result || Utils.exec(that.filters[i], [row, that.heads])
-                            ;
+                            result =
+                                o.filtersOperator.toLowerCase() === "and"
+                                    ? result && Metro.utils.exec(this.filters[i], [row, this.heads])
+                                    : result || Metro.utils.exec(this.filters[i], [row, this.heads]);
                         }
 
                         if (j === 0) result = true;
@@ -1428,41 +1602,45 @@
                         result = true;
                     }
 
-                    if (that.searchFields.length > 0) {
-                        $.each(that.heads, function(i, v){
-                            if (that.searchFields.indexOf(v.name) > -1) {
-                                row_data += "•"+row[i];
+                    if (this.searchFields.length > 0) {
+                        $.each(this.heads, (i, v) => {
+                            if (this.searchFields.indexOf(v.name) > -1) {
+                                row_data += `•${row[i]}`;
                             }
-                        })
+                        });
                     } else {
                         row_data = row.join("•");
                     }
 
-                    row_data = row_data.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim().toLowerCase();
-                    search_result = Utils.isValue(that.searchString) && that.searchString.length >= o.searchMinLength ? ~row_data.indexOf(that.searchString) : true;
-
+                    row_data = row_data
+                        .replace(/[\n\r]+|[\s]{2,}/g, " ")
+                        .trim()
+                        .toLowerCase();
+                    const search_result =
+                        Metro.utils.isValue(this.searchString) && this.searchString.length >= o.searchMinLength
+                            ? ~row_data.indexOf(this.searchString)
+                            : true;
                     result = result && search_result;
 
                     if (result) {
-                        that._fireEvent("filter-row-accepted", {
-                            row: row
+                        this._fireEvent("filter-row-accepted", {
+                            row: row,
                         });
                     } else {
-                        that._fireEvent("filter-row-declined", {
-                            row: row
+                        this._fireEvent("filter-row-declined", {
+                            row: row,
                         });
                     }
 
                     return result;
                 });
-
             } else {
                 items = this.items;
             }
 
             this._fireEvent("search", {
-                search: that.searchString,
-                items: items
+                search: this.searchString,
+                items: items,
             });
 
             this.filteredItems = items;
@@ -1470,22 +1648,32 @@
             return items;
         },
 
-        _draw: function(cb){
-            var that = this, element = this.element, o = this.options;
-            var body = element.find("tbody");
-            var i, j, tr, td, check, cells, tds, is_even_row;
-            var start = parseInt(o.rows) === -1 ? 0 : o.rows * (this.currentPage - 1),
-                stop = parseInt(o.rows) === -1 ? this.items.length - 1 : start + o.rows - 1;
-            var items, checkedItems = [];
-            var stored_keys = Metro.storage.getItem(o.checkStoreKey.replace("$1", element.attr('id')));
-
-            var view = o.staticView ? this.viewDefault : this.view;
+        _draw: function (cb) {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const strings = this.strings;
+            const body = element.find("tbody");
+            let i;
+            let j;
+            let tr;
+            let td;
+            let check;
+            let cells;
+            let tds;
+            let is_even_row;
+            const start = Number.parseInt(o.rows) === -1 ? 0 : o.rows * (this.currentPage - 1);
+            const stop = Number.parseInt(o.rows) === -1 ? this.items.length - 1 : start + o.rows - 1;
+            let items;
+            let checkedItems = [];
+            const stored_keys = Metro.storage.getItem(o.checkStoreKey.replace("$1", element.attr("id")));
+            const view = o.staticView ? this.viewDefault : this.view;
 
             body.html("");
 
             if (!this.heads.length) {
-                console.warn("Heads is not defined for table ID " + element.attr("id"));
-                return ;
+                console.warn(`Heads is not defined for table ID ${element.attr("id")}`);
+                return;
             }
 
             items = this._filter();
@@ -1497,37 +1685,51 @@
                 for (i = start; i <= stop; i++) {
                     cells = items[i];
                     tds = [];
-                    if (!Utils.isValue(cells)) {continue;}
+                    if (!Metro.utils.isValue(cells)) {
+                        continue;
+                    }
                     tr = $("<tr>").addClass(o.clsBodyRow);
-                    tr.data('original', cells);
+                    tr.data("original", cells);
 
                     // Rownum
 
                     is_even_row = i % 2 === 0;
 
-                    td = $("<td>").html(i + 1);
+                    td = $("<td>")
+                        .attr("data-label", "#")
+                        .attr("aria-label", "#")
+                        .html(i + 1);
                     if (that.service[0].clsColumn !== undefined) {
                         td.addClass(that.service[0].clsColumn);
                     }
                     td.appendTo(tr);
 
                     // Checkbox
-                    td = $("<td>");
+                    td = $("<td>").attr("data-label", "CHK").attr("aria-label", "CHK");
+
                     if (o.checkType === "checkbox") {
-                        check = $("<input type='checkbox' data-style='"+o.checkStyle+"' data-role='checkbox' name='" + (Utils.isValue(o.checkName) ? o.checkName : 'table_row_check') + "[]' value='" + items[i][o.checkColIndex] + "'>");
+                        check = $(
+                            `<input type='checkbox' data-style='${o.checkStyle}' data-role='checkbox' name='${Metro.utils.isValue(o.checkName) ? o.checkName : "table_row_check"}[]' value='${items[i][o.checkColIndex]}'>`,
+                        );
                     } else {
-                        check = $("<input type='radio' data-style='"+o.checkStyle+"' data-role='radio' name='" + (Utils.isValue(o.checkName) ? o.checkName : 'table_row_check') + "' value='" + items[i][o.checkColIndex] + "'>");
+                        check = $(
+                            `<input type='radio' data-style='${o.checkStyle}' data-role='radio' name='${Metro.utils.isValue(o.checkName) ? o.checkName : "table_row_check"}' value='${items[i][o.checkColIndex]}'>`,
+                        );
                     }
 
-                    if (Utils.isValue(stored_keys) && Array.isArray(stored_keys) && stored_keys.indexOf(""+items[i][o.checkColIndex]) > -1) {
+                    if (
+                        Metro.utils.isValue(stored_keys) &&
+                        Array.isArray(stored_keys) &&
+                        stored_keys.indexOf(`${items[i][o.checkColIndex]}`) > -1
+                    ) {
                         check.prop("checked", true);
-                        checkedItems.push(cells)
+                        checkedItems.push(cells);
                     }
 
                     check.addClass("table-service-check");
 
                     this._fireEvent("check-draw", {
-                        check: check
+                        check: check,
                     });
 
                     check.appendTo(td);
@@ -1537,58 +1739,60 @@
                     td.appendTo(tr);
                     // End of check
 
-                    for (j = 0; j < cells.length; j++){
+                    for (j = 0; j < cells.length; j++) {
                         tds[j] = null;
                     }
 
-                    $.each(cells, function(cell_index){
-                        var val = this;
-                        var td = $("<td>");
+                    $.each(cells, function (cell_index) {
+                        let val = this;
+                        const td = $("<td>")
+                            .attr("data-label", that.heads[cell_index].title)
+                            .attr("aria-label", that.heads[cell_index].title);
 
-                        if (Utils.isValue(that.heads[cell_index].template)) {
+                        if (Metro.utils.isValue(that.heads[cell_index].template)) {
                             val = that.heads[cell_index].template.replace(/%VAL%/g, val);
                         }
 
                         td.html(val);
 
                         td.addClass(o.clsBodyCell);
-                        if (Utils.isValue(that.heads[cell_index].clsColumn)) {
+                        if (Metro.utils.isValue(that.heads[cell_index].clsColumn)) {
                             td.addClass(that.heads[cell_index].clsColumn);
                         }
 
-                        if (Utils.bool(view[cell_index].show) === false) {
+                        if (Metro.utils.bool(view[cell_index].show) === false) {
                             td.addClass("hidden");
                         }
 
-                        if (Utils.bool(view[cell_index].show)) {
+                        if (Metro.utils.bool(view[cell_index].show)) {
                             td.removeClass("hidden");
                         }
 
-                        td.data('original',this);
+                        td.data("original", this);
 
-                        tds[view[cell_index]['index-view']] = td;
+                        tds[view[cell_index]["index-view"]] = td;
 
                         that._fireEvent("draw-cell", {
                             td: td,
                             val: val,
                             cellIndex: cell_index,
                             head: that.heads[cell_index],
-                            items: cells
+                            items: cells,
                         });
 
                         if (o.cellWrapper === true) {
                             val = $("<div>").addClass("data-wrapper").addClass(o.clsCellWrapper).html(td.html());
-                            td.html('').append(val);
+                            td.html("").append(val);
                         }
                     });
 
-                    for (j = 0; j < cells.length; j++){
+                    for (j = 0; j < cells.length; j++) {
                         tds[j].appendTo(tr);
 
                         that._fireEvent("append-cell", {
                             td: tds[j],
                             tr: tr,
-                            index: j
+                            index: j,
                         });
                     }
 
@@ -1596,20 +1800,22 @@
                         tr: tr,
                         view: that.view,
                         heads: that.heads,
-                        items: cells
+                        items: cells,
                     });
 
-                    tr.addClass(o.clsRow).addClass(is_even_row ? o.clsEvenRow : o.clsOddRow).appendTo(body);
+                    tr.addClass(o.clsRow)
+                        .addClass(is_even_row ? o.clsEvenRow : o.clsOddRow)
+                        .appendTo(body);
 
                     that._fireEvent("append-row", {
-                        tr: tr
+                        tr: tr,
                     });
                 }
 
                 $(this.component).find(".table-service-check-all input").prop("checked", checkedItems.length);
             } else {
                 j = 0;
-                $.each(view, function(){
+                $.each(view, function () {
                     if (this.show) j++;
                 });
                 if (o.check === true) {
@@ -1619,7 +1825,14 @@
                     j++;
                 }
                 tr = $("<tr>").addClass(o.clsBodyRow).appendTo(body);
-                td = $("<td>").attr("colspan", j).addClass("text-center").html($("<span>").addClass(o.clsEmptyTableTitle).html(o.emptyTableTitle || that.locale.table["empty"]));
+                td = $("<td>")
+                    .attr("colspan", j)
+                    .addClass("text-center")
+                    .html(
+                        $("<span>")
+                            .addClass(o.clsEmptyTableTitle)
+                            .html(o.emptyTableTitle || strings.label_empty),
+                    );
                 td.appendTo(tr);
             }
 
@@ -1631,41 +1844,70 @@
             this._fireEvent("draw");
 
             if (cb !== undefined) {
-                Utils.exec(cb, null, element[0])
+                Metro.utils.exec(cb, null, element[0]);
             }
         },
 
-        _getItemContent: function(row){
-            var o = this.options;
-            var result, col = row[this.sort.colIndex];
-            var format = this.heads[this.sort.colIndex].format;
-            var formatMask = !Utils.isNull(this.heads) && !Utils.isNull(this.heads[this.sort.colIndex]) && Utils.isValue(this.heads[this.sort.colIndex]['formatMask']) ? this.heads[this.sort.colIndex]['formatMask'] : "%Y-%m-%d";
-            var thousandSeparator = this.heads && this.heads[this.sort.colIndex] && this.heads[this.sort.colIndex]["thousandSeparator"] ? this.heads[this.sort.colIndex]["thousandSeparator"] : o.thousandSeparator;
-            var decimalSeparator  = this.heads && this.heads[this.sort.colIndex] && this.heads[this.sort.colIndex]["decimalSeparator"] ? this.heads[this.sort.colIndex]["decimalSeparator"] : o.decimalSeparator;
+        _getItemContent: function (row) {
+            const o = this.options;
+            const locale = this.locale;
+            let result;
+            const col = row[this.sort.colIndex];
+            const format = this.heads[this.sort.colIndex].format;
+            const formatMask =
+                !Metro.utils.isNull(this.heads) &&
+                !Metro.utils.isNull(this.heads[this.sort.colIndex]) &&
+                Metro.utils.isValue(this.heads[this.sort.colIndex].formatMask)
+                    ? this.heads[this.sort.colIndex].formatMask
+                    : "%Y-%m-%d";
+            const thousandSeparator =
+                this.heads?.[this.sort.colIndex] && this.heads[this.sort.colIndex].thousandSeparator
+                    ? this.heads[this.sort.colIndex].thousandSeparator
+                    : o.thousandSeparator;
+            const decimalSeparator =
+                this.heads?.[this.sort.colIndex] && this.heads[this.sort.colIndex].decimalSeparator
+                    ? this.heads[this.sort.colIndex].decimalSeparator
+                    : o.decimalSeparator;
 
-            result = (""+col).toLowerCase().replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
+            result = `${col}`
+                .toLowerCase()
+                .replace(/[\n\r]+|[\s]{2,}/g, " ")
+                .trim();
 
-            if (Utils.isValue(result) && Utils.isValue(format)) {
-
-                if (['number', 'int', 'float', 'money'].indexOf(format) !== -1) {
-                    result = Utils.parseNumber(result, thousandSeparator, decimalSeparator);
+            if (Metro.utils.isValue(result) && Metro.utils.isValue(format)) {
+                if (["number", "int", "float", "money"].indexOf(format) !== -1) {
+                    result = Metro.utils.parseNumber(result, thousandSeparator, decimalSeparator);
                 }
 
                 switch (format) {
-                    case "date": result = formatMask ? Datetime.from(result, formatMask, o.locale) : datetime(result); break;
-                    case "number": result = +result; break;
-                    case "int": result = parseInt(result); break;
-                    case "float": result = parseFloat(result); break;
-                    case "money": result = Utils.parseMoney(result); break;
-                    case "card": result = Utils.parseCard(result); break;
-                    case "phone": result = Utils.parsePhone(result); break;
+                    case "date":
+                        result = formatMask ? Datetime.from(result, formatMask, locale) : datetime(result);
+                        break;
+                    case "number":
+                        result = +result;
+                        break;
+                    case "int":
+                        result = Number.parseInt(result);
+                        break;
+                    case "float":
+                        result = Number.parseFloat(result);
+                        break;
+                    case "money":
+                        result = Metro.utils.parseMoney(result);
+                        break;
+                    case "card":
+                        result = Metro.utils.parseCard(result);
+                        break;
+                    case "phone":
+                        result = Metro.utils.parsePhone(result);
+                        break;
                 }
             }
 
             return result;
         },
 
-        addItem: function(item, redraw){
+        addItem: function (item, redraw) {
             if (!Array.isArray(item)) {
                 console.warn("Item is not an array and can't be added");
                 return this;
@@ -1674,35 +1916,34 @@
             if (redraw !== false) this.draw();
         },
 
-        addItems: function(items, redraw){
+        addItems: function (items, redraw) {
             if (!Array.isArray(items)) {
                 console.warn("Items is not an array and can't be added");
                 return this;
             }
-            items.forEach(function(item){
-                if (Array.isArray(item))
-                    this.items.push(item, false);
-            });
+            for (const item of items) {
+                if (Array.isArray(item)) this.items.push(item, false);
+            }
             this.draw();
             if (redraw !== false) this.draw();
         },
 
-        updateItem: function(key, field, value){
-            var item = this.items[this.index[key]];
-            var fieldIndex = null;
-            if (Utils.isNull(item)) {
-                console.warn('Item is undefined for update');
+        updateItem: function (key, field, value) {
+            const item = this.items[this.index[key]];
+            let fieldIndex = null;
+            if (Metro.utils.isNull(item)) {
+                console.warn("Item is undefined for update");
                 return this;
             }
-            if (isNaN(field)) {
-                this.heads.forEach(function(v, i){
-                    if (v['name'] === field) {
+            if (Number.isNaN(field)) {
+                this.heads.forEach((v, i) => {
+                    if (v.name === field) {
                         fieldIndex = i;
                     }
                 });
             }
-            if (Utils.isNull(fieldIndex)) {
-                console.warn('Item is undefined for update. Field ' + field + ' not found in data structure');
+            if (Metro.utils.isNull(fieldIndex)) {
+                console.warn(`Item is undefined for update. Field ${field} not found in data structure`);
                 return this;
             }
 
@@ -1711,16 +1952,17 @@
             return this;
         },
 
-        getItem: function(key){
+        getItem: function (key) {
             return this.items[this.index[key]];
         },
 
-        deleteItem: function(fieldIndex, value){
-            var i, deleteIndexes = [];
-            var is_func = Utils.isFunc(value);
-            for(i = 0; i < this.items.length; i++) {
+        deleteItem: function (fieldIndex, value) {
+            let i;
+            const deleteIndexes = [];
+            const is_func = Metro.utils.isFunc(value);
+            for (i = 0; i < this.items.length; i++) {
                 if (is_func) {
-                    if (Utils.exec(value, [this.items[i][fieldIndex]])) {
+                    if (Metro.utils.exec(value, [this.items[i][fieldIndex]])) {
                         deleteIndexes.push(i);
                     }
                 } else {
@@ -1730,25 +1972,27 @@
                 }
             }
 
-            this.items = Utils.arrayDeleteByMultipleKeys(this.items, deleteIndexes);
+            this.items = Metro.utils.arrayDeleteByMultipleKeys(this.items, deleteIndexes);
 
             return this;
         },
 
-        deleteItemByName: function(fieldName, value){
-            var i, fieldIndex, deleteIndexes = [];
-            var is_func = Utils.isFunc(value);
+        deleteItemByName: function (fieldName, value) {
+            let i;
+            let fieldIndex;
+            const deleteIndexes = [];
+            const is_func = Metro.utils.isFunc(value);
 
-            for(i = 0; i < this.heads.length; i++) {
-                if (this.heads[i]['name'] === fieldName) {
+            for (i = 0; i < this.heads.length; i++) {
+                if (this.heads[i].name === fieldName) {
                     fieldIndex = i;
                     break;
                 }
             }
 
-            for(i = 0; i < this.items.length; i++) {
+            for (i = 0; i < this.items.length; i++) {
                 if (is_func) {
-                    if (Utils.exec(value, [this.items[i][fieldIndex]])) {
+                    if (Metro.utils.exec(value, [this.items[i][fieldIndex]])) {
                         deleteIndexes.push(i);
                     }
                 } else {
@@ -1758,45 +2002,42 @@
                 }
             }
 
-            this.items = Utils.arrayDeleteByMultipleKeys(this.items, deleteIndexes);
+            this.items = Metro.utils.arrayDeleteByMultipleKeys(this.items, deleteIndexes);
 
             return this;
         },
 
-        draw: function(){
+        draw: function () {
             this._draw();
             return this;
         },
 
-        sorting: function(dir){
-            var that = this;
-
-            if (Utils.isValue(dir)) {
+        sorting: function (dir) {
+            if (Metro.utils.isValue(dir)) {
                 this.sort.dir = dir;
             }
 
             this._fireEvent("sort-start", {
-                items: this.items
+                items: this.items,
             });
 
-            this.items.sort(function(a, b){
-                var c1 = that._getItemContent(a);
-                var c2 = that._getItemContent(b);
-                var result = 0;
+            this.items.sort((a, b) => {
+                const c1 = this._getItemContent(a);
+                const c2 = this._getItemContent(b);
+                let result = 0;
 
                 if (c1 < c2) {
-                    result = that.sort.dir === "asc" ? -1 : 1;
+                    result = this.sort.dir === "asc" ? -1 : 1;
                 }
                 if (c1 > c2) {
-                    result = that.sort.dir === "asc" ? 1 : -1;
+                    result = this.sort.dir === "asc" ? 1 : -1;
                 }
 
                 if (result !== 0) {
-
-                    that._fireEvent("sort-item-switch", {
+                    this._fireEvent("sort-item-switch", {
                         a: a,
                         b: b,
-                        result: result
+                        result: result,
                     });
                 }
 
@@ -1804,22 +2045,24 @@
             });
 
             this._fireEvent("sort-stop", {
-                items: this.items
+                items: this.items,
             });
 
             return this;
         },
 
-        search: function(val){
+        search: function (val) {
             this.searchString = val.trim().toLowerCase();
             this.currentPage = 1;
             this._draw();
             return this;
         },
 
-        _rebuild: function(review){
-            var that = this, element = this.element;
-            var need_sort = false, sortable_columns;
+        _rebuild: function (review) {
+            const that = this;
+            const element = this.element;
+            let need_sort = false;
+            let sortable_columns;
 
             this._createIndex();
 
@@ -1831,19 +2074,19 @@
             this._createTableBody();
             this._createTableFooter();
 
-            if (this.heads.length > 0) $.each(this.heads, function(i){
-                var item = this;
-                if (!need_sort && ["asc", "desc"].indexOf(item.sortDir) > -1) {
-                    need_sort = true;
-                    that.sort.colIndex = i;
-                    that.sort.dir = item.sortDir;
-                }
-            });
+            if (this.heads.length > 0)
+                $.each(this.heads, function (i) {
+                    if (!need_sort && ["asc", "desc"].indexOf(this.sortDir) > -1) {
+                        need_sort = true;
+                        that.sort.colIndex = i;
+                        that.sort.dir = this.sortDir;
+                    }
+                });
 
             if (need_sort) {
                 sortable_columns = element.find(".sortable-column");
                 this._resetSortClass(sortable_columns);
-                $(sortable_columns.get(that.sort.colIndex)).addClass("sort-"+that.sort.dir);
+                $(sortable_columns.get(that.sort.colIndex)).addClass(`sort-${that.sort.dir}`);
                 this.sorting();
             }
 
@@ -1852,14 +2095,15 @@
             that._draw();
         },
 
-        setHeads: function(data){
+        setHeads: function (data) {
             this.heads = data;
             return this;
         },
 
-        setHeadItem: function(name, data){
-            var i, index;
-            for(i = 0; i < this.heads.length; i++) {
+        setHeadItem: function (name, data) {
+            let i;
+            let index;
+            for (i = 0; i < this.heads.length; i++) {
                 if (this.heads[i].name === name) {
                     index = i;
                     break;
@@ -1869,175 +2113,173 @@
             return this;
         },
 
-        setItems: function(data){
+        setItems: function (data) {
             this.items = data;
             return this;
         },
 
-        setData: function(/*obj*/ data){
-            var that = this, o = this.options;
+        setData: function (/*obj*/ data) {
+            const o = this.options;
 
-            this.activity.show(function() {
-                that.items = [];
-                that.heads = [];
-                that.foots = [];
+            this.activity.show(() => {
+                this.items = [];
+                this.heads = [];
+                this.foots = [];
 
                 if (Array.isArray(o.head)) {
-                    that.heads = o.head;
+                    this.heads = o.head;
                 }
 
                 if (Array.isArray(o.body)) {
-                    that.items = o.body;
+                    this.items = o.body;
                 }
 
-                that._createItemsFromJSON(data);
+                this._createItemsFromJSON(data);
 
-                that._rebuild(true);
+                this._rebuild(true);
 
-                that.activity.hide();
-            })
+                this.activity.hide();
+            });
 
             return this;
         },
 
-        loadData: function(source, review){
-            var that = this, element = this.element, o = this.options;
-
-            if (!Utils.isValue(review)) {
-                review = true;
-            }
+        loadData: function (source, review = true) {
+            const element = this.element;
+            const o = this.options;
 
             element.html("");
 
-            if (!Utils.isValue(source)) {
-
+            if (!Metro.utils.isValue(source)) {
                 this._rebuild(review);
-
             } else {
                 o.source = source;
 
                 this._fireEvent("data-load", {
-                    source: o.source
+                    source: o.source,
                 });
 
-                that.activity.show(function(){
+                this.activity.show(() => {
                     fetch(o.source)
                         .then(Metro.fetch.status)
                         .then(Metro.fetch.json)
-                        .then(function(data){
-                            that.activity.hide();
-                            that.items = [];
-                            that.heads = [];
-                            that.foots = [];
+                        .then((data) => {
+                            this.activity.hide();
+                            this.items = [];
+                            this.heads = [];
+                            this.foots = [];
 
-                            that._fireEvent("data-loaded", {
+                            this._fireEvent("data-loaded", {
                                 source: o.source,
-                                data: data
+                                data: data,
                             });
 
                             if (Array.isArray(o.head)) {
-                                that.heads = o.head;
+                                this.heads = o.head;
                             }
 
                             if (Array.isArray(o.body)) {
-                                that.items = o.body;
+                                this.items = o.body;
                             }
 
-                            that._createItemsFromJSON(data);
-                            that._rebuild(review);
-                            that._resetInspector();
+                            this._createItemsFromJSON(data);
+                            this._rebuild(review);
+                            this._resetInspector();
 
-                            that._fireEvent("data-load-end", {
+                            this._fireEvent("data-load-end", {
                                 source: o.source,
-                                data: data
+                                data: data,
                             });
                         })
-                        .catch(function(error){
-                            that.activity.hide();
-                            that._fireEvent("data-load-error", {
+                        .catch((error) => {
+                            this.activity.hide();
+                            this._fireEvent("data-load-error", {
                                 source: o.source,
-                                error: error
+                                error: error,
                             });
-                        })
+                        });
                 });
-
             }
         },
 
-        reload: function(review){
+        reload: function (review) {
             this.loadData(this.options.source, review);
         },
 
-        clear: function(){
+        clear: function () {
             this.items = [];
             return this.draw();
         },
 
-        next: function(){
-            if (this.items.length === 0) return ;
+        next: function () {
+            if (this.items.length === 0) return;
             this.currentPage++;
             if (this.currentPage > this.pagesCount) {
                 this.currentPage = this.pagesCount;
-                return ;
+                return;
             }
             this._draw();
             return this;
         },
 
-        prev: function(){
-            if (this.items.length === 0) return ;
+        prev: function () {
+            if (this.items.length === 0) return;
             this.currentPage--;
             if (this.currentPage === 0) {
                 this.currentPage = 1;
-                return ;
+                return;
             }
             this._draw();
             return this;
         },
 
-        first: function(){
-            if (this.items.length === 0) return ;
+        first: function () {
+            if (this.items.length === 0) return;
             this.currentPage = 1;
             this._draw();
             return this;
         },
 
-        last: function(){
-            if (this.items.length === 0) return ;
+        last: function () {
+            if (this.items.length === 0) return;
             this.currentPage = this.pagesCount;
             this._draw();
             return this;
         },
 
-        page: function(num){
-            if (num <= 0) {
-                num = 1;
+        page: function (num) {
+            let _num = num;
+
+            if (_num <= 0) {
+                _num = 1;
             }
 
-            if (num > this.pagesCount) {
-                num = this.pagesCount;
+            if (_num > this.pagesCount) {
+                _num = this.pagesCount;
             }
 
-            this.currentPage = num;
+            this.currentPage = _num;
             this._draw();
             return this;
         },
 
-        addFilter: function(f, redraw){
-            var filterIndex = null, i, func = Utils.isFunc(f);
+        addFilter: function (f, redraw) {
+            let filterIndex = null;
+            let i;
+            const func = Metro.utils.isFunc(f);
             if (func === false) {
-                return ;
+                return;
             }
 
-            for(i = 0; i < this.filters.length; i++) {
-                if (Utils.isNull(this.filters[i])) {
+            for (i = 0; i < this.filters.length; i++) {
+                if (Metro.utils.isNull(this.filters[i])) {
                     filterIndex = i;
                     this.filters[i] = func;
                     break;
                 }
             }
 
-            if (Utils.isNull(filterIndex)) {
+            if (Metro.utils.isNull(filterIndex)) {
                 this.filters.push(func);
                 filterIndex = this.filters.length - 1;
             }
@@ -2047,10 +2289,10 @@
                 this.draw();
             }
 
-            return filterIndex
+            return filterIndex;
         },
 
-        removeFilter: function(key, redraw){
+        removeFilter: function (key, redraw) {
             this.filters[key] = null;
             if (redraw === true) {
                 this.currentPage = 1;
@@ -2059,7 +2301,7 @@
             return this;
         },
 
-        removeFilters: function(redraw){
+        removeFilters: function (redraw) {
             this.filters = [];
             if (redraw === true) {
                 this.currentPage = 1;
@@ -2068,66 +2310,69 @@
             return this;
         },
 
-        getItems: function(){
+        getItems: function () {
             return this.items;
         },
 
-        getHeads: function(){
+        getHeads: function () {
             return this.heads;
         },
 
-        getView: function(){
+        getView: function () {
             return this.view;
         },
 
-        getFilteredItems: function(){
+        getFilteredItems: function () {
             return this.filteredItems.length > 0 ? this.filteredItems : this.items;
         },
 
-        getSelectedItems: function(){
-            var element = this.element, o = this.options;
-            var stored_keys = Metro.storage.getItem(o.checkStoreKey.replace("$1", element.attr("id")));
-            var selected = [];
+        getSelectedItems: function () {
+            const element = this.element;
+            const o = this.options;
+            const stored_keys = Metro.storage.getItem(o.checkStoreKey.replace("$1", element.attr("id")));
+            const selected = [];
 
-            if (!Utils.isValue(stored_keys)) {
+            if (!Metro.utils.isValue(stored_keys)) {
                 return [];
             }
 
-            $.each(this.items, function(){
-                if (stored_keys.indexOf(""+this[o.checkColIndex]) !== -1) {
+            $.each(this.items, function () {
+                if (stored_keys.indexOf(`${this[o.checkColIndex]}`) !== -1) {
                     selected.push(this);
                 }
             });
             return selected;
         },
 
-        getStoredKeys: function(){
-            var element = this.element, o = this.options;
+        getStoredKeys: function () {
+            const element = this.element;
+            const o = this.options;
             return Metro.storage.getItem(o.checkStoreKey.replace("$1", element.attr("id")), []);
         },
 
-        clearSelected: function(redraw){
-            var element = this.element, o = this.options;
+        clearSelected: function (redraw) {
+            const element = this.element;
+            const o = this.options;
             Metro.storage.setItem(o.checkStoreKey.replace("$1", element.attr("id")), []);
             element.find("table-service-check-all input").prop("checked", false);
             if (redraw === true) this._draw();
         },
 
-        getFilters: function(){
+        getFilters: function () {
             return this.filters;
         },
 
-        getFiltersIndexes: function(){
+        getFiltersIndexes: function () {
             return this.filtersIndexes;
         },
 
-        openInspector: function(mode){
-            var ins = this.inspector;
+        openInspector: function (mode) {
+            const ins = this.inspector;
             if (mode) {
-                ins.show(0, function(){
+                ins.show(0, () => {
                     ins.css({
-                        top: ($(globalThis).height()  - ins.outerHeight(true)) / 2 + pageYOffset,
-                        left: ($(globalThis).width() - ins.outerWidth(true)) / 2 + pageXOffset
+                        top: ($(globalThis).height() - ins.outerHeight(true)) / 2 + pageYOffset,
+                        left: ($(globalThis).width() - ins.outerWidth(true)) / 2 + pageXOffset,
                     }).data("open", true);
                 });
             } else {
@@ -2135,16 +2380,15 @@
             }
         },
 
-        closeInspector: function(){
+        closeInspector: function () {
             this.openInspector(false);
         },
 
-        toggleInspector: function(){
+        toggleInspector: function () {
             this.openInspector(!this.inspector.data("open"));
         },
 
-        resetView: function(){
-
+        resetView: function () {
             this.view = this._createView();
 
             this._createTableHeader();
@@ -2155,91 +2399,108 @@
             this._saveTableView();
         },
 
-        rebuildIndex: function(){
+        rebuildIndex: function () {
             this._createIndex();
         },
 
-        getIndex: function(){
+        getIndex: function () {
             return this.index;
         },
 
-        export: function(to, mode, filename, options){
-            var Export = Metro.export;
-            var that = this, o = this.options;
-            var table = document.createElement("table");
-            var head = $("<thead>").appendTo(table);
-            var body = $("<tbody>").appendTo(table);
-            var i, j, cells, tds = [], items, tr, td;
-            var start, stop;
+        export: function (to, mode, filename, options) {
+            const Export = Metro.export;
+            const that = this;
+            const o = this.options;
+            const table = document.createElement("table");
+            const head = $("<thead>").appendTo(table);
+            const body = $("<tbody>").appendTo(table);
+            let i;
+            let j;
+            let cells;
+            const tds = [];
+            let items;
+            let tr;
+            let td;
+            let start;
+            let stop;
 
-            if (typeof Export.tableToCSV !== 'function') {
-                return ;
+            if (typeof Export.tableToCSV !== "function") {
+                return;
             }
 
-            mode = Utils.isValue(mode) ? mode.toLowerCase() : "all-filtered";
-            filename = Utils.isValue(filename) ? filename : Utils.elementId("table")+"-export.csv";
+            const _mode = Metro.utils.isValue(mode) ? mode.toLowerCase() : "all-filtered";
+            const _filename = Metro.utils.isValue(filename) ? filename : `${element.id() || Hooks.useId()}-export.csv`;
 
             // Create table header
             tr = $("<tr>");
             cells = this.heads;
 
-            for (j = 0; j < cells.length; j++){
+            for (j = 0; j < cells.length; j++) {
                 tds[j] = null;
             }
 
-            $.each(cells, function(cell_index){
-                var item = this;
-                if (Utils.bool(that.view[cell_index]['show']) === false) {
-                    return ;
+            $.each(cells, function (cell_index) {
+                if (Metro.utils.bool(that.view[cell_index].show) === false) {
+                    return;
                 }
                 td = $("<th>");
-                if (Utils.isValue(item.title)) {
-                    td.html(item.title);
+                if (Metro.utils.isValue(this.title)) {
+                    td.html(this.title);
                 }
-                tds[that.view[cell_index]['index-view']] = td;
+                tds[that.view[cell_index]["index-view"]] = td;
             });
 
-            for (j = 0; j < cells.length; j++){
-                if (Utils.isValue(tds[j])) tds[j].appendTo(tr);
+            for (j = 0; j < cells.length; j++) {
+                if (Metro.utils.isValue(tds[j])) tds[j].appendTo(tr);
             }
             tr.appendTo(head);
 
-            // Create table data
-            if (mode === "checked") {
-                items = this.getSelectedItems();
-                start = 0; stop = items.length - 1;
-            } else if (mode === "view") {
-                items = this._filter();
-                start = parseInt(o.rows) === -1 ? 0 : o.rows * (this.currentPage - 1);
-                stop = parseInt(o.rows) === -1 ? items.length - 1 : start + o.rows - 1;
-            } else if (mode === "all") {
-                items = this.items;
-                start = 0; stop = items.length - 1;
-            } else {
-                items = this._filter();
-                start = 0; stop = items.length - 1;
+            switch (_mode) {
+                case "checked": {
+                    items = this.getSelectedItems();
+                    start = 0;
+                    stop = items.length - 1;
+                    break;
+                }
+                case "view": {
+                    items = this._filter();
+                    start = Number.parseInt(o.rows) === -1 ? 0 : o.rows * (this.currentPage - 1);
+                    stop = Number.parseInt(o.rows) === -1 ? items.length - 1 : start + o.rows - 1;
+                    break;
+                }
+                case "all": {
+                    items = this.items;
+                    start = 0;
+                    stop = items.length - 1;
+                    break;
+                }
+                default: {
+                    items = this._filter();
+                    start = 0;
+                    stop = items.length - 1;
+                }
             }
 
             for (i = start; i <= stop; i++) {
-                if (Utils.isValue(items[i])) {
+                if (Metro.utils.isValue(items[i])) {
                     tr = $("<tr>");
 
                     cells = items[i];
 
-                    for (j = 0; j < cells.length; j++){
+                    for (j = 0; j < cells.length; j++) {
                         tds[j] = null;
                     }
 
-                    $.each(cells, function(cell_index){
-                        if (Utils.bool(that.view[cell_index].show) === false) {
-                            return ;
+                    $.each(cells, function (cell_index) {
+                        if (Metro.utils.bool(that.view[cell_index].show) === false) {
+                            return;
                         }
                         td = $("<td>").html(this);
-                        tds[that.view[cell_index]['index-view']] = td;
+                        tds[that.view[cell_index]["index-view"]] = td;
                     });
 
-                    for (j = 0; j < cells.length; j++){
-                        if (Utils.isValue(tds[j])) tds[j].appendTo(tr);
+                    for (j = 0; j < cells.length; j++) {
+                        if (Metro.utils.isValue(tds[j])) tds[j].appendTo(tr);
                     }
 
                     tr.appendTo(body);
@@ -2249,43 +2510,49 @@
             // switch (to) {
             //     default: Export.tableToCSV(table, filename, options);
             // }
-            Export.tableToCSV(table, filename, options);
+            Export.tableToCSV(table, _filename, options);
             table.remove();
         },
 
-        changeAttribute: function(attributeName){
-            var that = this, element = this.element, o = this.options;
+        changeAttribute: function (attributeName) {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
-            function dataCheck(){
-                o.check = Utils.bool(element.attr("data-check"));
+            function dataCheck() {
+                o.check = Metro.utils.bool(element.attr("data-check"));
                 that._service();
                 that._createTableHeader();
                 that._draw();
             }
 
-            function dataRownum(){
-                o.rownum = Utils.bool(element.attr("data-rownum"));
+            function dataRownum() {
+                o.rownum = Metro.utils.bool(element.attr("data-rownum"));
                 that._service();
                 that._createTableHeader();
                 that._draw();
             }
 
             switch (attributeName) {
-                case "data-check": dataCheck(); break;
-                case "data-rownum": dataRownum(); break;
+                case "data-check":
+                    dataCheck();
+                    break;
+                case "data-rownum":
+                    dataRownum();
+                    break;
             }
         },
 
-        destroy: function(){
-            var element = this.element;
-            var component = element.closest(".table-component");
-            var search_input = component.find("input");
-            var rows_select = component.find("select");
+        destroy: function () {
+            const element = this.element;
+            const component = element.closest(".table-component");
+            const search_input = component.find("input");
+            const rows_select = component.find("select");
 
             search_input.data("input").destroy();
             rows_select.data("select").destroy();
 
-            $(globalThis).off(Metro.events.resize, {ns: this.id});
+            $(globalThis).off(Metro.events.resize, { ns: this.id });
 
             element.off(Metro.events.click, ".sortable-column");
 
@@ -2295,15 +2562,15 @@
 
             search_input.off(Metro.events.inputchange);
 
-            if (Utils.isValue(this.wrapperSearch)) {
-                var customSearch = this.wrapperSearch.find("input");
+            if (Metro.utils.isValue(this.wrapperSearch)) {
+                const customSearch = this.wrapperSearch.find("input");
                 if (customSearch.length > 0) {
                     customSearch.off(Metro.events.inputchange);
                 }
             }
 
             component.off(Metro.events.click, ".pagination .page-link");
-            if (Utils.isValue(this.wrapperPagination)) {
+            if (Metro.utils.isValue(this.wrapperPagination)) {
                 this.wrapperPagination.off(Metro.events.click, ".pagination .page-link");
             }
             element.off(Metro.events.click, ".js-table-crud-button");
@@ -2311,6 +2578,6 @@
             this._removeInspectorEvents();
 
             return element;
-        }
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

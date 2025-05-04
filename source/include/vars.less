@@ -9,100 +9,215 @@
 
 
 // Colors
-@lightenValue: 15%;
-@darkenValue: 15%;
+@lightenValue: 10%;
+@darkenValue: 10%;
 
 @transparent:			transparent;
 
-@brandColor1: #2ac4f4;
-@brandColor2: #004d6f;
+@black:                #000000;
+@white:                #ffffff;
+@dark:                 #1d1d1d;
+@light:                #f8f8f8;
 
-@black:                 #000000;
-@white:                 #ffffff;
-@dark:                  #1d1d1d;
-@light:                 #f8f8f8;
-@gray:                  #bebebe;
-@grayBlue:              #607d8b;
-@grayWhite:             #f5f5f5;
-@grayMouse:             #455a64;
+@gray:                 #ccc;
+@gray-blue:            #6a89a7;
+@gray-white:           #f5f5f5;
+@gray-mouse:           #566b75;
 
-@lime:                  #a4c400;
-@green:                 #60a917;
-@emerald:               #008a00;
-@blue:                  #00AFF0;
-@teal:                  #00aba9;
-@cyan: #1fb1f8;
-@cobalt:                #0050ef;
-@indigo:                #6a00ff;
-@violet:                #aa00ff;
-@pink:                  #dc4fad;
-@magenta:               #d80073;
-@crimson:               #a20025;
-@red:                   #CE352C;
-@orange:                #fa6800;
-@amber:                 #f0a30a;
-@yellow:                #fff000;
-@brown:                 #825a2c;
-@olive:                 #6d8764;
-@steel:                 #647687;
-@mauve:                 #76608a;
-@taupe:                 #87794e;
+@lime:                 #AEFD6C;
+@green: #00b500;
+@emerald:              #50c878;
+@blue:                 #5e87ff;
+@teal:                 #069494;
+@cyan:                 #94b6ff;
+@cobalt:               #0047ab;
+@indigo: #6400a8;
+@almost: #6a2ded;
+@violet:               #ee82ee;
+@pink:                 #ffc0cb;
+@magenta:              #ff00ff;
+@crimson:               #df0e38;
+@red:                  #ff0000;
+@clown: #d43e38;
+@orange:               #ffa500;
+@amber:                #ffca2a;
+@yellow:               #ffde21;
+@brown: #aa6432;
+@olive: #a1a100;
+@steel: #7b91a6;
+@mauve:                #e0afff;
+@taupe: #7a6654;
+@champagne:            #f7e6ca;
+@khaki:                #d5c58a;
+@charcoal: #989898;
+@bronze: #e48d3e;
+@windstorm: #799ed6;
+@nude:                 #f7d9bc;
+@terracotta:           #e35336;
+@coral:                #ff8559;
+@army:                 #5d6532;
+@seashell:             #fff1e7;
+@sand: #f1e0ae;
 
-@lightLime:             lighten(@lime, @lightenValue);
-@lightGreen:            lighten(@green, @lightenValue);
-@lightEmerald:          lighten(@emerald, @lightenValue);
-@lightBlue:             lighten(@blue, @lightenValue);
-@lightTeal:             lighten(@teal, @lightenValue);
-@lightCyan:             lighten(@cyan, @lightenValue);
-@lightCobalt:           lighten(@cobalt, @lightenValue);
-@lightIndigo:           lighten(@indigo, @lightenValue);
-@lightViolet:           lighten(@violet, @lightenValue);
-@lightPink:             lighten(@pink, @lightenValue);
-@lightMagenta:          lighten(@magenta, @lightenValue);
-@lightCrimson:          lighten(@crimson, @lightenValue);
-@lightRed:              lighten(@red, @lightenValue);
-@lightOrange:           lighten(@orange, @lightenValue);
-@lightAmber:            lighten(@amber, @lightenValue);
-@lightYellow:           lighten(@yellow, @lightenValue);
-@lightBrown:            lighten(@brown, @lightenValue);
-@lightOlive:            lighten(@olive, @lightenValue);
-@lightSteel:            lighten(@steel, @lightenValue);
-@lightMauve:            lighten(@mauve, @lightenValue);
-@lightTaupe:            lighten(@taupe, @lightenValue);
-@lightGray:             lighten(@gray, @lightenValue);
-@lightGrayBlue:         lighten(@grayBlue, @lightenValue);
+@light-lime:           #f2ffe7;
+@light-green:          #e7f6e6;
+@light-emerald: #d1e6cc;
+@light-blue:           #e7eaff;
+@light-teal:           #e1f2f3;
+@light-cyan:           #e3edff;
+@light-cobalt: #d1ecff;
+@light-indigo: #f3dcf3;
+@light-almost: #eee5ff;
+@light-violet:         #fce2fb;
+@light-pink:           #ffeef1;
+@light-magenta:        #ffe2ff;
+@light-crimson: #ffd1da;
+@light-red: #ffe1e1;
+@light-clown: #ffdede;
+@light-orange:         #fff3de;
+@light-amber:          #fff8e1;
+@light-yellow:         #ffffc6;
+@light-brown:          #ffeed9;
+@light-olive:          #f8fde7;
+@light-steel:          #edeeee;
+@light-mauve:          #f7ecfe;
+@light-taupe: #eadccf;
+@light-champagne: #fff9f2;
+@light-khaki: #f6f1dd;
+@light-charcoal:       #e8e8e8;
+@light-bronze: #ffecdc;
+@light-windstorm:      #e6ebf5;
+@light-nude:           #fcf0e4;
+@light-terracotta: #ffe5df;
+@light-coral:          #ffd8c8;
+@light-army:           #eceacb;
+@light-seashell:       #fff9f8;
+@light-sand:           #f8f3e0;
+@light-gray:           #f4f4f4;
+@light-gray-blue:      #bee2f4;
+@light-gray-mouse:     #8ab4c8;
+
+@sat-lime: #7dba4a;
+@sat-green: #008f00;
+@sat-emerald: #3ca15d;
+@sat-blue: #1f43ae;
+@sat-teal: #008a8a;
+@sat-cyan: #659db6;
+@sat-cobalt: #003391;
+@sat-indigo: #430080;
+@sat-almost: #4e18c1;
+@sat-violet: #b65fb6;
+@sat-pink: #cc7296;
+@sat-magenta: #c500c5;
+@sat-crimson: #980824;
+@sat-red: #b80000;
+@sat-clown: #dd443f;
+@sat-orange: #bc7700;
+@sat-amber: #d19b00;
+@sat-yellow: #ffee8c;
+@sat-brown: #884b20;
+@sat-olive: #838300;
+@sat-steel: #5c7081;
+@sat-mauve: #a982c1;
+@sat-taupe: #5e4a3c;
+@sat-champagne: #ccbca5;
+@sat-khaki: #aa9c6b;
+@sat-charcoal: #5e5e5e;
+@sat-bronze: #aa621f;
+@sat-windstorm: #5071a3;
+@sat-nude: #baa28b;
+@sat-terracotta: #af3a23;
+@sat-coral: #b65c39;
+@sat-army: #647030;
+@sat-seashell: #b8aea6;
+@sat-sand: #d1c5a1;
+@sat-gray: #9c9c9c;
+@sat-gray-blue: #5f7a88;
+@sat-gray-mouse: #3f535c;
+
+@dark-lime:            #557f32;
+@dark-green:           #003d00;
+@dark-emerald:         #246339;
+@dark-blue:            #132a6f;
+@dark-teal:            #014848;
+@dark-cyan:            #456c7e;
+@dark-cobalt:          #001f54;
+@dark-indigo:          #21003e;
+@dark-almost: #2f0687;
+@dark-violet:          #773e77;
+@dark-pink:            #805f65;
+@dark-magenta:         #800080;
+@dark-crimson:         #6e0519;
+@dark-red:             #800000;
+@dark-clown: #ae0700;
+@dark-orange:          #805100;
+@dark-amber:           #805e00;
+@dark-yellow:          #808000;
+@dark-brown:           #42240f;
+@dark-olive:           #3d3d00;
+@dark-steel:           #2e3841;
+@dark-mauve:           #705680;
+@dark-taupe:           #261e18;
+@dark-champagne:       #7c7364;
+@dark-khaki:           #6a6142;
+@dark-charcoal:        #202020;
+@dark-bronze:          #693c13;
+@dark-windstorm:       #304462;
+@dark-nude:            #7c6c5d;
+@dark-terracotta:      #712516;
+@dark-coral:           #804028;
+@dark-army:            #2a2f14;
+@dark-seashell:        #807973;
+@dark-sand: #8f8975;
+@dark-gray: #515151;
+@dark-gray-blue:       #36464e;
+@dark-gray-mouse: #2e3c42;
 
 
-@darkLime:             darken(@lime, @darkenValue);
-@darkGreen:            darken(@green, @darkenValue);
-@darkEmerald:          darken(@emerald, @darkenValue);
-@darkBlue:             darken(@blue, @darkenValue);
-@darkTeal:             darken(@teal, @darkenValue);
-@darkCyan:             darken(@cyan, @darkenValue);
-@darkCobalt:           darken(@cobalt, @darkenValue);
-@darkIndigo:           darken(@indigo, @darkenValue);
-@darkViolet:           darken(@violet, @darkenValue);
-@darkPink:             darken(@pink, @darkenValue);
-@darkMagenta:          darken(@magenta, @darkenValue);
-@darkCrimson:          darken(@crimson, @darkenValue);
-@darkRed:              darken(@red, @darkenValue);
-@darkOrange:           darken(@orange, @darkenValue);
-@darkAmber:            darken(@amber, @darkenValue);
-@darkYellow:           darken(@yellow, @darkenValue);
-@darkBrown:            darken(@brown, @darkenValue);
-@darkOlive:            darken(@olive, @darkenValue);
-@darkSteel:            darken(@steel, @darkenValue);
-@darkMauve:            darken(@mauve, @darkenValue);
-@darkTaupe:            darken(@taupe, @darkenValue);
-@darkGray:             darken(@gray, @darkenValue);
-@darkGrayBlue:         darken(@grayBlue, @darkenValue);
+@colors:       black, white, dark, light, gray, gray-blue, gray-white, gray-mouse,
 
-@colorList: black, white, dark, light, grayBlue, grayWhite, grayMouse, brandColor1, brandColor2,
-            lime, green, emerald, blue, teal, cyan, cobalt, indigo, violet, pink, magenta, crimson, red, orange, amber, yellow, brown, olive, steel, mauve, taupe, gray,
-            lightLime, lightGreen, lightEmerald, lightBlue, lightTeal, lightCyan, lightCobalt, lightIndigo, lightViolet, lightPink, lightMagenta, lightCrimson, lightRed, lightOrange, lightAmber, lightYellow, lightBrown, lightOlive, lightSteel, lightMauve, lightTaupe, lightGray, lightGrayBlue,
-            darkLime, darkGreen, darkEmerald, darkBlue, darkTeal, darkCyan, darkCobalt, darkIndigo, darkViolet, darkPink, darkMagenta, darkCrimson, darkRed, darkOrange, darkAmber, darkYellow, darkBrown, darkOlive, darkSteel, darkMauve, darkTaupe, darkGray, darkGrayBlue;
+               lime, green, emerald, blue, teal, cyan, cobalt, indigo, almost, violet, pink, magenta, crimson, red, clown, orange,
+               amber, yellow, brown, olive, steel, mauve, taupe, champagne, khaki, charcoal,
+               bronze, windstorm, nude, terracotta, coral, army, seashell, sand,
 
-@colorListLength: length(@colorList);
+               light-lime, light-green, light-emerald, light-blue, light-teal, light-cyan, light-cobalt, light-indigo, light-almost,
+               light-violet, light-pink, light-magenta, light-crimson, light-red, light-clown, light-orange, light-amber,
+               light-yellow, light-brown, light-olive, light-steel, light-mauve, light-taupe, light-gray, light-gray-blue,
+               light-gray-mouse, light-champagne, light-khaki, light-charcoal, light-bronze, light-windstorm, light-nude,
+               light-terracotta, light-coral, light-army, light-seashell, light-sand,
+
+               dark-lime, dark-green, dark-emerald, dark-blue, dark-teal, dark-cyan, dark-cobalt, dark-indigo, dark-almost, dark-violet,
+               dark-pink, dark-magenta, dark-crimson, dark-red, dark-clown, dark-orange, dark-amber, dark-yellow, dark-brown, dark-olive,
+               dark-steel, dark-mauve, dark-taupe, dark-gray, dark-gray-blue, dark-gray-mouse, dark-champagne, dark-khaki,
+               dark-charcoal, dark-bronze, dark-windstorm, dark-nude, dark-terracotta, dark-coral, dark-army, dark-seashell, dark-sand,
+
+                sat-lime, sat-green, sat-emerald, sat-blue, sat-teal, sat-cyan, sat-cobalt, sat-indigo, sat-almost, sat-violet,
+                sat-pink, sat-magenta, sat-crimson, sat-red, sat-clown, sat-orange, sat-amber, sat-yellow, sat-brown, sat-olive,
+                sat-steel, sat-mauve, sat-taupe, sat-gray, sat-gray-blue, sat-gray-mouse, sat-champagne, sat-khaki,
+                sat-charcoal, sat-bronze, sat-windstorm, sat-nude, sat-terracotta, sat-coral, sat-army, sat-seashell, sat-sand;
+
+@simpleColors: black, white, dark, light, gray, gray-blue, gray-white, gray-mouse;
+
+@normalColors: lime, green, emerald, blue, teal, cyan, cobalt, indigo, almost, violet, pink, magenta, crimson, red, orange,
+               amber, yellow, brown, olive, steel, mauve, taupe, champagne, khaki, charcoal,
+               bronze, windstorm, nude, terracotta, coral, army, seashell, sand;
+
+@lightColors:  light-lime, light-green, light-emerald, light-blue, light-teal, light-cyan, light-cobalt, light-indigo, light-almost,
+               light-violet, light-pink, light-magenta, light-crimson, light-red, light-orange, light-amber,
+               light-yellow, light-brown, light-olive, light-steel, light-mauve, light-taupe, light-gray, light-gray-blue,
+               light-gray-mouse, light-champagne, light-khaki, light-charcoal, light-bronze, light-windstorm, light-nude,
+               light-terracotta, light-coral, light-army, light-seashell, light-sand;
+
+@darkColors:  dark-lime, dark-green, dark-emerald, dark-blue, dark-teal, dark-cyan, dark-cobalt, dark-indigo, dark-almost, dark-violet,
+              dark-pink, dark-magenta, dark-crimson, dark-red, dark-orange, dark-amber, dark-yellow, dark-brown, dark-olive,
+              dark-steel, dark-mauve, dark-taupe, dark-gray, dark-gray-blue, dark-gray-mouse, dark-champagne, dark-khaki,
+              dark-charcoal, dark-bronze, dark-windstorm, dark-nude, dark-terracotta, dark-coral, dark-army, dark-seashell, dark-sand;
+
+@satColors:  sat-lime, sat-green, sat-emerald, sat-blue, sat-teal, sat-cyan, sat-cobalt, sat-indigo, sat-almost, sat-violet,
+              sat-pink, sat-magenta, sat-crimson, sat-red, sat-orange, sat-amber, sat-yellow, sat-brown, sat-olive,
+              sat-steel, sat-mauve, sat-taupe, sat-gray, sat-gray-blue, sat-gray-mouse, sat-champagne, sat-khaki,
+              sat-charcoal, sat-bronze, sat-windstorm, sat-nude, sat-terracotta, sat-coral, sat-army, sat-seashell, sat-sand;
+
 
 // Body
 @bodyColor: lighten(@black, 13%);
@@ -116,9 +231,9 @@
 @hoverBackgroundLight:  rgba(red(@white), green(@white), blue(@white), .01);
 
 // Appbar
-@appBarBackground: @brandColor2;
-@appBarBackgroundActive: lighten(@brandColor2, 10%);
-@appBarColor: @white;
+//@appBarBackground: @brandColor2;
+//@appBarBackgroundActive: lighten(@brandColor2, 10%);
+//@appBarColor: @white;
 
 // Taskbar
 @taskBarBackground: #053046;
@@ -143,25 +258,53 @@
 @linkColorHover:        #0056b3;
 
 
-// Accent colors
-@primaryColor: #0366d6;
-@secondaryColor: @grayBlue;
-@successColor: @green;
-@alertColor: @red;
-@warningColor: @lightOrange;
-@yellowColor: #ffe484;
-@infoColor: @lightCyan;
-@darkColor: lighten(@dark, 20%);
-@lightColor: @light;
-@brand1Color: @brandColor1;
-@brand2Color: @brandColor2;
+// Accent colors-css
+@primaryColor: #f75553;
+@primaryColorLight: lighten(#f75553, 15%);
+@primaryColorDark: darken(#f75553, 5%);
 
-@accentColors: primary, secondary, success, alert, warning, yellow, info, dark, light;
-@buttonPredefinedTypes: primary, secondary, success, alert, warning, yellow, info, dark, light, brand1, brand2;
+@secondaryColor: #74290a;
+@secondaryColorLight: lighten(#74290a, 15%);
+@secondaryColorDark: darken(#74290a, 5%);
+
+@tertiaryColor: #ffbebd;
+@tertiaryColorLight: lighten(#fdd7d6, 15%);
+@tertiaryColorDark: darken(#fdd7d6, 5%);
+
+@successColor: @emerald;
+@successColorLight: lighten(@emerald, 15%);
+@successColorDark: darken(@emerald, 5%);
+
+@alertColor: @crimson;
+@alertColorLight: lighten(@crimson, 15%);
+@alertColorDark: darken(@crimson, 5%);
+
+@warningColor: @orange;
+@warningColorLight: lighten(@orange, 15%);
+@warningColorDark: darken(@orange, 5%);
+
+@yellowColor: @yellow;
+@yellowColorLight: lighten(@yellow, 15%);
+@yellowColorDark: darken(@yellow, 5%);
+
+@infoColor: #468cff;
+@infoColorLight: lighten(#468cff, 15%);
+@infoColorDark: darken(#468cff, 5%);
+
+@darkColor: lighten(@dark, 20%);
+@darkColorLight: lighten(@darkColor, 15%);
+@darkColorDark: darken(@darkColor, 5%);
+
+@lightColor: @light;
+@lightColorLight: @white;
+@lightColorDark: darken(@light, 5%);
+
+@accentColors: primary, secondary, tertiary, success, alert, warning, info, dark, light;
+@buttonPredefinedTypes: primary, secondary, tertiary, success, alert, warning, info, dark, light;
 @buttonPredefinedTypesLength: length(@buttonPredefinedTypes);
 
 // Selected element
-@selectedElementBorder: @lightCyan;
+@selectedElementBorder: @light-cyan;
 
 // Z-index
 @zindex-selectedCheck:      100;
@@ -206,7 +349,7 @@
 @md: 768px;
 @lg: 992px;
 @xl: 1200px;
-@xxl: 1452px;
+@xxl: 1400px;
 @xxxl: 2000px;
 
 @media-rules: {
@@ -220,16 +363,27 @@
     xxl: @xxl;
     xxxl: @xxxl;
 }
+@media-rules-max: {
+    xs: 359px;
+    sm: 575px;
+    ld: 639px;
+    md: 767px;
+    lg: 991px;
+    xl: 1199px;
+    xxl: 1399px;
+    xxxl: 1999px;
+}
 
-@media-rules2: {
-    xs: @xs;
-    sm: @sm;
-    ld: @ld;
-    md: @md;
-    lg: @lg;
-    xl: @xl;
-    xxl: @xxl;
-    xxxl: @xxxl;
+@media-scale: {
+    fs: 0.8;
+    xs: 1.1;
+    sm: 1.2;
+    ld: 1.3;
+    md: 1.4;
+    lg: 1.5;
+    xl: 1.6;
+    xxl: 1.7;
+    xxxl: 1.8;
 }
 
 @mediaBreakpointListMobile: fs, xs, sm, ld, md, lg, xl, xxl, xxxl;
@@ -280,7 +434,7 @@
 @activityRingTime: 4000ms;
 @activityRingSize: 32px;
 @activityColor: @white;
-@activityColorDark: @darkGray;
+@activityColorDark: @dark-gray;
 @activityRingRotate: -14deg;
 @activityRingTimeMute: 30;
 
@@ -320,7 +474,7 @@
 @defaultPerspective: 600px;
 @defaultAnimationSpeed: .3s;
 
-// additional; colors
+// additional; colors-css
 @ribbedSize: 20px;
 @ribbedAlpha: .15;
 @ribbedAngle: -45deg;

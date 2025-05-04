@@ -1,8 +1,0 @@
-@import (once) "../../include/vars";
-
-each(@colorList, {
-    .ol-@{value} {outline-color: @@value !important;}
-    .ol-@{value}-active {&:active {outline-color: @@value !important;}}
-    .ol-@{value}-hover {&:hover {outline-color: @@value !important;}}
-    .ol-@{value}-focus {&:focus {outline-color: @@value !important;}}
-})

@@ -1,3 +1,3 @@
-import "../../farbe"
-import "./rating.js"
-import "./rating.less"
+import "../../farbe/index.js";
+import "./rating.js";
+import "./rating.less";

@@ -1,0 +1,2826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+
+    <title>Test Any - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Component Test</div>
+    </div>
+</nav>
+
+<div class="container">
+    <table
+            id="measures"
+            class="table table-striped table-border mt-4" data-role="table">
+        <thead>
+        <tr>
+            <th class="sortable-column sort-asc" width="10%">Domain</th>
+            <th class="sortable-column sort-asc" width="10%">Clause</th>
+            <th class="sortable-column sort-asc" width="60%">Name</th>
+            <th class="sortable-column sort-asc" data-cls-column="text-center" width="10%"># Measurements</th>
+            <th width="10%">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <a href="/domains/1">
+                    27001:2022
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-10.1" href="/alice/show/1">
+                    27001:2022-10.1
+                </a>
+            </td>
+            <td>Continuous improvement</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-10.1">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/1">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/1">
+                    27001:2022
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-10.2" href="/alice/show/2">
+                    27001:2022-10.2
+                </a>
+            </td>
+            <td>Non-compliance and corrective actions</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-10.2">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/2">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/1">
+                    27001:2022
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-4.x" href="/alice/show/3">
+                    27001:2022-4.x
+                </a>
+            </td>
+            <td>Understanding the organization and its context</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-4.x">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/3">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.01" href="/alice/show/4">
+                    27001:2022-5.01
+                </a>
+            </td>
+            <td> Information Security Policies</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.01">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/4">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.02" href="/alice/show/5">
+                    27001:2022-5.02
+                </a>
+            </td>
+            <td>Information Security Duties and Responsibilities</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.02">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/5">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.03" href="/alice/show/6">
+                    27001:2022-5.03
+                </a>
+            </td>
+            <td>Segregation of duties</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.03">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/6">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.04" href="/alice/show/7">
+                    27001:2022-5.04
+                </a>
+            </td>
+            <td>Management Responsibilities</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.04">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/7">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.05" href="/alice/show/8">
+                    27001:2022-5.05
+                </a>
+            </td>
+            <td>Relations with the authorities</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.05">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/8">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.06" href="/alice/show/9">
+                    27001:2022-5.06
+                </a>
+            </td>
+            <td>Relations with specialized working groups</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.06">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/9">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.07" href="/alice/show/10">
+                    27001:2022-5.07
+                </a>
+            </td>
+            <td>Threat intelligence</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.07">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/10">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.08" href="/alice/show/11">
+                    27001:2022-5.08
+                </a>
+            </td>
+            <td>Information Security in Project Management</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.08">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/11">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.09" href="/alice/show/12">
+                    27001:2022-5.09
+                </a>
+            </td>
+            <td>Inventory of information and other related assets</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.09">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/12">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.10" href="/alice/show/13">
+                    27001:2022-5.10
+                </a>
+            </td>
+            <td>Proper use of information and other associated assets</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.10">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/13">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.11" href="/alice/show/14">
+                    27001:2022-5.11
+                </a>
+            </td>
+            <td>Return of assets</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.11">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/14">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.12" href="/alice/show/15">
+                    27001:2022-5.12
+                </a>
+            </td>
+            <td>Classification of information</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.12">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/15">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.13" href="/alice/show/16">
+                    27001:2022-5.13
+                </a>
+            </td>
+            <td>Marking information</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.13">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/16">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.14" href="/alice/show/17">
+                    27001:2022-5.14
+                </a>
+            </td>
+            <td>Transfer of information</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.14">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/17">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.15" href="/alice/show/18">
+                    27001:2022-5.15
+                </a>
+            </td>
+            <td>Access control</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.15">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/18">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.16" href="/alice/show/19">
+                    27001:2022-5.16
+                </a>
+            </td>
+            <td>Identity management</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.16">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/19">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.17" href="/alice/show/20">
+                    27001:2022-5.17
+                </a>
+            </td>
+            <td>Authentication information</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.17">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/20">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.18" href="/alice/show/21">
+                    27001:2022-5.18
+                </a>
+            </td>
+            <td>Access rights</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.18">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/21">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.19" href="/alice/show/22">
+                    27001:2022-5.19
+                </a>
+            </td>
+            <td>Information security in supplier relationships</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.19">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/22">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.20" href="/alice/show/23">
+                    27001:2022-5.20
+                </a>
+            </td>
+            <td>Consideration of information security in agreements concluded with suppliers</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.20">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/23">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.21" href="/alice/show/24">
+                    27001:2022-5.21
+                </a>
+            </td>
+            <td>Information security management in the ICT supply chain</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.21">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/24">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.22" href="/alice/show/25">
+                    27001:2022-5.22
+                </a>
+            </td>
+            <td>Follow-up, review and change management of supplier services</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.22">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/25">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.23" href="/alice/show/26">
+                    27001:2022-5.23
+                </a>
+            </td>
+            <td>Information security in the use of cloud services</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.23">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/26">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.24" href="/alice/show/27">
+                    27001:2022-5.24
+                </a>
+            </td>
+            <td>Information security incident management planning and preparation</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.24">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/27">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.25" href="/alice/show/28">
+                    27001:2022-5.25
+                </a>
+            </td>
+            <td>Assessment of events related to information security and decision-making</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.25">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/28">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.26" href="/alice/show/29">
+                    27001:2022-5.26
+                </a>
+            </td>
+            <td>Response to information security incidents</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.26">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/29">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.27" href="/alice/show/30">
+                    27001:2022-5.27
+                </a>
+            </td>
+            <td>Learning from Information Security Incidents</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.27">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/30">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.28" href="/alice/show/31">
+                    27001:2022-5.28
+                </a>
+            </td>
+            <td>Collection of evidence</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.28">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/31">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.29" href="/alice/show/32">
+                    27001:2022-5.29
+                </a>
+            </td>
+            <td>Information security during a disruption</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.29">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/32">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.30" href="/alice/show/33">
+                    27001:2022-5.30
+                </a>
+            </td>
+            <td>ICT readiness for business continuity</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.30">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/33">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.31" href="/alice/show/34">
+                    27001:2022-5.31
+                </a>
+            </td>
+            <td>Identification of legal, statutory, regulatory and contractual requirements</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.31">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/34">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.32" href="/alice/show/35">
+                    27001:2022-5.32
+                </a>
+            </td>
+            <td>Intellectual property rights</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.32">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/35">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.33" href="/alice/show/36">
+                    27001:2022-5.33
+                </a>
+            </td>
+            <td>Protection of recordings</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.33">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/36">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.34" href="/alice/show/37">
+                    27001:2022-5.34
+                </a>
+            </td>
+            <td>Personal data privacy and protection</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.34">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/37">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.35" href="/alice/show/38">
+                    27001:2022-5.35
+                </a>
+            </td>
+            <td>Independent Information Security Review</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.35">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/38">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.36" href="/alice/show/39">
+                    27001:2022-5.36
+                </a>
+            </td>
+            <td>Compliance with information security policies and standards</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.36">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/39">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/2">
+                    27001:2022-5
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.37" href="/alice/show/40">
+                    27001:2022-5.37
+                </a>
+            </td>
+            <td>Documented operating procedures</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.37">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/40">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/1">
+                    27001:2022
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-5.x" href="/alice/show/41">
+                    27001:2022-5.x
+                </a>
+            </td>
+            <td>Leadership</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-5.x">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/41">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/3">
+                    27001:2022-6
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-6.01" href="/alice/show/42">
+                    27001:2022-6.01
+                </a>
+            </td>
+            <td>Pre-selection</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-6.01">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/42">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/3">
+                    27001:2022-6
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-6.02" href="/alice/show/43">
+                    27001:2022-6.02
+                </a>
+            </td>
+            <td>General conditions of employment</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-6.02">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/43">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/3">
+                    27001:2022-6
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-6.03" href="/alice/show/44">
+                    27001:2022-6.03
+                </a>
+            </td>
+            <td>Information security awareness, learning and training</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-6.03">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/44">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/3">
+                    27001:2022-6
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-6.04" href="/alice/show/45">
+                    27001:2022-6.04
+                </a>
+            </td>
+            <td>Disciplinary process</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-6.04">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/45">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/3">
+                    27001:2022-6
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-6.05" href="/alice/show/46">
+                    27001:2022-6.05
+                </a>
+            </td>
+            <td>Responsibilities following the end or modification of the service contract</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-6.05">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/46">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/3">
+                    27001:2022-6
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-6.06" href="/alice/show/47">
+                    27001:2022-6.06
+                </a>
+            </td>
+            <td>Confidentiality or non-disclosure commitments</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-6.06">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/47">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/3">
+                    27001:2022-6
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-6.07" href="/alice/show/48">
+                    27001:2022-6.07
+                </a>
+            </td>
+            <td>Remote work</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-6.07">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/48">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/3">
+                    27001:2022-6
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-6.08" href="/alice/show/49">
+                    27001:2022-6.08
+                </a>
+            </td>
+            <td>Reporting of Information Security Events</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-6.08">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/49">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/1">
+                    27001:2022
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-6.x" href="/alice/show/50">
+                    27001:2022-6.x
+                </a>
+            </td>
+            <td>Planning</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-6.x">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/50">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.01" href="/alice/show/51">
+                    27001:2022-7.01
+                </a>
+            </td>
+            <td>Physical security perimeter</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.01">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/51">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.02" href="/alice/show/52">
+                    27001:2022-7.02
+                </a>
+            </td>
+            <td>Physical access controls</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.02">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/52">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.03" href="/alice/show/53">
+                    27001:2022-7.03
+                </a>
+            </td>
+            <td>Securing offices, rooms and equipment</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.03">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/53">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.04" href="/alice/show/54">
+                    27001:2022-7.04
+                </a>
+            </td>
+            <td>Physical Security Monitoring</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.04">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/54">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.05" href="/alice/show/55">
+                    27001:2022-7.05
+                </a>
+            </td>
+            <td>Protection against physical and environmental threats</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.05">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/55">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.06" href="/alice/show/56">
+                    27001:2022-7.06
+                </a>
+            </td>
+            <td>Work in secure areas</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.06">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/56">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.07" href="/alice/show/57">
+                    27001:2022-7.07
+                </a>
+            </td>
+            <td>Clean desktop and blank screen</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.07">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/57">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.08" href="/alice/show/58">
+                    27001:2022-7.08
+                </a>
+            </td>
+            <td>Location and protection of equipment</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.08">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/58">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.09" href="/alice/show/59">
+                    27001:2022-7.09
+                </a>
+            </td>
+            <td>Off-Premises Asset Security</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.09">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/59">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.10" href="/alice/show/60">
+                    27001:2022-7.10
+                </a>
+            </td>
+            <td>Storage media</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.10">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/60">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.11" href="/alice/show/61">
+                    27001:2022-7.11
+                </a>
+            </td>
+            <td>General services</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.11">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/61">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.12" href="/alice/show/62">
+                    27001:2022-7.12
+                </a>
+            </td>
+            <td>Wiring Safety</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.12">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/62">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.13" href="/alice/show/63">
+                    27001:2022-7.13
+                </a>
+            </td>
+            <td>Hardware Maintenance</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.13">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/63">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/4">
+                    27001:2022-7
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.14" href="/alice/show/64">
+                    27001:2022-7.14
+                </a>
+            </td>
+            <td>Safe disposal or recycling of equipment</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.14">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/64">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/1">
+                    27001:2022
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.2" href="/alice/show/65">
+                    27001:2022-7.2
+                </a>
+            </td>
+            <td>Skills</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.2">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/65">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/1">
+                    27001:2022
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-7.x" href="/alice/show/66">
+                    27001:2022-7.x
+                </a>
+            </td>
+            <td>Support</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-7.x">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/66">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.01" href="/alice/show/67">
+                    27001:2022-8.01
+                </a>
+            </td>
+            <td>User terminals</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.01">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/67">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.02" href="/alice/show/68">
+                    27001:2022-8.02
+                </a>
+            </td>
+            <td>Access privileges</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.02">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/68">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.03" href="/alice/show/69">
+                    27001:2022-8.03
+                </a>
+            </td>
+            <td>Restriction of access to information</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.03">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/69">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.04" href="/alice/show/70">
+                    27001:2022-8.04
+                </a>
+            </td>
+            <td>Access to source code</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.04">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/70">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.05" href="/alice/show/71">
+                    27001:2022-8.05
+                </a>
+            </td>
+            <td>Secure authentication</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.05">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/71">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.06" href="/alice/show/72">
+                    27001:2022-8.06
+                </a>
+            </td>
+            <td>Sizing</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.06">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/72">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.07" href="/alice/show/73">
+                    27001:2022-8.07
+                </a>
+            </td>
+            <td>Protection against malware</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.07">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/73">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.08" href="/alice/show/74">
+                    27001:2022-8.08
+                </a>
+            </td>
+            <td>Management of technical vulnerabilities</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.08">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/74">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.09" href="/alice/show/75">
+                    27001:2022-8.09
+                </a>
+            </td>
+            <td>Configuration management</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.09">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/75">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.10" href="/alice/show/76">
+                    27001:2022-8.10
+                </a>
+            </td>
+            <td>Deletion of information</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.10">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/76">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.11" href="/alice/show/77">
+                    27001:2022-8.11
+                </a>
+            </td>
+            <td>Data masking</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.11">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/77">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.12" href="/alice/show/78">
+                    27001:2022-8.12
+                </a>
+            </td>
+            <td>Data leak prevention</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.12">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/78">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.13" href="/alice/show/79">
+                    27001:2022-8.13
+                </a>
+            </td>
+            <td>Backing up information</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.13">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/79">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.14" href="/alice/show/80">
+                    27001:2022-8.14
+                </a>
+            </td>
+            <td>Redundancy of information processing means</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.14">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/80">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.15" href="/alice/show/81">
+                    27001:2022-8.15
+                </a>
+            </td>
+            <td>Logging</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.15">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/81">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.16" href="/alice/show/82">
+                    27001:2022-8.16
+                </a>
+            </td>
+            <td>Monitoring activities</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.16">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/82">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.17" href="/alice/show/83">
+                    27001:2022-8.17
+                </a>
+            </td>
+            <td>Clock Synchronization</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.17">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/83">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.18" href="/alice/show/84">
+                    27001:2022-8.18
+                </a>
+            </td>
+            <td>Using Privileged Utility Programs</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.18">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/84">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.19" href="/alice/show/85">
+                    27001:2022-8.19
+                </a>
+            </td>
+            <td>Installing software on operating systems</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.19">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/85">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.20" href="/alice/show/86">
+                    27001:2022-8.20
+                </a>
+            </td>
+            <td>Network measures</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.20">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/86">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.21" href="/alice/show/87">
+                    27001:2022-8.21
+                </a>
+            </td>
+            <td>Network Services Security</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.21">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/87">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.22" href="/alice/show/88">
+                    27001:2022-8.22
+                </a>
+            </td>
+            <td>Internet filtering</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.22">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/88">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.23" href="/alice/show/89">
+                    27001:2022-8.23
+                </a>
+            </td>
+            <td>Network partitioning</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.23">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/89">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.24" href="/alice/show/90">
+                    27001:2022-8.24
+                </a>
+            </td>
+            <td>Use of cryptography</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.24">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/90">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.25" href="/alice/show/91">
+                    27001:2022-8.25
+                </a>
+            </td>
+            <td>Secure development lifecycle</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.25">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/91">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.26" href="/alice/show/92">
+                    27001:2022-8.26
+                </a>
+            </td>
+            <td>Application security requirements</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.26">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/92">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.27" href="/alice/show/93">
+                    27001:2022-8.27
+                </a>
+            </td>
+            <td>Principles of secure system engineering and architecture</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.27">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/93">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.28" href="/alice/show/94">
+                    27001:2022-8.28
+                </a>
+            </td>
+            <td>Secure coding</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.28">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/94">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.29" href="/alice/show/95">
+                    27001:2022-8.29
+                </a>
+            </td>
+            <td>Security testing in development and acceptance</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.29">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/95">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.30" href="/alice/show/96">
+                    27001:2022-8.30
+                </a>
+            </td>
+            <td>Outsourced development</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.30">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/96">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.31" href="/alice/show/97">
+                    27001:2022-8.31
+                </a>
+            </td>
+            <td>Separation of development, test and production environments</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.31">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/97">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.32" href="/alice/show/98">
+                    27001:2022-8.32
+                </a>
+            </td>
+            <td>Change Management</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.32">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/98">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.33" href="/alice/show/99">
+                    27001:2022-8.33
+                </a>
+            </td>
+            <td>Test Information</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.33">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/99">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/5">
+                    27001:2022-8
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.34" href="/alice/show/100">
+                    27001:2022-8.34
+                </a>
+            </td>
+            <td>Protection of information systems during audit and testing</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.34">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/100">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/1">
+                    27001:2022
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-8.x" href="/alice/show/101">
+                    27001:2022-8.x
+                </a>
+            </td>
+            <td>Functioning</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-8.x">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/101">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/1">
+                    27001:2022
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-9.2" href="/alice/show/102">
+                    27001:2022-9.2
+                </a>
+            </td>
+            <td>Internal Audit</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-9.2">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/102">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/domains/1">
+                    27001:2022
+                </a>
+            </td>
+            <td>
+                <a id="27001:2022-9.3" href="/alice/show/103">
+                    27001:2022-9.3
+                </a>
+            </td>
+            <td>Management review</td>
+            <td>
+                <a href="/bob/index?period=99&domain=0&scope=none&status=2&clause=27001:2022-9.3">
+                    1
+                </a>
+            </td>
+            <td>
+                <form action="/alice/plan/103">
+                    <button class="button info">
+                        <span class="mif-calendar"></span>
+                        &nbsp;
+                        Plan
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    Metro.welcome()
+</script>
+</body>
+</html>

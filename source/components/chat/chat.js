@@ -1,23 +1,21 @@
-/* global Metro, Datetime, datetime, Cake, METRO_LOCALE */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var defaultAvatar = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAUABQAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A+t+KKPxo/GgA70Yo/Gj8aADFH4VesdC1HUl3WtjcXCf344yV/PGKW+0HUtNXddWNzbp/fkjIX88YoAofhR+FH40fjQAfhR+FH40fjQAUUUUAFepeAPh5D9li1LVYhK8g3Q27j5VXszDuT6f5HA+FtOXVvEWn2rjMcko3j1UckfkDX0MBgYHAoARVCKFUBVHAA6ClZQwKkZBGCDS0UAec+Pvh3BJay6lpUQimjBeW3QYVx3Kjsfbv/PyqvpuvnvxfpqaT4l1C1QbY0lJUDsrfMB+RoAyKKKKACiiigDa8GXq6f4p02eQgIJQpJ7Bvlz+tfQP4V8yDg17P4A8cw65ZxWV5IE1KMbfmP+uA7j39R+NAHaUfhSUUAL+FeA+OL1NQ8WalNGQU83YCO+0Bf6V6b498cQ6BZyWlrIJNSkXaApz5QP8AEff0FeKk5OTyTQAUUUUAH40fjRU1naTX93DbQIXmlYIijuTQBc0Dw/eeI74W1mm49XkbhUHqTXsHhz4eaXoCpI8YvbscmaYZAP8Asr0H8/etHwv4cg8M6XHaxANIfmllxy7dz9PStigA/Gk/GlooA5bxJ8PdL19XkWMWd43PnwjGT/tL0P8AP3rx/X/D954cvjbXibT1SReVceoNfRFZHijw5B4m0uS1lAWQfNFLjlG7H6etAHz5+NH41NeWk1hdzW06FJonKMp7EGoaACvQfhBowudTudRkXK2y7I8j+Nup/Afzrz6vafhRaCDwmkgHM8zufwO3/wBloA7Kiij8KACkpaSgBaSj8KKAPJvi/owttTttRjXC3K7JMf3l6H8R/KvPq9p+K1qJ/CbyEcwTI4P1O3/2avFqAP/Z";
-    var ChatDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+    let ChatDefaultConfig = {
         chatDeferred: 0,
         inputTimeFormat: null,
         timeFormat: "D MMM hh:mm A",
         name: "John Doe",
-        avatar: defaultAvatar,
+        avatar: "<span>👦</span>",
         welcome: null,
-        welcomeAvatar: defaultAvatar,
+        welcomeAvatar: "<span>👽</span>",
         title: null,
         width: "100%",
         height: "auto",
         messages: null,
-        sendButtonTitle: "Send",
+        sendButtonTitle: "",
+        sendButtonIcon: "",
         readonly: false,
-        locale: METRO_LOCALE,
 
         clsChat: "",
         clsName: "",
@@ -30,72 +28,73 @@
         onMessage: Metro.noop,
         onSend: Metro.noop,
         onSendButtonClick: Metro.noop,
-        onChatCreate: Metro.noop
+        onChatCreate: Metro.noop,
     };
 
-    Metro.chatSetup = function (options) {
+    Metro.chatSetup = (options) => {
         ChatDefaultConfig = $.extend({}, ChatDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroChatSetup"] !== undefined) {
-        Metro.chatSetup(globalThis["metroChatSetup"]);
+    if (typeof globalThis.metroChatSetup !== "undefined") {
+        Metro.chatSetup(globalThis.metroChatSetup);
     }
 
-    Metro.Component('chat', {
-        init: function( options, elem ) {
+    Metro.Component("chat", {
+        init: function (options, elem) {
             this._super(elem, options, ChatDefaultConfig, {
                 input: null,
                 classes: "primary secondary success alert warning yellow info dark light".split(" "),
-                lastMessage: null
+                lastMessage: null,
             });
 
             return this;
         },
 
-        _create: function(){
-            var element = this.element;
+        _create: function () {
+            const element = this.element;
 
             this._createStructure();
             this._createEvents();
 
             this._fireEvent("chat-create", {
-                element: element
+                element: element,
             });
         },
 
-        _createStructure: function(){
-            var that = this, element = this.element, o = this.options;
-            var messages, messageInput, input;
-            var customButtons = [
+        _createStructure: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const customButtons = [
                 {
-                    html: o.sendButtonTitle,
-                    cls: o.clsSendButton+" js-chat-send-button",
-                    onclick: o.onSendButtonClick
-                }
+                    html: `${o.sendButtonTitle || this.strings.label_send}${o.sendButtonIcon}`,
+                    cls: `${o.clsSendButton} js-chat-send-button`,
+                    onclick: o.onSendButtonClick,
+                },
             ];
 
             element.addClass("chat").addClass(o.clsChat);
 
             element.css({
                 width: o.width,
-                height: o.height
+                height: o.height,
             });
 
-            if (Utils.isValue(o.title)) {
+            if (Metro.utils.isValue(o.title)) {
                 $("<div>").addClass("title").html(o.title).appendTo(element);
             }
 
-            messages = $("<div>").addClass("messages");
+            const messages = $("<div>").addClass("messages");
             messages.appendTo(element);
-            messageInput = $("<div>").addClass("message-input").appendTo(element);
-            input = $("<input type='text'>");
+            const messageInput = $("<div>").addClass("message-input").appendTo(element);
+            const input = $("<input type='text'>").addClass("chat-input");
             input.appendTo(messageInput);
             setTimeout(() => {
-                Metro.makePlugin(input[0], 'input', {
+                Metro.makePlugin(input[0], "input", {
                     customButtons: customButtons,
-                    clsInput: o.clsInput
-                })
-            })
+                    clsInput: o.clsInput,
+                });
+            });
 
             if (o.welcome) {
                 this.add({
@@ -103,81 +102,115 @@
                     time: datetime(),
                     position: "left",
                     name: "Chat Bot",
-                    avatar: o.welcomeAvatar
-                })
+                    avatar: o.welcomeAvatar,
+                });
             }
 
-            if (Utils.isValue(o.messages) && typeof o.messages === "string") {
-                o.messages = Utils.isObject(o.messages);
+            if (Metro.utils.isValue(o.messages) && typeof o.messages === "string") {
+                o.messages = Metro.utils.isObject(o.messages);
             }
 
-            if (!Utils.isNull(o.messages) && typeof o.messages === "object" && Utils.objectLength(o.messages) > 0) {
-                $.each(o.messages, function(){
+            if (
+                !Metro.utils.isNull(o.messages) &&
+                typeof o.messages === "object" &&
+                Metro.utils.objectLength(o.messages) > 0
+            ) {
+                $.each(o.messages, function () {
                     that.add(this);
                 });
             }
 
-            element.find(".message-input")[o.readonly ? 'addClass':'removeClass']("disabled");
+            element.find(".message-input")[o.readonly ? "addClass" : "removeClass"]("disabled");
         },
 
-        _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var sendButton = element.find(".js-chat-send-button");
-            var input = element.find("input[type=text]");
+        _createEvents: function () {
+            const element = this.element;
+            const o = this.options;
 
-            var send = function(){
-                var msg = ""+input.val(), m;
-                if (msg.trim() === "") {return false;}
-                m = {
-                    id: Utils.elementId("chat-message"),
+            const send = () => {
+                const input = element.find(".chat-input input");
+                const msg = `${input.val()}`;
+                if (msg.trim() === "") {
+                    return false;
+                }
+                const m = {
+                    id: Metro.utils.elementId("chat-message"),
                     name: o.name,
                     avatar: o.avatar,
                     text: msg,
                     position: "right",
-                    time: datetime()
+                    time: datetime(),
                 };
-                that.add(m);
+                this.add(m);
                 input.val("");
-                that._fireEvent("send", {
-                    msg: m
+                this._fireEvent("send", {
+                    msg: m,
                 });
                 input.focus();
             };
 
-            sendButton.on(Metro.events.click, function () {
+            element.on(Metro.events.click, ".js-chat-send-button", () => {
                 send();
             });
 
-            input.on(Metro.events.keyup, function(e){
+            element.on(Metro.events.keyup, ".chat-input > input", (e) => {
                 if (e.keyCode === Metro.keyCode.ENTER) {
                     send();
                 }
-            })
+            });
         },
 
-        add: function(msg){
-            var that = this, element = this.element, o = this.options;
-            var message, sender, time, item, avatar, text;
-            var messages = element.find(".messages");
-            var messageDate;
+        add: function (msg) {
+            const element = this.element;
+            const o = this.options;
+            const locale = this.locale;
+            let message;
+            let sender;
+            let item;
+            let avatar;
+            let text;
+            const messages = element.find(".messages");
 
-            messageDate = o.inputTimeFormat ? Datetime.from(msg.time, o.inputTimeFormat, o.locale) : datetime(msg.time);
-
+            const messageDate = o.inputTimeFormat
+                ? Datetime.from(msg.time, o.inputTimeFormat, locale)
+                : datetime(msg.time);
             message = $("<div>").addClass("message").addClass(msg.position).appendTo(messages);
             item = $("<div>").addClass("message-item").appendTo(message);
-            avatar = $("<img>").attr("src", msg.avatar).addClass("message-avatar").appendTo(item);
-            text = $("<div>").addClass("message-text").append($("<div>").addClass("message-text-inner").html(Str.escapeHtml(msg.text))).appendTo(item);
-            time = $("<div>").addClass("message-time").addClass(o.clsTime).text(messageDate.format(o.timeFormat)).appendTo(text);
+
+            if (Metro.utils.isUrl(msg.avatar) || msg.avatar.includes("data:image")) {
+                avatar = $("<img>")
+                    .attr("src", msg.avatar)
+                    .attr("alt", msg.avatar)
+                    .addClass("message-avatar")
+                    .appendTo(item);
+            } else if (msg.avatar) {
+                const _el = $(msg.avatar);
+                if (_el.length) {
+                    avatar = _el.addClass("message-avatar").appendTo(item);
+                } else {
+                    avatar = $("<span>").addClass("message-avatar").html(msg.avatar).appendTo(item);
+                }
+            }
+
+            text = $("<div>")
+                .addClass("message-text")
+                .append($("<div>").addClass("message-text-inner").html(Str.escapeHtml(msg.text)))
+                .appendTo(item);
+            const time = $("<div>")
+                .addClass("message-time")
+                .addClass(o.clsTime)
+                .text(messageDate.format(o.timeFormat))
+                .appendTo(text);
             sender = $("<div>").addClass("message-sender").addClass(o.clsName).text(msg.name).appendTo(text);
 
-            if (Utils.isValue(msg.id)) {
+            if (Metro.utils.isValue(msg.id)) {
                 message.attr("id", msg.id);
             }
 
-            if (msg.position === 'left' && Utils.isValue(o.clsMessageLeft)) {
+            if (msg.position === "left" && Metro.utils.isValue(o.clsMessageLeft)) {
                 text.addClass(o.clsMessageLeft);
             }
-            if (msg.position === 'right' && Utils.isValue(o.clsMessageRight)) {
+            if (msg.position === "right" && Metro.utils.isValue(o.clsMessageRight)) {
                 text.addClass(o.clsMessageRight);
             }
 
@@ -187,7 +220,7 @@
                 sender.hide();
             }
 
-            that._fireEvent("message", {
+            this._fireEvent("message", {
                 msg: msg,
                 el: {
                     message: message,
@@ -195,15 +228,15 @@
                     time: time,
                     item: item,
                     avatar: avatar,
-                    text: text
-                }
+                    text: text,
+                },
             });
 
             messages.animate({
                 draw: {
-                    scrollTop: messages[0].scrollHeight
+                    scrollTop: messages[0].scrollHeight,
                 },
-                dur: 1000
+                dur: 1000,
             });
 
             this.lastMessage = msg;
@@ -211,15 +244,16 @@
             return this;
         },
 
-        addMessages: function(messages){
-            var that = this;
+        addMessages: function (messages) {
+            const that = this;
+            let _messages = messages;
 
-            if (Utils.isValue(messages) && typeof messages === "string") {
-                messages = Utils.isObject(messages);
+            if (Metro.utils.isValue(_messages) && typeof _messages === "string") {
+                _messages = Metro.utils.isObject(_messages);
             }
 
-            if (typeof messages === "object" && Utils.objectLength(messages) > 0) {
-                $.each(messages, function(){
+            if (typeof _messages === "object" && Metro.utils.objectLength(_messages) > 0) {
+                $.each(_messages, function () {
                     that.add(this);
                 });
             }
@@ -227,22 +261,25 @@
             return this;
         },
 
-        delMessage: function(id){
-            var element = this.element;
+        delMessage: function (id) {
+            const element = this.element;
 
-            element.find(".messages").find("#"+id).remove();
+            element.find(".messages").find(`#${id}`).remove();
 
             return this;
         },
 
-        updMessage: function(msg){
-            var element = this.element;
-            var message = element.find(".messages").find("#"+msg.id);
-            let o = this.options;
+        updMessage: function (msg) {
+            const element = this.element;
+            const message = element.find(".messages").find(`#${msg.id}`);
+            const o = this.options;
+            const locale = this.locale;
 
             if (message.length === 0) return this;
 
-            let messageDate = o.inputTimeFormat ? Datetime.from(msg.time, o.inputTimeFormat, o.locale) : datetime(msg.time);
+            const messageDate = o.inputTimeFormat
+                ? Datetime.from(msg.time, o.inputTimeFormat, locale)
+                : datetime(msg.time);
 
             message.find(".message-text-inner").html(msg.text);
             message.find(".message-time").html(messageDate.format(o.timeFormat));
@@ -250,37 +287,39 @@
             return this;
         },
 
-        clear: function(){
-            var element = this.element;
-            var messages = element.find(".messages");
+        clear: function () {
+            const element = this.element;
+            const messages = element.find(".messages");
             messages.html("");
             this.lastMessage = null;
         },
 
-        toggleReadonly: function(readonly){
-            var element = this.element, o = this.options;
+        toggleReadonly: function (readonly) {
+            const element = this.element;
+            const o = this.options;
             o.readonly = typeof readonly === "undefined" ? !o.readonly : readonly;
-            element.find(".message-input")[o.readonly ? 'addClass':'removeClass']("disabled");
+            element.find(".message-input")[o.readonly ? "addClass" : "removeClass"]("disabled");
         },
 
-        changeAttribute: function(attributeName){
+        changeAttribute: function (attributeName) {
             switch (attributeName) {
-                case "data-readonly": this.toggleReadonly(); break;
+                case "data-readonly":
+                    this.toggleReadonly();
+                    break;
             }
         },
 
-        destroy: function(){
-            var element = this.element;
-            var sendButton = element.find(".js-chat-send-button");
-            var input = element.find("input[type=text]");
+        destroy: function () {
+            const element = this.element;
+            const sendButton = element.find(".js-chat-send-button");
+            const input = element.find("input[type=text]");
 
             sendButton.off(Metro.events.click);
             input.off(Metro.events.keyup);
 
             return element;
-        }
+        },
     });
 
     Metro.defaults.Chat = ChatDefaultConfig;
-    Metro.defaults.ChatAvatar = defaultAvatar;
-}(Metro, m4q));
+})(Metro, Dom);

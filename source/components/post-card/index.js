@@ -1,1 +1,0 @@
-import "./post-card.less"

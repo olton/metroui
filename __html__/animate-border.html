@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-side">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link href="../lib/metro.css" rel="stylesheet">
+
+    <title>Animate Border - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        body {
+            /*padding-top: 50px;*/
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+        }
+        .box {
+            width: 400px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .inner {
+            width: 100px;
+            height: 100px;
+            background-color: var(--default-background);
+            position: relative;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div>
+<div class="box p-4">
+    <button class="button animated-border mr-2">Button</button>
+    <div class="inner rainbow-border">123</div>
+</div>
+</div>
+<script src="../lib/metro.js"></script>
+</body>
+</html>

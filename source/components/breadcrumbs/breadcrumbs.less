@@ -2,7 +2,7 @@
 @import (once) "../../include/mixins";
 
 :root {
-    --breadcrumbs-background: #ffffff;
+    --breadcrumbs-background: transparent;
     --breadcrumbs-color: #191919;
     --breadcrumbs-background-hover: #ffffff;
     --breadcrumbs-color-hover: #000000;
@@ -16,13 +16,16 @@
 }
 
 .breadcrumbs {
+    position: relative;
+    list-style: none inside;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    
     &.default {
-        margin: 0;
+        margin: 10px 0;
         padding: 0;
-        list-style: none inside;
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
         background-color: var(--breadcrumbs-background);
         color: var(--breadcrumbs-color);
 
@@ -33,28 +36,39 @@
             justify-content: flex-start;
             background-color: inherit;
             color: inherit;
-            margin: 4px;
+            margin: 0 4px;
 
             &::after {
                 content: "›";
-                z-index: 3;
+                //z-index: 3;
                 position: absolute;
                 left: 100%;
-                top: -4px;
+                transform: translateY(-3px);
                 font-size: 1.4em;
             }
         }
 
         a {
             cursor: pointer;
-            display: block;
+            display: flex;
+            align-items: center;
             position: relative;
-            padding: .5rem .75rem;
+            padding: 0 .75rem;
             line-height: 1;
             font-size: 14px;
             text-decoration: none;
             color: inherit;
             background-color: transparent;
+        }
+
+        .icon {
+            font-size: 16px;
+            margin-right: .5rem;
+        }
+
+        .caption {
+            font-size: inherit;
+            color: inherit;
         }
 
         a:hover{
@@ -63,24 +77,33 @@
             text-decoration: none;
         }
 
-        li:last-child a {
-            font-weight: bold;
+        li:last-child {
+            a {
+                font-weight: bold;
+            }
+            &::after {
+                display: none;
+            }
         }
     }
 }
 
 :root {
-    --breadcrumbs-arrow-item-background: #f7f8fa;
-    --breadcrumbs-arrow-item-background-active: #468cff;
+    --breadcrumbs-arrow-item-background: rgba(251, 251, 251, 1);
+    --breadcrumbs-arrow-counter-background: #ffffff;
+    --breadcrumbs-arrow-counter-color: #000000;
+    --breadcrumbs-arrow-item-background-active: #959595;
     --breadcrumbs-arrow-item-color-active: #ffffff;
     --breadcrumbs-arrow-item-color: #191919;
-    --breadcrumbs-arrow-border-color: #e8e8e8;
+    --breadcrumbs-arrow-border-color: #c6c6c6;
     --breadcrumbs-arrow-item-shadow: rgba(133, 133, 133, 0.1);
 }
 
 .dark-side {
     --breadcrumbs-arrow-item-background: #2b2d30;
-    --breadcrumbs-arrow-item-background-active: #ffc351;
+    --breadcrumbs-arrow-counter-background: #ffffff;
+    --breadcrumbs-arrow-counter-color: #000000;
+    --breadcrumbs-arrow-item-background-active: #959595;
     --breadcrumbs-arrow-item-color-active: #000;
     --breadcrumbs-arrow-item-color: #ffffff;
     --breadcrumbs-arrow-border-color: #4a4d51;
@@ -89,12 +112,11 @@
 
 .breadcrumbs {
     &.arrow {
-        display: inline-flex;
-        flex-flow: row nowrap;
         overflow: hidden;
         border-radius: var(--border-radius);
         counter-reset: flag;
         border: 1px solid var(--breadcrumbs-arrow-border-color);
+        margin: 0;
 
         li {
             display: block;
@@ -108,7 +130,7 @@
             line-height: 36px;
             background: var(--breadcrumbs-arrow-item-background);
             color: var(--breadcrumbs-arrow-item-color);
-            padding: 0 10px 0 60px;
+            padding: 0 10px 0 70px;
             position: relative;
             height: 36px;
             text-decoration: none;
@@ -117,7 +139,7 @@
                 content: counter(flag);
                 counter-increment: flag;
                 border-radius: 50%;
-                border: 1px solid var(--border-color);
+                border: 1px solid var(--breadcrumbs-arrow-border-color);
                 width: 26px;
                 height: 26px;
                 line-height: 26px;
@@ -125,7 +147,8 @@
                 position: absolute;
                 top: -3px;
                 left: 27px;
-                background: var(--breadcrumbs-arrow-item-background);
+                background: var(--breadcrumbs-arrow-counter-background);
+                color: var(--breadcrumbs-arrow-counter-color);
                 font-weight: bold;
                 display: flex;
                 align-items: center;
@@ -148,6 +171,15 @@
             }
         }
 
+        .icon {
+            font-size: 16px;
+            margin: 0 .5rem;
+        }
+
+        .caption {
+            font-size: inherit;
+        }
+
         li:first-child a {
             padding-left: 46px;
             border-radius: 5px 0 0 5px;
@@ -168,7 +200,7 @@
             background: var(--breadcrumbs-arrow-item-background-active);
             color: var(--breadcrumbs-arrow-item-color-active);
             &::before {
-                color: var(--breadcrumbs-arrow-item-color);
+                //color: var(--breadcrumbs-arrow-item-color);
             }
             &::after {
                 background: var(--breadcrumbs-arrow-item-background-active);

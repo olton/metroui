@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Calendar - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Calendar - Metro UI :: Popular HTML, CSS and JS library</title>
 
     <style>
         .calendar {
@@ -13,7 +13,7 @@
         }
     </style>
 </head>
-<body class="m4-cloak" style="padding-top: 50px;">
+<body class="cloak">
 <nav data-role="appbar">
     <span class="app-bar-item">Calendar</span>
     <div class="app-bar-item no-hover">
@@ -24,25 +24,30 @@
 <div class="container">
     <h1>Calendar test page</h1>
 
-    <div class="row flex-align-start">
-        <div data-role="calendar"
-             data-animation-speed="20"
-             data-animation-content="true"
-             data-locale="en-US"
-             data-week-start="0"
-             data-exclude="2024-05-21"
-             data-static="true"
-        ></div>
-
-        <div data-role="calendar"
+    <div class="d-flex">
+        <div lang="en">
+            <div data-role="calendar"></div>
+        </div>
+        <div lang="en">
+            <div data-role="calendar"
+                 data-animation-speed="20"
+                 data-animation-content="true"
+                 data-week-start="0"
+                 data-exclude="2024-05-21"
+                 data-static="true"
+                 data-buttons="today,clear"
+            ></div>
+        </div>
+    </div>
+    <div>
+        <div lang="ua" data-role="calendar"
              data-wide="true"
              data-animation-speed="20"
              data-animation-content="true"
-             data-locale="en-US"
-             data-week-start="0"
+             data-week-start="1"
              data-cls-today-button="success"
              data-show-time="true"
-             data-readonly="true"
+             data-readonly="false"
              data-preset="
                 06-10-2024,
                 06-11-2024,

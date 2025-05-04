@@ -1,15 +1,16 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
 
-    var Utils = Metro.utils;
-    var TabsDefaultConfig = {
+    let TabsDefaultConfig = {
         tabsDeferred: 0,
         expand: false,
         expandPoint: null,
-        tabsPosition: "top",
-        tabsType: "default",
+        type: "default", // default, text, group, pills
         updateUri: false,
+        position: "top", // top, bottom, left, right
+        align: "left", // left, center, right
+        link: "",
 
         clsTabs: "",
         clsTabsList: "",
@@ -20,30 +21,30 @@
         onTabOpen: Metro.noop,
         onTabClose: Metro.noop,
         onBeforeTab: Metro.noop_true,
-        onTabsCreate: Metro.noop
+        onTabsCreate: Metro.noop,
     };
 
-    Metro.tabsSetup = function (options) {
+    Metro.tabsSetup = (options) => {
         TabsDefaultConfig = $.extend({}, TabsDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroTabsSetup"] !== undefined) {
-        Metro.tabsSetup(globalThis["metroTabsSetup"]);
+    if (typeof globalThis.metroTabsSetup !== "undefined") {
+        Metro.tabsSetup(globalThis.metroTabsSetup);
     }
 
-    Metro.Component('tabs', {
-        init: function( options, elem ) {
+    Metro.Component("tabs", {
+        init: function (options, elem) {
             this._super(elem, options, TabsDefaultConfig, {
                 _targets: [],
-                id: Utils.elementId('tabs')
+                id: Metro.utils.elementId("tabs"),
             });
 
             return this;
         },
 
-        _create: function(){
-            var element = this.element, o = this.options;
-            var tab = element.find(".active").length > 0 ? $(element.find(".active")[0]) : undefined;
+        _create: function () {
+            const element = this.element;
+            const tab = element.find(".active")[0];
 
             this._createStructure();
             this._createEvents();
@@ -51,40 +52,32 @@
             this._open(tab);
 
             this._fireEvent("tabs-create", {
-                element: element
+                element: element,
             });
         },
 
-        _createStructure: function(){
-            var element = this.element, o = this.options;
-            var parent = element.parent();
-            var right_parent = parent.hasClass("tabs");
-            var container = right_parent ? parent : $("<div>").addClass("tabs tabs-wrapper");
-            var expandTitle, hamburger;
+        _createStructure: function () {
+            const element = this.element;
+            const o = this.options;
+            const container = element.wrap("<div>").addClass("tabs");
+            let hamburger;
 
-            container.addClass(o.tabsPosition.replace(["-", "_", "+"], " "));
+            container.addClass(`tabs-${o.position}`);
 
             element.addClass("tabs-list");
-            if (o.tabsType !== "default") {
-                element.addClass("tabs-"+o.tabsType);
-            }
-            if (!right_parent) {
-                container.insertBefore(element);
-                element.appendTo(container);
-            }
+            element.addClass(`tabs-${o.type}`);
+            element.addClass(`align-${o.align}`);
 
-            element.data('expanded', false);
+            element.data("expanded", false);
 
-            expandTitle = $("<div>").addClass("expand-title"); container.prepend(expandTitle);
+            const expandTitle = $("<div>").addClass("expand-title");
+            container.prepend(expandTitle);
+
             hamburger = container.find(".hamburger");
             if (hamburger.length === 0) {
                 hamburger = $("<button>").attr("type", "button").addClass("hamburger menu-down").appendTo(container);
-                for(var i = 0; i < 3; i++) {
+                for (let i = 0; i < 3; i++) {
                     $("<span>").addClass("line").appendTo(hamburger);
-                }
-
-                if (Farbe.Routines.isLight(Utils.getStyleOne(container, "background-color")) === true) {
-                    hamburger.addClass("dark");
                 }
             }
 
@@ -92,127 +85,152 @@
             element.addClass(o.clsTabsList);
             element.children("li").addClass(o.clsTabsListItem);
 
-            if (o.expand === true && !o.tabsPosition.includes("vertical")) {
-                container.addClass("tabs-expand");
+            if (o.expand === true) {
+                if (!["left", "right"].includes(o.position)) {
+                    container.addClass("tabs-expand");
+                }
             } else {
-                if (Utils.isValue(o.expandPoint) && Utils.mediaExist(o.expandPoint) && !o.tabsPosition.includes("vertical")) {
+                if (
+                    Metro.utils.isValue(o.expandPoint) &&
+                    Metro.utils.mediaExist(o.expandPoint) &&
+                    !["left", "right"].includes(o.position)
+                ) {
                     container.addClass("tabs-expand");
                 }
             }
 
-            if (o.tabsPosition.includes("vertical")) {
+            if (["left", "right"].includes(o.position)) {
                 container.addClass("tabs-expand");
             }
-
         },
 
-        _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
-            var container = element.parent();
+        _createEvents: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
+            const container = element.parent();
 
-            $(globalThis).on(Metro.events.resize, function(){
-
-                if (o.tabsPosition.includes("vertical")) {
-                    return ;
-                }
-
-                if (o.expand === true && !o.tabsPosition.includes("vertical")) {
-                    container.addClass("tabs-expand");
-                } else {
-                    if (Utils.isValue(o.expandPoint) && Utils.mediaExist(o.expandPoint) && !o.tabsPosition.includes("vertical")) {
-                        if (!container.hasClass("tabs-expand")) container.addClass("tabs-expand");
-                    } else {
-                        if (container.hasClass("tabs-expand")) container.removeClass("tabs-expand");
+            $(globalThis).on(
+                Metro.events.resize,
+                () => {
+                    if (["left", "right"].includes(o.position)) {
+                        return;
                     }
-                }
-            }, {ns: this.id});
 
-            container.on(Metro.events.click, ".hamburger, .expand-title", function(){
-                if (element.data('expanded') === false) {
+                    if (o.expand === true) {
+                        if (!["left", "right"].includes(o.position)) {
+                            container.addClass("tabs-expand");
+                        }
+                    } else {
+                        if (
+                            Metro.utils.isValue(o.expandPoint) &&
+                            Metro.utils.mediaExist(o.expandPoint) &&
+                            !["left", "right"].includes(o.position)
+                        ) {
+                            if (!container.hasClass("tabs-expand")) container.addClass("tabs-expand");
+                        } else {
+                            if (container.hasClass("tabs-expand")) container.removeClass("tabs-expand");
+                        }
+                    }
+                },
+                { ns: this.id },
+            );
+
+            container.on(Metro.events.click, ".hamburger, .expand-title", () => {
+                if (element.data("expanded") === false) {
                     element.addClass("expand");
-                    element.data('expanded', true);
+                    element.data("expanded", true);
                     container.find(".hamburger").addClass("active");
                 } else {
                     element.removeClass("expand");
-                    element.data('expanded', false);
+                    element.data("expanded", false);
                     container.find(".hamburger").removeClass("active");
                 }
             });
 
-            element.on(Metro.events.click, "a", function(e){
-                var link = $(this);
-                var href = link.attr("href").trim();
-                var tab = link.parent("li");
+            element.on(Metro.events.click, "li", function (e) {
+                const link = $(this).children("a");
+                const href = link.attr("href").trim();
+                const tab = link.parent("li");
 
                 that._fireEvent("tab", {
                     tab: tab[0],
-                    target: tab.children("a").attr("href")
+                    target: tab.children("a").href(),
                 });
 
                 if (tab.hasClass("active")) {
-                    e.preventDefault();
+                    // e.preventDefault();
                 }
 
-                if (element.data('expanded') === true) {
+                if (element.data("expanded") === true) {
                     element.removeClass("expand");
-                    element.data('expanded', false);
+                    element.data("expanded", false);
                     container.find(".hamburger").removeClass("active");
                 }
 
-                if (Utils.exec(o.onBeforeTab, [tab, element], tab[0]) !== true) {
+                if (Metro.utils.exec(o.onBeforeTab, [tab, element], tab[0]) !== true) {
                     return false;
                 }
 
-                if (Utils.isValue(href) && href[0] === "#") {
-                    that._open(tab);
-                    e.preventDefault();
+                if (href) {
+                    if (href.startsWith("#")) {
+                        that._open(tab);
+                        e.preventDefault();
+                    } else {
+                        globalThis.location.href = href;
+                    }
                 }
             });
 
-            $(globalThis).on("hashchange", function(e){
-                var hash, tab;
+            $(globalThis).on("hashchange", () => {
+                let hash;
+                let tab;
 
                 if (o.updateUri) {
                     hash = globalThis.location.hash;
-                    tab = that._findTabByTarget(hash)
-                    that._open($(tab))
+                    tab = that._findTabByTarget(hash);
+                    that._open($(tab));
                 }
             });
         },
 
-        _findTabByTarget: function(target){
-            var element = this.element;
-            var tabs = element.find("li")
-            var tab = undefined
+        _findTabByTarget: function (target) {
+            const element = this.element;
+            const tabs = element.find("li");
+            let tab = undefined;
 
-            tabs.each(function(i, el){
+            tabs.each((i, el) => {
                 if (!tab && $(el).children("a").attr("href") === target) {
-                    tab = el
+                    tab = el;
                 }
-            })
+            });
 
-            return tab
+            return tab;
         },
 
-        _collectTargets: function(){
-            var that = this, element = this.element;
-            var tabs = element.find("li");
+        _collectTargets: function () {
+            const that = this;
+            const element = this.element;
+            const tabs = element.find("li");
 
             this._targets = [];
 
-            $.each(tabs, function(){
-                var target = $(this).find("a").attr("href").trim();
+            $.each(tabs, function () {
+                const tab = $(this);
+                if (tab.hasClass("divider")) return;
+                const target = tab.find("a").attr("href").trim();
                 if (target.length > 1 && target[0] === "#") {
                     that._targets.push(target);
                 }
             });
         },
 
-        _open: function(tab){
-            var element = this.element, o = this.options;
-            var tabs = element.find("li");
-            var expandTitle = element.siblings(".expand-title");
-            var activeTab = element.find("li.active");
+        _open: function (tab_to_open) {
+            const element = this.element;
+            const o = this.options;
+            const tabs = element.find("li");
+            const expandTitle = element.siblings(".expand-title");
+            const activeTab = element.find("li.active");
 
             if (tabs.length === 0) {
                 return;
@@ -220,11 +238,9 @@
 
             this._collectTargets();
 
-            if (tab === undefined) {
-                tab = $(tabs[0]);
-            }
-
-            var target = tab.find("a").attr("href");
+            const tab = typeof tab_to_open === "undefined" ? $(tabs[0]) : $(tab_to_open);
+            const target = tab.find("a").attr("href");
+            const tabIndex = tab.index();
 
             if (target === undefined) {
                 return;
@@ -237,14 +253,24 @@
                 tab.addClass("active");
             }
 
-            $.each(this._targets, function(){
-                var t = $(this);
+            if (o.link) {
+                $(`[data-link=${o.link}]`).each((i, el) => {
+                    if (el === this.elem) return;
+                    const tabs = $(el).find("li");
+                    if (tabs.length && tabs[tabIndex]) {
+                        tabs[tabIndex].click();
+                    }
+                });
+            }
+
+            $.each(this._targets, function () {
+                const t = $(this);
                 if (t.length > 0) t.hide();
             });
 
             if (target !== "#" && target[0] === "#") {
                 if (o.updateUri) {
-                    globalThis.location.hash = target
+                    globalThis.location.hash = target;
                 }
                 $(target).show();
             }
@@ -256,19 +282,20 @@
             if (!activeTab.is(tab)) {
                 this._fireEvent("tab-open", {
                     tab: tab[0],
-                    target: tab.children("a").attr("href")
+                    target: tab.children("a").attr("href"),
                 });
 
                 this._fireEvent("tab-close", {
                     tab: activeTab[0],
-                    target: activeTab.children("a").attr("href")
+                    target: activeTab.children("a").attr("href"),
                 });
             }
         },
 
-        next: function(){
-            var element = this.element;
-            var next, active_tab = element.find("li.active");
+        next: function () {
+            const element = this.element;
+            let next;
+            const active_tab = element.find("li.active");
 
             next = active_tab.next("li");
             if (next.length > 0) {
@@ -276,9 +303,10 @@
             }
         },
 
-        prev: function(){
-            var element = this.element;
-            var next, active_tab = element.find("li.active");
+        prev: function () {
+            const element = this.element;
+            let next;
+            const active_tab = element.find("li.active");
 
             next = active_tab.prev("li");
             if (next.length > 0) {
@@ -286,42 +314,42 @@
             }
         },
 
-        openByTarget: function(target){
-            var tab = this._findTabByTarget(target);
+        openByTarget: function (target) {
+            const tab = this._findTabByTarget(target);
             if (tab) {
                 this._open($(tab));
             }
         },
 
-        open: function(tab){
-            var element = this.element;
-            var tabs = element.find("li");
+        openByIndex: function (index) {
+            const element = this.element;
+            const tabs = element.find("li");
 
-            if (!Utils.isValue(tab)) {
-                tab = 1;
-            }
+            if (Metro.utils.isValue(tabs[index])) this._open($(tabs[index]));
+        },
 
-            if (Utils.isInt(tab)) {
-                if (Utils.isValue(tabs[tab-1])) this._open($(tabs[tab-1]));
+        open: function (tab = 1) {
+            const element = this.element;
+            const tabs = element.find("li");
+
+            if (Metro.utils.isInt(tab)) {
+                if (Metro.utils.isValue(tabs[tab - 1])) this._open($(tabs[tab - 1]));
             } else {
                 this._open($(tab));
             }
         },
 
-        changeAttribute: function(){
-        },
+        changeAttribute: () => {},
 
-        destroy: function(){
-            var element = this.element;
-            var container = element.parent();
+        destroy: function () {
+            const element = this.element;
+            const container = element.parent();
 
-            $(globalThis).off(Metro.events.resize,{ns: this.id});
-
+            $(globalThis).off(Metro.events.resize, { ns: this.id });
             container.off(Metro.events.click, ".hamburger, .expand-title");
-
             element.off(Metro.events.click, "a");
 
-            return element;
-        }
+            element.remove();
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

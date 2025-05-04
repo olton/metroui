@@ -1,1 +1,1 @@
-import "./sidenav-m3.less"
+import "./sidenav-m3.less";

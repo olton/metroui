@@ -6,7 +6,30 @@
     <link href="../lib/metro.css" rel="stylesheet">
     <link href="../lib/icons.css" rel="stylesheet">
 
-    <title>Test Navview - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Navview - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        .navview-content {
+            padding-top: 52px;
+        }
+
+        #page-content {
+            height: calc(100% - 2px);
+            width: calc(100% - 2px);
+            overflow-y: auto;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            padding-top: 100px;
+
+            .card {
+                margin: 0 auto;
+                width: 300px;
+                height: 300px;
+                padding: 1.5rem;
+                border-radius: 10px;
+            }
+        }
+    </style>
 </head>
 <body class="cloak">
 <div data-role="navview" data-expand-point="md">
@@ -26,11 +49,16 @@
 
         <ul class="navview-menu" id="side-menu">
             <li class="item-header">General</li>
-            <li id="li-dashboard">
-                <a href="#dashboard">
-                    <span class="icon"><span class="mif-roofing"></span></span>
-                    <span class="caption">Dashboard</span>
+            <li>
+                <a href="#" class="dropdown-toggle">
+                    <span class="icon"><span class="mif-developer_board"></span></span>
+                    <span class="caption">Dashboards</span>
                 </a>
+                <ul class="navview-menu" data-role="collapse">
+                    <li><a href="#"><span class="caption">Dashboard 1</span></a></li>
+                    <li><a href="#"><span class="caption">Dashboard 2</span></a></li>
+                    <li><a href="#"><span class="caption">Dashboard 3</span></a></li>
+                </ul>
             </li>
             <li id="li-widgets">
                 <a href="#widgets">
@@ -185,23 +213,65 @@
     </div>
 
     <div class="navview-content">
-        <div class="navview-content-inner">
-            <div data-role="appbar" class="bg-reserve-steppe pos-absolute border-bottom bd-default" data-expand-point="fs">
-                <div class="app-bar-item-static">
-                    <div class="text-bold enlarge-2" id="content-title">[...]</div>
-                </div>
-
-                <div class="app-bar-item-static ml-auto">
-                    <div data-role="clock"></div>
-                </div>
-                <div class="app-bar-item-static">
-                    <input type="checkbox" data-role="theme-switcher"/>
-                </div>
-
+        <div data-role="appbar" class="bg-reserve-steppe pos-absolute border-bottom bd-default" data-expand-point="fs">
+            <div class="app-bar-item-static">
+                <div class="text-bold enlarge-2" id="content-title">[...]</div>
             </div>
 
-            <div id="page-content"></div>
+            <div class="app-bar-item-static ml-auto">
+                <div data-role="clock"></div>
+            </div>
+            <div class="app-bar-item-static">
+                <input type="checkbox" data-role="theme-switcher"/>
+            </div>
+
         </div>
+
+        <div id="page-content" class="">
+            <div class="card animated-border-hover-red">
+                <h2>Header</h2>
+                malesuada ultrices dolore sodales phasellus vim quaeque amet vel prodesset euismod decore duo epicurei tota mediocrem oratio necessitatibus error disputationi
+
+                <div class="mt-4">
+                    <button class="button" id="btn1">Button</button>
+                    <div data-role="collapse" data-toggle-element="#btn1">
+                        collpsed block
+                    </div>
+                </div>
+            </div>
+
+            <div class="box z-1">
+                <div class="mt-4 d-flex flex-wrap gap-1">
+                    <button class="button rainbow-border">
+                        <span class="icon mif-github"></span>
+                        <span class="caption">GitHub</span>
+                    </button>
+                    <button class="button square rainbow-border">
+                        <span class="icon mif-github"></span>
+                    </button>
+                    <button class="button cycle rainbow-border">
+                        <span class="icon mif-github"></span>
+                    </button>
+                    <button class="button rainbow-border-hover">
+                        <span class="icon mif-github"></span>
+                        <span class="caption">GitHub</span>
+                    </button>
+                    <button class="button animated-border">
+                        <span class="icon mif-github"></span>
+                        <span class="caption">GitHub</span>
+                    </button>
+                    <button class="button animated-border-red">
+                        <span class="icon mif-github"></span>
+                        <span class="caption">GitHub</span>
+                    </button>
+                    <button class="button animated-border-hover">
+                        <span class="icon mif-github"></span>
+                        <span class="caption">GitHub</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 

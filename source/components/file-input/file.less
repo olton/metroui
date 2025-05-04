@@ -1,0 +1,183 @@
+@import (once) "../../include/vars";
+@import (once) "../../include/mixins";
+
+:root {
+    --file-height: 36px;
+    --file-button-background: #ebebeb;
+    --file-button-background-hover: #dadada;
+    --file-button-color: #191919;
+    
+    --file-drop-zone-border-size: 4px;
+    --file-drop-zone-border-type: dashed;
+    --file-drop-zone-border-color: #858585;
+    --file-drop-zone-background: #f5f5f5;
+    --file-drop-zone-color: #191919;
+    --file-drop-zone-hover-color: darken(#3A3A3A, 20%);
+    --file-drop-zone-drop-color: #94ff6a;
+}
+
+.dark-side {
+    --file-button-background: #3a3b40;
+    --file-button-background-hover: #484850;
+    --file-button-color: #f3fcff;
+
+    --file-drop-zone-border-size: 4px;
+    --file-drop-zone-border-type: dashed;
+    --file-drop-zone-border-color: #858585;
+    --file-drop-zone-background: #2b2d30;
+    --file-drop-zone-color: #dbdfe7;
+    --file-drop-zone-hover-color: #dbdfe7;
+    --file-drop-zone-drop-color: #94ff6a;
+}
+
+.file, .drop-zone, .file-button {
+    .hideElement(input);
+}
+
+.file {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0;
+    padding: 0;
+
+    .button {
+        border: none;
+        height: 30px;
+        margin: 2px 2px 2px auto;
+        background: var(--file-button-background);
+        color: var(--file-button-color);
+        
+        & > * {
+            height: 20px;
+            line-height: 20px!important;
+        }
+        
+        .icon {
+            font-size: 20px;
+            font-family: "Segoe UI Symbol", serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            object-fit: cover;
+        }
+        
+        &:hover {
+            background: var(--file-button-background-hover);
+        }
+    }
+
+    .caption {
+        line-height: 35px;
+        display: block;
+        padding: 0 .5rem;
+        width: 100%;
+        .text-ellipsis();
+    }
+
+    &.disabled {
+        .button {
+            pointer-events: none;
+            opacity: .45;
+            background: transparent;
+        }
+    }
+    
+    .prepend {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
+    .prepend {order: 1}
+    .append {order: 4}
+    .caption {order: 2;}
+    .button { order: 3; }
+}
+
+.drop-zone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    width: 100%;
+    height: auto;
+    padding: 40px 0;
+    outline: var(--file-drop-zone-border-size) var(--file-drop-zone-border-type) var(--file-drop-zone-border-color);
+    outline-offset: -12px;
+    background: var(--file-drop-zone-background);
+    color: var(--file-drop-zone-color);
+    transition: all .5s;
+    position: relative;
+
+    .icon {
+        font-family: "Segoe UI Symbol", serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        font-size: 64px;
+        object-fit: cover;
+    }
+
+    .caption {
+        margin-top: 10px;
+        font-size: 14px;
+        .text-ellipsis();
+    }
+
+    &.focused, &:hover {
+        outline-color: var(--file-drop-zone-hover-color)!important;
+    }
+
+    &.drop-on {
+        outline-color: lighten(green, 10%);
+    }
+    
+    .clear-button {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        font-family: "Segoe UI Symbol", serif;
+        .hide-element();
+    }
+    
+    &:hover {
+        .clear-button {
+            .show-element();
+        }
+    }
+}
+
+.file {
+    &[dir=rtl], &.rtl {
+        .append {order: 1}
+        .prepend {order: 4}
+        .caption {
+            order: 3;
+            text-align: right;
+        }
+
+        .button {
+            order: 2;
+            margin-left: 0;
+            margin-right: auto;
+        }
+    }
+}
+
+.file {
+    &.input-small {
+        line-height: 28px;
+        height: 28px;
+        
+        .caption {
+            font-size: 12px;
+            line-height: 28px;
+            height: 28px;
+        }
+        .button {
+            height: 24px;
+            margin: 1px 1px 1px auto;
+        }
+    }
+}

@@ -1,1 +1,1 @@
-import "./cookie.js"
+import "./cookie.js";

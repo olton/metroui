@@ -1,12 +1,33 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --skill-box-border-radius: 6px;
+    --skill-box-border-color: var(--border-color);
+    --skill-box-background: #ffffff;
+    --skill-box-color: #191919;
+    --skill-box-header-background: #fbfbfb;
+    --skill-box-header-color: #191919;
+    --skill-box-avatar-background: #e6e6e6;
+    --skill-box-avatar-color: #191919;
+}
+
+.dark-side {
+    --skill-box-background: #2b2d30;
+    --skill-box-color: #dbdfe7;
+    --skill-box-header-background: #282c35;
+    --skill-box-header-color: #fbfbfb;
+    --skill-box-avatar-background: #3b414e;
+    --skill-box-avatar-color: #fbfbfb;
+}
+
 .skill-box {
     display: block;
     position: relative;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-    background-color: @white;
-    color: @dark;
+    background: var(--skill-box-background);
+    color: var(--skill-box-color);
+    border: 1px solid var(--skill-box-border-color);
+    border-radius: var(--skill-box-border-radius);
 }
 
 .skill-box {
@@ -14,14 +35,25 @@
         display: block;
         position: relative;
         padding: 20px;
-        .clear();
+        background: var(--skill-box-header-background);
+        color: var(--skill-box-header-color);
+        border-top-left-radius: var(--skill-box-border-radius);
+        border-top-right-radius: var(--skill-box-border-radius);
+        border-bottom: 1px solid var(--skill-box-border-color);
 
         .avatar {
             float: left;
             width: 64px;
-            height: auto;
+            height: 64px;
             border-radius: 50%;
             overflow: hidden;
+            border: 1px solid var(--skill-box-border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--skill-box-avatar-color);
+            background-color: var(--skill-box-avatar-background);
         }
 
         .title {
@@ -37,6 +69,10 @@
             font-weight: 500;
             margin: 0 5px 5px 75px
         }
+    }
+
+    .content {
+        padding: 0 1rem 1rem;
     }
 
     .skills {

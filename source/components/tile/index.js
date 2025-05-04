@@ -1,5 +1,5 @@
-import "../animations"
-import "../colors"
-import "../../farbe"
-import "./tile.js"
-import "./tile.less"
+import "../carousel/animations.js";
+import "../../colors-css/index.js";
+import "../../farbe/index.js";
+import "./tile.js";
+import "./tile.less";

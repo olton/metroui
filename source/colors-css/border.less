@@ -1,0 +1,25 @@
+@import (once) "../include/vars";
+
+.bd-default {
+    border-color: var(--border-color)!important;
+}
+.bd-transparent {
+    border-color: transparent!important;
+}
+
+each(@colors, {
+    .bd-@{value} {border-color: @@value !important;}
+    .bd-@{value}-active {&:active {border-color: @@value !important;}}
+    .bd-@{value}-hover {&:hover {border-color: @@value !important;}}
+    .bd-@{value}-focus {&:focus {border-color: @@value !important;}}
+    .bd-before-@{value} {
+        &::before {
+            border-color: @@value!important;
+        }
+    }
+    .bd-after-@{value} {
+        &::after {
+            border-color: @@value!important;
+        }
+    }
+})

@@ -22,12 +22,13 @@
 .pos-absolute {position: absolute!important;}
 .pos-static {position: static!important;}
 .pos-fixed {position: fixed!important;}
+.pos-sticky {position: sticky!important; top: 0; align-self: flex-start!important;}
 
-each(@mediaBreakpointListMobile, {
-    @media screen and (min-width: @@value) {
-        .pos-relative-@{value} {position: relative!important;}
-        .pos-absolute-@{value} {position: absolute!important;}
-        .pos-static-@{value} {position: static!important;}
-        .pos-fixed-@{value} {position: fixed!important;}
+each(@media-rules, {
+    @container (min-width: @value) {
+        .pos-relative-@{key} {position: relative!important;}
+        .pos-absolute-@{key} {position: absolute!important;}
+        .pos-static-@{key} {position: static!important;}
+        .pos-fixed-@{key} {position: fixed!important;}
     }
 })

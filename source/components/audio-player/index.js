@@ -1,4 +1,3 @@
-import "../slider"
-import "../media-player"
-import "../default-icons"
-import "./audio-player.js"
+import "../slider/index.js";
+import "../media-player/index.js";
+import "./audio-player.js";

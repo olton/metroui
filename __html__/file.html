@@ -4,22 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
 
-    <title>Test File input - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test File input - Metro UI :: Popular HTML, CSS and JS library</title>
 
 </head>
-<body class="m4-cloak">
+<body class="cloak flex-center">
+<nav data-role="appbar">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher" data-mode="button"/>
+    </div>
+</nav>
 <div class="container">
     <h1>File input test page</h1>
 
-    <div class="example">
-        <input type="file" data-role="file">
+    <div class="example" lang="ua">
+        <input type="file" data-role="file" data-prepend="<span class='mif-folder-special1 mif-2x'>">
         <input type="file" data-role="file" data-label="Select a file:">
+        <input type="file" data-role="file" disabled>
     </div>
 
     <br>
 
-    <div class="example">
+    <div class="example" lang="ua">
         <input type="file" data-role="file" data-mode="drop">
     </div>
 

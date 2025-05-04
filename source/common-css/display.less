@@ -13,7 +13,7 @@
 .d-table-cell {display: table-cell!important;}
 
 each(@media-rules, {
-    @media screen and (min-width: @value) {
+    @container (min-width: @value) {
         .visible-@{key} {visibility: visible !important;}
         .no-visible-@{key} {visibility: hidden !important;}
 

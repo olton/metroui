@@ -4,7 +4,7 @@
 :root {
     --progress-bar-height: 12px;
     --progress-bar-height-ani: -24px;
-    --progress-bar-radius: 0;
+    --progress-bar-radius: 8px;
     --progress-bar-back-color: #eeeeee;
     --progress-bar-color: #60A917;
     --progress-bar-buffer-color: #CE352C;
@@ -24,21 +24,43 @@
     --progress-bar-value-color: #ffffff;
 }
 
-.progress {
-    display: block;
+.progress-component {
     position: relative;
+    display: block;
     width: 100%;
-    height: var(--progress-bar-height);
-    background-color: var(--progress-bar-back-color);
-    overflow: hidden;
-    border-radius: var(--progress-bar-radius);
 
-    &.with-load {
-        background: transparent;
+    .progress {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: var(--progress-bar-height);
+        background-color: var(--progress-bar-back-color);
+        overflow: hidden;
+        border-radius: var(--progress-bar-radius);
+
+        &.with-load {
+            background: transparent;
+        }
     }
-}
 
-.progress {
+    .progress-data {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .progress-label {
+            order: 1;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .progress-value {
+            margin-left: auto;
+            order: 2;
+            font-weight: 600;
+        }
+    }
+
     .bar, .buffer, .load {
         position: absolute;
         height: 100%;
@@ -66,7 +88,7 @@
         background: var(--progress-bar-color);
     }
 
-    &.line {
+    .line {
         background-color: var(--progress-bar-line-color);
         display: flex;
 
@@ -79,26 +101,44 @@
         }
     }
 
-    .value {
-        display: block;
-        float: left;
-        position: absolute;
-        z-index: 5;
-        font-size: 11px;
-        top: 50%;
-        transform: translateY(-50%);
-        margin-left: 4px;
+    .segments {
+        background: var(--progress-bar-back-color);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        overflow: hidden;
+        
+        .bar {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: var(--progress-bar-color);
+            z-index: 1;
+        }
+        
+        .segment {
+            background: transparent;
+            border: 1px solid var(--progress-bar-back-color);
+            height: 100%;
+            z-index: 2;
+            &:first-child {
+                border-radius: 8px 0 0 8px;
+            }
+            &:last-child {
+                border-radius: 0 4px 4px 0;
+            }
+        }
     }
-
-    .value.centered {
-        left: 50%;
-        transform: translate3d(-50%,-50%,0);
-    }
-}
-
-.progress {
-    &.small {
-        --progress-bar-height: 6px;
+    
+    .progress {
+        &.small {
+            --progress-bar-height: 6px;
+            --progress-bar-radius: 4px;
+        }
     }
 }
 
@@ -113,3 +153,24 @@
     50% { margin-left: 25%; margin-right: 0; }
     100% { margin-left: 100%; margin-right: 0; }
 }
+
+each(@normalColors, {
+    @lightColor: "light-@{value}";
+    @backColor: @@lightColor;
+    
+    .bar-@{value} {
+        --progress-bar-color: @@value;
+    }
+    
+    .progress-@{value} {
+        --progress-bar-color: @@value;
+        --progress-bar-back-color: @backColor;
+    }
+})
+
+each(@accentColors, {
+    @color: "@{value}Color";
+    .progress-@{value} {
+        --progress-bar-color: @@color;
+    }
+})

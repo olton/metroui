@@ -4,19 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
 
-    <title>Test Tag input - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Tag input - Metro UI :: Popular HTML, CSS and JS library</title>
     <style>
         div {
             position: relative;
         }
     </style>
 </head>
-<body class="m4-cloak">
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Streamer Test</div>
+    </div>
+</nav>
 <div class="container">
-    <h1>Tag input test page</h1>
-
-    <div class="example" style="height: 600px">
+    <div class="example mt-10" style="height: 600px">
         <div id="streamer" class="streamer-expand-sm"
              data-role="streamer"
              data-source="streamer.json"

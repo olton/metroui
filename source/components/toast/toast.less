@@ -1,18 +1,34 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --toast-background: #323232;
+    --toast-color: #ffffff;
+    --toast-border-radius: 6px;
+    --toast-closer-background: inherit;
+    --toast-closer-color: inherit;
+    --toast-closer-background-hover: var(--color-alert);
+    --toast-closer-color-hover: var(--color-light);
+}
+
+.dark-side {
+    --toast-background: #2b2d30;
+    --toast-color: #ffffff;
+}
+
 .toast {
     position: fixed;
     bottom: 20px;
     width: auto;
+    height: auto;
     max-width: 35.5rem;
     padding: .5rem 1.5rem;
     text-align: left;
     font-size: .875rem;
     font-weight: normal;
-    background-color: #323232;
-    color: @white;
-    border-radius: @borderRadius;
+    background: var(--toast-background);
+    color: var(--toast-color);
+    border-radius: var(--toast-border-radius);
     z-index: @zindex-top;
     display: block;
 
@@ -20,18 +36,26 @@
         bottom: auto;
         top: 20px;
     }
+    
+    &.show-center {
+        left: 50%;
+        top: 50%;
+        bottom: auto;
+        .translate(-50%, -50%);
+    }
 
     .closer {
         display: block;
         position: absolute;
         top: 4px;
         right: 4px;
-        background-color: inherit;
-        color: inherit;
+        background: var(--toast-closer-background);
+        color: var(--toast-closer-color);
         z-index: 100;
         &::before {
+            font-family: "Segoe UI Symbol", serif;
             display: block;
-            content: "\00d7";
+            content: "❌";
             font-size: 24px;
             margin-top: -4px;
         }

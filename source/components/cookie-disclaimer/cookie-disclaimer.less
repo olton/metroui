@@ -1,19 +1,50 @@
 @import (once) "../../include/vars";
 
-.cookie-disclaimer-block {
+:root {
+    --disclaimer-background: #f5f5f5;
+    --disclaimer-color: #191919;
+}
+
+.dark-side {
+    --disclaimer-background: #343637;
+    --disclaimer-color: #dbdfe7;
+}
+
+.cookie-disclaimer {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     height: auto;
     z-index: @zindex-fixed;
-    background-color: @white;
-    color: @dark;
+    background: var(--disclaimer-background);
+    color: var(--disclaimer-color);
     padding: 10px;
+
+    .disclaimer-actions {
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        position: relative;
+        padding-top: 10px;
+        gap: 6px;
+    }
+    
+    .disclaimer-message {
+        padding: 10px;
+        
+        .disclaimer-title {
+            font-size: 22px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .disclaimer-text {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
 }
 
-.cookie-disclaimer-actions {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}

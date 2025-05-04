@@ -1,3 +1,3 @@
-import "../input-common"
-import "./input-material.js"
-import "./input-material.less"
+import "../input-common/index.js";
+import "./input-material.js";
+import "./input-material.less";

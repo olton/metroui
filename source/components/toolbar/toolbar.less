@@ -1,17 +1,35 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --tool-button-border-radius: 4px;
+    --tool-button-background: #F8F8F8;
+    --tool-button-color: #191919;
+    --tool-button-background-hover: #dcdcdc;
+    --tool-button-color-hover: #474747;
+    --tool-button-border-color: #E8E8E8;
+}
+
+.dark-side {
+    --tool-button-background: #2e2e2e;
+    --tool-button-color: #F8F8F8;
+    --tool-button-background-hover: #373737;
+    --tool-button-color-hover: #bfbfbf;
+    --tool-button-border-color: #4A4D51;
+}
+
 .tool-button {
     width: 32px;
     height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: darken(@light, 5%);
-    color: @dark;
+    background: var(--tool-button-background);
+    color: var(--tool-button-color);
     user-select: none;
     border: 1px solid transparent;
-    transition: @transition-short;
+    border-radius: var(--tool-button-border-radius);
+    transition: @transition-base;
     padding: 0;
     cursor: pointer;
     outline: none;
@@ -20,9 +38,9 @@
     font-size: 14px;
 
     [class*=mif], .icon, img {
-        height: 1rem;
-        max-height: 1rem;
-        font-size: 1rem;
+        height: 16px;
+        width: 16px;
+        font-size: 16px;
     }
 
     &.text-button {
@@ -35,10 +53,6 @@
         text-decoration: none;
     }
 
-    &:hover {
-        background-color: @hoverBackground;
-    }
-
     &:active {
         outline: 0;
         box-shadow: none;
@@ -47,26 +61,28 @@
     &.outline {
         background: transparent none;
         border-width: 1px;
-        border-color: var(--border-color);
+        border-color: var(--tool-button-border-color);
+    }
+
+    &:hover {
+        background: var(--tool-button-background-hover);
+        color: var(--tool-button-color-hover);
     }
 
     &.disabled, &:disabled {
         opacity: .65;
     }
-}
-
-a.tool-button {
-    text-decoration: none;
-    color: @dark;
+    
+    &.w-auto {
+        padding: 0 8px;
+    }
 }
 
 .toolbar {
     display: inline-flex;
     position: relative;
     padding: 0;
-    top: 2px;
     flex-flow: row nowrap;
-    margin-left: 4px;
 
     &.no-divider {
         &::before {
@@ -81,7 +97,7 @@ a.tool-button {
         height: 32px;
         top: 0;
         left: 0;
-        background-color: rgba(red(@grayMouse), green(@grayMouse), blue(@grayMouse), .20);
+        background: var(--tool-button-background);
         cursor: default;
         display: none;
     }
@@ -96,7 +112,7 @@ a.tool-button {
     }
 
     &.movable {
-        padding-left: .5725rem;
+        padding-left: 6px;
         &::before {
             display: block;
             cursor: move;

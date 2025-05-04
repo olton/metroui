@@ -1,133 +1,135 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var RippleDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    let RippleDefaultConfig = {
         rippleDeferred: 0,
         rippleColor: "#fff",
-        rippleAlpha: .4,
+        rippleAlpha: 0.4,
         rippleTarget: "default",
-        onRippleCreate: Metro.noop
+        onRippleCreate: Metro.noop,
     };
 
-    Metro.rippleSetup = function (options) {
+    Metro.rippleSetup = (options) => {
         RippleDefaultConfig = $.extend({}, RippleDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroRippleSetup"] !== undefined) {
-        Metro.rippleSetup(globalThis["metroRippleSetup"]);
+    if (typeof globalThis.metroRippleSetup !== "undefined") {
+        Metro.rippleSetup(globalThis.metroRippleSetup);
     }
 
-    var getRipple = function(target, color, alpha, event){
-        var el = $(target);
-        var rect = Utils.rect(el[0]);
-        var x, y;
+    const getRipple = (target, color = "#fff", alpha = 0.4, event = false) => {
+        const el = $(target);
+        const rect = Metro.utils.rect(el[0]);
+        let x;
+        let y;
 
         if (el.length === 0) {
-            return ;
+            return;
         }
 
-        if (!Utils.isValue(color)) {
-            color = "#fff";
-        }
-
-        if (!Utils.isValue(alpha)) {
-            alpha = .4;
-        }
-
-        if (el.css('position') === 'static') {
-            el.css('position', 'relative');
+        if (el.css("position") === "static") {
+            el.css("position", "relative");
         }
 
         el.css({
-            overflow: 'hidden'
+            overflow: "hidden",
         });
 
         $(".ripple").remove();
 
-        var size = Math.max(el.outerWidth(), el.outerHeight());
+        const size = Math.max(el.outerWidth(), el.outerHeight());
 
         // Add the element
-        var ripple = $("<span class='ripple'></span>").css({
+        const ripple = $("<span class='ripple'></span>").css({
             width: size,
-            height: size
+            height: size,
         });
 
         el.prepend(ripple);
 
         if (event) {
             // Get touch point x, y
-            x = event.pageX - el.offset().left - ripple.width()/2;
-            y = event.pageY - el.offset().top - ripple.height()/2;
+            x = event.pageX - el.offset().left - ripple.width() / 2;
+            y = event.pageY - el.offset().top - ripple.height() / 2;
         } else {
             // Get the center of the element
-            x = rect.width / 2 - ripple.width()/2;
-            y = rect.height / 2 - ripple.height()/2;
+            x = rect.width / 2 - ripple.width() / 2;
+            y = rect.height / 2 - ripple.height() / 2;
         }
 
-        ripple.css({
-            background: Farbe.Routines.toRGBA(Farbe.Routines.parse(color), alpha),
-            width: size,
-            height: size,
-            top: y + 'px',
-            left: x + 'px'
-        }).addClass("rippleEffect");
+        ripple
+            .css({
+                background: Farbe.Routines.toRGBA(Farbe.Routines.parse(color), alpha),
+                width: size,
+                height: size,
+                top: `${y}px`,
+                left: `${x}px`,
+            })
+            .addClass("rippleEffect");
 
-        setTimeout(function(){
+        setTimeout(() => {
             ripple.remove();
         }, 400);
     };
 
-    Metro.Component('ripple', {
-        init: function( options, elem ) {
+    Metro.Component("ripple", {
+        init: function (options, elem) {
             this._super(elem, options, RippleDefaultConfig);
             return this;
         },
 
-        _create: function(){
-            var element = this.element, o = this.options;
-            var target = o.rippleTarget === 'default' ? null : o.rippleTarget;
+        _create: function () {
+            const element = this.element;
+            const o = this.options;
+            const target = o.rippleTarget === "default" ? null : o.rippleTarget;
 
-            element.on(Metro.events.click, target, function(e){
+            element.on(Metro.events.click, target, function (e) {
                 getRipple(this, o.rippleColor, o.rippleAlpha, e);
             });
 
             this._fireEvent("riopple-create", {
-                element: element
+                element: element,
             });
         },
 
-        changeAttribute: function(attributeName){
-            var element = this.element, o = this.options;
+        changeAttribute: function (attributeName) {
+            const element = this.element;
+            const o = this.options;
 
-            function changeColor(){
-                var color = element.attr("data-ripple-color");
+            function changeColor() {
+                const color = element.attr("data-ripple-color");
                 if (!Farbe.Routines.isColor(color)) {
                     return;
                 }
                 o.rippleColor = color;
             }
 
-            function changeAlpha(){
-                var alpha = +element.attr("data-ripple-alpha");
-                if (isNaN(alpha)) {
+            function changeAlpha() {
+                const alpha = +element.attr("data-ripple-alpha");
+                if (Number.isNaN(alpha)) {
                     return;
                 }
                 o.rippleColor = alpha;
             }
 
             switch (attributeName) {
-                case "data-ripple-color": changeColor(); break;
-                case "data-ripple-alpha": changeAlpha(); break;
+                case "data-ripple-color":
+                    changeColor();
+                    break;
+                case "data-ripple-alpha":
+                    changeAlpha();
+                    break;
             }
         },
 
-        destroy: function(){
-            var element = this.element, o = this.options;
-            var target = o.rippleTarget === 'default' ? null : o.rippleTarget;
+        destroy: function () {
+            const element = this.element;
+            const o = this.options;
+            const target = o.rippleTarget === "default" ? null : o.rippleTarget;
             element.off(Metro.events.click, target);
-        }
+        },
     });
 
     Metro.ripple = getRipple;
-}(Metro, m4q));
+})(Metro, Dom);

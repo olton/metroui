@@ -1,189 +1,29 @@
-(function() {
-    'use strict';
+import { Props } from "./props.js";
 
-    var $ = m4q;
+(($) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
 
-    if (typeof m4q === 'undefined') {
-        throw new Error('Metro UI requires m4q helper!');
+    if (typeof Dom === "undefined") {
+        throw new Error("Metro UI requires Dom library!");
     }
 
-    if (!('MutationObserver' in window)) {
-        throw new Error('Metro UI requires MutationObserver!');
+    if (!("MutationObserver" in window)) {
+        throw new Error("Metro UI requires MutationObserver!");
     }
 
-    var isTouch = (('ontouchstart' in window) || (navigator["MaxTouchPoints"] > 0) || (navigator["msMaxTouchPoints"] > 0));
+    const isTouch = "ontouchstart" in window || navigator.MaxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 
-    var normalizeComponentName = function(name){
-        return typeof name !== "string" ? undefined : name.replace(/-/g, "").toLowerCase();
-    };
+    const normalizeComponentName = (name) =>
+        typeof name !== "string" ? undefined : name.replace(/-/g, "").toLowerCase();
 
-    var Metro = {
-
-        version: globalThis.__version__,
-        build_time: globalThis.__build_time__,
+    const Metro = {
+        version: "__VERSION__",
+        build_time: "__BUILD_TIME__",
         buildNumber: 0,
         isTouchable: isTouch,
         fullScreenEnabled: document.fullscreenEnabled,
         sheet: null,
-
-
-        controlsPosition: {
-            INSIDE: "inside",
-            OUTSIDE: "outside"
-        },
-
-        groupMode: {
-            ONE: "one",
-            MULTI: "multi"
-        },
-
-        aspectRatio: {
-            HD: "hd",
-            SD: "sd",
-            CINEMA: "cinema"
-        },
-
-        fullScreenMode: {
-            WINDOW: "window",
-            DESKTOP: "desktop"
-        },
-
-        position: {
-            TOP: "top",
-            BOTTOM: "bottom",
-            LEFT: "left",
-            RIGHT: "right",
-            TOP_RIGHT: "top-right",
-            TOP_LEFT: "top-left",
-            BOTTOM_LEFT: "bottom-left",
-            BOTTOM_RIGHT: "bottom-right",
-            LEFT_BOTTOM: "left-bottom",
-            LEFT_TOP: "left-top",
-            RIGHT_TOP: "right-top",
-            RIGHT_BOTTOM: "right-bottom"
-        },
-
-        popoverEvents: {
-            CLICK: "click",
-            HOVER: "hover",
-            FOCUS: "focus"
-        },
-
-        stepperView: {
-            SQUARE: "square",
-            CYCLE: "cycle",
-            DIAMOND: "diamond"
-        },
-
-        listView: {
-            LIST: "list",
-            CONTENT: "content",
-            ICONS: "icons",
-            ICONS_MEDIUM: "icons-medium",
-            ICONS_LARGE: "icons-large",
-            TILES: "tiles",
-            TABLE: "table"
-        },
-
-        events: {
-            click: 'click',
-            start: isTouch ? 'touchstart' : 'mousedown',
-            stop: isTouch ? 'touchend' : 'mouseup',
-            move: isTouch ? 'touchmove' : 'mousemove',
-            enter: isTouch ? 'touchstart' : 'mouseenter',
-
-            startAll: 'mousedown touchstart',
-            stopAll: 'mouseup touchend',
-            moveAll: 'mousemove touchmove',
-
-            leave: 'mouseleave',
-            focus: 'focus',
-            blur: 'blur',
-            resize: 'resize',
-            keyup: 'keyup',
-            keydown: 'keydown',
-            keypress: 'keypress',
-            dblclick: 'dblclick',
-            input: 'input',
-            change: 'change',
-            cut: 'cut',
-            paste: 'paste',
-            scroll: 'scroll',
-            mousewheel: 'mousewheel',
-            inputchange: "change input propertychange cut paste copy drop",
-            dragstart: "dragstart",
-            dragend: "dragend",
-            dragenter: "dragenter",
-            dragover: "dragover",
-            dragleave: "dragleave",
-            drop: 'drop',
-            drag: 'drag'
-        },
-
-        keyCode: {
-            BACKSPACE: 8,
-            TAB: 9,
-            ENTER: 13,
-            SHIFT: 16,
-            CTRL: 17,
-            ALT: 18,
-            BREAK: 19,
-            CAPS: 20,
-            ESCAPE: 27,
-            SPACE: 32,
-            PAGEUP: 33,
-            PAGEDOWN: 34,
-            END: 35,
-            HOME: 36,
-            LEFT_ARROW: 37,
-            UP_ARROW: 38,
-            RIGHT_ARROW: 39,
-            DOWN_ARROW: 40,
-            COMMA: 188
-        },
-
-        media_queries: {
-            FS: "(min-width: 0px)",
-            XS: "(min-width: 360px)",
-            SM: "(min-width: 576px)",
-            LD: "(min-width: 640px)",
-            MD: "(min-width: 768px)",
-            LG: "(min-width: 992px)",
-            XL: "(min-width: 1200px)",
-            XXL: "(min-width: 1452px)",
-            XXXL: "(min-width: 2000px)"
-        },
-
-        media_sizes: {
-            FS: 0,
-            XS: 360,
-            SM: 576,
-            LD: 640,
-            MD: 768,
-            LG: 992,
-            XL: 1200,
-            XXL: 1452,
-            XXXL: 2000
-        },
-
-        media_mode: {
-            FS: "fs",
-            XS: "xs",
-            SM: "sm",
-            LD: "ld",
-            MD: "md",
-            LG: "lg",
-            XL: "xl",
-            XXL: "xxl",
-            XXXL: "xxxl"
-        },
-
-        media_modes: ["fs","xs","sm","ld","md","lg","xl","xxl","xxxl"],
-
-        actions: {
-            REMOVE: 1,
-            HIDE: 2
-        },
 
         hotkeys: {},
         locales: {},
@@ -199,66 +39,82 @@
         template: null,
         defaults: {},
 
-        info: function(){
-            if (typeof globalThis["METRO_DISABLE_LIB_INFO"] === 'undefined') {
-                console.info(`%c METRO UI %c v${Metro.version} %c ${Metro.build_time} `, "color: pink; font-weight: bold; background: #800000", "color: white; background: darkgreen", "color: white; background: #0080fe;")
-
-                if (globalThis.$ && $.info) $.info()
-                if (globalThis.Hooks && Hooks.info) Hooks.info()
-                if (globalThis.html && html.info) html.info()
-                if (globalThis.Animation && Animation.info) Animation.info()
-                if (globalThis.Farbe && Farbe.info) Farbe.info()
-                if (globalThis.Datetime && Datetime.info) Datetime.info()
-                if (globalThis.Str && Str.info) Str.info()
-                if (globalThis.G && G.info) G.info()
+        info: () => {
+            if (typeof globalThis.METRO_SHOW_INFO !== "undefined") {
+                Metro.welcome();
             }
         },
 
-        aboutDlg: function(){
-            alert("Metro UI - v" + Metro.version);
+        welcome: () => {
+            console.info(
+                `%c METRO UI %c v${Metro.version} %c ${Metro.build_time} `,
+                "color: pink; font-weight: bold; background: #800000",
+                "color: white; background: darkgreen",
+                "color: white; background: #0080fe;",
+            );
+
+            if (globalThis.$ && $.info) $.info();
+            if (globalThis.Hooks && Hooks.info) Hooks.info();
+            if (globalThis.HTML && HTML.info) HTML.info();
+            if (globalThis.Farbe && Farbe.info) Farbe.info();
+            if (globalThis.Datetime && Datetime.info) Datetime.info();
+            if (globalThis.Str && Str.info) Str.info();
+            if (globalThis.G && G.info) G.info();
+            if (globalThis.Router && Router.info) Router.info();
+            if (globalThis.Model && Model.info) Model.info();
         },
 
-        observe: function(){
-            var observer, observerCallback;
-            var observerConfig = {
+        aboutDlg: () => {
+            alert(`Metro UI - v${Metro.version}`);
+        },
+
+        observe: () => {
+            const observerConfig = {
                 childList: true,
                 attributes: true,
-                subtree: true
+                subtree: true,
             };
-            observerCallback = function(mutations){
-                mutations.map(function(mutation){
-                    if (mutation.type === 'attributes' && mutation.attributeName !== "data-role") {
-                        if (mutation.attributeName === 'data-hotkey') {
+            const observerCallback = (mutations) => {
+                mutations.map((mutation) => {
+                    if (mutation.type === "attributes" && mutation.attributeName !== "data-role") {
+                        if (mutation.attributeName === "data-hotkey") {
                             Metro.initHotkeys([mutation.target], true);
                         } else {
-                            var element = $(mutation.target);
-                            var mc = element.data('metroComponent');
-                            var attr = mutation.attributeName, newValue = element.attr(attr), oldValue = mutation.oldValue;
+                            const element = $(mutation.target);
+                            const mc = element.data("metroComponent");
+                            const attr = mutation.attributeName;
+                            const newValue = element.attr(attr);
+                            const oldValue = mutation.oldValue;
 
                             if (mc !== undefined) {
                                 element.fire("attr-change", {
                                     attr: attr,
                                     newValue: newValue,
                                     oldValue: oldValue,
-                                    __this: element[0]
+                                    __this: element[0],
                                 });
 
-                                $.each(mc, function(){
-                                    var plug = Metro.getPlugin(element, this);
+                                $.each(mc, function () {
+                                    const plug = Metro.getPlugin(element, this);
                                     if (plug && typeof plug.changeAttribute === "function") {
                                         plug.changeAttribute(attr, newValue, oldValue);
                                     }
                                 });
                             }
                         }
-                    } else
-
-                    if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                        var i, widgets = [];
-                        var $node, node, nodes = mutation.addedNodes;
+                    } else if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+                        const widgets = [];
+                        const hotkeys = [];
+                        let $node;
+                        let node;
+                        const nodes = mutation.addedNodes;
 
                         if (nodes.length) {
-                            for(i = 0; i < nodes.length; i++) {
+                            for (const node of $(nodes).find("[data-hotkey]")) {
+                                hotkeys.push($(node));
+                            }
+
+                            for (let i = 0; i < nodes.length; i++) {
                                 node = nodes[i];
                                 $node = $(node);
 
@@ -266,55 +122,47 @@
                                     widgets.push(node);
                                 }
 
-                                $.each($node.find("[data-role]"), function(){
-                                    var o = this;
-                                    if (widgets.indexOf(o) !== -1) {
+                                $.each($node.find("[data-role]"), function () {
+                                    if (widgets.indexOf(this) !== -1) {
                                         return;
                                     }
-                                    widgets.push(o);
+                                    widgets.push(this);
                                 });
                             }
 
                             if (widgets.length) Metro.initWidgets(widgets, "observe");
+                            if (hotkeys.length) Metro.initHotkeys(hotkeys);
                         }
-
-                    } else  {
+                    } else {
                         //console.log(mutation);
                     }
                 });
             };
-            observer = new MutationObserver(observerCallback);
+            const observer = new MutationObserver(observerCallback);
             observer.observe($("html")[0], observerConfig);
         },
 
-        init: function(){
-            var widgets = $("[data-role]");
-            var hotkeys = $("[data-hotkey]");
-            var html = $("html");
-            var that = this;
+        init: () => {
+            const widgets = $("[data-role]");
+            const hotkeys = $("[data-hotkey]");
+            const html = $("html");
 
-            if (window.METRO_BLUR_IMAGE) {
-                html.addClass("use-blur-image");
-            }
+            Metro.i18n.load(html.attr("lang"));
 
-            if (window.METRO_SHOW_INFO) {
-                Metro.info(true);
-            }
+            Metro.info();
 
             if (isTouch === true) {
-                html.addClass("metro-touch-device");
-            } else {
-                html.addClass("metro-no-touch-device");
+                html.addClass("touchable-device");
             }
 
             Metro.sheet = Metro.utils.newCssSheet();
 
             Metro.utils.addCssRule(Metro.sheet, "*, *::before, *::after", "box-sizing: border-box;");
 
-            window.METRO_MEDIA = [];
-            $.each(Metro.media_queries, function(key, query){
+            globalThis.METRO_MEDIA = [];
+            $.each(Metro.media_queries, (key, query) => {
                 if (Metro.utils.media(query)) {
-                    window.METRO_MEDIA.push(Metro.media_mode[key]);
+                    globalThis.METRO_MEDIA.push(Metro.media_mode[key]);
                 }
             });
 
@@ -323,360 +171,392 @@
             Metro.initHotkeys(hotkeys);
             Metro.initWidgets(widgets, "init");
 
-            if (window.METRO_CLOAK_REMOVE !== "fade") {
+            if (globalThis.METRO_CLOAK_REMOVE !== "fade") {
                 $(".m4-cloak").removeClass("m4-cloak");
                 $(".cloak").removeClass("cloak");
-                $(window).fire("metro-initiated");
+                $(globalThis).fire("metro-initiated");
             } else {
                 $(".m4-cloak, .cloak").animate({
                     draw: {
-                        opacity: [0, 1]
+                        opacity: [0, 1],
                     },
                     dur: 300,
-                    onDone: function(){
+                    onDone: () => {
                         $(".m4-cloak").removeClass("m4-cloak");
                         $(".cloak").removeClass("cloak");
-                        $(window).fire("metro-initiated");
-                    }
+                        $(globalThis).fire("metro-initiated");
+                    },
                 });
             }
 
-            $(document).on("click", "[data-copy-to-clipboard]", function(e) {
-                const val = $(this).attr("data-copy-to-clipboard")
-                Metro.utils.copy2clipboard(val)
+            $(document).on("click", "[data-copy-to-clipboard]", function () {
+                const val = $(this).attr("data-copy-to-clipboard");
+                Metro.utils.copy2clipboard(val);
                 if (Metro.toast) {
-                    Metro.toast.create(`Data copied to clipboard!`);
+                    Metro.toast.create(`Data ${val} copied to clipboard!`);
                 }
-            })
+            });
+
+            if (METRO_SMOOTH_SCROLL) {
+                const smoothLinks = document.querySelectorAll('a.smooth-scroll[href^="#"]');
+                for (const smoothLink of smoothLinks) {
+                    smoothLink.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        const id = smoothLink.getAttribute("href");
+
+                        document.querySelector(id).scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                        });
+                    });
+                }
+            }
         },
 
-        initHotkeys: function(hotkeys, redefine){
-            $.each(hotkeys, function(){
-                var element = $(this);
-                var hotkey = element.attr('data-hotkey') ? element.attr('data-hotkey').toLowerCase() : false;
-                var fn = element.attr('data-hotkey-func') ? element.attr('data-hotkey-func') : false;
+        initHotkeys: (hotkeys, redefine) => {
+            $.each(hotkeys, function () {
+                const element = $(this);
+                const hotkey = element.attr("data-hotkey") ? element.attr("data-hotkey").toLowerCase() : false;
+                const fn = element.attr("data-hotkey-func") ? element.attr("data-hotkey-func") : false;
 
                 if (hotkey === false) {
                     return;
                 }
 
-                if (element.data('hotKeyBonded') === true && redefine !== true) {
+                if (element.data("hotKeyBonded") === true && redefine !== true) {
                     return;
                 }
 
                 Metro.hotkeys[hotkey] = [this, fn];
-                element.data('hotKeyBonded', true);
+                element.data("hotKeyBonded", true);
                 element.fire("hot-key-bonded", {
                     __this: element[0],
                     hotkey: hotkey,
-                    fn: fn
+                    fn: fn,
                 });
             });
         },
 
-        initWidgets: function(widgets) {
-            var that = this;
-
+        initWidgets: (widgets) => {
             $.each(widgets, function () {
-                var $this = $(this), roles;
+                const $this = $(this);
 
                 if (!this.hasAttribute("data-role")) {
-                    return ;
+                    return;
                 }
 
-                roles = $this.attr('data-role').split(/\s*,\s*/);
+                const roles = $this.attr("data-role").split(/\s*,\s*/);
+                roles.map((func) => {
+                    const $$ = Metro.utils.$();
+                    const _func = normalizeComponentName(func);
 
-                roles.map(function (func) {
-
-                    var $$ = Metro.utils.$();
-                    var _func = normalizeComponentName(func);
-
-                    if ($$.fn[_func] !== undefined && $this.attr("data-role-"+_func) === undefined) {
+                    if ($$.fn[_func] !== undefined && $this.attr(`data-role-${_func}`) === undefined) {
                         try {
                             $$.fn[_func].call($this);
-                            $this.attr("data-role-"+_func, true);
+                            $this.attr(`data-role-${_func}`, true);
 
-                            var mc = $this.data('metroComponent');
+                            let mc = $this.data("metroComponent");
 
                             if (mc === undefined) {
                                 mc = [_func];
                             } else {
                                 mc.push(_func);
                             }
-                            $this.data('metroComponent', mc);
+                            $this.data("metroComponent", mc);
 
                             $this.fire("create", {
                                 __this: $this[0],
-                                name: _func
+                                name: _func,
                             });
                             $(document).fire("component-create", {
                                 element: $this[0],
-                                name: _func
+                                name: _func,
                             });
                         } catch (e) {
-                            console.error("Error creating component " + func + " for ", $this[0]);
+                            console.error(`Error creating component ${func} for `, $this[0]);
                             throw e;
                         }
                     }
                 });
             });
+
+            Metro.i18n.updateUI();
         },
 
-        plugin: function(name, object){
-            var _name = normalizeComponentName(name);
+        plugin: (name, object) => {
+            const _name = normalizeComponentName(name);
 
-            var register = function($){
-                $.fn[_name] = function( options ) {
-                    return this.each(function() {
-                        $.data( this, _name, Object.create(object).init(options, this ));
+            const register = ($) => {
+                $.fn[_name] = function (options) {
+                    return this.each(function () {
+                        $.data(this, _name, Object.create(object).init(options, this));
                     });
                 };
-            }
+            };
 
-            register(m4q);
+            register(Dom);
 
-            if (window.useJQuery) {
-                register(jQuery);
+            if (globalThis.useJQuery) {
+                register(globalThis.jQuery);
             }
         },
 
-        pluginExists: function(name){
-            var $ = window.useJQuery ? jQuery : m4q;
+        pluginExists: (name) => {
+            const $ = globalThis.useJQuery ? globalThis.jQuery : Dom;
             return typeof $.fn[normalizeComponentName(name)] === "function";
         },
 
-        destroyPlugin: function(element, name){
-            var p, mc;
-            var el = $(element);
-            var _name = normalizeComponentName(name);
+        destroyPlugin: (element, name) => {
+            const el = $(element);
+            const _name = normalizeComponentName(name);
 
-            p = Metro.getPlugin(el, _name);
-
-            if (typeof p === 'undefined') {
-                console.warn("Component "+name+" can not be destroyed: the element is not a Metro UI component.");
-                return ;
+            const p = Metro.getPlugin(el, _name);
+            if (typeof p === "undefined") {
+                console.warn(`Component ${name} can not be destroyed: the element is not a Metro UI component.`);
+                return;
             }
 
-            if (typeof p['destroy'] !== 'function') {
-                console.warn("Component "+name+" can not be destroyed: method destroy not found.");
-                return ;
+            if (typeof p.destroy !== "function") {
+                console.warn(`Component ${name} can not be destroyed: method destroy not found.`);
+                return;
             }
 
-            p['destroy']();
-            mc = el.data("metroComponent");
+            p.destroy();
+            const mc = el.data("metroComponent");
             Metro.utils.arrayDelete(mc, _name);
             el.data("metroComponent", mc);
             $.removeData(el[0], _name);
-            el.removeAttr("data-role-"+_name);
+            el.removeAttr(`data-role-${_name}`);
         },
 
-        destroyPluginAll: function(element){
-            var el = $(element);
-            var mc = el.data("metroComponent");
+        destroyPluginAll: (element) => {
+            const el = $(element);
+            const mc = el.data("metroComponent");
 
-            if (mc !== undefined && mc.length > 0) $.each(mc, function(){
-                Metro.destroyPlugin(el[0], this);
-            });
+            if (mc !== undefined && mc.length > 0)
+                $.each(mc, function () {
+                    Metro.destroyPlugin(el[0], this);
+                });
         },
 
-        noop: function(){},
-        noop_true: function(){return true;},
-        noop_false: function(){return false;},
-        noop_arg: function(a){return a;},
+        noop: () => {},
+        noop_true: () => true,
+        noop_false: () => false,
+        noop_arg: (a) => a,
 
-        requestFullScreen: function(element){
-            if (element["mozRequestFullScreen"]) {
-                element["mozRequestFullScreen"]();
-            } else if (element["webkitRequestFullScreen"]) {
-                element["webkitRequestFullScreen"]();
-            } else if (element["msRequestFullscreen"]) {
-                element["msRequestFullscreen"]();
+        requestFullScreen: (element) => {
+            if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullScreen) {
+                element.webkitRequestFullScreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
             } else {
-                element.requestFullscreen().catch( function(err){
-                    console.warn("Error attempting to enable full-screen mode: "+err.message+" "+err.name);
+                element.requestFullscreen().catch((err) => {
+                    console.warn(`Error attempting to enable full-screen mode: ${err.message} ${err.name}`);
                 });
             }
         },
 
-        exitFullScreen: function(){
-            if (document["mozCancelFullScreen"]) {
-                document["mozCancelFullScreen"]();
-            }
-            else if (document["webkitCancelFullScreen"]) {
-                document["webkitCancelFullScreen"]();
-            }
-            else if (document["msExitFullscreen"]) {
-                document["msExitFullscreen"]();
+        exitFullScreen: () => {
+            if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
             } else {
-                document.exitFullscreen().catch( function(err){
-                    console.warn("Error attempting to disable full-screen mode: "+err.message+" "+err.name);
+                document.exitFullscreen().catch((err) => {
+                    console.warn(`Error attempting to disable full-screen mode: ${err.message} ${err.name}`);
                 });
             }
         },
 
-        inFullScreen: function(){
-            var fsm = (document.fullscreenElement || document["webkitFullscreenElement"] || document["mozFullScreenElement"] || document["msFullscreenElement"]);
+        inFullScreen: () => {
+            const fsm =
+                document.fullscreenElement ||
+                document.webkitFullscreenElement ||
+                document.mozFullScreenElement ||
+                document.msFullscreenElement;
             return fsm !== undefined;
         },
 
-        $: function(){
-            return window.useJQuery ? jQuery : m4q;
-        },
+        $: () => (globalThis.useJQuery ? globalThis.jQuery : Dom),
 
-        get$el: function(el){
-            return Metro.$()($(el)[0]);
-        },
+        get$el: (el) => Metro.$()($(el)[0]),
 
-        get$elements: function(el){
-            return Metro.$()($(el));
-        },
+        get$elements: (el) => Metro.$()($(el)),
 
-        // TODO add if name is not defined, return one or array of plugins
-        getPlugin: function(el, name){
-            var _name = normalizeComponentName(name);
-            var $el = Metro.get$el(el);
+        getPlugin: (el, name) => {
+            const _name = normalizeComponentName(name);
+            const $el = Metro.get$el(el);
             return $el.length ? $el.data(_name) : undefined;
         },
 
-        makePlugin: function(el, name, options){
-            var _name = normalizeComponentName(name);
-            var $el = Metro.get$elements(el);
+        // TODO: need test
+        getPlugins: (el) => {
+            const $el = Metro.get$el(el);
+            const mc = $el.data("metroComponent");
+            if (mc === undefined) {
+                return [];
+            }
+            return mc.map((name) => {
+                const _name = normalizeComponentName(name);
+                return $el.data(_name);
+            });
+        },
+
+        makePlugin: (el, name, options) => {
+            const _name = normalizeComponentName(name);
+            const $el = Metro.get$elements(el);
             return $el.length && typeof $el[_name] === "function" ? $el[_name](options) : undefined;
         },
 
-        Component: function(nameName, compObj){
-            var name = normalizeComponentName(nameName);
-            var Utils = Metro.utils;
-            var component = $.extend({name: name}, {
-                _super: function(el, options, defaults, setup){
-                    var self = this;
+        Component: (nameName, compObj) => {
+            const name = normalizeComponentName(nameName);
+            const Utils = Metro.utils;
+            const component = $.extend(
+                { name: name },
+                {
+                    _super: function (el, options, defaults, setup) {
+                        this.elem = el;
+                        this.element = $(el);
+                        this.options = $.extend({}, defaults, options);
+                        this.component = this.elem;
+                        this.locale = "en";
+                        this.strings = {};
 
-                    this.elem = el;
-                    this.element = $(el);
-                    this.options = $.extend( {}, defaults, options );
-                    this.component = this.elem;
+                        this._setOptionsFromDOM();
+                        this._runtime();
+                        this._setLocale();
 
-                    this._setOptionsFromDOM();
-                    this._runtime();
+                        if (setup && typeof setup === "object") {
+                            $.each(setup, (key, val) => {
+                                this[key] = val;
+                            });
+                        }
 
-                    if (setup && typeof setup === 'object') {
-                        $.each(setup, function(key, val){
-                            self[key] = val;
-                        })
-                    }
+                        this._createExec();
+                    },
 
-                    this._createExec();
-                },
+                    _setOptionsFromDOM: function () {
+                        const element = this.element;
+                        const o = this.options;
 
-                _setOptionsFromDOM: function(){
-                    var element = this.element, o = this.options;
-
-                    $.each(element.data(), function(key, value){
-                        if (key in o) {
-                            try {
-                                o[key] = JSON.parse(value);
-                            } catch (e) {
-                                o[key] = value;
+                        $.each(element.data(), (key, value) => {
+                            if (key in o) {
+                                try {
+                                    o[key] = JSON.parse(value);
+                                } catch (e) {
+                                    o[key] = value;
+                                }
                             }
-                        }
-                    });
-                },
-
-                _runtime: function(){
-                    var element = this.element, mc;
-                    var roles = (element.attr("data-role") || "").toArray(",").map(function(v){
-                        return normalizeComponentName(v);
-                    }).filter(function(v){
-                        return v.trim() !== "";
-                    });
-
-                    if (!element.attr('data-role-'+this.name)) {
-                        element.attr("data-role-"+this.name, true);
-                        if (roles.indexOf(this.name) === -1) {
-                            roles.push(this.name);
-                            element.attr("data-role", roles.join(","));
-                        }
-
-                        mc = element.data('metroComponent');
-                        if (mc === undefined) {
-                            mc = [this.name];
-                        } else {
-                            mc.push(this.name);
-                        }
-                        element.data('metroComponent', mc);
-                    }
-                },
-
-                _createExec: function(){
-                    var that = this, timeout = this.options[this.name+'Deferred'];
-
-                    if (timeout) {
-                        setTimeout(function(){
-                            that._create();
-                        }, timeout)
-                    } else {
-                        that._create();
-                    }
-                },
-
-                _fireEvent: function(eventName, data, log, noFire, context = null){
-                    var element = this.element, o = this.options;
-                    var _data;
-                    var event = str(eventName).camelCase().capitalize(false).value;
-
-                    data = $.extend({}, data, {__this: element[0]});
-
-                    _data = data ? Object.values(data) : {};
-
-                    if (log) {
-                        console.warn(log);
-                        console.warn("Event: " + "on"+event);
-                        console.warn("Data: ", data);
-                        console.warn("Element: ", element[0]);
-                    }
-
-                    if (noFire !== true)
-                        element.fire(event.toLowerCase(), data);
-
-                    return Utils.exec(o["on"+event], _data, context ? context : element[0]);
-                },
-
-                _fireEvents: function(events, data, log, noFire, context){
-                    var that = this, _events;
-
-                    if (arguments.length === 0) {
-                        return ;
-                    }
-
-                    if (arguments.length === 1) {
-
-                        $.each(events, function () {
-                            var ev = this;
-                            that._fireEvent(ev.name, ev.data, ev.log, ev.noFire, context);
                         });
+                    },
 
-                        return Utils.objectLength(events);
-                    }
+                    _runtime: function () {
+                        const element = this.element;
+                        let mc;
+                        const roles = (element.attr("data-role") || "")
+                            .toArray(",")
+                            .map((v) => normalizeComponentName(v))
+                            .filter((v) => v.trim() !== "");
 
-                    if (!Array.isArray(events) && typeof events !== "string") {
-                        return ;
-                    }
+                        if (!element.attr(`data-role-${this.name}`)) {
+                            element.attr(`data-role-${this.name}`, true);
+                            if (roles.indexOf(this.name) === -1) {
+                                roles.push(this.name);
+                                element.attr("data-role", roles.join(","));
+                            }
 
-                    _events = Array.isArray(events) ? events : events.toArray(",");
+                            mc = element.data("metroComponent");
+                            if (mc === undefined) {
+                                mc = [this.name];
+                            } else {
+                                mc.push(this.name);
+                            }
+                            element.data("metroComponent", mc);
+                        }
+                    },
 
-                    $.each(_events, function(){
-                        that._fireEvent(this, data, log, noFire, context);
-                    });
+                    _createExec: function () {
+                        const timeout = this.options[`${this.name}Deferred`];
+
+                        if (timeout) {
+                            setTimeout(() => {
+                                this._create();
+                            }, timeout);
+                        } else {
+                            this._create();
+                        }
+                    },
+
+                    _fireEvent: function (eventName, data, log, noFire, context = null) {
+                        const element = this.element;
+                        const o = this.options;
+                        const event = str(eventName).camelCase().capitalize(false).value;
+
+                        const _data = $.extend({}, data, { __this: element[0] });
+
+                        if (log) {
+                            console.warn(log);
+                            console.warn(`Event: on${event}`);
+                            console.warn("Data: ", data);
+                            console.warn("Element: ", element[0]);
+                        }
+
+                        if (noFire !== true) element.fire(event.toLowerCase(), data);
+
+                        return Utils.exec(o[`on${event}`], Object.values(_data), context ? context : element[0]);
+                    },
+
+                    _fireEvents: function (events, data, log, noFire, context) {
+                        const that = this;
+
+                        // biome-ignore lint/style/noArguments: <explanation>
+                        if (arguments.length === 0) {
+                            return;
+                        }
+
+                        // biome-ignore lint/style/noArguments: <explanation>
+                        if (arguments.length === 1) {
+                            $.each(events, function () {
+                                that._fireEvent(this.name, this.data, this.log, this.noFire, context);
+                            });
+
+                            return Utils.objectLength(events);
+                        }
+
+                        if (!Array.isArray(events) && typeof events !== "string") {
+                            return;
+                        }
+
+                        const _events = Array.isArray(events) ? events : events.toArray(",");
+                        $.each(_events, function () {
+                            that._fireEvent(this, data, log, noFire, context);
+                        });
+                    },
+
+                    _setLocale: function () {
+                        const lang = this.element.closest("[lang]");
+                        if (lang.length > 0) {
+                            this.locale = lang.attr("lang");
+                        } else {
+                            this.locale = $("html").attr("lang") || "en";
+                        }
+                        this.strings = $.extend({}, Metro.locales.en, Metro.locales[this.locale]);
+                    },
+
+                    getComponent: function () {
+                        return this.component;
+                    },
+
+                    getComponentName: function () {
+                        return this.name;
+                    },
                 },
-
-                getComponent: function(){
-                    return this.component;
-                },
-
-                getComponentName: function(){
-                    return this.name;
-                }
-            }, compObj);
+                compObj,
+            );
 
             Metro.plugin(name, component);
 
@@ -684,67 +564,72 @@
         },
 
         fetch: {
-            status: function(response){
-                return response.ok ? Promise.resolve(response) : Promise.reject(new Error(response.statusText));
-            },
-
-            json: function(response){
-                return response.json();
-            },
-
-            text: function(response){
-                return response.text();
-            },
-
-            form: function(response){
-                return response.formData();
-            },
-
-            blob: function(response){
-                return response.blob();
-            },
-
-            buffer: function(response){
-                return response.arrayBuffer();
-            }
+            status: (response) =>
+                response.ok ? Promise.resolve(response) : Promise.reject(new Error(response.statusText)),
+            json: (response) => response.json(),
+            text: (response) => response.text(),
+            form: (response) => response.formData(),
+            blob: (response) => response.blob(),
+            buffer: (response) => response.arrayBuffer(),
         },
 
         i18n: {
-            loadLocale(lang = 'en-US'){
+            language: "en",
 
+            load(lang = "en") {
+                Metro.i18n.language = Metro.locales[lang] ? lang : "en";
+                Metro.locale = Metro.locales[Metro.i18n.language];
             },
 
-            getMessage(id){
-                return ""
+            add(id, data) {
+                Metro.locales[id] = data;
             },
 
-            updateUI(){
-                const updateUI = () => {
-                    document.querySelectorAll("[data-i18n]").forEach(el => {
-                        const id = el.getAttribute('data-i18n')
-                        el.innerHTML = Metro.i18n.getMessage(id)
-                    })
+            get(key, locale) {
+                return Metro.locales[locale][key] || "";
+            },
+
+            updateUI(from, lang) {
+                const _lang = lang || $.html().attr("lang") || "en";
+                const _from = from || document;
+                if (!Metro.locales[_lang]) {
+                    return;
                 }
-            }
-        }
+                Metro.i18n.load(lang);
+                $.html().attr("lang", lang);
+
+                for (const el of _from.querySelectorAll("[data-i18n]")) {
+                    const key = el.getAttribute("data-i18n");
+                    el.innerHTML = Metro.i18n.get(key, lang);
+                }
+            },
+
+            extend(data) {
+                $.each(data, (key, value) => {
+                    Metro.locales[key] = Object.assign({}, Metro.locales[key], value);
+                });
+            },
+        },
     };
 
-    $(window).on(Metro.events.resize, function(){
-        window.METRO_MEDIA = [];
-        $.each(Metro.media_queries, function(key, query){
+    Object.assign(Metro, Props);
+
+    $(globalThis).on(Metro.events.resize, () => {
+        globalThis.METRO_MEDIA = [];
+        $.each(Metro.media_queries, (key, query) => {
             if (Metro.utils.media(query)) {
-                window.METRO_MEDIA.push(Metro.media_mode[key]);
+                globalThis.METRO_MEDIA.push(Metro.media_mode[key]);
             }
         });
     });
 
-    window.Metro = Metro;
+    globalThis.Metro = Metro;
 
-    if (window.METRO_INIT ===  true) {
-        $(function(){
-            Metro.init()
+    if (globalThis.METRO_INIT === true) {
+        $(() => {
+            Metro.init();
         });
     }
 
     return Metro;
-}());
+})(Dom);

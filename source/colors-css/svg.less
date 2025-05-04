@@ -1,0 +1,13 @@
+@import (once) "../include/vars";
+
+each(@colors, {
+    .fc-@{value} {fill: @@value !important;}
+    .fc-@{value}-active {&:active {fill: @@value !important;}}
+    .fc-@{value}-hover {&:hover {fill: @@value !important;}}
+    .fc-@{value}-focus {&:focus {fill: @@value !important;}}
+
+    .sc-@{value} {stroke: @@value !important;}
+    .sc-@{value}-active {&:active {stroke: @@value !important;}}
+    .sc-@{value}-hover {&:hover {stroke: @@value !important;}}
+    .sc-@{value}-focus {&:focus {stroke: @@value !important;}}
+})

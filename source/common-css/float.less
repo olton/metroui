@@ -9,21 +9,12 @@
 .place-left, .float-left {float: left !important;}
 .place-none, .float-none, .no-float {float: none !important;}
 
-.generate-float-media-options(@mediaBreakpointListMobileLength);
-.generate-float-media-options(@name, @i: 1) when (@i <= @mediaBreakpointListMobileLength) {
-    @m: extract(@mediaBreakpointListMobile, @i);
-
-    @media screen and (min-width: @@m) {
-
-        .place-left-@{m} {float: left!important;}
-        .place-right-@{m} {float: right!important;}
-        .place-none-@{m} {float: none!important;}
-        .float-left-@{m} {float: left!important;}
-        .float-right-@{m} {float: right!important;}
-        .float-none-@{m} {float: none!important;}
-
+each(@media-rules, {
+    @container (min-width: @value) {
+        .place-right-@{key}, .float-right-@{key} {float: right !important;}
+        .place-left-@{key}, .float-left-@{key} {float: left !important;}
+        .place-none-@{key}, .float-none-@{key}, .no-float-@{key} {float: none !important;}
     }
+})
 
-    .generate-float-media-options(@name, @i + 1);
-}
 

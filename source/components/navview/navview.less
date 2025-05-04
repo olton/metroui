@@ -5,9 +5,9 @@
     --navview-pane-width-compact: 50px;
     --navview-item-border-radius: 4px;
 
-    --navview-background: #ffffff;
+    --navview-background: #f8f8f8;
     --navview-color: #191919;
-    --navview-pane-background: #f6f6f6;
+    --navview-pane-background: #ececec;
     --navview-pane-color: #191919;
     --navview-item-background: transparent;
     --navview-item-color: #191919;
@@ -20,6 +20,9 @@
     --navview-dropdown-toggle-color: #191919;
     --navview-item-header-color: #191919;
     --navview-item-header-border-color: #cccccc;
+    --navview-scrollbar-width: 6px;
+    --navview-scrollbar-thumb-color: #cccccc;
+    --navview-scrollbar-background-color: #ececec;
 }
 
 .dark-side {
@@ -38,6 +41,8 @@
     --navview-dropdown-toggle-color: #ffffff;
     --navview-item-header-color: #dfe1e5;
     --navview-item-header-border-color: #5d5e60;
+    --navview-scrollbar-thumb-color: #5d5e60;
+    --navview-scrollbar-background-color: #2b2d30;
 }
 
 .navview {
@@ -47,12 +52,24 @@
     position: relative;
     background-color: var(--navview-background);
     color: var(--navview-color);
+
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--navview-scrollbar-thumb-color) var(--navview-scrollbar-background-color);
+    }
+
+    ::-webkit-scrollbar {
+        width: var(--navview-scrollbar-width);
+        height: var(--navview-scrollbar-width);;
+    }
 }
 
 .navview-pane, .navview-content {
     position: relative;
     flex-shrink: 0;
     height: 100%;
+    isolation: isolate;
+    z-index: 0;
 }
 
 .navview-pane {
@@ -62,6 +79,7 @@
     background-color: var(--navview-pane-background);
     color: var(--navview-pane-color);
     z-index: @zindex-fixed - 1;
+    overflow: hidden;
 
     .pull-button, .holder {
         position: relative;
@@ -90,6 +108,7 @@
 
     .navview-menu-container {
         height: 100%;
+        //padding-left: 4px;
 
         & .navview-menu {
             height: 100%;
@@ -197,6 +216,7 @@
         width: 16px;
         height: 16px;
         font-size: 16px;
+        text-align: center;
     }
 
     .badges {
@@ -279,6 +299,8 @@
     width: 100%;
     background-color: inherit;
     color: inherit;
+    height: 100%;
+    overflow-y: auto;
 }
 
 .navview {
@@ -320,6 +342,20 @@
             .item-header {
                 display: flex;
             }
+
+            &.pad-second-level {
+                .navview-menu {
+                    margin-right: -4px;
+                    li {
+                        a {
+                            padding-left: calc(38px + 1.5rem);
+                            .icon {
+                                left: calc(10px + 1.5rem);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         .suggest-box > .input {
@@ -330,4 +366,14 @@
             display: none;
         }
     }
+}
+
+@media screen and (max-width: 640px) {
+    .navview {
+        &.expanded {
+            .navview-content {
+                margin-left: var(--navview-pane-width);
+            }
+        }
+    }    
 }

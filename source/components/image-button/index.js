@@ -1,1 +1,1 @@
-import "./image-button.less"
+import "./image-button.less";

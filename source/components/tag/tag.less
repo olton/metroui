@@ -3,6 +3,20 @@
 
 @taginput-item-size: 26px;
 
+:root {
+    --tag-background: #f8f8f8;
+    --tag-color: #191919;
+    --tag-action-background: #dcdcdc;
+    --tag-action-color: #191919;
+}
+
+.dark-side {
+    --tag-background: #53575c;
+    --tag-color: #f3fcff;
+    --tag-action-background: #2b2d30;
+    --tag-action-color: #ffffff;
+}
+
 .tag {
     display: inline-flex;
     justify-content: space-between;
@@ -12,27 +26,41 @@
     padding: 0;
     height: @taginput-item-size;
     line-height: @taginput-item-size;
-    background-color: @light;
+    background: var(--tag-background);
+    color: var(--tag-color);
     cursor: default;
+    border-radius: 4px;
+    flex-wrap: nowrap;
 
     .title {
-        display: block;
+        display: flex;
+        align-items: center;
         position: relative;
-        font-size: 14px;
+        font-size: 12px;
         .text-ellipsis();
-        margin: 0 8px;
+        padding: 0 .5rem;
+        white-space: nowrap;
     }
 
-    .remover {
-        display: block;
+    .action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         position: relative;
         width: @taginput-item-size;
         height: 100%;
         line-height: @taginput-item-size - 4;
         text-align: center;
         cursor: pointer;
-        background-color: @lightGray;
-        font-size: 1.2rem;
+        background: var(--tag-action-background);
+        color: var(--tag-action-color);
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        transition: @transition-short;
+        font-size: 12px;
+        &:hover {
+            font-size: 1.4rem;
+        }
     }
 
     &.short-tag {
@@ -51,7 +79,7 @@
         font-size: .7rem;
         line-height: @input-sx - 10;
     }
-    .remover {
+    .action {
         width: @input-sx - 10;
         height: @input-sx - 10;
         line-height: @input-sx - 10;
@@ -67,7 +95,7 @@
         font-size: 1.3rem;
         line-height: @input-lx - 14;
     }
-    .remover {
+    .action {
         width: @input-lx - 15;
         height: @input-lx - 15;
         line-height: @input-lx - 17;
@@ -78,7 +106,50 @@
 .tag.static {
     background: #d4f0ff;
     color: @dark;
-    .remover {
+    .action {
         display: none!important;
     }
 }
+
+each(@accentColors, {
+    @color: "@{value}Color";
+
+    .tag.@{value} {
+        .action {
+            background: darken(@@color, 10%);
+            color: #ffffff;
+        }
+        &:hover {
+            background: @@color!important;
+        }
+    }
+})
+
+each(@normalColors, {
+    @color: "light-@{value}";
+    @hoverTextColor: "dark-@{value}";
+    @actionColor: darken(@@color, 10%);
+    @darkenColor: darken(@actionColor, 10%);
+
+    .tag.soft-@{value} {
+        .action {
+            background: @actionColor;
+            color: #000000;
+        }
+        &:hover {
+            background: @@color!important;
+            color: @@hoverTextColor!important;
+        }
+    }
+
+    .tag.normal-@{value} {
+        .action {
+            background: darken(@@value, 10%);
+            color: #ffffff;
+        }
+        &:hover {
+            background: @@value!important;
+            color: #ffffff;
+        }
+    }
+})

@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Tabs - Metro 4 :: Popular HTML, CSS and JS library</title>
+    <title>Test Tabs - Metro UI :: Popular HTML, CSS and JS library</title>
     <style>
         .emulator {
             padding: 0;
-            background: #fff;
+            background: var(--default-background);
             overflow: hidden;
-            border: 1px solid #eee;
+            border: 1px solid var(--border-color);
             position: relative;
         }
         .emulator.galaxy-s5 {
@@ -32,16 +32,22 @@
         }
     </style>
 </head>
-<body class="m4-cloak">
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default">
+    <span class="app-bar-item">Any</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Component Test</div>
+    </div>
+</nav>
+<div class="container-fluid">
 <div class="container">
     <h1>Tabs test page</h1>
 
     <div class="example">
-        <div class="emulator galaxy-s5 bg-light" style="height: 200px">
-            <div class="head-bar pos-absolute bg-purple">
-                <button class="expand-button"><span></span></button>
-                <span class="app-title">Metro 4</span>
-            </div>
+        <div class="emulator galaxy-s5" style="height: 200px">
             <ul data-role="materialtabs" data-app-bar="true">
                 <li><a href="#games">Games</a></li>
                 <li><a href="#applications">Applications</a></li>
@@ -61,19 +67,12 @@
         </div>
     </div>
 
-    <div class="example">
-        <div class="emulator galaxy-s5 bg-light" style="height: 200px">
-            <div class="head-bar pos-absolute bg-darkRed fg-white">
-                <button class="expand-button light"><span></span></button>
-                <span class="app-title">Metro 4</span>
-            </div>
+    <div class="example mt-10">
+        <div class="emulator galaxy-s5" style="height: 200px">
             <ul data-role="materialtabs"
                 data-fixed-tabs="true"
                 data-app-bar="true"
                 data-deep="true"
-                data-cls-tab="bg-red fg-white text-light"
-                data-cls-tab-active="text-bold fg-yellow"
-                data-cls-marker="bg-orange"
             >
                 <li><a href="#">Music</a></li>
                 <li><a href="#">Films</a></li>
@@ -83,9 +82,7 @@
     </div>
 
 </div>
-
+</div>
 <script src="../lib/metro.js"></script>
-<script>
-</script>
 </body>
 </html>

@@ -1,0 +1,241 @@
+:root {
+    --directive-background: #f9f9f9;
+    --directive-color: #191919;
+    --directive-border-color: #3c3c3c1a;
+    --directive-title-color: #3c3c3c;
+    --directive-border-radius: 10px;
+    --directive-code-background: #f5f5f5;
+    --directive-icon-background: #f5f5f5;
+    --directive-icon-color: #7a7a7a;
+    --directive-icon-size: 3rem;
+}
+
+.dark-side {
+    --directive-color: #ffffff!important;
+    
+    .directive-note {
+        --directive-background: #292e37!important;
+        --directive-border-color: #5454547a!important;
+        --directive-title-color: #ffffff!important;
+    }
+    .directive-tip, .directive-success {
+        --directive-background: #079c701a!important;
+        --directive-border-color: #079c7033!important;
+        --directive-title-color: #3ec480!important;
+    }
+    .directive-info {
+        --directive-background: #0095ff33!important;
+        --directive-border-color: #0095ff33!important;
+        --directive-title-color: #66c2ff!important;
+    }
+    .directive-warning {
+        --directive-background: #ffc5171f!important;
+        --directive-border-color: #ffc51740!important;
+        --directive-title-color: #fbb451!important;
+    }
+    .directive-fuck {
+        --directive-background: rgba(250, 250, 250, 0.06) !important;
+    }
+    .directive-caution, .directive-alert, .directive-error {
+        --directive-background: #ed3c501f!important;
+        --directive-border-color: #ed3c504d!important;
+        --directive-title-color: #f76e85!important;
+    }
+    .directive-bug {
+        --directive-background: #7C7C7C19!important;
+        --directive-border-color: #5454547a!important;
+        --directive-title-color: #d53934 !important;
+    }
+    .directive-shit {
+        --directive-background: #7a493c19!important;
+        --directive-border-color: #7a493c !important;
+        --directive-title-color: #8f3f06 !important;
+    }
+}
+
+.directive {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: var(--directive-background);
+    color: var(--directive-color);
+    border: 1px solid var(--directive-border-color);
+    border-left-width: 4px;
+    margin: 1rem 0;
+    font-size: 14px;
+    line-height: 1.75;
+    position: relative;
+    padding: 0.8rem 1rem 1rem 1.2rem;
+    
+    .directive-title { 
+        font-weight: 600;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        color: var(--directive-title-color);
+        font-size: 20px;
+        line-height: 1.2;
+    }
+    
+    .icon {
+        position: absolute;
+        right: 0;
+        top: 8px;
+        width: var(--directive-icon-size);
+        height: var(--directive-icon-size);
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transform: rotate(-15deg);
+        opacity: .3;
+        z-index: 0;
+        
+        &::before {
+            font-size: var(--directive-icon-size);
+        }
+        
+        svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--directive-icon-color);
+            stroke: var(--directive-icon-color);
+        }
+    }
+
+    [data-role-directive] {
+        line-height: 1.3;
+    }
+}
+
+.directive {
+    &.directive-info {
+        --directive-background: #0095ff0f;
+        --directive-border-color: #0095ff;
+        --directive-title-color: #0095ff;
+        --directive-icon-color: #0095ff;
+        --code-background: #0095ff1a;
+        --code-color: #07f;
+    }
+    
+    &.directive-tip, &.directive-success {
+        --directive-background: #079c700f;
+        --directive-border-color: #079c7033;
+        --directive-title-color: #278359;
+        --directive-icon-color: #278359;
+        --code-background: #079c701a;
+        --code-color: #278359;
+    }
+
+    &.directive-success {
+        --directive-border-color: #079c70;
+    }
+    
+    &.directive-warning {
+        --directive-background: #ffc5171a;
+        --directive-border-color: #ffc51766;
+        --directive-title-color: #ffc517;
+        --directive-icon-color: #ffc517;
+        --code-background: #ffc5171a;
+        --code-color: #887233;
+    }
+    
+    &.directive-fuck {
+        --directive-background: #fafafa;
+        --directive-border-color: var(--border-color);
+        --directive-title-color: var(--default-color);
+
+        .icon::before {
+            content: "🖕";
+        }
+    }
+    
+    &.directive-caution, &.directive-alert, &.directive-error {
+        --directive-background: #ed3c5014;
+        --directive-border-color: #ed3c50;
+        --directive-title-color: #ff1f1f;
+        --directive-icon-color: #ff1f1f;
+        --code-background: #ed3c501a;
+        --code-color: #ab2131;
+    }
+
+    &.directive-important {
+        --directive-background: #ff6d2914;
+        --directive-border-color: #ff6d29;
+        --directive-title-color: #ff6d29;
+        --code-background: #ff6d2914;
+        --code-color: #ff6d29;
+        
+        .icon::before {
+            content: "🔥";
+        }
+    }
+    
+    &.directive-bug {
+        --directive-background: #7C7C7C19;
+        --directive-border-color: #1C1C1C66;
+        --directive-title-color: #191919;
+        --directive-icon-color: #ff1f1f;
+        
+        .icon::before {
+            content: "🐞";
+        }
+    }
+    
+    &.directive-shit {
+        --directive-background: #7a493c19;
+        --directive-border-color: #7a493c;
+        --directive-title-color: #7a493c;
+        --directive-icon-color: #7a493c;
+        
+        .icon::before {
+            content: "💩";
+        }
+    }
+
+    &.directive-air {
+        --directive-background: #d5d9dc19;
+        --directive-border-color: #d5d9dc;
+        --directive-title-color: #8c8f91;
+        --directive-icon-color: #80dbff;
+        
+        .icon::before {
+            content: "💨";
+        }
+    }
+}
+
+.directive-style-2 {
+    border: solid var(--directive-border-color);
+    border-width: 0 0 0 10px;
+    
+    .icon {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        font-size: 24px;
+        transform: rotate(0);
+        left: -21px;
+        top: 10px;
+        border: 1px solid var(--directive-border-color);
+        background: var(--default-background);
+        padding: 6px;
+        z-index: 1;
+        opacity: 1;
+        &::before {
+            font-size: 20px!important;          
+            position: relative;
+            margin-top: -3px;
+        }
+    }
+}
+
+.directive-style-3 {
+    padding-left: 4.5rem!important;
+    .icon {
+        right: auto;
+        left: 10px;
+        top: 20px;
+    }
+}

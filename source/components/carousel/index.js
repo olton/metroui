@@ -1,4 +1,3 @@
-import "../button"
-import "../animations"
-import "./carousel.js"
-import "./carousel.less"
+import "../button/index.js";
+import "./carousel.js";
+import "./carousel.less";

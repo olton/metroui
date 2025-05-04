@@ -1,1 +1,1 @@
-import "./sorter.js"
+import "./sorter.js";

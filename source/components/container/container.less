@@ -11,6 +11,7 @@
     width: 100%;
     padding-right: 12px;
     padding-left: 12px;
+    container: container / inline-size;
 }
 
 .container-fluid {
@@ -52,10 +53,15 @@
 
 each(@media-rules, {
     .container-@{key} {
-        max-width: @value!important;
+        max-width: @value;
     }
 })
 
 .container-max {
-    width: 100%!important;
+    width: 100%;
+}
+
+.container-query, .responsive-container {
+    container-name: container-query;
+    container-type: inline-size;
 }

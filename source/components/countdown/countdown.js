@@ -1,21 +1,18 @@
-/* global Metro, datetime, Datetime, METRO_LOCALE */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var CountdownDefaultConfig = {
+((Metro, $) => {
+    let CountdownDefaultConfig = {
         countdownDeferred: 0,
         stopOnBlur: true,
         animate: "none",
         ease: "linear",
         duration: 600,
         inputFormat: null,
-        locale: METRO_LOCALE,
         days: 0,
         hours: 0,
         minutes: 0,
         seconds: 0,
         date: null,
         start: true,
+        fontSize: 24,
         clsCountdown: "",
         clsPart: "",
         clsZero: "",
@@ -28,54 +25,57 @@
         onTick: Metro.noop,
         onZero: Metro.noop,
         onBlink: Metro.noop,
-        onCountdownCreate: Metro.noop
+        onCountdownCreate: Metro.noop,
     };
 
-    Metro.countdownSetup = function (options) {
+    Metro.countdownSetup = (options) => {
         CountdownDefaultConfig = $.extend({}, CountdownDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCountdownSetup"] !== undefined) {
-        Metro.countdownSetup(globalThis["metroCountdownSetup"]);
+    if (typeof globalThis.metroCountdownSetup !== "undefined") {
+        Metro.countdownSetup(globalThis.metroCountdownSetup);
     }
 
-    Metro.Component('countdown', {
-        init: function( options, elem ) {
+    Metro.Component("countdown", {
+        init: function (options, elem) {
             this._super(elem, options, CountdownDefaultConfig, {
-                locale: Metro.locales["en-US"],
-                breakpoint: (new Date()).getTime(),
+                breakpoint: new Date().getTime(),
                 blinkInterval: null,
                 tickInterval: null,
                 zeroDaysFired: false,
                 zeroHoursFired: false,
                 zeroMinutesFired: false,
                 zeroSecondsFired: false,
-                fontSize: parseInt(Utils.getStyleOne(elem, "font-size")),
+                fontSize: 0,
                 current: {
-                    d: 0, h: 0, m: 0, s: 0
+                    d: 0,
+                    h: 0,
+                    m: 0,
+                    s: 0,
                 },
                 inactiveTab: false,
-                id: Utils.elementId("countdown"),
-                duration: 600
+                id: Metro.utils.elementId("countdown"),
+                duration: 600,
             });
 
             return this;
         },
 
-        _create: function(){
-            var o = this.options;
+        _create: function () {
+            const o = this.options;
 
-            this.locale = Metro.locales[o.locale] !== undefined ? Metro.locales[o.locale] : Metro.locales["en-US"];
-
-            this.duration = (+o.duration <= 0 || +o.duration >= 1000) ? 600 : +o.duration;
+            this.duration = +o.duration <= 0 || +o.duration >= 1000 ? 1000 : +o.duration;
 
             this._build();
             this._createEvents();
         },
 
-        _setBreakpoint: function(){
-            var o = this.options;
-            var dm = 86400000, hm = 3600000, mm = 60000, sm = 1000;
+        _setBreakpoint: function () {
+            const o = this.options;
+            const dm = 86400000;
+            const hm = 3600000;
+            const mm = 60000;
+            const sm = 1000;
 
             this.breakpoint = datetime().time();
 
@@ -83,118 +83,137 @@
                 this.breakpoint = (o.inputFormat ? Datetime.from(o.date, o.inputFormat) : datetime(o.date)).time();
             }
 
-            if (parseInt(o.days) > 0) {
-                this.breakpoint += parseInt(o.days) * dm;
+            if (Number.parseInt(o.days) > 0) {
+                this.breakpoint += Number.parseInt(o.days) * dm;
             }
-            if (parseInt(o.hours) > 0) {
-                this.breakpoint += parseInt(o.hours) * hm;
+            if (Number.parseInt(o.hours) > 0) {
+                this.breakpoint += Number.parseInt(o.hours) * hm;
             }
-            if (parseInt(o.minutes) > 0) {
-                this.breakpoint += parseInt(o.minutes) * mm;
+            if (Number.parseInt(o.minutes) > 0) {
+                this.breakpoint += Number.parseInt(o.minutes) * mm;
             }
-            if (parseInt(o.seconds) > 0) {
-                this.breakpoint += parseInt(o.seconds) * sm;
+            if (Number.parseInt(o.seconds) > 0) {
+                this.breakpoint += Number.parseInt(o.seconds) * sm;
             }
         },
 
-        _build: function(){
-            var that = this, element = this.element, o = this.options;
-            var parts = ["days", "hours", "minutes", "seconds"];
-            var dm = 24*60*60*1000;
-            var delta_days;
-            var now = datetime().time();
-            var digit;
+        _build: function () {
+            const element = this.element;
+            const o = this.options;
+            const parts = ["days", "hours", "minutes", "seconds"];
+            const dm = 24 * 60 * 60 * 1000;
+            const now = datetime().time();
+            const strings = this.strings;
 
             if (!element.attr("id")) {
-                element.attr("id", Utils.elementId("countdown"));
+                element.attr("id", Metro.utils.elementId("countdown"));
             }
 
-            if (!Utils.isValue(element.attr("id"))) {
-                element.attr("id", Utils.elementId("countdown"));
-            }
-
-            element.addClass("countdown").addClass(o.clsCountdown);
+            element.addClass("countdown").addClass(`animate-${o.animate}`).addClass(o.clsCountdown);
+            element.css("font-size", o.fontSize);
 
             this._setBreakpoint();
 
-            delta_days = Math.round((that.breakpoint - now) / dm);
+            const delta_days = Math.round((this.breakpoint - now) / dm);
+            $.each(parts, function () {
+                const part = $("<div>")
+                    .addClass(`part ${this}`)
+                    .addClass(o.clsPart)
+                    .attr("data-label", strings[`label_${this}`])
+                    .appendTo(element);
 
-            $.each(parts, function(){
-                var part = $("<div>").addClass("part " + this).addClass(o.clsPart).attr("data-label", that.locale["calendar"]["time"][this]).appendTo(element);
-
-                if (this === "days") {part.addClass(o.clsDays);}
-                if (this === "hours") {part.addClass(o.clsHours);}
-                if (this === "minutes") {part.addClass(o.clsMinutes);}
-                if (this === "seconds") {part.addClass(o.clsSeconds);}
+                if (this === "days") {
+                    part.addClass(o.clsDays);
+                }
+                if (this === "hours") {
+                    part.addClass(o.clsHours);
+                }
+                if (this === "minutes") {
+                    part.addClass(o.clsMinutes);
+                }
+                if (this === "seconds") {
+                    part.addClass(o.clsSeconds);
+                }
 
                 $("<div>").addClass("digit").appendTo(part);
                 $("<div>").addClass("digit").appendTo(part);
 
                 if (this === "days" && delta_days >= 100) {
-
-                    for(var i = 0; i < String(Math.round(delta_days/100)).length; i++) {
+                    for (let i = 0; i < String(Math.round(delta_days / 100)).length; i++) {
                         $("<div>").addClass("digit").appendTo(part);
                     }
                 }
-
             });
 
-            digit = element.find(".digit");
+            const digit = element.find(".digit");
             digit.append($("<span class='digit-placeholder'>").html("0"));
             digit.append($("<span class='digit-value'>").html("0"));
 
             this._fireEvent("countdown-create", {
-                element: element
-            })
+                element: element,
+            });
 
             if (o.start === true) {
                 this.start();
             } else {
                 this.tick();
             }
+
+            this.fontSize = Number.parseInt(element.css("font-size"));
         },
 
-        _createEvents: function(){
-            var that = this;
-            $(document).on("visibilitychange", function() {
-                if (document.hidden) {
-                    that.pause();
-                } else {
-                    that.resume();
-                }
-            }, {ns: this.id});
+        _createEvents: function () {
+            $(document).on(
+                "visibilitychange",
+                () => {
+                    if (document.hidden) {
+                        this.pause();
+                    } else {
+                        this.resume();
+                    }
+                },
+                { ns: this.id },
+            );
         },
 
-        blink: function(){
-            var element = this.element;
+        blink: function () {
+            const element = this.element;
             element.toggleClass("blink");
 
             this._fireEvent("blink", {
-                time: this.current
+                time: this.current,
             });
         },
 
-        tick: function(){
-            var element = this.element, o = this.options;
-            var dm = 24*60*60, hm = 60*60, mm = 60, sm = 1;
-            var left, now = datetime().time();
-            var d, h, m, s;
-            var days = element.find(".days"),
-                hours = element.find(".hours"),
-                minutes = element.find(".minutes"),
-                seconds = element.find(".seconds");
+        tick: function () {
+            const element = this.element;
+            const o = this.options;
+            const dm = 24 * 60 * 60;
+            const hm = 60 * 60;
+            const mm = 60;
+            const sm = 1;
+            let left;
+            const now = datetime().time();
+            let d;
+            let h;
+            let m;
+            let s;
+            const days = element.find(".days");
+            const hours = element.find(".hours");
+            const minutes = element.find(".minutes");
+            const seconds = element.find(".seconds");
 
-            left = Math.floor((this.breakpoint - now)/1000);
+            left = Math.floor((this.breakpoint - now) / 1000);
 
             if (left <= -1) {
                 this.stop();
                 element.addClass(o.clsAlarm);
 
                 this._fireEvent("alarm", {
-                    time: now
+                    time: now,
                 });
 
-                return ;
+                return;
             }
 
             d = Math.floor(left / dm);
@@ -212,13 +231,13 @@
 
                     this._fireEvent("zero", {
                         part: "days",
-                        value: days
+                        value: days,
                     });
                 }
             }
 
             h = Math.floor(left / hm);
-            left -= h*hm;
+            left -= h * hm;
             if (this.current.h !== h) {
                 this.current.h = h;
                 this.draw("hours", h);
@@ -231,13 +250,13 @@
 
                     this._fireEvent("zero", {
                         part: "hours",
-                        value: hours
+                        value: hours,
                     });
                 }
             }
 
             m = Math.floor(left / mm);
-            left -= m*mm;
+            left -= m * mm;
             if (this.current.m !== m) {
                 this.current.m = m;
                 this.draw("minutes", m);
@@ -250,9 +269,8 @@
 
                     this._fireEvent("zero", {
                         part: "minutes",
-                        value: minutes
+                        value: minutes,
                     });
-
                 }
             }
 
@@ -269,9 +287,8 @@
 
                     this._fireEvent("zero", {
                         part: "seconds",
-                        value: seconds
+                        value: seconds,
                     });
-
                 }
             }
 
@@ -279,138 +296,133 @@
                 days: d,
                 hours: h,
                 minutes: m,
-                seconds: s
+                seconds: s,
             });
         },
 
-        draw: function(part, value){
-            var element = this.element, o = this.options;
-            var digits, digits_length, digit_value, digit_current, digit;
-            var len, i, duration = this.duration;
-            var fontSize = this.fontSize;
+        draw: function (part, value) {
+            const element = this.element;
+            const o = this.options;
+            let digits;
+            let digits_length;
+            let digit_value;
+            let digit_current;
+            let digit;
+            let len;
+            let i;
+            const duration = this.duration;
+            const fontSize = this.fontSize;
 
-            var slideDigit = function(digit, value){
-                var digit_copy, height = digit.height();
+            const slideDigit = (digit, value) => {
+                const height = digit.height();
 
                 digit.siblings(".-old-digit").remove();
-                digit_copy = digit.clone().appendTo(digit.parent());
+                const digit_copy = digit.clone().appendTo(digit.parent());
                 digit_copy.css({
-                    top: -1 * height + 'px'
+                    top: `${-1 * height}px`,
                 });
 
-                digit
-                    .addClass("-old-digit")
-                    .animate({
-                        draw: {
-                            top: height,
-                            opacity: 0
-                        },
-                        dur: duration,
-                        ease: o.ease,
-                        onDone: function(){
-                            $(this).remove();
-                        }
-                    });
-
-                digit_copy
-                    .html(value)
-                    .animate({
-                        draw: {
-                            top: 0,
-                            opacity: 1
-                        },
-                        dur: duration,
-                        ease: o.ease
-                    });
-            };
-
-            var fadeDigit = function(digit, value){
-                var digit_copy;
-                digit.siblings(".-old-digit").remove();
-                digit_copy = digit.clone().appendTo(digit.parent());
-                digit_copy.css({
-                    opacity: 0
+                digit.addClass("-old-digit").animate({
+                    draw: {
+                        top: height,
+                        opacity: 0,
+                    },
+                    dur: duration,
+                    ease: o.ease,
+                    onDone: function () {
+                        $(this).remove();
+                    },
                 });
 
-                digit
-                    .addClass("-old-digit")
-                    .animate({
-                        draw: {
-                            opacity: 0
-                        },
-                        dur: duration / 2,
-                        ease: o.ease,
-                        onDone: function(){
-                            $(this).remove();
-                        }
-                    });
-
-                digit_copy
-                    .html(value)
-                    .animate({
-                        draw: {
-                            opacity: 1
-                        },
-                        dur: duration / 2,
-                        ease: o.ease
-                    });
+                digit_copy.html(value).animate({
+                    draw: {
+                        top: 0,
+                        opacity: [0, 1],
+                    },
+                    dur: duration,
+                    ease: o.ease,
+                });
             };
 
-            var zoomDigit = function(digit, value) {
-                var digit_copy, height = digit.height(), fs = fontSize// parseInt(digit.style("font-size"));
+            const fadeDigit = (digit, value) => {
+                digit.siblings(".-old-digit").remove();
+                const digit_copy = digit.clone().appendTo(digit.parent());
+                digit_copy.css({
+                    opacity: 0,
+                });
+
+                digit.addClass("-old-digit").animate({
+                    draw: {
+                        opacity: 0,
+                    },
+                    dur: duration / 2,
+                    ease: o.ease,
+                    onDone: function () {
+                        $(this).remove();
+                    },
+                });
+
+                digit_copy.html(value).animate({
+                    draw: {
+                        opacity: 1,
+                    },
+                    dur: duration / 2,
+                    ease: o.ease,
+                });
+            };
+
+            const zoomDigit = (digit, value) => {
+                const height = element.height();
+                const fs = fontSize;
 
                 digit.siblings(".-old-digit").remove();
-                digit_copy = digit.clone().appendTo(digit.parent());
+                const digit_copy = digit.clone().appendTo(digit.parent());
                 digit_copy.css({
                     top: 0,
                     left: 0,
-                    opacity: 1
+                    opacity: 1,
                 });
 
-                digit
-                    .addClass("-old-digit")
-                    .animate({
-                        draw: {
-                            top: height,
-                            opacity: 0,
-                            fontSize: 0
-                        },
-                        dur: duration,
-                        ease: o.ease,
-                        onDone: function(){
-                            $(this).remove();
-                        }
-                    });
+                digit.addClass("-old-digit").animate({
+                    draw: {
+                        top: height,
+                        opacity: 0,
+                        fontSize: 0,
+                    },
+                    dur: duration,
+                    ease: o.ease,
+                    onDone: function () {
+                        $(this).remove();
+                    },
+                });
 
-                digit_copy
-                    .html(value)
-                    .animate({
-                        draw: {
-                            top: 0,
-                            opacity: 1,
-                            fontSize: [0, fs]
-                        },
-                        dur: duration,
-                        ease: o.ease
-                    });
+                digit_copy.html(value).animate({
+                    draw: {
+                        top: 0,
+                        opacity: 1,
+                        fontSize: [0, fs],
+                    },
+                    dur: duration,
+                    ease: o.ease,
+                });
             };
 
-            value = ""+value;
+            let _value = `${value}`;
 
-            if (value.length === 1) {
-                value = '0'+value;
+            if (_value.length === 1) {
+                _value = `0${value}`;
             }
 
             len = value.length;
 
-            digits = element.find("."+part+" .digit:not(.-old-digit)");
+            digits = element.find(`.${part} .digit:not(.-old-digit)`);
             digits_length = digits.length;
-            element.find(".-old-digit").remove()
+            element.find(".-old-digit").remove();
 
-            for(i = 0; i < len; i++){
+            for (i = 0; i < len; i++) {
                 digit = digits.eq(digits_length - 1).find(".digit-value");
-                digit_value = Math.floor( parseInt(value) / Math.pow(10, i) ) % 10;
-                digit_current = parseInt(digit.text());
+                digit_value = Math.floor(Number.parseInt(_value) / 10 ** i) % 10;
+                digit_current = Number.parseInt(digit.text());
 
                 digits_length--;
 
@@ -418,17 +430,24 @@
                     continue;
                 }
 
-                switch ((""+o.animate).toLowerCase()) {
-                    case "slide": slideDigit(digit, digit_value); break;
-                    case "fade": fadeDigit(digit, digit_value); break;
-                    case "zoom": zoomDigit(digit, digit_value); break;
-                    default: digit.html(digit_value);
+                switch (`${o.animate}`.toLowerCase()) {
+                    case "slide":
+                        slideDigit(digit, digit_value);
+                        break;
+                    case "fade":
+                        fadeDigit(digit, digit_value);
+                        break;
+                    case "zoom":
+                        zoomDigit(digit, digit_value);
+                        break;
+                    default:
+                        digit.html(digit_value);
                 }
             }
         },
 
-        start: function(){
-            var that = this, element = this.element;
+        start: function () {
+            const element = this.element;
 
             if (element.data("paused") === false) {
                 return;
@@ -442,44 +461,54 @@
             this._setBreakpoint();
             this.tick();
 
-            this.blinkInterval = setInterval(function(){that.blink();}, 500);
-            this.tickInterval = setInterval(function(){that.tick();}, 1000);
+            this.blinkInterval = setInterval(() => {
+                this.blink();
+            }, 500);
+            this.tickInterval = setInterval(() => {
+                this.tick();
+            }, 1000);
         },
 
-        stop: function(){
-            var element = this.element;
+        stop: function () {
+            const element = this.element;
             clearInterval(this.blinkInterval);
             clearInterval(this.tickInterval);
             element.data("paused", true);
             element.find(".digit").html("0");
             this.current = {
-                d: 0, h:0, m: 0, s:0
+                d: 0,
+                h: 0,
+                m: 0,
+                s: 0,
             };
         },
 
-        pause: function(){
+        pause: function () {
             clearInterval(this.blinkInterval);
             clearInterval(this.tickInterval);
             this.element.data("paused", true);
         },
 
-        resume: function(){
-            var that = this;
-
+        resume: function () {
             this.element.data("paused", false);
-            this.blinkInterval = setInterval(function(){that.blink();}, 500);
-            this.tickInterval = setInterval(function(){that.tick();}, 1000);
+            this.blinkInterval = setInterval(() => {
+                this.blink();
+            }, 500);
+            this.tickInterval = setInterval(() => {
+                this.tick();
+            }, 1000);
         },
 
-        reset: function(){
-            var that = this, element = this.element, o = this.options;
+        reset: function () {
+            const element = this.element;
+            const o = this.options;
 
             clearInterval(this.blinkInterval);
             clearInterval(this.tickInterval);
 
             element.find(".part").removeClass(o.clsZero);
 
-            var digit = element.find(".digit").clear();
+            const digit = element.find(".digit").clear();
 
             digit.append($("<span class='digit-placeholder'>").html("0"));
             digit.append($("<span class='digit-value'>").html("0"));
@@ -490,30 +519,35 @@
 
             this.tick();
 
-            this.blinkInterval = setInterval(function(){that.blink();}, 500);
-            this.tickInterval = setInterval(function(){that.tick();}, 1000);
+            this.blinkInterval = setInterval(() => {
+                this.blink();
+            }, 500);
+            this.tickInterval = setInterval(() => {
+                this.tick();
+            }, 1000);
         },
 
-        resetWith: function(val){
-            var that = this, element = this.element, o = this.options;
+        resetWith: function (val) {
+            const element = this.element;
+            const o = this.options;
 
             if (typeof val === "string") {
-                element.attr("data-date", val)
-                o.date = val
-            } else if (typeof val === 'object') {
-                var keys = ["days", "hours", "minutes", "seconds"]
-                $.each(keys, function(i, v){
+                element.attr("data-date", val);
+                o.date = val;
+            } else if (typeof val === "object") {
+                const keys = ["days", "hours", "minutes", "seconds"];
+                $.each(keys, (i, v) => {
                     if (Metro.utils.isValue(val[v])) {
-                        element.attr("data-"+v, val[v])
-                        o[v] = val[v]
+                        element.attr(`data-${v}`, val[v]);
+                        o[v] = val[v];
                     }
-                })
+                });
             }
 
-            this.reset()
+            this.reset();
         },
 
-        togglePlay: function(){
+        togglePlay: function () {
             if (this.element.attr("data-pause") === true) {
                 this.pause();
             } else {
@@ -521,68 +555,47 @@
             }
         },
 
-        isPaused: function(){
+        isPaused: function () {
             return this.element.data("paused");
         },
 
-        getBreakpoint: function(asDate){
+        getBreakpoint: function (asDate) {
             return asDate === true ? new Date(this.breakpoint) : this.breakpoint;
         },
 
-        getLeft: function(){
-            var dm = 24*60*60*1000, hm = 60*60*1000, mm = 60*1000, sm = 1000;
-            var now = (new Date()).getTime();
-            var left_seconds = Math.floor(this.breakpoint - now);
+        getLeft: function () {
+            const dm = 24 * 60 * 60 * 1000;
+            const hm = 60 * 60 * 1000;
+            const mm = 60 * 1000;
+            const sm = 1000;
+            const now = new Date().getTime();
+            const left_seconds = Math.floor(this.breakpoint - now);
             return {
                 days: Math.round(left_seconds / dm),
                 hours: Math.round(left_seconds / hm),
                 minutes: Math.round(left_seconds / mm),
-                seconds: Math.round(left_seconds / sm)
+                seconds: Math.round(left_seconds / sm),
             };
         },
 
-        i18n: function(val){
-            var that = this, element = this.element, o = this.options;
-            var parts = ["days", "hours", "minutes", "seconds"];
-
-
-            if (val === undefined) {
-                return o.locale;
-            }
-            if (Metro.locales[val] === undefined) {
-                return false;
-            }
-            o.locale = val;
-            this.locale = Metro.locales[o.locale];
-
-            $.each(parts, function(){
-                var cls = ".part." + this;
-                var part = element.find(cls);
-                part.attr("data-label", that.locale["calendar"]["time"][this]);
-            });
-        },
-
-        changeAttrLocale: function(){
-            var element = this.element;
-            var locale = element.attr('data-locale');
-            this.i18n(locale);
-        },
-
-        changeAttribute: function(attr, newVal){
+        changeAttribute: function (attr, newVal) {
             switch (attr) {
-                case "data-pause": this.togglePlay(); break;
-                case "data-locale": this.i18n(newVal); break;
-                case "data-duration": this.duration = +newVal <= 0 || +newVal >= 1000 ? 600 : +newVal; break;
+                case "data-pause":
+                    this.togglePlay();
+                    break;
+                case "data-duration":
+                    this.duration = +newVal <= 0 || +newVal >= 1000 ? 600 : +newVal;
+                    break;
             }
         },
 
-        destroy: function(){
+        destroy: function () {
             clearInterval(this.blinkInterval);
             clearInterval(this.tickInterval);
 
-            $(document).off("visibilitychange", {ns: this.id});
+            $(document).off("visibilitychange", { ns: this.id });
 
-            return this.element;
-        }
+            this.element.remove();
+        },
     });
-}(Metro, m4q));
+})(Metro, Dom);

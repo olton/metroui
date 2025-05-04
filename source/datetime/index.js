@@ -1,36 +1,59 @@
-import {Datetime, datetime, info} from "@olton/datetime"
+/** @format */
 
-Datetime.info = info
+import { Datetime, datetime } from "@olton/datetime";
 
-globalThis.Datetime = Datetime
-globalThis.datetime = datetime
+Datetime.correctDate = (date) => datetime(date).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
 
-;(function() {
-    'use strict';
+globalThis.Datetime = Datetime;
+globalThis.datetime = datetime;
 
-    var getLocale = Datetime.getLocale;
+(() => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
 
-    Datetime.getLocale = function(locale){
-        var data;
+    const MONTHS = [
+        "january",
+        "february",
+        "march",
+        "april",
+        "may",
+        "june",
+        "july",
+        "august",
+        "september",
+        "october",
+        "november",
+        "december",
+    ];
+    const DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+
+    const getLocale = Datetime.getLocale;
+
+    Datetime.getLocale = function (locale = "en") {
+        let _locale = locale;
 
         if (!Metro) {
-            locale = 'en';
             return getLocale.call(this, locale);
         }
 
-        if (!Metro.locales[locale]) {
-            locale = "en-US";
+        if (!Metro.locales[_locale]) {
+            _locale = "en";
         }
 
-        data = Metro.locales[locale]['calendar'];
+        const data = Metro.locales[_locale];
+        const months = MONTHS.map((el, i) => data[el]);
+        const monthsShort = MONTHS.map((el, i) => data[`${el}_short`]);
+        const weekdays = DAYS.map((el, i) => data[el]);
+        const weekdaysShort = DAYS.map((el, i) => data[`${el}_short`]);
+        const weekdaysMin = DAYS.map((el, i) => data[`${el}_short_2`]);
 
         return {
-            months: data.months.filter( function(el, i){ return i < 12} ),
-            monthsShort: data.months.filter( function(el, i){ return i > 11} ),
-            weekdays: data.days.filter( function(el, i){ return i < 7} ),
-            weekdaysShort: data.days.filter( function(el, i){ return i > 13} ),
-            weekdaysMin: data.days.filter( function(el, i){ return i > 6 && i < 14} ),
-            weekStart: data.weekStart
-        }
-    }
-}());
+            months,
+            monthsShort,
+            weekdays,
+            weekdaysShort,
+            weekdaysMin,
+            weekStart: data.weekStart,
+        };
+    };
+})();

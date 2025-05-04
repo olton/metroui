@@ -1,9 +1,9 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var HtmlContainerDefaultConfig = {
-        htmlcontainerDeferred: 0,
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    let HtmlContainerDefaultConfig = {
+        htmlContainerDeferred: 0,
         method: "get",
         htmlSource: null,
         requestData: null,
@@ -12,150 +12,166 @@
         onHtmlLoad: Metro.noop,
         onHtmlLoadFail: Metro.noop,
         onHtmlLoadDone: Metro.noop,
-        onHtmlContainerCreate: Metro.noop
+        onHtmlContainerCreate: Metro.noop,
     };
 
-    Metro.htmlContainerSetup = function (options) {
+    Metro.htmlContainerSetup = (options) => {
         HtmlContainerDefaultConfig = $.extend({}, HtmlContainerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroHtmlContainerSetup"] !== undefined) {
-        Metro.htmlContainerSetup(globalThis["metroHtmlContainerSetup"]);
+    if (typeof globalThis.metroHtmlContainerSetup !== "undefined") {
+        Metro.htmlContainerSetup(globalThis.metroHtmlContainerSetup);
     }
 
-    Metro.Component('html-container', {
-        init: function( options, elem ) {
+    Metro.Component("html-container", {
+        init: function (options, elem) {
             this._super(elem, options, HtmlContainerDefaultConfig, {
                 data: null,
                 opt: {},
-                htmlSource: ''
+                htmlSource: "",
             });
 
             return this;
         },
 
-        _create: function(){
-            var element = this.element, o = this.options;
+        _create: function () {
+            const element = this.element;
+            const o = this.options;
 
-            if (typeof o.requestData === 'string') {
+            if (typeof o.requestData === "string") {
                 o.requestData = JSON.parse(o.requestData);
             }
 
-            if (Utils.isObject(o.requestData)) {
-                this.data = Utils.isObject(o.requestData);
+            if (Metro.utils.isObject(o.requestData)) {
+                this.data = Metro.utils.isObject(o.requestData);
             }
 
-            if (typeof o.requestOptions === 'string') {
+            if (typeof o.requestOptions === "string") {
                 o.requestOptions = JSON.parse(o.requestOptions);
             }
 
-            if (Utils.isObject(o.requestOptions)) {
-                this.opt = Utils.isObject(o.requestOptions);
+            if (Metro.utils.isObject(o.requestOptions)) {
+                this.opt = Metro.utils.isObject(o.requestOptions);
             }
 
             o.method = o.method.toUpperCase();
 
-            if (Utils.isValue(o.htmlSource)) {
+            if (Metro.utils.isValue(o.htmlSource)) {
                 this.htmlSource = o.htmlSource;
                 this._load();
             }
 
             this._fireEvent("html-container-create", {
-                element: element
+                element: element,
             });
         },
 
-        _load: function(){
-            var that = this, element = this.element, o = this.options;
-            var fetchData = {
-                method: o.method
+        _load: function () {
+            const element = this.element;
+            const o = this.options;
+            const fetchData = {
+                method: o.method,
             };
 
-            if (this.data) fetchData['body'] = this.data;
-            if (this.opt) fetchData['headers'] = this.opt;
+            if (this.data) fetchData.body = this.data;
+            if (this.opt) fetchData.headers = this.opt;
 
             fetch(this.htmlSource, fetchData)
-            .then(Metro.fetch.status)
-            .then(Metro.fetch.text)
-            .then(function(data){
-                var _data = $(data);
+                .then(Metro.fetch.status)
+                .then(Metro.fetch.text)
+                .then((data) => {
+                    let _data = $(data);
 
-                if (_data.length === 0) {
-                    _data = $("<div>").html(data);
-                }
-
-                switch (o.insertMode.toLowerCase()) {
-                    case "prepend": element.prepend(_data); break;
-                    case "append": element.append(_data); break;
-                    case "replace": _data.insertBefore(element).script(); element.remove(); break;
-                    default: {
-                        element.html(_data);
+                    if (_data.length === 0) {
+                        _data = $("<div>").html(data);
                     }
-                }
-                that._fireEvent("html-load", {
-                    data: data,
-                    source: o.htmlSource,
-                    requestData: that.data,
-                    requestOptions: that.opt
+
+                    switch (o.insertMode.toLowerCase()) {
+                        case "prepend":
+                            element.prepend(_data);
+                            break;
+                        case "append":
+                            element.append(_data);
+                            break;
+                        case "replace":
+                            _data.insertBefore(element).script();
+                            element.remove();
+                            break;
+                        default: {
+                            element.html(_data);
+                        }
+                    }
+                    this._fireEvent("html-load", {
+                        data: data,
+                        source: o.htmlSource,
+                        requestData: this.data,
+                        requestOptions: this.opt,
+                    });
+                })
+                .catch((error) => {
+                    this._fireEvent("html-load-fail", {
+                        error: error,
+                    });
                 });
-            })
-            .catch(function(error){
-                that._fireEvent("html-load-fail", {
-                    error: error
-                });
-            });
         },
 
-        load: function(source, data, opt){
+        load: function (source, data, opt) {
             if (source) {
                 this.htmlSource = source;
             }
 
             if (data) {
-                this.data = Utils.isObject(data);
+                this.data = Metro.utils.isObject(data);
             }
 
             if (opt) {
-                this.opt = Utils.isObject(opt);
+                this.opt = Metro.utils.isObject(opt);
             }
 
             this._load();
         },
 
-        changeAttribute: function(attributeName){
-            var that = this, element = this.element, o = this.options;
+        changeAttribute: function (attributeName) {
+            const element = this.element;
+            const o = this.options;
 
-            var changeHTMLSource = function(){
-                var html = element.attr("data-html-source");
-                if (Utils.isNull(html)) {
-                    return ;
+            const changeHTMLSource = () => {
+                const html = element.attr("data-html-source");
+                if (Metro.utils.isNull(html)) {
+                    return;
                 }
                 if (html.trim() === "") {
                     element.html("");
                 }
                 o.htmlSource = html;
-                that._load();
+                this._load();
             };
 
-            var changeInsertMode = function(){
-                var attr = element.attr("data-insert-mode");
-                if (Utils.isValue(attr)) {
+            const changeInsertMode = () => {
+                const attr = element.attr("data-insert-mode");
+                if (Metro.utils.isValue(attr)) {
                     o.insertMode = attr;
                 }
             };
 
-            var changeRequestData = function(){
-                var data = element.attr("data-request-data");
-                that.load(o.htmlSource, data);
+            const changeRequestData = () => {
+                const data = element.attr("data-request-data");
+                this.load(o.htmlSource, data);
             };
 
             switch (attributeName) {
-                case "data-html-source": changeHTMLSource(); break;
-                case "data-insert-mode": changeInsertMode(); break;
-                case "data-request-data": changeRequestData(); break;
+                case "data-html-source":
+                    changeHTMLSource();
+                    break;
+                case "data-insert-mode":
+                    changeInsertMode();
+                    break;
+                case "data-request-data":
+                    changeRequestData();
+                    break;
             }
         },
 
-        destroy: function(){}
+        destroy: () => {},
     });
-}(Metro, m4q));
+})(Metro, Dom);

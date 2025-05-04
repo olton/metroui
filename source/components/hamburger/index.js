@@ -1,1 +1,1 @@
-import "./hamburger.less"
+import "./hamburger.less";

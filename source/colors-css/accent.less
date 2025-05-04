@@ -1,0 +1,142 @@
+@import (once) "../include/vars";
+@import (once) "../include/mixins";
+
+each(@accentColors, {
+    @color: "@{value}Color";
+
+    .@{value} {
+        outline-color: lighten(@@color, 30%)!important;
+        background-color: @@color!important;
+        border-color: @@color!important;
+        color: @white!important;
+
+        &.dropdown-toggle::before {
+            border-color: @white!important;
+        }
+    }
+})
+
+button, 
+.button, 
+.command-button, 
+.shortcut, 
+.action-button {
+    each(@accentColors, {
+        @color: "@{value}Color";
+
+        &.@{value} {
+            &.outline {
+                color: @@color!important;
+                border-color: @@color!important;
+                background-color: transparent!important;
+
+                &.dropdown-toggle::before {
+                    border-color: @@color!important;
+                }
+
+                @media (hover: hover) {
+                    &:hover {
+                        color: @white!important;
+                    }
+                }
+
+                @media (hover: none) {
+                    &:active {
+                        color: @white!important;
+                    }
+                }
+            }
+
+            @media (hover: hover) {
+                &:hover {
+                    color: @white!important;
+                    background-color: darken(@@color, 10%)!important;
+                    border-color: darken(@@color, 10%)!important;
+
+                    &.dropdown-toggle::before {
+                        border-color: @white!important;
+                    }
+                }
+            }
+
+            @media (hover: none) {
+                &:active {
+                    color: @white!important;
+                    background-color: darken(@@color, 10%)!important;
+                    border-color: darken(@@color, 10%)!important;
+
+                    &.dropdown-toggle::before {
+                        border-color: @white!important;
+                    }
+                }
+            }
+
+            &.same-color {
+                @media (hover: hover) {
+                    &:hover {
+                        background-color: @@color!important;
+                        border-color: @@color!important;
+                    }
+                }
+
+                @media (hover: none) {
+                    &:active {
+                        background-color: @@color!important;
+                        border-color: @@color!important;
+                    }
+                }
+            }
+        }
+    })
+
+    &.yellow, &.yellow.outline, &.light, &.light.outline {
+        color: @dark!important;
+
+        @media (hover: hover) {
+            &:hover, &.outline:hover {
+                color: @dark!important;
+            }
+        }
+
+        @media (hover: none) {
+            &:active, &.outline:active {
+                color: @dark!important;
+            }
+        }
+    }
+}
+
+.focusable {
+    each(@accentColors, {
+        @color: "@{value}Color";
+
+        &.@{value} {
+            &:active, &.focus, &:focus {
+                .focus-show(@@color) !important;
+            }
+        }
+    })
+}
+
+.metro-input,
+.file,
+.input,
+.select,
+.textarea,
+.keypad,
+.tag-input,
+.spinner
+{
+    each(@accentColors, {
+        @color: "@{value}Color";
+
+        &.@{value} {
+            border-color: @@color;
+
+            &:focus, &.focused {
+                .focus-show(@@color);
+            }
+        }
+    })
+}
+
