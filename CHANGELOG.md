@@ -1,5 +1,8 @@
 # Changelog
 
+### 5.1.1
++ [x] Added a combined hotkeys feature. Now you can create hotkey as: `alt+1 2`
+
 ### 5.1.0
 + [x] Updated color values, each color is worked by hand.
 + [x] Added gradient backgrounds with `gr-COLOR`, `gr-light-COLOR`, and `gr-dark-COLOR`
@@ -7,6 +10,15 @@
 + [x] Renamed colors to `*-color`, `*-light-color`, `*-dark-color`
 + [x] Improved progress bars
 + [x] Added classes `.animated-border`, `.animated-border-COLOR`
++ [x] Full refactoring
++ [x] New components
++ [x] Dark/Light themes for all components
++ [x] Complete migration from JavaScript 5 to JavaScript 6+
++ [x] New build engine with esbuild
++ [x] New built-in libraries (Dom, Hooks, Html, Farme, Datetime, Guardian, -String, Router, Model)
++ [x] Built-in Reactive Model with two ways binding
++ [x] New i18n engine
++ [x] And much, much more...
 
 ### 5.0.13
 + [x] Update Sidenav Counter, added role, theme
