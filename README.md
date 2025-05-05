@@ -10,6 +10,8 @@
     with the first front-end component library in Metro Style.
 </div>
 
+![img.png](img.png)
+
 ---
 <div align="center">
 
@@ -28,15 +30,17 @@ If you are using Metro UI commercially, there is a social (but no legal) expecta
 
 ### Project State
 ![Dependencies](https://img.shields.io/badge/Dependencies-none-darklime.svg)
+[![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
 ![Package Version](https://img.shields.io/github/package-json/v/olton/metroui)
 ![NPM Version](https://img.shields.io/npm/v/%40olton%2Fmetroui)
 ![Website](https://img.shields.io/website/https/metroui.org.ua.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?color=7852a9)
+
 ![Code size](https://img.shields.io/github/languages/code-size/olton/metroui.svg?color=830000)
 ![GitHub Css Size](https://img.shields.io/github/size/olton/metroui/lib%2Fmetro.css?label=CSS%20Size&color=fd9812)
 ![GitHub JS Size](https://img.shields.io/github/size/olton/metroui/lib%2Fmetro.js?label=JS%20Size&color=8f99ff)
 ![GitHub Icons Size](https://img.shields.io/github/size/olton/metroui/lib%2Ficons.css?label=Icons%20Size&color=01796f)
-[![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
+
 
 </div>
 
