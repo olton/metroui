@@ -10,8 +10,6 @@
     with the first front-end component library in Metro Style.
 </div>
 
-![Alt](https://repobeats.axiom.co/api/embed/0bec17257148030ff28810855fc54de0735a46a7.svg "Repobeats analytics image")
-
 ---
 <div align="center">
 
@@ -31,7 +29,6 @@ If you are using Metro UI commercially, there is a social (but no legal) expecta
 ### Project State
 ![Dependencies](https://img.shields.io/badge/Dependencies-none-darklime.svg)
 ![Package Version](https://img.shields.io/github/package-json/v/olton/metroui)
-![GitHub Release](https://img.shields.io/github/v/release/olton/metroui)
 ![NPM Version](https://img.shields.io/npm/v/%40olton%2Fmetroui)
 ![Website](https://img.shields.io/website/https/metroui.org.ua.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?color=7852a9)
