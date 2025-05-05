@@ -54751,12 +54751,21 @@ input.pill-input .button {
 .label-for-input.rtl {
   text-align: right;
 }
+.input .prepend-options [aria-hidden=true],
+.input .append-options [aria-hidden=true] {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  margin-top: -0.5rem;
+}
 .input .prepend-options .options-list,
 .input .append-options .options-list {
   border: none;
   border-right: 1px solid var(--input-border-color);
   height: 100%;
   border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
+  font-size: var(--input-font-size);
+  padding-right: 1rem;
 }
 .input .append-options .options-list {
   border-right: none;
@@ -62535,6 +62544,9 @@ label:has(input) {
 }
 .page-control__tabs.wrap-items {
   flex-wrap: wrap;
+}
+.page-control__tabs [aria-hidden=true] {
+  display: none;
 }
 .page-control__tab {
   display: flex;

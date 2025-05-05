@@ -1,4 +1,7 @@
 ((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
     let CountdownDefaultConfig = {
         countdownDeferred: 0,
         stopOnBlur: true,
@@ -115,6 +118,7 @@
             this._setBreakpoint();
 
             const delta_days = Math.round((this.breakpoint - now) / dm);
+
             $.each(parts, function () {
                 const part = $("<div>")
                     .addClass(`part ${this}`)
@@ -139,7 +143,7 @@
                 $("<div>").addClass("digit").appendTo(part);
 
                 if (this === "days" && delta_days >= 100) {
-                    for (let i = 0; i < String(Math.round(delta_days / 100)).length; i++) {
+                    for (let i = 0; i < Math.floor(delta_days / 100) - 2; i++) {
                         $("<div>").addClass("digit").appendTo(part);
                     }
                 }
@@ -217,7 +221,6 @@
             }
 
             d = Math.floor(left / dm);
-
             left -= d * dm;
             if (this.current.d !== d) {
                 this.current.d = d;
@@ -311,7 +314,8 @@
             let len;
             let i;
             const duration = this.duration;
-            const fontSize = this.fontSize;
+            const fontSize =
+                this.fontSize || Number.parseInt(getComputedStyle(element[0]).getPropertyValue("font-size"));
 
             const slideDigit = (digit, value) => {
                 const height = digit.height();
@@ -413,7 +417,7 @@
                 _value = `0${value}`;
             }
 
-            len = value.length;
+            len = _value.length;
 
             digits = element.find(`.${part} .digit:not(.-old-digit)`);
             digits_length = digits.length;
@@ -421,7 +425,7 @@
 
             for (i = 0; i < len; i++) {
                 digit = digits.eq(digits_length - 1).find(".digit-value");
-                digit_value = Math.floor(Number.parseInt(_value) / 10 ** i) % 10;
+                digit_value = Math.floor(Number.parseInt(value) / 10 ** i) % 10;
                 digit_current = Number.parseInt(digit.text());
 
                 digits_length--;

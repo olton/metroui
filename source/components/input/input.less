@@ -223,11 +223,22 @@
 
 .input {
     .prepend-options, .append-options {
+        [aria-hidden=true] {
+            //display: none;
+            //order: 1;
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            margin-top: -.5rem;
+        }
+        
         .options-list {
             border: none;
             border-right: 1px solid var(--input-border-color);
             height: 100%;
             border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
+            font-size: var(--input-font-size);
+            padding-right: 1rem;
         }
     }
     
