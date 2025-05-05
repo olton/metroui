@@ -70,12 +70,17 @@
                     this.open($(tabs[0]));
                 }
             }
+
+            setTimeout(() => {
+                $(window).trigger("resize");
+            });
         },
 
         _createEvents: function () {
             const that = this;
             const element = this.element;
             const o = this.options;
+            const content_holder = element.find(".content-holder").get(0);
 
             element.on(Metro.events.click, ".tabs-holder li a", function (e) {
                 const link = $(this);
@@ -94,7 +99,16 @@
                         that.open(tab[0]);
                     }
                 }
+                $(window).trigger("resize");
                 e.preventDefault();
+            });
+
+            window.addEventListener("resize", () => {
+                if (content_holder.clientWidth < content_holder.scrollWidth) {
+                    $(content_holder).addClass("scrollable");
+                } else {
+                    $(content_holder).removeClass("scrollable");
+                }
             });
         },
 

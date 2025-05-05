@@ -2,6 +2,9 @@
 
 ### 5.1.1
 + [x] Added a combined hotkeys feature. Now you can create hotkey as: `alt+1 2`
++ [x] Improved window caption buttons
++ [x] Improved `ribbon-menu` component, added scrollable feature
++ [x] Removed default transition property, update loading button
 
 ### 5.1.0
 + [x] Updated color values, each color is worked by hand.

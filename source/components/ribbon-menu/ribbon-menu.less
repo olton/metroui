@@ -104,27 +104,45 @@
 
 .ribbon-menu {
     .content-holder {
-        display: block;
-        position: relative;
-    }
-
-    .content-holder {
         background-color: var(--ribbon-menu-tab-background-active);
         border-left: none;
         border-right: none;
+        overflow-x: auto;
+        display: flex;
+        position: relative;
+        
+        &.scrollable {
+        }
+    }
 
+    .content-holder {
         .section {
-            display: block;
+            display: flex;
             padding: 4px 4px;
-            border-bottom: 1px solid var(--ribbon-menu-border-color);
+            //border-bottom: 1px solid var(--ribbon-menu-border-color);
             justify-content: flex-start;
-
+            flex-flow: row nowrap;
+            
             &.active {
                 display: flex;
             }
 
             &.non-active {
                 display: none;
+            }
+            
+            .title {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                right: 4px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 11px;
+                height: 22px;
+                border: 1px solid var(--ribbon-menu-border-color);
+                white-space: nowrap;
             }
         }
 
@@ -141,20 +159,10 @@
                 flex-basis: 100%;
             }
 
-            .title {
-                display: block;
-                position: absolute;
-                left: 0;
-                bottom: 0;
-                width: 100%;
-                line-height: 24px;
-                height: 20px;
-                font-size: 11px;
-                text-align: center;
-                border-top: 1px solid var(--ribbon-menu-border-color);
-                white-space: nowrap;
+            & > .title {
+                bottom: -4px
             }
-
+            
             .group-divider {
                 display: block;
                 position: relative;
@@ -186,6 +194,10 @@
     outline: none;
     position: relative;
     border-radius: 2px;
+    
+    [aria-hidden="true"] {
+        display: none;
+    }
 }
 
 .ribbon-button {
@@ -381,6 +393,10 @@
             }
         }
     }
+
+    [aria-hidden="true"] {
+        display: none;
+    }
 }
 
 .ribbon-dropdown {
@@ -404,7 +420,6 @@
         position: relative;
         background-color: inherit;
         color: inherit;
-        height: 24px;
     }
 
     li {
@@ -418,7 +433,7 @@
     }
 
     a {
-        line-height: 24px;
+        line-height: 22px;
         text-decoration: none;
         padding: 0 8px;
         border-left: 1px solid var(--ribbon-menu-border-color);
@@ -495,6 +510,10 @@
                 transform: rotate(45deg)!important;
             }
         }
+    }
+
+    [aria-hidden="true"] {
+        display: none;
     }
 }
 

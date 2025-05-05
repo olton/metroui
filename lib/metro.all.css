@@ -47376,7 +47376,6 @@ input[type=reset],
   padding: 0 var(--button-font-size);
   font-size: var(--button-font-size);
   height: var(--button-size);
-  transition: all 0.15s ease-in-out;
   background-color: var(--button-background);
   color: var(--button-color);
   border: 1px solid var(--button-border-color);
@@ -47628,38 +47627,48 @@ a.flat-button {
   box-shadow: none;
   text-decoration: none;
 }
-button .load-marker,
-input[type=button] .load-marker,
-input[type=submit] .load-marker,
-input[type=reset] .load-marker,
-.button .load-marker {
+button .loader,
+input[type=button] .loader,
+input[type=submit] .loader,
+input[type=reset] .loader,
+.button .loader {
   transform: scale(0);
   opacity: 0;
   transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-button .load-caption,
-input[type=button] .load-caption,
-input[type=submit] .load-caption,
-input[type=reset] .load-caption,
-.button .load-caption {
+button .caption,
+input[type=button] .caption,
+input[type=submit] .caption,
+input[type=reset] .caption,
+.button .caption {
   margin-left: -16px;
   transition: all 0.3s ease-in-out;
 }
-button.loading .load-marker,
-input[type=button].loading .load-marker,
-input[type=submit].loading .load-marker,
-input[type=reset].loading .load-marker,
-.button.loading .load-marker {
+button.loading,
+input[type=button].loading,
+input[type=submit].loading,
+input[type=reset].loading,
+.button.loading {
+  transition: all 0.3s ease-in-out;
+}
+button.loading .loader,
+input[type=button].loading .loader,
+input[type=submit].loading .loader,
+input[type=reset].loading .loader,
+.button.loading .loader {
   transform: scale(1);
   opacity: 1;
   animation: spin-loader 1.5s linear infinite;
 }
-button.loading .load-caption,
-input[type=button].loading .load-caption,
-input[type=submit].loading .load-caption,
-input[type=reset].loading .load-caption,
-.button.loading .load-caption {
-  margin-left: 0.5rem;
+button.loading .caption,
+input[type=button].loading .caption,
+input[type=submit].loading .caption,
+input[type=reset].loading .caption,
+.button.loading .caption {
+  margin-left: 0.3rem;
 }
 button.flat,
 .button.flat,
@@ -66331,25 +66340,37 @@ label:has(input) {
   color: var(--ribbon-menu-tab-color-static);
 }
 .ribbon-menu .content-holder {
-  display: block;
-  position: relative;
-}
-.ribbon-menu .content-holder {
   background-color: var(--ribbon-menu-tab-background-active);
   border-left: none;
   border-right: none;
+  overflow-x: auto;
+  display: flex;
+  position: relative;
 }
 .ribbon-menu .content-holder .section {
-  display: block;
+  display: flex;
   padding: 4px 4px;
-  border-bottom: 1px solid var(--ribbon-menu-border-color);
   justify-content: flex-start;
+  flex-flow: row nowrap;
 }
 .ribbon-menu .content-holder .section.active {
   display: flex;
 }
 .ribbon-menu .content-holder .section.non-active {
   display: none;
+}
+.ribbon-menu .content-holder .section .title {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  height: 22px;
+  border: 1px solid var(--ribbon-menu-border-color);
+  white-space: nowrap;
 }
 .ribbon-menu .content-holder .group {
   padding: 0 4px 24px;
@@ -66363,18 +66384,8 @@ label:has(input) {
 .ribbon-menu .content-holder .group:nth-child(1):last-child {
   flex-basis: 100%;
 }
-.ribbon-menu .content-holder .group .title {
-  display: block;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  line-height: 24px;
-  height: 20px;
-  font-size: 11px;
-  text-align: center;
-  border-top: 1px solid var(--ribbon-menu-border-color);
-  white-space: nowrap;
+.ribbon-menu .content-holder .group > .title {
+  bottom: -4px;
 }
 .ribbon-menu .content-holder .group .group-divider {
   display: block;
@@ -66404,6 +66415,12 @@ label:has(input) {
   outline: none;
   position: relative;
   border-radius: 2px;
+}
+.ribbon-button [aria-hidden=true],
+.ribbon-tool-button [aria-hidden=true],
+.ribbon-button-dropdown [aria-hidden=true],
+.ribbon-icon-button [aria-hidden=true] {
+  display: none;
 }
 .ribbon-button {
   height: auto;
@@ -66573,6 +66590,9 @@ label:has(input) {
   border-color: transparent transparent var(--ribbon-menu-button-color) transparent;
   z-index: 1;
 }
+.ribbon-split-button [aria-hidden=true] {
+  display: none;
+}
 .ribbon-dropdown {
   list-style: none inside;
   margin: 0;
@@ -66598,7 +66618,6 @@ label:has(input) {
   position: relative;
   background-color: inherit;
   color: inherit;
-  height: 24px;
 }
 .ribbon-dropdown li {
   border: 1px solid transparent;
@@ -66610,7 +66629,7 @@ label:has(input) {
   background-color: var(--ribbon-menu-button-background);
 }
 .ribbon-dropdown a {
-  line-height: 24px;
+  line-height: 22px;
   text-decoration: none;
   padding: 0 8px;
   border-left: 1px solid var(--ribbon-menu-border-color);
@@ -66671,6 +66690,9 @@ label:has(input) {
 }
 .ribbon-dropdown .dropdown-toggle.active-toggle::before {
   transform: rotate(45deg) !important;
+}
+.ribbon-dropdown [aria-hidden=true] {
+  display: none;
 }
 .ribbon-toggle-group {
   background-color: var(--ribbon-menu-background);
@@ -74701,6 +74723,7 @@ body.vegas-container > .vegas-slide {
   --window-border-color: #f3f3f3;
   --window-background: #fff;
   --window-color: #191919;
+  --window-button-size: 24px;
   --window-caption-color: #191919;
   --window-scrollbar-thumb-color: #a8a8a8;
   --window-scrollbar-track-color: #f1f1f1;
@@ -74784,13 +74807,13 @@ body.vegas-container > .vegas-slide {
   padding-left: 0;
 }
 .window-caption .buttons {
-  height: 100%;
+  height: var(--window-button-size);
   margin-left: auto;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
-  margin-right: 2px;
-  margin-top: 2px;
+  margin-right: 4px;
+  gap: 2px;
 }
 .window-caption .btn-custom:focus,
 .window-caption .btn-custom:active {
@@ -74807,6 +74830,13 @@ body.vegas-container > .vegas-slide {
 }
 .window-caption .buttons .sys-button:active {
   background-color: var(--window-sys-button-backgroud-hover);
+}
+.window-caption .buttons .btn-min,
+.window-caption .buttons .btn-max,
+.window-caption .buttons .btn-close {
+  height: var(--window-button-size) !important;
+  width: var(--window-button-size) !important;
+  padding: 0 !important;
 }
 .window-caption .buttons .btn-min::before,
 .window-caption .buttons .btn-max::before,
@@ -74828,6 +74858,7 @@ body.vegas-container > .vegas-slide {
   min-width: 34px;
   width: auto;
   flex-shrink: 0;
+  height: var(--window-button-size) !important;
 }
 .window-caption .buttons .btn-close:hover {
   background-color: var(--window-close-button-backgroud-hover);

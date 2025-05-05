@@ -32,6 +32,7 @@
         <div class="example">
             <button class="button primary">Primary</button>
             <button class="button secondary">Secondary</button>
+            <button class="button tertiary">Tertiary</button>
             <button class="button success">Success</button>
             <button class="button alert">Alert</button>
             <button class="button warning">Warning</button>
@@ -43,6 +44,7 @@
         <div class="example">
             <button class="button primary outline">Primary</button>
             <button class="button secondary outline">Secondary</button>
+            <button class="button tertiary outline">Tertiary</button>
             <button class="button success outline">Success</button>
             <button class="button alert outline">Alert</button>
             <button class="button warning outline">Warning</button>
@@ -54,6 +56,10 @@
         <div class="example">
             <button class="button"><span class="mif-checkmark"></span><span>Font</span></button>
             <button id="MACHINE" class="button success cycle mini outline mr-1" data-machine="mrdo"><span class="icon mif-gamepad"></span></button>
+            <button class="button" onclick="$(this).toggleClass('loading')">
+                <span class="loader"><span class="mif-spinner3"></span></span>
+                <span class="caption">Load Data</span>
+            </button>
         </div>
 
         <div class="example d-flex flex-justify-content-between">

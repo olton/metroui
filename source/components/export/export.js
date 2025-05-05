@@ -132,10 +132,6 @@
     };
 
     Metro.export = Export.init();
-
-    if (globalThis.METRO_GLOBAL_COMMON === true) {
-        globalThis.Export = Metro.export;
-    }
 })(Metro, Dom);
 
 // TODO: Add export from any data types
