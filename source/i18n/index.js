@@ -1,4 +1,12 @@
 import "./en.js";
-import "./ua.js";
+import "./uk.js";
+import "./pt.js";
 import "./pt-BR.js";
+import "./es.js";
 import "./es-ES.js";
+import "./de.js";
+import "./fr.js";
+import "./it.js";
+import "./zh.js";
+import "./hi.js";
+import "./pl.js";

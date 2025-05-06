@@ -56,7 +56,10 @@
             188: ",",
             190: ".",
             191: "/",
-            224: "meta",
+            91: "meta", // Левая клавиша Win
+            92: "meta", // Правая клавиша Win
+            93: "meta", // Контекстное меню
+            224: "meta", // Meta в Firefox
         },
 
         shiftNums: {
@@ -126,17 +129,67 @@
         pendingTimeout: 1000,
         pendingTimer: null,
 
+        normalizeKey: (key) => {
+            // Если ключ содержит пробел (составной хоткей)
+            if (key.includes(" ")) {
+                const parts = key.split(" ");
+                return parts.map(Hotkey.normalizeKey).join(" ");
+            }
+
+            // Если ключ не содержит "+", это простая клавиша
+            if (!key.includes("+")) {
+                return key;
+            }
+
+            // Разделяем ключ на модификаторы и основную клавишу
+            const parts = key.split("+");
+            const mainKey = parts.pop(); // Последняя часть - основная клавиша
+            const modifiers = parts.filter((mod) => ["alt", "ctrl", "meta", "shift"].includes(mod));
+
+            // Сортируем модификаторы в фиксированном порядке
+            modifiers.sort((a, b) => {
+                const order = { alt: 1, ctrl: 2, meta: 3, shift: 4 };
+                return order[a] - order[b];
+            });
+
+            // Собираем ключ обратно в нормализованном порядке
+            return modifiers.length ? `${modifiers.join("+")}+${mainKey}` : mainKey;
+        },
+
         getKey: (e) => {
             let key;
             const k = e.keyCode;
             const char = String.fromCharCode(k).toLowerCase();
-            if (e.shiftKey) {
+
+            // Проверка для клавиш Meta (Windows/Command)
+            if ([91, 92, 93, 224].includes(k)) {
+                // Для клавиш Meta возвращаем только "meta"
+                key = "meta";
+            } else if (k === 18) {
+                // Для клавиши Alt возвращаем только "alt"
+                key = "alt";
+            } else if (k === 17) {
+                // Для клавиши Ctrl возвращаем только "ctrl"
+                key = "ctrl";
+            } else if (k === 16) {
+                // Для клавиши Shift возвращаем только "shift"
+                key = "shift";
+            } else if (e.shiftKey) {
                 key = Hotkey.shiftNums[char] ? Hotkey.shiftNums[char] : char;
             } else {
                 key = Hotkey.specialKeys[k] === undefined ? char : Hotkey.specialKeys[k];
             }
 
-            return Hotkey.getModifier(e).length ? `${Hotkey.getModifier(e).join("+")}+${key}` : key;
+            // Получаем модификаторы
+            const modifiers = Hotkey.getModifier(e);
+
+            // Если ключ уже является модификатором и он присутствует в списке модификаторов,
+            // не дублируем его в результате
+            if (["alt", "ctrl", "meta", "shift"].includes(key) && modifiers.includes(key)) {
+                return modifiers.join("+");
+            }
+
+            return modifiers.length ? `${modifiers.join("+")}+${key}` : key;
         },
 
         getModifier: (e) => {
@@ -144,8 +197,11 @@
             if (e.altKey) {
                 m.push("alt");
             }
-            if (e.ctrlKey || e.metaKey) {
+            if (e.ctrlKey) {
                 m.push("ctrl");
+            }
+            if (e.metaKey) {
+                m.push("meta");
             }
             if (e.shiftKey) {
                 m.push("shift");
@@ -202,48 +258,110 @@
         },
     };
 
-    function bindKey(key, fn) {
-        return this.each(function () {
-            $(this).on(`${Metro.events.keydown}.hotkey-method-${key}`, function (e) {
-                if (e.repeat) return;
+    function hotkeyHandler(e) {
+        const key = Hotkey.getKey(e);
+        const normalizedKey = Hotkey.normalizeKey(key);
 
-                const _key = Hotkey.getKey(e);
-                const el = $(this);
-                const href = `${el.attr("href")}`;
+        // Перевіряємо, чи є вже очікування для комбінованого хоткея
+        if (Hotkey.pendingKey !== null) {
+            // Шукаємо комбінований ключ
+            const chordKey = Hotkey.createChordKey(Hotkey.pendingKey, normalizedKey);
 
-                // Перевіряємо, чи це комбінований хоткей
-                if (key.includes(" ")) {
-                    const keyParts = key.split(" ");
-
-                    // Якщо ми вже очікуємо другу частину
-                    if (Hotkey.pendingKey === keyParts[0] && _key === keyParts[1]) {
+            // Проходим по всем хоткеям и ищем соответствующий
+            for (const hotkeyName in Metro.hotkeys) {
+                if (Hotkey.normalizeKey(hotkeyName) === chordKey) {
+                    if (Hotkey.executeHotkeyAction(Metro.hotkeys[hotkeyName], e)) {
                         Hotkey.clearPending();
+                        return;
+                    }
+                }
+            }
+        }
 
-                        // Виконуємо дію
-                        if (el.is("a")) {
-                            if (href && href.trim() !== "#") {
-                                globalThis.location.href = href;
-                            }
+        // Перевіряємо, чи поточний ключ є першою частиною комбінованого хоткея
+        const isPartOfChord = Object.keys(Metro.hotkeys).some((hotkey) => {
+            const parts = hotkey.split(" ");
+            return parts.length > 1 && Hotkey.normalizeKey(parts[0]) === normalizedKey;
+        });
+
+        // Якщо ключ є частиною комбінованого хоткея, встановлюємо очікування
+        if (isPartOfChord) {
+            Hotkey.setPending(normalizedKey);
+        }
+
+        // Перевіряємо, чи є для поточного ключа окремий хоткей
+        for (const hotkeyName in Metro.hotkeys) {
+            if (!hotkeyName.includes(" ") && Hotkey.normalizeKey(hotkeyName) === normalizedKey) {
+                Hotkey.executeHotkeyAction(Metro.hotkeys[hotkeyName], e);
+                return;
+            }
+        }
+    }
+
+    function bindKey(key, fn) {
+        const normalizedKey = Hotkey.normalizeKey(key);
+
+        return this.each(function () {
+            const el = $(this);
+            const isInputElement = el.is("input, textarea") || el.attr("contenteditable") === "true";
+
+            // Для елементів введення використовуємо локальний обробник
+            if (isInputElement) {
+                const wrappedHandler = (e, pressedKey) => {
+                    Metro.utils.exec(fn, [e, pressedKey, key], el[0]);
+                };
+
+                el.on(`${Metro.events.keydown}.hotkey-data-${key}`, (e) => {
+                    const pressedKey = Hotkey.getKey(e);
+                    const normalizedPressedKey = Hotkey.normalizeKey(pressedKey);
+
+                    // Перевірка на очікування комбінованого хоткею
+                    if (Hotkey.pendingKey !== null) {
+                        const chordKey = Hotkey.createChordKey(Hotkey.pendingKey, normalizedPressedKey);
+
+                        if (normalizedKey === chordKey) {
+                            Hotkey.clearPending();
+                            e.preventDefault();
+                            wrappedHandler(e, pressedKey);
+                            return;
                         }
+                    }
 
-                        Metro.utils.exec(fn, [e, _key, key], this);
+                    // Перевірка на першу частину комбінованого хоткею
+                    if (normalizedKey.includes(" ")) {
+                        const keyParts = normalizedKey.split(" ");
+                        if (normalizedPressedKey === Hotkey.normalizeKey(keyParts[0])) {
+                            Hotkey.setPending(normalizedPressedKey);
+                            return;
+                        }
+                    }
+
+                    // Обробка звичайного хоткею
+                    if (normalizedKey === normalizedPressedKey) {
                         e.preventDefault();
+                        wrappedHandler(e, pressedKey);
                     }
-                    return;
-                }
-
-                if (key !== _key) {
-                    return;
-                }
-
-                if (el.is("a")) {
-                    if (href && href.trim() !== "#") {
-                        globalThis.location.href = href;
+                });
+            }
+            // Для решти елементів реєструємо глобальний хоткей
+            else {
+                // Обробник для глобального хоткею
+                const hotkeyHandler = (e) => {
+                    if (e.repeat && !el.attr("data-repeat")) {
+                        return false;
                     }
-                }
+                    e.preventDefault();
+                    Hotkey.executeHotkeyAction(normalizedKey, e);
+                    return true;
+                };
 
-                Metro.utils.exec(fn, [e, _key, key], this);
-            });
+                // Реєструємо хоткей у глобальному списку
+                if (!Metro.hotkeys) Metro.hotkeys = {};
+                Metro.hotkeys[key] = [el, hotkeyHandler];
+
+                // Додаємо атрибут для інформаційних цілей
+                el.attr("data-hotkey", key);
+            }
         });
     }
 
@@ -253,35 +371,5 @@
         globalThis.jQuery.fn.hotkey = bindKey;
     }
 
-    $(document).on(`${Metro.events.keydown}.hotkey-data`, (e) => {
-        const key = Hotkey.getKey(e);
-
-        // Перевіряємо, чи є вже очікування для комбінованого хоткея
-        if (Hotkey.pendingKey !== null) {
-            // Шукаємо комбінований ключ
-            const chordKey = Hotkey.createChordKey(Hotkey.pendingKey, key);
-
-            // Якщо знайдено комбінований хоткей
-            if (Metro.utils.keyInObject(Metro.hotkeys, chordKey)) {
-                if (Hotkey.executeHotkeyAction(Metro.hotkeys[chordKey], e)) {
-                    Hotkey.clearPending();
-                    return;
-                }
-            }
-            // Якщо другої частини комбінації не знайдено, продовжуємо обробку поточного ключа
-        }
-
-        // Перевіряємо, чи поточний ключ є першою частиною комбінованого хоткея
-        const isPartOfChord = Hotkey.isPartOfChordKey(key);
-
-        // Якщо ключ є частиною комбінованого хоткея, встановлюємо очікування
-        if (isPartOfChord) {
-            Hotkey.setPending(key);
-        }
-
-        // Перевіряємо, чи є для поточного ключа окремий хоткей
-        if (Metro.utils.keyInObject(Metro.hotkeys, key)) {
-            Hotkey.executeHotkeyAction(Metro.hotkeys[key], e);
-        }
-    });
+    $(document).on(`${Metro.events.keydown}.hotkey-data`, hotkeyHandler);
 })(Metro, Dom);
