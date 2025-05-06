@@ -3,8 +3,7 @@
 ### 5.1.2
 + [x] Added new languages for `i18n` component: `de`, `es`, `fr`, `hi`, `it`, `pl`, `pt`, `zh`
 + [x] Ukrainian language for `i18n` component renamed to `uk`
-+ [x] Updated `hotkey` component, now you can use an arbitrary order of defining special keys: `ctrl+shift+alt+f`
-+ [x] Updated `hotkey` component, added handler for `windows`/`command` key
++ [x] Updated `hotkey` component: arbitrary order of special keys: `ctrl+shift+alt+f`, added handler for `windows`/`command` key
 
 ### 5.1.1
 + [x] Added a combined hotkeys feature. Now you can create hotkey as: `alt+1 2`
