@@ -69,7 +69,8 @@
         label_send: "भेजें",
         label_accept: "स्वीकार करें",
         label_cookies_title: "यह साइट कुकीज़ का उपयोग करती है",
-        label_cookies_text: "यह वेबसाइट यह सुनिश्चित करने के लिए कुकीज़ का उपयोग करती है कि आपको हमारी वेबसाइट पर सबसे अच्छा अनुभव मिले।",
+        label_cookies_text:
+            "यह वेबसाइट यह सुनिश्चित करने के लिए कुकीज़ का उपयोग करती है कि आपको हमारी वेबसाइट पर सबसे अच्छा अनुभव मिले।",
         label_choose_file: "फ़ाइलें चुनें",
         label_drop_file: "यहां क्लिक करें या फ़ाइलें छोड़ें",
         label_files_selected: "{n} फ़ाइलें चुनी गईं",
@@ -110,6 +111,7 @@
         label_sell: "बेचें",
         label_details: "विवरण",
         label_sorting: "छंटाई",
+        label_finish: "Finish",
 
         label_on: "चालू",
         label_off: "बंद",

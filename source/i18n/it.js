@@ -110,6 +110,7 @@
         label_sell: "Vendi",
         label_details: "Dettagli",
         label_sorting: "Ordinamento",
+        label_finish: "Finish",
 
         label_on: "acceso",
         label_off: "spento",

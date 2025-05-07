@@ -8,8 +8,8 @@
         effectFunc: "linear",
         duration: 200,
 
-        controlPrev: "🡐",
-        controlNext: "🡒",
+        controlPrev: "←",
+        controlNext: "→",
         controlTitle: "Master, page $1 of $2",
         backgroundImage: "",
 

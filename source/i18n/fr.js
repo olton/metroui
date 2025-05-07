@@ -110,6 +110,7 @@
         label_sell: "Vendre",
         label_details: "Détails",
         label_sorting: "Tri",
+        label_finish: "Finish",
 
         label_on: "activé",
         label_off: "désactivé",

@@ -110,6 +110,7 @@
         label_sell: "出售",
         label_details: "详情",
         label_sorting: "排序",
+        label_finish: "Finish",
 
         label_on: "开",
         label_off: "关",

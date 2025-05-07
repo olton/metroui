@@ -152,5 +152,6 @@ import "./viewport-check/index.js";
 import "./wheelpicker/index.js";
 import "./window/index.js";
 import "./wizard/index.js";
+import "./wizard-classic/index.js";
 import "./working-tree/index.js";
 import "./drop-menu/index.js";

@@ -110,6 +110,7 @@
         label_sell: "Vender",
         label_details: "Detalhes",
         label_sorting: "Ordenar",
+        label_finish: "Finish",
 
         label_on: "lig",
         label_off: "deslig",

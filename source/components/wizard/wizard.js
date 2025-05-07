@@ -7,8 +7,8 @@
         start: 1,
         finish: 0,
         iconHelp: "💡",
-        iconPrev: "🡐",
-        iconNext: "🡒",
+        iconPrev: "←",
+        iconNext: "→",
         iconFinish: "✔",
 
         buttonMode: "cycle", // default, cycle, square

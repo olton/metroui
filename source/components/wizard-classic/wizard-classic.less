@@ -1,0 +1,75 @@
+@import "../../include/vars";
+
+:root {
+    --wizard-classic-border-color: #f3f3f3;
+    --wizard-classic-background: #ffffff;
+    --wizard-classic-color: #191919;
+}
+
+.dark-side {
+    
+}
+
+.wizard-classic {
+    height: 300px;
+    width: max(100%, 300px);
+    border: 1px solid var(--wizard-classic-border-color);
+    border-radius: 6px;
+    background-color: var(--wizard-classic-background);
+    display: flex;
+    flex-direction: column;
+    color: var(--wizard-classic-color);
+    
+    .wizard-pages {
+        display: block;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        
+        .page {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            bottom: 0;
+            transition: left .3s ease-in-out;
+            z-index: 1;
+            
+            &.active {
+                left: 0;
+                z-index: 2;
+            }
+            &.out {
+                left: -100%;
+            }
+        } 
+    }
+    
+    .wizard-actions {
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px 20px 10px 20px;
+        margin-top: auto;
+        border-top: 1px solid var(--wizard-classic-border-color);
+        gap: 4px;
+        
+        .wizard-help {
+            order: 1;
+            margin-right: auto;
+        }
+
+        .wizard-prev {
+            order: 2;
+        }
+        .wizard-next {
+            order: 3;
+        }
+        .wizard-finish {
+            order: 4;
+        }
+        .wizard-cancel {
+            order: 5;
+        }
+    }
+}

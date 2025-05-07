@@ -111,6 +111,7 @@
         label_sell: "Продати",
         label_details: "Подробиці",
         label_sorting: "Сортування",
+        label_finish: "Фініш",
 
         label_on: "увм",
         label_off: "вим",

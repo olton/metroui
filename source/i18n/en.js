@@ -110,6 +110,7 @@
         label_sell: "Sell",
         label_details: "Details",
         label_sorting: "Sorting",
+        label_finish: "Finish",
 
         label_on: "on",
         label_off: "off",

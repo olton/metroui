@@ -69,7 +69,8 @@
         label_send: "Enviar",
         label_accept: "Aceptar",
         label_cookies_title: "Este sitio utiliza cookies",
-        label_cookies_text: "Este sitio web utiliza cookies para garantizar que obtenga la mejor experiencia en nuestro sitio web.",
+        label_cookies_text:
+            "Este sitio web utiliza cookies para garantizar que obtenga la mejor experiencia en nuestro sitio web.",
         label_choose_file: "Seleccionar archivo(s)",
         label_drop_file: "Haga clic o suelte archivo(s) aquí",
         label_files_selected: "{n} archivo(s) seleccionado(s)",
@@ -110,6 +111,7 @@
         label_sell: "Vender",
         label_details: "Detalles",
         label_sorting: "Ordenar",
+        label_finish: "Finish",
 
         label_on: "encendido",
         label_off: "apagado",
