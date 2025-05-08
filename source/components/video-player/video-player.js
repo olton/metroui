@@ -30,7 +30,7 @@
         showVolume: true,
         showInfo: true,
 
-        loopIcon: "🔁",
+        loopIcon: "⮔",
         stopIcon: "⏹",
         playIcon: "▶",
         pauseIcon: "⏸",
@@ -39,7 +39,7 @@
         volumeMediumIcon: "🔉",
         volumeHighIcon: "🔊",
         screenMoreIcon: "⬜",
-        screenLessIcon: "⬚",
+        screenLessIcon: "▫️",
 
         onPlay: Metro.noop,
         onPause: Metro.noop,
@@ -104,12 +104,12 @@
             const element = this.element;
             const o = this.options;
             const video = this.video;
-            const player = $("<div>").addClass(`media-player video-player ${element[0].className}`);
+
+            const player = element.wrap("<div>").addClass(`media-player video-player ${element[0].className}`);
             const preloader = $("<div>").addClass("preloader").appendTo(player);
             const logo = $("<a>").attr("href", o.logoTarget).addClass("logo").appendTo(player);
 
-            player.insertBefore(element);
-            element.appendTo(player);
+            element.wrap("<div>").addClass("video-wrapper");
 
             $.each(["muted", "autoplay", "controls", "height", "width", "loop", "poster", "preload"], function () {
                 element.removeAttr(this);
@@ -174,7 +174,7 @@
             const o = this.options;
             const video = this.elem;
 
-            const controls = $("<div>").addClass("controls").addClass(o.clsControls).insertAfter(element);
+            const controls = $("<div>").addClass("controls").addClass(o.clsControls).appendTo(this.player);
 
             const stream = $("<div>").addClass("stream").appendTo(controls);
             const streamSlider = $("<input>").addClass("stream-slider ultra-thin cycle-marker").appendTo(stream);
@@ -306,25 +306,21 @@
             element.on("play", () => {
                 player.find(".play").html(o.pauseIcon);
                 Metro.utils.exec(o.onPlay, [video, player], element[0]);
-                this._onMouse();
             });
 
             element.on("pause", () => {
                 player.find(".play").html(o.playIcon);
                 Metro.utils.exec(o.onPause, [video, player], element[0]);
-                this._offMouse();
             });
 
             element.on("stop", () => {
                 Metro.getPlugin(this.stream, "slider").val(0);
                 Metro.utils.exec(o.onStop, [video, player], element[0]);
-                this._offMouse();
             });
 
             element.on("ended", () => {
                 Metro.getPlugin(this.stream, "slider").val(0);
                 Metro.utils.exec(o.onEnd, [video, player], element[0]);
-                this._offMouse();
             });
 
             element.on("volumechange", () => {
@@ -406,44 +402,6 @@
                 },
                 { ns: this.id },
             );
-        },
-
-        _onMouse: function () {
-            const o = this.options;
-            const player = this.player;
-
-            player.on(Metro.events.enter, () => {
-                const controls = player.find(".controls");
-                if (o.controlsHide > 0 && controls.style("display") === "none") {
-                    controls.stop(true).fadeIn(500, () => {
-                        controls.css("display", "flex");
-                    });
-                }
-            });
-
-            player.on(Metro.events.leave, () => {
-                const controls = player.find(".controls");
-                if (o.controlsHide > 0 && Number.parseInt(controls.style("opacity")) === 1) {
-                    setTimeout(() => {
-                        controls.stop(true).fadeOut(500);
-                    }, o.controlsHide);
-                }
-            });
-        },
-
-        _offMouse: function () {
-            const player = this.player;
-            const o = this.options;
-            const controls = player.find(".controls");
-
-            player.off(Metro.events.enter);
-            player.off(Metro.events.leave);
-
-            if (o.controlsHide > 0 && controls.style("display") === "none") {
-                controls.stop(true).fadeIn(500, () => {
-                    controls.css("display", "flex");
-                });
-            }
         },
 
         _toggleLoop: function () {

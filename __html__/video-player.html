@@ -5,21 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
 
-    <title>Test Video player - Metro UI :: Popular HTML, CSS and JS library</title>
+    <title>Video player - Metro UI :: Popular HTML, CSS and JS library</title>
 </head>
-<body class="cloak flex-center">
+<body class="cloak h-100-vh">
 <nav data-role="appbar">
     <span class="app-bar-item">Any</span>
     <div class="app-bar-item no-hover">
         <input type="checkbox" data-role="theme-switcher" data-state="dark"/>
     </div>
 </nav>
-    <div class="container">
-        <h1>Video player test page</h1>
-        <div class="example">
-            <video data-role="video-player" data-src="./data/ocean.mp4" data-full-screen-mode="window"></video>
-        </div>
+
+<div class="container h-100 d-flex flex-center flex-column">
+    <div class="example w-100">
+        <video data-role="video-player" 
+               data-src="./data/ocean.mp4" 
+               data-full-screen-mode="desktop"
+        ></video>
     </div>
+</div>
 
 <script src="../lib/metro.js"></script>
 <script>

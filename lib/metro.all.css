@@ -75946,9 +75946,33 @@ body.vegas-container > .vegas-slide {
   }
 }
 
-/* source/components/video-player/video-player.css */
-.video-player .controls .button {
-  border: none;
+/* source/components/video-player/video-player.less */
+:root {
+  --player-wrapper-background: #000;
+}
+.video-player {
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+}
+.video-player .video-wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-height: calc(100% - 48px);
+  background: var(--player-wrapper-background);
+  padding: 0;
+  margin-top: 4px;
+}
+.video-player .controls {
+  position: relative;
+  padding-top: 4px;
+  margin-top: auto;
+}
+.video-player.full-screen .video-wrapper {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /* source/components/window/window.less */
