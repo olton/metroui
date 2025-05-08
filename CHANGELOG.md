@@ -7,13 +7,14 @@
 + [x] Fixed icons for `wizard`
 + [x] Added component `wizard-classic`
 + [x] Minor fixes and improvements
++ [x] Fixed `i18n` component
 
 ### 5.1.1
 + [x] Added a combined hotkeys feature. Now you can create hotkey as: `alt+1 2`
 + [x] Improved window caption buttons
 + [x] Improved `ribbon-menu` component, added scrollable feature
 + [x] Removed default transition property, update loading button
-+ [x] Fix bug in `countdown` component
++ [x] Fixed bug in `countdown` component
 
 ### 5.1.0
 + [x] Updated color values, each color is worked by hand.

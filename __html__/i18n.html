@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ua">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -7,11 +7,6 @@
     <link href="../lib/icons.css" rel="stylesheet">
 
     <title>Test i18n - Metro UI :: Popular HTML, CSS and JS library</title>
-    <style>
-        body {
-            padding-top: 60px;
-        }
-    </style>
 </head>
 <body class="cloak">
 <nav data-role="appbar" class="border-bottom bd-default">
@@ -74,7 +69,7 @@
             "label_password": "Password",
             "label_form_example": "Form Example",
         },
-        "ua": {
+        "uk": {
             "label_title": "i18n  Демо",
             "label_welcome": "Ласкаво просимо до Metro UI",
             "label_user_name": "Ім'я користувача",
@@ -97,7 +92,7 @@
     function changeLanguage(lang) {
         Metro.i18n.updateUI(document, lang);
     }
-    
+
     $(function (){
         Metro.i18n.updateUI(document);
         $("#lang-select").val(Metro.i18n.language);

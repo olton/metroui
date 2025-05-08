@@ -9,9 +9,9 @@ afterAll(async () => {
     await B.bye()
 })
 
-describe("accordion.html tests", () => {
-    it("accordion.html", async () => {
-        await B.visit(`${getFileUrl(`./__html__/accordion.html`)}`)
+describe("select-{data}.html tests", () => {
+    it("select-{data}.html", async () => {
+        await B.visit(`${getFileUrl(`./__html__/select-{data}.html`)}`)
         expect(B.error).toBeNull(B.error)
     })
 })

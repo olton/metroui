@@ -586,7 +586,8 @@ import { Props } from "./props.js";
             },
 
             get(key, locale) {
-                return Metro.locales[locale][key] || "";
+                // biome-ignore lint/complexity/useOptionalChain: <explanation>
+                return Metro.locales[locale] && Metro.locales[locale][key] ? Metro.locales[locale][key] : "";
             },
 
             updateUI(from, lang) {
@@ -595,12 +596,12 @@ import { Props } from "./props.js";
                 if (!Metro.locales[_lang]) {
                     return;
                 }
-                Metro.i18n.load(lang);
-                $.html().attr("lang", lang);
+                Metro.i18n.load(_lang);
+                $.html().attr("lang", _lang);
 
                 for (const el of _from.querySelectorAll("[data-i18n]")) {
                     const key = el.getAttribute("data-i18n");
-                    el.innerHTML = Metro.i18n.get(key, lang);
+                    el.innerHTML = Metro.i18n.get(key, _lang);
                 }
             },
 

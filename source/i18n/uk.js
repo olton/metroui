@@ -1,5 +1,5 @@
 (() => {
-    Metro.i18n.add("ua", {
+    Metro.i18n.add("uk", {
         weekStart: 1,
 
         january: "Січень",
