@@ -21,6 +21,7 @@
         returnType: "value", // value or percent
         size: 0,
         label: null,
+        hideButton: false,
 
         clsSlider: "",
         clsBackside: "",
@@ -137,6 +138,10 @@
             marker.appendTo(slider);
             hint.appendTo(marker);
 
+            if (o.hideButton === true) {
+                slider.addClass("hidden-button");
+            }
+
             if (o.showMinMax === true) {
                 const min_max_wrapper = $("<div>").addClass("slider-min-max").addClass(o.clsMinMax);
                 $("<span>").addClass("slider-text-min").addClass(o.clsMin).html(o.min).appendTo(min_max_wrapper);
@@ -149,11 +154,6 @@
             }
 
             element[0].className = "";
-            if (o.copyInlineStyles === true) {
-                for (i = 0; i < element[0].style.length; i++) {
-                    slider.css(element[0].style[i], element.css(element[0].style[i]));
-                }
-            }
 
             if (element.is(":disabled")) {
                 this.disable();

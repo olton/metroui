@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
 
     <title>Test Audio player - Metro UI :: Popular HTML, CSS and JS library</title>
 </head>
-<body class="cloak flex-center">
+<body class="cloak h-100-vh">
 <nav data-role="appbar">
     <span class="app-bar-item">Any</span>
     <div class="app-bar-item-static no-hover">
@@ -17,10 +18,16 @@
         <input type="checkbox" data-role="theme-switcher" data-mode="button"/>
     </div>
 </nav>
-<div class="container">
+
+<div class="container h-100 flex-center flex-column">
     <h1>Audio-player test page</h1>
     <div>
-        <audio data-role="audio-player" data-src="./data/modem.mp3"></audio>
+        <audio data-role="audio-player"
+               data-loop-icon="<span class='mif-loop2'></span>"
+               data-play-icon="<span class='mif-play'></span>"
+               data-stop-icon="<span class='mif-stop'></span>"
+               data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        ></audio>
     </div>
 </div>
 

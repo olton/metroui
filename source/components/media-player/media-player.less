@@ -1,14 +1,32 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
+:root {
+    --player-background: #f2f3f5;
+    --player-info-background: #f2f3f5;
+    --player-info-color: #191919;
+    --player-control-background-hover: #dadbdd;
+    --player-constrol-color-hover: #191919;
+}
+
+.dark-side {
+    --player-background: #191919;
+    --player-info-background: #191919;
+    --player-info-color: #f2f3f5;
+    --player-control-background-hover: #4e5055;
+    --player-constrol-color-hover: #f2f3f5;
+}
+
 .media-player {
-    display: block;
+    display: flex;
     position: relative;
     width: 100%;
-    background: #000;
+    background: var(--player-background);
     height: auto;
     overflow: hidden;
     z-index: 1;
+    padding: 4px 9px;
+    border-radius: 20px;
 
     video {
         width: 100%;
@@ -57,7 +75,8 @@
         right: 0;
         height: auto;
         z-index: 2147483647;
-        background-color: @playerControlsBackground;
+        background-color: transparent;
+        gap: 4px;
 
         &.outside {
             position: relative;
@@ -65,11 +84,13 @@
     }
 
     .stream {
-        display: block;
-        padding: .625rem;
+        display: flex;
+        padding: 0;
         order: 5;
         width: 100%;
+        min-width: 100px;
         position: relative;
+        margin: 0;
 
         .slider {
             height: .875rem;
@@ -91,33 +112,8 @@
         }
     }
 
-    .controls > button, .info-box, .volume {
-        background-color: inherit;
-        color: @playerInactiveColor;
-        flex-shrink: 0;
-        height: 36px;
-        text-align: center;
-
-        &:hover {
-            color: @playerHoverColor;
-        }
-
-        &.active {
-            background-color: lighten(@playerControlsBackground, 30%);
-        }
-    }
-
-    .controls {
-        .button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-
     .loop {
         order: 1;
-        display: none;
     }
 
     .play {
@@ -126,21 +122,20 @@
 
     .stop {
         order: 3;
-        display: none;
     }
 
     .info-box {
         position: relative;
         width: auto;
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         order: 4;
-        background: @playerControlsBackground;
-        color: @playerHoverColor;
+        background: var(--player-info-background);
+        color: var(--player-info-color);
         padding: 0.625rem;
-        font-size: .6875rem;
-        text-align: center;
-        height: 36px;
-        flex-shrink: 1;
+        font-size: 10px;
+        flex-shrink: 0;
         white-space: nowrap;
         border: none;
     }
@@ -151,14 +146,26 @@
 
     .volume {
         order: 7;
-        width: 96px;
-        padding: 0 .625rem;
-        background: @playerControlsBackground;
-        display: none;
+        min-width: 50px;
+        padding: 0;
+        display: flex;
+        gap: 4px;
     }
 
     .full {
         order: 8;
+    }
+    
+    .loop, .stop, .play, .mute {
+        //font-size: 12px;
+        background: transparent;
+        
+        @media (hover: hover) {
+            &:hover {
+                background: var(--player-control-background-hover);
+                color: var(--player-constrol-color-hover);
+            }
+        }
     }
 }
 
@@ -185,46 +192,9 @@
     }
 }
 
-.media-player {
-    &.light {
-
-        background-color: @light;
-
-        .controls {
-            background-color: inherit;
-
-            .info-box, .volume {
-                background-color: inherit;
-                color: @dark;
-            }
-        }
-
-        .slider {
-            .buffer {
-                height: 2px!important;
-                background-color: @dark-gray-blue;
-            }
-        }
-
-        .controls > button {
-            &.active {
-                background-color: darken(@light, 10%);
-            }
-        }
-    }
-}
-
 .audio-player {
     overflow: visible;
     .controls {
         position: relative;
-    }
-}
-
-@media screen and (min-width: @sm){
-    .media-player {
-        .volume, .loop, .stop {
-            display: flex;
-        }
     }
 }

@@ -1,5 +1,8 @@
 # Changelog
 
+### 5.1.3
++ [x] Improved `audio-player` component
+
 ### 5.1.2
 + [x] Added new languages for `i18n` component: `de`, `es`, `fr`, `hi`, `it`, `pl`, `pt`, `zh`
 + [x] Ukrainian language for `i18n` component renamed to `uk`

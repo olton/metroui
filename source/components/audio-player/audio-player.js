@@ -29,7 +29,7 @@
         showShuffle: true,
         showRandom: true,
 
-        loopIcon: "🔁",
+        loopIcon: "⮔",
         stopIcon: "⏹",
         playIcon: "▶",
         pauseIcon: "⏸",
@@ -171,10 +171,11 @@
             this.preloader = preloader;
 
             Metro.makePlugin(streamSlider, "slider", {
-                clsMarker: "bg-red",
+                clsMarker: "bg-dark-cyan",
                 clsHint: "bg-cyan fg-white",
                 clsComplete: "bg-cyan",
                 hint: true,
+                hideButton: true,
                 onStart: () => {
                     if (!audio.paused) audio.pause();
                 },
@@ -195,9 +196,11 @@
             }
 
             Metro.makePlugin(volumeSlider, "slider", {
-                clsMarker: "bg-red",
+                clsMarker: "bg-dark-red",
                 clsHint: "bg-cyan fg-white",
+                clsComplete: "bg-red",
                 hint: true,
+                hideButton: true,
                 value: o.volume * 100,
                 onChangeValue: (val) => {
                     audio.volume = val / 100;
@@ -215,20 +218,20 @@
             if (o.showLoop === true) {
                 loop = $("<button>")
                     .attr("type", "button")
-                    .addClass("button square loop")
+                    .addClass("medium cycle loop")
                     .html(o.loopIcon)
                     .appendTo(controls);
                 loop.addClass("active");
                 element.attr("loop", "loop");
             }
             if (o.showPlay === true) {
-                $("<button>").attr("type", "button").addClass("button square play").html(o.playIcon).appendTo(controls);
+                $("<button>").attr("type", "button").addClass("medium cycle play").html(o.playIcon).appendTo(controls);
             }
             if (o.showStop === true) {
-                $("<button>").attr("type", "button").addClass("button square stop").html(o.stopIcon).appendTo(controls);
+                $("<button>").attr("type", "button").addClass("medium cycle stop").html(o.stopIcon).appendTo(controls);
             }
             if (o.showMute === true) {
-                $("<button>").attr("type", "button").addClass("button square mute").html(o.muteIcon).appendTo(controls);
+                $("<button>").attr("type", "button").addClass("medium cycle mute").html(o.muteIcon).appendTo(controls);
             }
 
             this._setVolume();

@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'metro-ui-core';
   src:
-    url('fonts/metro-ui-core.ttf?2rur89') format('truetype'),
-    url('fonts/metro-ui-core.woff?2rur89') format('woff'),
-    url('fonts/metro-ui-core.svg?2rur89#metro-ui-core') format('svg');
+    url('fonts/metro-ui-core.ttf?r11ptb') format('truetype'),
+    url('fonts/metro-ui-core.woff?r11ptb') format('woff'),
+    url('fonts/metro-ui-core.svg?r11ptb#metro-ui-core') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -26,6 +26,9 @@
 
 .mif-dark-light:before {
   content: "\eadd";
+}
+.mif-disc:before {
+  content: "\eadf";
 }
 .mif-crown:before {
   content: "\eac2";
