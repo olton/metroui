@@ -111,7 +111,12 @@
         label_sell: "Verkaufen",
         label_details: "Details",
         label_sorting: "Sortierung",
-        label_finish: "Finish",
+        label_finish: "Beenden",
+        label_play: "Abspielen",
+        label_pause: "Pause",
+        label_stop: "Stopp",
+        label_mute: "Stummschalten",
+        label_loop: "Wiederholen",
 
         label_on: "an",
         label_off: "aus",

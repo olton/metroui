@@ -111,7 +111,12 @@
         label_sell: "Продати",
         label_details: "Подробиці",
         label_sorting: "Сортування",
-        label_finish: "Фініш",
+        label_finish: "Завершити",
+        label_play: "Відтворити",
+        label_pause: "Пауза",
+        label_stop: "Зупинити",
+        label_mute: "Без звуку",
+        label_loop: "Повторювати",
 
         label_on: "увм",
         label_off: "вим",

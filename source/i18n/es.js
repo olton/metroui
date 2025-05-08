@@ -111,10 +111,15 @@
         label_sell: "Vender",
         label_details: "Detalles",
         label_sorting: "Ordenar",
-        label_finish: "Finish",
+        label_finish: "Finalizar",
+        label_play: "Reproducir",
+        label_pause: "Pausa",
+        label_stop: "Detener",
+        label_mute: "Silenciar",
+        label_loop: "Repetir",
 
-        label_on: "encendido",
-        label_off: "apagado",
+        label_on: "enc",
+        label_off: "apa",
 
         label_rename_tab: "Renombrar pestaña",
         label_close_tab: "Cerrar pestaña",

@@ -110,7 +110,12 @@
         label_sell: "出售",
         label_details: "详情",
         label_sorting: "排序",
-        label_finish: "Finish",
+        label_finish: "完成",
+        label_play: "播放",
+        label_pause: "暂停",
+        label_stop: "停止",
+        label_mute: "静音",
+        label_loop: "循环",
 
         label_on: "开",
         label_off: "关",

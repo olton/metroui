@@ -110,10 +110,15 @@
         label_sell: "Vendre",
         label_details: "Détails",
         label_sorting: "Tri",
-        label_finish: "Finish",
+        label_finish: "Terminer",
+        label_play: "Lire",
+        label_pause: "Pause",
+        label_stop: "Arrêter",
+        label_mute: "Muet",
+        label_loop: "Boucle",
 
-        label_on: "activé",
-        label_off: "désactivé",
+        label_on: "act",
+        label_off: "dés",
 
         label_rename_tab: "Renommer l'onglet",
         label_close_tab: "Fermer l'onglet",

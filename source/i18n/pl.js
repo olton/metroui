@@ -110,10 +110,15 @@
         label_sell: "Sprzedaj",
         label_details: "Szczegóły",
         label_sorting: "Sortowanie",
-        label_finish: "Finish",
+        label_finish: "Zakończ",
+        label_play: "Odtwórz",
+        label_pause: "Pauza",
+        label_stop: "Zatrzymaj",
+        label_mute: "Wycisz",
+        label_loop: "Zapętl",
 
-        label_on: "włączony",
-        label_off: "wyłączony",
+        label_on: "włą",
+        label_off: "wył",
 
         label_rename_tab: "Zmień nazwę karty",
         label_close_tab: "Zamknij kartę",

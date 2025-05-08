@@ -111,7 +111,12 @@
         label_sell: "बेचें",
         label_details: "विवरण",
         label_sorting: "छंटाई",
-        label_finish: "Finish",
+        label_finish: "समाप्त करें",
+        label_play: "चलाएं",
+        label_pause: "रोकें",
+        label_stop: "बंद करें",
+        label_mute: "म्यूट करें",
+        label_loop: "दोहराएं",
 
         label_on: "चालू",
         label_off: "बंद",

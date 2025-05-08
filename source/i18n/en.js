@@ -111,6 +111,11 @@
         label_details: "Details",
         label_sorting: "Sorting",
         label_finish: "Finish",
+        label_play: "Play",
+        label_pause: "Pause",
+        label_stop: "Stop",
+        label_mute: "Mute",
+        label_loop: "Loop",
 
         label_on: "on",
         label_off: "off",

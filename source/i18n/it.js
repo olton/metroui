@@ -110,10 +110,15 @@
         label_sell: "Vendi",
         label_details: "Dettagli",
         label_sorting: "Ordinamento",
-        label_finish: "Finish",
+        label_finish: "Termina",
+        label_play: "Riproduci",
+        label_pause: "Pausa",
+        label_stop: "Arresta",
+        label_mute: "Silenzia",
+        label_loop: "Ripeti",
 
-        label_on: "acceso",
-        label_off: "spento",
+        label_on: "acc",
+        label_off: "spe",
 
         label_rename_tab: "Rinomina scheda",
         label_close_tab: "Chiudi scheda",

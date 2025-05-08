@@ -110,10 +110,15 @@
         label_sell: "Vender",
         label_details: "Detalhes",
         label_sorting: "Ordenar",
-        label_finish: "Finish",
+        label_finish: "Finalizar",
+        label_play: "Reproduzir",
+        label_pause: "Pausar",
+        label_stop: "Parar",
+        label_mute: "Silenciar",
+        label_loop: "Repetir",
 
         label_on: "lig",
-        label_off: "deslig",
+        label_off: "des",
 
         label_rename_tab: "Renomear aba",
         label_close_tab: "Fechar aba",

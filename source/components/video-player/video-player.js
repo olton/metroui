@@ -234,14 +234,30 @@
                 loop = $("<button>")
                     .attr("type", "button")
                     .addClass("button square loop")
+                    .attr("title", this.strings.label_loop)
                     .html(o.loopIcon)
                     .appendTo(controls);
             if (o.showPlay === true)
-                $("<button>").attr("type", "button").addClass("button square play").html(o.playIcon).appendTo(controls);
+                $("<button>")
+                    .attr("type", "button")
+                    .addClass("button square play")
+                    .attr("title", this.strings.label_play)
+                    .html(o.playIcon)
+                    .appendTo(controls);
             if (o.showStop === true)
-                $("<button>").attr("type", "button").addClass("button square stop").html(o.stopIcon).appendTo(controls);
+                $("<button>")
+                    .attr("type", "button")
+                    .addClass("button square stop")
+                    .attr("title", this.strings.label_stop)
+                    .html(o.stopIcon)
+                    .appendTo(controls);
             if (o.showMute === true)
-                $("<button>").attr("type", "button").addClass("button square mute").html(o.muteIcon).appendTo(controls);
+                $("<button>")
+                    .attr("type", "button")
+                    .addClass("button square mute")
+                    .attr("title", this.strings.label_mute)
+                    .html(o.muteIcon)
+                    .appendTo(controls);
             if (o.showFull === true)
                 $("<button>")
                     .attr("type", "button")
