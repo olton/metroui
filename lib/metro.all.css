@@ -50962,6 +50962,12 @@ button:has(.badge.corner),
   position: relative;
 }
 
+/* source/components/audio-player/audio-player.less */
+.audio-player {
+  width: auto;
+  display: inline-flex;
+}
+
 /* source/components/badges/badges.less */
 :root {
   --badge-background: #F8F8F8;
