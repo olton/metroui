@@ -22,7 +22,8 @@
             this._super(elem, options, AudioButtonDefaultConfig, {
                 audio: null,
                 canPlay: null,
-                id: Metro.utils.elementId("audioButton"),
+                id: null,
+                playing: false,
             });
 
             return this;
@@ -30,6 +31,8 @@
 
         _create: function () {
             const element = this.element;
+
+            this.id = Hooks.useId(element);
 
             this._createStructure();
             this._createEvents();
@@ -55,6 +58,7 @@
             });
 
             audio.addEventListener("ended", () => {
+                this.playing = false;
                 this._fireEvent("audioEnd", {
                     src: o.audioSrc,
                     audio: audio,
@@ -75,7 +79,13 @@
             const o = this.options;
             const audio = this.audio;
 
+            if (this.playing) {
+                this.stop();
+                return;
+            }
+
             if (o.audioSrc !== "" && this.audio.duration && this.canPlay) {
+                this.playing = true;
                 this._fireEvent("audioStart", {
                     src: o.audioSrc,
                     audio: audio,
@@ -93,6 +103,8 @@
             const element = this.element;
             const o = this.options;
             const audio = this.audio;
+
+            this.playing = false;
 
             audio.pause();
             audio.currentTime = 0;

@@ -169,6 +169,7 @@ each(@normalColors, {
     @activeColor: "sat-@{value}";
     
     .pagination.@{value} {
+        background: transparent;
         .page-item {
             --pagination-page-item-background: @@lightColor;
             --pagination-page-item-color: @@activeColor;

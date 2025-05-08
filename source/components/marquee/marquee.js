@@ -14,6 +14,7 @@
         accentPause: 2000,
         firstPause: 1000,
         stopOnHover: true,
+        splitBy: "\n",
 
         clsMarquee: "",
         clsMarqueeItem: "",
@@ -65,7 +66,7 @@
 
             const items = element
                 .html()
-                .split("\n")
+                .split(o.splitBy)
                 .map((a) => a.trim())
                 .filter((a) => a.length);
             const itemsFromOptions = Metro.utils.isObject(o.items) || [];

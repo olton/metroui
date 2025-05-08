@@ -188,16 +188,15 @@ input[type="reset"],
         align-items: center;
         justify-content: center;
     }
-    .caption {
-        margin-left: -16px;
+    .loader + .caption {
         transition: @transition-base;
+        margin-left: -16px;
     }
     &.loading {
         transition: @transition-base;
         .loader {
             transform: scale(1);
             opacity: 1;
-            .animate( spin-loader 1.5s linear infinite);
         }
         .caption {
             margin-left: .3rem;
@@ -222,15 +221,6 @@ button.flat, .button.flat, .flat-button {
             background-color: var(--button-background);
             color: var(--button-color);
         }
-    }
-}
-
-@keyframes spin-loader {
-    0% {
-        .rotate(0deg);
-    }
-    100% {
-        .rotate(359deg);
     }
 }
 

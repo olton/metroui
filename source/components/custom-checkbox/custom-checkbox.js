@@ -5,8 +5,8 @@
     let CustomCheckboxDefaultConfig = {
         customCheckboxDeferred: 0,
 
-        stateOn: "☑",
-        stateOff: "☐",
+        stateOn: "✓",
+        stateOff: "✗",
 
         captionOn: "",
         captionOff: "",

@@ -86,9 +86,13 @@
                         .html(o.prepend),
                 );
             }
-            if (o.append) {
+            if (o.append || o.caption) {
                 container.append(
-                    $("<span>").addClass("caption-append").addClass(o.clsAppend).addClass(o.clsCaption).html(o.append),
+                    $("<span>")
+                        .addClass("caption-append")
+                        .addClass(o.clsAppend)
+                        .addClass(o.clsCaption)
+                        .html(o.caption ? o.caption : o.append),
                 );
             }
 

@@ -111,10 +111,56 @@ each(@accentColors, {
 })
 
 each(@normalColors, {
-    .soft-@{value} {
+    @action-color: "dark-@{value}";
+    @hover-color: darken(@@value, 10%);
+    
+    .@{value} {
+        background: @@value;
+        color: #ffffff;
+        
         .action {
-            background: darken(@@value, 10%);
+            background: @@action-color;
             color: #ffffff;
+        }
+        
+        @media (hover: hover) {
+            &:hover {
+                background: @hover-color;
+            }
+        }
+        @media (hover: none) {
+            &:active {
+                background: @hover-color;
+            }
+        }
+    }
+})
+
+each(@normalColors, {
+    @background: "light-@{value}";
+    @color: "dark-@{value}";
+    @hover-color: darken(@@value, 10%);
+    
+    .soft-@{value} {
+        background: @@background;
+        color: @@color;
+        
+        .action {
+            background: @@color;
+            color: #ffffff;
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                background: @hover-color;
+                color: #ffffff;
+            }
+        }
+        @media (hover: none) {
+            &:active {
+                background: @hover-color;
+                color: #ffffff;
+            }
         }
     }
 })

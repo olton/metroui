@@ -6,6 +6,7 @@
 + [x] Updated `hotkey` component: arbitrary order of special keys: `ctrl+shift+alt+f`, added handler for `windows`/`command` key
 + [x] Fixed icons for `wizard`
 + [x] Added component `wizard-classic`
++ [x] Minor fixes and improvements
 
 ### 5.1.1
 + [x] Added a combined hotkeys feature. Now you can create hotkey as: `alt+1 2`
