@@ -28,6 +28,7 @@
         init: function (options, elem) {
             this._super(elem, options, ClockDefaultConfig, {
                 _clockInterval: null,
+                locale: "en",
             });
 
             return this;
@@ -36,6 +37,11 @@
         _create: function () {
             const element = this.element;
             const o = this.options;
+
+            const langElement = element.closest("[lang]");
+            if (langElement.length) {
+                this.locale = langElement.attr("lang") || "en";
+            }
 
             element.addClass("clock");
             if (o.show === "column") {
@@ -70,8 +76,8 @@
             const timestamp = datetime();
             let result = "";
 
-            const date = timestamp.format(o.dateFormat);
-            const time = timestamp.format(o.timeFormat);
+            const date = timestamp.format(o.dateFormat, this.locale);
+            const time = timestamp.format(o.timeFormat, this.locale);
 
             if (o.showTime) {
                 result = `<span class="clock-time">${time}</span>`;
