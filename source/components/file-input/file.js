@@ -68,6 +68,7 @@
                 files
                     .html((o.filesSelectedTitle || this.strings.label_files_selected).replace("{n}", 0))
                     .insertAfter(caption);
+
                 button = $("<button>")
                     .addClass("button clear-button square")
                     .html(o.clearButtonIcon)
@@ -127,9 +128,9 @@
             const that = this;
             const element = this.element;
             const o = this.options;
-            const container = element.closest("label");
-            const caption = container.find(".caption");
-            const files = container.find(".files");
+            const container = element.closest(".file, .drop-zone");
+            const caption = element.siblings(".caption");
+            const files = element.siblings(".files");
             const form = element.closest("form");
 
             if (form.length) {
@@ -149,9 +150,9 @@
             element.on(Metro.events.change, function () {
                 const file_names = [];
                 let entry;
-                const files = Array.from(this.files);
+                const _files = Array.from(this.files);
 
-                for (const file of files) {
+                for (const file of _files) {
                     file_names.push(file.name);
                 }
 
@@ -181,6 +182,10 @@
             });
 
             if (o.mode !== "input") {
+                container.on(Metro.events.click, () => {
+                    element[0].click();
+                });
+
                 container.on("drag dragstart dragend dragover dragenter dragleave drop", (e) => {
                     e.preventDefault();
                 });
