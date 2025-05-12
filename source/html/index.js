@@ -1,27 +1,10 @@
-import {
-    HTML,
-    addCssRule,
-    addStyle,
-    clearViewStorageHolder,
-    createStyleElement,
-    createStyleSheet,
-    cssLoader,
-    info,
-    jsLoader,
-    render,
-    viewLoader,
-} from "@olton/html";
+import { HTML, CSS, cssLoader, info, jsLoader, render } from "@olton/html";
 
 globalThis.HTML = {
-    addStyle,
-    addCssRule,
     cssLoader,
     jsLoader,
-    viewLoader,
-    clearViewStorageHolder,
-    createStyleElement,
-    createStyleSheet,
     render,
     ...HTML,
+    ...CSS,
     info,
 };

@@ -41,7 +41,7 @@
     "browserslist": ["last 2 versions"],
     "devDependencies": {
         "@biomejs/biome": "1.9.4",
-        "@olton/latte": "^0.15.0",
+        "@olton/latte": "^0.16.0",
         "@olton/esbuild-plugin-autoprefixer": "^0.2.0",
         "@olton/esbuild-plugin-progress": "^0.3.0",
         "@olton/esbuild-plugin-unlink": "^0.2.0",
@@ -53,13 +53,13 @@
         "shx": "^0.4.0"
     },
     "dependencies": {
-        "@olton/datetime": "^3.2.3",
+        "@olton/datetime": "^3.2.4",
         "@olton/dom": "^1.5.0",
         "@olton/farbe": "^1.0.8",
         "@olton/guardian": "^0.7.2",
         "@olton/hooks": "^0.13.0",
-        "@olton/html": "^0.14.2",
-        "@olton/model": "^0.17.1",
+        "@olton/html": "^0.15.0",
+        "@olton/model": "^0.18.0",
         "@olton/router": "^0.4.0",
         "@olton/string": "^0.10.1"
     }
