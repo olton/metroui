@@ -2,7 +2,7 @@
   <h1 align="center">Metro UI</h1>
 
 <p align="center">
-    <a href="https://docs-new.metroui.org.ua/"><strong>Explore Metro UI Docs</strong></a>
+    <a href="https://v5.metroui.org.ua/"><strong>Explore Metro UI Docs</strong></a>
 </p>
 
     Sleek, intuitive, and powerful front-end framework for faster and easier web development.
