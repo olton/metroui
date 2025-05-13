@@ -534,18 +534,23 @@
         resetWith: function (val) {
             const element = this.element;
             const o = this.options;
+            const keys = ["days", "hours", "minutes", "seconds"];
+
+            this.stop();
 
             if (typeof val === "string") {
                 element.attr("data-date", val);
+                for (const key of keys) {
+                    o[key] = 0;
+                }
                 o.date = val;
             } else if (typeof val === "object") {
-                const keys = ["days", "hours", "minutes", "seconds"];
-                $.each(keys, (i, v) => {
-                    if (Metro.utils.isValue(val[v])) {
-                        element.attr(`data-${v}`, val[v]);
-                        o[v] = val[v];
-                    }
-                });
+                o.date = null;
+                for (const key of keys) {
+                    const newVal = val[key] !== undefined ? val[key] : 0;
+                    element.attr(`data-${key}`, newVal);
+                    o[key] = newVal;
+                }
             }
 
             this.reset();
