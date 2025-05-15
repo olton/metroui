@@ -1,12 +1,14 @@
-(function() {
-    'use strict';
+(() => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
 
     if (typeof Array.prototype.shuffle !== "function") {
         Array.prototype.shuffle = function () {
-            var currentIndex = this.length, temporaryValue, randomIndex;
+            let currentIndex = this.length;
+            let temporaryValue;
+            let randomIndex;
 
             while (0 !== currentIndex) {
-
                 randomIndex = Math.floor(Math.random() * currentIndex);
                 currentIndex -= 1;
 
@@ -27,11 +29,10 @@
 
     if (typeof Array.prototype.unique !== "function") {
         Array.prototype.unique = function () {
-            var a = this.concat();
-            for (var i = 0; i < a.length; ++i) {
-                for (var j = i + 1; j < a.length; ++j) {
-                    if (a[i] === a[j])
-                        a.splice(j--, 1);
+            const a = this.concat();
+            for (let i = 0; i < a.length; ++i) {
+                for (let j = i + 1; j < a.length; ++j) {
+                    if (a[i] === a[j]) a.splice(j--, 1);
                 }
             }
 
@@ -41,8 +42,9 @@
 
     if (typeof Array.prototype.pack !== "function") {
         Array.prototype.pack = function () {
-            return this.map(n => n.trim()).filter(Boolean);
+            return this.filter((value) => {
+                return value !== undefined && value !== null && `${value}`.trim() !== "";
+            });
         };
     }
-
-}());
+})();

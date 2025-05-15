@@ -1,1 +1,1 @@
-import "./image-box.js"
+import "./image-box.js";

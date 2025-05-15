@@ -22,7 +22,7 @@
 @gray:                 #ccc;
 @gray-blue:            #6a89a7;
 @gray-white:           #f5f5f5;
-@gray-mouse: #566b75;
+@gray-mouse:           #566b75;
 
 @lime:                 #AEFD6C;
 @green: #00b500;
@@ -259,36 +259,48 @@
 
 
 // Accent colors-css
-@primaryColor: #0366d6;
-@primaryColorLight: lighten(#0366d6, 15%);
-@primaryColorDark: darken(#0366d6, 5%);
-@secondaryColor: @gray-blue;
-@secondaryColorLight: lighten(@gray-blue, 15%);
-@secondaryColorDark: darken(@gray-blue, 5%);
+@primaryColor: #f75553;
+@primaryColorLight: lighten(#f75553, 15%);
+@primaryColorDark: darken(#f75553, 5%);
+
+@secondaryColor: #74290a;
+@secondaryColorLight: lighten(#74290a, 15%);
+@secondaryColorDark: darken(#74290a, 5%);
+
+@tertiaryColor: #ffbebd;
+@tertiaryColorLight: lighten(#fdd7d6, 15%);
+@tertiaryColorDark: darken(#fdd7d6, 5%);
+
 @successColor: @emerald;
 @successColorLight: lighten(@emerald, 15%);
 @successColorDark: darken(@emerald, 5%);
+
 @alertColor: @crimson;
 @alertColorLight: lighten(@crimson, 15%);
 @alertColorDark: darken(@crimson, 5%);
+
 @warningColor: @orange;
 @warningColorLight: lighten(@orange, 15%);
 @warningColorDark: darken(@orange, 5%);
+
 @yellowColor: @yellow;
 @yellowColorLight: lighten(@yellow, 15%);
 @yellowColorDark: darken(@yellow, 5%);
+
 @infoColor: #468cff;
 @infoColorLight: lighten(#468cff, 15%);
 @infoColorDark: darken(#468cff, 5%);
+
 @darkColor: lighten(@dark, 20%);
 @darkColorLight: lighten(@darkColor, 15%);
 @darkColorDark: darken(@darkColor, 5%);
+
 @lightColor: @light;
 @lightColorLight: @white;
 @lightColorDark: darken(@light, 5%);
 
-@accentColors: primary, secondary, success, alert, warning, info, dark, light;
-@buttonPredefinedTypes: primary, secondary, success, alert, warning, info, dark, light;
+@accentColors: primary, secondary, tertiary, success, alert, warning, info, dark, light;
+@buttonPredefinedTypes: primary, secondary, tertiary, success, alert, warning, info, dark, light;
 @buttonPredefinedTypesLength: length(@buttonPredefinedTypes);
 
 // Selected element

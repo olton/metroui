@@ -1,0 +1,71 @@
+name: draft-release.yml
+on:
+  push:
+    branches:
+      - master
+jobs:
+  verify:
+    name: Verify
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+
+      # Check out the current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build   
+        run: npm run build
+        
+      - name: Test
+        run: npm test
+        
+  releaseDraft:
+    name: Release draft
+    if: github.event_name != 'pull_request'
+    needs: [ verify ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+
+      # Check out the current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Get Version
+        id: get-version
+        uses: beaconbrigade/package-json-version@v0.3.2
+        with:
+          path: .
+
+      - name: Read CHANGELOG.md
+        id: changelog
+        uses: jaywcjlove/github-action-read-file@main
+        with:
+          path: CHANGELOG.md
+
+      # Remove old release drafts by using the curl request for the available releases with a draft flag
+      - name: Remove Old Release Drafts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api repos/{owner}/{repo}/releases \
+            --jq '.[] | select(.draft == true) | .id' \
+            | xargs -I '{}' gh api -X DELETE repos/{owner}/{repo}/releases/{}
+
+      # Create a new release draft which is not publicly visible and requires manual acceptance
+      - name: Create Release Draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${{ steps.get-version.outputs.version }}" \
+            --draft \
+            --title "v${{ steps.get-version.outputs.version }}" \
+            --notes "$(cat << 'EOM'
+          ${{ steps.changelog.outputs.content }}
+          EOM
+          )"

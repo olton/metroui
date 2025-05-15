@@ -1,1 +1,1 @@
-import "./input-mask.js"
+import "./input-mask.js";

@@ -1,2 +1,2 @@
-import "./splitter.js"
-import "./splitter.less"
+import "./splitter.js";
+import "./splitter.less";

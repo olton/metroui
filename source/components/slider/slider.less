@@ -54,6 +54,43 @@
         border-radius: 50%;
         padding: 0;
         transition: none;
+        width: var(--slider-thumb-size);
+        height: var(--slider-thumb-size);
+        background: var(--slider-thumb-color);
+        z-index: 4;
+        outline: none;
+        border: 2px solid var(--slider-thumb-border-color);
+        cursor: pointer;
+        overflow: visible;
+
+        &:focus {
+            .focus-show(@light-gray);
+        }
+
+        &:active {
+            .halo();
+        }
+
+        &.left-knob {
+            left: 0;
+        }
+
+        &.right-knob {
+            left: auto;
+            right: 0;
+        }
+    }
+    
+    &.hidden-button {
+        .marker {
+            opacity: 0;
+            transition: opacity .3s ease-in-out;
+        }
+        @media (hover: hover) {
+            &:hover .marker {
+                opacity: 1;
+            }
+        }
     }
     
     .backside {
@@ -73,25 +110,6 @@
         z-index: 3;
         height: .6rem;
         background-color: var(--slider-fill-color);
-    }
-
-    .marker {
-        width: var(--slider-thumb-size);
-        height: var(--slider-thumb-size);
-        background: var(--slider-thumb-color);
-        z-index: 4;
-        outline: none;
-        border: 2px solid var(--slider-thumb-border-color);
-        cursor: pointer;
-        overflow: visible;
-
-        &:focus {
-            .focus-show(@light-gray);
-        }
-
-        &:active {
-            .halo();
-        }
     }
 
     .hint {
@@ -170,17 +188,6 @@
         }
     }
 
-    .marker {
-        &.left-knob {
-            left: 0;
-        }
-
-        &.right-knob {
-            left: auto;
-            right: 0;
-        }
-    }
-
     &.range {
         .complete {
             width: 100%;
@@ -195,6 +202,10 @@
     &.ultra-thin {
         .backside, .complete, .buffer {
             height: 4px;
+        }
+        .marker {
+            width: 12px;
+            height: 12px;
         }
     }
     &.cycle-marker {

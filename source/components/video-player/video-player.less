@@ -1,0 +1,37 @@
+:root {
+    --player-wrapper-background: #000;
+}
+
+.dark-side {
+    
+}
+
+.video-player {
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+
+    .video-wrapper {
+        position: relative;
+        width: 100%;
+        height: auto;
+        max-height: calc(100% - 48px);
+        background: var(--player-wrapper-background);
+        padding: 0;
+        margin-top: 4px;
+    }
+    
+    .controls {
+        position: relative;
+        padding-top: 4px;
+        margin-top: auto;
+    }
+    
+    &.full-screen {
+        .video-wrapper {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+}

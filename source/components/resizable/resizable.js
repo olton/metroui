@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var ResizableDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    let ResizableDefaultConfig = {
         resizableDeferred: 0,
         canResize: true,
         resizeElement: ".resize-element",
@@ -14,41 +14,42 @@
         onResizeStart: Metro.noop,
         onResizeStop: Metro.noop,
         onResize: Metro.noop,
-        onResizableCreate: Metro.noop
+        onResizableCreate: Metro.noop,
     };
 
-    Metro.resizableSetup = function (options) {
+    Metro.resizableSetup = (options) => {
         ResizableDefaultConfig = $.extend({}, ResizableDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroResizableSetup"] !== "undefined") {
-        Metro.resizableSetup(globalThis["metroResizableSetup"]);
+    if (typeof globalThis.metroResizableSetup !== "undefined") {
+        Metro.resizableSetup(globalThis.metroResizableSetup);
     }
 
-    Metro.Component('resizable', {
-        init: function( options, elem ) {
+    Metro.Component("resizable", {
+        init: function (options, elem) {
             this._super(elem, options, ResizableDefaultConfig, {
                 resizer: null,
-                id: Utils.elementId("resizable")
+                id: Metro.utils.elementId("resizable"),
             });
 
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             this._createStructure();
             this._createEvents();
 
             this._fireEvent("resizable-create");
         },
 
-        _createStructure: function(){
-            var element = this.element, o = this.options;
+        _createStructure: function () {
+            const element = this.element;
+            const o = this.options;
 
             element.data("canResize", true);
             element.addClass("resizable-element");
 
-            if (Utils.isValue(o.resizeElement) && element.find(o.resizeElement).length > 0) {
+            if (Metro.utils.isValue(o.resizeElement) && element.find(o.resizeElement).length > 0) {
                 this.resizer = element.find(o.resizeElement);
             } else {
                 this.resizer = $("<span>").addClass("resize-element").appendTo(element);
@@ -57,93 +58,109 @@
             element.data("canResize", o.canResize);
         },
 
-        _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+        _createEvents: function () {
+            const element = this.element;
+            const o = this.options;
 
-            this.resizer.on(Metro.events.start, function(e){
-
-                if (element.data('canResize') === false) {
-                    return ;
+            this.resizer.on(Metro.events.start, (e) => {
+                if (element.data("canResize") === false) {
+                    return;
                 }
 
-                var startXY = Utils.pageXY(e);
-                var startWidth = parseInt(element.outerWidth());
-                var startHeight = parseInt(element.outerHeight());
-                var size = {width: startWidth, height: startHeight};
+                const startXY = Metro.utils.pageXY(e);
+                const startWidth = Number.parseInt(element.outerWidth());
+                const startHeight = Number.parseInt(element.outerHeight());
+                const size = { width: startWidth, height: startHeight };
 
                 element.addClass("stop-pointer");
 
-                that._fireEvent("resize-start", {
-                    size: size
+                this._fireEvent("resize-start", {
+                    size: size,
                 });
 
-                $(document).on(Metro.events.move, function(e){
-                    var moveXY = Utils.pageXY(e);
-                    var size = {
-                        width: startWidth + moveXY.x - startXY.x,
-                        height: startHeight + moveXY.y - startXY.y
-                    };
+                $(document).on(
+                    Metro.events.move,
+                    (e) => {
+                        const moveXY = Metro.utils.pageXY(e);
+                        const size = {
+                            width: startWidth + moveXY.x - startXY.x,
+                            height: startHeight + moveXY.y - startXY.y,
+                        };
 
-                    if (o.maxWidth > 0 && size.width > o.maxWidth) {return true;}
-                    if (o.minWidth > 0 && size.width < o.minWidth) {return true;}
+                        if (o.maxWidth > 0 && size.width > o.maxWidth) {
+                            return true;
+                        }
+                        if (o.minWidth > 0 && size.width < o.minWidth) {
+                            return true;
+                        }
 
-                    if (o.maxHeight > 0 && size.height > o.maxHeight) {return true;}
-                    if (o.minHeight > 0 && size.height < o.minHeight) {return true;}
+                        if (o.maxHeight > 0 && size.height > o.maxHeight) {
+                            return true;
+                        }
+                        if (o.minHeight > 0 && size.height < o.minHeight) {
+                            return true;
+                        }
 
-                    element.css(size);
+                        element.css(size);
 
-                    that._fireEvent("resize", {
-                        size: size
-                    })
+                        this._fireEvent("resize", {
+                            size: size,
+                        });
+                    },
+                    { ns: this.id },
+                );
 
-                }, {ns: that.id});
+                $(document).on(
+                    Metro.events.stop,
+                    () => {
+                        element.removeClass("stop-pointer");
 
-                $(document).on(Metro.events.stop, function(){
-                    element.removeClass("stop-pointer");
+                        $(document).off(Metro.events.move, { ns: this.id });
+                        $(document).off(Metro.events.stop, { ns: this.id });
 
-                    $(document).off(Metro.events.move, {ns: that.id});
-                    $(document).off(Metro.events.stop, {ns: that.id});
+                        const size = {
+                            width: Number.parseInt(element.outerWidth()),
+                            height: Number.parseInt(element.outerHeight()),
+                        };
 
-                    var size = {
-                        width: parseInt(element.outerWidth()),
-                        height: parseInt(element.outerHeight())
-                    };
-
-                    that._fireEvent("resize-stop", {
-                        size: size
-                    });
-
-                }, {ns: that.id});
+                        this._fireEvent("resize-stop", {
+                            size: size,
+                        });
+                    },
+                    { ns: this.id },
+                );
 
                 e.preventDefault();
                 e.stopPropagation();
             });
-
         },
 
-        off: function(){
+        off: function () {
             this.element.data("canResize", false);
         },
 
-        on: function(){
+        on: function () {
             this.element.data("canResize", true);
         },
 
-        changeAttribute: function(attributeName){
-            var element = this.element, o = this.options;
+        changeAttribute: function (attributeName) {
+            const element = this.element;
+            const o = this.options;
 
-            var canResize = function(){
-                o.canResize = JSON.parse(element.attr('data-can-resize')) === true;
+            const canResize = () => {
+                o.canResize = JSON.parse(element.attr("data-can-resize")) === true;
             };
 
             switch (attributeName) {
-                case "data-can-resize": canResize(); break;
+                case "data-can-resize":
+                    canResize();
+                    break;
             }
         },
 
-        destroy: function(){
+        destroy: function () {
             this.resizer.off(Metro.events.start);
             return this.element;
-        }
+        },
     });
-}(Metro, Dom));
+})(Metro, Dom);

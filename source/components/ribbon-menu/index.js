@@ -1,2 +1,2 @@
-import "./ribbon-menu.js"
-import "./ribbon-menu.less"
+import "./ribbon-menu.js";
+import "./ribbon-menu.less";

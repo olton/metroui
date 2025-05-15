@@ -1,3 +1,3 @@
-import "../../farbe/index.js"
-import "./marquee.js"
-import "./marquee.less"
+import "../../farbe/index.js";
+import "./marquee.js";
+import "./marquee.less";

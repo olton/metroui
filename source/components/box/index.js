@@ -1,1 +1,1 @@
-import "./box.less"
+import "./box.less";

@@ -1,16 +1,12 @@
-/** @format */
-
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
+
     Metro.utils = {
-        nothing: function () {},
-        noop: function () {},
+        // Deprecated, use Hooks.useId()
+        elementId: (prefix) => `${prefix}-${new Date().getTime()}${$.random(1, 1000)}`,
 
-        elementId: function (prefix) {
-            return prefix + "-" + new Date().getTime() + $.random(1, 1000);
-        },
-
-        secondsToTime: function (s) {
+        secondsToTime: (s) => {
             const days = Math.floor((s % 31536000) / 86400);
             const hours = Math.floor(((s % 31536000) % 86400) / 3600);
             const minutes = Math.floor((((s % 31536000) % 86400) % 3600) / 60);
@@ -24,22 +20,16 @@
             };
         },
 
-        secondsToFormattedString: function (time) {
-            const sec_num = parseInt(time, 10);
+        secondsToFormattedString: (time) => {
+            const sec_num = Number.parseInt(time, 10);
             const hours = Math.floor(sec_num / 3600);
             const minutes = Math.floor((sec_num - hours * 3600) / 60);
             const seconds = sec_num - hours * 3600 - minutes * 60;
 
-            return [
-                Str.lpad(hours, "0", 2),
-                Str.lpad(minutes, "0", 2),
-                Str.lpad(seconds, "0", 2),
-            ].join(":");
+            return [Str.lpad(hours, "0", 2), Str.lpad(minutes, "0", 2), Str.lpad(seconds, "0", 2)].join(":");
         },
 
-        func: function (f) {
-            return new Function("a", f);
-        },
+        func: (f) => new Function("a", f),
 
         exec: function (f, args, context) {
             let result;
@@ -56,22 +46,19 @@
                 result = func.apply(context, args);
             } catch (err) {
                 result = null;
-                if (globalThis["METRO_THROWS"] === true) {
+                if (globalThis.METRO_THROWS === true) {
                     throw err;
                 }
             }
             return result;
         },
 
-        embedUrl: function (val) {
-            if (val.indexOf("youtu.be") !== -1) {
-                val = "https://www.youtube.com/embed/" + val.split("/").pop();
+        embedUrl: (val) => {
+            let url = val;
+            if (url.indexOf("youtu.be") !== -1) {
+                url = `https://www.youtube.com/embed/${val.split("/").pop()}`;
             }
-            return (
-                "<div class='embed-container'><iframe src='" +
-                val +
-                "'></iframe></div>"
-            );
+            return `<div class='embed-container'><iframe src='${url}'></iframe></div>`;
         },
 
         isVisible: function (element) {
@@ -83,35 +70,25 @@
             );
         },
 
-        isUrl: function (val) {
-            return /^(\.\/|\.\.\/|ftp|http|https):\/\/(\w+:?\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@\-\/]))?/.test(
-                val,
-            );
-        },
+        isUrl: (val) =>
+            /^(\.\/|\.\.\/|ftp|http|https):\/\/(\w+:?\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@\-\/]))?/.test(val),
 
-        isTag: function (val) {
-            return /^<\/?[\w\s="\/.':;#-\/?]+>/gi.test(val);
-        },
+        isTag: (val) => /^<\/?[\w\s="\/.':;#-\/?]+>/gi.test(val),
 
-        isEmbedObject: function (val) {
+        isEmbedObject: (val) => {
             const embed = ["iframe", "object", "embed", "video"];
             let result = false;
             $.each(embed, function () {
                 if (typeof val === "string" && val.toLowerCase() === this) {
                     result = true;
-                } else if (
-                    val.nodeType !== undefined &&
-                    val.tagName.toLowerCase() === this
-                ) {
+                } else if (val.nodeType !== undefined && val.tagName.toLowerCase() === this) {
                     result = true;
                 }
             });
             return result;
         },
 
-        isVideoUrl: function (val) {
-            return /youtu\.be|youtube|twitch|vimeo/gi.test(val);
-        },
+        isVideoUrl: (val) => /youtu\.be|youtube|twitch|vimeo/gi.test(val),
 
         isDate: function (val, format, locale = "en-US") {
             let result;
@@ -121,26 +98,18 @@
             }
 
             try {
-                result = format
-                    ? Datetime.from(val, format, locale)
-                    : datetime(val);
+                result = format ? Datetime.from(val, format, locale) : datetime(val);
                 return Datetime.isDatetime(result);
             } catch (e) {
                 return false;
             }
         },
 
-        isDateObject: function (v) {
-            return typeof v === "object" && v.getMonth !== undefined;
-        },
+        isDateObject: (v) => typeof v === "object" && v.getMonth !== undefined,
 
-        isInt: function (n) {
-            return !isNaN(n) && +n % 1 === 0;
-        },
+        isInt: (n) => !Number.isNaN(n) && +n % 1 === 0,
 
-        isFloat: function (n) {
-            return (!isNaN(n) && +n % 1 !== 0) || /^\d*\.\d+$/.test(n);
-        },
+        isFloat: (n) => (!Number.isNaN(n) && +n % 1 !== 0) || /^\d*\.\d+$/.test(n),
 
         isFunc: function (f) {
             return this.isType(f, "function");
@@ -150,28 +119,27 @@
             return this.isType(o, "object");
         },
 
-        isObject2: function (o) {
-            return typeof o === "object" && !Array.isArray(o);
-        },
+        isObject2: (o) => typeof o === "object" && !Array.isArray(o),
 
-        isType: function (o, t) {
+        isType: function (o, t = "undefined") {
             if (!this.isValue(o)) {
                 return false;
             }
 
+            // biome-ignore lint/suspicious/useValidTypeof: <explanation>
             if (typeof o === t) {
                 return o;
             }
 
-            if (("" + t).toLowerCase() === "tag" && this.isTag(o)) {
+            if (`${t}`.toLowerCase() === "tag" && this.isTag(o)) {
                 return o;
             }
 
-            if (("" + t).toLowerCase() === "url" && this.isUrl(o)) {
+            if (`${t}`.toLowerCase() === "url" && this.isUrl(o)) {
                 return o;
             }
 
-            if (("" + t).toLowerCase() === "array" && Array.isArray(o)) {
+            if (`${t}`.toLowerCase() === "array" && Array.isArray(o)) {
                 return o;
             }
 
@@ -179,6 +147,7 @@
                 return false;
             }
 
+            // biome-ignore lint/suspicious/useValidTypeof: <explanation>
             if (typeof window[o] === t) {
                 return window[o];
             }
@@ -196,37 +165,31 @@
             }
 
             const ns = o.split(".");
-            let i,
-                context = window;
+            let i;
+            let context = window;
 
             for (i = 0; i < ns.length; i++) {
                 context = context[ns[i]];
             }
 
+            // biome-ignore lint/suspicious/useValidTypeof: <explanation>
             return typeof context === t ? context : false;
         },
 
-        $: function () {
-            return globalThis["useJQuery"] ? globalThis["jQuery"] : Dom;
-        },
+        $: () => (globalThis.useJQuery ? globalThis.jQuery : Dom),
 
-        isMetroObject: function (el, type) {
-            const $el = $(el),
-                el_obj = Metro.getPlugin(el, type);
+        isMetroObject: (el, type) => {
+            const $el = $(el);
+            const el_obj = Metro.getPlugin(el, type);
 
             if ($el.length === 0) {
-                console.warn(type + " " + el + " not found!");
+                console.warn(`${type} ${el} not found!`);
                 return false;
             }
 
             if (el_obj === undefined) {
                 console.warn(
-                    "Element not contain role " +
-                        type +
-                        '! Please add attribute data-role="' +
-                        type +
-                        '" to element ' +
-                        el,
+                    `Element not contain role ${type}! Please add attribute data-role="${type}" to element ${el}`,
                 );
                 return false;
             }
@@ -234,13 +197,9 @@
             return true;
         },
 
-        isJQuery: function (el) {
-            return typeof globalThis["jQuery"] !== "undefined" && el instanceof globalThis["jQuery"];
-        },
+        isJQuery: (el) => typeof globalThis.jQuery !== "undefined" && el instanceof globalThis.jQuery,
 
-        isDom: function (el) {
-            return typeof Dom !== "undefined" && el instanceof Dom;
-        },
+        isDom: (el) => typeof Dom !== "undefined" && el instanceof Dom,
 
         isQ: function (el) {
             return this.isJQuery(el) || this.isDom(el);
@@ -248,7 +207,6 @@
 
         isOutsider: function (element) {
             const el = $(element);
-            let inViewport;
             const clone = el.clone();
 
             clone.removeAttr("data-role").css({
@@ -258,8 +216,7 @@
             });
             el.parent().append(clone);
 
-            inViewport = this.inViewport(clone[0]);
-
+            const inViewport = this.inViewport(clone[0]);
             clone.remove();
 
             return !inViewport;
@@ -271,12 +228,8 @@
             return (
                 rect.top >= 0 &&
                 rect.left >= 0 &&
-                rect.bottom <=
-                    (globalThis.innerHeight ||
-                        document.documentElement.clientHeight) &&
-                rect.right <=
-                    (globalThis.innerWidth ||
-                        document.documentElement.clientWidth)
+                rect.bottom <= (globalThis.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (globalThis.innerWidth || document.documentElement.clientWidth)
             );
         },
 
@@ -286,21 +239,19 @@
 
             return rect.right > w;
         },
-        
+
         viewportOutByHeight: function (el) {
             const rect = this.rect(el);
             const h = globalThis.innerHeight || document.documentElement.clientHeight;
 
             return rect.bottom > h;
         },
-        
+
         viewportOut: function (el) {
             return this.viewportOutByWidth(el) || this.viewportOutByHeight(el);
         },
-        
-        rect: function (el) {
-            return el.getBoundingClientRect();
-        },
+
+        rect: (el) => el.getBoundingClientRect(),
 
         getCursorPosition: function (el, e) {
             const a = this.rect(el);
@@ -318,23 +269,19 @@
             return this.getCursorPosition(el, e).y;
         },
 
-        objectLength: function (obj) {
-            return Object.keys(obj).length;
-        },
+        objectLength: (obj) => Object.keys(obj).length,
 
-        percent: function (total, part, round_value) {
+        percent: (total, part, round_value) => {
             if (total === 0) {
                 return 0;
             }
             const result = (part * 100) / total;
-            return round_value === true
-                ? Math.round(result)
-                : Math.round(result * 100) / 100;
+            return round_value === true ? Math.round(result) : Math.round(result * 100) / 100;
         },
 
-        objectShift: function (obj) {
+        objectShift: (obj) => {
             let min = 0;
-            $.each(obj, function (i) {
+            $.each(obj, (i) => {
                 if (min === 0) {
                     min = i;
                 } else {
@@ -348,33 +295,29 @@
             return obj;
         },
 
-        objectDelete: function (obj, key) {
+        objectDelete: (obj, key) => {
             if (key in obj) delete obj[key];
         },
 
-        arrayDeleteByMultipleKeys: function (arr, keys) {
-            keys.forEach(function (ind) {
+        arrayDeleteByMultipleKeys: (arr, keys) => {
+            for (const ind of keys) {
                 delete arr[ind];
-            });
-            return arr.filter(function (item) {
-                return item !== undefined;
-            });
+            }
+            return arr.filter((item) => item !== undefined);
         },
 
-        arrayDelete: function (arr, val) {
+        arrayDelete: (arr, val) => {
             const i = arr.indexOf(val);
             if (i > -1) arr.splice(i, 1);
         },
 
-        arrayDeleteByKey: function (arr, key) {
+        arrayDeleteByKey: (arr, key) => {
             arr.splice(key, 1);
         },
 
-        nvl: function (data, other) {
-            return data === undefined || data === null ? other : data;
-        },
+        nvl: (data, other) => (data === undefined || data === null ? other : data),
 
-        objectClone: function (obj) {
+        objectClone: (obj) => {
             const copy = {};
             for (const key in obj) {
                 if ($.hasProp(obj, key)) {
@@ -391,9 +334,9 @@
             this.exec(callback, [data]);
         },
 
-        pageHeight: function () {
-            const body = document.body,
-                html = document.documentElement;
+        pageHeight: () => {
+            const body = document.body;
+            const html = document.documentElement;
 
             return Math.max(
                 body.scrollHeight,
@@ -404,28 +347,26 @@
             );
         },
 
-        cleanPreCode: function (selector) {
-            const els = Array.prototype.slice.call(
-                document.querySelectorAll(selector),
-                0,
-            );
+        cleanPreCode: (selector) => {
+            const els = Array.prototype.slice.call(document.querySelectorAll(selector), 0);
 
-            els.forEach(function (el) {
+            for (const el of els) {
                 const txt = el.textContent
                     .replace(/^[\r\n]+/, "") // strip leading newline
                     .replace(/\s+$/g, "");
 
                 if (/^\S/gm.test(txt)) {
                     el.textContent = txt;
-                    return;
+                    continue;
                 }
 
-                let mat,
-                    str,
-                    re = /^[\t ]+/gm,
-                    len,
-                    min = 1e3;
+                let mat;
+                let str = "";
+                const re = /^[\t ]+/gm;
+                let len;
+                let min = 1e3;
 
+                // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
                 while ((mat = re.exec(txt))) {
                     len = mat[0].length;
 
@@ -435,15 +376,13 @@
                     }
                 }
 
-                if (min === 1e3) return;
+                if (min === 1e3) continue;
 
-                el.textContent = txt
-                    .replace(new RegExp("^" + str, "gm"), "")
-                    .trim();
-            });
+                el.textContent = txt.replace(new RegExp(`^${str}`, "gm"), "").trim();
+            }
         },
 
-        coords: function (element) {
+        coords: (element) => {
             const el = $(element)[0];
             const box = el.getBoundingClientRect();
 
@@ -454,10 +393,10 @@
         },
 
         /**
-        * @param {TouchEvent|Event|MouseEvent} e
-        * @param t where: client, screen, or page
-        * @param s source: touches or changedTouches
-        */
+         * @param {TouchEvent|Event|MouseEvent} e
+         * @param t where: client, screen, or page
+         * @param s source: touches or changedTouches
+         */
         positionXY: function (e, t, s) {
             switch (t) {
                 case "client":
@@ -477,12 +416,10 @@
          * @param t source: touches or changedTouches
          * @returns {{x: (*), y: (*)}}
          */
-        clientXY: function (e, t = "touches") {
-            return {
-                x: e[t] ? e[t][0].clientX : e.clientX,
-                y: e[t] ? e[t][0].clientY : e.clientY,
-            };
-        },
+        clientXY: (e, t = "touches") => ({
+            x: e[t] ? e[t][0].clientX : e.clientX,
+            y: e[t] ? e[t][0].clientY : e.clientY,
+        }),
 
         /**
          *
@@ -490,12 +427,10 @@
          * @param t source: touches or changedTouches
          * @returns {{x: (*), y: (*)}}
          */
-        screenXY: function (e, t = "touches") {
-            return {
-                x: e[t] ? e[t][0].screenX : e.screenX,
-                y: e[t] ? e[t][0].screenY : e.screenY,
-            };
-        },
+        screenXY: (e, t = "touches") => ({
+            x: e[t] ? e[t][0].screenX : e.screenX,
+            y: e[t] ? e[t][0].screenY : e.screenY,
+        }),
 
         /**
          *
@@ -503,25 +438,15 @@
          * @param t source: touches or changedTouches
          * @returns {{x: (*), y: (*)}}
          */
-        pageXY: function (e, t = "touches") {
-            return {
-                x: e[t] ? e[t][0].pageX : e.pageX,
-                y: e[t] ? e[t][0].pageY : e.pageY,
-            };
-        },
+        pageXY: (e, t = "touches") => ({
+            x: e[t] ? e[t][0].pageX : e.pageX,
+            y: e[t] ? e[t][0].pageY : e.pageY,
+        }),
 
-        isRightMouse: function (e) {
-            return "which" in e
-                ? e.which === 3
-                : "button" in e
-                  ? e.button === 2
-                  : undefined;
-        },
+        isRightMouse: (e) => ("which" in e ? e.which === 3 : "button" in e ? e.button === 2 : undefined),
 
-        hiddenElementSize: function (el, includeMargin) {
-            let width,
-                height,
-                clone = $(el).clone(true);
+        hiddenElementSize: (el, includeMargin = false) => {
+            const clone = $(el).clone(true);
 
             clone.removeAttr("data-role").css({
                 visibility: "hidden",
@@ -530,12 +455,8 @@
             });
             $("body").append(clone);
 
-            if (!this.isValue(includeMargin)) {
-                includeMargin = false;
-            }
-
-            width = clone.outerWidth(includeMargin);
-            height = clone.outerHeight(includeMargin);
+            const width = clone.outerWidth(includeMargin);
+            const height = clone.outerHeight(includeMargin);
             clone.remove();
             return {
                 width: width,
@@ -543,7 +464,7 @@
             };
         },
 
-        getStyle: function (element) {
+        getStyle: (element) => {
             const el = $(element)[0];
             return globalThis.getComputedStyle(el);
         },
@@ -552,11 +473,11 @@
             return this.getStyle(el).getPropertyValue(property);
         },
 
-        getInlineStyles: function (element) {
-            let i,
-                l,
-                styles = {},
-                el = $(element)[0];
+        getInlineStyles: (element) => {
+            let i;
+            let l;
+            const styles = {};
+            const el = $(element)[0];
             for (i = 0, l = el.style.length; i < l; i++) {
                 const s = el.style[i];
                 styles[s] = el.style[s];
@@ -565,64 +486,51 @@
             return styles;
         },
 
-        encodeURI: function (str) {
-            return encodeURI(str).replace(/%5B/g, "[").replace(/%5D/g, "]");
-        },
+        encodeURI: (str) => encodeURI(str).replace(/%5B/g, "[").replace(/%5D/g, "]"),
 
-        updateURIParameter: function (uri, key, value) {
-            const re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        updateURIParameter: (uri, key, value) => {
+            const re = new RegExp(`([?&])${key}=.*?(&|$)`, "i");
             const separator = uri.indexOf("?") !== -1 ? "&" : "?";
             if (uri.match(re)) {
-                return uri.replace(re, "$1" + key + "=" + value + "$2");
-            } else {
-                return uri + separator + key + "=" + value;
+                return uri.replace(re, `$1${key}=${value}$2`);
             }
+            return `${uri + separator + key}=${value}`;
         },
 
-        getURIParameter: function (url, name) {
-            if (!url) url = globalThis.location.href;
-            /* eslint-disable-next-line */
-            name = name.replace(/[\[\]]/g, "\\$&");
-            const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                results = regex.exec(url);
+        getURIParameter: (url = globalThis.location.href, name = "") => {
+            const _name = name.replace(/[\[\]]/g, "\\$&");
+            const regex = new RegExp(`[?&]${_name}(=([^&#]*)|&|#|$)`);
+            const results = regex.exec(url);
             if (!results) return null;
             if (!results[2]) return "";
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         },
 
-        getLocales: function () {
-            return Object.keys(Metro.locales);
-        },
+        getLocales: () => Object.keys(Metro.locales),
 
-        addLocale: function (locale) {
+        addLocale: (locale) => {
             Metro.locales = $.extend({}, Metro.locales, locale);
         },
 
-        aspectRatioH: function (width, a) {
+        aspectRatioH: (width, a) => {
             if (a === "16/9") return (width * 9) / 16;
             if (a === "21/9") return (width * 9) / 21;
             if (a === "4/3") return (width * 3) / 4;
         },
 
-        aspectRatioW: function (height, a) {
+        aspectRatioW: (height, a) => {
             if (a === "16/9") return (height * 16) / 9;
             if (a === "21/9") return (height * 21) / 9;
             if (a === "4/3") return (height * 4) / 3;
         },
 
-        valueInObject: function (obj, value) {
-            return Object.values(obj).indexOf(value) > -1;
-        },
+        valueInObject: (obj, value) => Object.values(obj).indexOf(value) > -1,
 
-        keyInObject: function (obj, key) {
-            return Object.keys(obj).indexOf(key) > -1;
-        },
+        keyInObject: (obj, key) => Object.keys(obj).indexOf(key) > -1,
 
-        inObject: function (obj, key, val) {
-            return obj[key] !== undefined && obj[key] === val;
-        },
+        inObject: (obj, key, val) => obj[key] !== undefined && obj[key] === val,
 
-        newCssSheet: function (media) {
+        newCssSheet: (media) => {
             const style = document.createElement("style");
 
             if (media !== undefined) {
@@ -636,81 +544,50 @@
             return style.sheet;
         },
 
-        addCssRule: function (sheet, selector, rules, index) {
-            sheet.insertRule(selector + "{" + rules + "}", index);
+        addCssRule: (sheet, selector, rules, index) => {
+            sheet.insertRule(`${selector}{${rules}}`, index);
         },
 
-        media: function (query) {
-            return globalThis.matchMedia(query).matches;
+        media: (query) => globalThis.matchMedia(query).matches,
+
+        mediaModes: () => globalThis.METRO_MEDIA,
+
+        mediaExist: (media) => globalThis.METRO_MEDIA.indexOf(media) > -1,
+
+        inMedia: (media) =>
+            globalThis.METRO_MEDIA.indexOf(media) > -1 &&
+            globalThis.METRO_MEDIA.indexOf(media) === globalThis.METRO_MEDIA.length - 1,
+
+        isValue: (val) => val !== undefined && val !== null && val !== "",
+
+        isNull: (val) => val === undefined || val === null,
+
+        isNegative: (val) => Number.parseFloat(val) < 0,
+
+        isPositive: (val) => Number.parseFloat(val) > 0,
+
+        isZero: (val) => Number.parseFloat(val.toFixed(2)) === 0.0,
+
+        between: (val, bottom, top, equals) =>
+            equals === true ? val >= bottom && val <= top : val > bottom && val < top,
+
+        parseMoney: (val) => Number(Number.parseFloat(val.replace(/[^0-9-.]/g, ""))),
+
+        parseCard: (val) => val.replace(/[^0-9]/g, ""),
+
+        parsePhone: (val) => this.parseCard(val),
+
+        parseNumber: (val, thousand, decimal) =>
+            val.replace(new RegExp(`\\${thousand}`, "g"), "").replace(new RegExp(`\\${decimal}`, "g"), "."),
+
+        nearest: (val, precision, down) => {
+            let _val = val / precision;
+            _val = Math[down === true ? "floor" : "ceil"](_val) * precision;
+            return _val;
         },
 
-        mediaModes: function () {
-            return globalThis["METRO_MEDIA"];
-        },
-
-        mediaExist: function (media) {
-            return globalThis["METRO_MEDIA"].indexOf(media) > -1;
-        },
-
-        inMedia: function (media) {
-            return (
-                globalThis["METRO_MEDIA"].indexOf(media) > -1 &&
-                globalThis["METRO_MEDIA"].indexOf(media) ===
-                    globalThis["METRO_MEDIA"].length - 1
-            );
-        },
-
-        isValue: function (val) {
-            return val !== undefined && val !== null && val !== "";
-        },
-
-        isNull: function (val) {
-            return val === undefined || val === null;
-        },
-
-        isNegative: function (val) {
-            return parseFloat(val) < 0;
-        },
-
-        isPositive: function (val) {
-            return parseFloat(val) > 0;
-        },
-
-        isZero: function (val) {
-            return parseFloat(val.toFixed(2)) === 0.0;
-        },
-
-        between: function (val, bottom, top, equals) {
-            return equals === true
-                ? val >= bottom && val <= top
-                : val > bottom && val < top;
-        },
-
-        parseMoney: function (val) {
-            return Number(parseFloat(val.replace(/[^0-9-.]/g, "")));
-        },
-
-        parseCard: function (val) {
-            return val.replace(/[^0-9]/g, "");
-        },
-
-        parsePhone: function (val) {
-            return this.parseCard(val);
-        },
-
-        parseNumber: function (val, thousand, decimal) {
-            return val
-                .replace(new RegExp("\\" + thousand, "g"), "")
-                .replace(new RegExp("\\" + decimal, "g"), ".");
-        },
-
-        nearest: function (val, precision, down) {
-            val /= precision;
-            val = Math[down === true ? "floor" : "ceil"](val) * precision;
-            return val;
-        },
-
-        bool: function (value) {
+        bool: (value) => {
+            let result;
             switch (value) {
                 case true:
                 case "true":
@@ -718,25 +595,25 @@
                 case "1":
                 case "on":
                 case "yes":
-                    return true;
+                case "+":
+                    result = true;
+                    break;
                 default:
-                    return false;
+                    result = false;
             }
+            return result;
         },
 
-        decCount: function (v) {
-            return v % 1 === 0 ? 0 : v.toString().split(".")[1].length;
-        },
+        decCount: (v) => (v % 1 === 0 ? 0 : v.toString().split(".")[1].length),
 
-        classNames: function () {
-            const args = Array.prototype.slice.call(arguments, 0);
+        classNames: (...args) => {
             const classes = [];
-            for (let a of args) {
+            for (const a of args) {
                 if (!a) continue;
                 if (typeof a === "string") {
                     classes.push(a);
                 } else if (Metro.utils.isObject(a)) {
-                    for (let k in a) {
+                    for (const k in a) {
                         if (a[k]) {
                             classes.push(k);
                         }
@@ -748,30 +625,29 @@
             return classes.join(" ");
         },
 
-        join: function () {
-            const values = Array.prototype.slice.call(arguments, 0);
+        join: (...values) => {
             const sep = values.pop();
             const classes = [];
-            for (let a of values) {
+            for (const a of values) {
                 if (!a) continue;
                 classes.push(Metro.utils.isObject(a) ? Object.values(a)[0] : a);
             }
             return classes.join(sep);
         },
 
-        copy2clipboard: function (v, cb) {
-            navigator.clipboard.writeText(v).then(function () {
+        copy2clipboard: (v, cb) => {
+            navigator.clipboard.writeText(v).then(() => {
                 Metro.utils.exec(cb, [v]);
             });
         },
 
-        getCssVar: function (v) {
+        getCssVar: (v) => {
             const root = document.documentElement;
             const style = getComputedStyle(root);
             return style.getPropertyValue(v);
         },
 
-        scrollTo: function (element, options) {
+        scrollTo: (element, options) => {
             const elem = typeof element === "string" ? $(element)[0] : element;
             elem.scrollIntoView({
                 ...options,
@@ -780,8 +656,4 @@
             });
         },
     };
-
-    if (globalThis["METRO_GLOBAL_COMMON"] === true) {
-        globalThis["Utils"] = Metro.utils;
-    }
 })(Metro, Dom);

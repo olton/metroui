@@ -1,1 +1,1 @@
-import "./t-menu.less"
+import "./t-menu.less";

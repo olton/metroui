@@ -1,1 +1,1 @@
-import "./h-menu.less"
+import "./h-menu.less";

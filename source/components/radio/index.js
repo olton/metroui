@@ -1,2 +1,2 @@
-import "./radio.less"
-import "./radio.js"
+import "./radio.less";
+import "./radio.js";

@@ -1,1 +1,1 @@
-import "./flip-card.less"
+import "./flip-card.less";

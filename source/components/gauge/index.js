@@ -1,2 +1,2 @@
-import "./gauge.less"
-import "./gauge.js"
+import "./gauge.less";
+import "./gauge.js";

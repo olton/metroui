@@ -1,7 +1,8 @@
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
     let NavigationViewDefaultConfig = {
-        navviewDeferred: 0,
+        navViewDeferred: 0,
         expandPoint: null,
         // compacted: false,
         toggle: null,
@@ -16,12 +17,12 @@
         onNavviewCreate: Metro.noop,
     };
 
-    Metro.navViewSetup = function (options) {
+    Metro.navViewSetup = (options) => {
         NavigationViewDefaultConfig = $.extend({}, NavigationViewDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroNavViewSetup"] !== "undefined") {
-        Metro.navViewSetup(globalThis["metroNavViewSetup"]);
+    if (typeof globalThis.metroNavViewSetup !== "undefined") {
+        Metro.navViewSetup(globalThis.metroNavViewSetup);
     }
 
     Metro.Component("nav-view", {
@@ -46,18 +47,15 @@
         },
 
         _calcMenuHeight: function () {
-            let element = this.element,
-                pane,
-                menu_container;
+            const element = this.element;
             let elements_height = 0;
 
-            pane = element.children(".navview-pane");
+            const pane = element.children(".navview-pane");
             if (pane.length === 0) {
                 return;
             }
 
-            menu_container = pane.children(".navview-menu-container");
-
+            const menu_container = pane.children(".navview-menu-container");
             if (menu_container.length === 0) {
                 return;
             }
@@ -71,7 +69,7 @@
             });
 
             menu_container.css({
-                height: "calc(100% - " + elements_height + "px)",
+                height: `calc(100% - ${elements_height}px)`,
             });
 
             this.menuScrollStep = 48;
@@ -79,16 +77,15 @@
         },
 
         _recalc: function () {
-            const that = this;
-            setTimeout(function () {
-                that._calcMenuHeight();
+            setTimeout(() => {
+                this._calcMenuHeight();
             }, 200);
         },
 
         _createStructure: function () {
-            const element = this.element,
-                o = this.options;
-            let pane, content, toggle, menu;
+            const element = this.element;
+            const o = this.options;
+            let menu;
 
             element.addClass("navview");
             if (element.attr("id") === undefined) {
@@ -110,10 +107,9 @@
                 element.addClass("compacted handmade");
             }
 
-            pane = element.children(".navview-pane");
-            content = element.children(".navview-content");
-            toggle = $(o.toggle);
-
+            const pane = element.children(".navview-pane");
+            const content = element.children(".navview-content");
+            const toggle = $(o.toggle);
             menu = pane.children(".navview-menu");
             if (menu.length) {
                 menu.prevAll().reverse().wrapAll($("<div>").addClass("navview-container"));
@@ -141,31 +137,31 @@
         },
 
         _createEvents: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const menu_container = element.find(".navview-menu-container");
             const menu = menu_container.children(".navview-menu");
 
             menu_container.on(
                 "mousewheel",
-                function (e) {
+                (e) => {
                     const pane_width = element.find(".navview-pane").width();
                     const dir = e.deltaY > 0 ? -1 : 1;
                     const step = that.menuScrollStep;
                     const distance = that.menuScrollDistance;
-                    const top = parseInt(menu.css("top"));
+                    const top = Number.parseInt(menu.css("top"));
 
                     if (pane_width > 50) {
                         return false;
                     }
 
                     if (dir === -1 && Math.abs(top) <= distance) {
-                        menu.css("top", parseInt(menu.css("top")) + step * dir);
+                        menu.css("top", Number.parseInt(menu.css("top")) + step * dir);
                     }
 
                     if (dir === 1 && top <= -step) {
-                        menu.css("top", parseInt(menu.css("top")) + step * dir);
+                        menu.css("top", Number.parseInt(menu.css("top")) + step * dir);
                     }
                 },
                 {
@@ -195,7 +191,7 @@
             });
 
             if (this.paneToggle !== null) {
-                this.paneToggle.on(Metro.events.click, function () {
+                this.paneToggle.on(Metro.events.click, () => {
                     //that.pane.toggleClass("open");
                 });
             }
@@ -246,8 +242,8 @@
         },
 
         _togglePaneMode: function (hand = false) {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             element.toggleClass("expanded");
             element.toggleClass("compacted");
@@ -263,12 +259,12 @@
         },
 
         _pullClick: function (el, sender) {
-            let input,
-                target = $(el);
+            let input;
+            const target = $(el);
 
-            if (target && target.hasClass("holder")) {
+            if (target?.hasClass("holder")) {
                 input = target.parent().find("input");
-                setTimeout(function () {
+                setTimeout(() => {
                     input.focus();
                 }, 200);
             }
@@ -298,12 +294,11 @@
             this._recalc();
         },
 
-        state(){
-            return this.element.hasClass("expanded") ? "expand" : "compact";    
+        state() {
+            return this.element.hasClass("expanded") ? "expand" : "compact";
         },
-        
-        /* eslint-disable-next-line */
-        changeAttribute: function (attributeName) {},
+
+        changeAttribute: (attr, val) => {},
 
         destroy: function () {
             const element = this.element;

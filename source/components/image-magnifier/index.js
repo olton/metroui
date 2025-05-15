@@ -1,2 +1,2 @@
-import "./image-magnifier.js"
-import "./image-magnifier.less"
+import "./image-magnifier.js";
+import "./image-magnifier.less";

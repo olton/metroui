@@ -1,1 +1,1 @@
-import "./template.js"
+import "./template.js";

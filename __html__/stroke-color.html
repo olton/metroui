@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+
+    <title>Stroke Color - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        .color-item {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default d-none">
+    <span class="app-bar-item">Stroke Color</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="container mt-4 mb-4">
+    <div id="colors"></div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    (function(){
+        const colors = [
+            'lime', 'green', 'emerald', 'blue', 'teal', 'cyan', 'cobalt', 'indigo', 'almost', 'violet', 'pink',
+            'magenta', 'crimson', 'red', 'clown', 'orange', 'amber', 'yellow', 'brown', 'olive', 'steel',
+            'mauve', 'taupe', 'champagne', 'khaki', 'charcoal', 'bronze', 'windstorm', 'nude',
+            'terracotta', 'coral', 'army', 'seashell', 'sand'
+        ]
+
+        for (let c of colors) {
+            const row = $("<div class='row'></div>").appendTo("#colors");
+            row
+                .append(`<div class="cell-sm-3 color-item stroke-${c}">light-${c}</div>`)
+                .append(`<div class="cell-sm-3 color-item stroke-light-${c}">light-${c}</div>`)
+                .append(`<div class="cell-sm-3 color-item stroke-dark-${c}">dark-${c}</div>`)
+                .append(`<div class="cell-sm-3 color-item stroke-sat-${c}">sat-${c}</div>`)
+        }
+    })()
+</script>
+</body>
+</html>

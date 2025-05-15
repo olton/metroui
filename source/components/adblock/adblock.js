@@ -1,8 +1,7 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var AdblockDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+    let AdblockDefaultConfig = {
         adblockDeferred: 0,
         checkInterval: 1000,
         fireOnce: true,
@@ -10,20 +9,21 @@
         localhost: false,
         onAlert: Metro.noop,
         onFishingStart: Metro.noop,
-        onFishingDone: Metro.noop
+        onFishingDone: Metro.noop,
     };
 
-    Metro.adblockSetup = function(options){
+    Metro.adblockSetup = (options) => {
         AdblockDefaultConfig = $.extend({}, AdblockDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroAdblockSetup"] !== "undefined") {
-        Metro.adblockSetup(globalThis["metroAdblockSetup"]);
+    if (typeof globalThis.metroAdblockSetup !== "undefined") {
+        Metro.adblockSetup(globalThis.metroAdblockSetup);
     }
 
-    var Adblock = {
-        bite: function(){
-            var classes = "adblock-bite adsense google-adsense dblclick advert topad top_ads topAds textads sponsoredtextlink_container show_ads right-banner rekl mpu module-ad mid_ad mediaget horizontal_ad headerAd contentAd brand-link bottombanner bottom_ad_block block_ad bannertop banner-right banner-body b-banner b-article-aside__banner b-advert adwrapper adverts advertisment advertisement:not(body) advertise advert_list adtable adsense adpic adlist adleft adinfo adi adholder adframe addiv ad_text ad_space ad_right ad_links ad_body ad_block ad_Right adTitle adText";
+    const Adblock = {
+        bite: () => {
+            const classes =
+                "adblock-bite adsense google-adsense dblclick advert topad top_ads topAds textads sponsoredtextlink_container show_ads right-banner rekl mpu module-ad mid_ad mediaget horizontal_ad headerAd contentAd brand-link bottombanner bottom_ad_block block_ad bannertop banner-right banner-body b-banner b-article-aside__banner b-advert adwrapper adverts advertisment advertisement:not(body) advertise advert_list adtable adsense adpic adlist adleft adinfo adi adholder adframe addiv ad_text ad_space ad_right ad_links ad_body ad_block ad_Right adTitle adText";
             $("<div>")
                 .addClass(classes.split(" ").shuffle().join(" "))
                 .css({
@@ -33,30 +33,30 @@
                     overflow: "hidden",
                     visibility: "visible",
                     top: 0,
-                    left: 0
+                    left: 0,
                 })
-                .append($("<a href='https://dblclick.net'>").html('dblclick.net'))
-                .appendTo('body');
+                .append($("<a href='https://dblclick.net'>").html("dblclick.net"))
+                .appendTo("body");
 
             if (Adblock.options.adblockDeferred) {
-                setTimeout(function () {
+                setTimeout(() => {
                     Adblock.fishing();
                 }, Adblock.options.adblockDeferred);
-            } else this.fishing();
+            } else Adblock.fishing();
         },
 
-        fishing: function(){
-            var o = Adblock.options;
-            var checks = typeof o.fireOnce === "number" ? o.fireOnce : 0;
-            var checkStop = o.checkStop;
-            var interval = false;
-            var run = function(){
-                var a = $(".adsense.google-adsense.dblclick.advert.adblock-bite");
-                var b = a.find("a");
-                var done = function(){
+        fishing: () => {
+            const o = Adblock.options;
+            let checks = typeof o.fireOnce === "number" ? o.fireOnce : 0;
+            let checkStop = o.checkStop;
+            let interval = false;
+            const run = () => {
+                const a = $(".adsense.google-adsense.dblclick.advert.adblock-bite");
+                const b = a.find("a");
+                const done = () => {
                     clearInterval(interval);
 
-                    Utils.exec(o.onFishingDone);
+                    Metro.utils.exec(o.onFishingDone);
                     $(globalThis).fire("fishing-done");
 
                     a.remove();
@@ -64,16 +64,16 @@
 
                 if (!o.localhost && $.localhost) {
                     done();
-                    return ;
+                    return;
                 }
 
-                if (   !a.length
-                    || !b.length
-                    || a.css("display").indexOf('none') > -1
-                    || b.css("display").indexOf('none') > -1
+                if (
+                    !a.length ||
+                    !b.length ||
+                    a.css("display").indexOf("none") > -1 ||
+                    b.css("display").indexOf("none") > -1
                 ) {
-
-                    Utils.exec(Adblock.options.onAlert);
+                    Metro.utils.exec(Adblock.options.onAlert);
                     $(globalThis).fire("adblock-alert");
 
                     if (Adblock.options.fireOnce === true) {
@@ -94,23 +94,23 @@
                 }
             };
 
-            Utils.exec(o.onFishingStart);
+            Metro.utils.exec(o.onFishingStart);
             $(globalThis).fire("fishing-start");
 
-            interval = setInterval(function(){
+            interval = setInterval(() => {
                 run();
             }, Adblock.options.checkInterval);
 
             run();
-        }
+        },
     };
 
     Metro.Adblock = Adblock;
 
-    $(function(){
+    $(() => {
         Adblock.options = $.extend({}, AdblockDefaultConfig);
-        $(globalThis).on("metro-initiated", function(){
+        $(globalThis).on("metro-initiated", () => {
             Adblock.bite();
         });
     });
-}(Metro, Dom));
+})(Metro, Dom);

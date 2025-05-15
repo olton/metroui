@@ -1,6 +1,6 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
     let ProgressDefaultConfig = {
         progressDeferred: 0,
         showValue: false,
@@ -22,78 +22,87 @@
         onBufferChange: Metro.noop,
         onComplete: Metro.noop,
         onBuffered: Metro.noop,
-        onProgressCreate: Metro.noop
+        onProgressCreate: Metro.noop,
     };
 
-    Metro.progressSetup = function (options) {
+    Metro.progressSetup = (options) => {
         ProgressDefaultConfig = $.extend({}, ProgressDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroProgressSetup"] !== "undefined") {
-        Metro.progressSetup(globalThis["metroProgressSetup"]);
+    if (typeof globalThis.metroProgressSetup !== "undefined") {
+        Metro.progressSetup(globalThis.metroProgressSetup);
     }
 
-    Metro.Component('progress', {
-        init: function( options, elem ) {
+    Metro.Component("progress", {
+        init: function (options, elem) {
             this._super(elem, options, ProgressDefaultConfig, {
                 value: 0,
-                buffer: 0
+                buffer: 0,
             });
 
             return this;
         },
 
-        _create: function(){
-            const element = this.element, elem = this.elem, o = this.options;
+        _create: function () {
+            const element = this.element;
+            const elem = this.elem;
+            const o = this.options;
 
             if (typeof o.type === "string") o.type = o.type.toLowerCase();
 
-            element
-                .html("")
-                .addClass("progress");
+            element.html("").addClass("progress");
 
             this.component = element.wrap("<div>").addClass("progress-component").addClass(o.clsProgress);
 
-            function _progress(){
-                elem.innerHTML = `<div class="bar"></div>`
+            function _progress() {
+                elem.innerHTML = `<div class="bar"></div>`;
             }
 
-            function _buffer(){
+            function _buffer() {
                 elem.innerHTML = `
                     <div class="bar"></div>
                     <div class="buffer"></div>
-                `
+                `;
             }
 
-            function _load(){
+            function _load() {
                 element.addClass("with-load");
                 elem.innerHTML = `
                     <div class="bar"></div>
                     <div class="buffer"></div>
                     <div class="load"></div>
-                `
+                `;
             }
 
-            function _line(){
+            function _line() {
                 element.addClass("line");
             }
 
-            function _segment(){
+            function _segment() {
                 element.addClass("segments");
-                element.append(`<div class="bar"></div>`)
+                element.append(`<div class="bar"></div>`);
                 const width = element.width();
                 const segments = Math.ceil(width / (o.segmentSize || 10));
                 for (let i = 0; i < segments; i++) {
                     elem.innerHTML += `<div class="segment" style="width: ${o.segmentSize}px"></div>`;
                 }
             }
-            
+
             switch (o.type) {
-                case "buffer": _buffer(); break;
-                case "load": _load(); break;
-                case "line": _line(); break;
-                case "segment": _segment(); break;
-                default: _progress();
+                case "buffer":
+                    _buffer();
+                    break;
+                case "load":
+                    _load();
+                    break;
+                case "line":
+                    _line();
+                    break;
+                case "segment":
+                    _segment();
+                    break;
+                default:
+                    _progress();
             }
 
             if (o.small === true) element.addClass("small");
@@ -106,23 +115,27 @@
             const label = $("<div>").addClass("progress-label").addClass(o.clsLabel).html(o.label).appendTo(data);
             const value = $("<div>").addClass("progress-value").addClass(o.clsLabel).html(o.value).appendTo(data);
 
-            if (o.showLabel === false) { label.hide(); }
-            if (o.showValue === false) { value.hide(); }
+            if (o.showLabel === false) {
+                label.hide();
+            }
+            if (o.showValue === false) {
+                value.hide();
+            }
 
             this.val(o.value);
             this.buff(o.buffer);
 
             this._fireEvent("progress-create", {
-                element: element
+                element: element,
             });
         },
 
-        val: function(v){
-            const that = this, element = this.element, o = this.options;
+        val: function (v) {
+            const element = this.element;
             const value = this.component.find(".progress-value");
 
             if (v === undefined) {
-                return that.value;
+                return this.value;
             }
 
             const bar = element.find(".bar");
@@ -131,29 +144,27 @@
                 return false;
             }
 
-            this.value = parseInt(v, 10);
+            this.value = Number.parseInt(v, 10);
 
-            bar.css("width", this.value + "%");
-            value.html(this.value+"%");
+            bar.css("width", `${this.value}%`);
+            value.html(`${this.value}%`);
 
             this._fireEvent("value-change", {
-                val: this.value
+                val: this.value,
             });
 
             if (this.value === 100) {
-
                 this._fireEvent("complete", {
-                    val: this.value
+                    val: this.value,
                 });
-
             }
         },
 
-        buff: function(v){
-            const that = this, element = this.element;
+        buff: function (v) {
+            const element = this.element;
 
             if (v === undefined) {
-                return that.buffer;
+                return this.buffer;
             }
 
             const bar = element.find(".buffer");
@@ -162,38 +173,42 @@
                 return false;
             }
 
-            this.buffer = parseInt(v, 10);
+            this.buffer = Number.parseInt(v, 10);
 
-            bar.css("width", this.buffer + "%");
+            bar.css("width", `${this.buffer}%`);
 
             this._fireEvent("buffer-change", {
-                val: this.buffer
+                val: this.buffer,
             });
 
             if (this.buffer === 100) {
                 this._fireEvent("buffered", {
-                    val: this.buffer
+                    val: this.buffer,
                 });
             }
         },
 
-        changeValue: function(){
-            this.val(this.element.attr('data-value'));
+        changeValue: function () {
+            this.val(this.element.attr("data-value"));
         },
 
-        changeBuffer: function(){
-            this.buff(this.element.attr('data-buffer'));
+        changeBuffer: function () {
+            this.buff(this.element.attr("data-buffer"));
         },
 
-        changeAttribute: function(attributeName){
+        changeAttribute: function (attributeName) {
             switch (attributeName) {
-                case 'data-value': this.changeValue(); break;
-                case 'data-buffer': this.changeBuffer(); break;
+                case "data-value":
+                    this.changeValue();
+                    break;
+                case "data-buffer":
+                    this.changeBuffer();
+                    break;
             }
         },
 
-        destroy: function(){
+        destroy: function () {
             this.component.remove();
-        }
+        },
     });
-}(Metro, Dom));
+})(Metro, Dom);

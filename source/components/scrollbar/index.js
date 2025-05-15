@@ -1,1 +1,1 @@
-import "./scrollbar.less"
+import "./scrollbar.less";

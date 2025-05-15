@@ -1,2 +1,2 @@
-import "./vegas.js"
-import "./vegas.less"
+import "./vegas.js";
+import "./vegas.less";

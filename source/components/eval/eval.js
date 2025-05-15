@@ -1,32 +1,33 @@
-(function(Metro, $) {
-    'use strict';
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
 
     let EvalDefaultConfig = {
         enabled: true,
         logErrors: false,
-        delimiterStart: '{{', 
-        delimiterEnd: '}}',
+        delimiterStart: "{{",
+        delimiterEnd: "}}",
         context: null, // контекст выполнения для передачи переменных
-        processChild: true // обработка дочерних элементов
+        processChild: true, // обработка дочерних элементов
     };
 
-    Metro.evalSetup = function (options) {
+    Metro.evalSetup = (options) => {
         EvalDefaultConfig = $.extend({}, EvalDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroEvalSetup"] !== "undefined") {
-        Metro.evalSetup(globalThis["metroEvalSetup"]);
+    if (typeof globalThis.metroEvalSetup !== "undefined") {
+        Metro.evalSetup(globalThis.metroEvalSetup);
     }
 
-    Metro.Component('eval', {
-        init: function( options, elem ) {
+    Metro.Component("eval", {
+        init: function (options, elem) {
             this._super(elem, options, EvalDefaultConfig, {
-                origContent: null
+                origContent: null,
             });
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             const element = this.element;
             this.origContent = element.html();
 
@@ -39,9 +40,10 @@
             }
         },
 
-        _processNodeAndChildren: function(node) {
+        _processNodeAndChildren: function (node) {
             // Обработка текстовых узлов
-            if (node.nodeType === 3) { // Текстовый узел
+            if (node.nodeType === 3) {
+                // Текстовый узел
                 node.textContent = this.eval(node.textContent);
                 return;
             }
@@ -52,20 +54,18 @@
             }
         },
 
-        eval: function(str) {
+        eval: function (str) {
             const o = this.options;
             if (!o.enabled) return str;
 
             const regex = new RegExp(
-                this._escapeRegExp(o.delimiterStart || '{{') +
-                "(.*?)" +
-                this._escapeRegExp(o.delimiterEnd || '}}'),
-                "gs"
+                `${this._escapeRegExp(o.delimiterStart || "{{")}(.*?)${this._escapeRegExp(o.delimiterEnd || "}}")}`,
+                "gs",
             );
 
             return str.replace(regex, (match, code) => {
                 try {
-                    const fn = new Function("return " + code);
+                    const fn = new Function(`return ${code}`);
                     return fn.call(o.context);
                 } catch (error) {
                     if (o.logErrors) {
@@ -76,26 +76,24 @@
             });
         },
 
-        _escapeRegExp: function(string) {
-            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        },
+        _escapeRegExp: (string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
 
-        reset: function() {
+        reset: function () {
             if (this.origContent) {
                 this.element.html(this.origContent);
             }
         },
 
-        destroy: function(){
+        destroy: function () {
             this.reset();
             return this._super();
-        }
+        },
     });
 
     // Добавление глобального метода для удобства
-    Metro.evalText = function(text, options) {
+    Metro.evalText = (text, options) => {
         const tempConfig = $.extend({}, EvalDefaultConfig, options);
-        const instance = {options: tempConfig};
-        return Metro.Component('eval').prototype.eval.call(instance, text);
+        const instance = { options: tempConfig };
+        return Metro.Component("eval").prototype.eval.call(instance, text);
     };
-}(Metro, Dom));
+})(Metro, Dom);

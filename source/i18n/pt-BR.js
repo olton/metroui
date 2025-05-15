@@ -1,6 +1,4 @@
-/** @format */
-
-(function () {
+(() => {
     Metro.i18n.add("pt-BR", {
         weekStart: 0,
 
@@ -112,9 +110,15 @@
         label_sell: "Vender",
         label_details: "Detalhes",
         label_sorting: "Ordenar",
+        label_finish: "Finalizar",
+        label_play: "Reproduzir",
+        label_pause: "Pausar",
+        label_stop: "Parar",
+        label_mute: "Silenciar",
+        label_loop: "Repetir",
 
         label_on: "lig",
-        label_off: "deslig",
+        label_off: "des",
 
         label_rename_tab: "Renomear aba",
         label_close_tab: "Fechar aba",
@@ -123,13 +127,13 @@
         label_close_tabs_right: "Fechar abas a direita",
         label_close_all_tabs: "Fechar todas as abas",
         label_close_inactive_tabs: "Fechar abas inativas",
-        
+
         label_clear_input: "Limpar",
         label_reveal_password: "Mostrar senha",
         label_hide_password: "Ocultar senha",
         label_generate_random: "Gerar valor aleatório",
         label_search_input: "Pesquisar pelo valor",
-        
+
         label_note: "Nota",
         label_tip: "Dica",
         label_info: "Informação",

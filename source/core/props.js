@@ -169,4 +169,4 @@ export const Props = {
         LIGHT: "light",
         DARK: "dark",
     },
-}
+};

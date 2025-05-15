@@ -1,6 +1,4 @@
-/** @format */
-
-(function () {
+(() => {
     Metro.i18n.add("en", {
         weekStart: 0,
 
@@ -112,6 +110,12 @@
         label_sell: "Sell",
         label_details: "Details",
         label_sorting: "Sorting",
+        label_finish: "Finish",
+        label_play: "Play",
+        label_pause: "Pause",
+        label_stop: "Stop",
+        label_mute: "Mute",
+        label_loop: "Loop",
 
         label_on: "on",
         label_off: "off",
@@ -123,13 +127,13 @@
         label_close_tabs_right: "Close tabs right",
         label_close_all_tabs: "Close all tabs",
         label_close_inactive_tabs: "Close inactive tabs",
-        
+
         label_clear_input: "Clear input",
         label_reveal_password: "Reveal password",
         label_hide_password: "Hide password",
         label_generate_random: "Generate random value",
         label_search_input: "Search for the entered value",
-        
+
         label_note: "Note",
         label_tip: "Tip",
         label_info: "Info",
@@ -144,12 +148,12 @@
         label_important: "Important",
         label_shit: "Shit",
         label_air: "Air",
-        
+
         label_select_all: "Select all",
         label_select_more: "Select...",
         label_select: "Select",
         label_filter: "Filter",
-        
+
         label_collapse: "Collapse",
     });
 })();

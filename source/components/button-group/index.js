@@ -1,2 +1,2 @@
-import "./button-group.js"
-import "./button-group.less"
+import "./button-group.js";
+import "./button-group.less";

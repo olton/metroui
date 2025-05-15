@@ -1,1 +1,1 @@
-import "./toolbar.less"
+import "./toolbar.less";

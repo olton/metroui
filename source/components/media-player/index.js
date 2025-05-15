@@ -1,1 +1,1 @@
-import "./media-player.less"
+import "./media-player.less";

@@ -1,1 +1,1 @@
-import "./tokenizer.js"
+import "./tokenizer.js";

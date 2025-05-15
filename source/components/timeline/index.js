@@ -1,1 +1,1 @@
-import "./timeline.less"
+import "./timeline.less";

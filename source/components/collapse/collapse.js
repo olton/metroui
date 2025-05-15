@@ -1,12 +1,7 @@
-/**
- * global Metro
- *
- * @format
- */
-
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
-    var CollapseDefaultConfig = {
+    let CollapseDefaultConfig = {
         collapseDeferred: 0,
         collapsed: false,
         toggleElement: false,
@@ -16,12 +11,12 @@
         onCollapseCreate: Metro.noop,
     };
 
-    Metro.collapseSetup = function (options) {
+    Metro.collapseSetup = (options) => {
         CollapseDefaultConfig = $.extend({}, CollapseDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCollapseSetup"] !== "undefined") {
-        Metro.collapseSetup(globalThis["metroCollapseSetup"]);
+    if (typeof globalThis.metroCollapseSetup !== "undefined") {
+        Metro.collapseSetup(globalThis.metroCollapseSetup);
     }
 
     Metro.Component("collapse", {
@@ -34,30 +29,24 @@
         },
 
         _create: function () {
-            var that = this,
-                element = this.element,
-                o = this.options;
-            var toggle;
+            const element = this.element;
+            const o = this.options;
 
-            toggle =
+            const toggle =
                 o.toggleElement !== false
                     ? $(o.toggleElement)
                     : element.siblings(".collapse-toggle").length > 0
                       ? element.siblings(".collapse-toggle")
                       : element.siblings("a:nth-child(1)");
-
             if (o.collapsed === true || element.attr("collapsed") === true) {
                 element.hide(0);
             }
 
-            toggle.on(Metro.events.click, function (e) {
-                if (
-                    element.css("display") !== "none" &&
-                    !element.hasClass("keep-open")
-                ) {
-                    that._close(element);
+            toggle.on(Metro.events.click, (e) => {
+                if (element.css("display") !== "none" && !element.hasClass("keep-open")) {
+                    this._close(element);
                 } else {
-                    that._open(element);
+                    this._open(element);
                 }
 
                 if (["INPUT"].indexOf(e.target.tagName) === -1) {
@@ -74,21 +63,21 @@
         },
 
         _close: function (el, immediate) {
-            var elem = $(el);
-            var collapsed = elem.data("collapsed");
+            const elem = $(el);
+            const collapsed = elem.data("collapsed");
 
             if (collapsed) {
                 return;
             }
 
-            var dropdown = Metro.getPlugin(elem[0], "collapse");
-            var options = dropdown.options;
-            var func = immediate ? "show" : "slideUp";
-            var dur = immediate ? 0 : options.duration;
+            const dropdown = Metro.getPlugin(elem[0], "collapse");
+            const options = dropdown.options;
+            const func = immediate ? "show" : "slideUp";
+            const dur = immediate ? 0 : options.duration;
 
             this.toggle.removeClass("active-toggle");
 
-            elem[func](dur, function () {
+            elem[func](dur, () => {
                 el.trigger("onCollapse", null, el);
                 el.data("collapsed", true);
                 el.addClass("collapsed");
@@ -98,21 +87,21 @@
         },
 
         _open: function (el, immediate) {
-            var elem = $(el);
-            var collapsed = elem.data("collapsed");
+            const elem = $(el);
+            const collapsed = elem.data("collapsed");
 
             if (!collapsed) {
                 return;
             }
 
-            var dropdown = Metro.getPlugin(elem[0], "collapse");
-            var options = dropdown.options;
-            var func = immediate ? "show" : "slideDown";
-            var dur = immediate ? 0 : options.duration;
+            const dropdown = Metro.getPlugin(elem[0], "collapse");
+            const options = dropdown.options;
+            const func = immediate ? "show" : "slideDown";
+            const dur = immediate ? 0 : options.duration;
 
             this.toggle.addClass("active-toggle");
 
-            elem[func](dur, function () {
+            elem[func](dur, () => {
                 el.trigger("onExpand", null, el);
                 el.data("collapsed", false);
                 el.removeClass("collapsed");
@@ -142,11 +131,8 @@
         },
 
         toggleState: function () {
-            var element = this.element;
-            if (
-                element.attr("collapsed") === true ||
-                element.data("collapsed") === true
-            ) {
+            const element = this.element;
+            if (element.attr("collapsed") === true || element.data("collapsed") === true) {
                 this.collapse();
             } else {
                 this.expand();

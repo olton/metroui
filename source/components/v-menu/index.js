@@ -1,1 +1,1 @@
-import "./v-menu.less"
+import "./v-menu.less";

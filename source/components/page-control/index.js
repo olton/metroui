@@ -1,2 +1,2 @@
-import "./pagecontrol.js"
-import "./pagecontrol.less"
+import "./pagecontrol.js";
+import "./pagecontrol.less";

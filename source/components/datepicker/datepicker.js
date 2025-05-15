@@ -1,13 +1,8 @@
-/**
- * global Metro, METRO_LOCALE, Datetime, datetime
- *
- * @format
- */
-
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
-    var Utils = Metro.utils;
-    var DatePickerDefaultConfig = {
+
+    let DatePickerDefaultConfig = {
         label: "",
         datepickerDeferred: 0,
         gmt: 0,
@@ -42,12 +37,12 @@
         onDatePickerCreate: Metro.noop,
     };
 
-    Metro.datePickerSetup = function (options) {
+    Metro.datePickerSetup = (options) => {
         DatePickerDefaultConfig = $.extend({}, DatePickerDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDatePickerSetup"] !== "undefined") {
-        Metro.datePickerSetup(globalThis["metroDatePickerSetup"]);
+    if (typeof globalThis.metroDatePickerSetup !== "undefined") {
+        Metro.datePickerSetup(globalThis.metroDatePickerSetup);
     }
 
     Metro.Component("date-picker", {
@@ -67,20 +62,20 @@
         },
 
         _create: function () {
-            var element = this.element,
-                o = this.options,
-                locale = this.locale;
-            var date = datetime();
+            const element = this.element;
+            const o = this.options;
+            const locale = this.locale;
+            const date = datetime();
 
             if (o.distance < 1) {
                 o.distance = 1;
             }
 
-            if (Utils.isValue(element.val())) {
+            if (Metro.utils.isValue(element.val())) {
                 o.value = element.val();
             }
 
-            if (Utils.isValue(o.value)) {
+            if (Metro.utils.isValue(o.value)) {
                 this.value = o.inputFormat ? Datetime.from(o.value, o.inputFormat, locale) : datetime(o.value);
             }
 
@@ -102,27 +97,35 @@
         },
 
         _createStructure: function () {
-            var element = this.element,
-                o = this.options,
-                locale = this.locale;
-            var picker, month, day, year, i, j;
-            var dateWrapper, selectWrapper, selectBlock, actionBlock;
+            const element = this.element;
+            const o = this.options;
+            const locale = this.locale;
+            let picker;
+            let month;
+            let day;
+            let year;
+            let i;
+            let j;
+            let dateWrapper;
+            let selectBlock;
 
-            var id = Utils.elementId("datepicker");
+            const id = Metro.utils.elementId("datepicker");
 
-            picker = $("<div>")
-                .addClass("wheel-picker date-picker " + element[0].className)
-                .addClass(o.clsPicker);
+            picker = $("<div>").addClass(`wheel-picker date-picker ${element[0].className}`).addClass(o.clsPicker);
 
             if (!picker.attr("id")) {
-                picker.attr("id", id);
+                picker.attr("id", Hooks.useId(element[0]));
             }
-            
+
             picker.insertBefore(element);
             element.appendTo(picker);
 
             if (o.label) {
-                var label = $("<label>").addClass("label-for-input").addClass(o.clsLabel).html(o.label).insertBefore(picker);
+                const label = $("<label>")
+                    .addClass("label-for-input")
+                    .addClass(o.clsLabel)
+                    .html(o.label)
+                    .insertBefore(picker);
                 if (element.attr("id")) {
                     label.attr("for", element.attr("id"));
                 }
@@ -143,8 +146,7 @@
                 year = $("<div>").addClass("year").addClass(o.clsPart).addClass(o.clsYear).appendTo(dateWrapper);
             }
 
-            selectWrapper = $("<div>").addClass("select-wrapper").appendTo(picker);
-
+            const selectWrapper = $("<div>").addClass("select-wrapper").appendTo(picker);
             selectBlock = $("<div>").addClass("select-block").appendTo(selectWrapper);
 
             if (o.month === true) {
@@ -153,7 +155,7 @@
                 for (i = 0; i < 12; i++) {
                     const month_name = Datetime.getLocale(locale).months[i];
                     $("<li>")
-                        .addClass("js-month-" + i + " js-month-real-" + month_name.toLowerCase())
+                        .addClass(`js-month-${i} js-month-real-${month_name.toLowerCase()}`)
                         .html(month_name)
                         .data("value", i)
                         .appendTo(month);
@@ -166,7 +168,7 @@
                 for (i = 0; i < o.distance; i++) $("<li>").html("&nbsp;").data("value", -1).appendTo(day);
                 for (i = 0; i < 31; i++) {
                     $("<li>")
-                        .addClass("js-day-" + i + " js-day-real-" + (i + 1))
+                        .addClass(`js-day-${i} js-day-real-${i + 1}`)
                         .html(i + 1)
                         .data("value", i + 1)
                         .appendTo(day);
@@ -178,18 +180,14 @@
                 year = $("<ul>").addClass("sel-year").appendTo(selectBlock);
                 for (i = 0; i < o.distance; i++) $("<li>").html("&nbsp;").data("value", -1).appendTo(year);
                 for (i = o.minYear, j = 0; i <= o.maxYear; i++, j++) {
-                    $("<li>")
-                        .addClass("js-year-" + j + " js-year-real-" + i)
-                        .html(i)
-                        .data("value", i)
-                        .appendTo(year);
+                    $("<li>").addClass(`js-year-${j} js-year-real-${i}`).html(i).data("value", i).appendTo(year);
                 }
                 for (i = 0; i < o.distance; i++) $("<li>").html("&nbsp;").data("value", -1).appendTo(year);
             }
 
             selectBlock.height((o.distance * 2 + 1) * 40);
 
-            actionBlock = $("<div>").addClass("action-block").appendTo(selectWrapper);
+            const actionBlock = $("<div>").addClass("action-block").appendTo(selectWrapper);
             $("<button>")
                 .attr("type", "button")
                 .addClass("button action-today")
@@ -227,31 +225,29 @@
         },
 
         _createEvents: function () {
-            var that = this,
-                o = this.options;
-            var picker = this.picker;
+            const that = this;
+            const o = this.options;
+            const picker = this.picker;
 
             picker.on("touchstart", ".select-block ul", function (e) {
                 if (e.changedTouches) {
                     return;
                 }
-
-                var target = this;
-                var pageY = Utils.pageXY(e).y;
+                let pageY = Metro.utils.pageXY(e).y;
 
                 $(document).on(
                     "touchmove",
-                    function (e) {
-                        target.scrollTop -= o.scrollSpeed * (pageY > Utils.pageXY(e).y ? -1 : 1);
+                    (e) => {
+                        this.scrollTop -= o.scrollSpeed * (pageY > Metro.utils.pageXY(e).y ? -1 : 1);
 
-                        pageY = Utils.pageXY(e).y;
+                        pageY = Metro.utils.pageXY(e).y;
                     },
                     { ns: picker.attr("id") },
                 );
 
                 $(document).on(
                     "touchend",
-                    function () {
+                    () => {
                         $(document).off(Metro.events.move, { ns: picker.attr("id") });
                         $(document).off(Metro.events.stop, { ns: picker.attr("id") });
                     },
@@ -259,108 +255,101 @@
                 );
             });
 
-            picker.on(Metro.events.click, function (e) {
+            picker.on(Metro.events.click, (e) => {
                 if (that.isOpen === false) that.open();
                 e.stopPropagation();
             });
 
-            picker.on(Metro.events.click, ".action-ok", function (e) {
-                var m, d, y;
-                var sm = picker.find(".sel-month li.active"),
-                    sd = picker.find(".sel-day li.active"),
-                    sy = picker.find(".sel-year li.active");
+            picker.on(Metro.events.click, ".action-ok", (e) => {
+                const sm = picker.find(".sel-month li.active");
+                const sd = picker.find(".sel-day li.active");
+                const sy = picker.find(".sel-year li.active");
 
-                m = sm.length === 0 ? that.value.value.getMonth() : sm.data("value");
-                d = sd.length === 0 ? that.value.value.getDate() : sd.data("value");
-                y = sy.length === 0 ? that.value.value.getFullYear() : sy.data("value");
-
+                const m = sm.length === 0 ? that.value.value.getMonth() : sm.data("value");
+                const d = sd.length === 0 ? that.value.value.getDate() : sd.data("value");
+                const y = sy.length === 0 ? that.value.value.getFullYear() : sy.data("value");
                 that.value = datetime(y, m, d);
                 // that._correct();
                 that._set();
                 that.close();
-                
+
                 e.preventDefault();
                 e.stopPropagation();
             });
 
-            picker.on(Metro.events.click, ".action-cancel", function (e) {
+            picker.on(Metro.events.click, ".action-cancel", (e) => {
                 that.close();
                 e.preventDefault();
                 e.stopPropagation();
             });
 
-            var scrollLatency = 150;
+            const scrollLatency = 150;
             $.each(["month", "day", "year"], function () {
-                var part = this,
-                    list = picker.find(".sel-" + part);
+                const list = picker.find(`.sel-${this}`);
 
-                const scrollFn = Hooks.useDebounce(function (e) {
-                    var target, targetElement, scrollTop;
+                const scrollFn = Hooks.useDebounce((e) => {
+                    that.listTimer[this] = null;
 
-                    that.listTimer[part] = null;
-
-                    target = Math.round(Math.ceil(list.scrollTop()) / 40);
-
-                    targetElement = list.find(".js-" + part + "-" + target);
-                    scrollTop = targetElement.position().top - o.distance * 40;
-
+                    const target = Math.round(Math.ceil(list.scrollTop()) / 40);
+                    const targetElement = list.find(`.js-${this}-${target}`);
+                    const scrollTop = targetElement.position().top - o.distance * 40;
                     list.find(".active").removeClass("active");
 
                     list[0].scrollTop = scrollTop;
                     targetElement.addClass("active");
-                    Utils.exec(o.onScroll, [targetElement, list, picker], list[0]);
-                }, scrollLatency)
+                    Metro.utils.exec(o.onScroll, [targetElement, list, picker], list[0]);
+                }, scrollLatency);
 
-                list.on("scroll", scrollFn)
+                list.on("scroll", scrollFn);
             });
-            
+
             picker.on(Metro.events.click, "ul li", function (e) {
-                const target = $(this)
-                const list = target.closest("ul")
+                const target = $(this);
+                const list = target.closest("ul");
                 const scrollTop = target.position().top - o.distance * 40;
                 list.find(".active").removeClass("active");
                 $.animate({
                     el: list[0],
                     draw: {
-                        scrollTop
+                        scrollTop,
                     },
                     dur: 300,
-                })
+                });
                 list[0].scrollTop = scrollTop;
                 target.addClass("active");
-                Utils.exec(o.onScroll, [target, list, picker], list[0]);
-            })
-            
-            picker.on(Metro.events.click, ".action-today", function (e) {
-                const now = datetime()
-                const month = now.month()
-                const day = now.day()
-                const year = now.year()
-                
+                Metro.utils.exec(o.onScroll, [target, list, picker], list[0]);
+            });
+
+            picker.on(Metro.events.click, ".action-today", (e) => {
+                const now = datetime();
+                const month = now.month();
+                const day = now.day();
+                const year = now.year();
+
                 picker.find(`.sel-month li.js-month-${month}`).click();
                 picker.find(`.sel-day li.js-day-real-${day}`).click();
                 picker.find(`.sel-year li.js-year-real-${year}`).click();
 
                 e.preventDefault();
                 e.stopPropagation();
-            })
+            });
         },
 
         _correct: function () {
-            var m = this.value.month(),
-                d = this.value.day(),
-                y = this.value.year();
+            const m = this.value.month();
+            const d = this.value.day();
+            const y = this.value.year();
 
             this.value = datetime(y, m, d);
         },
 
         _set: function () {
-            var element = this.element,
-                o = this.options;
-            var picker = this.picker;
-            var m = Datetime.getLocale(this.locale).months[this.value.month()],
-                d = this.value.day(),
-                y = this.value.year();
+            const element = this.element;
+            const o = this.options;
+            const picker = this.picker;
+            const m = Datetime.getLocale(this.locale).months[this.value.month()];
+            const d = this.value.day();
+            const y = this.value.year();
 
             if (o.month === true) {
                 picker.find(".month").html(m);
@@ -382,13 +371,12 @@
         },
 
         open: function () {
-            var o = this.options;
-            var picker = this.picker;
-            var m = this.value.month(),
-                d = this.value.day() - 1,
-                y = this.value.year();
-            var m_list, d_list, y_list;
-            var select_wrapper = picker.find(".select-wrapper");
+            const o = this.options;
+            const picker = this.picker;
+            const m = this.value.month();
+            const d = this.value.day() - 1;
+            const y = this.value.year();
+            const select_wrapper = picker.find(".select-wrapper");
 
             $.each($(".date-picker"), function () {
                 $(this)
@@ -397,7 +385,7 @@
                         Metro.getPlugin(this, "datepicker").close();
                     });
             });
-            
+
             select_wrapper.show(0);
             picker.find("li").removeClass("active");
 
@@ -416,45 +404,31 @@
                     select_wrapper.parent().addClass("drop-up-select");
                 }
             }
-            
+
             if (o.month === true) {
-                m_list = picker.find(".sel-month");
+                const m_list = picker.find(".sel-month");
                 m_list.scrollTop(0).animate({
                     draw: {
-                        scrollTop:
-                            m_list
-                                .find("li.js-month-" + m)
-                                .addClass("active")
-                                .position().top -
-                            40 * o.distance,
+                        scrollTop: m_list.find(`li.js-month-${m}`).addClass("active").position().top - 40 * o.distance,
                     },
                     dur: 100,
                 });
             }
             if (o.day === true) {
-                d_list = picker.find(".sel-day");
+                const d_list = picker.find(".sel-day");
                 d_list.scrollTop(0).animate({
                     draw: {
-                        scrollTop:
-                            d_list
-                                .find("li.js-day-" + d)
-                                .addClass("active")
-                                .position().top -
-                            40 * o.distance,
+                        scrollTop: d_list.find(`li.js-day-${d}`).addClass("active").position().top - 40 * o.distance,
                     },
                     dur: 100,
                 });
             }
             if (o.year === true) {
-                y_list = picker.find(".sel-year");
+                const y_list = picker.find(".sel-year");
                 y_list.scrollTop(0).animate({
                     draw: {
                         scrollTop:
-                            y_list
-                                .find("li.js-year-real-" + y)
-                                .addClass("active")
-                                .position().top -
-                            40 * o.distance,
+                            y_list.find(`li.js-year-real-${y}`).addClass("active").position().top - 40 * o.distance,
                     },
                     dur: 100,
                 });
@@ -469,7 +443,8 @@
         },
 
         close: function () {
-            var picker = this.picker, o = this.options;
+            const picker = this.picker;
+            const o = this.options;
             picker.find(".select-wrapper").hide(0);
             if (o.openMode === "auto") {
                 picker.find(".select-wrapper").parent().removeClass("drop-up-select drop-as-dialog");
@@ -483,9 +458,9 @@
         },
 
         val: function (value) {
-            var o = this.options;
+            const o = this.options;
 
-            if (!Utils.isValue(value)) {
+            if (!Metro.utils.isValue(value)) {
                 return this.element.val();
             }
 
@@ -541,11 +516,11 @@
         },
 
         destroy: function () {
-            var element = this.element,
-                picker = this.picker;
+            const element = this.element;
+            const picker = this.picker;
 
             $.each(["moth", "day", "year"], function () {
-                picker.find(".sel-" + this).off("scroll");
+                picker.find(`.sel-${this}`).off("scroll");
             });
 
             picker.off(Metro.events.start, ".select-block ul");
@@ -557,7 +532,7 @@
         },
     });
 
-    $(document).on(Metro.events.click, function () {
+    $(document).on(Metro.events.click, () => {
         $.each($(".date-picker"), function () {
             $(this)
                 .find("input")

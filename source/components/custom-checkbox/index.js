@@ -1,2 +1,2 @@
-import "./custom-checkbox.less"
-import "./custom-checkbox.js"
+import "./custom-checkbox.less";
+import "./custom-checkbox.js";

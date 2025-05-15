@@ -1,1 +1,1 @@
-import "./wheelpicker.less"
+import "./wheelpicker.less";

@@ -1,1 +1,1 @@
-import "./md5.js"
+import "./md5.js";

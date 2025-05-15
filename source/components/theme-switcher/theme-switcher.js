@@ -1,4 +1,5 @@
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
 
     let ThemeSwitcherDefaultConfig = {
@@ -14,12 +15,12 @@
         onChangeTheme: Metro.noop,
     };
 
-    Metro.themeSwitcherSetup = function (options) {
+    Metro.themeSwitcherSetup = (options) => {
         ThemeSwitcherDefaultConfig = $.extend({}, ThemeSwitcherDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroThemeSwitcherSetup"] !== "undefined") {
-        Metro.themeSwitcherSetup(globalThis["metroThemeSwitcherSetup"]);
+    if (typeof globalThis.metroThemeSwitcherSetup !== "undefined") {
+        Metro.themeSwitcherSetup(globalThis.metroThemeSwitcherSetup);
     }
 
     Metro.Component("theme-switcher", {
@@ -41,8 +42,8 @@
         },
 
         _createStructure: function () {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             let initState = "light";
 
             if (o.saveState) {
@@ -53,7 +54,7 @@
             element.attr("data-dark-symbol", o.darkSymbol);
 
             Metro.makePlugin(element, "switch");
-            
+
             this.container = element.wrap($("<label>").addClass("theme-switcher"));
             this.container.addClass(`mode-${o.mode}`);
 
@@ -76,13 +77,13 @@
 
         _observeClass: function () {
             const observer = new MutationObserver((mutations) => {
-                mutations.forEach((mutation) => {
+                for (const mutation of mutations) {
                     if (mutation.type === "attributes") {
                         if (mutation.attributeName === "class") {
                             this.elem.checked = this.target[0].classList.contains("dark-side");
                         }
                     }
-                });
+                }
             });
             observer.observe(this.target[0], {
                 attributes: true,
@@ -95,15 +96,15 @@
         },
 
         _updateState: function () {
-            const usingMeta = $.meta("metro:theme").length > 0
-            const o = this.options,
-                elem = this.elem,
-                target = this.target;
+            const usingMeta = $.meta("metro:theme").length > 0;
+            const o = this.options;
+            const elem = this.elem;
+            const target = this.target;
 
             if (usingMeta) {
-                return
+                return;
             }
-            
+
             if (elem.checked) {
                 target.addClass("dark-side").addClass(this.options.clsDark);
             } else {
@@ -118,7 +119,7 @@
         },
 
         val: function (value) {
-            if (typeof value === undefined) {
+            if (typeof value === "undefined") {
                 return this.elem.checked ? Metro.theme.DARK : Metro.theme.LIGHT;
             }
             this._setState(typeof value === "boolean" ? value : value === Metro.theme.DARK);

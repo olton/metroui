@@ -1,54 +1,53 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var ButtonGroupDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+    let ButtonGroupDefaultConfig = {
         buttongroupDeferred: 0,
         targets: "button",
         clsActive: "",
         requiredButton: false,
         mode: Metro.groupMode.ONE,
         onButtonClick: Metro.noop,
-        onButtonGroupCreate: Metro.noop
+        onButtonGroupCreate: Metro.noop,
     };
 
-    Metro.buttonGroupSetup = function(options){
+    Metro.buttonGroupSetup = (options) => {
         ButtonGroupDefaultConfig = $.extend({}, ButtonGroupDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroButtonGroupSetup"] !== "undefined") {
-        Metro.buttonGroupSetup(globalThis["metroButtonGroupSetup"]);
+    if (typeof globalThis.metroButtonGroupSetup !== "undefined") {
+        Metro.buttonGroupSetup(globalThis.metroButtonGroupSetup);
     }
 
-    Metro.Component('button-group', {
-        init: function( options, elem ) {
+    Metro.Component("button-group", {
+        init: function (options, elem) {
             this._super(elem, options, ButtonGroupDefaultConfig, {
                 active: null,
-                id: Utils.elementId("button-group")
+                id: Metro.utils.elementId("button-group"),
             });
 
             return this;
         },
 
-        _create: function(){
-            var element = this.element;
+        _create: function () {
+            const element = this.element;
 
             this._createGroup();
             this._createEvents();
 
             this._fireEvent("button-group-create", {
-                element: element
-            })
+                element: element,
+            });
         },
 
-        _createGroup: function(){
-            var element = this.element, o = this.options;
-            var buttons, buttons_active;
+        _createGroup: function () {
+            const element = this.element;
+            const o = this.options;
 
             element.addClass("button-group");
 
-            buttons = element.find( o.targets );
-            buttons_active = element.find( ".active" );
+            const buttons = element.find(o.targets);
+            const buttons_active = element.find(".active");
 
             if (o.mode === Metro.groupMode.ONE && buttons_active.length === 0 && o.requiredButton === true) {
                 $(buttons[0]).addClass("active");
@@ -59,24 +58,23 @@
                 $(buttons[0]).addClass("active");
             }
 
-            element
-                .find( ".active" )
-                .addClass("js-active")
-                .addClass(o.clsActive);
+            element.find(".active").addClass("js-active").addClass(o.clsActive);
         },
 
-        _createEvents: function(){
-            var that = this, element = this.element, o = this.options;
+        _createEvents: function () {
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
-            element.on(Metro.events.click, o.targets, function(){
-                var el = $(this);
+            element.on(Metro.events.click, o.targets, function () {
+                const el = $(this);
 
                 that._fireEvent("button-click", {
-                    button: this
-                })
+                    button: this,
+                });
 
                 if (o.mode === Metro.groupMode.ONE && el.hasClass("active")) {
-                    return ;
+                    return;
                 }
 
                 if (o.mode === Metro.groupMode.ONE) {
@@ -85,19 +83,16 @@
                 } else {
                     el.toggleClass("active").toggleClass(o.clsActive).toggleClass("js-active");
                 }
-
             });
         },
 
-        /* eslint-disable-next-line */
-        changeAttribute: function(attributeName){
-        },
+        changeAttribute: (attributeName) => {},
 
-        destroy: function(){
-            var element = this.element, o = this.options;
+        destroy: function () {
+            const element = this.element;
+            const o = this.options;
             element.off(Metro.events.click, o.targets);
-            return element;
-        }
-
+            element.remove();
+        },
     });
-}(Metro, Dom));
+})(Metro, Dom);

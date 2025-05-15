@@ -1,1 +1,1 @@
-import "./transform-button.less"
+import "./transform-button.less";

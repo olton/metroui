@@ -11,27 +11,13 @@
 <body class="m4-cloak">
 <div class="container">
     <h1 class="text-center">Countdown test page</h1>
-
+    <div class="d-flex flex-center gap-4">
+        <button onclick="reset(1)">Reset 1</button>
+        <button onclick="reset(2)">Reset 2</button>
+    </div>
     <div class="example">
         <div class="row">
-            <div data-role="countdown" data-hours="90" style="font-size: 48px;"></div>
-            <div class="cell-md-4">
-                <div data-role="countdown" data-hours="90" data-animate="slide" style="font-size: 32px;"></div>
-            </div>
-            <div class="cell-md-4">
-                <div data-role="countdown" data-hours="90" data-animate="fade" style="font-size: 32px;"></div>
-            </div>
-            <div class="cell-md-4">
-                <div data-role="countdown" data-hours="90" data-animate="zoom" style="font-size: 32px;" lang="ua"></div>
-            </div>
-        </div>
-
-        <hr>
-        <div>
-            <div id="cd1" data-role="countdown" data-date="12/18/2021" class="countdownItems"></div>
-            <div data-role="countdown" data-date="12/19/2021" class="countdownItems"></div>
-            <div data-role="countdown" data-date="12/20/2021" class="countdownItems"></div>
-            <div data-role="countdown" data-date="12/21/2021" class="countdownItems"></div>
+            <div id="cd1" data-role="countdown" data-animate="slide" data-font-size="96"></div>
         </div>
     </div>
 
@@ -39,11 +25,16 @@
 
 <script src="../lib/metro.js"></script>
 <script>
-    setTimeout(()=>{
+    function reset(v){
         const cd = Metro.getPlugin("#cd1", "countdown")
-        console.log(cd)
-        cd.resetWith("07/15/2024 20:00")
-    }, 1000)
+        if (v === 1) {
+            cd.resetWith("2025/05/15");
+        } else {
+            cd.resetWith({
+                days: 2,
+            });
+        }
+    }
 </script>
 </body>
 </html>

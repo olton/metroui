@@ -1,2 +1,2 @@
-import "./pagination.js"
-import "./pagination.less"
+import "./pagination.js";
+import "./pagination.less";

@@ -1,3 +1,3 @@
-import * as G from "@olton/guardian"
+import * as G from "@olton/guardian";
 
-globalThis.G = G
+globalThis.G = G;

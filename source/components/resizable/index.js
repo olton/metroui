@@ -1,2 +1,2 @@
-import "./resizable.js"
-import "./resizeable.less"
+import "./resizable.js";
+import "./resizeable.less";

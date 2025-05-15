@@ -1,2 +1,2 @@
-import "./typer.js"
-import "./typer.less"
+import "./typer.js";
+import "./typer.less";

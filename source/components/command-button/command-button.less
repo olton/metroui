@@ -106,4 +106,8 @@
             color: var(--command-button-color-hover);
         }
     }
+
+    &.shadow { box-shadow: 6px 6px 0 var(--shadow-color-3d); }
+    &.shadow:active { transform: translate(4px, 4px); }
+    &.shift { &:active {transform: translate(2px, 2px);} }
 }

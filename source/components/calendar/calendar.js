@@ -1,8 +1,6 @@
-/** @format */
-
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
-
     let CalendarDefaultConfig = {
         weekStart: null,
         static: false,
@@ -100,17 +98,17 @@
         onCalendarCreate: Metro.noop,
     };
 
-    Metro.calendarSetup = function (options) {
+    Metro.calendarSetup = (options) => {
         CalendarDefaultConfig = $.extend({}, CalendarDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCalendarSetup"] !== "undefined") {
-        Metro.calendarSetup(globalThis["metroCalendarSetup"]);
+    if (typeof globalThis.metroCalendarSetup !== "undefined") {
+        Metro.calendarSetup(globalThis.metroCalendarSetup);
     }
 
     Metro.Component("calendar", {
         init: function (options, elem) {
-            const time = datetime()
+            const time = datetime();
             const now = this._correctDate(datetime());
 
             this._super(elem, options, CalendarDefaultConfig, {
@@ -142,8 +140,8 @@
         },
 
         _create: function () {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             this.content = o.startContent;
             this.minYear = this.current.year - this.options.yearsBefore;
@@ -151,7 +149,7 @@
 
             element
                 .html("")
-                .addClass("calendar " + (o.compact === true ? "compact" : ""))
+                .addClass(`calendar ${o.compact === true ? "compact" : ""}`)
                 .addClass(o.clsCalendar);
 
             if (Metro.utils.isValue(o.initialTime)) {
@@ -159,11 +157,11 @@
             }
 
             if (Metro.utils.isValue(o.initialHours) && Metro.utils.between(o.initialHours, 0, 23, true)) {
-                this.time[0] = parseInt(o.initialHours);
+                this.time[0] = Number.parseInt(o.initialHours);
             }
 
             if (Metro.utils.isValue(o.initialMinutes) && Metro.utils.between(o.initialMinutes, 0, 59, true)) {
-                this.time[1] = parseInt(o.initialMinutes);
+                this.time[1] = Number.parseInt(o.initialMinutes);
             }
 
             if (o.dayBorder === true) {
@@ -171,7 +169,7 @@
             }
 
             if (Metro.utils.isValue(o.excludeDay)) {
-                this.excludeDay = ("" + o.excludeDay).toArray(",", "int");
+                this.excludeDay = `${o.excludeDay}`.toArray(",", "int");
             }
 
             if (Metro.utils.isValue(o.preset)) {
@@ -190,11 +188,17 @@
                 this._dates2array(o.events, "events");
             }
 
-            this.min = o.minDate ? (o.inputFormat ? Datetime.from(o.minDate, o.inputFormat) : datetime(o.minDate)).align("day") : null;
-            this.max = o.maxDate ? (o.inputFormat ? Datetime.from(o.maxDate, o.inputFormat) : datetime(o.maxDate)).align("day") : null;
+            this.min = o.minDate
+                ? (o.inputFormat ? Datetime.from(o.minDate, o.inputFormat) : datetime(o.minDate)).align("day")
+                : null;
+            this.max = o.maxDate
+                ? (o.inputFormat ? Datetime.from(o.maxDate, o.inputFormat) : datetime(o.maxDate)).align("day")
+                : null;
 
             if (o.show) {
-                this.show = (!o.show ? datetime() : o.inputFormat ? Datetime.from(o.show, o.inputFormat) : datetime(o.show)).align("day");
+                this.show = (
+                    !o.show ? datetime() : o.inputFormat ? Datetime.from(o.show, o.inputFormat) : datetime(o.show)
+                ).align("day");
                 this.current = {
                     year: this.show.year(),
                     month: this.show.month(),
@@ -220,32 +224,33 @@
                 });
             }
 
-            const id = element.id()
-            
+            const id = element.id();
+
             if (id) {
                 if (Metro.storage.getItem(`METRO:CALENDAR:${id}:COLLAPSED`, element.hasClass("calendar-collapsed"))) {
-                    element.addClass("calendar-collapsed")
-                }                
+                    element.addClass("calendar-collapsed");
+                }
             }
 
             this._fireEvent("calendar-create");
         },
 
         _dates2array: function (val, category) {
-            const that = this,
-                o = this.options;
-            let dates;
+            const that = this;
+            const o = this.options;
 
             if (Metro.utils.isNull(val)) {
                 return;
             }
 
-            dates = typeof val === "string" ? val.toArray() : Array.isArray(val) ? val : [];
+            const dates = typeof val === "string" ? val.toArray() : Array.isArray(val) ? val : [];
 
             $.each(dates, function () {
-                let _d
+                let _d;
                 try {
-                    _d = that._correctDate(o.inputFormat ? Datetime.from(this, o.inputFormat) : datetime(this)).format("YYYY-MM-DD");
+                    _d = that
+                        ._correctDate(o.inputFormat ? Datetime.from(this, o.inputFormat) : datetime(this))
+                        .format("YYYY-MM-DD");
                 } catch (e) {
                     return;
                 }
@@ -253,19 +258,17 @@
                 that[category].push(_d);
             });
         },
-        
-        _correctDate: function (date) {
-            return datetime(date).addDay(1).align("day").addMinute(new Date().getTimezoneOffset());
-        },
+
+        _correctDate: (date) => datetime(date).addDay(1).align("day").addMinute(new Date().getTimezoneOffset()),
 
         _createEvents: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
             $(globalThis).on(
                 Metro.events.resize,
-                function () {
+                () => {
                     if (o.wide !== true) {
                         if (!Metro.utils.isNull(o.widePoint) && Metro.utils.mediaExist(o.widePoint)) {
                             element.addClass("calendar-wide");
@@ -277,14 +280,14 @@
                 { ns: this.id },
             );
 
-            element.on(Metro.events.click, ".button-collapse", function () {
-                const id = element.id() 
+            element.on(Metro.events.click, ".button-collapse", () => {
+                const id = element.id();
                 element.toggleClass("calendar-collapsed");
                 if (id) {
                     Metro.storage.setItem(`METRO:CALENDAR:${id}:COLLAPSED`, element.hasClass("calendar-collapsed"));
                 }
-            })
-            
+            });
+
             element.on(Metro.events.click, ".prev-year-group, .next-year-group", function () {
                 if (o.static) {
                     return;
@@ -299,8 +302,8 @@
             });
 
             element.on(Metro.events.click, ".prev-month, .next-month, .prev-year, .next-year", function () {
-                let new_date,
-                    el = $(this);
+                let new_date;
+                const el = $(this);
 
                 if (o.static) {
                     return;
@@ -338,7 +341,7 @@
                 };
 
                 setTimeout(
-                    function () {
+                    () => {
                         that._drawContent();
 
                         if (el.hasClass("prev-month") || el.hasClass("next-month")) {
@@ -357,7 +360,7 @@
                 );
             });
 
-            element.on(Metro.events.click, ".button-today", function () {
+            element.on(Metro.events.click, ".button-today", () => {
                 that.toDay();
                 that._fireEvent("today", {
                     today: that.today.val(),
@@ -365,7 +368,7 @@
                 });
             });
 
-            element.on(Metro.events.click, ".button-clear", function () {
+            element.on(Metro.events.click, ".button-clear", () => {
                 const date = datetime();
 
                 that.selected = [];
@@ -375,12 +378,12 @@
                 that._fireEvent("clear");
             });
 
-            element.on(Metro.events.click, ".button-cancel", function () {
+            element.on(Metro.events.click, ".button-cancel", () => {
                 that._drawContent();
                 that._fireEvent("cancel");
             });
 
-            element.on(Metro.events.click, ".button-done", function () {
+            element.on(Metro.events.click, ".button-done", () => {
                 that._drawContent();
                 that._fireEvent("done", {
                     selected: that.selected,
@@ -390,16 +393,15 @@
 
             if (o.weekDayClick === true) {
                 element.on(Metro.events.click, ".week-days .week-day", function (e) {
-                    let day,
-                        index,
-                        days,
-                        ii = [];
+                    let index;
+                    let days;
+                    const ii = [];
 
                     if (o.static || o.readonly) {
                         return;
                     }
 
-                    day = $(this);
+                    const day = $(this);
                     index = day.index();
 
                     for (let i = 0; i < 7; i++) {
@@ -408,7 +410,7 @@
                     }
 
                     if (o.multiSelect === true) {
-                        days = element.find(".day").filter(function (el) {
+                        days = element.find(".day").filter((el) => {
                             const $el = $(el);
                             return ii.indexOf($el.index()) > -1 && !$el.hasClass("outside disabled excluded");
                         });
@@ -439,11 +441,11 @@
 
             if (o.weekNumberClick) {
                 element.on(Metro.events.click, ".week-number", function (e) {
-                    let $el, wn, index, days;
+                    let days;
 
-                    $el = $(this);
-                    wn = $el.text();
-                    index = $el.index();
+                    const $el = $(this);
+                    const wn = $el.text();
+                    const index = $el.index();
 
                     if (wn === "#") {
                         return;
@@ -454,10 +456,13 @@
                     }
 
                     if (o.multiSelect === true) {
-                        days = element.find(".day").filter(function (el) {
+                        days = element.find(".day").filter((el) => {
                             const $el = $(el);
                             const elIndex = $el.index();
-                            return Metro.utils.between(elIndex, index, index + 8, false) && !$el.hasClass("outside disabled excluded");
+                            return (
+                                Metro.utils.between(elIndex, index, index + 8, false) &&
+                                !$el.hasClass("outside disabled excluded")
+                            );
                         });
 
                         $.each(days, function () {
@@ -487,7 +492,8 @@
 
             element.on(Metro.events.click, ".day", function (e) {
                 const day = $(this);
-                let index, date;
+                let index;
+                let date;
 
                 if (o.static || o.readonly) {
                     return;
@@ -546,7 +552,7 @@
                 e.stopPropagation();
             });
 
-            element.on(Metro.events.click, ".curr-month, .header-day", function (e) {
+            element.on(Metro.events.click, ".curr-month, .header-day", (e) => {
                 that.content = "months";
                 that._drawContent();
 
@@ -555,7 +561,7 @@
             });
 
             element.on(Metro.events.click, ".month", function (e) {
-                that.current.month = parseInt($(this).attr("data-month"));
+                that.current.month = Number.parseInt($(this).attr("data-month"));
                 that.content = "days";
                 that._drawContent();
 
@@ -567,7 +573,7 @@
                 e.stopPropagation();
             });
 
-            element.on(Metro.events.click, ".curr-year, .header-year", function (e) {
+            element.on(Metro.events.click, ".curr-year, .header-year", (e) => {
                 if (that.content === "years") {
                     return;
                 }
@@ -579,7 +585,7 @@
             });
 
             element.on(Metro.events.click, ".year", function (e) {
-                that.current.year = parseInt($(this).attr("data-year"));
+                that.current.year = Number.parseInt($(this).attr("data-year"));
                 that.yearGroupStart = that.current.year;
                 that.content = "months";
                 that._drawContent();
@@ -594,8 +600,8 @@
         },
 
         _drawHeader: function () {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             let header = element.find(".calendar-header");
 
             if (header.length === 0) {
@@ -606,32 +612,35 @@
 
             $("<div>").addClass("header-year").html(this.today.year()).appendTo(header);
             $("<div>").addClass("header-day").html(this.today.format(o.headerFormat, this.locale)).appendTo(header);
-            
+
             const headerActions = $("<div>").addClass("header-actions").appendTo(header);
 
             // $("<button>").addClass("square small button-today").html(`
-            //     <svg aria-hidden="true" class="caret" width="16" height="16"  viewBox="0 0 24 24"> 
+            //     <svg aria-hidden="true" class="caret" width="16" height="16"  viewBox="0 0 24 24">
             //         <path d="M15 17C16.1046 17 17 16.1046 17 15C17 13.8954 16.1046 13 15 13C13.8954 13 13 13.8954 13 15C13 16.1046 13.8954 17 15 17Z"/>
             //         <path d="M6 3C4.34315 3 3 4.34315 3 6V18C3 19.6569 4.34315 21 6 21H18C19.6569 21 21 19.6569 21 18V6C21 4.34315 19.6569 3 18 3H6ZM5 18V7H19V18C19 18.5523 18.5523 19 18 19H6C5.44772 19 5 18.5523 5 18Z" />
             //     </svg>
             // `).attr("title", this.strings.label_today).appendTo(headerActions)
 
-            $("<button>").addClass("square small button-collapse").html(`
+            $("<button>")
+                .addClass("square small button-collapse")
+                .html(`
                 <svg aria-hidden="true" class="caret toggle-collapsed" width="16" height="16" viewBox="0 0 24 24">
                     <path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"></path>
                 </svg>
-            `).attr("title", this.strings.label_collapse).appendTo(headerActions)
-           
-            
+            `)
+                .attr("title", this.strings.label_collapse)
+                .appendTo(headerActions);
+
             if (o.showHeader === false) {
                 header.hide();
             }
         },
 
         _drawFooter: function () {
-            const element = this.element,
-                o = this.options,
-                strings = this.strings;
+            const element = this.element;
+            const o = this.options;
+            const strings = this.strings;
             let footer = element.find(".calendar-footer");
 
             if (!o.buttons) {
@@ -647,7 +656,7 @@
             $.each(o.buttons.toArray(","), function () {
                 const button = $("<button>")
                     .attr("type", "button")
-                    .addClass("button " + `button-${this}` + " " + o["cls" + Str.capitalize(this) + "Button"])
+                    .addClass(`button button-${this} ${o[`cls${Str.capitalize(this)}Button`]}`)
                     .html(strings[`label_${this}`])
                     .appendTo(footer);
                 if (this === "cancel" || this === "done") {
@@ -661,18 +670,21 @@
         },
 
         _drawTime: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
             const strings = this.strings;
             const calendarContent = element.find(".calendar-content");
             const time = $("<div>").addClass("calendar-time").addClass(o.clsCalendarTime).appendTo(calendarContent);
-            let inner, hours, minutes, row;
-            let h = "" + this.time[0];
-            let m = "" + this.time[1];
+            let inner;
+            let hours;
+            let minutes;
+            let row;
+            let h = `${this.time[0]}`;
+            let m = `${this.time[1]}`;
 
             const onChange = function (val) {
-                const value = parseInt(val);
+                const value = Number.parseInt(val);
                 if ($(this).attr("data-time-part") === "hours") {
                     that.time[0] = value;
                     that._fireEvent("hours-change", {
@@ -692,27 +704,35 @@
                 });
             };
 
+            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
             time.append((inner = $("<div>").addClass("calendar-time__inner")));
-
+            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
             inner.append((row = $("<div>").addClass("calendar-time__inner-row")));
-            row.append($("<div>").addClass("calendar-time__inner-cell").append($("<span>").html(str(strings["label_hours"]).capitalize())));
-            row.append($("<div>").addClass("calendar-time__inner-cell").append($("<span>").html(str(strings["label_minutes"]).capitalize())));
+            row.append(
+                $("<div>")
+                    .addClass("calendar-time__inner-cell")
+                    .append($("<span>").html(str(strings.label_hours).capitalize())),
+            );
+            row.append(
+                $("<div>")
+                    .addClass("calendar-time__inner-cell")
+                    .append($("<span>").html(str(strings.label_minutes).capitalize())),
+            );
 
+            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
             time.append((inner = $("<div>").addClass("calendar-time__inner spinners").addClass(o.clsTime)));
             inner.append(
+                // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
                 (hours = $(
-                    "<input type='text' data-cls-spinner-input='" +
-                        o.clsTimeHours +
-                        "' data-time-part='hours' data-buttons-position='right' data-min-value='0' data-max-value='23'>",
+                    `<input type='text' data-cls-spinner-input='${o.clsTimeHours}' data-time-part='hours' data-buttons-position='right' data-min-value='0' data-max-value='23'>`,
                 )
                     .addClass("hours")
                     .addClass(o.compact ? "input-small" : "input-normal")),
             );
             inner.append(
+                // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
                 (minutes = $(
-                    "<input type='text' data-cls-spinner-input='" +
-                        o.clsTimeMinutes +
-                        "' data-time-part='minutes' data-buttons-position='right' data-min-value='0' data-max-value='59'>",
+                    `<input type='text' data-cls-spinner-input='${o.clsTimeMinutes}' data-time-part='minutes' data-buttons-position='right' data-min-value='0' data-max-value='59'>`,
                 )
                     .addClass("minutes")
                     .addClass(o.compact ? "input-small" : "input-normal")),
@@ -737,18 +757,18 @@
         },
 
         _drawContentDays: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
             const strings = this.strings;
 
-            let content = element.find(".calendar-content"),
-                toolbar,
-                weekDays,
-                calendarDays;
+            let content = element.find(".calendar-content");
+            let weekDays;
 
-            const calendar = datetime(this.current.year, this.current.month, this.current.day).useLocale(this.locale, true).calendar(Metro.utils.isValue(o.weekStart) ? o.weekStart : strings["weekStart"]);
+            const calendar = datetime(this.current.year, this.current.month, this.current.day)
+                .useLocale(this.locale, true)
+                .calendar(Metro.utils.isValue(o.weekStart) ? o.weekStart : strings.weekStart);
             const showDay = this.show.format("YYYY-MM-DD");
             const now = datetime();
 
@@ -762,10 +782,13 @@
 
             content.empty();
 
-            toolbar = $("<div>").addClass("calendar-toolbar").appendTo(content);
+            const toolbar = $("<div>").addClass("calendar-toolbar").appendTo(content);
 
             $("<span>").addClass("prev-month").html(o.prevMonthIcon).appendTo(toolbar);
-            $("<span>").addClass("curr-month").html(Datetime.getLocale(this.locale).months[this.current.month]).appendTo(toolbar);
+            $("<span>")
+                .addClass("curr-month")
+                .html(Datetime.getLocale(this.locale).months[this.current.month])
+                .appendTo(toolbar);
             $("<span>").addClass("next-month").html(o.nextMonthIcon).appendTo(toolbar);
 
             $("<span>").addClass("prev-year").html(o.prevYearIcon).appendTo(toolbar);
@@ -776,14 +799,14 @@
             if (o.showWeekNumber) {
                 $("<span>").addClass("week-number").html("#").appendTo(weekDays);
             }
-            $.each(calendar["weekdays"], function () {
+            $.each(calendar.weekdays, function () {
                 $("<span>").addClass("week-day").html(this).appendTo(weekDays);
             });
 
-            calendarDays = $("<div>").addClass("days").appendTo(content);
+            const calendarDays = $("<div>").addClass("days").appendTo(content);
 
-            $.each(calendar["days"], function (i) {
-                const day = this;
+            $.each(calendar.days, function (i) {
+                const day = `${this}`;
                 const date = that._correctDate(day);
                 const outsideDate = date.month() !== that.current.month;
 
@@ -794,9 +817,12 @@
                         .appendTo(calendarDays);
                 }
 
-                const _day = date.day(),
-                    _data = date.format("YYYY-MM-DD");
-                const cell = $("<span>").addClass("day").html(`<span class="day-content">${_day}</span>`).appendTo(calendarDays);
+                const _day = date.day();
+                const _data = date.format("YYYY-MM-DD");
+                const cell = $("<span>")
+                    .addClass("day")
+                    .html(`<span class="day-content">${_day}</span>`)
+                    .appendTo(calendarDays);
 
                 cell.attr("data-day", _data);
 
@@ -811,7 +837,7 @@
                     }
                 }
 
-                if (day === calendar["today"]) {
+                if (day === calendar.today) {
                     cell.addClass("today");
                 }
 
@@ -840,11 +866,11 @@
                     }
                 }
 
-                if (calendar["weekends"].indexOf(day) !== -1) {
+                if (calendar.weekends.indexOf(day) !== -1) {
                     cell.addClass(o.clsWeekend);
                 }
 
-                if (calendar["week"].indexOf(day) !== -1) {
+                if (calendar.week.indexOf(day) !== -1) {
                     cell.addClass(o.clsCurrentWeek);
                 }
 
@@ -880,17 +906,16 @@
         },
 
         _drawContentMonths: function () {
-            const element = this.element,
-                elem = this.elem,
-                o = this.options,
-                locale = this.locale;
+            const element = this.element;
+            const elem = this.elem;
+            const o = this.options;
+            const locale = this.locale;
 
             let content = element.find(".calendar-content");
-            let toolbar,
-                months,
-                month,
-                yearToday = datetime().year(),
-                monthToday = datetime().month();
+            let months;
+            let month;
+            const yearToday = datetime().year();
+            const monthToday = datetime().month();
 
             if (content.length === 0) {
                 content = $("<div>").addClass("calendar-content").addClass(o.clsCalendarContent).appendTo(element);
@@ -898,7 +923,7 @@
 
             content.clear();
 
-            toolbar = $("<div>").addClass("calendar-toolbar").appendTo(content);
+            const toolbar = $("<div>").addClass("calendar-toolbar").appendTo(content);
 
             /**
              * Calendar toolbar
@@ -908,11 +933,13 @@
             $("<span>").addClass("curr-year").html(this.current.year).appendTo(toolbar);
             $("<span>").addClass("next-year").html(o.nextYearIcon).appendTo(toolbar);
 
+            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
             content.append((months = $("<div>").addClass("months")));
 
             let index = 0;
-            for (let m of Datetime.getLocale(locale).months) {
+            for (const m of Datetime.getLocale(locale).months) {
                 months.append(
+                    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
                     (month = $("<div>")
                         .attr("data-month", index)
                         .addClass("month")
@@ -937,10 +964,11 @@
         },
 
         _drawContentYears: function () {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             let content = element.find(".calendar-content");
-            let toolbar, years, year;
+            let years;
+            let year;
 
             if (content.length === 0) {
                 content = $("<div>").addClass("calendar-content").addClass(o.clsCalendarContent).appendTo(element);
@@ -948,7 +976,7 @@
 
             content.clear();
 
-            toolbar = $("<div>").addClass("calendar-toolbar").appendTo(content);
+            const toolbar = $("<div>").addClass("calendar-toolbar").appendTo(content);
 
             /**
              * Calendar toolbar
@@ -957,14 +985,16 @@
             $("<span>").addClass("prev-year-group").html(o.prevYearIcon).appendTo(toolbar);
             $("<span>")
                 .addClass("curr-year")
-                .html(this.yearGroupStart + " - " + (this.yearGroupStart + this.yearDistance))
+                .html(`${this.yearGroupStart} - ${this.yearGroupStart + this.yearDistance}`)
                 .appendTo(toolbar);
             $("<span>").addClass("next-year-group").html(o.nextYearIcon).appendTo(toolbar);
 
+            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
             content.append((years = $("<div>").addClass("years")));
 
             for (let i = this.yearGroupStart; i <= this.yearGroupStart + this.yearDistance; i++) {
                 years.append(
+                    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
                     (year = $("<div>")
                         .attr("data-year", i)
                         .addClass("year")
@@ -1004,39 +1034,34 @@
         },
 
         _drawCalendar: function () {
-            const that = this,
-                element = this.elem;
-            setTimeout(function () {
-                that.element.html("");
-                that._drawHeader();
-                that._drawContent();
-                that._drawFooter();
-                Metro.i18n.updateUI(element, that.locale);
+            const element = this.elem;
+            setTimeout(() => {
+                this.element.html("");
+                this._drawHeader();
+                this._drawContent();
+                this._drawFooter();
+                Metro.i18n.updateUI(element, this.locale);
             }, 0);
         },
 
-        _animateContent: function (target, cls) {
-            const element = this.element,
-                o = this.options;
+        _animateContent: function (target, cls = "to-animate") {
+            const element = this.element;
+            const o = this.options;
             const content = element.find(".calendar-content");
-
-            cls = cls || "to-animate";
 
             content.find(target).each(function (k) {
                 const day = $(this);
-                setTimeout(function () {
+                setTimeout(() => {
                     day.removeClass(cls);
                 }, o.animationSpeed * k);
             });
         },
 
         getTime: function (asString = false) {
-            let h, m;
+            const h = Str.lpad(this.time[0], "0", 2);
+            const m = Str.lpad(this.time[1], "0", 2);
 
-            h = Str.lpad(this.time[0], "0", 2);
-            m = Str.lpad(this.time[1], "0", 2);
-
-            return asString ? h + ":" + m : this.time;
+            return asString ? `${h}:${m}` : this.time;
         },
 
         setTime: function (time) {
@@ -1074,7 +1099,7 @@
         },
 
         toDay: function () {
-            const time = datetime()
+            const time = datetime();
             this.today = datetime().align("day");
             this.current = {
                 year: this.today.year(),
@@ -1089,22 +1114,22 @@
         },
 
         setExclude: function (exclude) {
-            const element = this.element,
-                o = this.options;
-            
+            const element = this.element;
+            const o = this.options;
+
             if (Metro.utils.isNull(exclude) && Metro.utils.isNull(element.attr("data-exclude"))) {
                 return;
             }
-            
+
             o.exclude = exclude ? exclude : element.attr("data-exclude");
-            
+
             this._dates2array(o.exclude, "exclude");
             this._drawContent();
         },
 
         setPreset: function (preset) {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             if (Metro.utils.isNull(preset) && Metro.utils.isNull(element.attr("data-preset"))) {
                 return;
@@ -1117,15 +1142,15 @@
         },
 
         setSpecial: function (special) {
-            const element = this.element,
-                o = this.options;
-            
+            const element = this.element;
+            const o = this.options;
+
             if (Metro.utils.isNull(special) && Metro.utils.isNull(element.attr("data-special"))) {
                 return;
             }
-            
+
             o.special = special ? special : element.attr("data-special");
-            
+
             this._dates2array(o.exclude, "special");
             this._drawContent();
         },
@@ -1135,8 +1160,8 @@
         },
 
         setShow: function (show) {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             const attr = element.attr("data-show");
 
             if (!show && !attr) {
@@ -1167,8 +1192,8 @@
         },
 
         setMinDate: function (date) {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             const attr = element.attr("data-min-date");
 
             if (!date && !attr) {
@@ -1177,19 +1202,23 @@
 
             o.minDate = date ? date : attr;
 
-            this.min = o.minDate ? (o.inputFormat ? Datetime.from(o.minDate, o.inputFormat) : datetime(o.minDate)).align("day") : null;
+            this.min = o.minDate
+                ? (o.inputFormat ? Datetime.from(o.minDate, o.inputFormat) : datetime(o.minDate)).align("day")
+                : null;
 
             this._drawContent();
         },
 
         setMaxDate: function (date) {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
             const attr = element.attr("data-max-date");
 
             o.maxDate = date ? date : attr;
 
-            this.max = o.maxDate ? (o.inputFormat ? Datetime.from(o.maxDate, o.inputFormat) : datetime(o.maxDate)).align("day") : null;
+            this.max = o.maxDate
+                ? (o.inputFormat ? Datetime.from(o.maxDate, o.inputFormat) : datetime(o.maxDate)).align("day")
+                : null;
 
             this._drawContent();
         },
@@ -1218,8 +1247,8 @@
         },
 
         destroy: function () {
-            const element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             element.off(Metro.events.click, ".prev-month, .next-month, .prev-year, .next-year");
             element.off(Metro.events.click, ".button.today");
@@ -1244,7 +1273,7 @@
         },
     });
 
-    $(document).on(Metro.events.click, function () {
+    $(document).on(Metro.events.click, () => {
         $(".calendar .calendar-years").each(function () {
             $(this).removeClass("open");
         });

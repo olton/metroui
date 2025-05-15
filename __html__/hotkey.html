@@ -13,14 +13,22 @@
     <h1>Hotkey test page</h1>
 
     <div class="example">
-        <button class="button" data-hotkey="alt+1" onclick="console.log('Button clicked!')">Button</button>
-        <button class="button" data-hotkey="alt+2" data-repeat="true" onclick="console.log('Button clicked!')">Button</button>
+        <button class="button" data-hotkey="ctrl+alt+1" onclick="alert('Button1 clicked!')">Button</button>
+        <button class="button" data-hotkey="alt+2" data-repeat="true" onclick="alert('Button2 clicked!')">Button</button>
+        <button class="button" data-hotkey="alt+3 4" onclick="alert('Button3 clicked!')">Button</button>
+        <button class="button" data-hotkey="alt+meta+," onclick="alert('Button4 clicked!')">Button</button>
+        <button class="button" id="btn5" onclick="alert('Button5 clicked!')">Button</button>
+        <input type="text" id="inp1" placeholder="Input field" value="lorem impsum dolor emet"/>
     </div>
 
 </div>
 
 <script src="../lib/metro.js"></script>
 <script>
+    $("#inp1").hotkey("alt+1", function() {
+        this.value = this.value.toUpperCase();
+    });
+    $("#btn5").hotkey("alt+5");
 </script>
 </body>
 </html>

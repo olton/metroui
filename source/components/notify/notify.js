@@ -1,12 +1,16 @@
-/* global Metro, METRO_TIMEOUT, METRO_ANIMATION_DURATION */
-(function(Metro, $) {
-    'use strict';
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    const NOTIFY_TIMEOUT = 3000;
+    const NOTIFY_WIDTH = 220;
+    const NOTIFY_DURATION = 200;
 
     let NotifyDefaultConfig = {
         container: null,
-        width: 220,
-        timeout: 3000,
-        duration: METRO_ANIMATION_DURATION,
+        width: NOTIFY_WIDTH,
+        timeout: NOTIFY_TIMEOUT,
+        duration: NOTIFY_DURATION,
         distance: "max",
         animation: "linear",
         clsNotify: "",
@@ -14,15 +18,15 @@
         onClose: Metro.noop,
         onShow: Metro.noop,
         onAppend: Metro.noop,
-        onNotifyCreate: Metro.noop
+        onNotifyCreate: Metro.noop,
     };
 
-    Metro.notifySetup = function(options){
+    Metro.notifySetup = (options) => {
         NotifyDefaultConfig = $.extend({}, NotifyDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroNotifySetup"] !== "undefined") {
-        Metro.notifySetup(globalThis["metroNotifySetup"]);
+    if (typeof globalThis.metroNotifySetup !== "undefined") {
+        Metro.notifySetup(globalThis.metroNotifySetup);
     }
 
     const Notify = {
@@ -30,31 +34,34 @@
         options: {},
         notifies: [],
 
-        setup: function(options){
+        setup: function (options) {
             this.options = $.extend({}, NotifyDefaultConfig, options);
             return this;
         },
 
-        reset: function(){
+        reset: function () {
             const reset_options = {
-                width: 220,
-                timeout: METRO_TIMEOUT,
-                duration: METRO_ANIMATION_DURATION,
+                width: NOTIFY_WIDTH,
+                timeout: NOTIFY_TIMEOUT,
+                duration: NOTIFY_DURATION,
                 distance: "max",
-                animation: "linear"
+                animation: "linear",
             };
             this.options = $.extend({}, NotifyDefaultConfig, reset_options);
         },
 
-        _createContainer: function(){
+        _createContainer: () => {
             const container = $("<div>").addClass("notify-container");
             $("body").prepend(container);
             return container;
         },
 
-        create: function(message, title, options = {}){
-            const that = this, o = this.options
-            let notify, m, t, id = Metro.utils.elementId("notify");
+        create: function (message, title, options = {}) {
+            const that = this;
+            const o = this.options;
+            let notify;
+            let t;
+            const id = Metro.utils.elementId("notify");
 
             if (!message) {
                 return false;
@@ -62,32 +69,35 @@
 
             notify = $("<div>").addClass("notify").addClass(o.clsNotify).attr("id", id);
             notify.css({
-                width: o.width
+                width: o.width,
             });
 
             if (title) {
                 t = $("<div>").addClass("notify-title").html(title);
                 notify.prepend(t);
             }
-            m = $("<div>").addClass("notify-message").html(message);
+            const m = $("<div>").addClass("notify-message").html(message);
             m.appendTo(notify);
 
             // Set options
             /*
-            * keepOpen, cls, width, callback
-            * */
+             * keepOpen, cls, width, callback
+             * */
             if (options.clsNotify) {
                 notify.addClass(options.clsNotify);
             }
             if (options.width !== undefined) {
                 notify.css({
-                    width: options.width
+                    width: options.width,
                 });
             }
 
-            notify.on(Metro.events.click, function(){
+            notify.on(Metro.events.click, function () {
                 Metro.utils.exec(Metro.utils.isValue(options.onClick) ? options.onClick : o.onClick, null, this);
-                that.kill($(this).closest(".notify"), Metro.utils.isValue(options.onClose) ? options.onClose : o.onClose);
+                that.kill(
+                    $(this).closest(".notify"),
+                    Metro.utils.isValue(options.onClose) ? options.onClose : o.onClose,
+                );
             });
 
             // Show
@@ -96,62 +106,65 @@
             }
             notify.appendTo(Notify.container);
 
-            notify.hide(function(){
-
-                Metro.utils.exec(Metro.utils.isValue(options.onAppend) ? options.onAppend : o.onAppend, null, notify[0]);
+            notify.hide(() => {
+                Metro.utils.exec(
+                    Metro.utils.isValue(options.onAppend) ? options.onAppend : o.onAppend,
+                    null,
+                    notify[0],
+                );
 
                 const duration = Metro.utils.isValue(options.duration) ? options.duration : o.duration;
                 const animation = Metro.utils.isValue(options.animation) ? options.animation : o.animation;
                 let distance = Metro.utils.isValue(options.distance) ? options.distance : o.distance;
 
-                if (distance === "max" || isNaN(distance)) {
+                if (distance === "max" || Number.isNaN(distance)) {
                     distance = $(globalThis).height();
                 }
 
-                notify
-                    .show()
-                    .animate({
-                        draw: {
-                            marginTop: [distance, 4],
-                            opacity: [0, 1]
-                        },
-                        dur: duration,
-                        ease: animation,
-                        onDone: function(){
-                            Metro.utils.exec(o.onNotifyCreate, null, this);
+                notify.show().animate({
+                    draw: {
+                        marginTop: [distance, 4],
+                        opacity: [0, 1],
+                    },
+                    dur: duration,
+                    ease: animation,
+                    onDone: function () {
+                        Metro.utils.exec(o.onNotifyCreate, null, this);
 
-                            if (options !== undefined && options.keepOpen === true) {
-                                // do nothing;
-                            } else {
-                                setTimeout(function(){
-                                    that.kill(notify, Metro.utils.isValue(options.onClose) ? options.onClose : o.onClose);
-                                }, o.timeout);
-                            }
-
-                            Metro.utils.exec(Metro.utils.isValue(options.onShow) ? options.onShow : o.onShow, null, notify[0]);
+                        if (options !== undefined && options.keepOpen === true) {
+                            // do nothing;
+                        } else {
+                            setTimeout(() => {
+                                that.kill(notify, Metro.utils.isValue(options.onClose) ? options.onClose : o.onClose);
+                            }, o.timeout);
                         }
-                    });
 
+                        Metro.utils.exec(
+                            Metro.utils.isValue(options.onShow) ? options.onShow : o.onShow,
+                            null,
+                            notify[0],
+                        );
+                    },
+                });
             });
         },
 
-        kill: function(notify, callback){
-            const that = this, o = this.options;
+        kill: function (notify, callback) {
             notify.off(Metro.events.click);
-            notify.zoomOut(300, 'linear', function(){
-                Metro.utils.exec(callback ? callback : that.options.onClose, null, notify[0]);
+            notify.zoomOut(300, "linear", () => {
+                Metro.utils.exec(callback ? callback : this.options.onClose, null, notify[0]);
                 notify.remove();
             });
         },
 
-        killAll: function(){
+        killAll: function () {
             const that = this;
             const notifies = $(".notify");
-            $.each(notifies, function(){
+            $.each(notifies, function () {
                 that.kill($(this));
             });
-        }
+        },
     };
 
-    Metro['notify'] = Notify.setup();
-}(Metro, Dom));
+    Metro.notify = Notify.setup();
+})(Metro, Dom);

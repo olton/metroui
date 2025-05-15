@@ -1,2 +1,2 @@
-import "./image-grig.js"
-import "./image-grid.less"
+import "./image-grig.js";
+import "./image-grid.less";

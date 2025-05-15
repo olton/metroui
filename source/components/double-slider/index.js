@@ -1,2 +1,2 @@
-import "../slider/index.js"
-import "./double-slider.js"
+import "../slider/index.js";
+import "./double-slider.js";

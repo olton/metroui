@@ -1,4 +1,4 @@
-import {$} from "@olton/dom"
+import { $ } from "@olton/dom";
 
-globalThis.$ = $
-globalThis.Dom = $
+globalThis.$ = $;
+globalThis.Dom = $;

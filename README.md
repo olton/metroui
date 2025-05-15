@@ -2,7 +2,7 @@
   <h1 align="center">Metro UI</h1>
 
 <p align="center">
-    <a href="https://docs-new.metroui.org.ua/"><strong>Explore Metro UI Docs</strong></a>
+    <a href="https://v5.metroui.org.ua/"><strong>Explore Metro UI Docs</strong></a>
 </p>
 
     Sleek, intuitive, and powerful front-end framework for faster and easier web development.
@@ -10,7 +10,7 @@
     with the first front-end component library in Metro Style.
 </div>
 
-![Alt](https://repobeats.axiom.co/api/embed/0bec17257148030ff28810855fc54de0735a46a7.svg "Repobeats analytics image")
+![img.png](img.png)
 
 ---
 <div align="center">
@@ -30,15 +30,17 @@ If you are using Metro UI commercially, there is a social (but no legal) expecta
 
 ### Project State
 ![Dependencies](https://img.shields.io/badge/Dependencies-none-darklime.svg)
+[![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
 ![Package Version](https://img.shields.io/github/package-json/v/olton/metroui)
-![GitHub Release](https://img.shields.io/github/v/release/olton/metroui)
 ![NPM Version](https://img.shields.io/npm/v/%40olton%2Fmetroui)
 ![Website](https://img.shields.io/website/https/metroui.org.ua.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?color=7852a9)
+
 ![Code size](https://img.shields.io/github/languages/code-size/olton/metroui.svg?color=830000)
 ![GitHub Css Size](https://img.shields.io/github/size/olton/metroui/lib%2Fmetro.css?label=CSS%20Size&color=fd9812)
 ![GitHub JS Size](https://img.shields.io/github/size/olton/metroui/lib%2Fmetro.js?label=JS%20Size&color=8f99ff)
 ![GitHub Icons Size](https://img.shields.io/github/size/olton/metroui/lib%2Ficons.css?label=Icons%20Size&color=01796f)
+
 
 </div>
 
@@ -94,28 +96,41 @@ Latest 2 ✔ | Latest 2 ✔ | Latest 2 ✔ | Latest 2 ✔ | Latest 2 ✔ |
 
 </div>
 
-<div align="center">
+---
+### Previous versions
 
-### Old version
-Metro UI CSS 3.x you can find in a repo [Metro-UI-CSS-3](https://github.com/olton-archive/Metro-UI-CSS-3)     
-Metro UI CSS 2.x you can find in a repo [Metro-UI-CSS-2](https://github.com/olton-archive/Metro-UI-CSS-2)     
-Metro UI CSS 0.x you can find in a repo [Metro-UI-CSS-095](https://github.com/olton-archive/Metro-UI-CSS-095) 
-
-### Thanks
-Thanks to all. Special thanks to all those who financially supported the project.    
++ `Metro-UI-CSS-4` - [Repository](https://github.com/olton/Metro-UI-CSS-4), [Documentation](https://v4.metroui.org.ua/)     
++ `Metro-UI-CSS-3` - [Repository](https://github.com/olton-archive/Metro-UI-CSS-3), [Documentation](https://v3.metroui.org.ua/)     
++ `Metro-UI-CSS-2` - [Repository](https://github.com/olton-archive/Metro-UI-CSS-2), [Documentation](https://v2.metroui.org.ua/)     
++ `Metro-UI-CSS-1` - [Repository](https://github.com/olton-archive/Metro-UI-CSS-085) 
 
 ### Credits
-You can read about credits [here](CREDITS.md)
+
+- Styles created using the [less](http://lesscss.org) preprocessor by [Alexis Sellier](https://github.com/cloudhead)
+- preCode by Leon Sorokin [preCode](https://github.com/leeoniya/preCode.js)
+- strftime by Tom Doan [strftime](https://github.com/thdoan/strftime)
+- function b64toBlob by [Jeremy Banks](http://stackoverflow.com/users/1114/jeremy-banks)
+- Date.getWeek by [Nick Baicoianu](http://www.epoch-calendar.com)
+- Data source processor by [jQuery](https://jquery.com)
+- All who brought something good
+
+### Thanks
+Thanks to all. Special thanks to all those who financially supported the project.
 
 ---
 
-### Support my work
-You can support my work
-+ [x] Patreon - https://www.patreon.com/metroui
-+ [x] PayPal - serhii@pimenov.com.ua
+## Support
+
+If you like this project, please consider supporting it by:
+
++ Star this repository on GitHub
++ Sponsor this project on GitHub Sponsors
++ **PayPal** to `serhii@pimenov.com.ua`.
++ [**Patreon**](https://www.patreon.com/metroui)
++ [**Buy me a coffee**](https://buymeacoffee.com/pimenov)
 
 ---
 
-2012-2024 © Copyright by Serhii Pimenov. All Rights Reserved.
+Copyright (c) 2012-2025 by [Serhii Pimenov](https://pimenov.com.ua). All Rights Reserved.
 
-</div>
+

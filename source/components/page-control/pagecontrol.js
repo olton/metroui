@@ -1,6 +1,5 @@
-/** @format */
-
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
 
     let PageControlDefaultConfig = {
@@ -28,12 +27,12 @@
         onTabOrganized: Metro.noop,
     };
 
-    Metro.pageControlSetup = function (options) {
+    Metro.pageControlSetup = (options) => {
         PageControlDefaultConfig = $.extend({}, PageControlDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroPageControlSetup"] !== "undefined") {
-        Metro.pageControlSetup(globalThis["metroPageControlSetup"]);
+    if (typeof globalThis.metroPageControlSetup !== "undefined") {
+        Metro.pageControlSetup(globalThis.metroPageControlSetup);
     }
 
     Metro.Component("page-control", {
@@ -55,9 +54,8 @@
         },
 
         _createStructure: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             this.component = $("<div>").addClass("page-control").insertBefore(element);
 
@@ -68,11 +66,11 @@
 
             let activeTabExists = false;
 
-            items.each(function (index, el) {
-                const $el = $(el),
-                    html = $el.html(),
-                    active = $el.hasClass("active");
-                const tab = that.createTab({
+            items.each((index, el) => {
+                const $el = $(el);
+                const html = $el.html();
+                const active = $el.hasClass("active");
+                const tab = this.createTab({
                     caption: html,
                     icon: $el.attr("data-icon"),
                     image: $el.attr("data-image"),
@@ -83,7 +81,7 @@
                 if (active && !activeTabExists) {
                     activeTabExists = true;
                     tab.addClass("active");
-                    that._fireEvent("tab-activate", { tab: tab[0] });
+                    this._fireEvent("tab-activate", { tab: tab[0] });
                 }
                 element.append(tab);
                 $el.remove();
@@ -100,7 +98,9 @@
             }
 
             if (o.appendButton) {
-                const appendButton = $("<li>").addClass("page-control__tab__append").html(`<span class="toggle">+</span>`);
+                const appendButton = $("<li>")
+                    .addClass("page-control__tab__append")
+                    .html(`<span class="toggle">+</span>`);
 
                 if (o.appendActions) {
                     const appendItems = Metro.utils.exec(o.appendActions, null, this);
@@ -108,40 +108,56 @@
                         throw "PageControl Error! Prop appendActions must be a function that returns an array.";
                     }
                     const appendMenu = $("<ul data-role='dropdown' class='d-menu context'>");
-                    appendItems.map((el) => appendMenu.append(that._renderMenuItem(el)));
+                    appendItems.map((el) => appendMenu.append(this._renderMenuItem(el)));
                     appendButton.append(appendMenu);
                 }
 
                 element.append(appendButton);
             }
 
-            const services = $("<li>").addClass("page-control__tab__service").addClass("invisible-tabs").appendTo(element);
+            const services = $("<li>")
+                .addClass("page-control__tab__service")
+                .addClass("invisible-tabs")
+                .appendTo(element);
             services.append(
-                $("<div>").addClass("page-control__service-button").html(`
+                $("<div>")
+                    .addClass("page-control__service-button")
+                    .html(`
                     <span class="toggle">↧</span>
                     <ul class="d-menu place-right context page-control__invisible_tabs_holder"></ul>
                 `),
             );
 
-            this.invisibleTabsHolderToggle = services.find(".page-control__tab__service.invisible-tabs > .page-control__service-button");
-            this.invisibleTabsHolder = Metro.makePlugin(services.find(".page-control__invisible_tabs_holder"), "dropdown", {
-                onClick: (e) => {
-                    const parent = $(e.target.parentNode);
-                    if (parent.hasClass("page-control__tab__closer")) {
-                        this.closeButtonClick(e);
-                    } else {
-                        this.activateTab(parent[0]);
-                    }
-                    e.preventDefault();
-                    e.stopPropagation();
+            this.invisibleTabsHolderToggle = services.find(
+                ".page-control__tab__service.invisible-tabs > .page-control__service-button",
+            );
+            this.invisibleTabsHolder = Metro.makePlugin(
+                services.find(".page-control__invisible_tabs_holder"),
+                "dropdown",
+                {
+                    onClick: (e) => {
+                        const parent = $(e.target.parentNode);
+                        if (parent.hasClass("page-control__tab__closer")) {
+                            this.closeButtonClick(e);
+                        } else {
+                            this.activateTab(parent[0]);
+                        }
+                        e.preventDefault();
+                        e.stopPropagation();
+                    },
                 },
-            });
+            );
             this.invisibleTabsHolderToggle.hide();
             this.organizeTabs();
 
-            const tabsServices = $("<li>").addClass("page-control__tab__service").addClass("tabs-menu").appendTo(element);
+            const tabsServices = $("<li>")
+                .addClass("page-control__tab__service")
+                .addClass("tabs-menu")
+                .appendTo(element);
             tabsServices.append(
-                $("<div>").addClass("page-control__service-button").html(`
+                $("<div>")
+                    .addClass("page-control__service-button")
+                    .html(`
                     <span class="toggle">︙</span>
                     <ul class="d-menu place-right context" data-role="dropdown"></ul>
                 `),
@@ -151,7 +167,7 @@
             } else {
                 const tabsMenu = tabsServices.find("ul");
                 const tabsMenuItems = Metro.utils.exec(o.tabsActions, null, this);
-                tabsMenuItems.map((el) => tabsMenu.append(that._renderMenuItem(el)));
+                tabsMenuItems.map((el) => tabsMenu.append(this._renderMenuItem(el)));
             }
         },
 
@@ -163,9 +179,9 @@
         },
 
         _createEvents: function () {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const that = this;
+            const element = this.element;
+            const o = this.options;
 
             element.on("click", ".page-control__tab__closer", this.closeButtonClick.bind(this));
 
@@ -244,12 +260,16 @@
             });
         },
 
-        _renderMenuItem: function (el) {
+        _renderMenuItem: (el) => {
             const li = $("<li>");
             const an = $("<a>");
 
             if (el.icon || el.image) {
-                an.append(el.icon ? $("<span class='icon'>").addClass(el.icon) : $("<img class='icon'>").attr("src", el.image).attr("alt", ""));
+                an.append(
+                    el.icon
+                        ? $("<span class='icon'>").addClass(el.icon)
+                        : $("<img class='icon'>").attr("src", el.image).attr("alt", ""),
+                );
             }
 
             if (el.title) {
@@ -264,15 +284,16 @@
         },
 
         createTab: function ({ caption, icon, image, canClose = true, hasMenu = true, data, ref }) {
-            const that = this,
-                element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             const tab = $("<li>").addClass("page-control__tab").appendTo(element);
 
             if (hasMenu) {
                 tab.append(
-                    $("<div>").addClass("page-control__tab__menu__holder").html(`
+                    $("<div>")
+                        .addClass("page-control__tab__menu__holder")
+                        .html(`
                         <span class="">︙</span>
                         <ul class="d-menu context page-control__tab__menu" data-role="dropdown">
                             <li><a data-action="rename">${this.strings.label_rename_tab}</a></li>
@@ -293,7 +314,7 @@
                         throw "PageControl Error! Prop tabActions must be a function that returns an array.";
                     }
                     tabMenu.append($("<li class='divider'>"));
-                    tabMenuItems.map((el) => tabMenu.append(that._renderMenuItem(el)));
+                    tabMenuItems.map((el) => tabMenu.append(this._renderMenuItem(el)));
                 }
             }
 
@@ -308,7 +329,7 @@
             tab.append($("<span>").addClass("page-control__tab__caption").html(caption));
 
             if (canClose) {
-                tab.append($("<span>").addClass("page-control__tab__closer").html(`<span>✕</span>`));
+                tab.append($("<span>").addClass("page-control__tab__closer").html("<span>✕</span>"));
             }
 
             tab.data("data", data);
@@ -322,9 +343,7 @@
         },
 
         closeButtonClick: function (e) {
-            const that = this,
-                o = this.options;
-
+            const o = this.options;
             const tab = $(e.target).closest(".page-control__tab");
             const parent = tab.closest("ul");
 
@@ -332,9 +351,12 @@
                 return;
             }
 
-            that.closeTab(tab[0]);
+            this.closeTab(tab[0]);
 
-            if (parent.hasClass("page-control__invisible_tabs_holder") && parent.children(".page-control__tab").length === 0) {
+            if (
+                parent.hasClass("page-control__invisible_tabs_holder") &&
+                parent.children(".page-control__tab").length === 0
+            ) {
                 Metro.getPlugin(this.invisibleTabsHolder, "dropdown").close();
                 this.invisibleTabsHolderToggle.hide();
             }
@@ -346,13 +368,16 @@
         closeTab: function (tab, reorg = true) {
             const $tab = $(tab);
             if ($tab.hasClass("active")) {
-                const prev = $tab.prev(".page-control__tab"),
-                    next = $tab.next(".page-control__tab");
+                const prev = $tab.prev(".page-control__tab");
+                const next = $tab.next(".page-control__tab");
                 if (prev.length) {
                     this.activateTab(prev[0]);
                 } else if (next.length) {
                     this.activateTab(next[0]);
-                } else if ($tab.parent().hasClass("page-control__invisible_tabs_holder") && parent.children(".page-control__tab").length === 1) {
+                } else if (
+                    $tab.parent().hasClass("page-control__invisible_tabs_holder") &&
+                    parent.children(".page-control__tab").length === 1
+                ) {
                     if (element.children(".page-control__tab").length) {
                         this.activateTab(element.children(".page-control__tab").last()[0]);
                     }
@@ -368,7 +393,8 @@
         },
 
         activateTab: function (tab) {
-            const element = this.element, o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             element.find(".page-control__tab").each((index, el) => {
                 const t = $(el);
@@ -412,7 +438,7 @@
 
             const tabs = element.children(".page-control__tab");
             let w = 0;
-            for (let tab of tabs) {
+            for (const tab of tabs) {
                 const tabRect = tab.getBoundingClientRect();
                 if (w + tabRect.width + 50 > tabsWidth) {
                     $(tab).nextAll(".page-control__tab").appendTo(holder);
@@ -438,7 +464,7 @@
         addTab: function ({ caption, icon, image, canClose = true, hasMenu = true, data, ref }, insert = "before") {
             const o = this.options;
 
-            const newTab = this.createTab({caption, icon, image, canClose, hasMenu, data, ref});
+            const newTab = this.createTab({ caption, icon, image, canClose, hasMenu, data, ref });
 
             if (o.activateNewTab) {
                 this.activateTab(newTab);
@@ -491,7 +517,7 @@
         },
 
         closeOtherTabs: function (tab) {
-            let _tab = typeof tab === "number" ? this.getTabByIndex(tab) : $(tab);
+            const _tab = typeof tab === "number" ? this.getTabByIndex(tab) : $(tab);
             this.component.find(".page-control__tab").each((index, tab) => {
                 if (_tab[0] !== tab) this.closeTab(tab, false);
             });
@@ -549,11 +575,10 @@
         },
 
         renameTab: function (tab) {
-            const that = this;
             const caption = $(tab).find(".page-control__tab__caption");
 
             Metro.dialog.create({
-                title: that.strings.label_rename_tab,
+                title: this.strings.label_rename_tab,
                 content: `
                     <form style="width: 100%">
                         <input type="text" data-role="input" value="${caption.text()}">
@@ -562,21 +587,21 @@
                 defaultActions: false,
                 customButtons: [
                     {
-                        text: that.strings.label_ok,
+                        text: this.strings.label_ok,
                         cls: "js-dialog-close info",
-                        onclick: function (dlg) {
-                            that.setupTab(tab, "caption", dlg.find("input").val());
+                        onclick: (dlg) => {
+                            this.setupTab(tab, "caption", dlg.find("input").val());
                         },
                     },
                     {
-                        text: that.strings.label_cancel,
+                        text: this.strings.label_cancel,
                         cls: "js-dialog-close",
                     },
                 ],
             });
         },
 
-        changeAttribute: function (attr, newValue) {},
+        changeAttribute: (attr, newValue) => {},
 
         destroy: function () {
             this.component.remove();

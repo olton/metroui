@@ -1,2 +1,2 @@
-import "./dropdown.less"
-import "./dropdown.js"
+import "./dropdown.less";
+import "./dropdown.js";

@@ -1,0 +1,63 @@
+name: Push to NuGet
+
+on:
+  release:
+    types: [released]
+
+jobs:
+  verify:
+    name: Verify
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+
+      # Check out the current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: [ verify ]
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+
+      - name: Setup Nuget.exe
+        uses: nuget/setup-nuget@v2
+        with:
+          nuget-version: 'latest'
+          nuget-api-key: ${{ secrets.NUGET_KEY }}
+        
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Metro UI
+        run: npm run build
+
+      - name: Set version
+        id: update
+        uses: vers-one/dotnet-project-version-updater@v1.7
+        with:
+          file: "metroui.nuspec"
+          version: ${{ steps.package-version.outputs.current-version }}
+            
+      - name: Create NuGet package
+        run: nuget pack metroui.nuspec
+
+      - name: Push to NuGet
+        run: nuget push metroui.nupkg -Source https://api.nuget.org/v3/index.json

@@ -12,19 +12,10 @@
 <div class="container">
     <h1>Clock test page</h1>
 
-    <div id="clock" data-role="clock" data-on-clock-create="console.log(1)" data-on-second="tick"></div>
+    <div id="clock" data-role="clock" data-date-format="dddd, D MMMM YYYY" lang="pt"></div>
 
 </div>
 
 <script src="../lib/metro.js"></script>
-<script>
-    function tick(timestamp){
-        console.log(timestamp);
-    }
-
-    $("#clock").on("clock-create", function(){
-        console.log("Clock created 2");
-    })
-</script>
 </body>
 </html>

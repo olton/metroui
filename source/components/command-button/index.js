@@ -1,1 +1,1 @@
-import "./command-button.less"
+import "./command-button.less";

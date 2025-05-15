@@ -1,1 +1,1 @@
-import "./gradient-box.js"
+import "./gradient-box.js";

@@ -39,7 +39,6 @@ input[type="reset"],
     padding: 0 var(--button-font-size);
     font-size: var(--button-font-size);
     height: var(--button-size);
-    transition: @transition-short;
     background-color: var(--button-background);
     color: var(--button-color);
     border: 1px solid var(--button-border-color);
@@ -112,6 +111,11 @@ input[type="reset"],
         --button-size: 26px;
         --button-font-size: 12px;
     }
+    &.medium {
+        --button-pill-radius: 15px;
+        --button-size: 30px;
+        --button-font-size: 14px;
+    }
     &.large {
         --button-pill-radius: 27px;
         --button-size: 54px;
@@ -181,23 +185,26 @@ input[type="button"],
 input[type="submit"],
 input[type="reset"],
 .button {
-    .load-marker {
+    .loader {
         transform: scale(0);
         opacity: 0;
         transition: @transition-base;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .load-caption {
-        margin-left: -16px;
+    .loader + .caption {
         transition: @transition-base;
+        margin-left: -16px;
     }
     &.loading {
-        .load-marker {
+        transition: @transition-base;
+        .loader {
             transform: scale(1);
             opacity: 1;
-            .animate( spin-loader 1.5s linear infinite);
         }
-        .load-caption {
-            margin-left: .5rem;
+        .caption {
+            margin-left: .3rem;
         }
     }
 }
@@ -219,15 +226,6 @@ button.flat, .button.flat, .flat-button {
             background-color: var(--button-background);
             color: var(--button-color);
         }
-    }
-}
-
-@keyframes spin-loader {
-    0% {
-        .rotate(0deg);
-    }
-    100% {
-        .rotate(359deg);
     }
 }
 

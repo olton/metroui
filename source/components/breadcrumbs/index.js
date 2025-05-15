@@ -1,1 +1,1 @@
-import "./breadcrumbs.less"
+import "./breadcrumbs.less";

@@ -1,6 +1,6 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
 
     let CounterDefaultConfig = {
         startOnViewport: false,
@@ -16,57 +16,61 @@
         onStart: Metro.noop,
         onStop: Metro.noop,
         onTick: Metro.noop,
-        onCounterCreate: Metro.noop
+        onCounterCreate: Metro.noop,
     };
 
-    Metro.counterSetup = function (options) {
+    Metro.counterSetup = (options) => {
         CounterDefaultConfig = $.extend({}, CounterDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroCounterSetup"] !== "undefined") {
-        Metro.counterSetup(globalThis["metroCounterSetup"]);
+    if (typeof globalThis.metroCounterSetup !== "undefined") {
+        Metro.counterSetup(globalThis.metroCounterSetup);
     }
 
-    Metro.Component('counter', {
-        init: function( options, elem ) {
+    Metro.Component("counter", {
+        init: function (options, elem) {
             this._super(elem, options, CounterDefaultConfig, {
                 numbers: [],
                 html: $(elem).html(),
                 started: false,
-                id: Metro.utils.elementId("counter")
+                id: Metro.utils.elementId("counter"),
             });
 
             return this;
         },
 
-        _create: function(){
+        _create: function () {
             this._createStruct();
             this._createEvents();
             this._fireEvent("counter-create");
         },
 
-        _createStruct: function(){
-            const element = this.element, elem = this.elem, o = this.options;
+        _createStruct: function () {
+            const element = this.element;
+            const elem = this.elem;
+            const o = this.options;
             this.elem.value = 0;
-            element.css("font-size", this.options.size)
+            element.css("font-size", this.options.size);
         },
-        
-        _createEvents: function(){
-            const that = this, element = this.element, o = this.options;
+
+        _createEvents: function () {
+            const o = this.options;
 
             if (o.startOnViewport) {
                 Hooks.useEvent({
-                    effect: ()=>{
-                        that.start()
+                    effect: () => {
+                        this.start();
                     },
-                    target: that.elem,
-                    event: Hooks.EVENTS.VIEWPORT
-                })
+                    target: this.elem,
+                    event: Hooks.EVENTS.VIEWPORT,
+                });
             }
         },
 
-        start: function(val, from){
-            const that = this, elem = this.elem, o = this.options;
+        start: function (val, from) {
+            const that = this;
+            const elem = this.elem;
+            const o = this.options;
 
             if (Metro.utils.isValue(from)) {
                 o.from = +from;
@@ -75,7 +79,7 @@
             if (Metro.utils.isValue(val)) {
                 o.value = +val;
             }
-            
+
             this.started = true;
             const _from = o.from;
             const _to = o.value;
@@ -85,29 +89,29 @@
             $.animate({
                 el: elem,
                 draw: {
-                    value: [_from, _to]
+                    value: [_from, _to],
                 },
                 defer: o.timeout,
                 dur: o.duration,
                 onFrame: function () {
                     that._fireEvent("tick", {
-                        value: this.value
+                        value: this.value,
                     });
-                    this.innerHTML = o.prefix + Number(this.value).format(0, 0, o.delimiter) + o.suffix
+                    this.innerHTML = o.prefix + Number(this.value).format(0, 0, o.delimiter) + o.suffix;
                 },
-                onDone: function(){
+                onDone: () => {
                     // this.innerHTML = o.prefix + Number(o.value).format(0, 0, o.delimiter) + o.suffix
                     that._fireEvent("stop");
-                }
-            })
+                },
+            });
         },
 
-        reset: function(){
+        reset: function () {
             this.started = false;
             this.element.html(this.html);
         },
 
-        changeAttribute: function(attr, val){
+        changeAttribute: function (attr, val) {
             const o = this.options;
 
             if (attr === "data-value") {
@@ -118,8 +122,8 @@
             }
         },
 
-        destroy: function(){
+        destroy: function () {
             this.element.remove();
-        }
+        },
     });
-}(Metro, Dom));
+})(Metro, Dom);

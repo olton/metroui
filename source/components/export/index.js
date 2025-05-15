@@ -1,1 +1,1 @@
-import "./export.js"
+import "./export.js";

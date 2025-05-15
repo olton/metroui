@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+
+    <title>Color Palette - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        .color-item {
+            --background-color: #ffffff;
+            background: var(--background-color);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin: 0;
+
+            &.dark-color {
+                color: #ffffff;
+            }
+        }
+        
+        .dark-side {
+            .color-item {
+                &.light-color {
+                    color: #191919;
+                }
+            }
+        }
+    </style>
+</head>
+<body class="cloak">
+<nav data-role="appbar" class="border-bottom bd-default d-none">
+    <span class="app-bar-item">Color Palette</span>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="container mt-4 mb-4">
+    <div id="colors"></div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    (function(){
+        const colors = [
+            'lime', 'green', 'emerald', 'blue', 'teal', 'cyan', 'cobalt', 'indigo', 'almost', 'violet', 'pink',
+            'magenta', 'crimson', 'red', 'clown', 'orange', 'amber', 'yellow', 'brown', 'olive', 'steel',
+            'mauve', 'taupe', 'champagne', 'khaki', 'charcoal', 'bronze', 'windstorm', 'nude',
+            'terracotta', 'coral', 'army', 'seashell', 'sand', 'gray', 'gray-blue', 'gray-mouse'
+        ]
+
+        for (let c of colors) {
+            const row = $("<div class='row'></div>").appendTo("#colors");
+            row
+                .append(`<div class="cell-sm-3 color-item light-color" style="background: var(--color-light-${c})">light-${c}</div>`)
+                .append(`<div class="cell-sm-3 color-item normal-color" style="background: var(--color-${c})">${c}</div>`)
+                .append(`<div class="cell-sm-3 color-item dark-color" style="background: var(--color-sat-${c})">sat-${c}</div>`)
+                .append(`<div class="cell-sm-3 color-item dark-color" style="background: var(--color-dark-${c})">dark-${c}</div>`)
+        }
+    })()
+</script>
+</body>
+</html>

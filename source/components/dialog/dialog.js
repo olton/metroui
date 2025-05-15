@@ -1,19 +1,18 @@
-/** @format */
-
 /*
-* customButtons: [
-*    {
-*        text: "Button",
-*        cls: "",
-*        onclick: () => {},
-*    }
-* ]
-* */
+ * customButtons: [
+ *    {
+ *        text: "Button",
+ *        cls: "",
+ *        onclick: () => {},
+ *    }
+ * ]
+ * */
 
-(function (Metro, $) {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
-    var Utils = Metro.utils;
-    var DialogDefaultConfig = {
+
+    let DialogDefaultConfig = {
         dialogDeferred: 0,
         closeButton: false,
         leaveOverlayOnClose: false,
@@ -54,12 +53,12 @@
         onDialogCreate: Metro.noop,
     };
 
-    Metro.dialogSetup = function (options) {
+    Metro.dialogSetup = (options) => {
         DialogDefaultConfig = $.extend({}, DialogDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroDialogSetup"] !== "undefined") {
-        Metro.dialogSetup(globalThis["metroDialogSetup"]);
+    if (typeof globalThis.metroDialogSetup !== "undefined") {
+        Metro.dialogSetup(globalThis.metroDialogSetup);
     }
 
     Metro.Component("dialog", {
@@ -69,7 +68,7 @@
             this._super(elem, options, DialogDefaultConfig, {
                 interval: null,
                 overlay: null,
-                id: Utils.elementId("dialog"),
+                id: Metro.utils.elementId("dialog"),
             });
 
             return this;
@@ -80,12 +79,11 @@
         },
 
         _build: function () {
-            var that = this,
-                element = this.element,
-                o = this.options,
-                strings = this.strings;
-            var body = $("body");
-            var overlay;
+            const element = this.element;
+            const o = this.options;
+            const strings = this.strings;
+            const body = $("body");
+            let overlay;
 
             element.addClass("dialog");
 
@@ -98,46 +96,48 @@
             }
 
             if (o.defaultActions === true || o.customButtons) {
-                var buttons = element.find(".dialog-actions");
-                var button;
+                let buttons = element.find(".dialog-actions");
+                let button;
 
                 if (buttons.length === 0) {
                     buttons = $("<div>")
                         .addClass("dialog-actions")
-                        .addClass("text-" + o.actionsAlign)
+                        .addClass(`text-${o.actionsAlign}`)
                         .appendTo(element);
                 }
 
                 if (o.defaultActions === true && element.find(".dialog-actions > *").length === 0) {
-                    for (let b of o.defaultActionButtons.toArray(",")) {
-                        button = $("<button>").addClass(b !== "help" ? ".js-dialog-close" : "").addClass(o.clsDefaultAction).html(strings[`label_${b}`]);
+                    for (const b of o.defaultActionButtons.toArray(",")) {
+                        button = $("<button>")
+                            .addClass(b !== "help" ? ".js-dialog-close" : "")
+                            .addClass(o.clsDefaultAction)
+                            .html(strings[`label_${b}`]);
                         button.appendTo(buttons);
                         if (b === "ok") {
-                            button.on(Metro.events.click, function () {
-                                Utils.exec(o.onOk, [element]);
+                            button.on(Metro.events.click, () => {
+                                Metro.utils.exec(o.onOk, [element]);
                             });
                         }
                         if (b === "help") {
-                            button.on(Metro.events.click, function () {
-                                Utils.exec(o.onHelp, [element]);
+                            button.on(Metro.events.click, () => {
+                                Metro.utils.exec(o.onHelp, [element]);
                             });
                         }
                         if (b === "cancel") {
-                            button.on(Metro.events.click, function () {
-                                Utils.exec(o.onCancel, [element]);
+                            button.on(Metro.events.click, () => {
+                                Metro.utils.exec(o.onCancel, [element]);
                             });
                         }
                     }
                 }
-                
-                const customButtons = Utils.isObject(o.customButtons);
+
+                const customButtons = Metro.utils.isObject(o.customButtons);
                 if (Array.isArray(customButtons))
                     $.each(customButtons, function () {
-                        var item = this;
-                        button = $("<button>").addClass("button").addClass(item.cls).html(item.text);
-                        if (item.onclick)
-                            button.on(Metro.events.click, function () {
-                                Utils.exec(item.onclick, [element]);
+                        button = $("<button>").addClass("button").addClass(this.cls).html(this.text);
+                        if (this.onclick)
+                            button.on(Metro.events.click, () => {
+                                Metro.utils.exec(this.onclick, [element]);
                             });
                         button.appendTo(buttons);
                     });
@@ -149,12 +149,12 @@
             }
 
             if (o.closeAction === true) {
-                element.on(Metro.events.click, ".js-dialog-close", function () {
-                    that.close();
+                element.on(Metro.events.click, ".js-dialog-close", () => {
+                    this.close();
                 });
             }
 
-            var closer = element.find("closer");
+            let closer = element.find("closer");
             if (closer.length === 0) {
                 closer = $("<span>").addClass("closer js-dialog-close");
                 closer.appendTo(element);
@@ -174,7 +174,7 @@
                     width: o.width,
                 });
             }
-            
+
             element.addClass(o.clsDialog);
             element.find(".dialog-title").addClass(o.clsTitle);
             element.find(".dialog-content").addClass(o.clsContent);
@@ -188,8 +188,8 @@
 
             $(globalThis).on(
                 Metro.events.resize,
-                function () {
-                    that.setPosition();
+                () => {
+                    this.setPosition();
                 },
                 { ns: this.id },
             );
@@ -200,9 +200,9 @@
         },
 
         _overlay: function () {
-            var o = this.options;
+            const o = this.options;
+            const overlay = $("<div>");
 
-            var overlay = $("<div>");
             overlay.addClass("overlay").addClass(o.clsOverlay);
 
             if (o.overlayColor === "transparent") {
@@ -217,16 +217,16 @@
         },
 
         hide: function (callback) {
-            var element = this.element,
-                o = this.options;
-            var timeout = 0;
+            const element = this.element;
+            const o = this.options;
+            let timeout = 0;
             if (o.onHide !== Metro.noop) {
                 timeout = 500;
 
                 this._fireEvent("hide");
             }
-            setTimeout(function () {
-                Utils.exec(callback, null, element[0]);
+            setTimeout(() => {
+                Metro.utils.exec(callback, null, element[0]);
                 element.css({
                     visibility: "hidden",
                     top: "100%",
@@ -235,7 +235,7 @@
         },
 
         show: function (callback) {
-            var element = this.element;
+            const element = this.element;
             this.setPosition();
             element.css({
                 visibility: "visible",
@@ -243,13 +243,14 @@
 
             this._fireEvent("show");
 
-            Utils.exec(callback, null, element[0]);
+            Metro.utils.exec(callback, null, element[0]);
         },
 
         setPosition: function () {
-            var element = this.element,
-                o = this.options;
-            var top, bottom;
+            const element = this.element;
+            const o = this.options;
+            let top;
+            let bottom;
             if (o.toTop !== true && o.toBottom !== true) {
                 top = ($(globalThis).height() - element.outerHeight()) / 2;
                 if (top < 0) {
@@ -274,27 +275,28 @@
         },
 
         setContent: function (c) {
-            var element = this.element;
-            var content = element.find(".dialog-content");
+            const element = this.element;
+            let content = element.find(".dialog-content");
+
             if (content.length === 0) {
                 content = $("<div>").addClass("dialog-content");
                 content.appendTo(element);
             }
 
-            if (!Utils.isQ(c) && Utils.isFunc(c)) {
-                c = Utils.exec(c);
-            }
-
-            if (Utils.isQ(c)) {
+            if (Metro.utils.isQ(c)) {
                 c.appendTo(content);
             } else {
-                content.html(c);
+                if (Metro.utils.isFunc(c)) {
+                    content.html(Metro.utils.exec(c));
+                } else {
+                    content.html(c);
+                }
             }
         },
 
         setTitle: function (t) {
-            var element = this.element;
-            var title = element.find(".dialog-title");
+            const element = this.element;
+            let title = element.find(".dialog-title");
             if (title.length === 0) {
                 title = $("<div>").addClass("dialog-title");
                 title.appendTo(element);
@@ -303,18 +305,17 @@
         },
 
         close: function () {
-            var that = this,
-                element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
-            if (!Utils.bool(o.leaveOverlayOnClose)) {
+            if (!Metro.utils.bool(o.leaveOverlayOnClose)) {
                 $("body").find(".overlay").remove();
             }
 
-            this.hide(function () {
+            this.hide(() => {
                 element.data("open", false);
 
-                that._fireEvent("close");
+                this._fireEvent("close");
 
                 if (o.removeOnClose === true) {
                     element.remove();
@@ -323,33 +324,32 @@
         },
 
         open: function () {
-            var that = this,
-                element = this.element,
-                o = this.options;
+            const element = this.element;
+            const o = this.options;
 
             if (o.overlay === true && $(".overlay").length === 0) {
                 this.overlay.appendTo($("body"));
                 if (o.overlayClickClose === true) {
-                    this.overlay.on(Metro.events.click, function () {
-                        that.close();
+                    this.overlay.on(Metro.events.click, () => {
+                        this.close();
                     });
                 }
             }
 
-            this.show(function () {
-                that._fireEvent("open");
+            this.show(() => {
+                this._fireEvent("open");
 
                 element.data("open", true);
-                if (parseInt(o.autoHide) > 0) {
-                    setTimeout(function () {
-                        that.close();
-                    }, parseInt(o.autoHide));
+                if (Number.parseInt(o.autoHide) > 0) {
+                    setTimeout(() => {
+                        this.close();
+                    }, Number.parseInt(o.autoHide));
                 }
             });
         },
 
         toggle: function () {
-            var element = this.element;
+            const element = this.element;
             if (element.data("open")) {
                 this.close();
             } else {
@@ -362,29 +362,27 @@
         },
 
         /* eslint-disable-next-line */
-        changeAttribute: function (attributeName) {},
+        changeAttribute: (attr, val) => {},
 
         destroy: function () {
-            var element = this.element;
+            const element = this.element;
 
             element.off(Metro.events.click, ".js-dialog-close");
             element.find(".button").off(Metro.events.click);
             $(globalThis).off(Metro.events.resize, { ns: this.id });
 
-            return element;
+            element.remove();
         },
     });
 
     Metro.dialog = {
-        isDialog: function (el) {
-            return Utils.isMetroObject(el, "dialog");
-        },
+        isDialog: (el) => Metro.utils.isMetroObject(el, "dialog"),
 
         open: function (el, content, title) {
             if (!this.isDialog(el)) {
                 return false;
             }
-            var dialog = Metro.getPlugin(el, "dialog");
+            const dialog = Metro.getPlugin(el, "dialog");
             if (title) {
                 dialog.setTitle(title);
             }
@@ -419,17 +417,14 @@
             if (!this.isDialog(el)) {
                 return false;
             }
-            var dialog = Metro.getPlugin($(el)[0], "dialog");
+            const dialog = Metro.getPlugin($(el)[0], "dialog");
             dialog.options.removeOnClose = true;
             dialog.close();
         },
 
-        create: function (options) {
-            var dlg;
-
-            dlg = $("<div>").appendTo($("body"));
-
-            var dlg_options = $.extend(
+        create: (options) => {
+            const dlg = $("<div>").appendTo($("body"));
+            const dlg_options = $.extend(
                 {},
                 {
                     show: true,

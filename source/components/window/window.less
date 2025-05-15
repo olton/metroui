@@ -9,6 +9,7 @@
     --window-border-color: #f3f3f3;
     --window-background: #fff;
     --window-color: #191919;
+    --window-button-size: 24px;
     //--window-caption-background: #f3f3f3;
     --window-caption-color: #191919;
     --window-scrollbar-thumb-color: #a8a8a8;
@@ -106,13 +107,13 @@
 
 .window-caption {
     .buttons {
-        height: 100%;
+        height: var(--window-button-size);
         margin-left: auto;
         display: flex;
         flex-wrap: nowrap;
         flex-direction: row;
-        margin-right: 2px;
-        margin-top: 2px;
+        margin-right: 4px;
+        gap: 2px
     }
 
     .btn-custom {
@@ -136,6 +137,10 @@
         }
 
         .btn-min, .btn-max, .btn-close {
+            height: var(--window-button-size)!important;
+            width: var(--window-button-size)!important;
+            padding: 0!important;
+
             &::before {
                 display: block;
                 position: absolute;
@@ -165,6 +170,7 @@
             min-width: 34px;
             width: auto;
             flex-shrink: 0;
+            height: var(--window-button-size)!important;
         }
 
         .btn-close {

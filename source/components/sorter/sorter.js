@@ -1,8 +1,8 @@
-/* global Metro */
-(function(Metro, $) {
-    'use strict';
-    var Utils = Metro.utils;
-    var SorterDefaultConfig = {
+((Metro, $) => {
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
+
+    let SorterDefaultConfig = {
         sorterDeferred: 0,
         thousandSeparator: ",",
         decimalSeparator: ",",
@@ -14,38 +14,39 @@
         onSortStart: Metro.noop,
         onSortStop: Metro.noop,
         onSortItemSwitch: Metro.noop,
-        onSorterCreate: Metro.noop
+        onSorterCreate: Metro.noop,
     };
 
-    Metro.sorterSetup = function (options) {
+    Metro.sorterSetup = (options) => {
         SorterDefaultConfig = $.extend({}, SorterDefaultConfig, options);
     };
 
-    if (typeof globalThis["metroSorterSetup"] !== "undefined") {
-        Metro.sorterSetup(globalThis["metroSorterSetup"]);
+    if (typeof globalThis.metroSorterSetup !== "undefined") {
+        Metro.sorterSetup(globalThis.metroSorterSetup);
     }
 
-    Metro.Component('sorter', {
-        init: function( options, elem ) {
+    Metro.Component("sorter", {
+        init: function (options, elem) {
             this._super(elem, options, SorterDefaultConfig, {
-                initial: []
+                initial: [],
             });
 
             return this;
         },
 
-        _create: function(){
-            var element = this.element;
+        _create: function () {
+            const element = this.element;
 
             this._createStructure();
 
             this._fireEvent("sorter-create", {
-                element: element
+                element: element,
             });
         },
 
-        _createStructure: function(){
-            var element = this.element, o = this.options;
+        _createStructure: function () {
+            const element = this.element;
+            const o = this.options;
 
             if (o.sortTarget === null) {
                 o.sortTarget = element.children()[0].tagName;
@@ -58,50 +59,74 @@
             }
         },
 
-        _getItemContent: function(item){
-            var o = this.options;
-            var data, inset, i, format;
+        _getItemContent: function (item) {
+            const o = this.options;
+            let data;
+            let inset;
+            let i;
+            let format;
 
-            if (Utils.isValue(o.sortSource)) {
+            if (Metro.utils.isValue(o.sortSource)) {
                 data = "";
                 inset = item.getElementsByClassName(o.sortSource);
 
-                if (inset.length > 0) for (i = 0; i < inset.length; i++) {
-                    data += inset[i].textContent;
-                }
+                if (inset.length > 0)
+                    for (i = 0; i < inset.length; i++) {
+                        data += inset[i].textContent;
+                    }
                 format = inset[0].dataset.format;
             } else {
                 data = item.textContent;
                 format = item.dataset.format;
             }
 
-            data = (""+data).toLowerCase().replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
+            data = `${data}`
+                .toLowerCase()
+                .replace(/[\n\r]+|[\s]{2,}/g, " ")
+                .trim();
 
-            if (Utils.isValue(format)) {
-
-                if (['number', 'int', 'float', 'money'].indexOf(format) !== -1 && (o.thousandSeparator !== "," || o.decimalSeparator !== "." )) {
-                    data = Utils.parseNumber(data, o.thousandSeparator, o.decimalSeparator);
+            if (Metro.utils.isValue(format)) {
+                if (
+                    ["number", "int", "float", "money"].indexOf(format) !== -1 &&
+                    (o.thousandSeparator !== "," || o.decimalSeparator !== ".")
+                ) {
+                    data = Metro.utils.parseNumber(data, o.thousandSeparator, o.decimalSeparator);
                 }
 
                 switch (format) {
-                    case "date": data = Utils.isDate(data) ? new Date(data) : ""; break;
-                    case "number": data = Number(data); break;
-                    case "int": data = parseInt(data); break;
-                    case "float": data = parseFloat(data); break;
-                    case "money": data = Utils.parseMoney(data); break;
-                    case "card": data = Utils.parseCard(data); break;
-                    case "phone": data = Utils.parsePhone(data); break;
+                    case "date":
+                        data = Metro.utils.isDate(data) ? new Date(data) : "";
+                        break;
+                    case "number":
+                        data = Number(data);
+                        break;
+                    case "int":
+                        data = Number.parseInt(data);
+                        break;
+                    case "float":
+                        data = Number.parseFloat(data);
+                        break;
+                    case "money":
+                        data = Metro.utils.parseMoney(data);
+                        break;
+                    case "card":
+                        data = Metro.utils.parseCard(data);
+                        break;
+                    case "phone":
+                        data = Metro.utils.parsePhone(data);
+                        break;
                 }
             }
 
             return data;
         },
 
-        sort: function(dir){
-            var that = this, element = this.element, o = this.options;
-            var items;
-            var id = Utils.elementId("temp");
-            var prev;
+        sort: function (dir) {
+            const element = this.element;
+            const o = this.options;
+            let items;
+            const id = Metro.utils.elementId("temp");
+            let prev;
 
             if (dir) {
                 o.sortDir = dir;
@@ -110,33 +135,35 @@
             items = element.find(o.sortTarget).get();
 
             if (items.length === 0) {
-                return ;
+                return;
             }
 
-            prev = $("<div>").attr("id", id).insertBefore($(element.find(o.sortTarget)[0]));
+            prev = $("<div>")
+                .attr("id", id)
+                .insertBefore($(element.find(o.sortTarget)[0]));
 
             this._fireEvent("sort-start", {
-                items: items
+                items: items,
             });
 
-            items.sort(function(a, b){
-                var c1 = that._getItemContent(a);
-                var c2 = that._getItemContent(b);
-                var result = 0;
+            items.sort((a, b) => {
+                const c1 = this._getItemContent(a);
+                const c2 = this._getItemContent(b);
+                let result = 0;
 
-                if (c1 < c2 ) {
+                if (c1 < c2) {
                     result = -1;
                 }
 
-                if (c1 > c2 ) {
+                if (c1 > c2) {
                     result = 1;
                 }
 
                 if (result !== 0) {
-                    that._fireEvent("sort-item-switch", {
+                    this._fireEvent("sort-item-switch", {
                         a: a,
                         b: b,
-                        result: result
+                        result: result,
                     });
                 }
 
@@ -149,96 +176,93 @@
 
             element.find(o.sortTarget).remove();
 
-            $.each(items, function(){
-                var $this = $(this);
+            $.each(items, function () {
+                const $this = $(this);
                 $this.insertAfter(prev);
                 prev = $this;
             });
 
-            $("#"+id).remove();
+            $(`#${id}`).remove();
 
             this._fireEvent("sort-stop", {
-                items: items
+                items: items,
             });
         },
 
-        reset: function(){
-            var element = this.element, o = this.options;
-            var items;
-            var id = Utils.elementId('sorter');
-            var prev;
+        reset: function () {
+            const element = this.element;
+            const o = this.options;
+            const id = Metro.utils.elementId("sorter");
+            let prev;
 
-            items = this.initial;
-
+            const items = this.initial;
             if (items.length === 0) {
-                return ;
+                return;
             }
 
-            prev = $("<div>").attr("id", id).insertBefore($(element.find(o.sortTarget)[0]));
+            prev = $("<div>")
+                .attr("id", id)
+                .insertBefore($(element.find(o.sortTarget)[0]));
 
             element.find(o.sortTarget).remove();
 
-            $.each(items, function(){
-                var $this = $(this);
+            $.each(items, function () {
+                const $this = $(this);
                 $this.insertAfter(prev);
                 prev = $this;
             });
 
-            $("#"+id).remove();
+            $(`#${id}`).remove();
         },
 
-        changeAttribute: function(attributeName){
-            var that = this, element = this.element, o = this.options;
+        changeAttribute: function (attributeName) {
+            const element = this.element;
+            const o = this.options;
 
-            var changeSortDir = function() {
-                var dir = element.attr("data-sort-dir").trim();
+            const changeSortDir = () => {
+                const dir = element.attr("data-sort-dir").trim();
                 if (dir === "") return;
                 o.sortDir = dir;
-                that.sort();
+                this.sort();
             };
 
-            var changeSortContent = function(){
-                var content = element.attr("data-sort-content").trim();
-                if (content === "") return ;
+            const changeSortContent = () => {
+                const content = element.attr("data-sort-content").trim();
+                if (content === "") return;
                 o.sortContent = content;
-                that.sort();
+                this.sort();
             };
 
             switch (attributeName) {
-                case "data-sort-dir": changeSortDir(); break;
-                case "data-sort-content": changeSortContent(); break;
+                case "data-sort-dir":
+                    changeSortDir();
+                    break;
+                case "data-sort-content":
+                    changeSortContent();
+                    break;
             }
         },
 
-        destroy: function(){
+        destroy: function () {
             return this.element;
-        }
+        },
     });
 
-    Metro['sorter'] = {
-        create: function(el, op){
-            return Utils.$()(el).sorter(op);
-        },
-
-        isSorter: function(el){
-            return Utils.isMetroObject(el, "sorter");
-        },
-
-        sort: function(el, dir){
+    Metro.sorter = {
+        create: (el, op) => Metro.utils.$()(el).sorter(op),
+        isSorter: (el) => Metro.utils.isMetroObject(el, "sorter"),
+        sort: function (el, dir = "asc") {
             if (!this.isSorter(el)) {
                 return false;
-            }
-            if (dir === undefined) {
-                dir = "asc";
             }
             Metro.getPlugin(el, "sorter").sort(dir);
         },
 
-        reset: function(el){
+        reset: function (el) {
             if (!this.isSorter(el)) {
                 return false;
             }
             Metro.getPlugin(el, "sorter").reset();
-        }
+        },
     };
-}(Metro, Dom));
+})(Metro, Dom);

@@ -1,2 +1,2 @@
-import "./analog-clock.less"
-import "./analog-clock.js"
+import "./analog-clock.less";
+import "./analog-clock.js";
