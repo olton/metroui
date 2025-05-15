@@ -36,6 +36,21 @@ each(range(24), {
 .flex-row {flex-direction: row !important;}
 .flex-row-reverse {flex-direction: row-reverse !important;}
 
+.flex-align-normal {align-items: normal !important;}
+.flex-align-stretch {align-items: stretch !important;}
+.flex-align-start {align-items: flex-start !important;}
+.flex-align-end {align-items: flex-end !important;}
+.flex-align-baseline {align-items: baseline !important;}
+.flex-align-baseline-first {align-items: first baseline !important;}
+.flex-align-baseline-last {align-items: last baseline !important;}
+.flex-align-center {align-items: center !important;}
+.flex-align-center-safe {align-items: safe center !important;}
+.flex-align-center-unsafe {align-items: unsafe center !important;}
+.flex-align-inherit {align-items: inherit !important;}
+.flex-align-initial {align-items: initial !important;}
+.flex-align-revert {align-items: revert !important;}
+.flex-align-unset {align-items: unset !important;}
+
 .flex-align-items-normal {align-items: normal !important;}
 .flex-align-items-stretch {align-items: stretch !important;}
 .flex-align-items-start {align-items: flex-start !important;}
@@ -135,6 +150,23 @@ each(range(24), {
 .flex-justify-content-revert {justify-content: revert !important;}
 .flex-justify-content-unset {justify-content: unset !important;}
 
+.flex-justify-center {justify-content: center !important;}
+.flex-justify-center-safe {justify-content: safe center !important;}
+.flex-justify-center-unsafe {justify-content: unsafe center !important;}
+.flex-justify-start {justify-content: flex-start !important;}
+.flex-justify-end {justify-content: flex-end !important;}
+.flex-justify-left {justify-content: left !important;}
+.flex-justify-right {justify-content: right !important;}
+.flex-justify-normal {justify-content: normal !important;}
+.flex-justify-between {justify-content: space-between !important;}
+.flex-justify-around {justify-content: space-around !important;}
+.flex-justify-evenly {justify-content: space-evenly !important;}
+.flex-justify-stretch {justify-content: stretch !important;}
+.flex-justify-inherit {justify-content: inherit !important;}
+.flex-justify-initial {justify-content: initial !important;}
+.flex-justify-revert {justify-content: revert !important;}
+.flex-justify-unset {justify-content: unset !important;}
+
 .flex-no-shrink > * {flex-shrink: 0!important;}
 .flex-shrink > * {flex-shrink: 1!important;}
 .flex-no-grow > * {flex-grow: 0!important;}
@@ -186,6 +218,21 @@ each(@media-rules, {
             align-items: center!important;
             justify-content: center!important;
         }
+
+        .flex-align-normal-@{key} {align-items: normal !important;}
+        .flex-align-stretch-@{key} {align-items: stretch !important;}
+        .flex-align-start-@{key} {align-items: flex-start !important;}
+        .flex-align-end-@{key} {align-items: flex-end !important;}
+        .flex-align-baseline-@{key} {align-items: baseline !important;}
+        .flex-align-baseline-first-@{key} {align-items: first baseline !important;}
+        .flex-align-baseline-last-@{key} {align-items: last baseline !important;}
+        .flex-align-center-@{key} {align-items: center !important;}
+        .flex-align-center-safe-@{key} {align-items: safe center !important;}
+        .flex-align-center-unsafe-@{key} {align-items: unsafe center !important;}
+        .flex-align-inherit-@{key} {align-items: inherit !important;}
+        .flex-align-initial-@{key} {align-items: initial !important;}
+        .flex-align-revert-@{key} {align-items: revert !important;}
+        .flex-align-unset-@{key} {align-items: unset !important;}
 
         .flex-align-items-normal-@{key} {align-items: normal !important;}
         .flex-align-items-stretch-@{key} {align-items: stretch !important;}
@@ -285,6 +332,23 @@ each(@media-rules, {
         .flex-justify-content-initial-@{key} {justify-content: initial !important;}
         .flex-justify-content-revert-@{key} {justify-content: revert !important;}
         .flex-justify-content-unset-@{key} {justify-content: unset !important;}
+
+        .flex-justify-center-@{key} {justify-content: center !important;}
+        .flex-justify-center-safe-@{key} {justify-content: safe center !important;}
+        .flex-justify-center-unsafe-@{key} {justify-content: unsafe center !important;}
+        .flex-justify-start-@{key} {justify-content: flex-start !important;}
+        .flex-justify-end-@{key} {justify-content: flex-end !important;}
+        .flex-justify-left-@{key} {justify-content: left !important;}
+        .flex-justify-right-@{key} {justify-content: right !important;}
+        .flex-justify-normal-@{key} {justify-content: normal !important;}
+        .flex-justify-between-@{key} {justify-content: space-between !important;}
+        .flex-justify-around-@{key} {justify-content: space-around !important;}
+        .flex-justify-evenly-@{key} {justify-content: space-evenly !important;}
+        .flex-justify-stretch-@{key} {justify-content: stretch !important;}
+        .flex-justify-inherit-@{key} {justify-content: inherit !important;}
+        .flex-justify-initial-@{key} {justify-content: initial !important;}
+        .flex-justify-revert-@{key} {justify-content: revert !important;}
+        .flex-justify-unset-@{key} {justify-content: unset !important;}
 
         each(range(24), .(@v) {
             .order-@{v}-@{key} {
