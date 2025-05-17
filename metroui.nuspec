@@ -11,10 +11,18 @@
     <projectUrl>http://metroui.org.ua/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Metro UI is an open source toolkit for developing with HTML, CSS, and JS</description>
-    <releaseNotes></releaseNotes>
     <language>en-US</language>
     <copyright>Copyright 2012-2025, Serhii Pimenov</copyright>
     <tags>Metro UI CSS Framework LESS CSS JS HTML</tags>
+    <releaseNotes>
+        5.1.3
+
+        + Fixed `audio-player` component
+        + Fixed i18n for `clock` component
+        + Fixed input `file` component
+        + Fixed `resetWith` method in `countdown` component
+    </releaseNotes>
+    <repository type="git" url="https://github.com/olton/metroui" branch="master"/>
   </metadata>
   <files>
     <file src="CHANGELOG.md" />
