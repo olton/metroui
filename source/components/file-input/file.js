@@ -77,6 +77,7 @@
                 caption.insertBefore(element);
 
                 button = $("<button>")
+                    .attr("type", "button")
                     .addClass("button select-files-button")
                     .attr("tabindex", -1)
                     .html(o.buttonTitle || this.strings.label_choose_file);

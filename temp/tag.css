@@ -1,0 +1,10 @@
+span {
+    color: oklch(82.8% .111 230.318);
+    border: 1px dashed color-mix(in oklab, oklch(82.8% .111 230.318) 30%, transparent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    font-size: .625rem;
+    line-height: 1.125rem;
+    padding-inline: calc(.25rem * 1.5);
+}
