@@ -68,7 +68,6 @@
     Metro.Component("audio-player", {
         init: function (options, elem) {
             this._super(elem, options, AudioPlayerDefaultConfig, {
-                preloader: null,
                 player: null,
                 audio: elem,
                 stream: null,
@@ -150,7 +149,6 @@
 
             const stream = $("<div>").addClass("stream").appendTo(controls);
             const streamSlider = $("<input>").addClass("stream-slider ultra-thin cycle-marker").appendTo(stream);
-            const preloader = $("<div>").addClass("load-audio").appendTo(stream);
 
             const volume = $("<div>").addClass("volume").appendTo(controls);
             const volumeSlider = $("<input>").addClass("volume-slider ultra-thin cycle-marker").appendTo(volume);
@@ -160,15 +158,6 @@
             if (o.showInfo !== true) {
                 infoBox.hide();
             }
-
-            preloader.activity({
-                type: "metro",
-                style: "color",
-            });
-
-            preloader.hide(0);
-
-            this.preloader = preloader;
 
             Metro.makePlugin(streamSlider, "slider", {
                 clsMarker: "bg-dark-cyan",
@@ -251,9 +240,7 @@
             const audio = this.elem;
             const player = this.player;
 
-            element.on("loadstart", () => {
-                this.preloader.fadeIn();
-            });
+            element.on("loadstart", () => {});
 
             element.on("loadedmetadata", () => {
                 this.duration = audio.duration.toFixed(0);
@@ -263,7 +250,6 @@
 
             element.on("canplay", () => {
                 this._setBuffer();
-                this.preloader.fadeOut();
             });
 
             element.on("progress", () => {
@@ -277,9 +263,7 @@
                 Metro.utils.exec(o.onTime, [audio.currentTime, this.duration, audio, player], element[0]);
             });
 
-            element.on("waiting", () => {
-                this.preloader.fadeIn();
-            });
+            element.on("waiting", () => {});
 
             element.on("loadeddata", () => {});
 
