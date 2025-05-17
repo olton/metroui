@@ -20,6 +20,10 @@
         clearButton: false,
         calendarButtonIcon: "📅",
         clearButtonIcon: "❌",
+        prevMonthIcon: "⯇",
+        nextMonthIcon: "⯈",
+        prevYearIcon: "⯇",
+        nextYearIcon: "⯈",
         copyInlineStyles: false,
         openMode: "auto",
         clsPicker: "",
@@ -175,6 +179,11 @@
                 outside: o.outside,
                 buttons: false,
                 headerFormat: o.headerFormat,
+
+                prevMonthIcon: o.prevMonthIcon,
+                nextMonthIcon: o.nextMonthIcon,
+                prevYearIcon: o.prevYearIcon,
+                nextYearIcon: o.nextYearIcon,
 
                 clsCalendar: [o.clsCalendar, "calendar-for-picker", o.dialogMode ? "dialog-mode" : ""].join(" "),
                 clsCalendarHeader: o.clsCalendarHeader,
