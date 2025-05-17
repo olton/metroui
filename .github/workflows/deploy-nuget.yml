@@ -1,12 +1,12 @@
-name: Push to NuGet
+name: Publish to NuGet
 
 on:
   release:
     types: [released]
 
 jobs:
-  verify:
-    name: Verify
+  publish:
+    name: Publish
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
@@ -28,15 +28,6 @@ jobs:
       - name: Test
         run: npm run test:ci
 
-  publish:
-    runs-on: ubuntu-latest
-    needs: [ verify ]
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
@@ -46,12 +37,6 @@ jobs:
         with:
           nuget-version: 'latest'
           nuget-api-key: ${{ secrets.NUGET_KEY }}
-        
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Metro UI
-        run: npm run build
 
       - name: Set version
         id: update
@@ -59,9 +44,10 @@ jobs:
         with:
           file: "metroui.nuspec"
           version: ${{ steps.package-version.outputs.current-version }}
-            
+
       - name: Create NuGet package
         run: nuget pack metroui.nuspec
 
-      - name: Push to NuGet
+      - name: Publish to NuGet
         run: nuget push metroui.nupkg -Source https://api.nuget.org/v3/index.json
+
