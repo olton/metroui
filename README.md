@@ -56,7 +56,7 @@ If you are using Metro UI commercially, there is a social (but no legal) expecta
 
 Welcome to Metro UI Discord Server!
 
-[![Join the chat at https://discord.gg/QYszPjRP](https://img.shields.io/badge/community-on%20discord-brightgreen.svg?style=flat)](https://discord.gg/QYszPjRP)
+[![Join the chat at https://discord.gg/QYszPjRP](https://img.shields.io/badge/community-on%20discord-brightgreen.svg?style=flat)](https://discord.gg/cxrhV7pGG8)
 
 ---
 
