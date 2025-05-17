@@ -1,0 +1,29 @@
+name: Verify lib
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    name: Test library
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+      FORCE_COLOR: 3
+      NO_COLOR: false
+      TERM: xterm-256color
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test
+        run: npm test:ci

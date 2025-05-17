@@ -35,6 +35,7 @@
         "dev": "npm run clean && cross-env NODE_NO_WARNINGS=1 MODE=development node build.js",
         "pub": "npm publish --access public",
         "test": "latte --dom --progress=none",
+        "test:ci": "latte --dom --progress=none",
         "test:trace": "latte --dom --progress=dots --show-stack --verbose",
         "check": "npx @biomejs/biome check --write ./source",
         "commit": "node -e \"const mssg = process.argv[1]; require('child_process').execSync('npm run build && git add . && git commit -m \\\"' + mssg + '\\\"', { stdio:[0, 1, 2] })\""
