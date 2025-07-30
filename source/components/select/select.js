@@ -71,6 +71,7 @@
                 list: null,
                 placeholder: null,
                 observer: null,
+                origin: null,
             });
 
             return this;
@@ -78,6 +79,8 @@
 
         _create: function () {
             const element = this.element;
+
+            this.origin = element.clone(true, true);
 
             this._createSelect();
             this._createEvents();
@@ -456,21 +459,10 @@
             });
 
             clearButton.on(Metro.events.click, (e) => {
-                element.val(o.emptyValue);
-                if (element[0].multiple) {
-                    list.find("li").removeClass("d-none");
-                }
-
-                input.clear();
-                that._setPlaceholder();
-
                 e.preventDefault();
                 e.stopPropagation();
 
-                that._fireEvent("clear");
-                that._fireEvent("change", {
-                    selected: that.getSelected(),
-                });
+                that.clear();
             });
 
             element.on(Metro.events.change, () => {
@@ -631,24 +623,23 @@
             }
         },
 
-        reset: function (to_default) {
-            const element = this.element;
-            const options = element.find("option");
-            const select = element.closest(".select");
+        reset: function () {
+            this.observer.disconnect();
+            this.element.clear();
 
-            $.each(options, function () {
-                this.selected = !Metro.utils.isNull(to_default) ? this.defaultSelected : false;
-            });
-
-            this.list.find("li").remove();
-            select.find(".select-input").html("");
+            for (const option of this.origin.children()) {
+                this.element.append(option.cloneNode(true));
+            }
 
             this._createOptions();
-
-            const selected = this.getSelected();
-            this._fireEvent("change", {
-                selected: selected,
+            this.observer.observe(this.elem, {
+                childList: true,
+                subtree: true,
             });
+
+            this._fireEvent("reset");
+
+            return this;
         },
 
         getSelected: function () {
@@ -918,6 +909,23 @@
                 }
                 option.appendTo(element);
             });
+        },
+
+        clear: function () {
+            const element = this.element;
+            const o = this.options;
+            const input = element.siblings(".select-input");
+
+            element.val(o.emptyValue);
+
+            if (element[0].multiple) {
+                list.find("li").removeClass("d-none");
+            }
+
+            input.clear();
+            this._setPlaceholder();
+
+            this._fireEvent("clear");
         },
 
         changeAttribute: function (attributeName) {

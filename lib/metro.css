@@ -59083,7 +59083,7 @@ ul ul .dropdown-caret {
 .select > .button-group {
   display: flex;
   flex-wrap: nowrap;
-  margin-right: 1rem;
+  margin-right: calc(var(--select-height, 36px) - 2px);
 }
 .select select[multiple] ~ .button-group {
   margin-right: 0;
@@ -59100,6 +59100,8 @@ ul ul .dropdown-caret {
   text-shadow: rgba(0, 0, 0, 0.25) 0.1em 0.1em 0.2em;
 }
 .select .input-clear-button {
+  height: calc(var(--select-height, 36px) - 2px);
+  width: calc(var(--select-height, 36px) - 2px);
   background-color: transparent;
 }
 .select .input-clear-button:hover {
