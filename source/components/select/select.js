@@ -693,13 +693,16 @@
 
             const _val = Array.isArray(val) ? val : [val];
 
-            $.each(_val, function () {
-                for (i = 0; i < options.length; i++) {
-                    option = options[i];
-                    html = Metro.utils.isValue(option.getAttribute("data-template"))
+            $.each(_val, (_, v) => {
+                for (option of options) {
+                    if (option.getAttribute("data-icon")) {
+                        html = `<span class='icon'>${option.getAttribute("data-icon")}</span>`;
+                    }
+                    html += option.getAttribute("data-template")
                         ? option.getAttribute("data-template").replace("$1", option.text)
                         : option.text;
-                    if (`${option.value}` === `${this}`) {
+
+                    if (`${option.value}` === `${v}`) {
                         option.selected = true;
                         break;
                     }
@@ -709,7 +712,8 @@
                     list_item = $(list_items[i]);
                     group = list_item.data("group");
                     option_value = list_item.attr("data-value");
-                    if (`${option_value}` === `${this}`) {
+
+                    if (`${option_value}` === `${v}`) {
                         if (o.showGroupName && group) {
                             html += `&nbsp;<span class='selected-item__group-name'>${group}</span>`;
                         }
@@ -726,9 +730,8 @@
                 }
             });
 
-            const selected = this.getSelected();
             this._fireEvent("change", {
-                selected: selected,
+                selected: this.getSelected(),
             });
         },
 
@@ -844,7 +847,7 @@
 
             options.each(function () {
                 const $el = $(this);
-                if (`${$el.attr("value")}` === "${val}") {
+                if (`${$el.attr("value")}` === `${val}`) {
                     $el.remove();
                 }
             });

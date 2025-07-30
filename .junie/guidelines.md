@@ -173,7 +173,7 @@
 4. API methods (excluding those starting with an underscore)
 5. How to style the component using CSS variables and available CSS classes
 
-Якщо є відповідний приклад компонента в теці `examples`, його слід використовувати як приклад використання компонента.
+Якщо є відповідний приклад компонента в теці `examples` (зазвичай це файл з назвою компонента: `component.html`, `component-{...}.html`, `component-....html`), його слід використовувати як приклад використання компонента.
 
 ### Компоненти, які реалізують логіку через завантаження даних
 Для компонентів, які використовують завантаження даних, слід описати, як це зробити, які параметри використовуються для цього, якій формат має бути в завантажених даних, та як обробляються дані.
@@ -272,6 +272,11 @@ const accordion = Metro.getPlugin("#myAccordion", "accordion");
    | `paramName` | type | default | Description of parameter |
    ```
 
+#### Example of Parameter Usage
+   ```html
+   <div data-role="component-name" data-param-name="value"></div>
+   ```
+
 #### **Events**
    ```markdown
    ## Events
@@ -279,6 +284,18 @@ const accordion = Metro.getPlugin("#myAccordion", "accordion");
    | Event | Description |
    | ----- | ----------- |
    | `onEventName` | Description of event |
+   ```
+
+#### Example of Event Usage
+   ```html
+   <div data-role="component-name" data-on-{event-name}="onEvent"></div>
+
+    <script>
+         function onEvent(event) {
+             // Handle the event
+            ...
+         }
+    </script>
    ```
 
 #### **API Methods**
@@ -345,10 +362,11 @@ For each component that needs documentation:
 1. **Examine the Component Files**:
     - Look at the JavaScript file (e.g., `component-name.js`) to understand:
         - Default configuration options (usually in a variable like `ComponentDefaultConfig`)
-        - API methods (public methods that don't start with underscore or `#`)
         - Events (usually in the configuration with names like `onEvent`)
+        - Styles options (usually in the configuration with names like `clsElementName`)
+        - API methods (public methods that don't start with underscore or `#`)
 
-    - Look at the LESS file (e.g., `component-name.less`) to understand:
+    - Look at the LESS (CSS)) file (e.g., `component-name.less` or `component-name.css`) to understand:
         - CSS variables (usually defined in `:root` and `.dark-side` selectors)
         - Available CSS classes and their purpose
 
