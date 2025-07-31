@@ -1,15 +1,13 @@
 # Select
 
-The Select component provides an enhanced replacement for the standard HTML select element with features like filtering, multiple selection, remote data sources, and customizable styling.
+The Select component provides a customizable dropdown selection interface that enhances the standard HTML select element with advanced features like filtering, multiple selection, icons, option groups, and remote data loading.
 
 ## Dependencies
 
-- Input Common component
-- Input component
-- Dropdown component
-- Tag component
-- Button component
-- Button Group component
+This component depends on the following Metro UI modules:
+- Core Metro UI framework
+- Dropdown component (for dropdown functionality)
+- Input common styles
 
 ## Usage
 
@@ -17,19 +15,19 @@ The Select component provides an enhanced replacement for the standard HTML sele
 
 ```html
 <select data-role="select">
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
 </select>
 ```
 
-### With Icons
+### Select with Icons
 
 ```html
 <select data-role="select">
     <option data-icon="<span class='mif-rocket'>" value="rocket">Rocket</option>
     <option data-icon="<span class='mif-star-empty'>" value="star">Star</option>
-    <option data-icon="<img src='images/icon.svg' alt=''/>" value="custom">Custom Icon</option>
+    <option data-icon="<img src='images/flag.svg' alt=''/>" value="flag" selected>Flag</option>
 </select>
 ```
 
@@ -37,122 +35,41 @@ The Select component provides an enhanced replacement for the standard HTML sele
 
 ```html
 <select data-role="select" multiple data-clear-button="true">
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
 </select>
 ```
 
-### With Option Groups
+### Select with Option Groups
 
 ```html
 <select data-role="select" data-show-group-name="true">
     <optgroup label="Group 1">
-        <option value="1-1">Option 1.1</option>
-        <option value="1-2">Option 1.2</option>
+        <option value="g1-option1">Group 1 Option 1</option>
+        <option value="g1-option2">Group 1 Option 2</option>
     </optgroup>
     <optgroup label="Group 2">
-        <option value="2-1">Option 2.1</option>
-        <option value="2-2">Option 2.2</option>
+        <option value="g2-option1">Group 2 Option 1</option>
+        <option value="g2-option2">Group 2 Option 2</option>
     </optgroup>
 </select>
 ```
 
-### With Filtering
+### Select with Filtering
 
 ```html
-<select data-role="select" data-filter="true" data-filter-placeholder="Search...">
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
+<select data-role="select" data-filter="true" data-filter-placeholder="Search options...">
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
 </select>
 ```
 
-### With Remote Data Source
+### Select with Remote Data
 
 ```html
-<select data-role="select" 
-        data-source="/api/data" 
-        data-source-method="GET" 
-        data-source-type="json">
-</select>
-```
-
-#### Format of Remote Data
-The remote data should be in JSON format, structured as follows:
-
-```json
-[
-    {"value": "1", "text": "Option 1"},
-    {"value": "2", "text": "Option 2", "icon": "<span class='mif-star'></span>"},
-    {"value": "3", "text": "Option 3", "icon": "<img src='images/icon.svg' alt=''/>"},
-    {"value": "4", "text": "Option 4", "selected": true}
-]
-```
-
-:::caution
-Option groups are not supported in remote data sources!
-:::
-
-#### Transforming Remote Data
-You can transform the remote data using a callback function specified in the `data-on-data` attribute. 
-This function should return an array of options in the format expected by the Select component.
-
-```html
-<select data-role="select" id="select" data-filter="true" data-source="https://dummyjson.com/products" data-filter-source="https://dummyjson.com/products/search?q=" data-on-data="updateData"></select>
-
-<script>
-    function updateData(data){
-        const products = [...data.products]
-        const result = []
-        for (const p of products) {
-            result.push({
-                value: p.id,
-                text: p.title
-            })
-        }
-        return result
-    }
-</script>
-```
-
-```html
-
-### Different Sizes
-
-```html
-<select data-role="select" class="small">
-    <!-- options -->
-</select>
-
-<select data-role="select" class="medium">
-    <!-- options -->
-</select>
-
-<select data-role="select" class="large">
-    <!-- options -->
-</select>
-```
-
-### With Placeholder
-
-```html
-<select data-role="select" data-use-placeholder="true" data-placeholder="Select an option">
-    <option value=""></option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-</select>
-```
-
-### With Prepend/Append Text
-
-```html
-<select data-role="select" data-prepend="Select:">
-    <!-- options -->
-</select>
-
-<select data-role="select" data-append="Required">
-    <!-- options -->
+<select data-role="select" data-source="data/options.json" data-source-method="GET">
 </select>
 ```
 
@@ -160,229 +77,272 @@ This function should return an array of options in the format expected by the Se
 
 | Parameter | Type | Default | Description |
 | --------- | ---- | ------- | ----------- |
-| `id` | string | "" | The ID for the select element |
+| `id` | string | "" | Custom ID for the select element |
 | `label` | string | "" | Label text for the select |
-| `size` | string | "normal" | Size of the select. Possible values: "small", "medium", "normal", "large" |
-| `selectDeferred` | number | 0 | Delay before initialization in milliseconds |
-| `clearButton` | boolean | false | Show clear button |
-| `clearButtonIcon` | string | "❌" | Icon for clear button |
-| `usePlaceholder` | boolean | false | Use placeholder text |
+| `size` | string | "normal" | Size of the select (small, medium, normal, large, largest) |
+| `selectDeferred` | number | 0 | Delay in milliseconds before processing selection |
+| `clearButton` | boolean | false | Show clear button to reset selection |
+| `clearButtonIcon` | string | "❌" | Icon for the clear button |
+| `usePlaceholder` | boolean | false | Use placeholder text when no option is selected |
 | `placeholder` | string | "" | Placeholder text |
-| `addEmptyValue` | boolean | false | Add empty value option |
-| `emptyValue` | string | "" | Value for empty option |
-| `duration` | number | 0 | Duration of dropdown animation |
-| `prepend` | string | "" | Text to prepend to the select |
-| `append` | string | "" | Text to append to the select |
-| `filterPlaceholder` | string | "" | Placeholder for filter input |
-| `filter` | boolean | false | Show filter input |
-| `dropHeight` | number | 200 | Maximum height of dropdown |
-| `dropWidth` | number | null | Width of dropdown (null = auto) |
+| `addEmptyValue` | boolean | false | Add an empty option at the beginning |
+| `emptyValue` | string | "" | Value for the empty option |
+| `duration` | number | 0 | Animation duration for dropdown |
+| `prepend` | string | "" | Text to prepend before the select |
+| `append` | string | "" | Text to append after the select |
+| `filterPlaceholder` | string | "" | Placeholder text for filter input |
+| `filter` | boolean | false | Enable filtering of options |
+| `dropHeight` | number | 200 | Maximum height of dropdown in pixels |
+| `dropWidth` | number | null | Width of dropdown (null for auto) |
 | `dropFullSize` | boolean | false | Make dropdown full width |
-| `openMode` | string | "auto" | Dropdown open mode |
-| `showGroupName` | boolean | false | Show group name in selected item |
-| `shortTag` | boolean | true | Limit tag width to 120px |
+| `openMode` | string | "auto" | How dropdown opens (auto, up, down) |
+| `showGroupName` | boolean | false | Show group name in selected items |
+| `shortTag` | boolean | true | Use short tags (max width 120px) for multiple selection |
 | `source` | string | null | URL for remote data source |
-| `sourceMethod` | string | "GET" | HTTP method for remote data source |
-| `sourceType` | string | "json" | Data type for remote data source |
-| `filterSource` | string | null | URL for filter remote data source |
-| `filterThreshold` | number | 500 | Debounce threshold for filter input |
-| `clsSelect` | string | "" | Additional CSS class for select element |
+| `sourceMethod` | string | "GET" | HTTP method for remote data |
+| `sourceType` | string | "json" | Data type for remote source (json, text) |
+| `filterSource` | string | null | URL for filtered data source |
+| `filterThreshold` | number | 500 | Minimum characters before filtering |
+
+### CSS Class Parameters
+
+| Parameter | Type | Default | Description |
+| --------- | ---- | ------- | ----------- |
+| `clsSelect` | string | "" | Additional CSS class for select container |
 | `clsSelectInput` | string | "" | Additional CSS class for select input |
 | `clsPrepend` | string | "" | Additional CSS class for prepend element |
 | `clsAppend` | string | "" | Additional CSS class for append element |
-| `clsOption` | string | "" | Additional CSS class for option elements |
+| `clsOption` | string | "" | Additional CSS class for options |
 | `clsOptionActive` | string | "" | Additional CSS class for active option |
-| `clsOptionGroup` | string | "" | Additional CSS class for option group |
+| `clsOptionGroup` | string | "" | Additional CSS class for option groups |
 | `clsDropList` | string | "" | Additional CSS class for dropdown list |
 | `clsDropContainer` | string | "" | Additional CSS class for dropdown container |
-| `clsSelectedItem` | string | "" | Additional CSS class for selected item |
-| `clsSelectedItemAction` | string | "" | Additional CSS class for selected item action |
+| `clsSelectedItem` | string | "" | Additional CSS class for selected item tags |
+| `clsSelectedItemAction` | string | "" | Additional CSS class for selected item action button |
 | `clsLabel` | string | "" | Additional CSS class for label |
-| `clsGroupName` | string | "" | Additional CSS class for group name |
+| `clsGroupName` | string | "" | Additional CSS class for group names |
 | `clsFilterInput` | string | "" | Additional CSS class for filter input |
 
-## API Methods
+### Example of Parameter Usage
 
-+ `disable()` - Disables the select component
-+ `enable()` - Enables the select component
-+ `toggleState()` - Toggles between enabled and disabled states
-+ `reset(toDefault)` - Resets the select to default or empty state. If `toDefault` is true, resets to default selected options
-+ `getSelected()` - Returns an array of selected values
-+ `val(val)` - Gets or sets the selected value(s). For multiple selects, pass an array of values
-+ `options(options, selected, delimiter)` - Sets the options data. `options` can be a string of HTML, an object with key-value pairs, or a complex object with nested groups
-+ `data(options, selected, delimiter)` - Sets the options data. `options` can be a string of HTML, an object with key-value pairs, or a complex object with nested groups
-+ `addOption(val, title, selected)` - Adds a single option to the select
-+ `addOptions(values)` - Adds multiple options to the select. `values` can be an array or object
-+ `removeOption(val)` - Removes an option with the specified value
-+ `removeOptions(values)` - Removes multiple options with the specified values
-+ `fetch(source, options, clearOptions)` - Fetches options from a remote source
-+ `changeAttribute(attributeName)` - Updates the component when an attribute changes
-+ `destroy()` - Destroys the select component and removes all event listeners
+```html
+<select data-role="select" 
+        data-clear-button="true"
+        data-filter="true"
+        data-filter-placeholder="Search..."
+        data-show-group-name="true"
+        data-cls-select="custom-select"
+        data-cls-option="custom-option">
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+</select>
+```
 
 ## Events
 
-| Event            | Description                                     |
-|------------------|-------------------------------------------------|
-| `onClear`        | Fired when the select is cleared                |
-| `onChange`       | Fired when the selection changes                |
-| `onUp`           | Fired when the dropdown is closed               |
-| `onDrop`         | Fired when the dropdown is opened               |
-| `onItemSelect`   | Fired when an item is selected                  |
-| `onItemDeselect` | Fired when an item is deselected                |
-| `onSelectCreate` | Fired when the select is created                |
-| `onData`         | Callback for processing data from remote source |
-| `onOptions`      | Callback for processing select options          |
+| Event | Description |
+| ----- | ----------- |
+| `onClear` | Fired when the select is cleared |
+| `onChange` | Fired when the selection changes |
+| `onUp` | Fired when the dropdown closes |
+| `onDrop` | Fired when the dropdown opens |
+| `onOptions` | Fired when options are processed |
+| `onItemSelect` | Fired when an item is selected |
+| `onItemDeselect` | Fired when an item is deselected |
+| `onSelectCreate` | Fired when the select component is created |
+| `onData` | Function to process data before rendering |
+
+### Example of Event Usage
+
+```html
+<select data-role="select" 
+        data-on-change="onSelectChange"
+        data-on-clear="onSelectClear">
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+</select>
+
+<script>
+    function onSelectChange(event) {
+        console.log('Selection changed:', event.detail);
+    }
+    
+    function onSelectClear(event) {
+        console.log('Select cleared');
+    }
+</script>
+```
+
+## API Methods
+
++ `getSelected()` - Returns an array of selected values.
++ `val(val)` - Gets or sets the selected value(s). If no parameter is provided, returns current selection.
++ `data(options, selected, delimiter)` - Sets the select options from data object or HTML string.
++ `options(options, selected, delimiter)` - Alias for the data method.
++ `addOption(val, title, selected)` - Adds a single option to the select.
++ `addOptions(values)` - Adds multiple options from array or object.
++ `removeOption(val)` - Removes an option by value.
++ `removeOptions(values)` - Removes multiple options by values array.
++ `fetch(source, options, clearOptions)` - Fetches data from remote source.
++ `clear()` - Clears the selected value(s).
++ `reset()` - Resets the select to its initial state.
++ `destroy()` - Destroys the component and removes all event listeners.
+
+### Example of Method Usage
+
+```javascript
+// Get the select component
+const select = Metro.getPlugin('#mySelect', 'select');
+
+// Set single value
+select.val('option1');
+
+// Set multiple values
+select.val(['option1', 'option2']);
+
+// Get selected values
+const selected = select.getSelected();
+
+// Add options from object
+select.data({
+    'value1': 'Option 1',
+    'value2': 'Option 2'
+});
+
+// Add single option
+select.addOption('new-value', 'New Option', true);
+
+// Clear selection
+select.clear();
+
+// Reset to initial state
+select.reset();
+```
 
 ## Styling with CSS Variables
 
-### Light Theme Variables (Default)
-
-| Variable | Default (Light) | Description |
-| -------- | --------------- | ----------- |
-| `--select-focus-color` | rgba(light-gray, 0.45) | Focus outline color |
-| `--select-disabled-color` | #ccc | Color for disabled state |
-| `--select-options-background` | #ffffff | Background color for options list |
-| `--select-options-color` | #191919 | Text color for options list |
-| `--select-option-background` | transparent | Background color for option |
-| `--select-option-color` | inherit | Text color for option |
-| `--select-option-background-hover` | rgba(29,29,29,0.1) | Background color for option on hover |
-| `--select-option-color-hover` | inherit | Text color for option on hover |
-| `--select-option-background-selected` | #e8e8e8 | Background color for selected option |
-| `--select-option-color-selected` | #191919 | Text color for selected option |
-| `--select-button-background` | transparent | Background color for buttons |
-| `--select-button-color` | #191919 | Text color for buttons |
-| `--select-button-background-hover` | transparent | Background color for buttons on hover |
-| `--select-button-color-hover` | #191919 | Text color for buttons on hover |
-| `--select-dropdown-toggle-color` | #191919 | Color for dropdown toggle |
-| `--select-group-title-background` | #f6f7f8 | Background color for group titles |
-| `--select-group-title-color` | #646464 | Text color for group titles |
-| `--select-item-group-title-background` | transparent | Background color for selected item group titles |
-| `--select-item-group-title-color` | #ccc | Text color for selected item group titles |
-| `--select-tag-background` | #f6f7f8 | Background color for tags (multiple select) |
-| `--select-tag-color` | #191919 | Text color for tags |
-| `--select-tag-button-background` | #f6f7f8 | Background color for tag buttons |
-| `--select-tag-button-color` | #191919 | Text color for tag buttons |
-| `--select-border-radius` | 4px | Border radius for select elements |
-
-### Dark Theme Variables
-
-| Variable | Dark Mode | Description |
-| -------- | --------- | ----------- |
-| `--select-focus-color` | rgba(light-gray, 0.2) | Focus outline color |
-| `--select-disabled-color` | #ccc | Color for disabled state |
-| `--select-options-background` | #2b2d30 | Background color for options list |
-| `--select-options-color` | #dbdfe7 | Text color for options list |
-| `--select-option-background` | transparent | Background color for option |
-| `--select-option-color` | inherit | Text color for option |
-| `--select-option-background-hover` | #43454a | Background color for option on hover |
-| `--select-option-color-hover` | #ffffff | Text color for option on hover |
-| `--select-option-background-selected` | #43454a | Background color for selected option |
-| `--select-option-color-selected` | #ffffff | Text color for selected option |
-| `--select-button-background` | transparent | Background color for buttons |
-| `--select-button-color` | #dbdfe7 | Text color for buttons |
-| `--select-button-background-hover` | transparent | Background color for buttons on hover |
-| `--select-button-color-hover` | #ffffff | Text color for buttons on hover |
-| `--select-dropdown-toggle-color` | #ffffff | Color for dropdown toggle |
-| `--select-group-title-background` | #1e1f22 | Background color for group titles |
-| `--select-group-title-color` | #646464 | Text color for group titles |
-| `--select-item-group-title-background` | transparent | Background color for selected item group titles |
-| `--select-item-group-title-color` | #646464 | Text color for selected item group titles |
-| `--select-tag-background` | #2b2d30 | Background color for tags (multiple select) |
-| `--select-tag-color` | #dbdfe7 | Text color for tags |
-| `--select-tag-button-background` | #2b2d30 | Background color for tag buttons |
-| `--select-tag-button-color` | #dbdfe7 | Text color for tag buttons |
-
-## Available CSS Classes
-
-### Base Classes
-- `.select` - Main container class
-- `.select-input` - Input field class
-- `.option-list` - Options list class
-- `.drop-container` - Dropdown container class
-- `.tag` - Tag class for multiple selection
-- `.dropdown-caret` - Dropdown toggle arrow
-- `.group-title` - Option group title
-- `.selected-item__group-name` - Group name in selected items
-- `.unselect-option` - Remove button for selected items
-
-### Size Modifiers
-- `.small` - Small size
-- `.medium` - Medium size
-- `.large` - Large size
-- `.largest` - Largest size
-
-### State Modifiers
-- `.focused` - Focused state
-- `.disabled` - Disabled state
-- `.active` - Active option
-- `.active-toggle` - Active dropdown toggle state
-- `.multiple` - Multiple selection mode
-
-### Special Modifiers
-- `.pill-input` - Pill-shaped input
-- `.no-icons` - Hide icons
-- `.drop-full-size` - Full-width dropdown
-- `.rtl` - Right-to-left text direction
+| Variable | Default (Light) | Dark Mode | Description |
+| -------- | --------------- | --------- | ----------- |
+| `--select-focus-color` | rgba(204,204,204,0.45) | rgba(204,204,204,0.2) | Focus outline color |
+| `--select-disabled-color` | #ccc | #ccc | Disabled state color |
+| `--select-options-background` | #ffffff | #2b2d30 | Dropdown background |
+| `--select-options-color` | #191919 | #dbdfe7 | Dropdown text color |
+| `--select-option-background` | transparent | transparent | Option background |
+| `--select-option-color` | inherit | inherit | Option text color |
+| `--select-option-background-hover` | rgba(29,29,29,0.1) | #43454a | Option hover background |
+| `--select-option-color-hover` | inherit | #ffffff | Option hover text color |
+| `--select-option-background-selected` | #e8e8e8 | #43454a | Selected option background |
+| `--select-option-color-selected` | #191919 | #ffffff | Selected option text color |
+| `--select-button-background` | transparent | transparent | Button background |
+| `--select-button-color` | #191919 | #dbdfe7 | Button text color |
+| `--select-button-background-hover` | transparent | transparent | Button hover background |
+| `--select-button-color-hover` | #191919 | #ffffff | Button hover text color |
+| `--select-dropdown-toggle-color` | #191919 | #ffffff | Dropdown arrow color |
+| `--select-group-title-background` | #f6f7f8 | #1e1f22 | Group title background |
+| `--select-group-title-color` | #646464 | #646464 | Group title text color |
+| `--select-item-group-title-background` | transparent | transparent | Selected item group background |
+| `--select-item-group-title-color` | #ccc | #646464 | Selected item group text color |
+| `--select-tag-background` | #f6f7f8 | #2b2d30 | Tag background for multiple select |
+| `--select-tag-color` | #191919 | #dbdfe7 | Tag text color |
+| `--select-tag-button-background` | #f6f7f8 | #2b2d30 | Tag button background |
+| `--select-tag-button-color` | #191919 | #dbdfe7 | Tag button text color |
+| `--select-border-radius` | 4px | 4px | Border radius |
 
 ### Example of Custom Styling
 
 ```css
-/* Custom styling example */
-.my-custom-select {
+/* Custom select styling */
+#mySelect {
+    --select-options-background: #f0f0f0;
+    --select-option-background-hover: #e0e0e0;
     --select-border-radius: 8px;
-    --select-option-background-selected: #007bff;
-    --select-option-color-selected: white;
-    --select-tag-background: #e9f5ff;
-    --select-tag-color: #007bff;
+}
+
+/* Dark theme customization */
+.dark-side #mySelect {
+    --select-options-background: #1a1a1a;
+    --select-option-background-hover: #333333;
 }
 ```
 
-## HTML Attributes
+## Available CSS Classes
 
-The Select component uses the following HTML attributes:
+### Base Classes
+- `.select` - Main select container class
+- `.select-input` - Input display area
+- `.option-list` - Dropdown options list
+- `.drop-container` - Dropdown container
 
-| Attribute | Description |
-| --------- | ----------- |
-| `data-role="select"` | Initializes the element as a Select component |
-| `multiple` | Enables multiple selection mode |
-| `data-icon` | Specifies an icon for an option (used on `<option>` elements) |
-| `data-display` | Specifies alternative display text for an option (used on `<option>` elements) |
-| `data-template` | Specifies a template for option display, where `$1` is replaced with the option text |
-| `data-source` | URL for fetching options from a remote data source |
-| `data-source-method` | HTTP method for the remote data source request (default: "GET") |
-| `data-source-type` | Data type for the remote data source (default: "json") |
-| `data-filter-source` | URL for filtering options from a remote data source |
-| `data-on-data` | Callback function name for transforming remote data before it's used to populate the select |
+### Size Modifiers
+- `.small` - Small size select
+- `.medium` - Medium size select  
+- `.large` - Large size select
+- `.largest` - Largest size select
 
-## Accessibility
+### State Classes
+- `.focused` - Applied when select is focused
+- `.active-toggle` - Applied when dropdown is open
+- `.multiple` - Applied to multiple select containers
+- `.disabled` - Applied when select is disabled
 
-The Select component maintains accessibility by:
+### Feature Classes
+- `.drop-full-size` - Makes dropdown full width
+- `.no-icons` - Hides option icons
+- `.pill-input` - Applies pill-shaped styling
 
-1. Preserving keyboard navigation - users can navigate through options using arrow keys
-2. Supporting screen readers by maintaining proper ARIA attributes
-3. Providing visual focus indicators for keyboard navigation
-4. Maintaining proper contrast ratios between text and background colors
-5. Supporting text scaling without loss of functionality
+### Element Classes
+- `.dropdown-caret` - Dropdown arrow element
+- `.group-title` - Option group title
+- `.tag` - Selected item tag in multiple select
+- `.unselect-option` - Remove button for selected items
+- `.input-clear-button` - Clear button
+- `.selected-item__group-name` - Group name in selected items
 
-## Browser Compatibility
+## Additional Notes
 
-The Select component is compatible with:
+### Remote Data Format
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+When using remote data sources, the expected JSON format is:
 
-Some visual styling may vary slightly between browsers, but core functionality remains consistent.
+```json
+[
+    {
+        "value": "option1",
+        "text": "Option 1",
+        "icon": "<span class='mif-star'>",
+        "selected": false
+    },
+    {
+        "value": "option2", 
+        "text": "Option 2",
+        "selected": true
+    }
+]
+```
+
+### Option Attributes
+
+Options support several data attributes:
+- `data-icon` - HTML for option icon
+- `data-template` - Custom template with $1 placeholder for text
+- `data-display` - Custom display text different from option text
+
+### Multiple Selection
+
+For multiple selection:
+- Use the `multiple` attribute on the select element
+- Selected items appear as removable tags
+- Use `data-short-tag="true"` to limit tag width to 120px
 
 ## Best Practices
 
-1. Always provide meaningful option text that clearly describes what each option represents
-2. Use filtering for selects with many options (more than 10-15 items)
-3. Consider using multiple selection with tags for cases where users need to select several related items
-4. Include a clear button for multiple selects to allow users to easily reset their selections
-5. Use appropriate sizing based on the context - smaller selects for forms with limited space, larger ones for more prominent UI elements
-6. Provide placeholder text that guides users on what to select
-7. Group related options using `<optgroup>` for better organization
-8. For remote data sources, implement proper loading indicators and error handling
-9. Test keyboard navigation to ensure all options are accessible without a mouse
+- Always provide meaningful option values and text
+- Use option groups to organize large lists of options
+- Enable filtering for lists with more than 10-15 options
+- Provide clear labels and placeholders for better UX
+- Use icons consistently across all options or not at all
+- Test with both light and dark themes
+- Ensure proper keyboard navigation support
+- Use the clear button for optional selections
+- Handle loading states when using remote data sources
+- Validate selections on form submission

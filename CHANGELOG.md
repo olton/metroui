@@ -1,5 +1,5 @@
 ### 5.1.12
 
-+ [x] Fixed method `val()` in `select` component to add value with icon
-+ [x] Added method `clear()` to `select` component to clear selected value(s)
-+ [x] Refactored method `reset()` in `select` component to reset select to initial state
++ [x] `select` - fixed method `val()` no icons were displayed when using this method
++ [x] `select` - added method `clear()` to clear selected value(s)
++ [x] `select` - refactored method `reset()` - now calling this method resets select to initial state
