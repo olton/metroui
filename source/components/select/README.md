@@ -4,10 +4,12 @@ The Select component provides a customizable dropdown selection interface that e
 
 ## Dependencies
 
-This component depends on the following Metro UI modules:
-- Core Metro UI framework
-- Dropdown component (for dropdown functionality)
-- Input common styles
+- Input Common component
+- Input component
+- Dropdown component
+- Tag component
+- Button component
+- Button Group component
 
 ## Usage
 
@@ -69,8 +71,53 @@ This component depends on the following Metro UI modules:
 ### Select with Remote Data
 
 ```html
-<select data-role="select" data-source="data/options.json" data-source-method="GET">
+<select data-role="select" 
+        data-source="data/options.json" 
+        data-source-method="GET">
 </select>
+```
+
+#### Format of Remote Data
+The remote data should be in JSON format, structured as follows:
+
+```json
+[
+    {"value": "1", "text": "Option 1"},
+    {"value": "2", "text": "Option 2", "icon": "<span class='mif-star'></span>"},
+    {"value": "3", "text": "Option 3", "icon": "<img src='images/icon.svg' alt=''/>"},
+    {"value": "3", "text": "Option 3"},
+    {"value": "4", "text": "Option 4", "selected": true}
+]
+```
+
+:::caution
+Option groups are not supported in remote data sources!
+:::
+
+#### Transforming Remote Data
+You can transform the remote data using a callback function specified in the `data-on-data` attribute.
+This function should return an array of options in the format expected by the Select component.
+
+```html
+<select data-role="select" id="select" 
+        data-filter="true" 
+        data-source="https://dummyjson.com/products" 
+        data-filter-source="https://dummyjson.com/products/search?q=" 
+        data-on-data="updateData"></select>
+
+<script>
+    function updateData(data){
+        const products = [...data.products]
+        const result = []
+        for (const p of products) {
+            result.push({
+                value: p.id,
+                text: p.title
+            })
+        }
+        return result
+    }
+</script>
 ```
 
 ## Plugin Parameters
@@ -140,17 +187,19 @@ This component depends on the following Metro UI modules:
 
 ## Events
 
-| Event | Description |
-| ----- | ----------- |
-| `onClear` | Fired when the select is cleared |
-| `onChange` | Fired when the selection changes |
-| `onUp` | Fired when the dropdown closes |
-| `onDrop` | Fired when the dropdown opens |
-| `onOptions` | Fired when options are processed |
-| `onItemSelect` | Fired when an item is selected |
-| `onItemDeselect` | Fired when an item is deselected |
+| Event            | Description                                |
+|------------------|--------------------------------------------|
+| `onClear`        | Fired when the select is cleared           |
+| `onChange`       | Fired when the selection changes           |
+| `onUp`           | Fired when the dropdown closes             |
+| `onDrop`         | Fired when the dropdown opens              |
+| `onOptions`      | Fired when options are processed           |
+| `onItemSelect`   | Fired when an item is selected             |
+| `onItemDeselect` | Fired when an item is deselected           |
 | `onSelectCreate` | Fired when the select component is created |
-| `onData` | Function to process data before rendering |
+| `onData`         | Function to process data before rendering  |
+| `onReset`        | Event calling when select was reseted      |
+| `onOptions`      | Event calling when options where created   |
 
 ### Example of Event Usage
 
