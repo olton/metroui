@@ -35,6 +35,7 @@
                 interval: null,
                 colors: null,
                 colorIndex: 0,
+                typing: false,
             });
             return this;
         },
@@ -46,11 +47,16 @@
             element.addClass("typer");
 
             this.original = element.text();
-            this.words = this.original.split(o.splitter).pack();
-            this.colors = o.colors.split(",").pack();
+            this.words = this.original.toArray(o.splitter);
+            this.colors = o.colors.toArray(",");
             this.cursor = $("<span>").addClass("typer-cursor").html(o.cursor).insertAfter(element);
             this.interval = setInterval(() => this._blink(), +o.blinkDelay);
             this.progress = { word: 0, char: 0, building: true, looped: 0 };
+
+            if (this.colors.length) {
+                this.elem.style.color = this.colors[0];
+            }
+
             element.clear();
             this.start();
         },
@@ -69,12 +75,12 @@
             const element = this.element;
             const elem = this.elem;
             const o = this.options;
-            let atWordEnd;
             const p = this.progress;
             const w = p.word;
             const c = p.char;
             const curr = [...this.words[w]].slice(0, c).join("");
             const timeout = (2 * Math.random() - 1) * o.variance + o.delay;
+            let atWordEnd;
 
             this.cursor[0].style.opacity = "1";
             this.on = true;
