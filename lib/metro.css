@@ -73790,7 +73790,7 @@ label:has(input) {
 .sidenav a:hover {
   text-decoration: none;
 }
-.sidenav a > *:not(.icon) {
+.sidenav a > *:not(.icon, .badge) {
   visibility: collapse;
 }
 .sidenav li + li {
@@ -73841,6 +73841,15 @@ label:has(input) {
 .sidenav .dropdown-caret {
   margin-left: auto;
 }
+.sidenav .badge {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 11px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
 .sidenav.expanded {
   width: var(--sidenav-width);
 }
@@ -73853,6 +73862,12 @@ label:has(input) {
 }
 .sidenav.expanded .title {
   display: flex;
+}
+.sidenav.expanded .badge {
+  position: relative;
+  margin-left: 0.5rem;
+  top: auto;
+  right: auto;
 }
 .sidenav .d-menu {
   --d-menu-background: var(--sidenav-background);

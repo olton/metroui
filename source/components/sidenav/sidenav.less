@@ -96,7 +96,7 @@
             text-decoration: none;
         }
         
-        & > *:not(.icon) {
+        & > *:not(.icon, .badge) {
             visibility: collapse;
         }
     }
@@ -156,6 +156,16 @@
     .dropdown-caret {
         margin-left: auto;
     }
+    
+    .badge {
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 11px;
+        display: flex!important;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .sidenav {
@@ -173,6 +183,13 @@
         
         .title {
             display: flex;
+        }
+        
+        .badge {
+            position: relative;
+            margin-left: .5rem;
+            top: auto;
+            right: auto;
         }
     }
 }
