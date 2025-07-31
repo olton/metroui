@@ -73705,6 +73705,306 @@ label:has(input) {
   height: calc(100% - 160px);
 }
 
+/* source/components/sidenav/sidenav.less */
+:root {
+  --sidenav-border-radius: 4px;
+  --sidenav-width: 220px;
+}
+:root {
+  --sidenav-background: #f6f6f6;
+  --sidenav-color: #191919;
+  --sidenav-icon-color: #191919;
+  --sidenav-counter-color: #191919;
+  --sidenav-background-hover: #cecece;
+  --sidenav-color-hover: #0a0a0a;
+  --sidenav-background-active: #68a3ff;
+  --sidenav-color-active: #ffffff;
+  --sidenav-border-color: var(--border-color);
+}
+.dark-side {
+  --sidenav-background: #2b2d30;
+  --sidenav-color: #dfe1e5;
+  --sidenav-icon-color: #dfe1e5;
+  --sidenav-counter-color: #dfe1e5;
+  --sidenav-background-hover: #43454a;
+  --sidenav-color-hover: #ffffff;
+  --sidenav-background-active: #468cff;
+  --sidenav-color-active: #ffffff;
+  --sidenav-border-color: var(--border-color);
+}
+.sidenav {
+  display: block;
+  position: relative;
+  list-style: none inside;
+  height: 100%;
+  width: 54px;
+  margin: 0;
+  padding: 0;
+  background-color: var(--sidenav-background);
+  color: var(--sidenav-color);
+}
+.sidenav {
+  padding: 10px 0;
+}
+.sidenav li {
+  margin: 0 6px;
+  font-size: 14px;
+}
+.sidenav li,
+.sidenav a {
+  position: relative;
+  color: inherit;
+  border-radius: var(--sidenav-border-radius);
+}
+.sidenav > li {
+  background: transparent;
+}
+.sidenav > li.stick-left::before,
+.sidenav > li.stick-right::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 6px;
+  height: 42px;
+  border-radius: var(--sidenav-border-radius) 0 0 var(--sidenav-border-radius);
+  background-color: inherit;
+  top: 0;
+  left: -12px;
+}
+.sidenav > li.stick-right::before {
+  left: auto;
+  right: -12px;
+  border-radius: 0 var(--sidenav-border-radius) var(--sidenav-border-radius) 0;
+}
+.sidenav a {
+  display: flex;
+  align-items: center;
+  overflow: hidden !important;
+  width: 42px;
+  padding: 0.625rem;
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.sidenav a:hover {
+  text-decoration: none;
+}
+.sidenav a > *:not(.icon) {
+  visibility: collapse;
+}
+.sidenav li + li {
+  border-top: 1px solid var(--sidenav-border-color);
+}
+.sidenav .icon {
+  width: 20px;
+  height: 20px;
+  font-size: 18px;
+  line-height: 20px;
+  vertical-align: middle;
+  text-align: center;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  bottom: 12px;
+  object-fit: cover;
+}
+.sidenav .title {
+  padding: 20px 10px;
+  font-size: 16px;
+  font-weight: 500;
+  border: 0;
+  cursor: default;
+  align-items: center;
+  justify-content: flex-start;
+  display: none;
+}
+.sidenav .title .action {
+  margin-left: auto;
+}
+@media (hover: hover) {
+  .sidenav li:not(.title):hover {
+    background-color: var(--sidenav-background-hover);
+    color: var(--sidenav-color-hover);
+  }
+}
+@media (hover: none) {
+  .sidenav li:not(.title):active {
+    background-color: var(--sidenav-background-hover);
+    color: var(--sidenav-color-hover);
+  }
+}
+.sidenav li:not(.title).active {
+  background-color: var(--sidenav-background-active);
+  color: var(--sidenav-color-active);
+}
+.sidenav .dropdown-caret {
+  margin-left: auto;
+}
+.sidenav.expanded {
+  width: var(--sidenav-width);
+}
+.sidenav.expanded a {
+  width: auto;
+  padding: 0.625rem 1rem 0.625rem 2.5rem;
+}
+.sidenav.expanded a > *:not(.icon) {
+  visibility: visible;
+}
+.sidenav.expanded .title {
+  display: flex;
+}
+.sidenav .d-menu {
+  --d-menu-background: var(--sidenav-background);
+  --d-menu-color: var(--sidenav-color);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 0;
+}
+.sidenav .d-menu a {
+  width: auto !important;
+  padding: 0.625rem 1rem 0.625rem 2.5rem;
+}
+.sidenav .d-menu.drop-up {
+  top: auto !important;
+  bottom: 0 !important;
+}
+.sidenav.expanded .d-menu {
+  left: 0;
+  position: relative;
+  box-shadow: none;
+  width: 100%;
+  float: none;
+  border-radius: 0 !important;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid var(--sidenav-border-color);
+}
+.sidenav.expanded .d-menu li {
+  margin: 0;
+}
+.sidenav.expanded .d-menu li:not(:first-child) {
+  border-top: 1px solid var(--border-color);
+}
+.sidenav.expanded .d-menu a {
+  border-radius: 0 !important;
+}
+.sidenav.expanded > li > .d-menu li a {
+  padding-left: 3.5rem;
+}
+.sidenav.expanded > li > .d-menu li a .icon {
+  left: 1.5rem;
+}
+.stick-color-gray::before {
+  background-color: hsl(0, 0%, 80%) !important;
+}
+.stick-color-gray-blue::before {
+  background-color: hsl(210, 26%, 54%) !important;
+}
+.stick-color-gray-mouse::before {
+  background-color: hsl(199, 15%, 40%) !important;
+}
+.stick-color-lime::before {
+  background-color: hsl(93, 97%, 71%) !important;
+}
+.stick-color-green::before {
+  background-color: hsl(120, 100%, 35%) !important;
+}
+.stick-color-emerald::before {
+  background-color: hsl(140, 52%, 55%) !important;
+}
+.stick-color-blue::before {
+  background-color: hsl(225, 100%, 68%) !important;
+}
+.stick-color-teal::before {
+  background-color: hsl(180, 77%, 44%) !important;
+}
+.stick-color-cyan::before {
+  background-color: hsl(221, 100%, 79%) !important;
+}
+.stick-color-cobalt::before {
+  background-color: hsl(215, 100%, 34%) !important;
+}
+.stick-color-indigo::before {
+  background-color: hsl(276, 100%, 33%) !important;
+}
+.stick-color-almost::before {
+  background-color: hsl(259, 84%, 55%) !important;
+}
+.stick-color-violet::before {
+  background-color: hsl(300, 76%, 72%) !important;
+}
+.stick-color-pink::before {
+  background-color: hsl(350, 100%, 88%) !important;
+}
+.stick-color-magenta::before {
+  background-color: hsl(300, 100%, 50%) !important;
+}
+.stick-color-crimson::before {
+  background-color: hsl(348, 88%, 46%) !important;
+}
+.stick-color-red::before {
+  background-color: hsl(0, 100%, 50%) !important;
+}
+.stick-color-orange::before {
+  background-color: hsl(39, 100%, 50%) !important;
+}
+.stick-color-amber::before {
+  background-color: hsl(45, 100%, 58%) !important;
+}
+.stick-color-yellow::before {
+  background-color: hsl(52, 100%, 68%) !important;
+}
+.stick-color-brown::before {
+  background-color: hsl(25, 57%, 51%) !important;
+}
+.stick-color-olive::before {
+  background-color: hsl(60, 100%, 32%) !important;
+}
+.stick-color-steel::before {
+  background-color: hsl(209, 19%, 57%) !important;
+}
+.stick-color-mauve::before {
+  background-color: hsl(277, 100%, 84%) !important;
+}
+.stick-color-taupe::before {
+  background-color: hsl(29, 19%, 50%) !important;
+}
+.stick-color-champagne::before {
+  background-color: hsl(37, 74%, 88%) !important;
+}
+.stick-color-khaki::before {
+  background-color: hsl(47, 47%, 69%) !important;
+}
+.stick-color-charcoal::before {
+  background-color: hsl(0, 0%, 60%) !important;
+}
+.stick-color-bronze::before {
+  background-color: hsl(29, 75%, 57%) !important;
+}
+.stick-color-windstorm::before {
+  background-color: hsl(216, 53%, 66%) !important;
+}
+.stick-color-nude::before {
+  background-color: hsl(29, 79%, 85%) !important;
+}
+.stick-color-terracotta::before {
+  background-color: hsl(10, 76%, 55%) !important;
+}
+.stick-color-coral::before {
+  background-color: hsl(16, 100%, 67%) !important;
+}
+.stick-color-army::before {
+  background-color: hsl(69, 34%, 30%) !important;
+}
+.stick-color-seashell::before {
+  background-color: hsl(25, 100%, 95%) !important;
+}
+.stick-color-sand::before {
+  background-color: hsl(45, 71%, 81%) !important;
+}
+
 /* source/components/sidenav-counter/sidenav-counter.less */
 :root {
   --sidenav-counter-width: 220px;
@@ -73828,266 +74128,6 @@ label:has(input) {
   position: relative;
   top: auto;
   right: auto;
-}
-
-/* source/components/sidenav-m3/sidenav-m3.less */
-:root {
-  --sidenav-m3-border-radius: 4px;
-  --sidenav-m3-width: 220px;
-}
-:root {
-  --sidenav-m3-background: #f6f6f6;
-  --sidenav-m3-color: #191919;
-  --sidenav-m3-icon-color: #191919;
-  --sidenav-m3-counter-color: #191919;
-  --sidenav-m3-background-hover: #cecece;
-  --sidenav-m3-color-hover: #0a0a0a;
-  --sidenav-m3-background-active: #68a3ff;
-  --sidenav-m3-color-active: #ffffff;
-  --sidenav-m3-border-color: var(--border-color);
-}
-.dark-side {
-  --sidenav-m3-background: #2b2d30;
-  --sidenav-m3-color: #dfe1e5;
-  --sidenav-m3-icon-color: #dfe1e5;
-  --sidenav-m3-counter-color: #dfe1e5;
-  --sidenav-m3-background-hover: #43454a;
-  --sidenav-m3-color-hover: #ffffff;
-  --sidenav-m3-background-active: #468cff;
-  --sidenav-m3-color-active: #ffffff;
-  --sidenav-m3-border-color: var(--border-color);
-}
-.sidenav-m3 {
-  display: block;
-  position: relative;
-  list-style: none inside;
-  height: 100%;
-  width: var(--sidenav-m3-width);
-  margin: 0;
-  padding: 0;
-  background-color: var(--sidenav-m3-background);
-  color: var(--sidenav-m3-color);
-}
-.sidenav-m3 {
-  padding: 10px 0;
-}
-.sidenav-m3 li {
-  margin: 0 6px;
-  font-size: 14px;
-}
-.sidenav-m3 li,
-.sidenav-m3 a {
-  position: relative;
-  color: inherit;
-  border-radius: var(--sidenav-m3-border-radius);
-}
-.sidenav-m3 > li {
-  background: transparent;
-}
-.sidenav-m3 > li.stick-left::before,
-.sidenav-m3 > li.stick-right::before {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 6px;
-  height: 42px;
-  border-radius: var(--sidenav-m3-border-radius) 0 0 var(--sidenav-m3-border-radius);
-  background-color: inherit;
-  top: 0;
-  left: -12px;
-}
-.sidenav-m3 > li.stick-right::before {
-  left: auto;
-  right: -12px;
-  border-radius: 0 var(--sidenav-m3-border-radius) var(--sidenav-m3-border-radius) 0;
-}
-.sidenav-m3 a {
-  display: flex;
-  align-items: center;
-  padding: 0.625rem 1rem 0.625rem 3rem;
-  text-decoration: none;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.sidenav-m3 a:hover {
-  text-decoration: none;
-}
-.sidenav-m3 li + li {
-  border-top: 1px solid var(--sidenav-m3-border-color);
-}
-.sidenav-m3 .icon {
-  width: 20px;
-  height: 20px;
-  font-size: 18px;
-  line-height: 20px;
-  vertical-align: middle;
-  text-align: center;
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  bottom: 12px;
-  object-fit: cover;
-}
-.sidenav-m3 .title {
-  padding: 20px 10px;
-  font-size: 16px;
-  font-weight: 500;
-  border: 0;
-  cursor: default;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-.sidenav-m3 .title .action {
-  margin-left: auto;
-}
-@media (hover: hover) {
-  .sidenav-m3 li:not(.title):hover {
-    background-color: var(--sidenav-m3-background-hover);
-    color: var(--sidenav-m3-color-hover);
-  }
-}
-@media (hover: none) {
-  .sidenav-m3 li:not(.title):active {
-    background-color: var(--sidenav-m3-background-hover);
-    color: var(--sidenav-m3-color-hover);
-  }
-}
-.sidenav-m3 li:not(.title).active {
-  background-color: var(--sidenav-m3-background-active);
-  color: var(--sidenav-m3-color-active);
-}
-.sidenav-m3 .dropdown-caret {
-  margin-left: auto;
-}
-.sidenav-m3 .d-menu {
-  position: relative;
-  box-shadow: none;
-  width: 100%;
-  float: none;
-  border-radius: 0 !important;
-  padding: 0;
-  margin: 0;
-  border: none;
-  border-bottom: 1px solid var(--sidenav-m3-border-color);
-}
-.sidenav-m3 .d-menu li {
-  margin: 0;
-}
-.sidenav-m3 .d-menu li:not(:first-child) {
-  border-top: 1px solid var(--border-color);
-}
-.sidenav-m3 .d-menu a {
-  border-radius: 0 !important;
-}
-.stick-color-gray::before {
-  background-color: hsl(0, 0%, 80%) !important;
-}
-.stick-color-gray-blue::before {
-  background-color: hsl(210, 26%, 54%) !important;
-}
-.stick-color-gray-mouse::before {
-  background-color: hsl(199, 15%, 40%) !important;
-}
-.stick-color-lime::before {
-  background-color: hsl(93, 97%, 71%) !important;
-}
-.stick-color-green::before {
-  background-color: hsl(120, 100%, 35%) !important;
-}
-.stick-color-emerald::before {
-  background-color: hsl(140, 52%, 55%) !important;
-}
-.stick-color-blue::before {
-  background-color: hsl(225, 100%, 68%) !important;
-}
-.stick-color-teal::before {
-  background-color: hsl(180, 77%, 44%) !important;
-}
-.stick-color-cyan::before {
-  background-color: hsl(221, 100%, 79%) !important;
-}
-.stick-color-cobalt::before {
-  background-color: hsl(215, 100%, 34%) !important;
-}
-.stick-color-indigo::before {
-  background-color: hsl(276, 100%, 33%) !important;
-}
-.stick-color-almost::before {
-  background-color: hsl(259, 84%, 55%) !important;
-}
-.stick-color-violet::before {
-  background-color: hsl(300, 76%, 72%) !important;
-}
-.stick-color-pink::before {
-  background-color: hsl(350, 100%, 88%) !important;
-}
-.stick-color-magenta::before {
-  background-color: hsl(300, 100%, 50%) !important;
-}
-.stick-color-crimson::before {
-  background-color: hsl(348, 88%, 46%) !important;
-}
-.stick-color-red::before {
-  background-color: hsl(0, 100%, 50%) !important;
-}
-.stick-color-orange::before {
-  background-color: hsl(39, 100%, 50%) !important;
-}
-.stick-color-amber::before {
-  background-color: hsl(45, 100%, 58%) !important;
-}
-.stick-color-yellow::before {
-  background-color: hsl(52, 100%, 68%) !important;
-}
-.stick-color-brown::before {
-  background-color: hsl(25, 57%, 51%) !important;
-}
-.stick-color-olive::before {
-  background-color: hsl(60, 100%, 32%) !important;
-}
-.stick-color-steel::before {
-  background-color: hsl(209, 19%, 57%) !important;
-}
-.stick-color-mauve::before {
-  background-color: hsl(277, 100%, 84%) !important;
-}
-.stick-color-taupe::before {
-  background-color: hsl(29, 19%, 50%) !important;
-}
-.stick-color-champagne::before {
-  background-color: hsl(37, 74%, 88%) !important;
-}
-.stick-color-khaki::before {
-  background-color: hsl(47, 47%, 69%) !important;
-}
-.stick-color-charcoal::before {
-  background-color: hsl(0, 0%, 60%) !important;
-}
-.stick-color-bronze::before {
-  background-color: hsl(29, 75%, 57%) !important;
-}
-.stick-color-windstorm::before {
-  background-color: hsl(216, 53%, 66%) !important;
-}
-.stick-color-nude::before {
-  background-color: hsl(29, 79%, 85%) !important;
-}
-.stick-color-terracotta::before {
-  background-color: hsl(10, 76%, 55%) !important;
-}
-.stick-color-coral::before {
-  background-color: hsl(16, 100%, 67%) !important;
-}
-.stick-color-army::before {
-  background-color: hsl(69, 34%, 30%) !important;
-}
-.stick-color-seashell::before {
-  background-color: hsl(25, 100%, 95%) !important;
-}
-.stick-color-sand::before {
-  background-color: hsl(45, 71%, 81%) !important;
 }
 
 /* source/components/sidenav-simple/sidenav-simple.less */
