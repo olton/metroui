@@ -42,7 +42,6 @@
     background-color: var(--sidenav-background);
     color: var(--sidenav-color);
     padding: 10px 0;
-    overflow-y: auto;
 }
 
 .sidenav {
@@ -298,6 +297,7 @@ each(@normalColors, {
     grid-template-columns: var(--sidenav-width-compact) 1fr;
     grid-gap: 4px;
     transition: grid-template-columns .3s ease-in-out;
+    height: 100%;
 }
 
 .layout-sidenav:has(.sidenav.expanded) {
