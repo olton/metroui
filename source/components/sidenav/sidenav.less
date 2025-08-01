@@ -239,6 +239,11 @@
         .caption {
             visibility: visible!important;
         }
+
+        .badge {
+            top: 21px;
+            transform: translateY(-50%);
+        }
     }
 }
 
@@ -291,6 +296,15 @@ each(@normalColors, {
         }
     }
 })
+
+.sidenav {
+    .dropdown-caret {
+        display: none;   
+    }
+    .dropdown-toggle::after {
+        display: block!important;
+    }
+}
 
 .layout-sidenav {
     display: grid;

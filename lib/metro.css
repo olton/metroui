@@ -73903,6 +73903,10 @@ label:has(input) {
 .sidenav .d-menu .caption {
   visibility: visible !important;
 }
+.sidenav .d-menu .badge {
+  top: 21px;
+  transform: translateY(-50%);
+}
 .sidenav.expanded .dropdown-toggle::after {
   display: none;
 }
@@ -74034,6 +74038,12 @@ label:has(input) {
 }
 .stick-color-sand::before {
   background-color: hsl(45, 71%, 81%) !important;
+}
+.sidenav .dropdown-caret {
+  display: none;
+}
+.sidenav .dropdown-toggle::after {
+  display: block !important;
 }
 .layout-sidenav {
   display: grid;
