@@ -62,7 +62,7 @@ each(range(0, 12), .(@k) {
 })
 
 each(@media-rules, {
-    @container (min-width: @value) {
+    @container (width >= @value) {
         .cell-@{key}-half, .col-@{key}-half {
             flex: 0 0 50%;
             max-width: 50%;
