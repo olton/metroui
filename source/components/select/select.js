@@ -664,7 +664,7 @@
             const multiple = !!element.attr("multiple");
             let option;
             let i;
-            let html;
+            let html = "";
             let list_item;
             let option_value;
             let group;
@@ -686,12 +686,13 @@
 
             $.each(_val, (_, v) => {
                 for (option of options) {
-                    if (option.getAttribute("data-icon")) {
-                        html = `<span class='icon'>${option.getAttribute("data-icon")}</span>`;
-                    }
-                    html += option.getAttribute("data-template")
+                    html = option.getAttribute("data-template")
                         ? option.getAttribute("data-template").replace("$1", option.text)
                         : option.text;
+
+                    if (option.getAttribute("data-icon")) {
+                        html = `<span class='icon'>${option.getAttribute("data-icon")}</span>` + html;
+                    }
 
                     if (`${option.value}` === `${v}`) {
                         option.selected = true;
