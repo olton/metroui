@@ -42,14 +42,14 @@
     background-color: var(--sidenav-background);
     color: var(--sidenav-color);
     padding: 10px 0;
+    transition: width .3s ease-in-out;
 }
 
 .sidenav {
     li {
         margin: 0 6px;
         font-size: 14px;
-    }
-    
+    }    
     
     li, a {
         position: relative;
@@ -173,7 +173,6 @@
         position: absolute;
         right: 0;
         top: 0;
-        //transform: translateY(-50%);
         font-size: 11px;
         display: flex!important;
         align-items: center;
@@ -183,7 +182,6 @@
 
 .sidenav {
     &.expanded {
-        transition: width .3s ease-in-out;
         width: var(--sidenav-width);
         
         a {
@@ -202,6 +200,7 @@
         .badge {
             top: 21px;
             transform: translateY(-50%);
+            right: 8px;
         }
     }
 }
@@ -243,6 +242,7 @@
         .badge {
             top: 21px;
             transform: translateY(-50%);
+            right: 8px;
         }
     }
 }

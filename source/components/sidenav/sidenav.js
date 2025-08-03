@@ -40,7 +40,13 @@
             if (Metro.utils.mediaExist(o.expandPoint)) {
                 element.addClass("expanded");
             }
-            const state = Metro.storage.getItem("sidenav:compacted");
+
+            if (!element.id()) {
+                element.attr("id", Hooks.useId(element[0]));
+            }
+
+            const id = element.id();
+            const state = Metro.storage.getItem(`sidenav:${id}:compacted`);
             if (state === true) {
                 element.removeClass("expanded");
                 element.addClass("handmade");
@@ -65,12 +71,13 @@
         _createEvents: function () {
             const element = this.element;
             const o = this.options;
+            const id = element.id();
 
             if (o.toggle) {
                 $(o.toggle).on("click", () => {
                     element.toggleClass("expanded");
                     element.toggleClass("handmade");
-                    Metro.storage.setItem("sidenav:compacted", !element.hasClass("expanded"));
+                    Metro.storage.setItem(`sidenav:${id}:compacted`, !element.hasClass("expanded"));
                 });
             }
 

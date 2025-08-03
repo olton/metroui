@@ -61014,11 +61014,20 @@ aside::after {
 /* source/components/cutter/cutter.less */
 :root {
   --cutter-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMCAxMUw4IDVMMTYgMTEiIHN0cm9rZT0iIzMwMzYzZCIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIC8+Cjwvc3ZnPgo=);
-  --cutter-border-color: #3a3b3d;
+  --cutter-line-width: 2px;
+  --cutter-line-color: #3a3b3d;
+  --cutter-content-background: var(--default-background);
+  --cutter-content-color: var(--default-color);
+  --cutter-content-background-hover: #dadada;
+  --cutter-content-color-hover: #191919;
 }
 .dark-side {
   --cutter-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMCAxMUw4IDVMMTYgMTEiIHN0cm9rZT0iI2UxZTRlOCIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIC8+Cjwvc3ZnPgo=);
-  --cutter-border-color: #e4e5e9;
+  --cutter-line-color: #e4e5e9;
+  --cutter-content-background: var(--default-background);
+  --cutter-content-color: var(--default-color);
+  --cutter-content-background-hover: #333439;
+  --cutter-content-color-hover: #f3fcff;
 }
 .cutter {
   background-image: var(--cutter-image);
@@ -61030,6 +61039,8 @@ aside::after {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 1rem 0;
+  cursor: default;
 }
 .cutter .content {
   display: flex;
@@ -61040,9 +61051,61 @@ aside::after {
   font-size: 12px;
   min-height: 32px;
   background: var(--default-background);
-  border: 1px solid var(--cutter-border-color);
+  border: var(--cutter-line-width) solid var(--cutter-line-color);
   border-radius: 6px;
   padding: 8px 24px;
+}
+.cutter.line {
+  background-image:
+    linear-gradient(
+      to right,
+      var(--cutter-line-color),
+      var(--cutter-line-color));
+  background-repeat: no-repeat;
+  background-size: 100% var(--cutter-line-width);
+  background-position: 0 center;
+}
+.cutter.dash {
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      var(--cutter-line-color) 0,
+      var(--cutter-line-color) 10px,
+      transparent 10px,
+      transparent 20px);
+  background-repeat: no-repeat;
+  background-size: 100% var(--cutter-line-width);
+  background-position: 0 center;
+}
+.cutter.dash .content {
+  border-style: dashed;
+}
+.cutter.dot {
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      var(--cutter-line-color) 0,
+      var(--cutter-line-color) var(--cutter-line-width),
+      transparent var(--cutter-line-width),
+      transparent 10px);
+  background-repeat: no-repeat;
+  background-size: 100% var(--cutter-line-width);
+  background-position: 0 center;
+}
+.cutter.dot .content {
+  border-style: dotted;
+}
+@media (hover: hover) {
+  .cutter.hoverable:hover .content {
+    background: var(--cutter-content-background-hover);
+    color: var(--cutter-content-color-hover);
+  }
+}
+@media (hover: none) {
+  .cutter.hoverable:active .content {
+    background: var(--cutter-content-background-hover);
+    color: var(--cutter-content-color-hover);
+  }
 }
 
 /* source/components/wheelpicker/wheelpicker.less */
@@ -73743,6 +73806,7 @@ label:has(input) {
   background-color: var(--sidenav-background);
   color: var(--sidenav-color);
   padding: 10px 0;
+  transition: width 0.3s ease-in-out;
 }
 .sidenav li {
   margin: 0 6px;
@@ -73860,7 +73924,6 @@ label:has(input) {
   justify-content: center;
 }
 .sidenav.expanded {
-  transition: width 0.3s ease-in-out;
   width: var(--sidenav-width);
 }
 .sidenav.expanded a {
@@ -73876,6 +73939,7 @@ label:has(input) {
 .sidenav.expanded .badge {
   top: 21px;
   transform: translateY(-50%);
+  right: 8px;
 }
 .sidenav .dropdown-toggle::after {
   content: "\25e2";
@@ -73906,6 +73970,7 @@ label:has(input) {
 .sidenav .d-menu .badge {
   top: 21px;
   transform: translateY(-50%);
+  right: 8px;
 }
 .sidenav.expanded .dropdown-toggle::after {
   display: none;
