@@ -1,5 +1,7 @@
-## 5.1.11
+### 5.1.12
 
-+ [x] Updated `select` component: added event `onOptions` to `select` component, to remote data added `selected` prop.
-+ [x] `md5` moved to `common-js`
-+ [x] Fixed function `min`, `max` in `validator` component.
++ [x] `select` - fixed method `val()` no icons were displayed when using this method
++ [x] `select` - added method `clear()` to clear selected value(s)
++ [x] `select` - refactored method `reset()` - now calling this method resets select to initial state
++ [x] `typer` - fixed color change
++ [x] `sidenav-m3` renamed to `sidenav` and has role `sidenav`

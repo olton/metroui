@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Test Select val() - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Select.val()</div>
+    </div>
+    <div class="app-bar-item-static no-hover ml-auto">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="container h-100 d-flex flex-column flex-center gap-2">
+    <div class="d-flex gap-2"> 
+        <div style="flex: 0 0 200px;">
+            <select id="sel1"
+                    data-role="select"
+                    data-cls-select="text-bold fg-orange"
+                    data-clear-button="true"
+                    data-cls-label="text-bold fg-black" size="1">
+                <option value="">&nbsp;</option>
+                <option value="M"
+                        data-icon="<SPAN class='mif-gamepad mif-2x fg-black'></SPAN>">Machines
+                </option>
+                <option value="C"
+                        data-icon="<SPAN class='mif-display mif-2x fg-black'></SPAN>">Computers
+                </option>
+            </select>
+        </div>
+        <button onclick="$('#sel1').data('select').val('C')">Set Val</button>
+        <button onclick="$('#sel1').data('select').reset()">Reset</button>
+    </div>
+    <div class="d-flex gap-2"> 
+        <div style="flex: 0 0 200px;">
+            <select id="sel2" multiple
+                    data-role="select"
+                    data-cls-select="text-bold fg-orange"
+                    data-cls-label="text-bold fg-black" size="1">
+                <option value="">&nbsp;</option>
+                <option value="M"
+                        data-icon="<SPAN class='mif-gamepad mif-2x fg-black'></SPAN>">Machines
+                </option>
+                <option value="C"
+                        data-icon="<SPAN class='mif-display mif-2x fg-black'></SPAN>">Computers
+                </option>
+            </select>
+        </div>
+        <button onclick="$('#sel2').data('select').val(['C', 'M'])">Set Val</button>
+        <button onclick="$('#sel2').data('select').reset()">Reset</button>
+    </div>
+    <div class="d-flex gap-2"> 
+        <div style="flex: 0 0 200px;">
+            <select id="sel3"
+                    data-role="select"
+            >
+                <option value="">&nbsp;</option>
+                <option value="M"
+                        data-template="<SPAN class='fg-red text-bold mr-2'>M</SPAN>$1">Machines
+                </option>
+                <option value="C"
+                        data-template="<SPAN class='fg-green text-bold mr-2'>C</SPAN>$1">Computers
+                </option>
+            </select>
+        </div>
+        <button onclick="$('#sel3').data('select').val('M')">Set Val</button>
+        <button onclick="$('#sel3').data('select').reset()">Reset</button>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+</script>
+</body>
+</html>

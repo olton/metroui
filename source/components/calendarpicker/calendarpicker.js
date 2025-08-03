@@ -532,17 +532,20 @@
             this.element.val("");
         },
 
-        val: function (v, f) {
+        // val: function (v, f) {
+        val: function (...args) {
             const element = this.element;
             const o = this.options;
             let elementValue;
 
-            if (arguments.length === 0 || Metro.utils.isNull(v)) {
+            if (args.length === 0) {
                 return {
                     date: this.value.val(),
                     time: this.time,
                 };
             }
+
+            const [v, f] = args;
 
             if (v === "") {
                 return this.clear();

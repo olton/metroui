@@ -13,57 +13,65 @@
 <div class="container">
     <h1>Sidenav test page</h1>
 
-    <div class="example">
-        <ul class="sidenav-m3">
-            <li class="title">Title 1</li>
-            <li class="active"><a href="#"><span class="mif-home icon"></span>Dashboard</a></li>
-            <li class="stick-right bg-red"><a href="#"><span class="mif-cog icon"></span>Layouts</a></li>
-            <li class="stick-left bg-green">
-                <a class="dropdown-toggle" href="#"><span class="mif-tree icon"></span>Sub menu</a>
-                <ul class="d-menu" data-role="dropdown" style="display: none;">
-                    <li><a href=""><span class="mif-vpn-lock icon"></span> Subitem 1</a></li>
-                    <li><a href="">Subitem 2</a></li>
-                    <li><a href="">Subitem 3</a></li>
-                    <li><a href="">Subitem 4</a></li>
-                    <li class="disabled"><a href="">Subitem 5</a></li>
-                </ul>
-            </li>
-            <li class=""><a href="#">Thread item</a></li>
-            <li class="disabled"><a href="#">Disabled item</a></li>
-
-            <li class="title">Title 2</li>
-            <li><a href="#">Other Item 1</a></li>
-            <li><a href="#">Other item 2</a></li>
-            <li><a href="#">Other item 3</a></li>
-        </ul>
-    </div>
-
-    <div class="example mt-10 d-none">
-        <div class="dropdown-button">
-            <button class="button dropdown-toggle">Button</button>
-            <ul class="d-menu" data-role="dropdown">
-                <li><a href="#">
-                    <span class="icon mif-codepen"></span>
-                    <span class="caption">Go to Definition</span>
-                    <span class="hotkey">Ctrl+F12</span>
-                </a></li>
-                <li><a href="#">Go to Type Definition</a></li>
-                <li class="disabled"><a href="#">
-                    <span class="caption">Go to Type Implementation</span>
-                    <span class="hotkey">Ctrl+F12</span></a></li>
-                <li><a href="#">Go to References<span class="hotkey">Alt+Shift+F12</span></a></li>
-                <li>
-                    <a href="#" class="dropdown-toggle">Peek</a>
-                    <ul class="d-menu" data-role="dropdown">
-                        <li><a href="#"><span class="caption">Find All References</span></a></li>
-                        <li><a href="#"><span class="caption">Find All Implementations</span></a></li>
-                        <li><a href="#"><span class="caption">Show Call Hierarchy</span></a></li>
+    <div class="row">
+        <div class="cell-md-6">
+            <ul data-role="sidenav">
+                <li class="title">Title 1</li>
+                <li class="active"><a href="#"><span class="mif-home icon"></span><span class="caption">Dashboard</span></a></li>
+                <li class="stick-right">
+                    <a href="#">
+                        <span class="mif-cog icon"></span>
+                        <span class="caption">Layouts</span>
+                        <span class="badge">2</span>
+                    </a>
+                </li>
+                <li class="stick-left">
+                    <a class="dropdown-toggle" href="#"><span class="mif-tree icon"></span><span class="caption">Sub menu</span></a>
+                    <ul class="d-menu" data-role="dropdown" style="display: none;">
+                        <li><a href=""><span class="mif-vpn-lock icon"></span> Subitem 1</a></li>
+                        <li><a href=""><span class="mif-vpn-lock icon"></span> Subitem 1</a></li>
+                        <li><a href=""><span class="mif-vpn-lock icon"></span> Subitem 1</a></li>
+                        <li><a href=""><span class="mif-vpn-lock icon"></span> Subitem 1</a></li>
+                        <li class="disabled"><a href="">Subitem 5</a></li>
                     </ul>
                 </li>
-                <li class="divider"></li>
-                <li><a href="#">Find All References</a></li>
-                <li><a href="#">Find All Implementations</a></li>
-                <li><a href="#">Show Call Hierarchy</a></li>
+                <li class=""><a href="#">Thread item</a></li>
+                <li class="disabled"><a href="#">Disabled item</a></li>
+
+                <li class="title">Title 2</li>
+                <li><a href="#"><span class="mif-vpn-lock icon"></span><span class="caption">Other Item 1</span></a></li>
+                <li><a href="#"><span class="mif-vpn-lock icon"></span><span class="caption">Other item 2</span></a></li>
+                <li><a href="#"><span class="mif-vpn-lock icon"></span><span class="caption">Other item 3</span></a></li>
+            </ul>
+        </div>
+        <div class="cell-md-6">
+            <ul data-role="sidenav" data-expand-point="xxl">
+                <li class="title">Title 1</li>
+                <li class="active"><a href="#"><span class="mif-home icon"></span><span class="caption">Dashboard</span></a></li>
+                <li>
+                    <a href="#">
+                        <span class="mif-cog icon"></span>
+                        <span class="caption">Layouts</span>
+                        <span class="badge">2</span>
+                    </a>
+                </li>
+                <li class="stick-left">
+                    <a class="dropdown-toggle" href="#"><span class="mif-tree icon"></span><span class="caption">Sub menu</span></a>
+                    <ul class="d-menu" data-role="dropdown" style="display: none;">
+                        <li><a href=""><span class="mif-vpn-lock icon"></span> Subitem 1</a></li>
+                        <li><a href=""><span class="mif-vpn-lock icon"></span> Subitem 1</a></li>
+                        <li><a href=""><span class="mif-vpn-lock icon"></span> Subitem 1</a></li>
+                        <li><a href=""><span class="mif-vpn-lock icon"></span> Subitem 1</a></li>
+                        <li class="disabled"><a href="">Subitem 5</a></li>
+                    </ul>
+                </li>
+                <li class=""><a href="#"><span class="caption">Thread item</span></a></li>
+                <li class="disabled"><a href="#"><span class="caption">Disabled item</span></a></li>
+
+                <li class="title">Title 2</li>
+                <li><a href="#"><span class="mif-vpn-lock icon"></span><span class="caption">Other Item 1</span></a></li>
+                <li><a href="#"><span class="mif-vpn-lock icon"></span><span class="caption">Other item 2</span></a></li>
+                <li><a href="#"><span class="mif-vpn-lock icon"></span><span class="caption">Other item 3</span></a></li>
             </ul>
         </div>
     </div>
@@ -71,10 +79,6 @@
 
 <script src="../lib/metro.js"></script>
 <script>
-    // $(function(){
-    //     $("#block1").dropdown();
-    //     $("#block2").dropdown();
-    // })
 </script>
 </body>
 </html>

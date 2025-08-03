@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Test Select reset() - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Select.reset()</div>
+    </div>
+    <div class="app-bar-item-static no-hover ml-auto">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="container h-100 d-flex flex-column flex-center gap-2">
+    <div class="d-flex gap-2"> 
+        <div style="flex: 0 0 200px;">
+            <select id="sel1"
+                    data-role="select"
+                    data-cls-select="text-bold fg-orange"
+                    data-clear-button="true"
+                    data-cls-label="text-bold fg-black" size="1">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+        </div>
+        <button onclick="createItems()">Create Items</button>
+        <button onclick="reset()">Reset</button>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    function reset(){
+        $('#sel1').data('select').reset()
+    }
+    
+    function createItems(){
+        let options = {};
+        for (const tz of Intl.supportedValuesOf('timeZone')) {
+            options[tz] = tz;
+        }
+        $('#sel1').data('select').data(options)
+    }
+</script>
+</body>
+</html>
