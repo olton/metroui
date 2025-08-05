@@ -51,7 +51,7 @@
 		"@olton/esbuild-plugin-progress": "^0.3.1",
 		"@olton/esbuild-plugin-unlink": "^0.2.1",
 		"@olton/latte": "^0.17.3",
-		"chalk": "^5.4.1",
+		"chalk": "^5.5.0",
 		"cross-env": "^10.0.0",
 		"esbuild": "^0.25.8",
 		"esbuild-plugin-less": "^1.3.25",
@@ -61,7 +61,7 @@
 	"dependencies": {
 		"@olton/datetime": "^3.2.5",
 		"@olton/dom": "^1.5.1",
-		"@olton/farbe": "^1.0.9",
+		"@olton/farbe": "^1.0.10",
 		"@olton/guardian": "^0.7.3",
 		"@olton/hooks": "^0.13.1",
 		"@olton/html": "^0.15.1",
