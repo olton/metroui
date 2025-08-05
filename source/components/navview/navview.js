@@ -88,11 +88,11 @@
             let menu;
 
             element.addClass("navview");
-            
+
             if (element.attr("id") === undefined) {
                 element.attr("id", Hooks.useId(this.elem));
-            }            
-            this.id = element.attr("id")
+            }
+            this.id = element.attr("id");
 
             if (o.initialView !== "compact" && Metro.utils.mediaExist(o.expandPoint)) {
                 element.addClass("expanded");
@@ -110,6 +110,7 @@
             const content = element.children(".navview-content");
             const toggle = $(o.toggle);
             menu = pane.children(".navview-menu");
+            console.log(menu);
             if (menu.length) {
                 menu.prevAll().reverse().wrapAll($("<div>").addClass("navview-container"));
                 menu.wrap($("<div>").addClass("navview-menu-container"));
