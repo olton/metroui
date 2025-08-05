@@ -1,4 +1,7 @@
-import { $ } from "@olton/dom";
+import { $ as Dom } from "@olton/dom";
 
-globalThis.$ = $;
-globalThis.Dom = $;
+globalThis.Dom = Dom;
+
+if (typeof $ === "undefined") {
+    globalThis.$ = Dom;
+}

@@ -1,7 +1,4 @@
-### 5.1.12
+### 5.1.13
 
-+ [x] `select` - fixed method `val()` no icons were displayed when using this method
-+ [x] `select` - added method `clear()` to clear selected value(s)
-+ [x] `select` - refactored method `reset()` - now calling this method resets select to initial state
-+ [x] `typer` - fixed color change
-+ [x] `sidenav-m3` renamed to `sidenav` and has role `sidenav`
++ [x] Fixed `Component` for using `Dom` instead of `jQuery` if `jQuery` is loaded.
++ [x] Updated `Farbe` class
