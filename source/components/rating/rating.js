@@ -51,7 +51,7 @@
             const o = this.options;
             let i;
 
-            if (Number.isNaN(o.value)) {
+            if (isNaN(o.value)) {
                 o.value = 0;
             } else {
                 o.value = Number.parseFloat(o.value).toFixed(1);
@@ -91,7 +91,7 @@
             const value = o.static ? Math.floor(this.originValue) : this.value;
 
             const rating = element.wrap("<div>").addClass(`rating ${element[0].className}`).addClass(o.clsRating);
-            const id = Hooks.useId(rating[0])
+            const id = Hooks.useId(rating[0]);
 
             element.val(this.value);
 

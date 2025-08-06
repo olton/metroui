@@ -318,8 +318,7 @@
                     $.each(customButtons, function () {
                         const btn = $("<span>");
 
-                        btn
-                            .addClass("button btn-custom")
+                        btn.addClass("button btn-custom")
                             .addClass(o.clsCustomButton)
                             .addClass(this.cls)
                             .attr("tabindex", -1)
@@ -392,10 +391,10 @@
                 if (o.btnClose) o.minWidth += 34;
             }
 
-            if (o.minWidth > 0 && !Number.isNaN(o.width) && o.width < o.minWidth) {
+            if (o.minWidth > 0 && !isNaN(o.width) && o.width < o.minWidth) {
                 width = o.minWidth;
             }
-            if (o.minHeight > 0 && !Number.isNaN(o.height) && o.height > o.minHeight) {
+            if (o.minHeight > 0 && !isNaN(o.height) && o.height > o.minHeight) {
                 height = o.minHeight;
             }
 
@@ -719,14 +718,14 @@
                 let pos;
                 if (a === "data-top") {
                     pos = Number.parseInt(v);
-                    if (!Number.isNaN(pos)) {
+                    if (!isNaN(pos)) {
                         return;
                     }
                     win.css("top", pos);
                 }
                 if (a === "data-left") {
                     pos = Number.parseInt(v);
-                    if (!Number.isNaN(pos)) {
+                    if (!isNaN(pos)) {
                         return;
                     }
                     win.css("left", pos);

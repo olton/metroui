@@ -9,11 +9,11 @@
             switch (type) {
                 case "int":
                 case "integer":
-                    result = Number.isNaN(s) ? s.trim() : Number.parseInt(s);
+                    result = isNaN(s) ? s.trim() : Number.parseInt(s);
                     break;
                 case "number":
                 case "float":
-                    result = Number.isNaN(s) ? s : Number.parseFloat(s);
+                    result = isNaN(s) ? s : Number.parseFloat(s);
                     break;
                 case "date":
                     result = !format ? datetime(s) : Datetime.from(s, format, locale);

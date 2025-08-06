@@ -107,9 +107,9 @@
 
         isDateObject: (v) => typeof v === "object" && v.getMonth !== undefined,
 
-        isInt: (n) => !Number.isNaN(n) && +n % 1 === 0,
+        isInt: (n) => !isNaN(n) && +n % 1 === 0,
 
-        isFloat: (n) => (!Number.isNaN(n) && +n % 1 !== 0) || /^\d*\.\d+$/.test(n),
+        isFloat: (n) => (!isNaN(n) && +n % 1 !== 0) || /^\d*\.\d+$/.test(n),
 
         isFunc: function (f) {
             return this.isType(f, "function");

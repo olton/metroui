@@ -107,7 +107,7 @@
 
             function changeAlpha() {
                 const alpha = +element.attr("data-ripple-alpha");
-                if (Number.isNaN(alpha)) {
+                if (isNaN(alpha)) {
                     return;
                 }
                 o.rippleColor = alpha;

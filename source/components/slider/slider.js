@@ -73,7 +73,7 @@
             const o = this.options;
 
             this.id = element.attr("id") || Hooks.useId(this.elem);
-            
+
             this._createSlider();
             this._createEvents();
             this.buff(o.buffer);
@@ -329,7 +329,7 @@
             const min = this.options.min;
             const max = this.options.max;
 
-            if (accuracy === 0 || Number.isNaN(accuracy)) {
+            if (accuracy === 0 || isNaN(accuracy)) {
                 return res;
             }
 
@@ -493,7 +493,7 @@
         val: function (v) {
             const o = this.options;
 
-            if (v === undefined || Number.isNaN(v)) {
+            if (v === undefined || isNaN(v)) {
                 return this.value;
             }
 
@@ -518,7 +518,7 @@
             const slider = this.slider;
             const buffer = slider.find(".buffer");
 
-            if (v === undefined || Number.isNaN(v)) {
+            if (v === undefined || isNaN(v)) {
                 return this.buffer;
             }
 

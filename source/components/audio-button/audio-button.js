@@ -152,7 +152,7 @@
 
             const changeVolume = () => {
                 const volume = Number.parseFloat(element.attr("data-audio-volume"));
-                if (Number.isNaN(volume)) {
+                if (isNaN(volume)) {
                     return;
                 }
                 o.audioVolume = volume;

@@ -50,7 +50,7 @@
                     this.position = "to bottom";
                 } else {
                     this.position =
-                        Number.isNaN(o.gradientPosition) === false ? `${o.gradientPosition}deg` : o.gradientPosition;
+                        isNaN(o.gradientPosition) === false ? `${o.gradientPosition}deg` : o.gradientPosition;
 
                     if (this.position.indexOf("deg") === -1 && this.position.indexOf("to ") === -1) {
                         this.position = `to ${this.position}`;
