@@ -252,9 +252,7 @@
             $.each(dates, function () {
                 let _d;
                 try {
-                    _d = that
-                        ._correctDate(o.inputFormat ? Datetime.from(this, o.inputFormat) : datetime(this))
-                        .format("YYYY-MM-DD");
+                    _d = (o.inputFormat ? Datetime.from(this, o.inputFormat) : datetime(this)).format("YYYY-MM-DD");
                 } catch (e) {
                     return;
                 }
@@ -808,7 +806,6 @@
             });
 
             const calendarDays = $("<div>").addClass("days").appendTo(content);
-
             $.each(calendar.days, function (i) {
                 const day = `${this}`;
                 const date = that._correctDate(day);

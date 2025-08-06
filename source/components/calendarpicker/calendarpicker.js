@@ -164,10 +164,10 @@
                 }
             } else {
                 _curr = curr.split(" ");
-                this.value = (!o.inputFormat ? datetime(_curr[0]) : Datetime.from(_curr[0], o.inputFormat, locale))
-                    .addDay(1)
-                    .align("day")
-                    .addMinute(new Date().getTimezoneOffset());
+                this.value = !o.inputFormat ? datetime(_curr[0]) : Datetime.from(_curr[0], o.inputFormat, locale);
+                // .addDay(1)
+                // .align("day")
+                // .addMinute(new Date().getTimezoneOffset());
                 if (_curr[1]) {
                     this.time = _curr[1].trim().split(":");
                 }
