@@ -738,9 +738,9 @@
             const _delimiter = delimiter || ",";
 
             if (typeof selected === "string") {
-                _selected = selected.toArray(_delimiter).map((v) => (Number.isNaN(v) ? v : +v));
+                _selected = selected.toArray(_delimiter).map((v) => (isNaN(v) ? v : +v));
             } else if (Array.isArray(selected)) {
-                _selected = selected.slice().map((v) => (Number.isNaN(v) ? v : +v));
+                _selected = selected.slice().map((v) => (isNaN(v) ? v : +v));
             } else {
                 _selected = [];
             }

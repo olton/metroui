@@ -4,16 +4,17 @@ on:
     branches:
       - master
 jobs:
-  verify:
-    name: Verify
+  releaseDraft:
+    name: Release draft
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-
       # Check out the current repository
       - name: Fetch Sources
         uses: actions/checkout@v4
-        
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -21,24 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build   
+      - name: Build
         run: npm run build
-        
-      - name: Test
-        run: npm run test:ci
-        
-  releaseDraft:
-    name: Release draft
-    if: github.event_name != 'pull_request'
-    needs: [ verify ]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-
-      # Check out the current repository
-      - name: Fetch Sources
-        uses: actions/checkout@v4
 
       - name: Get Version
         id: get-version

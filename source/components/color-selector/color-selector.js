@@ -70,8 +70,8 @@
 
         _create: function () {
             const o = this.options;
-            
-            this.id = Hooks.useId(this.element)
+
+            this.id = Hooks.useId(this.element);
 
             if (Metro.utils.isValue(o.defaultSwatches))
                 this.defaultSwatches = o.defaultSwatches.toArray(",").map((el) => el.toUpperCase());
@@ -479,11 +479,11 @@
             let lightness = (hsvValue / 2) * (2 - hsvSaturation);
             let saturation = (hsvValue * hsvSaturation) / (1 - Math.abs(2 * lightness - 1));
 
-            if (Number.isNaN(lightness)) {
+            if (isNaN(lightness)) {
                 lightness = 0;
             }
 
-            if (Number.isNaN(saturation)) {
+            if (isNaN(saturation)) {
                 saturation = 0;
             }
 

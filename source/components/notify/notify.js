@@ -117,7 +117,7 @@
                 const animation = Metro.utils.isValue(options.animation) ? options.animation : o.animation;
                 let distance = Metro.utils.isValue(options.distance) ? options.distance : o.distance;
 
-                if (distance === "max" || Number.isNaN(distance)) {
+                if (distance === "max" || isNaN(distance)) {
                     distance = $(globalThis).height();
                 }
 

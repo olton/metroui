@@ -168,7 +168,7 @@
 
             if (o.overlay) {
                 this.overlay = $('<div class="vegas-overlay">').addClass(
-                    `overlay${typeof o.overlay === "boolean" || Number.isNaN(o.overlay) ? 2 : +o.overlay}`,
+                    `overlay${typeof o.overlay === "boolean" || isNaN(o.overlay) ? 2 : +o.overlay}`,
                 );
                 element.append(this.overlay);
             }

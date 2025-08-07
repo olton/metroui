@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+<!--    <link rel="stylesheet" href="https://cdn.metroui.org.ua/5.1.13/metro.css">-->
+    <title>Test Any - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Component Name</div>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="container h-100 d-flex flex-column flex-center">
+    <div class="">
+        <label for="fecha_creacion_test">Fecha creación test</label>
+        <textarea name="fecha_creacion_test" cols="40" rows="10" class="textarea" id="fecha_creacion_test" data-role="textarea">Fecha creacion: 2025-08-06 06:00:00
+Fecha ejecucion: 2025-08-06 06:00:00</textarea>
+    </div>
+    <div class="row mt-10">
+        <!-- Form Virtual Line 2 -->
+        <div class="cell-12 cell-md-6">
+            <div class="form-group">
+                <label for="fecha_creacion">Fecha creación</label>
+                <input type="text" name="fecha_creacion" value="2025-08-06 06:00:00" class="text" id="fecha_creacion"
+                       maxlength="10" data-role="calendarpicker" data-format="DD/MM/YYYY"
+                       data-input-format="YYYY-MM-DD H:m:s"
+                       data-dialog-mode="false" data-show-time >
+            </div>
+        </div>
+        <div class="cell-12 cell-md-6">
+            <div class="form-group">
+                <label for="fecha_ejecucion">Fecha ejecución</label>
+                <input type="text" name="fecha_ejecucion" value="" class="text" id="fecha_ejecucion"
+                       maxlength="10" data-role="calendarpicker" data-format="DD/MM/YYYY"
+                       data-input-format="YYYY-MM-DD H:m:s"
+                       data-dialog-mode="false"
+                       data-show-time
+                       data-def-date="2025-08-06 06:00:00">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<!--<script src="https://cdn.metroui.org.ua/5.1.13/metro.js"></script>-->
+<script>
+    $(document).ready(function() {
+        const d = $("#fecha_ejecucion").attr("data-def-date");
+        console.log("Date: " + d);
+
+        const picker = Metro.getPlugin('#fecha_ejecucion', 'calendar-picker');
+
+        picker.clear();
+        picker.val(d, 'YYYY-MM-DD H:m:s');
+    });
+</script>
+</body>
+</html>
