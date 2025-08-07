@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>metroui</id>
-    <version>5.1.14</version>
+    <version>5.1.15</version>
     <title>Metro UI Components Library</title>
     <authors>Serhii Pimenov</authors>
     <owners>serhii_pimenov</owners>
@@ -16,9 +16,7 @@
     <tags>Metro UI CSS Framework LESS CSS JS HTML</tags>
     <readme>README.md</readme>
     <releaseNotes>
-    + [x] Updated `Farbe` - fixed `saturate()`, `desaturate()`, and `brighten()`
-    + [x] Fixed incorrect behavior of `calendar` and `calendarpicker` components, issue #1991
-    + [x] Change `Number.isNaN` to `isNaN`
+
     </releaseNotes>
     <repository type="git" url="https://github.com/olton/metroui" branch="master"/>
   </metadata>
