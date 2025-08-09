@@ -7,7 +7,9 @@
     with the first front-end component library in Metro Style.
 
 <p align="center">
-    <a href="https://v5.metroui.org.ua/"><strong>Explore Metro UI Docs</strong></a>
+    <a href="https://v5.metroui.org.ua/"><strong>Explore Docs</strong></a>
+    or
+    <a href="https://panda.metroui.org.ua/"><strong>View Demo</strong></a>
 </p>
 
 </div>
