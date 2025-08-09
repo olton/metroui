@@ -1,11 +1,48 @@
-# Керівні принципи проєкту 
+# Керівні принципи проєкту Metro UI (v5)
 
-## 1. Структура проєкту
+Цей документ призначено для розробників Metro UI. Тут зафіксовано специфічні для цього репозиторію відомості щодо збирання, тестування та стилю коду, перевірені на практиці в поточній кодовій базі.
 
-Проєкт дотримується конкретної структури для забезпечення узгодженості в процесі розробки та супроводу.
-Вихідний код розташований у теці `source`, а скомпільований — у теці `lib`.
+За основу взято файл .junie\~guidelines.md і скориговано під реальний процес у цьому репозиторії.
 
-## 2. Структура вихідного коду
+## 1. Збірка та конфігурація
+
+Проєкт збирається за допомогою esbuild (див. build.js). Вихідний код у теці `source`, артефакти збірки — у `lib`.
+
+- Передумови
+  - Node.js: рекомендується 18+ (esbuild і сучасні ESM-флоу).
+  - ОС: Windows/macOS/Linux. Для Windows використовується PowerShell, шляхи бажано зазначати у форматі з прямими слешами для CLI інструментів (див. примітки для Latte нижче).
+
+- Встановлення залежностей
+  - Виконайте: `npm ci`
+
+- Скрипти
+  - `npm run dev`
+    - Очищає `lib` і запускає esbuild у режимі розробки (watch через esbuild context) для `./source/default.js` і `./source/icons.js`.
+    - Вихід: `lib/metro.js` (з sourcemap) і `lib/icons.js`.
+    - Перемикач середовища: `MODE=development` (встановлюється через cross-env).
+  - `npm run build`
+    - Повна продакшн-збірка: `lib/metro.js`, `lib/metro.all.js`, `lib/icons.js` з банером і мініфікацією.
+    - Перемикач середовища: `MODE=production`.
+  - `npm run clean`
+    - Чистить теку `lib`.
+  - `npm run check`
+    - Перевірка/форматування коду за допомогою Biome (див. розділ «Стиль коду»).
+
+- Нотатки щодо build.js
+  - Підтримуються банери з версією з `package.json` і часом збірки.
+  - less підтримується через `esbuild-plugin-less`, автопрефікс — через `@olton/esbuild-plugin-autoprefixer`.
+  - У dev-режимі ввімкнений watch для `default.js` та `icons.js` (див. контекст у build.js), `index.js` закоментовано для watch, але збирається в production як `metro.all.js`.
+  - Якщо компоненти/стилі додано/змінено, перед запуском прикладів/тестів, що читають із `lib`, виконайте `npm run dev` або `npm run build`.
+
+## 2. Структура вихідних кодів (коротко)
+
+- `source/`
+  - `components/<name>/` — компонент (JS + LESS + index.js). Для більшості компонентів існують відповідні `.test.js` у цій самій теці.
+  - `core/`, `common-{css,js}`, `colors-css`, `datetime`, `dom`, `extensions`, `farbe`, `guardian`, `hooks`, `html`, `i18n`, `icons`, `include`, `model`, `reset`, `router`, `string` — модулі ядра й утиліти.
+  - Вхідні точки: `default.js`, `index.js`, `icons.js`, `runtime.js`, `i18n.js`.
+- `lib/` — результати збірки (`metro.js`, `metro.all.js`, `icons.js`, CSS та sourcemap-и за потреби).
+- `examples/` — HTML-приклади, що можуть використовуватись для E2E-перевірок у тестах Latte.
+- `tests/` — інтеграційні/прикладні тести (див. generate-tests.js).
 
 Вихідний код поділяється на модулі, які розташовані в теках в теці `source`:
 - `colors-css` — модулі, що реалізують кольори
@@ -35,37 +72,39 @@
 - `runtime.js` — точка входу для бандлерів, включає в зборку всі функції, які не є компонентами і стилями
 - `default.js` — точка входу для бандлерів, включає в зборку `reset`, `common{css,js}`, `i18n`, `runtime`, and all `component`
 
-### 2.1. Компоненти
+### 2.1. Core - Ядро бібліотеки
+Ядро бібліотеки реалізовано в теці `source/core`. Воно містить основні функції та класи, які використовуються в інших модулях. Основні компоненти ядра:
+- `global.js` — глобальні змінні  
+- `metro.js` — глобальний об'єкт, який реалізує функції для роботи з компонентами.
+- `component.js` — базовий клас для компонентів.
+- `props.js` - enum для властивостей компонентів.
+
+### 2.2. Common CSS - Загальні стилі
+Загальні стилі розташовані в теці `common-css`. Кожен файл являє собою окремий модуль з класами, які реалізують одну специфічну поведінку.
+
+### 2.3. Common JS - Загальні функції
+Загальні функції розташовані в теці `common-js`. Файл містить різноманітні функції, які не є компонентами або стилями, але використовуються в різних компонентах.
+
+### 2.4. Colors CSS - Кольори
+Стилі кольору розташовані в теці `colors-css`. Кожен файл являє собою окремий модуль з класами, які реалізують одну специфічну поведінку.
+
+### 2.5. i18n - Локалізація
+Локалізація розташована в теці `i18n`. Файл містить локалізовані строки для компонентів.
+
+### 2.6. Components - Компоненти
 Кожен компонент має свою теку, в якій розташовані файли `index.js`, `[component-name].less`, `[component-name].js`.
 Також, у теці компонента, можуть бути розташовані додаткові включення компонентів, які використовуються поточним компонентом.
 
-### 2.2. Стилі кольору
-Стилі кольору розташовані в теці `colors-css`. Кожен файл являє собою окремий модуль з класами, які реалізують одну специфічну поведінку.
-
-### 2.3. Загальні стилі
-Загальні стилі розташовані в теці `common-css`. Кожен файл являє собою окремий модуль з класами, які реалізують одну специфічну поведінку.
-
-### 2.4. Загальні функції
-Загальні функції розташовані в теці `common-js`. Файл містить різноманітні функції, які не є компонентами або стилями, але використовуються в різних компонентах.
-
-### 2.5. Зовнішні модулі
-В теках: `dom`, `html`, `datetime`, `farbe`, `guardian`, `hooks`, `model`, `router`, та `string` розташовані функції, які підключають сторонні модулі для використання з Metro UI.
-
-### 2.6. Ядро бібліотеки
-В теці `core` розташовані модулі, які реалізують ядро бібліотеки та глобальний неймспейс `Metro`.
-
-## 3. Створеня компонента
-
-### Складові компонента:
+#### Складові компонента:
 + `[component-name].less` — файл стилів компонента, який містить стилі компонента та кольорові складові для світлої та темної тем.
 + `[component-name].js` — файл JavaScript, який містить код компонента.
 + `index.js` — файл, який імплементує компонент, щоб його можна було використовувати в інших модулях.
 
-### Додаткові файли:
+#### Додаткові файли:
 + `[component-name].test.js` — файл з тестами для компонента, який використовує фреймворк Latte.
 + `README.md` — файл з документацією для компонента, який містить приклади використання, параметри, методи API та інші деталі.
 
-### Javascript шаблон компонента:
+#### Javascript шаблон компонента:
 
 ```js
 ((Metro, $) => {
@@ -117,13 +156,11 @@
     });
 })(Metro, Dom);
 ```
-### Стилі компонента.
+
+#### Стилі компонента.
 Стилі компонента мають бути написані в LESS файлі, який містить стилі для світлої та темної теми за наступним шаблоном:
 
 ```less
-@import (once) "../../include/vars";
-@import (once) "../../include/mixins;
-
 :root {
     // Світла тема
     --component-color: #191919;
@@ -150,10 +187,10 @@
 }
 ```
 
-Основний класс компонента має бути названий як і компонент, з використанням kebab-case (наприклад: `action-button`).
+Основний CSS класс компонента має бути названий як і компонент, з використанням kebab-case (наприклад: `action-button`).
 Інши класи компонента мають бути названі з використанням kebab-case за методою БЕМ (блок-елемент__модіфікатор).
 
-## 4. Документація компонента
+## 3. Документація
 
 Цей посібник надає інструкції щодо створення документації для компонентів Metro UI.
 
@@ -164,12 +201,12 @@
 1. Назва компонента та його короткий опис
 2. Ініціалізація компонента
 3. Параметри компонента
-   - Тип параметра (тип даних, наприклад: `string`, `number
-   - Значення за замовчуванням (якщо є)
-   - Опис параметра
-3.1. Типи параметрів:
-   - параметри, які починаються з `cls` (CSS класи) - це CSS класи, які додаються до компонента, елемента, або його дочірніх елементів
-   - параметри, які починаються з `on` - це атрибути подій, які викликаються при певних діях користувача (наприклад: `onClick`, `onChange`, тощо)
+    - Тип параметра (тип даних, наприклад: `string`, `number
+    - Значення за замовчуванням (якщо є)
+    - Опис параметра
+      3.1. Типи параметрів:
+    - параметри, які починаються з `cls` (CSS класи) - це CSS класи, які додаються до компонента, елемента, або його дочірніх елементів
+    - параметри, які починаються з `on` - це атрибути подій, які викликаються при певних діях користувача (наприклад: `onClick`, `onChange`, тощо)
 4. API methods (excluding those starting with an underscore)
 5. How to style the component using CSS variables and available CSS classes
 
@@ -237,7 +274,7 @@ const accordion = Metro.getPlugin("#myAccordion", "accordion");
    ```
 
 #### **Dependencies**
-   Залежності, які потрібні для коректної роботи компонента, можна визначити в файлі index.js компонента через додаткові імпорти.
+Залежності, які потрібні для коректної роботи компонента, можна визначити в файлі index.js компонента через додаткові імпорти.
    ```markdown
    ## Dependencies
    
@@ -369,6 +406,9 @@ For each component that needs documentation:
     - Look at the LESS (CSS)) file (e.g., `component-name.less` or `component-name.css`) to understand:
         - CSS variables (usually defined in `:root` and `.dark-side` selectors)
         - Available CSS classes and their purpose
+      
+    - Look at the HTML examples in `examples/` to see how the component is used in practice.
+    - Look the component test files (e.g., `component-name.test.js`) to see how the component is tested.
 
 2. **Create the README.md File**:
     - Use the structure outlined above
@@ -380,53 +420,107 @@ For each component that needs documentation:
     - Ensure all examples are correct and work as expected
     - Verify that all parameters, methods, and CSS variables are accurately documented
 
-## 5. Testing Guidelines
 
-+ Для тестування вихідного коду використовуються тести на основі фреймворку Latte (@olton/latte).
-+ Документація з тестування доступна за посиланням: [Latte Documentation](https://latte.org.ua)
-+ Тестування вихідного коду є обов'язковим для всіх компонентів, які реалізують нову функціональність або змінюють існуючу.
-+ Тестування вихідного коду є необов'язковим для компонентів, які реалізують лише стилі або не змінюють функціональність.
-+ Запуск тестів можна здійснити за допомогою команди
-```bash
-npm run test:components
-```
-+ Для мокінгу функцій слід використовувать функцію фреймворку Latte: `mock()`
-+ Для створення тестових груп використовуються функції фреймворку Latte: `suite()` або `describe()`. Ці функції не можуть бути вкладеними в інші функції.
-+ Для створення тестів усередині групи використовується функція фреймворку Latte: `it()`.
-+ Для створення окремо стоячих тестів використовується функція фреймворку Latte: `test()`.
-+ Тести мають бути написані в окремому файлі, якій розташован в теці відповідного компонента і називатись `[component-name].test.js`.
-+ Тести не мають використовувати інші фреймворки окрім Latte (наприклад: jest, vitest, тощо).
-+ Якщо тест не проходить і якщо не вказано прямо виправляти помилки, потрібно створити файл з назвою `[component-name].fix.js`, в якому реалізувати пропозиції.
+## 4. Тестування (@olton/latte)
 
-Кожен тестовий файл має починатися з коду завантаження бібліотекі Metro UI:
-```javascript
-let Metro = null
-let $ = null
+У репозиторії використовується Latte (DOM режим, jsdom) для юніт/інтеграційних тестів. Більшість компонентних тестів завантажує `lib/metro.js` і `lib/metro.css` через DOM-утиліти Latte, а прикладні — відкривають HTML із `examples/`.
 
-beforeAll(async () => {
-   const metro_js = `./lib/metro.js`
-   const metro_css = `./lib/metro.css`
+- Корисні команди
+  - `npm run test` — запустити всі тести (файлові патерни: `**/*.{test,spec}.{js,ts,jsx,tsx}`).
+  - `npm run test:components` — тести лише для компонентів: `source/components/**/*.test.js`.
+  - `npm run test:ci` — без прогрес-барів (для CI).
+  - `npm run test:trace` — розширений лог, стек-трейси.
 
-   DOM.js.fromFile(metro_js)
-   DOM.css.fromFile(metro_css)
+- Запуск вибірково (важливо для Windows)
+  - Для параметра `--include` використовуйте шляхи з прямими слешами `/`, навіть у Windows. Наприклад:
+    - Правильно: `npx latte --dom --include=tests/guidelines-demo.test.js`
+    - Неправильно: `npx latte --dom --include=tests\guidelines-demo.test.js` (у нашому середовищі це не знаходило тести)
 
-   Metro = await DOM.waitForObject('Metro')
-   $ = await DOM.waitForObject('$')
-})
+- Попередні умови
+  - Якщо тест завантажує артефакти з `lib/`, перед цим виконайте `npm run dev` або `npm run build`.
 
-beforeEach(() => {
-   document.body.innerHTML = '';
-})
+- Приклади шаблонів тестів
+  1) Мінімальний sanity-тест (не потребує `lib`):
+  ```js
+  import { describe, it, expect } from "@olton/latte";
 
-// Test cases go here
-```
+  describe("Guidelines demo", () => {
+      it("sanity", () => {
+          expect(1).toBe(1)
+      })
+  })
+  ```
+  Запуск лише цього тесту: `npx latte --dom --include=tests/guidelines-demo.test.js`
 
-## 6. Code Style
+  2) Компонентний тест (приклад із шаблону):
+  ```js
+  import { suite, it, expect, beforeAll, DOM, beforeEach } from "@olton/latte"
 
-+ Для форматування вихідного коду використовується `Biom`.
-+ Форматування має відповідати вимогам [JavaScript Standard Style](https://standardjs.com/) за виключенням того, що замість 2-х пробілів, використовується 4 пробіли.
+  let Metro = null
 
-## 7. Contribution Guidelines
+  beforeAll(async () => {
+      const metro_js = `./lib/metro.js`
+      const metro_css = `./lib/metro.css`
+
+      DOM.js.fromFile(metro_js)
+      DOM.css.fromFile(metro_css)
+
+      Metro = await DOM.waitForObject('Metro')
+  })
+
+  beforeEach(() => {
+      document.body.innerHTML = ''
+  })
+
+  suite("Accordion Component Tests", () => {
+      it("should initialize", async () => {
+          document.body.innerHTML = `<div id="acc"></div>`
+          Metro.makePlugin("#acc", "accordion")
+          const inst = Metro.getPlugin("#acc", "accordion")
+          expect(inst).not.toBeNull()
+      })
+  })
+  ```
+
+  3) Тест прикладу (відкриття HTML із examples/):
+  ```js
+  import {beforeAll, afterAll, describe, it, expect, getFileUrl, B} from "@olton/latte";
+
+  beforeAll(async () => { await B.create() })
+  afterAll(async () => { await B.bye() })
+
+  describe("any.html tests", () => {
+      it("any.html", async () => {
+          await B.visit(`${getFileUrl("./examples/any.html")}`)
+          expect(B.error).toBeNull(B.error)
+      })
+  })
+  ```
+
+- Генерація тестів за прикладами
+  - Скрипт `generate-tests.js` формує тести в `tests/` на основі файлів у `examples/` (і перед цим видаляє існуючі файли в `tests/`). Використовуйте його обережно, якщо в `tests/` є ручні тести.
+
+### Додавання нових тестів
+
+- Де розміщувати
+  - Для компонентів: `source/components/<name>/<name>.test.js` (переважно компонентні юніт/інтеграційні тести).
+  - Для прикладів/інтеграційних сценаріїв: `tests/*.test.js` або згенерувати через `generate-tests.js`.
+
+- Рекомендації
+  - Не змішуйте інші фреймворки тестування (jest/vitest тощо). Проєкт стандартизовано на Latte.
+  - Для DOM-орієнтованих тестів обнуляйте `document.body` у `beforeEach`.
+  - Якщо тест очікує присутність Metro у глобальному неймспейсі — завантажуйте `lib/metro.js` та `lib/metro.css` через `DOM.js.fromFile` і `DOM.css.fromFile`, та чекайте на об’єкт `Metro` через `DOM.waitForObject('Metro')`.
+
+## 5. Стиль коду (Biome)
+
+- Конфігурація: `biome.json`.
+  - Formatter: ввімкнено; indentWidth = 4, indentStyle = space, lineWidth = 120, lineEnding = lf.
+  - Linter: `rules.recommended = true`.
+  - JavaScript formatter: `quoteStyle = "double"`.
+  - Coverage: `files.includes = ["source/**/*.js", "!**/*.test.js"]` — тобто тестові файли не форматуються та не лінтяться цим тарґетом.
+- Команда: `npm run check` (виконає `biome check --write ./source`).
+
+## 6. Contribution Guidelines
 
 + Перед внесенням змін до коду, створіть гілку з назвою, що описує ваші зміни (наприклад: `feature/new-component` або `bugfix/fix-issue-123`).
 + Використовуйте зрозумілі коміти, які описують внесені зміни.
@@ -438,5 +532,13 @@ beforeEach(() => {
 + Якщо ви вносите зміни до тестів, переконайтеся, що вони покривають всі можливі сценарії використання компонента та не порушують існуючі тести.
 + Якщо ви вносите зміни до коду, який реалізує нову функціональність, переконайтеся, що вона протестована та задокументована.
 
-## 8. License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+## 7. Додаткові поради для розробки
+
+- Архітектура компонентів Metro UI — через `Metro.Component(...)`, плагіни ініціалізуються `Metro.makePlugin(selector, name, options)` та дістаються через `Metro.getPlugin(selector, name)`.
+- Уникайте консольних побічних ефектів у продакшн-режимі (див. змінну `drop` у build.js — за бажанням можна розкоментувати `console`).
+- Перед відкриттям прикладів і E2E-тестів переконайтесь, що `lib/metro.js` та `lib/metro.css` актуальні (`npm run dev` під час розробки).
+- Для Windows у CLI (Latte) використовуйте прямі слеші в шляхах/ґлобах.
+
+## 8. Ліцензія
+
+Проєкт ліцензовано за MIT. Див. файл [LICENSE](../LICENSE).

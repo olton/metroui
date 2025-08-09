@@ -96,9 +96,9 @@ Latest 2 ✔ | Latest 2 ✔ | Latest 2 ✔ | Latest 2 ✔ | Latest 2 ✔ |
 ### Previous versions
 
 + `Metro-UI-CSS-4` - [Repository](https://github.com/olton/Metro-UI-CSS-4), [Documentation](https://v4.metroui.org.ua/)     
-+ `Metro-UI-CSS-3` - [Repository](https://github.com/olton-archive/Metro-UI-CSS-3), [Documentation](https://v3.metroui.org.ua/)     
-+ `Metro-UI-CSS-2` - [Repository](https://github.com/olton-archive/Metro-UI-CSS-2), [Documentation](https://v2.metroui.org.ua/)     
-+ `Metro-UI-CSS-1` - [Repository](https://github.com/olton-archive/Metro-UI-CSS-085) 
++ `Metro-UI-CSS-3` - [Repository](https://github.com/olton/Metro-UI-CSS-3), [Documentation](https://v3.metroui.org.ua/)     
++ `Metro-UI-CSS-2` - [Repository](https://github.com/olton/Metro-UI-CSS-2), [Documentation](https://v2.metroui.org.ua/)     
++ `Metro-UI-CSS-1` - [Repository](https://github.com/olton/Metro-UI-CSS-1) 
 
 ### Credits
 
