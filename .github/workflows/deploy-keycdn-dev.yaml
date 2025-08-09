@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - dev
+    paths:
+      - 'source/**/*.js'
+      - 'source/**/*.css'
+      - 'source/**/*.less'
 jobs:
   build:
     name: Build
