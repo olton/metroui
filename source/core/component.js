@@ -161,6 +161,16 @@ export const Component = (nameName, compObj) => {
                 });
             },
 
+            _waitForRole: async function (role, callback) {
+                const element = this.element;
+                const _role = normalizeComponentName(role);
+                return new Promise((resolve) => {
+                    if (element.attr(`data-role-${_role}`)) {
+                        resolve(callback());
+                    }
+                });
+            },
+
             getComponent: function () {
                 return this.component;
             },

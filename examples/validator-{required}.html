@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Test Any - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Component Name</div>
+    </div>
+    <div class="app-bar-item-static no-hover">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="container h-100 d-flex flex-column flex-center">
+    <div>
+        <form action="javascript:"
+              data-role="validator"
+              data-clear-invalid="2000"
+        >
+            <div class="form-group">
+                <input type="text"
+                       data-role="calendar-picker"
+                       data-validate="required"
+                       data-label="Select Date:">
+                <span class="invalid_feedback">This field required value!</span>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-10">
+        <form action="javascript:"
+              data-role="validator"
+              data-clear-invalid="2000"
+              data-interactive-check="true"
+        >
+            <div class="form-group">
+                <input type="text"
+                       data-role="input"
+                       data-validate="minlength=3"
+                       data-label="Enter data:">
+                <span class="invalid_feedback">The length of value must be >= 3!</span>
+            </div>
+            <div class="form-group">
+                <input type="text"
+                       data-role="input"
+                       data-validate="maxlength=3"
+                       data-label="Enter data:">
+                <span class="invalid_feedback">The length of value must be <= 3!</span>
+            </div>
+            <div class="form-group">
+                <input type="text"
+                       data-role="calendar-picker"
+                       data-validate="required"
+                       data-label="Select Date:*">
+                <span class="invalid_feedback">This field required value!</span>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+</script>
+</body>
+</html>

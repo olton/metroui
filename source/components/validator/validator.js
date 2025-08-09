@@ -212,6 +212,7 @@
     Metro.validator = ValidatorFuncs;
 
     let ValidatorDefaultConfig = {
+        deferred: 500,
         validatorDeferred: 0,
         submitTimeout: 200,
         interactiveCheck: false,
@@ -253,44 +254,46 @@
 
             element.attr("novalidate", "novalidate");
 
-            $.each(inputs, function () {
-                const input = $(this);
-                const funcs = input.data("validate");
-                const required = funcs.indexOf("required") > -1;
-                if (required && o.useRequiredClass === true) {
-                    if (ValidatorFuncs.is_control(input)) {
-                        input.parent().addClass("required");
-                    } else {
-                        input.addClass("required");
+            setTimeout(() => {
+                $.each(inputs, function () {
+                    const input = $(this);
+                    const funcs = input.data("validate");
+                    const required = funcs.includes("required");
+                    if (required && o.useRequiredClass === true) {
+                        if (ValidatorFuncs.is_control(input)) {
+                            input.parent().addClass("required");
+                        } else {
+                            input.addClass("required");
+                        }
                     }
+                    if (o.interactiveCheck === true) {
+                        input.on(Metro.events.inputchange, function () {
+                            ValidatorFuncs.validate(this, undefined, undefined, undefined, o.requiredMode);
+                        });
+                    }
+                });
+
+                this._onsubmit = null;
+                this._onreset = null;
+
+                if (element[0].onsubmit !== null) {
+                    this._onsubmit = element[0].onsubmit;
+                    element[0].onsubmit = null;
                 }
-                if (o.interactiveCheck === true) {
-                    input.on(Metro.events.inputchange, function () {
-                        ValidatorFuncs.validate(this, undefined, undefined, undefined, o.requiredMode);
-                    });
+
+                if (element[0].onreset !== null) {
+                    this._onreset = element[0].onreset;
+                    element[0].onreset = null;
                 }
-            });
 
-            this._onsubmit = null;
-            this._onreset = null;
+                element[0].onsubmit = () => this._submit();
 
-            if (element[0].onsubmit !== null) {
-                this._onsubmit = element[0].onsubmit;
-                element[0].onsubmit = null;
-            }
+                element[0].onreset = () => this._reset();
 
-            if (element[0].onreset !== null) {
-                this._onreset = element[0].onreset;
-                element[0].onreset = null;
-            }
-
-            element[0].onsubmit = () => this._submit();
-
-            element[0].onreset = () => this._reset();
-
-            this._fireEvent("validator-create", {
-                element: element,
-            });
+                this._fireEvent("validator-create", {
+                    element: element,
+                });
+            }, o.deferred);
         },
 
         _reset: function () {
