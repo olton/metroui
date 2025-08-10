@@ -2,6 +2,10 @@
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
 
+    if (typeof Metro.hotkeys === "undefined") {
+        Metro.hotkeys = {};
+    }
+
     const Hotkey = {
         specialKeys: {
             8: "backspace",
@@ -292,6 +296,7 @@
         // Перевіряємо, чи є для поточного ключа окремий хоткей
         for (const hotkeyName in Metro.hotkeys) {
             if (!hotkeyName.includes(" ") && Hotkey.normalizeKey(hotkeyName) === normalizedKey) {
+                console.log(Metro.hotkeys);
                 Hotkey.executeHotkeyAction(Metro.hotkeys[hotkeyName], e);
                 return;
             }
@@ -345,22 +350,8 @@
             }
             // Для решти елементів реєструємо глобальний хоткей
             else {
-                // Обробник для глобального хоткею
-                const hotkeyHandler = (e) => {
-                    if (e.repeat && !el.attr("data-repeat")) {
-                        return false;
-                    }
-                    e.preventDefault();
-                    Hotkey.executeHotkeyAction(normalizedKey, e);
-                    return true;
-                };
-
                 // Реєструємо хоткей у глобальному списку
-                if (!Metro.hotkeys) Metro.hotkeys = {};
-                Metro.hotkeys[key] = [el, hotkeyHandler];
-
-                // Додаємо атрибут для інформаційних цілей
-                el.attr("data-hotkey", key);
+                Metro.hotkeys[key] = [el, fn];
             }
         });
     }

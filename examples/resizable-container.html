@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Test Any - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        .demo-box {
+            width: 300px;
+            height: 300px;
+            background-color: var(--color-light-nude);
+            border: 1px solid var(--color-nude);
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Resizable Container</div>
+    </div>
+    <div class="app-bar-container" style="position: absolute; left: 50%; transform: translateX(-50%)">
+        Press Alt+T to toggle the resize mode. 
+<!--        <button class="d-none" data-hotkey="alt+t" onclick="toggleResizeMode()"></button>-->
+    </div>
+    <div class="app-bar-item-static no-hover ml-auto">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="container h-100">
+    <div class="demo-box" data-role="resizable-container, draggable" data-enable-resize="false" style="width: 300px; height: 300px;">
+    </div>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    function toggleResizeMode() {
+        const container = $(".demo-box");
+        const mode = container.attr("data-enable-resize");
+        container.attr("data-enable-resize", mode === "true" ? "false" : "true");
+    }
+
+    (() => {
+        $("body").hotkey("alt+t", toggleResizeMode)
+        
+        const container = $(".demo-box");
+        const parentRect = container.parent()[0].getBoundingClientRect();
+        container.css({
+            top: parentRect.height / 2 - container.height() / 2,
+            left: parentRect.width / 2 - container.width() / 2,
+        })
+    })()
+</script>
+</body>
+</html>

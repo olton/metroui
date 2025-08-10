@@ -1,0 +1,83 @@
+:root {
+    --resizable-container-border-color: #000;
+    --resizable-container-border-width: 1px;
+    --resizable-container-point-size: 8px;
+}
+
+.dark-side {
+    --resizable-container-border-color: #fff;
+}
+
+.resizable-container {
+    user-select: none;
+    
+    .rc-contour {
+        position: absolute;
+        inset: 0;
+        background: transparent;
+        border: var(--resizable-container-border-width) dashed var(--resizable-container-border-color);
+        border-radius: 0;
+        overflow: visible;
+        
+        .rc-point {
+            position: absolute;
+            width: var(--resizable-container-point-size);
+            aspect-ratio: 1;
+            background: var(--default-background);
+            border: var(--resizable-container-border-width) solid var(--resizable-container-border-color);
+        }
+        
+        .-nw {
+            top: 0;
+            left: 0;
+            cursor: nw-resize;
+            transform: translate(-50%, -50%);
+        }
+        .-ne {
+            top: 0;
+            right: 0;
+            cursor: ne-resize;
+            transform: translate(50%, -50%);
+        }
+        .-sw {
+            bottom: 0;
+            left: 0;
+            cursor: sw-resize;
+            transform: translate(-50%, 50%);
+        }
+        .-se {
+            bottom: 0;
+            right: 0;
+            cursor: se-resize;
+            transform: translate(50%, 50%);
+        }
+        .-n {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(calc(-50% - 1px));
+            cursor: n-resize;
+        }
+        .-s {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(calc(50% + 1px));
+            cursor: s-resize;
+        }
+        .-e {
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%) translateX(calc(50% + 1px));
+            cursor: e-resize;
+        }
+        .-w {
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%) translateX(calc(-50% - 1px));
+            cursor: w-resize;
+        }
+        
+        &.disabled {
+            display: none;
+        }
+    }
+}

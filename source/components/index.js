@@ -106,6 +106,7 @@ import "./remark/index.js";
 import "./remote-dataset/index.js";
 import "./remote-table/index.js";
 import "./resizable/index.js";
+import "./resizable-container/index.js";
 import "./resizer/index.js";
 import "./ribbon/index.js";
 import "./ribbon-menu/index.js";

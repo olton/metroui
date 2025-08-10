@@ -661,5 +661,10 @@
             const height = el.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
             return { width, height };
         },
+
+        clamp: (val, min, max) => {
+            if (max > 0) return Math.min(Math.max(val, min), max);
+            return Math.max(val, min);
+        },
     };
 })(Metro, Dom);
