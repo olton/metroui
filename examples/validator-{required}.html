@@ -47,9 +47,13 @@
             <div class="form-group">
                 <input type="text"
                        data-role="input"
-                       data-validate="minlength=3"
-                       data-label="Enter data:">
-                <span class="invalid_feedback">The length of value must be >= 3!</span>
+                       data-validate="date"
+                       data-label="Enter date:">
+                <span class="invalid_feedback">Enter a valid date</span>
+            </div>
+            <div class="form-group">
+                <input type="text" data-validate="date" data-value-format="DD, MMM YYYY">
+                <span class="invalid_feedback">Enter a valid date</span>
             </div>
             <div class="form-group">
                 <input type="text"

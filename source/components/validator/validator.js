@@ -1,5 +1,5 @@
 ((Metro, $) => {
-    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    // biome-ignore lint/suspicious/noRedundantUseStrict: Required to work with string
     "use strict";
 
     const ValidatorFuncs = {
@@ -14,13 +14,9 @@
         url: (val) => G.safeParse(G.url(), val).ok,
         date: (val, format, locale) => {
             try {
-                if (!format) {
-                    datetime(val);
-                } else {
-                    Datetime.from(val, format, locale);
-                }
-                return true;
-            } catch (e) {
+                const _d = !format ? datetime(val) : Datetime.from(val, format, locale);
+                return !format ? true : _d.format(format, locale) === val;
+            } catch {
                 return false;
             }
         },
@@ -35,9 +31,9 @@
             return Farbe.Palette.color(val, Farbe.StandardColors) || Farbe.Routines.isColor(val);
         },
         pattern: (val, pat) => G.safeParse(G.pattern(pat), val).ok,
-        // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
+        // biome-ignore lint/suspicious/noDoubleEquals: required for compare
         compare: (val, val2) => val == val2,
-        // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
+        // biome-ignore lint/suspicious/noDoubleEquals: required for compare
         not: (val, not_this) => val != not_this,
         notequals: (val, val2) => val !== val2,
         equals: (val, val2) => val === val2,
