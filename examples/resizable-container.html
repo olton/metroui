@@ -9,10 +9,7 @@
     <title>Test Any - Metro UI :: Popular HTML, CSS and JS library</title>
     <style>
         .demo-box {
-            width: 300px;
-            height: 300px;
-            /*background-color: var(--color-light-nude);*/
-            border: 1px solid var(--color-nude);
+            border: 1px solid var(--border-color);
             position: absolute;
             display: flex;
             align-items: center;
@@ -34,7 +31,15 @@
 </nav>
 
 <div class="container h-100">
-    <div class="demo-box" data-role="resizable-container, draggable" data-enable-resize="false" style="width: 300px; height: 300px;">
+    <div class="demo-box" 
+         data-role="resizable-container, draggable" 
+         data-can-resize="false"
+         data-min-width="100"
+         data-min-height="100"
+         data-on-resize="onResize"
+         data-on-resize-stop="onResizeStop"
+         >
+        <div class="text-center" id="size"></div>
     </div>
 </div>
 
@@ -42,10 +47,18 @@
 <script>
     function toggleResizeMode() {
         const container = $(".demo-box");
-        const mode = container.attr("data-enable-resize");
-        container.attr("data-enable-resize", mode === "true" ? "false" : "true");
+        const mode = container.attr("data-can-resize");
+        container.attr("data-can-resize", mode === "true" ? "false" : "true");
     }
 
+    function onResize(size, element, point) {
+        $("#size").html(size.width + "x" + size.height)
+    }
+
+    function onResizeStop(size, element, point) {
+        $("#size").clear()
+    }
+    
     (() => {
         $("body").hotkey("alt+t", toggleResizeMode)
         

@@ -6,10 +6,13 @@
         minHeight: 0,
         maxWidth: 0,
         maxHeight: 0,
-        enableResize: true,
+        initWidth: 0,
+        initHeight: 0,
         onResizeStart: Metro.noop,
         onResize: Metro.noop,
         onResizeStop: Metro.noop,
+        onResizeEnable: Metro.noop,
+        onResizeDisable: Metro.noop,
         onResizableContainerCreate: Metro.noop,
     };
 
@@ -55,24 +58,38 @@
                     .sort((a, b) => b - a)[0] || 0;
 
             element.addClass("resizable-container");
+
             if (Metro.utils.getStyleOne(element[0], "position") === "static") {
                 element.css("position", "relative");
             }
 
+            if (o.minWidth) {
+                element.css("minWidth", o.minWidth);
+            }
+            if (o.minHeight) {
+                element.css("minHeight", o.minHeight);
+            }
+            if (o.initWidth) {
+                element.css("width", o.initWidth);
+            }
+            if (o.initHeight) {
+                element.css("height", o.initHeight);
+            }
+
             const contour = $(`<div>`)
                 .addClass("rc-contour")
-                .css({ zIndex: zIndex + 1 })
+                .css({ zIndex: zIndex + 2 })
                 .appendTo(element);
             for (const p of this.pointers) {
                 $(`<div>`)
                     .addClass(`rc-point -${p}`)
-                    .css({ zIndex: zIndex + 2 })
+                    .css({ zIndex: zIndex + 3 })
                     .attr("data-resize-direction", p)
                     .appendTo(contour);
             }
 
-            if (o.enableResize === false) {
-                contour.addClass("disabled");
+            if (o.canResize === false) {
+                this.disable();
             }
         },
 
@@ -89,15 +106,19 @@
             const clamp = Metro.utils.clamp;
 
             element.on(Metro.events.startAll, ".rc-point", function (e) {
-                if (!o.canResize) return;
-
                 e.preventDefault();
                 e.stopPropagation();
 
-                const pointer = $(this).attr("data-resize-direction");
+                const point = $(this).attr("data-resize-direction");
                 const startXY = Metro.utils.pageXY(e);
                 const { height, width, top, left } = element[0].getBoundingClientRect();
                 const { top: pTop, left: pLeft } = element.parent()[0].getBoundingClientRect();
+
+                that._fireEvent("resize-start", {
+                    size: that.size(),
+                    element: element[0],
+                    point,
+                });
 
                 $(document).on(
                     Metro.events.moveAll,
@@ -107,7 +128,7 @@
                         const deltaY = moveXY.y - startXY.y;
 
                         // north (n)
-                        if (pointer === "n") {
+                        if (point === "n") {
                             const rawH = height - deltaY;
                             const newH = clamp(rawH, minH, maxH);
                             const effDy = height - newH;
@@ -120,7 +141,7 @@
                         }
 
                         // south (s)
-                        if (pointer === "s") {
+                        if (point === "s") {
                             const rawH = height + deltaY;
                             const newH = clamp(rawH, minH, maxH);
 
@@ -130,7 +151,7 @@
                         }
 
                         // east (e)
-                        if (pointer === "e") {
+                        if (point === "e") {
                             const rawW = width + deltaX;
                             const newW = clamp(rawW, minW, maxW);
 
@@ -140,7 +161,7 @@
                         }
 
                         // west (w)
-                        if (pointer === "w") {
+                        if (point === "w") {
                             const rawW = width - deltaX;
                             const newW = clamp(rawW, minW, maxW);
                             const effDx = width - newW;
@@ -153,7 +174,7 @@
                         }
 
                         // northeast (ne) = n + e
-                        if (pointer === "ne") {
+                        if (point === "ne") {
                             const rawW = width + deltaX;
                             const newW = clamp(rawW, minW, maxW);
 
@@ -170,7 +191,7 @@
                         }
 
                         // northwest (nw) = n + w
-                        if (pointer === "nw") {
+                        if (point === "nw") {
                             const rawW = width - deltaX;
                             const newW = clamp(rawW, minW, maxW);
                             const effDx = width - newW;
@@ -190,7 +211,7 @@
                         }
 
                         // southeast (se) = s + e
-                        if (pointer === "se") {
+                        if (point === "se") {
                             const rawW = width + deltaX;
                             const newW = clamp(rawW, minW, maxW);
                             const rawH = height + deltaY;
@@ -203,7 +224,7 @@
                         }
 
                         // southwest (sw) = s + w
-                        if (pointer === "sw") {
+                        if (point === "sw") {
                             const rawW = width - deltaX;
                             const newW = clamp(rawW, minW, maxW);
                             const effDx = width - newW;
@@ -218,6 +239,12 @@
                                 left: `${newLeft}px`,
                             });
                         }
+
+                        that._fireEvent("resize", {
+                            size: that.size(),
+                            element: element[0],
+                            point,
+                        });
                     },
                     { ns: that.id },
                 );
@@ -227,23 +254,58 @@
                     () => {
                         $(document).off(Metro.events.moveAll, { ns: that.id });
                         $(document).off(Metro.events.stopAll, { ns: that.id });
+                        that._fireEvent("resize-stop", {
+                            size: that.size(),
+                            element: element[0],
+                            point,
+                        });
                     },
                     { ns: that.id },
                 );
             });
         },
 
+        size: function (width, height) {
+            const element = this.element;
+            const clamp = Metro.utils.clamp;
+            const o = this.options;
+
+            if (width !== undefined) {
+                element.css("width", clamp(width, o.minWidth, o.maxWidth));
+            }
+            if (height !== undefined) {
+                element.css("height", clamp(height, o.minHeight, o.maxHeight));
+            }
+
+            const rect = element[0].getBoundingClientRect();
+
+            return {
+                width: rect.width,
+                height: rect.height,
+                top: rect.top,
+                left: rect.left,
+            };
+        },
+
         enable: function () {
             this.element.find(".rc-contour").removeClass("disabled");
+            this._fireEvent("resize-enable", {
+                size: this.size(),
+                element: this.element,
+            });
         },
 
         disable: function () {
             this.element.find(".rc-contour").addClass("disabled");
+            this._fireEvent("resize-disable", {
+                size: this.size(),
+                element: this.element,
+            });
         },
 
         changeAttribute: function (attr, val) {
             switch (attr) {
-                case "data-enable-resize": {
+                case "data-can-resize": {
                     if (val === "true") {
                         this.enable();
                     } else {
