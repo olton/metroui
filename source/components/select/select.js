@@ -31,6 +31,8 @@
         filterSource: null,
         filterThreshold: 500,
 
+        closeOnClear: true,
+
         clsSelect: "",
         clsSelectInput: "",
         clsPrepend: "",
@@ -916,11 +918,16 @@
             const element = this.element;
             const o = this.options;
             const input = element.siblings(".select-input");
+            const drop = element.siblings(".drop-container");
+            const list = drop.find("ul");
 
             element.val(o.emptyValue);
 
             if (element[0].multiple) {
                 list.find("li").removeClass("d-none");
+                if (o.closeOnClear) {
+                    drop.data("dropdown").close();
+                }
             }
 
             input.clear();
