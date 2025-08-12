@@ -46,15 +46,22 @@
                     data-cls-select="text-bold fg-orange"
                     data-cls-label="text-bold fg-black" size="1">
                 <option value="">&nbsp;</option>
-                <option value="M"
-                        data-icon="<SPAN class='mif-gamepad mif-2x fg-black'></SPAN>">Machines
+                <option value="A"
+                        data-icon="<SPAN class='mif-gamepad mif-2x fg-black'></SPAN>">Mercury
+                </option>
+                <option value="B"
+                        data-icon="<SPAN class='mif-gamepad mif-2x fg-black'></SPAN>">Venus
                 </option>
                 <option value="C"
-                        data-icon="<SPAN class='mif-display mif-2x fg-black'></SPAN>">Computers
+                        data-icon="<SPAN class='mif-display mif-2x fg-black'></SPAN>">Earth
+                </option>
+                <option value="D"
+                        data-icon="<SPAN class='mif-gamepad mif-2x fg-black'></SPAN>">Mars
                 </option>
             </select>
         </div>
-        <button onclick="$('#sel2').data('select').val(['C', 'M'])">Set Val</button>
+        <button onclick="$('#sel2').data('select').val(['A', 'B'])">Set A, B</button>
+        <button onclick="$('#sel2').data('select').val(['C', 'D'])">Set C, D</button>
         <button onclick="$('#sel2').data('select').reset()">Reset</button>
     </div>
     <div class="d-flex gap-2"> 

@@ -681,7 +681,7 @@
             $.each(options, function () {
                 this.selected = false;
             });
-            list_items.removeClass("active").removeClass(o.clsOptionActive);
+            list_items.removeClass("active").removeClass("d-none").removeClass(o.clsOptionActive);
             input.html("");
 
             const _val = Array.isArray(val) ? val : [val];
