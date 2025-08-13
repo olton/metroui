@@ -1,0 +1,79 @@
+:root {
+    --pattern-grid-size: 20px;
+    --pattern-grid-color: #f0f0f0;
+    --pattern-mountain-color: rgba(0, 0, 0, 0.1);
+    --pattern-paper-color1: rgba(0,0,0,0.08);
+    --pattern-paper-color2: rgba(0,0,0,0.02);
+    --pattern-grid-dots-color: rgba(0,0,0,0.06);
+    --pattern-diagonal-color: rgba(0,0,0,0.06);
+}
+
+.dark-side {
+    --pattern-grid-color: #2b2d30;
+    --pattern-mountain-color: rgba(255, 255, 255, 0.1);
+    --pattern-paper-color1: rgba(255,255,255,0.08);
+    --pattern-paper-color2: rgba(255,255,255,0.02);
+    --pattern-diagonal-color: rgba(255,255,255,0.06);
+}
+
+.pattern-grid {
+    background-image: linear-gradient(to right, var(--pattern-grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--pattern-grid-color) 1px, transparent 1px);
+    background-size: var(--pattern-grid-size) var(--pattern-grid-size),
+    var(--pattern-grid-size) var(--pattern-grid-size);
+}
+
+.pattern-grid-top {
+    background-image: linear-gradient(to right, var(--pattern-grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--pattern-grid-color) 1px, transparent 1px);
+    background-size: var(--pattern-grid-size) var(--pattern-grid-size);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+}
+
+.pattern-grid-bottom {
+    background-image: linear-gradient(to right, var(--pattern-grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--pattern-grid-color) 1px, transparent 1px);
+    background-size: var(--pattern-grid-size) var(--pattern-grid-size);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 100%, #000 60%, transparent 100%);
+}
+
+.pattern-paper {
+    background-image: radial-gradient(circle at 1px 1px, var(--pattern-paper-color1) 1px, transparent 0),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, var(--pattern-paper-color2) 2px, var(--pattern-paper-color2) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, var(--pattern-paper-color2) 2px, var(--pattern-paper-color2) 4px);
+    background-size: 8px 8px, 32px 32px, 32px 32px;
+}
+
+.pattern-mountain {
+    background-image: repeating-linear-gradient(45deg, var(--pattern-mountain-color) 0, var(--pattern-mountain-color) 1px, transparent 1px, transparent 20px),
+    repeating-linear-gradient(-45deg, var(--pattern-mountain-color) 0, var(--pattern-mountain-color) 1px, transparent 1px, transparent 20px);
+    background-size: 40px 40px;
+}
+
+.pattern-art {
+    background-image: repeating-linear-gradient(22.5deg, transparent, transparent 2px, rgba(75, 85, 99, 0.06) 2px, rgba(75, 85, 99, 0.06) 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(67.5deg, transparent, transparent 2px, rgba(107, 114, 128, 0.05) 2px, rgba(107, 114, 128, 0.05) 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(112.5deg, transparent, transparent 2px, rgba(55, 65, 81, 0.04) 2px, rgba(55, 65, 81, 0.04) 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(157.5deg, transparent, transparent 2px, rgba(31, 41, 55, 0.03) 2px, rgba(31, 41, 55, 0.03) 3px, transparent 3px, transparent 8px);
+}
+
+.pattern-grid-dot {
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(75, 85, 99, 0.08) 19px, rgba(75, 85, 99, 0.08) 20px, transparent 20px, transparent 39px, rgba(75, 85, 99, 0.08) 39px, rgba(75, 85, 99, 0.08) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(75, 85, 99, 0.08) 19px, rgba(75, 85, 99, 0.08) 20px, transparent 20px, transparent 39px, rgba(75, 85, 99, 0.08) 39px, rgba(75, 85, 99, 0.08) 40px),
+    radial-gradient(circle at 20px 20px, rgba(55, 65, 81, 0.12) 2px, transparent 2px),
+    radial-gradient(circle at 40px 40px, rgba(55, 65, 81, 0.12) 2px, transparent 2px);
+    background-size: 40px 40px, 40px 40px, 40px 40px, 40px 40px;
+}
+
+.pattern-box-dot {
+    background-image: linear-gradient(to right, var(--pattern-grid-dots-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--pattern-grid-dots-color) 1px, transparent 1px),
+    radial-gradient(circle, rgba(51,65,85,0.4) 1px, transparent 1px);
+    background-size: 20px 20px, 20px 20px, 20px 20px;
+    background-position: 0 0, 0 0, 0 0;
+}
+
+.pattern-diagonal {
+    background-image: repeating-linear-gradient(45deg, var(--pattern-diagonal-color) 0, var(--pattern-diagonal-color) 1px, transparent 1px, transparent 20px),
+    repeating-linear-gradient(-45deg, var(--pattern-diagonal-color) 0, var(--pattern-diagonal-color) 1px, transparent 1px, transparent 20px);
+}

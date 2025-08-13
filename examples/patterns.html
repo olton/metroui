@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Test Any - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        .demo-box {
+            width: 100px;
+            height: 100px;
+            display: block;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            background: var(--default-background);
+            border-radius: 10px;
+            position: relative;
+            flex: 0 0 100px;
+            
+            .box-inner {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--default-background);
+                border-radius: inherit;
+            }
+            
+            button {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                translate: -50% -50%;
+            }
+        }
+    </style>
+</head>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Background Patterns</div>
+    </div>
+    <div class="app-bar-item-static no-hover ml-auto">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<main class="h-100 d-flex flex-wrap flex-center gap-4">
+    <div class="row flex-center">
+        <div class="demo-box">
+            <div class="box-inner pattern-grid"></div>
+            <button class="small" data-pattern="pattern-grid">View</button>
+        </div>
+        <div class="demo-box">
+            <div class="box-inner pattern-grid-top"></div>
+            <button class="small" data-pattern="pattern-grid-top">View</button>
+        </div>
+        <div class="demo-box">
+            <div class="box-inner pattern-grid-bottom"></div>
+            <button class="small" data-pattern="pattern-grid-bottom">View</button>
+        </div>
+        <div class="demo-box">
+            <div class="box-inner pattern-paper"></div>
+            <button class="small" data-pattern="pattern-paper">View</button>
+        </div>
+        <div class="demo-box">
+            <div class="box-inner pattern-mountain"></div>
+            <button class="small" data-pattern="pattern-mountain">View</button>
+        </div>
+        <div class="demo-box">
+            <div class="box-inner pattern-art"></div>
+            <button class="small" data-pattern="pattern-art">View</button>
+        </div>
+        <div class="demo-box">
+            <div class="box-inner pattern-grid-dot"></div>
+            <button class="small" data-pattern="pattern-grid-dot">View</button>
+        </div>
+        <div class="demo-box">
+            <div class="box-inner pattern-box-dot"></div>
+            <button class="small" data-pattern="pattern-box-dot">View</button>
+        </div>
+        <div class="demo-box">
+            <div class="box-inner pattern-diagonal"></div>
+            <button class="small" data-pattern="pattern-diagonal">View</button>
+        </div>
+        
+    </div>
+</main>
+
+<script src="../lib/metro.js"></script>
+<script>
+    $("button").on("click", function () {
+        const pattern = $(this).data("pattern");
+        $("main").removeClassBy("pattern-").addClass(pattern);
+    });
+</script>
+</body>
+</html>

@@ -85,6 +85,7 @@ import "./input-mask/index.js";
 import "./input-material/index.js";
 import "./keypad/index.js";
 import "./lightbox/index.js";
+import "./linked-block/index.js";
 import "./list/index.js";
 import "./listview/index.js";
 import "./marquee/index.js";

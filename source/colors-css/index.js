@@ -1,5 +1,3 @@
-/** @format */
-
 import "./vars.less";
 import "./background.less";
 import "./border.less";
@@ -12,3 +10,4 @@ import "./ribbed.less";
 import "./accent.less";
 import "./gradients.less";
 import "./stroke.less";
+import "./patterns.less";
