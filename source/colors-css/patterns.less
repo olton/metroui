@@ -4,7 +4,7 @@
     --pattern-mountain-color: rgba(0, 0, 0, 0.1);
     --pattern-paper-color1: rgba(0,0,0,0.08);
     --pattern-paper-color2: rgba(0,0,0,0.02);
-    --pattern-grid-dots-color: rgba(0,0,0,0.06);
+    --pattern-box-dot-color: rgba(0,0,0,0.06);
     --pattern-diagonal-color: rgba(0,0,0,0.06);
 }
 
@@ -13,6 +13,7 @@
     --pattern-mountain-color: rgba(255, 255, 255, 0.1);
     --pattern-paper-color1: rgba(255,255,255,0.08);
     --pattern-paper-color2: rgba(255,255,255,0.02);
+    --pattern-box-dot-color: rgba(255,255,255,0.06);
     --pattern-diagonal-color: rgba(255,255,255,0.06);
 }
 
@@ -66,14 +67,14 @@
 }
 
 .pattern-box-dot {
-    background-image: linear-gradient(to right, var(--pattern-grid-dots-color) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--pattern-grid-dots-color) 1px, transparent 1px),
+    background-image: linear-gradient(to right, var(--pattern-box-dot-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--pattern-box-dot-color) 1px, transparent 1px),
     radial-gradient(circle, rgba(51,65,85,0.4) 1px, transparent 1px);
     background-size: 20px 20px, 20px 20px, 20px 20px;
     background-position: 0 0, 0 0, 0 0;
 }
 
 .pattern-diagonal {
-    background-image: repeating-linear-gradient(45deg, var(--pattern-diagonal-color) 0, var(--pattern-diagonal-color) 1px, transparent 1px, transparent 20px),
-    repeating-linear-gradient(-45deg, var(--pattern-diagonal-color) 0, var(--pattern-diagonal-color) 1px, transparent 1px, transparent 20px);
+    background-image: repeating-linear-gradient(45deg, var(--pattern-diagonal-color) 0, var(--pattern-diagonal-color) 1px, transparent 1px, transparent var(--pattern-grid-size)),
+    repeating-linear-gradient(-45deg, var(--pattern-diagonal-color) 0, var(--pattern-diagonal-color) 1px, transparent 1px, transparent var(--pattern-grid-size));
 }
