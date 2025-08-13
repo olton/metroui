@@ -47920,6 +47920,25 @@ button.light.outline,
       #333399,
       #0033ff);
 }
+.gradient-cosmic-aurora {
+  --background:
+    radial-gradient(
+      ellipse at 20% 30%,
+      rgba(56, 189, 248, 0.4) 0%,
+      transparent 60%),
+    radial-gradient(
+      ellipse at 80% 70%,
+      rgba(139, 92, 246, 0.3) 0%,
+      transparent 70%),
+    radial-gradient(
+      ellipse at 60% 20%,
+      rgba(236, 72, 153, 0.25) 0%,
+      transparent 50%),
+    radial-gradient(
+      ellipse at 40% 80%,
+      rgba(34, 197, 94, 0.2) 0%,
+      transparent 65%);
+}
 .gradient-sunny-morning {
   --background:
     linear-gradient(
@@ -47965,6 +47984,21 @@ button.light.outline,
       to right,
       #00f260,
       #0575e6);
+}
+.gradient-midnight-mist {
+  --background:
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(70, 85, 110, 0.5) 0%,
+      transparent 60%),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(99, 102, 241, 0.4) 0%,
+      transparent 70%),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(181, 184, 208, 0.3) 0%,
+      transparent 80%);
 }
 
 /* source/colors-css/stroke.less */
