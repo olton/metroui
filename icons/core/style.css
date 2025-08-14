@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'metro-ui-core';
   src:
-    url('fonts/metro-ui-core.ttf?ges7u7') format('truetype'),
-    url('fonts/metro-ui-core.woff?ges7u7') format('woff'),
-    url('fonts/metro-ui-core.svg?ges7u7#metro-ui-core') format('svg');
+    url('fonts/metro-ui-core.ttf?kj6kn6') format('truetype'),
+    url('fonts/metro-ui-core.woff?kj6kn6') format('woff'),
+    url('fonts/metro-ui-core.svg?kj6kn6#metro-ui-core') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -24,6 +24,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.mif-person-position:before {
+  content: "\ebf8";
+}
+.mif-google:before {
+  content: "\ebf9";
+}
 .mif-dice-filled:before {
   content: "\ebc1";
 }
@@ -378,10 +384,10 @@
 .mif-repeat-one:before {
   content: "\ea21";
 }
-.mif-next:before {
+.mif-last:before {
   content: "\ea22";
 }
-.mif-previous:before {
+.mif-first:before {
   content: "\ea23";
 }
 .mif-stop:before {
