@@ -110,7 +110,6 @@
             const content = element.children(".navview-content");
             const toggle = $(o.toggle);
             menu = pane.children(".navview-menu");
-            console.log(menu);
             if (menu.length) {
                 menu.prevAll().reverse().wrapAll($("<div>").addClass("navview-container"));
                 menu.wrap($("<div>").addClass("navview-menu-container"));
