@@ -6,24 +6,57 @@
     <link href="../lib/metro.css" rel="stylesheet">
     <link href="../lib/icons.css" rel="stylesheet">
 
-    <title>Test Any - Metro UI :: Popular HTML, CSS and JS library</title>
-
+    <title>Linked Block - Metro UI :: Popular HTML, CSS and JS library</title>
 </head>
 <body class="cloak h-100-vh">
 <nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
     <div class="app-bar-item-static no-hover">
-        <div class="text-leader">Component Name</div>
+        <div class="text-leader">Linked Block</div>
     </div>
-    <div class="app-bar-item-static no-hover">
+    <div class="app-bar-item-static no-hover ml-auto">
         <input type="checkbox" data-role="theme-switcher"/>
     </div>
 </nav>
 
-<div data-role="linked-block" id="block1"></div>
-<div data-role="linked-block" id="block2"></div>
+<main class="h-100 pos-relative pattern-grid-dot">
+    <div data-role="linked-block, draggable" id="block1">
+        <div class="north-side"></div>
+        <div class="east-side">
+            <div class="link-point"></div>
+        </div>
+        <div class="south-side"></div>
+        <div class="west-side"></div>
+    </div>
+
+    <div data-role="linked-block, draggable" id="block2">
+        <div class="north-side"></div>
+        <div class="east-side"></div>
+        <div class="south-side"></div>
+        <div class="west-side">
+            <div class="link-point"></div>
+        </div>
+    </div>
+</main>
 
 <script src="../lib/metro.js"></script>
 <script>
+    (() => {
+        setTimeout(() => {
+            const block1 = $("#block1")
+            const block2 = $("#block2")
+            const parent = $("main")
+
+            block1.css({
+                top: parent.height() / 2 - block1.height() / 2,
+                left: parent.width() / 2 - block1.width() / 2 - 200,
+            })
+
+            block2.css({
+                top: parent.height() / 2 - block2.height() / 2,
+                left: parent.width() / 2 - block2.width() / 2 + 200,
+            })
+        }, 100)
+    })()
 </script>
 </body>
 </html>

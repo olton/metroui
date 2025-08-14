@@ -32,6 +32,8 @@
         _createStructure: function () {
             const element = this.element;
             const o = this.options;
+
+            element.addClass("linked-block");
         },
 
         _createEvents: function () {
