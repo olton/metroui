@@ -47,6 +47,8 @@
         maxWidth: 0,
         maxHeight: 0,
 
+        zIndex: null,
+
         onDragStart: Metro.noop,
         onDragStop: Metro.noop,
         onDragMove: Metro.noop,
@@ -256,6 +258,10 @@
             let height = o.height;
 
             win = $("<div>").addClass("window");
+
+            if (o.zIndex !== null) {
+                win.css("z-index", o.zIndex);
+            }
 
             if (o.modal === true) {
                 win.addClass("modal");
@@ -710,6 +716,16 @@
                 left: v,
             });
             return this;
+        },
+
+        zIndex: function (v) {
+            if (Metro.utils.isNull(v) === false) {
+                this.win.css({
+                    zIndex: +v,
+                });
+            }
+
+            return this.win.style("zIndex");
         },
 
         changeAttribute: function (attr, value) {
