@@ -19,44 +19,230 @@
 </nav>
 
 <main class="h-100 pos-relative pattern-grid-dot">
-    <div data-role="linked-block, draggable" id="block1">
+    <div data-role="linked-block, draggable" id="block1" data-on-drag-move="dragBlock1" data-on-drag-stop="dragBlock1">
         <div class="north-side"></div>
         <div class="east-side">
-            <div class="link-point"></div>
+            <div class="link-point" id="block1_a"></div>
         </div>
-        <div class="south-side"></div>
+        <div class="south-side">
+            <div class="link-point" id="block1_b"></div>
+        </div>
         <div class="west-side"></div>
     </div>
 
-    <div data-role="linked-block, draggable" id="block2">
+    <div data-role="linked-block, draggable" id="block2" data-on-drag-move="dragBlock2" data-on-drag-stop="dragBlock2">
         <div class="north-side"></div>
         <div class="east-side"></div>
         <div class="south-side"></div>
         <div class="west-side">
-            <div class="link-point"></div>
+            <div class="link-point" id="block2_a"></div>
         </div>
     </div>
+
+    <div data-role="linked-block, draggable" id="block3" data-on-drag-move="dragBlock3" data-on-drag-stop="dragBlock3">
+        <div class="north-side">
+            <div class="link-point" id="block3_a"></div>
+        </div>
+        <div class="east-side"></div>
+        <div class="south-side"></div>
+        <div class="west-side"></div>
+    </div>
+
+<!--    <svg class="connection-line" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">-->
+<!--        <line id="connector" stroke="var(&#45;&#45;linked-block-border-color)" stroke-width="1"/>-->
+<!--    </svg>-->
+
+    <svg id="line-block1-block2" class="connection-line">
+        <path class="cl-curve" stroke="var(--linked-block-border-color)" stroke-width="2" fill="none"/>
+    </svg>
+
+    <svg id="line-block1-block3" class="connection-line">
+        <path class="cl-curve" stroke="var(--linked-block-border-color)" stroke-width="2" fill="none"/>
+    </svg>
 </main>
 
 <script src="../lib/metro.js"></script>
 <script>
-    (() => {
-        setTimeout(() => {
-            const block1 = $("#block1")
-            const block2 = $("#block2")
-            const parent = $("main")
+    // line
+    // function updateConnection () {
+    //     const point1 = $('#block1_a')
+    //     const point2 = $('#block2_a')
+    //     const line = $('#connector')
+    //     const svg = $('.connection-line')
+    //
+    //     // Отримуємо позиції точок відносно документа
+    //     const rect1 = point1.offset()
+    //     const rect2 = point2.offset()
+    //
+    //     // Отримуємо позицію SVG контейнера відносно документа
+    //     const svgRect = svg.offset()
+    //
+    //     // Отримуємо розміри точок для центрування
+    //     const point1Width = point1.outerWidth()
+    //     const point1Height = point1.outerHeight()
+    //     const point2Width = point2.outerWidth()
+    //     const point2Height = point2.outerHeight()
+    //
+    //     // Розраховуємо координати відносно SVG контейнера і центруємо точки
+    //     const x1 = rect1.left - svgRect.left + point1Width / 2
+    //     const y1 = rect1.top - svgRect.top + point1Height / 2
+    //     const x2 = rect2.left - svgRect.left + point2Width / 2
+    //     const y2 = rect2.top - svgRect.top + point2Height / 2
+    //
+    //     line.attr({
+    //         x1: x1,
+    //         y1: y1,
+    //         x2: x2,
+    //         y2: y2
+    //     })
+    // }
 
-            block1.css({
-                top: parent.height() / 2 - block1.height() / 2,
-                left: parent.width() / 2 - block1.width() / 2 - 200,
-            })
+    // curve z
+    // function updateConnection () {
+    //     const point1 = $('#block1_a')
+    //     const point2 = $('#block2_a')
+    //     const path = $('#connector')
+    //     const svg = $('.connection-line')
+    //
+    //     const rect1 = point1.offset()
+    //     const rect2 = point2.offset()
+    //     const svgRect = svg.offset()
+    //
+    //     const point1Width = point1.outerWidth()
+    //     const point1Height = point1.outerHeight()
+    //     const point2Width = point2.outerWidth()
+    //     const point2Height = point2.outerHeight()
+    //
+    //     const x1 = rect1.left - svgRect.left + point1Width / 2
+    //     const y1 = rect1.top - svgRect.top + point1Height / 2
+    //     const x2 = rect2.left - svgRect.left + point2Width / 2
+    //     const y2 = rect2.top - svgRect.top + point2Height / 2
+    //
+    //     let pathData = ''
+    //
+    //     const tolerance = 5 // допуск для визначення "однакової" висоти
+    //     const horizontalDistance = Math.abs(x2 - x1)
+    //     const cornerRadius = Math.min(20, horizontalDistance / 6) // радіус заокруглення кутів
+    //
+    //     if (Math.abs(y1 - y2) <= tolerance) {
+    //         // 1. Якщо y1 === y2 - пряма лінія
+    //         pathData = `M ${x1} ${y1} L ${x2} ${y2}`
+    //     } else {
+    //         // Точки для створення сходинки
+    //         const midX = x1 + horizontalDistance / 2
+    //
+    //         if (y1 < y2) {
+    //             // 2. y1 < y2 - починається прямо, потім вниз, потім прямо
+    //             pathData = `M ${x1} ${y1} 
+    //                     L ${midX - cornerRadius} ${y1} 
+    //                     Q ${midX} ${y1} ${midX} ${y1 + cornerRadius}
+    //                     L ${midX} ${y2 - cornerRadius}
+    //                     Q ${midX} ${y2} ${midX + cornerRadius} ${y2}
+    //                     L ${x2} ${y2}`
+    //         } else {
+    //             // 3. y1 > y2 - починається прямо, потім вверх, потім прямо
+    //             pathData = `M ${x1} ${y1} 
+    //                     L ${midX - cornerRadius} ${y1} 
+    //                     Q ${midX} ${y1} ${midX} ${y1 - cornerRadius}
+    //                     L ${midX} ${y2 + cornerRadius}
+    //                     Q ${midX} ${y2} ${midX + cornerRadius} ${y2}
+    //                     L ${x2} ${y2}`
+    //         }
+    //     }
+    //
+    //     path.attr('d', pathData)
+    // }
 
-            block2.css({
-                top: parent.height() / 2 - block2.height() / 2,
-                left: parent.width() / 2 - block2.width() / 2 + 200,
-            })
-        }, 100)
-    })()
+    // curve
+    function updateConnection (a, b, c) {
+        const point1 = $(a)
+        const point2 = $(b)
+        const parent1 = point1.parent()
+        const parent2 = point2.parent()
+        const svg = $(c)
+        const path = svg.find('.cl-curve')
+        let direction = 'horizontal'
+        
+        if (parent1.hasClass('east-side') && parent2.hasClass('west-side')) {
+            direction = 'horizontal'
+        } else if (parent1.hasClass('south-side') && parent2.hasClass('north-side')) {
+            direction = 'vertical'
+        }
+
+        const rect1 = point1.offset()
+        const rect2 = point2.offset()
+        const svgRect = svg.offset()
+
+        const point1Width = point1.outerWidth()
+        const point1Height = point1.outerHeight()
+        const point2Width = point2.outerWidth()
+        const point2Height = point2.outerHeight()
+
+        const x1 = rect1.left - svgRect.left + point1Width / 2
+        const y1 = rect1.top - svgRect.top + point1Height / 2
+        const x2 = rect2.left - svgRect.left + point2Width / 2
+        const y2 = rect2.top - svgRect.top + point2Height / 2
+
+        // Створюємо плавну криву для горизонтального та вертикального з'єднання
+        const dx = x2 - x1
+        const dy = y2 - y1
+
+        let cp1x, cp1y, cp2x, cp2y
+
+        // Визначаємо, чи з'єднання більш горизонтальне або вертикальне
+        if (direction === 'horizontal') {
+            // Горизонтальне з'єднання - контрольні точки по X
+            const controlDistance = Math.abs(dx) * 0.4
+            cp1x = x1 + (dx > 0 ? controlDistance : -controlDistance)
+            cp1y = y1
+            cp2x = x2 - (dx > 0 ? controlDistance : -controlDistance)
+            cp2y = y2
+        } else {
+            // Вертикальне з'єднання - контрольні точки по Y
+            const controlDistance = Math.abs(dy) * 0.4
+            cp1x = x1
+            cp1y = y1 + (dy > 0 ? controlDistance : -controlDistance)
+            cp2x = x2
+            cp2y = y2 - (dy > 0 ? controlDistance : -controlDistance)
+        }
+
+        // Створюємо кубічну криву Безьє
+        const pathData = `M ${x1} ${y1} C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${x2} ${y2}`
+
+        path.attr('d', pathData)
+    }
+    
+    function dragBlock1(){
+        updateConnection("#block1_a", "#block2_a", "#line-block1-block2")
+        updateConnection("#block1_b", "#block3_a", "#line-block1-block3")
+    }
+    
+    function dragBlock2(){
+        updateConnection("#block1_a", "#block2_a", "#line-block1-block2")
+    }
+    
+    function dragBlock3(){
+        updateConnection("#block1_b", "#block3_a", "#line-block1-block3")
+    }
+    
+    setTimeout(() => {
+        const block1 = $('#block1')
+        const block2 = $('#block2')
+        const parent = $('main')
+
+        block1.css({
+            top: parent.height() / 2 - block1.height() / 2,
+            left: parent.width() / 2 - block1.width() / 2 - 200,
+        })
+
+        block2.css({
+            top: parent.height() / 2 - block2.height() / 2,
+            left: parent.width() / 2 - block2.width() / 2 + 200,
+        })
+
+        updateConnection("#block1_a", "#block2_a", "#line-block1-block2")
+        updateConnection("#block1_b", "#block3_a", "#line-block1-block3")
+    }, 100)
 </script>
 </body>
 </html>

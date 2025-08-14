@@ -66475,6 +66475,14 @@ label:has(input) {
   background-color: var(--linked-block-border-color);
   flex: 0 0 var(--linked-block-point-size);
 }
+.connection-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 
 /* source/components/list/list.less */
 
