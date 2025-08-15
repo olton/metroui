@@ -48949,6 +48949,7 @@ button.light.outline,
 }
 .bg-pattern-grid-top {
   position: relative;
+  background-color: transparent !important;
 }
 .bg-pattern-grid-top::before {
   content: "";
@@ -48977,6 +48978,7 @@ button.light.outline,
 }
 .bg-pattern-grid-bottom {
   position: relative;
+  background-color: transparent !important;
 }
 .bg-pattern-grid-bottom::before {
   content: "";
