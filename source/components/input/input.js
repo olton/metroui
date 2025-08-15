@@ -636,7 +636,6 @@
 			if (o.prependOptions) {
 				prepend = groups.shift();
 				Metro.getPlugin(this.prependOptionsList, "select").val(prepend);
-				console.log(prepend);
 			}
 			if (o.appendOptions) {
 				append = groups.pop();

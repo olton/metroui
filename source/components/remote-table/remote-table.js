@@ -214,7 +214,6 @@
             element.on("click", ".page-link", function () {
                 const parent = $(this).parent();
                 if (parent.hasClass("service")) {
-                    console.log();
                     if (parent.hasClass("prev-page")) {
                         if (o.pageMode === "offset") {
                             that.offset -= that.limit;
@@ -233,7 +232,6 @@
                         } else {
                             that.offset += 1;
                         }
-                        console.log(`Offset: ${that.offset}`);
                     }
                     that._loadData().then(() => {});
                     return;

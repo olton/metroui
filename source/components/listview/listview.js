@@ -218,7 +218,6 @@
             const o = this.options;
             o.selectable = !o.selectable;
             const func = o.selectable === true ? "addClass" : "removeClass";
-            console.log(func);
             element[func]("selectable");
             element.find("ul")[func]("selectable");
         },

@@ -77,7 +77,6 @@
             if (this.items.length) {
                 this.current = 0;
                 this.createChain();
-                console.log(this.chain);
                 this.start();
             }
         },

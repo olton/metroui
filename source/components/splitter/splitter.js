@@ -275,7 +275,6 @@
             const storage = this.storage;
             const itemsSize = [];
             const id = element.attr("id") || this.id;
-            console.log(storage);
             if (o.saveState === true && storage !== null) {
                 $.each(element.children(".split-block"), function () {
                     const item = $(this);

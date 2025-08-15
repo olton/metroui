@@ -296,7 +296,6 @@
         // Перевіряємо, чи є для поточного ключа окремий хоткей
         for (const hotkeyName in Metro.hotkeys) {
             if (!hotkeyName.includes(" ") && Hotkey.normalizeKey(hotkeyName) === normalizedKey) {
-                console.log(Metro.hotkeys);
                 Hotkey.executeHotkeyAction(Metro.hotkeys[hotkeyName], e);
                 return;
             }

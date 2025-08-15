@@ -123,11 +123,9 @@
                         ) {
                             if (!Metro.utils.isValue(o.dropFilter)) {
                                 this.close(true, el);
-                                console.log(1);
                             } else {
                                 if ($(el).closest(o.dropFilter).length > 0) {
                                     this.close(true, el);
-                                    console.log(2);
                                 }
                             }
                         }

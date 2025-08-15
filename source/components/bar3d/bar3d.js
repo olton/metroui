@@ -84,7 +84,6 @@
         changeAttribute: function (attr, newValue) {
             switch (attr) {
                 case "data-value": {
-                    console.log("Set value");
                     this.options.value = newValue;
                     this._drawBar();
                     break;
