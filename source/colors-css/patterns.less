@@ -16,17 +16,41 @@
 }
 
 .bg-pattern-grid-top {
-    background-image: linear-gradient(to right, var(--pattern-color) 1px, transparent 1px),
-                      linear-gradient(to bottom, var(--pattern-color) 1px, transparent 1px);
-    background-size: var(--pattern-grid-size) var(--pattern-grid-size);
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: linear-gradient(to right, var(--pattern-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--pattern-color) 1px, transparent 1px);
+        background-size: var(--pattern-grid-size) var(--pattern-grid-size);
+        mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+        pointer-events: none;
+        z-index: -1;
+    }
 }
 
 .bg-pattern-grid-bottom {
-    background-image: linear-gradient(to right, var(--pattern-color) 1px, transparent 1px),
-                      linear-gradient(to bottom, var(--pattern-color) 1px, transparent 1px);
-    background-size: var(--pattern-grid-size) var(--pattern-grid-size);
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 100%, #000 60%, transparent 100%);
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: linear-gradient(to right, var(--pattern-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--pattern-color) 1px, transparent 1px);
+        background-size: var(--pattern-grid-size) var(--pattern-grid-size);
+        mask-image: radial-gradient(ellipse 70% 60% at 50% 100%, #000 60%, transparent 100%);
+        pointer-events: none;
+        z-index: -1;
+    }
 }
 
 .bg-pattern-paper {

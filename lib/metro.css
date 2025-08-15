@@ -48948,6 +48948,15 @@ button.light.outline,
   background-size: var(--pattern-grid-size) var(--pattern-grid-size), var(--pattern-grid-size) var(--pattern-grid-size);
 }
 .bg-pattern-grid-top {
+  position: relative;
+}
+.bg-pattern-grid-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-image:
     linear-gradient(
       to right,
@@ -48963,8 +48972,19 @@ button.light.outline,
       ellipse 70% 60% at 50% 0%,
       #000 60%,
       transparent 100%);
+  pointer-events: none;
+  z-index: -1;
 }
 .bg-pattern-grid-bottom {
+  position: relative;
+}
+.bg-pattern-grid-bottom::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-image:
     linear-gradient(
       to right,
@@ -48980,6 +49000,8 @@ button.light.outline,
       ellipse 70% 60% at 50% 100%,
       #000 60%,
       transparent 100%);
+  pointer-events: none;
+  z-index: -1;
 }
 .bg-pattern-paper {
   background-image:
