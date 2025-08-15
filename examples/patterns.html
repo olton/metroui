@@ -52,39 +52,39 @@
 <main class="h-100 d-flex flex-wrap flex-center gap-4">
     <div class="row flex-center">
         <div class="demo-box">
-            <div class="box-inner pattern-grid"></div>
+            <div class="box-inner bg-pattern-grid"></div>
             <button class="small" data-pattern="pattern-grid">View</button>
         </div>
         <div class="demo-box">
-            <div class="box-inner pattern-grid-top"></div>
+            <div class="box-inner bg-pattern-grid-top"></div>
             <button class="small" data-pattern="pattern-grid-top">View</button>
         </div>
         <div class="demo-box">
-            <div class="box-inner pattern-grid-bottom"></div>
+            <div class="box-inner bg-pattern-grid-bottom"></div>
             <button class="small" data-pattern="pattern-grid-bottom">View</button>
         </div>
         <div class="demo-box">
-            <div class="box-inner pattern-paper"></div>
+            <div class="box-inner bg-pattern-paper"></div>
             <button class="small" data-pattern="pattern-paper">View</button>
         </div>
         <div class="demo-box">
-            <div class="box-inner pattern-mountain"></div>
+            <div class="box-inner bg-pattern-mountain"></div>
             <button class="small" data-pattern="pattern-mountain">View</button>
         </div>
         <div class="demo-box">
-            <div class="box-inner pattern-art"></div>
+            <div class="box-inner bg-pattern-art"></div>
             <button class="small" data-pattern="pattern-art">View</button>
         </div>
         <div class="demo-box">
-            <div class="box-inner pattern-grid-dot"></div>
+            <div class="box-inner bg-pattern-grid-dot"></div>
             <button class="small" data-pattern="pattern-grid-dot">View</button>
         </div>
         <div class="demo-box">
-            <div class="box-inner pattern-box-dot"></div>
+            <div class="box-inner bg-pattern-box-dot"></div>
             <button class="small" data-pattern="pattern-box-dot">View</button>
         </div>
         <div class="demo-box">
-            <div class="box-inner pattern-diagonal"></div>
+            <div class="box-inner bg-pattern-diagonal"></div>
             <button class="small" data-pattern="pattern-diagonal">View</button>
         </div>
         
@@ -95,7 +95,7 @@
 <script>
     $("button").on("click", function () {
         const pattern = $(this).data("pattern");
-        $("main").removeClassBy("pattern-").addClass(pattern);
+        $("main").removeClassBy("bg-pattern-").addClass(`bg-${pattern}`);
     });
 </script>
 </body>
