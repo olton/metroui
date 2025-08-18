@@ -275,27 +275,70 @@
             const parent2 = point2.parent();
             const path = svg.find(".cl-curve");
 
-            const direction = this._getDirection(parent1, parent2);
-
             const coords = this._getCoordinates(point1, point2, svg);
             const { x1, y1, x2, y2 } = coords;
 
             const dx = x2 - x1;
             const dy = y2 - y1;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
             let cp1x, cp1y, cp2x, cp2y;
 
-            if (direction === "horizontal") {
-                const controlDistance = Math.abs(dx) * 0.4;
-                cp1x = x1 + (dx > 0 ? controlDistance : -controlDistance);
-                cp1y = y1;
-                cp2x = x2 - (dx > 0 ? controlDistance : -controlDistance);
-                cp2y = y2;
+            // Визначаємо сторони точок
+            const side1 = parent1.attr("class").match(/(north|south|east|west)-side/)?.[1] || "north";
+            const side2 = parent2.attr("class").match(/(north|south|east|west)-side/)?.[1] || "north";
+
+            // Спеціальна логіка для точок на одній стороні
+            if (side1 === side2) {
+                const controlOffset = Math.max(60, distance * 0.3);
+
+                switch (side1) {
+                    case "north":
+                        // Обидві точки зверху - створюємо дугу вгору
+                        cp1x = x1;
+                        cp1y = y1 - controlOffset;
+                        cp2x = x2;
+                        cp2y = y2 - controlOffset;
+                        break;
+                    case "south":
+                        // Обидві точки знизу - створюємо дугу вниз
+                        cp1x = x1;
+                        cp1y = y1 + controlOffset;
+                        cp2x = x2;
+                        cp2y = y2 + controlOffset;
+                        break;
+                    case "east":
+                        // Обидві точки праворуч - створюємо дугу вправо
+                        cp1x = x1 + controlOffset;
+                        cp1y = y1;
+                        cp2x = x2 + controlOffset;
+                        cp2y = y2;
+                        break;
+                    case "west":
+                        // Обидві точки ліворуч - створюємо дугу вліво
+                        cp1x = x1 - controlOffset;
+                        cp1y = y1;
+                        cp2x = x2 - controlOffset;
+                        cp2y = y2;
+                        break;
+                }
             } else {
-                const controlDistance = Math.abs(dy) * 0.4;
-                cp1x = x1;
-                cp1y = y1 + (dy > 0 ? controlDistance : -controlDistance);
-                cp2x = x2;
-                cp2y = y2 - (dy > 0 ? controlDistance : -controlDistance);
+                // Стандартна логіка для точок на різних сторонах
+                const direction = this._getDirection(parent1, parent2);
+
+                if (direction === "horizontal") {
+                    const controlDistance = Math.abs(dx) * 0.4;
+                    cp1x = x1 + (dx > 0 ? controlDistance : -controlDistance);
+                    cp1y = y1;
+                    cp2x = x2 - (dx > 0 ? controlDistance : -controlDistance);
+                    cp2y = y2;
+                } else {
+                    const controlDistance = Math.abs(dy) * 0.4;
+                    cp1x = x1;
+                    cp1y = y1 + (dy > 0 ? controlDistance : -controlDistance);
+                    cp2x = x2;
+                    cp2y = y2 - (dy > 0 ? controlDistance : -controlDistance);
+                }
             }
 
             const pathData = `M ${x1} ${y1} C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${x2} ${y2}`;
@@ -309,7 +352,6 @@
             const parent2 = point2.parent();
             const path = svg.find(".cl-curve");
 
-            const direction = this._getDirection(parent1, parent2);
             const coords = this._getCoordinates(point1, point2, svg);
             const { x1, y1, x2, y2 } = coords;
 
@@ -317,53 +359,130 @@
             const tolerance = 5;
             const dx = x2 - x1;
             const dy = y2 - y1;
+            const distance = Math.sqrt(dx * dx + dy * dy);
 
-            if (direction === "horizontal") {
-                const horizontalDistance = Math.abs(dx);
-                const cornerRadius = Math.min(20, horizontalDistance / 6);
+            // Визначаємо сторони точок
+            const side1 = parent1.attr("class").match(/(north|south|east|west)-side/)?.[1] || "north";
+            const side2 = parent2.attr("class").match(/(north|south|east|west)-side/)?.[1] || "north";
 
-                if (Math.abs(y1 - y2) <= tolerance) {
-                    pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
-                } else {
-                    const midX = x1 + dx / 2;
-                    if (y1 < y2) {
-                        pathData = `M ${x1} ${y1} 
-                            L ${midX - cornerRadius} ${y1} 
-                            Q ${midX} ${y1} ${midX} ${y1 + cornerRadius}
-                            L ${midX} ${y2 - cornerRadius}
-                            Q ${midX} ${y2} ${midX + cornerRadius} ${y2}
-                            L ${x2} ${y2}`;
-                    } else {
-                        pathData = `M ${x1} ${y1} 
-                            L ${midX - cornerRadius} ${y1} 
-                            Q ${midX} ${y1} ${midX} ${y1 - cornerRadius}
-                            L ${midX} ${y2 + cornerRadius}
-                            Q ${midX} ${y2} ${midX + cornerRadius} ${y2}
-                            L ${x2} ${y2}`;
-                    }
+            // Спеціальна логіка для точок на одній стороні
+            if (side1 === side2) {
+                const offset = Math.max(40, distance * 0.25);
+                const cornerRadius = Math.min(15, offset / 3);
+
+                switch (side1) {
+                    case "north":
+                        // Обидві точки зверху - йдемо вгору, потім горизонтально, потім вниз
+                        if (Math.abs(x1 - x2) <= tolerance) {
+                            // Точки вертикально одна над одною
+                            pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
+                        } else {
+                            const topY = Math.min(y1, y2) - offset;
+                            pathData = `M ${x1} ${y1}
+                                L ${x1} ${topY + cornerRadius}
+                                Q ${x1} ${topY} ${x1 + (x2 > x1 ? cornerRadius : -cornerRadius)} ${topY}
+                                L ${x2 - (x2 > x1 ? cornerRadius : -cornerRadius)} ${topY}
+                                Q ${x2} ${topY} ${x2} ${topY + cornerRadius}
+                                L ${x2} ${y2}`;
+                        }
+                        break;
+
+                    case "south":
+                        // Обидві точки знизу - йдемо вниз, потім горизонтально, потім вгору
+                        if (Math.abs(x1 - x2) <= tolerance) {
+                            pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
+                        } else {
+                            const bottomY = Math.max(y1, y2) + offset;
+                            pathData = `M ${x1} ${y1}
+                                L ${x1} ${bottomY - cornerRadius}
+                                Q ${x1} ${bottomY} ${x1 + (x2 > x1 ? cornerRadius : -cornerRadius)} ${bottomY}
+                                L ${x2 - (x2 > x1 ? cornerRadius : -cornerRadius)} ${bottomY}
+                                Q ${x2} ${bottomY} ${x2} ${bottomY - cornerRadius}
+                                L ${x2} ${y2}`;
+                        }
+                        break;
+
+                    case "east":
+                        // Обidві точки праворуч - йдемо вправо, потім вертикально, потім вліво
+                        if (Math.abs(y1 - y2) <= tolerance) {
+                            pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
+                        } else {
+                            const rightX = Math.max(x1, x2) + offset;
+                            pathData = `M ${x1} ${y1}
+                                L ${rightX - cornerRadius} ${y1}
+                                Q ${rightX} ${y1} ${rightX} ${y1 + (y2 > y1 ? cornerRadius : -cornerRadius)}
+                                L ${rightX} ${y2 - (y2 > y1 ? cornerRadius : -cornerRadius)}
+                                Q ${rightX} ${y2} ${rightX - cornerRadius} ${y2}
+                                L ${x2} ${y2}`;
+                        }
+                        break;
+
+                    case "west":
+                        // Обидві точки ліворуч - йдемо вліво, потім вертикально, потім вправо
+                        if (Math.abs(y1 - y2) <= tolerance) {
+                            pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
+                        } else {
+                            const leftX = Math.min(x1, x2) - offset;
+                            pathData = `M ${x1} ${y1}
+                                L ${leftX + cornerRadius} ${y1}
+                                Q ${leftX} ${y1} ${leftX} ${y1 + (y2 > y1 ? cornerRadius : -cornerRadius)}
+                                L ${leftX} ${y2 - (y2 > y1 ? cornerRadius : -cornerRadius)}
+                                Q ${leftX} ${y2} ${leftX + cornerRadius} ${y2}
+                                L ${x2} ${y2}`;
+                        }
+                        break;
                 }
             } else {
-                const verticalDistance = Math.abs(dy);
-                const cornerRadius = Math.min(20, verticalDistance / 6);
+                // Стандартна логіка для точок на різних сторонах
+                const direction = this._getDirection(parent1, parent2);
 
-                if (Math.abs(x1 - x2) <= tolerance) {
-                    pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
-                } else {
-                    const midY = y1 + dy / 2;
-                    if (x1 < x2) {
-                        pathData = `M ${x1} ${y1} 
-                            L ${x1} ${midY - cornerRadius} 
-                            Q ${x1} ${midY} ${x1 + cornerRadius} ${midY}
-                            L ${x2 - cornerRadius} ${midY}
-                            Q ${x2} ${midY} ${x2} ${midY + cornerRadius}
-                            L ${x2} ${y2}`;
+                if (direction === "horizontal") {
+                    const horizontalDistance = Math.abs(dx);
+                    const cornerRadius = Math.min(20, horizontalDistance / 6);
+
+                    if (Math.abs(y1 - y2) <= tolerance) {
+                        pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
                     } else {
-                        pathData = `M ${x1} ${y1} 
-                            L ${x1} ${midY - cornerRadius} 
-                            Q ${x1} ${midY} ${x1 - cornerRadius} ${midY}
-                            L ${x2 + cornerRadius} ${midY}
-                            Q ${x2} ${midY} ${x2} ${midY + cornerRadius}
-                            L ${x2} ${y2}`;
+                        const midX = x1 + dx / 2;
+                        if (y1 < y2) {
+                            pathData = `M ${x1} ${y1} 
+                                L ${midX - cornerRadius} ${y1} 
+                                Q ${midX} ${y1} ${midX} ${y1 + cornerRadius}
+                                L ${midX} ${y2 - cornerRadius}
+                                Q ${midX} ${y2} ${midX + cornerRadius} ${y2}
+                                L ${x2} ${y2}`;
+                        } else {
+                            pathData = `M ${x1} ${y1} 
+                                L ${midX - cornerRadius} ${y1} 
+                                Q ${midX} ${y1} ${midX} ${y1 - cornerRadius}
+                                L ${midX} ${y2 + cornerRadius}
+                                Q ${midX} ${y2} ${midX + cornerRadius} ${y2}
+                                L ${x2} ${y2}`;
+                        }
+                    }
+                } else {
+                    const verticalDistance = Math.abs(dy);
+                    const cornerRadius = Math.min(20, verticalDistance / 6);
+
+                    if (Math.abs(x1 - x2) <= tolerance) {
+                        pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
+                    } else {
+                        const midY = y1 + dy / 2;
+                        if (x1 < x2) {
+                            pathData = `M ${x1} ${y1} 
+                                L ${x1} ${midY - cornerRadius} 
+                                Q ${x1} ${midY} ${x1 + cornerRadius} ${midY}
+                                L ${x2 - cornerRadius} ${midY}
+                                Q ${x2} ${midY} ${x2} ${midY + cornerRadius}
+                                L ${x2} ${y2}`;
+                        } else {
+                            pathData = `M ${x1} ${y1} 
+                                L ${x1} ${midY - cornerRadius} 
+                                Q ${x1} ${midY} ${x1 - cornerRadius} ${midY}
+                                L ${x2 + cornerRadius} ${midY}
+                                Q ${x2} ${midY} ${x2} ${midY + cornerRadius}
+                                L ${x2} ${y2}`;
+                        }
                     }
                 }
             }
@@ -373,18 +492,23 @@
 
         // Допоміжні методи
         _getDirection: (parent1, parent2) => {
-            if (
-                (parent1.hasClass("east-side") && parent2.hasClass("west-side")) ||
-                (parent1.hasClass("west-side") && parent2.hasClass("east-side"))
-            ) {
+            const side1 = parent1.attr("class").match(/(north|south|east|west)-side/)?.[1];
+            const side2 = parent2.attr("class").match(/(north|south|east|west)-side/)?.[1];
+
+            // Якщо обидві точки на одній стороні
+            if (side1 === side2) {
+                return side1 === "north" || side1 === "south" ? "horizontal" : "vertical";
+            }
+
+            // Стандартна логіка для різних сторін
+            if ((side1 === "east" && side2 === "west") || (side1 === "west" && side2 === "east")) {
                 return "horizontal";
-            } else if (
-                (parent1.hasClass("south-side") && parent2.hasClass("north-side")) ||
-                (parent1.hasClass("north-side") && parent2.hasClass("south-side"))
-            ) {
+            } else if ((side1 === "south" && side2 === "north") || (side1 === "north" && side2 === "south")) {
                 return "vertical";
             }
-            return "horizontal"; // за замовчуванням
+
+            // Для інших випадків визначаємо за домінуючим напрямком
+            return side1 === "north" || side1 === "south" ? "vertical" : "horizontal";
         },
 
         _getCoordinates: (point1, point2, svg) => {

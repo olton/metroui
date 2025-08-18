@@ -21,8 +21,12 @@
         <div class="text-leader">Linked Block</div>
     </div>
     <div class="app-bar-container gap-2" style="position: absolute; left: 50%; transform: translateX(-50%);">
-        <button onclick="createBlock()">Create Block</button>
-        <button onclick="addBlock()">Add Block</button>
+        <button onclick="createBlocksZTop()">Z Top</button>
+        <button onclick="createBlocksZBottom()">Z Bottom</button>
+        <button onclick="createBlocksZSide()">Z Side</button>
+        <button onclick="createBlocksCTop()">C Top</button>
+        <button onclick="createBlocksCBottom()">C Bottom</button>
+        <button onclick="createBlocksCSide()">C Side</button>
     </div>
     <div class="app-bar-item-static no-hover ml-auto">
         <input type="checkbox" data-role="theme-switcher"/>
@@ -34,13 +38,67 @@
 <script src="../lib/metro.js"></script>
 <script>
     var blockCount = 0;
-    function createBlock () {
+    var container = $('#container');
+    
+    function createBlocksZTop () {
         blockCount++;
         const block1 = Metro.linkedBlock.create({
             content: `Block ${blockCount}`,
-            container: $('#container'),
+            container,
             top: 100,
             left: 100,
+            resizable: true,
+        });
+        block1.addPoint('north')
+
+        blockCount++;
+        const block2 = Metro.linkedBlock.create({
+            content: `Block ${blockCount}`,
+            container,
+            top: 100,
+            left: 300,
+            resizable: true,
+        });
+        block2.addPoint('north')
+
+        block1.connect(block2.element, {
+            type: "zigzag"
+        })
+    }
+    
+    function createBlocksZBottom () {
+        blockCount++;
+        const block1 = Metro.linkedBlock.create({
+            content: `Block ${blockCount}`,
+            container,
+            top: 100,
+            left: 500,
+            resizable: true,
+        });
+        block1.addPoint('south')
+
+        blockCount++;
+        const block2 = Metro.linkedBlock.create({
+            content: `Block ${blockCount}`,
+            container,
+            top: 100,
+            left: 700,
+            resizable: true,
+        });
+        block2.addPoint('south')
+
+        block1.connect(block2.element, {
+            type: "zigzag"
+        })
+    }
+    
+    function createBlocksZSide () {
+        blockCount++;
+        const block1 = Metro.linkedBlock.create({
+            content: `Block ${blockCount}`,
+            container,
+            top: 100,
+            left: 900,
             resizable: true,
         });
         block1.addPoint('east')
@@ -48,9 +106,87 @@
         blockCount++;
         const block2 = Metro.linkedBlock.create({
             content: `Block ${blockCount}`,
-            container: $('#container'),
+            container,
             top: 100,
+            left: 1100,
+            resizable: true,
+        });
+        block2.addPoint('west')
+
+        block1.connect(block2.element, {
+            type: "zigzag"
+        })
+    }
+    
+    function createBlocksCTop () {
+        blockCount++;
+        const block1 = Metro.linkedBlock.create({
+            content: `Block ${blockCount}`,
+            container,
+            top: 300,
+            left: 100,
+            resizable: true,
+        });
+        block1.addPoint('north')
+
+        blockCount++;
+        const block2 = Metro.linkedBlock.create({
+            content: `Block ${blockCount}`,
+            container,
+            top: 300,
             left: 300,
+            resizable: true,
+        });
+        block2.addPoint('north')
+
+        block1.connect(block2.element, {
+            type: "curve"
+        })
+    }
+    
+    function createBlocksCBottom () {
+        blockCount++;
+        const block1 = Metro.linkedBlock.create({
+            content: `Block ${blockCount}`,
+            container,
+            top: 300,
+            left: 500,
+            resizable: true,
+        });
+        block1.addPoint('south')
+
+        blockCount++;
+        const block2 = Metro.linkedBlock.create({
+            content: `Block ${blockCount}`,
+            container,
+            top: 300,
+            left: 700,
+            resizable: true,
+        });
+        block2.addPoint('south')
+
+        block1.connect(block2.element, {
+            type: "curve"
+        })
+    }
+    
+    function createBlocksCSide () {
+        blockCount++;
+        const block1 = Metro.linkedBlock.create({
+            content: `Block ${blockCount}`,
+            container,
+            top: 300,
+            left: 900,
+            resizable: true,
+        });
+        block1.addPoint('east')
+
+        blockCount++;
+        const block2 = Metro.linkedBlock.create({
+            content: `Block ${blockCount}`,
+            container,
+            top: 300,
+            left: 1100,
             resizable: true,
         });
         block2.addPoint('west')
@@ -58,10 +194,6 @@
         block1.connect(block2.element, {
             type: "curve"
         })
-    }
-    
-    function addBlock(){
-        
     }
 </script>
 </body>
