@@ -1,8 +1,0 @@
-### 5.1.16
-
-+ [x] Fixed method `val()` in the select component for multiple select.
-+ [x] Fixed the movement of the hour hand in the analog clock (thanks to CmPi).
-+ [x] Added background patterns
-+ [x] Added new gradients gradient-cosmic-aurora, gradient-midnight-mist
-+ [x] Added new icons
-+ [x] Added new prop `zIndex` and method `zIndex()` to the `window` component
