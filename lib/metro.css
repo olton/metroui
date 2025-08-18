@@ -66424,16 +66424,21 @@ label:has(input) {
 /* source/components/linked-block/linked-block.less */
 :root {
   --linked-block-point-size: 7px;
+  --linked-block-point-color: #b1b1b1;
+  --linked-block-line-width: 1px;
   --linked-block-min-size: 100px;
   --linked-block-border-radius: 4px;
   --linked-block-background: var(--default-background);
-  --linked-block-color: var(--default-color);
-  --linked-block-border-color: var(--border-color);
+  --linked-block-color: #191919;
+  --linked-block-border-color: #b1b1b1;
+  --linked-block-line-color: #b1b1b1;
 }
 .dark-side {
   --linked-block-background: var(--default-background);
-  --linked-block-color: var(--default-color);
-  --linked-block-border-color: var(--border-color);
+  --linked-block-color: #ffffff;
+  --linked-block-border-color: #656a70;
+  --linked-block-line-color: #656a70;
+  --linked-block-point-color: #656a70;
 }
 .linked-block {
   position: absolute;
@@ -66444,6 +66449,7 @@ label:has(input) {
   color: var(--linked-block-color);
   border: 1px solid var(--linked-block-border-color);
   border-radius: var(--linked-block-border-radius);
+  user-select: none;
 }
 .linked-block .north-side,
 .linked-block .east-side,
@@ -66486,7 +66492,7 @@ label:has(input) {
   width: var(--linked-block-point-size);
   aspect-ratio: 1/1;
   border-radius: 50%;
-  background-color: var(--linked-block-border-color);
+  background-color: var(--linked-block-point-color);
   flex: 0 0 var(--linked-block-point-size);
 }
 .connection-line {
