@@ -66495,6 +66495,40 @@ label:has(input) {
   background-color: var(--linked-block-point-color);
   flex: 0 0 var(--linked-block-point-size);
 }
+.linked-block .add-point-btn {
+  position: absolute;
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 1px dashed var(--linked-block-border-color);
+  background: var(--linked-block-background);
+  color: var(--linked-block-color);
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+}
+.linked-block .add-point-btn.add-point-north {
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.linked-block .add-point-btn.add-point-east {
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.linked-block .add-point-btn.add-point-south {
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.linked-block .add-point-btn.add-point-west {
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 .connection-line {
   position: absolute;
   top: 0;

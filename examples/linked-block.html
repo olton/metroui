@@ -20,65 +20,44 @@
     <div class="app-bar-item-static no-hover">
         <div class="text-leader">Linked Block</div>
     </div>
+    <div class="app-bar-container" style="position: absolute; left: 50%; transform: translateX(-50%);">
+        <button onclick="createBlock()">Create Block</button>
+    </div>
     <div class="app-bar-item-static no-hover ml-auto">
         <input type="checkbox" data-role="theme-switcher"/>
     </div>
 </nav>
 
-<main class="h-100 pos-relative" style="--linked-block-point-color: #ff0000;">
-    <div id="block1"
-         data-role="linked-block"          
-    >1</div>
-
-    <div id="block2"
-         data-role="linked-block"  
-    >2</div>
-
-    <div id="block3"
-         data-role="linked-block"  
-    >3</div>
-
-    <div id="block4"
-         data-role="linked-block" 
-    >4</div>
-</main>
+<main id="container" class="h-100 pos-relative" style="--linked-block-point-color: #ff0000;"></main>
 
 <script src="../lib/metro.js"></script>
 <script>
-    setTimeout(() => {
-        const block1 = $('#block1')
-        const block2 = $('#block2')
-        const block3 = $('#block3')
-        const block4 = $('#block4')
-        const parent = $('main')
+    var blockCount = 0;
+    function createBlock () {
+        blockCount++;
+        const block1 = Metro.linkedBlock.create({
+            content: `Block ${blockCount}`,
+            container: $('#container'),
+            top: 100,
+            left: 100,
+            resizable: true,
+        });
+        block1.addPoint('east')
 
-        block1.css({
-            top: parent.height() / 2 - block1.height() / 2 - 200,
-            left: parent.width() / 2 - block1.width() / 2 - 200,
-        })
+        blockCount++;
+        const block2 = Metro.linkedBlock.create({
+            content: `Block ${blockCount}`,
+            container: $('#container'),
+            top: 100,
+            left: 300,
+            resizable: true,
+        });
+        block2.addPoint('west')
 
-        block2.css({
-            top: parent.height() / 2 - block2.height() / 2 - 200,
-            left: parent.width() / 2 - block2.width() / 2 + 200,
+        block1.connect(block2.element, {
+            type: "curve"
         })
-
-        block3.css({
-            top: parent.height() / 2 - block3.height() / 2 + 200,
-            left: parent.width() / 2 - block3.width() / 2 - 200,
-        })
-
-        block4.css({
-            top: parent.height() / 2 - block4.height() / 2 + 200,
-            left: parent.width() / 2 - block4.width() / 2 + 200,
-        })
-    }, 100)
-    
-    $(document).on('click', ".linked-block", function() {
-        const block = Metro.getPlugin($(this), 'linked-block')
-        const sides = ["north", "east", "south", "west"];
-        const sideIndex = Math.floor(Math.random() * sides.length);
-        block.addPoint(sides[sideIndex]);
-    })
+    }
 </script>
 </body>
 </html>
