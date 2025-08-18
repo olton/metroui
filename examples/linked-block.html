@@ -8,7 +8,7 @@
 
     <title>Linked Block - Metro UI :: Popular HTML, CSS and JS library</title>
     <style>
-        .linked-block {
+        .linked-block-content {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,8 +20,9 @@
     <div class="app-bar-item-static no-hover">
         <div class="text-leader">Linked Block</div>
     </div>
-    <div class="app-bar-container" style="position: absolute; left: 50%; transform: translateX(-50%);">
+    <div class="app-bar-container gap-2" style="position: absolute; left: 50%; transform: translateX(-50%);">
         <button onclick="createBlock()">Create Block</button>
+        <button onclick="addBlock()">Add Block</button>
     </div>
     <div class="app-bar-item-static no-hover ml-auto">
         <input type="checkbox" data-role="theme-switcher"/>
@@ -57,6 +58,10 @@
         block1.connect(block2.element, {
             type: "curve"
         })
+    }
+    
+    function addBlock(){
+        
     }
 </script>
 </body>

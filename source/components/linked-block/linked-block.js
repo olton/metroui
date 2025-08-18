@@ -18,8 +18,8 @@
         },
         onLinkedBlockCreate: Metro.noop,
         onLinkedBlockDestroy: Metro.noop,
-        onPointAdd: Metro.noop,
-        onPointRemove: Metro.noop,
+        onAddPoint: Metro.noop,
+        onRemovePoint: Metro.noop,
         onConnect: Metro.noop,
         onDisconnect: Metro.noop,
         onDragStart: Metro.noop,
@@ -83,11 +83,17 @@
             if (o.maxWidth) element.css("max-width", o.maxWidth);
             if (o.maxHeight) element.css("max-height", o.maxHeight);
 
+            const _content = element.innerHTML;
+
+            let contentContainer = element.find(".linked-block-content");
+            if (contentContainer.length === 0) {
+                contentContainer = $("<div>").addClass("linked-block-content");
+                element.append(contentContainer);
+            }
+            contentContainer.html(_content || o.content);
+
             // Створюємо структуру сторін
             this._createSides();
-
-            // Додаємо контент
-            this._createContent();
 
             // Створюємо кнопки додавання точок
             if (o.showAddButtons) {
@@ -109,59 +115,6 @@
                 const sideElement = $("<div>").addClass(`side ${side.name}`).attr("data-side", side.position);
                 element.append(sideElement);
             });
-        },
-
-        _createContent: function () {
-            const element = this.element;
-            const o = this.options;
-
-            // Створюємо контейнер для контенту
-            let contentContainer = element.find(".block-content");
-            if (contentContainer.length === 0) {
-                contentContainer = $("<div>").addClass("block-content").css({
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    pointerEvents: "none",
-                    zIndex: 1,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "calc(100% - 20px)",
-                    height: "calc(100% - 20px)",
-                    textAlign: "center",
-                });
-                element.append(contentContainer);
-            }
-
-            // Додаємо контент
-            if (o.content) {
-                contentContainer.html(o.content);
-            } else if (element.text().trim() && !element.find(".side").length) {
-                // Переносимо існуючий текст у контентний контейнер
-                const existingContent = element.html();
-                element.empty();
-                this._createSides();
-                contentContainer = $("<div>")
-                    .addClass("block-content")
-                    .css({
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        pointerEvents: "none",
-                        zIndex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "calc(100% - 20px)",
-                        height: "calc(100% - 20px)",
-                        textAlign: "center",
-                    })
-                    .html(existingContent);
-                element.append(contentContainer);
-            }
         },
 
         _createInitialPoints: function () {
@@ -222,27 +175,19 @@
             }
 
             // Обробка подвійного кліку для додавання точки
-            element.on("dblclick.linked-block", (e) => {
-                e.preventDefault();
-                const rect = element[0].getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const side = self._getSideFromCoordinates(x, y, rect.width, rect.height);
-                self.addPoint(side);
-            });
-
-            // Обробка кліку по точці з'єднання для видалення
-            element.on("contextmenu.linked-block", ".link-point", function (e) {
-                e.preventDefault();
-                const pointId = $(this).attr("id");
-                self.removePoint(pointId);
-            });
+            // element.on("dblclick.linked-block", (e) => {
+            //     e.preventDefault();
+            //     const rect = element[0].getBoundingClientRect();
+            //     const x = e.clientX - rect.left;
+            //     const y = e.clientY - rect.top;
+            //     const side = self._getSideFromCoordinates(x, y, rect.width, rect.height);
+            //     self.addPoint(side);
+            // });
         },
 
         _setupDraggable: function () {
             const element = this.element;
             const o = this.options;
-            const self = this;
 
             if (o.draggable) {
                 // Додаємо draggable через Metro UI
@@ -252,14 +197,14 @@
                         Metro.utils.exec(o.onDragStart, [{ top, left }, element]);
                     },
                     onDragMove: () => {
-                        self.hoverButtons.forEach((btn) => btn.hide());
-                        self._updateConnections();
+                        this.hoverButtons.forEach((btn) => btn.hide());
+                        this._updateConnections();
                         const { top, left } = element.rect();
                         Metro.utils.exec(o.onDragMove, [{ top, left }, element]);
                     },
                     onDragStop: () => {
-                        self.hoverButtons.forEach((btn) => btn.show());
-                        self._updateConnections();
+                        this.hoverButtons.forEach((btn) => btn.show());
+                        this._updateConnections();
                         const { top, left } = element.rect();
                         Metro.utils.exec(o.onDragStop, [{ top, left }, element]);
                     },
@@ -323,6 +268,7 @@
         // Публічні методи
         addPoint: function (side) {
             const element = this.element;
+            const o = this.options;
             const validSides = ["north", "east", "south", "west"];
 
             if (validSides.indexOf(side) === -1) {
@@ -336,7 +282,9 @@
             const sideElement = element.find(`.${side}-side`);
             sideElement.append(point);
 
-            this._fireEvent("point-add", {
+            Metro.utils.exec(o.onAddPoint, [point[0], side, pointId, element[0]], element[0]);
+
+            this._fireEvent("add-point", {
                 element: element,
                 point: point,
                 side: side,
@@ -348,6 +296,7 @@
 
         removePoint: function (pointId) {
             const element = this.element;
+            const o = this.options;
             const point = element.find(`#${pointId}`);
 
             if (point.length === 0) {
@@ -359,9 +308,12 @@
 
             // Видаляємо точку
             const side = point.attr("data-side");
+
+            Metro.utils.exec(o.onRemovePoint, [point[0], side, pointId, element[0]], element[0]);
+
             point.remove();
 
-            this._fireEvent("point-remove", {
+            this._fireEvent("remove-point", {
                 element: element,
                 pointId: pointId,
                 side: side,
@@ -382,6 +334,7 @@
 
         connect: function (targetBlock, options = {}) {
             const element = this.element;
+            const o = this.options;
             const target = $(targetBlock);
 
             if (target.length === 0) {
@@ -419,12 +372,18 @@
                     options: options,
                 });
 
+                Metro.utils.exec(
+                    o.onConnect,
+                    [target[0], sourcePoint[0], targetPoint[0], connector.element[0]],
+                    element[0],
+                );
+
                 this._fireEvent("connect", {
-                    element: element,
-                    target: target,
-                    sourcePoint: sourcePoint,
-                    targetPoint: targetPoint,
-                    connector: connector,
+                    element: element[0],
+                    target: target[0],
+                    sourcePoint: sourcePoint[0],
+                    targetPoint: targetPoint[0],
+                    connector: connector.element[0],
                     connectionId: connectionId,
                 });
 
@@ -432,9 +391,9 @@
 
                 return {
                     id: connectionId,
-                    connector: connector,
-                    sourcePoint: sourcePoint,
-                    targetPoint: targetPoint,
+                    connector: connector.element[0],
+                    sourcePoint: sourcePoint[0],
+                    targetPoint: targetPoint[0],
                 };
             }
 
@@ -486,20 +445,14 @@
 
         setContent: function (content) {
             const element = this.element;
-            let contentContainer = element.find(".block-content");
-
-            if (contentContainer.length === 0) {
-                this._createContent();
-                contentContainer = element.find(".block-content");
-            }
-
+            const contentContainer = element.find(".linked-block-content");
             contentContainer.html(content);
             this.options.content = content;
         },
 
         getContent: function () {
             const element = this.element;
-            const contentContainer = element.find(".block-content");
+            const contentContainer = element.find(".linked-block-content");
             return contentContainer.length ? contentContainer.html() : "";
         },
 
@@ -507,32 +460,21 @@
             return Array.from(this.connections.values());
         },
 
-        changeAttribute: function (attr, newValue) {
+        changeAttribute: function (attr, val) {
             const o = this.options;
-
-            switch (attr) {
-                case "data-draggable":
-                    o.draggable = Metro.utils.isValue(newValue);
-                    this._setupDraggable();
-                    break;
-                case "data-resizable":
-                    o.resizable = Metro.utils.isValue(newValue);
-                    this._setupResizable();
-                    break;
-                case "data-content":
-                    this.setContent(newValue);
-                    break;
-            }
         },
 
         destroy: function () {
             const element = this.element;
+            const o = this.options;
 
             // Видаляємо всі з'єднання
             this.disconnectAll();
 
             // Видаляємо обробники подій
-            element.off(".linked-block");
+            element.off("mouseenter.linked-block");
+            element.off("mouseleave.linked-block");
+            element.off("click.linked-block");
 
             // Видаляємо кнопки hover
             this.hoverButtons.forEach((btn) => btn.remove());
@@ -542,7 +484,17 @@
                 element: element,
             });
 
-            return element;
+            if (o.draggable) {
+                const draggable = Metro.getPlugin(element, "draggable");
+                draggable.destroy();
+            }
+
+            if (o.resizable) {
+                const resizable = Metro.getPlugin(element, "resizable");
+                resizable.destroy();
+            }
+
+            element.remove();
         },
     });
 

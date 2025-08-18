@@ -66529,6 +66529,10 @@ label:has(input) {
   top: 50%;
   transform: translateY(-50%);
 }
+.linked-block .linked-block-content {
+  position: absolute;
+  inset: 4px;
+}
 .connection-line {
   position: absolute;
   top: 0;
