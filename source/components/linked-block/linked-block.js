@@ -21,7 +21,6 @@
         maxHeight: null,
         content: "",
         showAddButtons: true,
-
         onAddPoint: Metro.noop,
         onRemovePoint: Metro.noop,
         onConnect: Metro.noop,
@@ -52,7 +51,6 @@
 
         _create: function () {
             const element = this.element;
-            const o = this.options;
 
             this._createStructure();
             this._createEvents();
@@ -172,8 +170,15 @@
                 });
             }
 
+            element.on("click.linked-block", (e) => {
+                $(".linked-block").removeClass("active-block");
+                element.toggleClass("active-block");
+                e.stopPropagation();
+            });
+
             // Глобальна обробка кліків для скасування з'єднання
             $(document).on("click.linked-block-global", (e) => {
+                $(".linked-block").removeClass("active-block");
                 if (globalConnectionState.isConnecting && !$(e.target).hasClass("add-point-btn")) {
                     self._cancelConnection();
                 }
@@ -201,16 +206,6 @@
                     $(e.target).removeClass("connection-target");
                 }
             });
-
-            // Обробка подвійного кліку для додавання точки
-            // element.on("dblclick.linked-block", (e) => {
-            //     e.preventDefault();
-            //     const rect = element[0].getBoundingClientRect();
-            //     const x = e.clientX - rect.left;
-            //     const y = e.clientY - rect.top;
-            //     const side = self._getSideFromCoordinates(x, y, rect.width, rect.height);
-            //     self.addPoint(side);
-            // });
         },
 
         _setupDraggable: function () {
@@ -245,7 +240,9 @@
             const o = this.options;
 
             if (o.resizable) {
-                Metro.makePlugin(element, "resizable", {
+                Metro.makePlugin(element, "resizable-container", {
+                    resizePointers: "nw, ne, se, sw",
+                    canResize: false,
                     minWidth: o.minWidth,
                     minHeight: o.minHeight,
                     maxWidth: o.maxWidth,
@@ -296,12 +293,13 @@
         _startConnection: function (button, side) {
             // Додаємо нову точку
             const newPoint = this.addPoint(side);
+            const newPointRect = newPoint.rect();
 
             // Створюємо тимчасову точку
             const tempPoint = this._createTempPoint();
             tempPoint.css({
-                top: globalMousePosition.y,
-                left: globalMousePosition.x,
+                top: newPointRect.y,
+                left: newPointRect.x,
             });
             tempPoint.addClass("temp-point");
 
@@ -351,6 +349,11 @@
             }
 
             const container = this.element.parent();
+
+            if (typeof container === "undefined") {
+                return;
+            }
+
             const containerOffset = container.offset();
 
             const x = clientX - containerOffset.left;
@@ -413,9 +416,17 @@
             };
 
             globalConnectionState.sourceBlock.connections.set(connectionId, connectionData);
+            this.connections.set(connectionId, connectionData);
             targetBlockInstance.connections.set(connectionId, connectionData);
 
             // Викликаємо callback
+            Metro.utils.exec(o.onConnect, [
+                globalConnectionState.sourceBlock.element,
+                targetBlock,
+                globalConnectionState.sourcePoint,
+                targetPoint,
+                connector,
+            ]);
             globalConnectionState.sourceBlock._fireEvent("connect", {
                 sourceBlock: globalConnectionState.sourceBlock.element,
                 targetBlock: targetBlock,
@@ -590,6 +601,14 @@
                     options: options,
                 });
 
+                Metro.getPlugin(target[0], "linked-block").connections.set(connectionId, {
+                    target: element,
+                    sourcePoint: sourcePoint,
+                    targetPoint: targetPoint,
+                    connector: connector,
+                    options: options,
+                });
+
                 Metro.utils.exec(
                     o.onConnect,
                     [target[0], sourcePoint[0], targetPoint[0], connector.element[0]],
@@ -694,25 +713,9 @@
             element.off("mouseleave.linked-block");
             element.off("click.linked-block");
 
-            // Видаляємо кнопки hover
-            this.hoverButtons.forEach((btn) => btn.remove());
-            this.hoverButtons = [];
-
-            this._fireEvent("linked-block-destroy", {
-                element: element,
-            });
-
-            if (o.draggable) {
-                const draggable = Metro.getPlugin(element, "draggable");
-                draggable.destroy();
-            }
-
-            if (o.resizable) {
-                const resizable = Metro.getPlugin(element, "resizable");
-                resizable.destroy();
-            }
-
             element.remove();
+
+            this._fireEvent("linked-block-destroy");
         },
     });
 

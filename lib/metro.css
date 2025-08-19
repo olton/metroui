@@ -66421,6 +66421,85 @@ label:has(input) {
   max-width: calc(100vw - 20px);
 }
 
+/* source/components/resizable-container/resizable-container.less */
+:root {
+  --resizable-container-border-color: #000;
+  --resizable-container-border-width: 1px;
+  --resizable-container-point-size: 8px;
+}
+.dark-side {
+  --resizable-container-border-color: #fff;
+}
+.resizable-container {
+  user-select: none;
+}
+.resizable-container .rc-contour {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  border: var(--resizable-container-border-width) dashed var(--resizable-container-border-color);
+  border-radius: 0;
+  overflow: visible;
+}
+.resizable-container .rc-contour .rc-point {
+  position: absolute;
+  width: var(--resizable-container-point-size);
+  aspect-ratio: 1;
+  background: var(--default-background);
+  border: var(--resizable-container-border-width) solid var(--resizable-container-border-color);
+}
+.resizable-container .rc-contour .-nw {
+  top: 0;
+  left: 0;
+  cursor: nw-resize;
+  transform: translate(-50%, -50%);
+}
+.resizable-container .rc-contour .-ne {
+  top: 0;
+  right: 0;
+  cursor: ne-resize;
+  transform: translate(50%, -50%);
+}
+.resizable-container .rc-contour .-sw {
+  bottom: 0;
+  left: 0;
+  cursor: sw-resize;
+  transform: translate(-50%, 50%);
+}
+.resizable-container .rc-contour .-se {
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+  transform: translate(50%, 50%);
+}
+.resizable-container .rc-contour .-n {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(calc(-50% - 1px));
+  cursor: n-resize;
+}
+.resizable-container .rc-contour .-s {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(calc(50% + 1px));
+  cursor: s-resize;
+}
+.resizable-container .rc-contour .-e {
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%) translateX(calc(50% + 1px));
+  cursor: e-resize;
+}
+.resizable-container .rc-contour .-w {
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%) translateX(calc(-50% - 1px));
+  cursor: w-resize;
+}
+.resizable-container .rc-contour.disabled {
+  display: none;
+}
+
 /* source/components/linked-block/linked-block.less */
 :root {
   --linked-block-point-size: 7px;
@@ -66432,6 +66511,7 @@ label:has(input) {
   --linked-block-color: #191919;
   --linked-block-border-color: #b1b1b1;
   --linked-block-line-color: #b1b1b1;
+  --linked-block-border-color-active: #007bff;
 }
 .dark-side {
   --linked-block-background: var(--default-background);
@@ -66439,6 +66519,7 @@ label:has(input) {
   --linked-block-border-color: #656a70;
   --linked-block-line-color: #656a70;
   --linked-block-point-color: #656a70;
+  --linked-block-border-color-active: #007bff;
 }
 .linked-block {
   position: absolute;
@@ -66548,6 +66629,9 @@ label:has(input) {
 .linked-block .linked-block-content {
   position: absolute;
   inset: 4px;
+}
+.linked-block.active-block {
+  border-color: var(--linked-block-border-color-active);
 }
 .connection-area {
   position: absolute;
@@ -71930,85 +72014,6 @@ label:has(input) {
 }
 .resize-element.resize-element-disabled::after {
   border-bottom-color: hsl(0, 0%, 80%);
-}
-
-/* source/components/resizable-container/resizable-container.less */
-:root {
-  --resizable-container-border-color: #000;
-  --resizable-container-border-width: 1px;
-  --resizable-container-point-size: 8px;
-}
-.dark-side {
-  --resizable-container-border-color: #fff;
-}
-.resizable-container {
-  user-select: none;
-}
-.resizable-container .rc-contour {
-  position: absolute;
-  inset: 0;
-  background: transparent;
-  border: var(--resizable-container-border-width) dashed var(--resizable-container-border-color);
-  border-radius: 0;
-  overflow: visible;
-}
-.resizable-container .rc-contour .rc-point {
-  position: absolute;
-  width: var(--resizable-container-point-size);
-  aspect-ratio: 1;
-  background: var(--default-background);
-  border: var(--resizable-container-border-width) solid var(--resizable-container-border-color);
-}
-.resizable-container .rc-contour .-nw {
-  top: 0;
-  left: 0;
-  cursor: nw-resize;
-  transform: translate(-50%, -50%);
-}
-.resizable-container .rc-contour .-ne {
-  top: 0;
-  right: 0;
-  cursor: ne-resize;
-  transform: translate(50%, -50%);
-}
-.resizable-container .rc-contour .-sw {
-  bottom: 0;
-  left: 0;
-  cursor: sw-resize;
-  transform: translate(-50%, 50%);
-}
-.resizable-container .rc-contour .-se {
-  bottom: 0;
-  right: 0;
-  cursor: se-resize;
-  transform: translate(50%, 50%);
-}
-.resizable-container .rc-contour .-n {
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%) translateY(calc(-50% - 1px));
-  cursor: n-resize;
-}
-.resizable-container .rc-contour .-s {
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) translateY(calc(50% + 1px));
-  cursor: s-resize;
-}
-.resizable-container .rc-contour .-e {
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%) translateX(calc(50% + 1px));
-  cursor: e-resize;
-}
-.resizable-container .rc-contour .-w {
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%) translateX(calc(-50% - 1px));
-  cursor: w-resize;
-}
-.resizable-container .rc-contour.disabled {
-  display: none;
 }
 
 /* source/components/ribbon/ribbon.less */

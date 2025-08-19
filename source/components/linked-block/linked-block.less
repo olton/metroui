@@ -8,6 +8,7 @@
     --linked-block-color: #191919;
     --linked-block-border-color: #b1b1b1;
     --linked-block-line-color: #b1b1b1;
+    --linked-block-border-color-active: #007bff;
 }
 
 .dark-side {
@@ -16,6 +17,7 @@
     --linked-block-border-color: #656a70;
     --linked-block-line-color: #656a70;
     --linked-block-point-color: #656a70;
+    --linked-block-border-color-active: #007bff;
 }
 
 .linked-block {
@@ -134,6 +136,10 @@
     .linked-block-content {
         position: absolute;
         inset: 4px;
+    }
+    
+    &.active-block {
+        border-color: var( --linked-block-border-color-active);
     }
 }
 
