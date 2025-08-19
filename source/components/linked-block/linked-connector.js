@@ -75,6 +75,7 @@
 
             // Створюємо елемент шляху/лінії для поточного конектора у спільному SVG
             const shape = this._createShape(o.id, o.type, sharedSvg);
+            const deleteBtn = this._createDeleteButton(sharedSvg, o.id);
 
             // Зберігаємо з'єднання
             this.connections.set(o.id, {
@@ -82,8 +83,12 @@
                 pointB: o.pointB,
                 type: o.type,
                 svg: sharedSvg,
-                shape: shape,
+                shape,
+                deleteBtn,
             });
+
+            this._incPointRef(o.pointA);
+            this._incPointRef(o.pointB);
 
             // Оновлюємо з'єднання
             this.update();
@@ -159,30 +164,9 @@
             });
         },
 
-        // ... existing code ...
-        _createSVG: (id, type) => {
-            let svg;
-
-            if (type === "line") {
-                svg = $(`
-                    <svg id="${id}" class="connection-line">
-                        <line class="cl-line"/>
-                    </svg>
-                `);
-            } else {
-                svg = $(`
-                    <svg id="${id}" class="connection-line">
-                        <path class="cl-curve"/>
-                    </svg>
-                `);
-            }
-
-            return svg;
-        },
-
         _getOrCreateSharedSVG: (container) => {
             const $container = $(container);
-            let svg = $container.children("svg.connection-line").first();
+            let svg = $container.children("svg.connection-area").first();
             if (!svg.length) {
                 // Забезпечуємо позиціювання контейнера для абсолютного SVG
                 if ($container.css("position") === "static") {
@@ -191,16 +175,9 @@
                 const ns = "http://www.w3.org/2000/svg";
                 const svgEl = document.createElementNS(ns, "svg");
                 svgEl.setAttribute("xmlns", ns);
-                svgEl.setAttribute("class", "connection-line");
+                svgEl.setAttribute("class", "connection-area");
                 // Розмір і позиціювання через стилі, щоб займати весь контейнер
-                svg = $(svgEl).css({
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    zIndex: 0,
-                });
+                svg = $(svgEl);
                 $container.append(svg);
             }
             return svg;
@@ -223,6 +200,62 @@
             return $(el);
         },
 
+        _createDeleteButton: function (svg, id) {
+            const ns = "http://www.w3.org/2000/svg";
+
+            // Група кнопки (для позиціонування трансформацією)
+            const g = document.createElementNS(ns, "g");
+            g.setAttribute("class", "connector-delete");
+            g.setAttribute("data-conn-id", id);
+            g.style.cursor = "pointer";
+            g.style.pointerEvents = "all";
+
+            // Парсимо deleteIcon як SVG
+            const parsed = new DOMParser().parseFromString(deleteIcon, "image/svg+xml");
+            let iconSvg = parsed.documentElement; // <svg> з іконкою
+
+            // Приводимо до потрібного розміру (наприклад, 16px)
+            iconSvg.setAttribute("width", "16");
+            iconSvg.setAttribute("height", "16");
+
+            // Приберемо зайві атрибути, які можуть впливати на позиціонування
+            iconSvg.removeAttribute("x");
+            iconSvg.removeAttribute("y");
+
+            // Трохи фонового кола для кращої видимості і легшого кліку (опційно)
+            // можна забрати, якщо не потрібно
+            const bg = document.createElementNS(ns, "circle");
+            bg.setAttribute("r", "10");
+            bg.setAttribute("cx", "8");
+            bg.setAttribute("cy", "8");
+            bg.setAttribute("fill", "var(--default-background, #fff)");
+            bg.setAttribute("stroke", "var(--linked-block-line-color)");
+            bg.setAttribute("stroke-width", "0.5");
+
+            g.appendChild(bg);
+            g.appendChild(iconSvg);
+
+            svg[0].appendChild(g);
+
+            // Обробник кліку — видалення конкретного конектора
+            $(g).on("click", (e) => {
+                e.stopPropagation();
+                // Знайдемо інстанс плагіну за елементом, на якому він створений
+                const plugin = Metro.getPlugin(this.element, "connector");
+                if (plugin && plugin.options.id === id) {
+                    plugin.destroy();
+                } else {
+                    // Якщо поточний інстанс не той самий (рідкісний випадок), знайдемо за id у мапі
+                    const connection = this.connections.get(id);
+                    if (connection) {
+                        this.destroy();
+                    }
+                }
+            });
+
+            return $(g);
+        },
+
         // Публічні методи
         update: function () {
             const o = this.options;
@@ -242,10 +275,48 @@
                     break;
             }
 
+            // Позиціюємо кнопку видалення у центрі лінії/шляху
+            this._positionDeleteButton(connection);
+
             this._fireEvent("connector-update", {
                 connection: connection,
                 type: o.type,
             });
+        },
+
+        _positionDeleteButton: (connection) => {
+            const { type, shape, deleteBtn } = connection;
+            if (!deleteBtn || !deleteBtn.length || !shape || !shape.length) return;
+
+            let cx = 0,
+                cy = 0;
+
+            if (type === "line") {
+                // Для лінії — середина між (x1,y1) та (x2,y2)
+                const x1 = parseFloat(shape.attr("x1"));
+                const y1 = parseFloat(shape.attr("y1"));
+                const x2 = parseFloat(shape.attr("x2"));
+                const y2 = parseFloat(shape.attr("y2"));
+                if (isFinite(x1) && isFinite(y1) && isFinite(x2) && isFinite(y2)) {
+                    cx = (x1 + x2) / 2;
+                    cy = (y1 + y2) / 2;
+                }
+            } else {
+                // Для шляхів — беремо середню точку за довжиною
+                const pathEl = shape[0];
+                if (typeof pathEl.getTotalLength === "function") {
+                    const len = pathEl.getTotalLength();
+                    const pt = pathEl.getPointAtLength(len / 2);
+                    cx = pt.x;
+                    cy = pt.y;
+                }
+            }
+
+            // Центруємо групу на точці (іконка 16x16, фон 20px в діаметрі)
+            // Зсув на пів ширини/висоти, щоб центр групи припав на лінію
+            const offsetX = 10; // половина діаметра bg кола
+            const offsetY = 10;
+            deleteBtn.attr("transform", `translate(${cx - offsetX}, ${cy - offsetY})`);
         },
 
         setType: function (type) {
@@ -264,7 +335,7 @@
             const svg = connection?.svg || this.svgElement || this._getOrCreateSharedSVG(o.container);
             const newShape = this._createShape(o.id, type, svg);
 
-            if (oldShape && oldShape.length) {
+            if (oldShape?.length) {
                 oldShape.remove();
             }
 
@@ -275,6 +346,7 @@
                 old: oldType,
                 svg: svg,
                 shape: newShape,
+                deleteBtn: connection?.deleteBtn,
             });
 
             this.update();
@@ -282,8 +354,17 @@
 
         setPoints: function (pointA, pointB) {
             const o = this.options;
+
+            // Декремент лічильників для старих точок
+            if (o.pointA) this._decPointRef(o.pointA);
+            if (o.pointB) this._decPointRef(o.pointB);
+
             o.pointA = pointA;
             o.pointB = pointB;
+
+            // Інкремент лічильників для нових точок
+            this._incPointRef(pointA);
+            this._incPointRef(pointB);
 
             // Оновлюємо з'єднання
             this.connections.set(o.id, {
@@ -598,6 +679,27 @@
             $(document).off(".connector." + o.id);
         },
 
+        _incPointRef: (point) => {
+            const $p = $(point);
+            const count = parseInt($p.attr("data-conn-count") || "0", 10) + 1;
+            $p.attr("data-conn-count", String(count));
+        },
+
+        _decPointRef: (point, removeIfAuto = false) => {
+            const $p = $(point);
+            const current = parseInt($p.attr("data-conn-count") || "0", 10);
+            const next = Math.max(0, current - 1);
+            if (next === 0) {
+                $p.removeAttr("data-conn-count");
+                if (removeIfAuto && $p.attr("data-auto-point") === "1") {
+                    // Видалимо точку, якщо вона була створена автоматично під час з'єднання
+                    $p.remove();
+                }
+            } else {
+                $p.attr("data-conn-count", String(next));
+            }
+        },
+
         changeAttribute: function (attr, newValue) {
             if (attr === "data-type") {
                 this.setType(newValue);
@@ -607,6 +709,14 @@
         destroy: function () {
             const o = this.options;
 
+            const pointA = $(o.pointA);
+            const pointB = $(o.pointB);
+
+            if (!pointB.hasClass("temp-point")) {
+                pointA.remove();
+                pointB.remove();
+            }
+
             this._cleanupAutoUpdate();
 
             const connection = this.connections.get(o.id);
@@ -615,11 +725,20 @@
                 const svg = connection.svg || this.svgElement;
                 connection.shape.remove();
 
+                // Видаляємо кнопку видалення
+                if (connection.deleteBtn) {
+                    connection.deleteBtn.remove();
+                }
+
                 // Якщо у спільному SVG більше немає елементів конекторів — прибираємо SVG
                 if (svg && svg.find(".cl-line, .cl-curve").length === 0) {
                     svg.remove();
                 }
             }
+
+            // Декремент/видалення точок
+            if (o.pointA) this._decPointRef(o.pointA, true);
+            if (o.pointB) this._decPointRef(o.pointB, true);
 
             if (this.svgElement) {
                 this.svgElement = null;

@@ -66425,7 +66425,7 @@ label:has(input) {
 :root {
   --linked-block-point-size: 7px;
   --linked-block-point-color: #b1b1b1;
-  --linked-block-line-width: 2px;
+  --linked-block-line-width: 1px;
   --linked-block-min-size: 100px;
   --linked-block-border-radius: 4px;
   --linked-block-background: var(--default-background);
@@ -66549,7 +66549,7 @@ label:has(input) {
   position: absolute;
   inset: 4px;
 }
-.connection-line {
+.connection-area {
   position: absolute;
   top: 0;
   left: 0;
@@ -66557,22 +66557,24 @@ label:has(input) {
   height: 100%;
   z-index: 0;
 }
-.connection-line .cl-line {
+.connection-area .cl-line {
   stroke-width: var(--linked-block-line-width);
   stroke: var(--linked-block-line-color);
 }
-.connection-line .cl-curve {
+.connection-area .cl-curve {
   stroke-width: var(--linked-block-line-width);
   stroke: var(--linked-block-line-color);
 }
-.connection-line .cl-line,
-.connection-line .cl-curve {
+.connection-area .cl-line,
+.connection-area .cl-curve {
   transition: stroke 0.2s ease, stroke-width 0.2s ease;
   fill: none;
   cursor: pointer;
 }
-.connection-line .cl-line.selected-path,
-.connection-line .cl-curve.selected-path {
+.connection-area .cl-line:hover,
+.connection-area .cl-curve:hover,
+.connection-area .cl-line.selected-path,
+.connection-area .cl-curve.selected-path {
   stroke: #0a87c1;
 }
 

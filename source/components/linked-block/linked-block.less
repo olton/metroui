@@ -1,7 +1,7 @@
 :root {
     --linked-block-point-size: 7px;
     --linked-block-point-color: #b1b1b1;
-    --linked-block-line-width: 2px;
+    --linked-block-line-width: 1px;
     --linked-block-min-size: 100px;
     --linked-block-border-radius: 4px;
     --linked-block-background: var(--default-background);
@@ -137,7 +137,7 @@
     }
 }
 
-.connection-line {
+.connection-area {
     position: absolute;
     top: 0;
     left: 0;
@@ -154,14 +154,14 @@
         stroke-width: var(--linked-block-line-width);
         stroke: var(--linked-block-line-color);
     }
-
+    
     .cl-line, .cl-curve {
         transition: stroke 0.2s ease, stroke-width 0.2s ease;
         fill: none;
         cursor: pointer;
         
-        &.selected-path {
-            stroke: #0a87c1;
+        &:hover, &.selected-path {
+            stroke: #0a87c1;            
         }
     }
 }
