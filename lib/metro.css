@@ -66577,6 +66577,12 @@ label:has(input) {
 .connection-area .cl-curve.selected-path {
   stroke: #0a87c1;
 }
+.connector-delete {
+  display: none;
+}
+.show-connector-delete .connector-delete {
+  display: block !important;
+}
 
 /* source/components/list/list.less */
 

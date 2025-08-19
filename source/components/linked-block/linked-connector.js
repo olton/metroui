@@ -87,17 +87,12 @@
                 deleteBtn,
             });
 
-            this._incPointRef(o.pointA);
-            this._incPointRef(o.pointB);
-
             // Оновлюємо з'єднання
             this.update();
         },
 
         _createEvents: function () {
-            const element = this.element;
             const o = this.options;
-            const self = this;
 
             if (o.autoUpdate) {
                 this._setupAutoUpdate();
@@ -105,12 +100,17 @@
 
             $(document).on("click", ".cl-curve, .cl-line", (e) => {
                 const target = $(e.target);
-                $(target).toggleClass("selected-path");
+                const connId = target.attr("data-conn-id");
+                target.toggleClass("selected-path");
+                if (target.hasClass("selected-path")) {
+                    $(`.connector-delete[data-conn-id=${connId}]`).show();
+                }
                 e.stopPropagation();
             });
 
-            $(document).on("click", (e) => {
+            $(document).on("click", () => {
                 $(".cl-line, .cl-curve").removeClass("selected-path");
+                $(`.connector-delete`).hide();
             });
         },
 
@@ -212,7 +212,7 @@
 
             // Парсимо deleteIcon як SVG
             const parsed = new DOMParser().parseFromString(deleteIcon, "image/svg+xml");
-            let iconSvg = parsed.documentElement; // <svg> з іконкою
+            const iconSvg = parsed.documentElement; // <svg> з іконкою
 
             // Приводимо до потрібного розміру (наприклад, 16px)
             iconSvg.setAttribute("width", "16");
@@ -355,16 +355,8 @@
         setPoints: function (pointA, pointB) {
             const o = this.options;
 
-            // Декремент лічильників для старих точок
-            if (o.pointA) this._decPointRef(o.pointA);
-            if (o.pointB) this._decPointRef(o.pointB);
-
             o.pointA = pointA;
             o.pointB = pointB;
-
-            // Інкремент лічильників для нових точок
-            this._incPointRef(pointA);
-            this._incPointRef(pointB);
 
             // Оновлюємо з'єднання
             this.connections.set(o.id, {
@@ -679,27 +671,6 @@
             $(document).off(".connector." + o.id);
         },
 
-        _incPointRef: (point) => {
-            const $p = $(point);
-            const count = parseInt($p.attr("data-conn-count") || "0", 10) + 1;
-            $p.attr("data-conn-count", String(count));
-        },
-
-        _decPointRef: (point, removeIfAuto = false) => {
-            const $p = $(point);
-            const current = parseInt($p.attr("data-conn-count") || "0", 10);
-            const next = Math.max(0, current - 1);
-            if (next === 0) {
-                $p.removeAttr("data-conn-count");
-                if (removeIfAuto && $p.attr("data-auto-point") === "1") {
-                    // Видалимо точку, якщо вона була створена автоматично під час з'єднання
-                    $p.remove();
-                }
-            } else {
-                $p.attr("data-conn-count", String(next));
-            }
-        },
-
         changeAttribute: function (attr, newValue) {
             if (attr === "data-type") {
                 this.setType(newValue);
@@ -735,10 +706,6 @@
                     svg.remove();
                 }
             }
-
-            // Декремент/видалення точок
-            if (o.pointA) this._decPointRef(o.pointA, true);
-            if (o.pointB) this._decPointRef(o.pointB, true);
 
             if (this.svgElement) {
                 this.svgElement = null;
