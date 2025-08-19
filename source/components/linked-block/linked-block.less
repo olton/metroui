@@ -89,7 +89,25 @@
         cursor: pointer;
         z-index: 10;
         padding: 0;
+        transition: border-color 0.2s ease;
+
+        @media (hover: hover) {
+            &:hover {
+                border-color: #28a745;
+            }
+        }
         
+        @media (hover: none) {
+            &:active {
+                border-color: #28a745;
+            }
+        }
+        
+        &.connecting {
+            border-color: #007bff!important;
+            display: block!important;
+        }
+
         &.add-point-north {
             top: -10px; 
             left: 50%; 
@@ -125,4 +143,51 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
+    cursor: pointer;
+
+    .cl-line, .cl-curve {
+        transition: stroke 0.2s ease, stroke-width 0.2s ease;
+        stroke-width: 8px; // Збільшуємо для легшого наведення
+        stroke: transparent; // Невидимий товстий шар для hover
+    }
+
+    .cl-line {
+        stroke-width: var(--linked-block-line-width);
+        stroke: var(--linked-block-line-color);
+    }
+
+    .cl-curve {
+        stroke-width: var(--linked-block-line-width);
+        stroke: var(--linked-block-line-color);
+    }
+}
+
+.connector-delete-btn {
+    position: absolute;
+    display: none;
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--linked-block-border-color);
+    border-radius: 50%;
+    background: var(--linked-block-background);
+    cursor: pointer;
+    z-index: 1000;
+    padding: 2px;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #ff6b6b;
+        border-color: #ff5252;
+        transform: scale(1.1);
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+        fill: var(--linked-block-line-color);
+    }
+
+    &:hover svg {
+        fill: white;
+    }
 }

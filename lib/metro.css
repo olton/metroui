@@ -66508,6 +66508,21 @@ label:has(input) {
   cursor: pointer;
   z-index: 10;
   padding: 0;
+  transition: border-color 0.2s ease;
+}
+@media (hover: hover) {
+  .linked-block .add-point-btn:hover {
+    border-color: #28a745;
+  }
+}
+@media (hover: none) {
+  .linked-block .add-point-btn:active {
+    border-color: #28a745;
+  }
+}
+.linked-block .add-point-btn.connecting {
+  border-color: #007bff !important;
+  display: block !important;
 }
 .linked-block .add-point-btn.add-point-north {
   top: -10px;
@@ -66540,6 +66555,47 @@ label:has(input) {
   width: 100%;
   height: 100%;
   pointer-events: none;
+  cursor: pointer;
+}
+.connection-line .cl-line,
+.connection-line .cl-curve {
+  transition: stroke 0.2s ease, stroke-width 0.2s ease;
+  stroke-width: 8px;
+  stroke: transparent;
+}
+.connection-line .cl-line {
+  stroke-width: var(--linked-block-line-width);
+  stroke: var(--linked-block-line-color);
+}
+.connection-line .cl-curve {
+  stroke-width: var(--linked-block-line-width);
+  stroke: var(--linked-block-line-color);
+}
+.connector-delete-btn {
+  position: absolute;
+  display: none;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--linked-block-border-color);
+  border-radius: 50%;
+  background: var(--linked-block-background);
+  cursor: pointer;
+  z-index: 1000;
+  padding: 2px;
+  transition: all 0.2s ease;
+}
+.connector-delete-btn:hover {
+  background: #ff6b6b;
+  border-color: #ff5252;
+  transform: scale(1.1);
+}
+.connector-delete-btn svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--linked-block-line-color);
+}
+.connector-delete-btn:hover svg {
+  fill: white;
 }
 
 /* source/components/list/list.less */

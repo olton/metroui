@@ -1,4 +1,13 @@
 ((Metro, $) => {
+    // Глобальний стан з'єднання
+    let globalConnectionState = {
+        isConnecting: false,
+        sourceBlock: null,
+        sourcePoint: null,
+        tempConnector: null,
+        mouseFollower: null,
+    };
+
     let LinkedBlockDefaultConfig = {
         draggable: true,
         resizable: false,
@@ -43,7 +52,6 @@
                 pointCount: 0,
                 connections: new Map(),
                 hoverButtons: [],
-                isDragging: false,
             });
             return this;
         },
@@ -154,14 +162,15 @@
             // Обробка hover для показу кнопок додавання
             if (o.showAddButtons) {
                 element.on("mouseenter.linked-block", () => {
-                    if (!self.isDragging) {
-                        self.hoverButtons.forEach((btn) => btn.show());
-                        self._fireEvent("hover", { element: element });
-                    }
+                    self.hoverButtons.forEach((btn) => btn.show());
+                    self._fireEvent("hover", { element: element });
                 });
 
                 element.on("mouseleave.linked-block", () => {
-                    self.hoverButtons.forEach((btn) => btn.hide());
+                    if (!self.isConnecting) {
+                        self.hoverButtons.forEach((btn) => btn.hide());
+                    }
+
                     self._fireEvent("leave", { element: element });
                 });
 
@@ -170,9 +179,47 @@
                     e.preventDefault();
                     e.stopPropagation();
                     const side = $(this).attr("data-side");
-                    self.addPoint(side);
+
+                    if (globalConnectionState.isConnecting) {
+                        // Завершення з'єднання
+                        self._completeConnection($(this), side);
+                    } else {
+                        // Початок з'єднання
+                        self._startConnection($(this), side);
+                    }
+                    self._updateConnections();
                 });
             }
+
+            // Глобальна обробка кліків для скасування з'єднання
+            $(document).on("click.linked-block-global", (e) => {
+                if (globalConnectionState.isConnecting && !$(e.target).hasClass("add-point-btn")) {
+                    self._cancelConnection();
+                }
+            });
+
+            // Глобальна обробка руху миші для слідування коннектора
+            $(document).on("mousemove.linked-block-global", (e) => {
+                if (globalConnectionState.isConnecting && globalConnectionState.mouseFollower) {
+                    self._updateMouseFollower(e.clientX, e.clientY);
+                }
+            });
+
+            // Обробка hover над кнопками інших блоків під час з'єднання
+            $(document).on("mouseenter.linked-block-connection", ".add-point-btn", (e) => {
+                if (
+                    globalConnectionState.isConnecting &&
+                    $(e.target).closest(".linked-block")[0] !== globalConnectionState.sourceBlock.element[0]
+                ) {
+                    $(e.target).addClass("connection-target");
+                }
+            });
+
+            $(document).on("mouseleave.linked-block-connection", ".add-point-btn", (e) => {
+                if (globalConnectionState.isConnecting) {
+                    $(e.target).removeClass("connection-target");
+                }
+            });
 
             // Обробка подвійного кліку для додавання точки
             // element.on("dblclick.linked-block", (e) => {
@@ -263,6 +310,196 @@
             const element = this.element;
             const blockId = element.attr("id");
             return `${blockId}_${side}_${this.pointCount++}`;
+        },
+
+        _startConnection: function (button, side) {
+            // Додаємо нову точку
+            const newPoint = this.addPoint(side);
+
+            // Створюємо тимчасову точку
+            const tempPoint = this._createTempPoint();
+
+            // Встановлюємо глобальний стан з'єднання
+            globalConnectionState.isConnecting = true;
+            globalConnectionState.sourceBlock = this;
+            globalConnectionState.sourcePoint = newPoint;
+
+            // Створюємо тимчасовий лінійний коннектор
+            const tempId = `temp-connector-${Date.now()}`;
+
+            try {
+                globalConnectionState.tempConnector = Metro.connector.create(
+                    newPoint[0], // передаємо DOM елемент
+                    tempPoint, // передаємо DOM елемент
+                    {
+                        type: "line",
+                        container: this.element.parent(),
+                        id: tempId,
+                        autoUpdate: false,
+                    },
+                );
+            } catch (error) {
+                console.error("Error creating temp connector:", error);
+                this._cancelConnection();
+                return;
+            }
+
+            // Створюємо елемент для слідування за мишею
+            globalConnectionState.mouseFollower = $("<div>")
+                .addClass("temp-connection-point")
+                .css({
+                    position: "absolute",
+                    width: "1px",
+                    height: "1px",
+                    pointerEvents: "none",
+                    zIndex: 1000,
+                })
+                .appendTo(this.element.parent());
+
+            // Ховаємо всі кнопки крім активної
+            button.addClass("connecting");
+
+            // Показуємо кнопки на всіх блоках
+            $(".linked-block").each(function () {
+                $(this).find(".add-point-btn").show();
+            });
+        },
+
+        _updateMouseFollower: function (clientX, clientY) {
+            if (!globalConnectionState.mouseFollower || !globalConnectionState.tempConnector) {
+                return;
+            }
+
+            const container = this.element.parent();
+            const containerOffset = container.offset();
+
+            const x = clientX - containerOffset.left;
+            const y = clientY - containerOffset.top;
+
+            globalConnectionState.mouseFollower.css({
+                left: x + "px",
+                top: y + "px",
+            });
+
+            // Також оновлюємо тимчасову точку в коннекторі
+            const tempPoint = $(globalConnectionState.tempConnector.options.pointB);
+            tempPoint.css({
+                left: x + "px",
+                top: y + "px",
+            });
+
+            // Оновлюємо тимчасовий коннектор
+            try {
+                globalConnectionState.tempConnector.update();
+            } catch (error) {
+                console.error("Error updating temp connector:", error);
+            }
+        },
+
+        _completeConnection: function (targetButton, targetSide) {
+            const targetBlock = targetButton.closest(".linked-block");
+            const targetBlockInstance = Metro.getPlugin(targetBlock[0], "linked-block");
+
+            if (!targetBlockInstance || targetBlock[0] === globalConnectionState.sourceBlock.element[0]) {
+                this._cancelConnection();
+                return;
+            }
+
+            // Додаємо точку на цільовому блоці
+            const targetPoint = targetBlockInstance.addPoint(targetSide);
+
+            // Видаляємо тимчасовий коннектор
+            if (globalConnectionState.tempConnector) {
+                globalConnectionState.tempConnector.destroy();
+            }
+
+            // Створюємо постійне з'єднання типу curve
+            const connectionId = `connection-${Date.now()}`;
+            const connector = Metro.connector.create(globalConnectionState.sourcePoint[0], targetPoint[0], {
+                type: "curve",
+                container: globalConnectionState.sourceBlock.element.parent(),
+                id: connectionId,
+                autoUpdate: true,
+            });
+
+            // Зберігаємо з'єднання в обох блоків
+            const connectionData = {
+                connector: connector,
+                sourceBlock: globalConnectionState.sourceBlock.element,
+                targetBlock: targetBlock,
+                sourcePoint: globalConnectionState.sourcePoint,
+                targetPoint: targetPoint,
+            };
+
+            globalConnectionState.sourceBlock.connections.set(connectionId, connectionData);
+            targetBlockInstance.connections.set(connectionId, connectionData);
+
+            // Викликаємо callback
+            globalConnectionState.sourceBlock._fireEvent("connect", {
+                sourceBlock: globalConnectionState.sourceBlock.element,
+                targetBlock: targetBlock,
+                sourcePoint: globalConnectionState.sourcePoint,
+                targetPoint: targetPoint,
+                connector: connector,
+            });
+
+            this._resetConnectionState();
+        },
+
+        _cancelConnection: function () {
+            // Видаляємо створену точку
+            if (globalConnectionState.sourcePoint) {
+                $(globalConnectionState.sourcePoint).remove();
+            }
+
+            // Видаляємо тимчасовий коннектор
+            if (globalConnectionState.tempConnector) {
+                globalConnectionState.tempConnector.destroy();
+            }
+
+            this._resetConnectionState();
+        },
+
+        _resetConnectionState: () => {
+            // Очищуємо елемент слідування за мишею
+            if (globalConnectionState.mouseFollower) {
+                globalConnectionState.mouseFollower.remove();
+            }
+
+            // Очищуємо глобальний стан з'єднання
+            globalConnectionState = {
+                isConnecting: false,
+                sourceBlock: null,
+                sourcePoint: null,
+                tempConnector: null,
+                mouseFollower: null,
+            };
+
+            // Відновлюємо нормальний стан кнопок
+            $(".add-point-btn").removeClass("connecting connection-target").hide();
+
+            // Показуємо кнопки тільки на поточному блоці при hover
+            $(".linked-block").each(function () {
+                const blockInstance = Metro.getPlugin(this, "linked-block");
+                if (blockInstance && $(this).is(":hover")) {
+                    blockInstance.hoverButtons.forEach((btn) => btn.show());
+                }
+            });
+        },
+
+        _createTempPoint: function () {
+            const container = this.element.parent();
+            return $("<div>")
+                .addClass("temp-point")
+                .css({
+                    position: "absolute",
+                    width: "1px",
+                    height: "1px",
+                    left: "0px",
+                    top: "0px",
+                    zIndex: -1,
+                })
+                .appendTo(container)[0];
         },
 
         // Публічні методи

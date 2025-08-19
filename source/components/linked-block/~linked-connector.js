@@ -58,6 +58,9 @@
             if (!o.id) {
                 o.id = `connector-${Hooks.useId(element[0])}`;
             }
+
+            // Створюємо кнопку видалення
+            // this.deleteButton = this._createDeleteButton();
         },
 
         _createConnection: function () {
@@ -71,6 +74,12 @@
             // Створюємо SVG елемент
             this.svgElement = this._createSVG(o.id, o.type);
             $(o.container).append(this.svgElement);
+
+            // Створюємо кнопку видалення
+            this.deleteButton = this._createDeleteButton();
+
+            // Додаємо обробники подій для видалення
+            this._setupDeleteEvents();
 
             // Оновлюємо з'єднання
             this.update();
@@ -90,6 +99,280 @@
 
             if (o.autoUpdate) {
                 this._setupAutoUpdate();
+            }
+        },
+
+        _setupDeleteEvents: function () {
+            const self = this;
+            const o = this.options;
+
+            console.log("Setting up delete events for connector:", o.id);
+
+            // Обробка hover над областю наведення (товстий невидимий шар)
+            if (this.svgElement) {
+                const hoverArea = this.svgElement.find(".cl-hover-area");
+
+                hoverArea.on("mouseenter", function (e) {
+                    console.log("Hover area mouseenter");
+                    e.stopPropagation();
+                    self._showDeleteButton();
+                    self._highlightConnection(true);
+                });
+
+                hoverArea.on("mouseleave", function (e) {
+                    console.log("Hover area mouseleave");
+                    e.stopPropagation();
+
+                    // Додаємо невелику затримку щоб дати час курсору перейти на кнопку
+                    setTimeout(() => {
+                        if (!self._isOverDeleteButton(e)) {
+                            self._hideDeleteButton();
+                            self._highlightConnection(false);
+                        }
+                    }, 50);
+                });
+
+                // Також додаємо обробку кліку для мобільних пристроїв
+                hoverArea.on("click", function (e) {
+                    console.log("Hover area clicked");
+                    e.stopPropagation();
+                    if (self.deleteButton && self.deleteButton.is(":visible")) {
+                        self._hideDeleteButton();
+                        self._highlightConnection(false);
+                    } else {
+                        self._showDeleteButton();
+                        self._highlightConnection(true);
+                    }
+                });
+            }
+
+            // Клік по кнопці видалення
+            if (this.deleteButton) {
+                this.deleteButton.on("click.connector-delete", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log("Delete button clicked");
+                    self._deleteConnection();
+                });
+
+                // Обробники для кнопки
+                this.deleteButton.on("mouseenter.connector-delete", function (e) {
+                    e.stopPropagation();
+                });
+
+                this.deleteButton.on("mouseleave.connector-delete", function (e) {
+                    e.stopPropagation();
+                    self._hideDeleteButton();
+                    self._highlightConnection(false);
+                });
+            }
+
+            // Глобальний клік для приховування кнопки
+            $(document).on(`click.connector-delete-${o.id}`, function (e) {
+                // const target = $(e.target);
+                // const isConnectorElement = target.closest(`#${o.id}`).length > 0;
+                // const isDeleteButton =
+                //     self.deleteButton && (target.is(self.deleteButton) || target.closest(self.deleteButton).length > 0);
+                //
+                // if (!isConnectorElement && !isDeleteButton) {
+                //     self._hideDeleteButton();
+                //     self._highlightConnection(false);
+                // }
+                self._hideDeleteButton();
+                self._highlightConnection(false);
+            });
+        },
+
+        _isOverDeleteButton: function (e) {
+            if (!this.deleteButton) return false;
+
+            const deleteButtonElement = this.deleteButton[0];
+            if (!deleteButtonElement) return false;
+
+            // Перевіряємо чи курсор над кнопкою або її дочірніми елементами
+            return (
+                e.relatedTarget === deleteButtonElement ||
+                (deleteButtonElement.contains && deleteButtonElement.contains(e.relatedTarget))
+            );
+        },
+
+        _highlightConnection: function (highlight) {
+            if (!this.svgElement) return;
+
+            console.log("Highlighting connection:", highlight);
+
+            const visiblePath = this.svgElement.find(".cl-visible");
+            if (visiblePath.length) {
+                const strokeColor = highlight ? "#ff6b6b" : "var(--linked-block-line-color)";
+                const strokeWidth = highlight ? "3px" : "var(--linked-block-line-width)";
+
+                visiblePath.attr({
+                    stroke: strokeColor,
+                    "stroke-width": strokeWidth,
+                });
+            }
+        },
+
+        _createDeleteButton: function () {
+            const o = this.options;
+
+            const deleteButton = $(`
+                <button class="connector-delete-btn" data-connector-id="${o.id}">
+                    ${deleteIcon}
+                </button>
+            `).css({
+                position: "absolute",
+                display: "none",
+                width: "24px",
+                height: "24px",
+                border: "1px solid var(--linked-block-border-color)",
+                borderRadius: "50%",
+                background: "var(--linked-block-background)",
+                cursor: "pointer",
+                zIndex: 1000,
+                padding: "2px",
+            });
+
+            $(o.container).append(deleteButton);
+            return deleteButton;
+        },
+
+        _showDeleteButton: function () {
+            if (!this.deleteButton || !this.svgElement) return;
+            // Знаходимо центр з'єднання
+            const centerPoint = this._getConnectionCenter();
+            if (!centerPoint) return;
+
+            this.deleteButton.css({
+                display: "block",
+                left: centerPoint.x - 12 + "px",
+                top: centerPoint.y - 12 + "px",
+            });
+        },
+
+        _hideDeleteButton: function () {
+            if (this.deleteButton) {
+                this.deleteButton.hide();
+            }
+        },
+
+        // _highlightConnection: function (highlight) {
+        //     if (!this.svgElement) return;
+        //
+        //     const connection = this.connections.get(this.options.id);
+        //     if (!connection || !connection.svg) return;
+        //
+        //     const strokeColor = highlight ? "#ff6b6b" : "var(--linked-block-line-color)";
+        //     const strokeWidth = highlight ? "3px" : "var(--linked-block-line-width)";
+        //
+        //     // Оновлюємо стиль залежно від типу
+        //     if (this.options.type === "line") {
+        //         connection.svg.find(".cl-line").attr({
+        //             stroke: strokeColor,
+        //             "stroke-width": strokeWidth,
+        //         });
+        //     } else {
+        //         connection.svg.find(".cl-curve").attr({
+        //             stroke: strokeColor,
+        //             "stroke-width": strokeWidth,
+        //         });
+        //     }
+        // },
+
+        _getConnectionCenter: function () {
+            const o = this.options;
+            const connection = this.connections.get(o.id);
+
+            if (!connection || !connection.pointA || !connection.pointB) return null;
+
+            const point1 = $(connection.pointA);
+            const point2 = $(connection.pointB);
+
+            if (!point1.length || !point2.length) return null;
+
+            const rect1 = point1.offset();
+            const rect2 = point2.offset();
+
+            if (!rect1 || !rect2) return null;
+
+            // Обчислюємо центральну точку між двома точками
+            const centerX = (rect1.left + point1.outerWidth() / 2 + rect2.left + point2.outerWidth() / 2) / 2;
+            const centerY = (rect1.top + point1.outerHeight() / 2 + rect2.top + point2.outerHeight() / 2) / 2;
+
+            // Конвертуємо в координати контейнера
+            const containerOffset = $(o.container).offset() || { left: 0, top: 0 };
+
+            return {
+                x: centerX - containerOffset.left,
+                y: centerY - containerOffset.top,
+            };
+        },
+
+        _deleteConnection: function () {
+            const o = this.options;
+            console.log("Deleting connection:", o.id);
+
+            // Знаходимо точки з'єднання
+            const connection = this.connections.get(o.id);
+            if (!connection) return;
+
+            const pointA = $(connection.pointA);
+            const pointB = $(connection.pointB);
+
+            // Знаходимо батьківські блоки
+            const blockA = pointA.closest(".linked-block");
+            const blockB = pointB.closest(".linked-block");
+
+            // Видаляємо з'єднання з блоків
+            if (blockA.length) {
+                const blockAInstance = Metro.getPlugin(blockA[0], "linked-block");
+                if (blockAInstance) {
+                    blockAInstance.connections.delete(o.id);
+                }
+            }
+
+            if (blockB.length) {
+                const blockBInstance = Metro.getPlugin(blockB[0], "linked-block");
+                if (blockBInstance) {
+                    blockBInstance.connections.delete(o.id);
+                }
+            }
+
+            // Видаляємо точки якщо вони не мають інших з'єднань
+            this._removeOrphanedPoint(pointA);
+            this._removeOrphanedPoint(pointB);
+
+            // Знищуємо коннектор
+            this.destroy();
+        },
+
+        _removeOrphanedPoint: (point) => {
+            if (!point || !point.length) return;
+
+            const pointId = point.attr("id");
+            if (!pointId) return;
+
+            // Перевіряємо чи використовується точка в інших з'єднаннях
+            let isUsed = false;
+
+            // Перевіряємо всі блоки на наявність з'єднань з цією точкою
+            $(".linked-block").each(function () {
+                const blockInstance = Metro.getPlugin(this, "linked-block");
+                if (blockInstance) {
+                    blockInstance.connections.forEach((connection) => {
+                        const sourcePointId = $(connection.sourcePoint).attr("id");
+                        const targetPointId = $(connection.targetPoint).attr("id");
+                        if (sourcePointId === pointId || targetPointId === pointId) {
+                            isUsed = true;
+                        }
+                    });
+                }
+            });
+
+            // Видаляємо точку якщо вона не використовується
+            if (!isUsed) {
+                console.log("Removing orphaned point:", pointId);
+                point.remove();
             }
         },
 
@@ -115,14 +398,14 @@
                 const blockA = pointA.closest(".linked-block");
                 const blockB = pointB.closest(".linked-block");
 
-                if (blockA.length) {
+                if (blockA?.length) {
                     observer.observe(blockA[0], {
                         attributes: true,
                         attributeFilter: ["style", "class"],
                     });
                 }
 
-                if (blockB.length) {
+                if (blockB?.length) {
                     observer.observe(blockB[0], {
                         attributes: true,
                         attributeFilter: ["style", "class"],
@@ -148,19 +431,30 @@
 
             if (type === "line") {
                 svg = $(`
-                    <svg id="${id}" class="connection-line">
-                        <line class="cl-line" 
+                    <svg id="${id}" class="connection-line" data-connector-id="${id}">
+                        <line class="cl-line cl-hover-area" 
+                              stroke="transparent" 
+                              stroke-width="12"
+                              style="cursor: pointer;"/>
+                        <line class="cl-line cl-visible" 
                               stroke="var(--linked-block-line-color)" 
-                              stroke-width="var(--linked-block-line-width)"/>
+                              stroke-width="var(--linked-block-line-width)"
+                              pointer-events="none"/>
                     </svg>
                 `);
             } else {
                 svg = $(`
-                    <svg id="${id}" class="connection-line">
-                        <path class="cl-curve" 
+                    <svg id="${id}" class="connection-line" data-connector-id="${id}">
+                        <path class="cl-curve cl-hover-area" 
+                              stroke="transparent" 
+                              stroke-width="12" 
+                              fill="none"
+                              style="cursor: pointer;"/>
+                        <path class="cl-curve cl-visible" 
                               stroke="var(--linked-block-line-color)" 
                               stroke-width="var(--linked-block-line-width)" 
-                              fill="none"/>
+                              fill="none"
+                              pointer-events="none"/>
                     </svg>
                 `);
             }
@@ -173,7 +467,7 @@
             const o = this.options;
             const connection = this.connections.get(o.id);
 
-            if (!connection) return;
+            if (!connection || !connection.svg) return;
 
             switch (o.type) {
                 case "line":
@@ -244,25 +538,59 @@
 
         // Приватні методи оновлення
         _updateLine: (pointA, pointB, svg) => {
+            if (!svg || !svg.find) {
+                console.warn("Connector: svg element is not available for _updateLine");
+                return;
+            }
+
             const point1 = $(pointA);
             const point2 = $(pointB);
-            const line = svg.find(".cl-line");
+            const lines = svg.find(".cl-line"); // Знаходимо всі лінії
 
-            const rect1 = point1.offset();
-            const rect2 = point2.offset();
-            const svgRect = svg.offset();
+            if (lines.length === 0) {
+                console.warn("Connector: .cl-line elements not found in svg");
+                return;
+            }
 
-            const point1Width = point1.outerWidth();
-            const point1Height = point1.outerHeight();
-            const point2Width = point2.outerWidth();
-            const point2Height = point2.outerHeight();
+            // Отримуємо координати
+            let rect1, rect2;
+
+            if (point1.offset && point1.offset()) {
+                rect1 = point1.offset();
+            } else {
+                // Якщо це тимчасова точка без offset
+                const containerOffset = $(svg).parent().offset() || { left: 0, top: 0 };
+                rect1 = {
+                    left: containerOffset.left + (parseFloat(point1.css("left")) || 0),
+                    top: containerOffset.top + (parseFloat(point1.css("top")) || 0),
+                };
+            }
+
+            if (point2.offset && point2.offset()) {
+                rect2 = point2.offset();
+            } else {
+                // Якщо це тимчасова точка без offset
+                const containerOffset = $(svg).parent().offset() || { left: 0, top: 0 };
+                rect2 = {
+                    left: containerOffset.left + (parseFloat(point2.css("left")) || 0),
+                    top: containerOffset.top + (parseFloat(point2.css("top")) || 0),
+                };
+            }
+
+            const svgRect = svg.offset() || { left: 0, top: 0 };
+
+            const point1Width = point1.outerWidth() || 1;
+            const point1Height = point1.outerHeight() || 1;
+            const point2Width = point2.outerWidth() || 1;
+            const point2Height = point2.outerHeight() || 1;
 
             const x1 = rect1.left - svgRect.left + point1Width / 2;
             const y1 = rect1.top - svgRect.top + point1Height / 2;
             const x2 = rect2.left - svgRect.left + point2Width / 2;
             const y2 = rect2.top - svgRect.top + point2Height / 2;
 
-            line.attr({
+            // Оновлюємо всі лінії (і hover область, і видиму)
+            lines.attr({
                 x1: x1,
                 y1: y1,
                 x2: x2,
@@ -271,11 +599,21 @@
         },
 
         _updateCurve: function (pointA, pointB, svg) {
+            if (!svg || !svg.find) {
+                console.warn("Connector: svg element is not available for _updateCurve");
+                return;
+            }
+
             const point1 = $(pointA);
             const point2 = $(pointB);
             const parent1 = point1.parent();
             const parent2 = point2.parent();
-            const path = svg.find(".cl-curve");
+            const paths = svg.find(".cl-curve"); // Знаходимо всі шляхи
+
+            if (paths.length === 0) {
+                console.warn("Connector: .cl-curve elements not found in svg");
+                return;
+            }
 
             const coords = this._getCoordinates(point1, point2, svg);
             const { x1, y1, x2, y2 } = coords;
@@ -287,8 +625,8 @@
             let cp1x, cp1y, cp2x, cp2y;
 
             // Визначаємо сторони точок
-            const side1 = parent1.attr("class").match(/(north|south|east|west)-side/)?.[1] || "north";
-            const side2 = parent2.attr("class").match(/(north|south|east|west)-side/)?.[1] || "north";
+            const side1 = parent1.attr("class")?.match(/(north|south|east|west)-side/)?.[1] || "north";
+            const side2 = parent2.attr("class")?.match(/(north|south|east|west)-side/)?.[1] || "north";
 
             // Спеціальна логіка для точок на одній стороні
             if (side1 === side2) {
@@ -296,28 +634,24 @@
 
                 switch (side1) {
                     case "north":
-                        // Обидві точки зверху - створюємо дугу вгору
                         cp1x = x1;
                         cp1y = y1 - controlOffset;
                         cp2x = x2;
                         cp2y = y2 - controlOffset;
                         break;
                     case "south":
-                        // Обидві точки знизу - створюємо дугу вниз
                         cp1x = x1;
                         cp1y = y1 + controlOffset;
                         cp2x = x2;
                         cp2y = y2 + controlOffset;
                         break;
                     case "east":
-                        // Обидві точки праворуч - створюємо дугу вправо
                         cp1x = x1 + controlOffset;
                         cp1y = y1;
                         cp2x = x2 + controlOffset;
                         cp2y = y2;
                         break;
                     case "west":
-                        // Обидві точки ліворуч - створюємо дугу вліво
                         cp1x = x1 - controlOffset;
                         cp1y = y1;
                         cp2x = x2 - controlOffset;
@@ -344,10 +678,17 @@
             }
 
             const pathData = `M ${x1} ${y1} C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${x2} ${y2}`;
-            path.attr("d", pathData);
+
+            // Оновлюємо всі шляхи (і hover область, і видимий)
+            paths.attr("d", pathData);
         },
 
         _updateZigzag: function (pointA, pointB, svg) {
+            if (!svg || !svg.find) {
+                console.warn("Connector: svg element is not available for _updateCurve");
+                return;
+            }
+
             const point1 = $(pointA);
             const point2 = $(pointB);
             const parent1 = point1.parent();
@@ -514,14 +855,36 @@
         },
 
         _getCoordinates: (point1, point2, svg) => {
-            const rect1 = point1.offset();
-            const rect2 = point2.offset();
-            const svgRect = svg.offset();
+            let rect1, rect2;
 
-            const point1Width = point1.outerWidth();
-            const point1Height = point1.outerHeight();
-            const point2Width = point2.outerWidth();
-            const point2Height = point2.outerHeight();
+            if (point1.offset && point1.offset()) {
+                rect1 = point1.offset();
+            } else {
+                // Якщо це тимчасова точка без offset
+                const containerOffset = $(svg).parent().offset() || { left: 0, top: 0 };
+                rect1 = {
+                    left: containerOffset.left + (parseFloat(point1.css("left")) || 0),
+                    top: containerOffset.top + (parseFloat(point1.css("top")) || 0),
+                };
+            }
+
+            if (point2.offset && point2.offset()) {
+                rect2 = point2.offset();
+            } else {
+                // Якщо це тимчасова точка без offset
+                const containerOffset = $(svg).parent().offset() || { left: 0, top: 0 };
+                rect2 = {
+                    left: containerOffset.left + (parseFloat(point2.css("left")) || 0),
+                    top: containerOffset.top + (parseFloat(point2.css("top")) || 0),
+                };
+            }
+
+            const svgRect = svg.offset() || { left: 0, top: 0 };
+
+            const point1Width = point1.outerWidth() || 1;
+            const point1Height = point1.outerHeight() || 1;
+            const point2Width = point2.outerWidth() || 1;
+            const point2Height = point2.outerHeight() || 1;
 
             return {
                 x1: rect1.left - svgRect.left + point1Width / 2,
@@ -554,38 +917,76 @@
         destroy: function () {
             const o = this.options;
 
+            console.log("Destroying connector:", o.id);
+
+            // Очищуємо події видалення
+            if (this.svgElement) {
+                this.svgElement.off(".connector-delete");
+            }
+
+            if (this.deleteButton) {
+                this.deleteButton.off(".connector-delete");
+                this.deleteButton.remove();
+            }
+
+            $(document).off(`click.connector-delete-${o.id}`);
+
+            // Очищуємо автооновлення
             this._cleanupAutoUpdate();
 
+            // Видаляємо SVG елемент
             if (this.svgElement) {
                 this.svgElement.remove();
             }
 
+            // Очищуємо з'єднання
             this.connections.delete(o.id);
+
+            // Видаляємо основний елемент
+            this.element.remove();
 
             this._fireEvent("connector-destroy", {
                 id: o.id,
             });
-
-            return this.element;
         },
     });
 
     // Статичні методи для створення з'єднань
     Metro.connector = {
         create: (pointA, pointB, options = {}) => {
+            console.log("Metro.connector.create called with:", { pointA, pointB, options });
+
             const defaultOptions = {
                 pointA: pointA,
                 pointB: pointB,
                 container: $("body"),
+                autoUpdate: true,
             };
 
             const config = $.extend({}, defaultOptions, options);
+            console.log("Final config:", config);
 
             // Створюємо фіктивний елемент для компонента
-            const element = $("<div>");
-            config.container.append(element);
+            const element = $("<div>").css({
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: 1,
+                height: 1,
+                pointerEvents: "none",
+            });
 
-            return Metro.makePlugin(element, "connector", config);
+            $(config.container).append(element);
+
+            try {
+                const connector = Metro.makePlugin(element, "connector", config);
+                console.log("Connector plugin created:", connector);
+                return connector;
+            } catch (error) {
+                console.error("Error creating connector plugin:", error);
+                element.remove();
+                return null;
+            }
         },
 
         connect: function (blockA, blockB, options = {}) {
@@ -601,7 +1002,7 @@
                 return null;
             }
 
-            return this.create(pointA, pointB, options);
+            return this.create(pointA[0], pointB[0], options);
         },
     };
 })(Metro, Dom);
