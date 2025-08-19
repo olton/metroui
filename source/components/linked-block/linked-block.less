@@ -141,6 +141,19 @@
     &.active-block {
         border-color: var( --linked-block-border-color-active);
     }
+    
+    --resizer-color: var( --linked-block-border-color-active);
+    
+    .resize-element {
+        display: none;
+    }
+    
+    &[data-can-resize=true] {
+        border-style: dashed!important;
+        .resize-element {
+            display: block;
+        }
+    }
 }
 
 .connection-area {

@@ -464,11 +464,18 @@ import { Component } from "./component.js";
                 });
             },
         },
+
+        globalMousePosition: { x: 0, y: 0 },
     };
 
     Metro.Component = Component;
 
     Object.assign(Metro, Props);
+
+    $(document).on(Metro.events.moveAll, (e) => {
+        Metro.globalMousePosition.x = e.clientX;
+        Metro.globalMousePosition.y = e.clientY;
+    });
 
     $(globalThis).on(Metro.events.resize, () => {
         globalThis.METRO_MEDIA = [];

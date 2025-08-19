@@ -1,6 +1,4 @@
 ((Metro, $) => {
-    let globalMousePosition = { x: 0, y: 0 };
-
     // Глобальний стан з'єднання
     let globalConnectionState = {
         isConnecting: false,
@@ -21,6 +19,7 @@
         maxHeight: null,
         content: "",
         showAddButtons: true,
+        resizeHotkey: null,
         onAddPoint: Metro.noop,
         onRemovePoint: Metro.noop,
         onConnect: Metro.noop,
@@ -206,6 +205,16 @@
                     $(e.target).removeClass("connection-target");
                 }
             });
+
+            if (o.resizeHotkey) {
+                $("body").hotkey(o.resizeHotkey, () => {
+                    const activeBlock = $(".linked-block.active-block");
+                    const canResize = activeBlock.attr("data-can-resize")
+                        ? JSON.parse(activeBlock.attr("data-can-resize"))
+                        : false;
+                    activeBlock.attr("data-can-resize", !canResize);
+                });
+            }
         },
 
         _setupDraggable: function () {
@@ -240,8 +249,7 @@
             const o = this.options;
 
             if (o.resizable) {
-                Metro.makePlugin(element, "resizable-container", {
-                    resizePointers: "nw, ne, se, sw",
+                Metro.makePlugin(element, "resizable", {
                     canResize: false,
                     minWidth: o.minWidth,
                     minHeight: o.minHeight,
@@ -400,7 +408,7 @@
             // Створюємо постійне з'єднання типу curve
             const connectionId = `connection-${Date.now()}`;
             const connector = Metro.connector.create(globalConnectionState.sourcePoint[0], targetPoint[0], {
-                type: o.type || "curve",
+                // type: connector.options.type || "curve",
                 container: globalConnectionState.sourceBlock.element.parent(),
                 id: connectionId,
                 autoUpdate: true,
@@ -752,9 +760,4 @@
             return Metro.makePlugin(element, "linked-block", config);
         },
     };
-
-    $(document).on(Metro.events.moveAll, (e) => {
-        globalMousePosition.x = e.clientX;
-        globalMousePosition.y = e.clientY;
-    });
 })(Metro, Dom);

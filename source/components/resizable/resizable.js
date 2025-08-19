@@ -37,7 +37,7 @@
 
         _create: function () {
             this.id = Hooks.useId(this.elem);
-            
+
             this._createStructure();
             this._createEvents();
 
@@ -48,7 +48,6 @@
             const element = this.element;
             const o = this.options;
 
-            element.data("canResize", true);
             element.addClass("resizable-element");
 
             if (Metro.utils.isValue(o.resizeElement) && element.find(o.resizeElement).length > 0) {
@@ -151,6 +150,11 @@
 
             const canResize = () => {
                 o.canResize = JSON.parse(element.attr("data-can-resize")) === true;
+                if (o.canResize) {
+                    this.on();
+                } else {
+                    this.off();
+                }
             };
 
             switch (attributeName) {

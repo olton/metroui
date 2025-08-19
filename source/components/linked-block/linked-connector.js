@@ -8,6 +8,7 @@
         container: null, // контейнер для SVG
         autoUpdate: true, // автоматичне оновлення при переміщенні блоків
         id: null, // унікальний ID для з'єднання
+        deleteButton: false,
         onConnectorCreate: Metro.noop,
         onConnectorUpdate: Metro.noop,
         onConnectorDestroy: Metro.noop,
@@ -99,12 +100,7 @@
             }
 
             $(document).on("click", ".cl-curve, .cl-line", (e) => {
-                const target = $(e.target);
-                const connId = target.attr("data-conn-id");
-                target.toggleClass("selected-path");
-                if (target.hasClass("selected-path")) {
-                    $(`.connector-delete[data-conn-id=${connId}]`).show();
-                }
+                this._selectPath(e.target);
                 e.stopPropagation();
             });
 
@@ -112,6 +108,16 @@
                 $(".cl-line, .cl-curve").removeClass("selected-path");
                 $(`.connector-delete`).hide();
             });
+        },
+
+        _selectPath: function (path) {
+            const o = this.options;
+            const target = $(path);
+            const connId = target.attr("data-conn-id");
+            target.toggleClass("selected-path");
+            if (target.hasClass("selected-path") && o.deleteButton === true) {
+                $(`.connector-delete[data-conn-id=${connId}]`).show();
+            }
         },
 
         _setupAutoUpdate: function () {

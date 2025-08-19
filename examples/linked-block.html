@@ -17,8 +17,9 @@
 </head>
 <body class="cloak h-100-vh">
 <nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
-    <div class="app-bar-item-static no-hover">
+    <div class="app-bar-item-static no-hover flex-center">
         <div class="text-leader">Linked Block</div>
+        <div class="text-bold ml-2" id="mouse-position">0:0</div>
     </div>
     <div class="app-bar-container gap-2" style="position: absolute; left: 50%; transform: translateX(-50%);">
         <button onclick="createBlocksZTop()">Z Top</button>
@@ -34,10 +35,26 @@
     </div>
 </nav>
 
-<main id="container" class="h-100 pos-relative" style="--linked-block-point-color: #ff0000;"></main>
+<main id="container" class="h-100 pos-relative" style="--linked-block-point-color: #ff0000; --linked-block-line-width: 2px"></main>
 
+<script>
+    window.metroLinkedBlockSetup = {
+        resizeHotkey: "alt+t",
+    }
+    
+    window.metroConnectorSetup = {
+        deleteButton: true,
+        // type: 'zigzag'
+    }
+</script>
 <script src="../lib/metro.js"></script>
 <script>
+    const mousePosition = $('#mouse-position')
+    setInterval(() => {
+        mousePosition.html(`${Metro.globalMousePosition.x}:${Metro.globalMousePosition.y}`)
+    }, 100)
+    
+    
     var blockCount = 0;
     var container = $('#container');
     
