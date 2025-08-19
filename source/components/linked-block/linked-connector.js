@@ -27,6 +27,7 @@
                 connections: new Map(),
                 svgElement: null,
                 observers: new Map(),
+                deleteButton: null,
             });
             return this;
         },
@@ -68,29 +69,44 @@
                 return;
             }
 
-            // Створюємо SVG елемент
-            this.svgElement = this._createSVG(o.id, o.type);
-            $(o.container).append(this.svgElement);
+            // Отримуємо або створюємо спільний SVG у контейнері
+            const sharedSvg = this._getOrCreateSharedSVG(o.container);
+            this.svgElement = sharedSvg;
 
-            // Оновлюємо з'єднання
-            this.update();
+            // Створюємо елемент шляху/лінії для поточного конектора у спільному SVG
+            const shape = this._createShape(o.id, o.type, sharedSvg);
 
             // Зберігаємо з'єднання
             this.connections.set(o.id, {
                 pointA: o.pointA,
                 pointB: o.pointB,
                 type: o.type,
-                svg: this.svgElement,
+                svg: sharedSvg,
+                shape: shape,
             });
+
+            // Оновлюємо з'єднання
+            this.update();
         },
 
         _createEvents: function () {
             const element = this.element;
             const o = this.options;
+            const self = this;
 
             if (o.autoUpdate) {
                 this._setupAutoUpdate();
             }
+
+            $(document).on("click", ".cl-curve, .cl-line", (e) => {
+                const target = $(e.target);
+                $(target).toggleClass("selected-path");
+                e.stopPropagation();
+            });
+
+            $(document).on("click", (e) => {
+                $(".cl-line, .cl-curve").removeClass("selected-path");
+            });
         },
 
         _setupAutoUpdate: function () {
@@ -143,29 +159,68 @@
             });
         },
 
+        // ... existing code ...
         _createSVG: (id, type) => {
             let svg;
 
             if (type === "line") {
                 svg = $(`
                     <svg id="${id}" class="connection-line">
-                        <line class="cl-line" 
-                              stroke="var(--linked-block-line-color)" 
-                              stroke-width="var(--linked-block-line-width)"/>
+                        <line class="cl-line"/>
                     </svg>
                 `);
             } else {
                 svg = $(`
                     <svg id="${id}" class="connection-line">
-                        <path class="cl-curve" 
-                              stroke="var(--linked-block-line-color)" 
-                              stroke-width="var(--linked-block-line-width)" 
-                              fill="none"/>
+                        <path class="cl-curve"/>
                     </svg>
                 `);
             }
 
             return svg;
+        },
+
+        _getOrCreateSharedSVG: (container) => {
+            const $container = $(container);
+            let svg = $container.children("svg.connection-line").first();
+            if (!svg.length) {
+                // Забезпечуємо позиціювання контейнера для абсолютного SVG
+                if ($container.css("position") === "static") {
+                    $container.css("position", "relative");
+                }
+                const ns = "http://www.w3.org/2000/svg";
+                const svgEl = document.createElementNS(ns, "svg");
+                svgEl.setAttribute("xmlns", ns);
+                svgEl.setAttribute("class", "connection-line");
+                // Розмір і позиціювання через стилі, щоб займати весь контейнер
+                svg = $(svgEl).css({
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    zIndex: 0,
+                });
+                $container.append(svg);
+            }
+            return svg;
+        },
+
+        _createShape: (id, type, svg) => {
+            const ns = "http://www.w3.org/2000/svg";
+            let el;
+            if (type === "line") {
+                el = document.createElementNS(ns, "line");
+                el.setAttribute("class", "cl-line");
+            } else {
+                el = document.createElementNS(ns, "path");
+                el.setAttribute("class", "cl-curve");
+                // Важливо для видимості контуру, якщо стилі не підвантажились
+                // el.setAttribute("fill", "none");
+            }
+            el.setAttribute("data-conn-id", id);
+            svg[0].appendChild(el);
+            return $(el);
         },
 
         // Публічні методи
@@ -177,13 +232,13 @@
 
             switch (o.type) {
                 case "line":
-                    this._updateLine(connection.pointA, connection.pointB, connection.svg);
+                    this._updateLine(connection.pointA, connection.pointB, connection.shape);
                     break;
                 case "curve":
-                    this._updateCurve(connection.pointA, connection.pointB, connection.svg);
+                    this._updateCurve(connection.pointA, connection.pointB, connection.shape);
                     break;
                 case "zigzag":
-                    this._updateZigzag(connection.pointA, connection.pointB, connection.svg);
+                    this._updateZigzag(connection.pointA, connection.pointB, connection.shape);
                     break;
             }
 
@@ -203,19 +258,23 @@
             const oldType = o.type;
             o.type = type;
 
-            // Створюємо новий SVG елемент з новим типом
-            const oldSvg = this.svgElement;
-            this.svgElement = this._createSVG(o.id, type);
+            // Створюємо новий shape-елемент у спільному SVG
+            const connection = this.connections.get(o.id);
+            const oldShape = connection?.shape;
+            const svg = connection?.svg || this.svgElement || this._getOrCreateSharedSVG(o.container);
+            const newShape = this._createShape(o.id, type, svg);
 
-            // Замінюємо старий елемент
-            oldSvg.replaceWith(this.svgElement);
+            if (oldShape && oldShape.length) {
+                oldShape.remove();
+            }
 
             // Оновлюємо з'єднання
             this.connections.set(o.id, {
-                ...this.connections.get(o.id),
+                ...connection,
                 type: type,
                 old: oldType,
-                svg: this.svgElement,
+                svg: svg,
+                shape: newShape,
             });
 
             this.update();
@@ -243,10 +302,11 @@
         },
 
         // Приватні методи оновлення
-        _updateLine: (pointA, pointB, svg) => {
+        _updateLine: (pointA, pointB, shape) => {
             const point1 = $(pointA);
             const point2 = $(pointB);
-            const line = svg.find(".cl-line");
+            const line = shape; // <line>
+            const svg = line.closest("svg");
 
             const rect1 = point1.offset();
             const rect2 = point2.offset();
@@ -270,12 +330,13 @@
             });
         },
 
-        _updateCurve: function (pointA, pointB, svg) {
+        _updateCurve: function (pointA, pointB, shape) {
             const point1 = $(pointA);
             const point2 = $(pointB);
             const parent1 = point1.parent();
             const parent2 = point2.parent();
-            const path = svg.find(".cl-curve");
+            const path = shape; // <path>
+            const svg = path.closest("svg");
 
             const coords = this._getCoordinates(point1, point2, svg);
             const { x1, y1, x2, y2 } = coords;
@@ -296,28 +357,24 @@
 
                 switch (side1) {
                     case "north":
-                        // Обидві точки зверху - створюємо дугу вгору
                         cp1x = x1;
                         cp1y = y1 - controlOffset;
                         cp2x = x2;
                         cp2y = y2 - controlOffset;
                         break;
                     case "south":
-                        // Обидві точки знизу - створюємо дугу вниз
                         cp1x = x1;
                         cp1y = y1 + controlOffset;
                         cp2x = x2;
                         cp2y = y2 + controlOffset;
                         break;
                     case "east":
-                        // Обидві точки праворуч - створюємо дугу вправо
                         cp1x = x1 + controlOffset;
                         cp1y = y1;
                         cp2x = x2 + controlOffset;
                         cp2y = y2;
                         break;
                     case "west":
-                        // Обидві точки ліворуч - створюємо дугу вліво
                         cp1x = x1 - controlOffset;
                         cp1y = y1;
                         cp2x = x2 - controlOffset;
@@ -347,12 +404,13 @@
             path.attr("d", pathData);
         },
 
-        _updateZigzag: function (pointA, pointB, svg) {
+        _updateZigzag: function (pointA, pointB, shape) {
             const point1 = $(pointA);
             const point2 = $(pointB);
             const parent1 = point1.parent();
             const parent2 = point2.parent();
-            const path = svg.find(".cl-curve");
+            const path = shape; // <path>
+            const svg = path.closest("svg");
 
             const coords = this._getCoordinates(point1, point2, svg);
             const { x1, y1, x2, y2 } = coords;
@@ -374,9 +432,7 @@
 
                 switch (side1) {
                     case "north":
-                        // Обидві точки зверху - йдемо вгору, потім горизонтально, потім вниз
                         if (Math.abs(x1 - x2) <= tolerance) {
-                            // Точки вертикально одна над одною
                             pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
                         } else {
                             const topY = Math.min(y1, y2) - offset;
@@ -390,7 +446,6 @@
                         break;
 
                     case "south":
-                        // Обидві точки знизу - йдемо вниз, потім горизонтально, потім вгору
                         if (Math.abs(x1 - x2) <= tolerance) {
                             pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
                         } else {
@@ -405,7 +460,6 @@
                         break;
 
                     case "east":
-                        // Обidві точки праворуч - йдемо вправо, потім вертикально, потім вліво
                         if (Math.abs(y1 - y2) <= tolerance) {
                             pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
                         } else {
@@ -420,7 +474,6 @@
                         break;
 
                     case "west":
-                        // Обидві точки ліворуч - йдемо вліво, потім вертикально, потім вправо
                         if (Math.abs(y1 - y2) <= tolerance) {
                             pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
                         } else {
@@ -556,8 +609,20 @@
 
             this._cleanupAutoUpdate();
 
+            const connection = this.connections.get(o.id);
+
+            if (connection?.shape) {
+                const svg = connection.svg || this.svgElement;
+                connection.shape.remove();
+
+                // Якщо у спільному SVG більше немає елементів конекторів — прибираємо SVG
+                if (svg && svg.find(".cl-line, .cl-curve").length === 0) {
+                    svg.remove();
+                }
+            }
+
             if (this.svgElement) {
-                this.svgElement.remove();
+                this.svgElement = null;
             }
 
             this.connections.delete(o.id);

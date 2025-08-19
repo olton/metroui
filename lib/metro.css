@@ -66425,7 +66425,7 @@ label:has(input) {
 :root {
   --linked-block-point-size: 7px;
   --linked-block-point-color: #b1b1b1;
-  --linked-block-line-width: 1px;
+  --linked-block-line-width: 2px;
   --linked-block-min-size: 100px;
   --linked-block-border-radius: 4px;
   --linked-block-background: var(--default-background);
@@ -66450,6 +66450,7 @@ label:has(input) {
   border: 1px solid var(--linked-block-border-color);
   border-radius: var(--linked-block-border-radius);
   user-select: none;
+  z-index: 1;
 }
 .linked-block .north-side,
 .linked-block .east-side,
@@ -66554,14 +66555,7 @@ label:has(input) {
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
-  cursor: pointer;
-}
-.connection-line .cl-line,
-.connection-line .cl-curve {
-  transition: stroke 0.2s ease, stroke-width 0.2s ease;
-  stroke-width: 8px;
-  stroke: transparent;
+  z-index: 0;
 }
 .connection-line .cl-line {
   stroke-width: var(--linked-block-line-width);
@@ -66571,31 +66565,15 @@ label:has(input) {
   stroke-width: var(--linked-block-line-width);
   stroke: var(--linked-block-line-color);
 }
-.connector-delete-btn {
-  position: absolute;
-  display: none;
-  width: 24px;
-  height: 24px;
-  border: 1px solid var(--linked-block-border-color);
-  border-radius: 50%;
-  background: var(--linked-block-background);
+.connection-line .cl-line,
+.connection-line .cl-curve {
+  transition: stroke 0.2s ease, stroke-width 0.2s ease;
+  fill: none;
   cursor: pointer;
-  z-index: 1000;
-  padding: 2px;
-  transition: all 0.2s ease;
 }
-.connector-delete-btn:hover {
-  background: #ff6b6b;
-  border-color: #ff5252;
-  transform: scale(1.1);
-}
-.connector-delete-btn svg {
-  width: 100%;
-  height: 100%;
-  fill: var(--linked-block-line-color);
-}
-.connector-delete-btn:hover svg {
-  fill: white;
+.connection-line .cl-line.selected-path,
+.connection-line .cl-curve.selected-path {
+  stroke: #0a87c1;
 }
 
 /* source/components/list/list.less */
