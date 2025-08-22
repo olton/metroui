@@ -51435,7 +51435,6 @@ button:has(.badge.corner),
   border-radius: var(--dialog-border-radius);
 }
 .dialog-title,
-.dialog-content,
 .dialog-actions {
   display: flex;
 }
@@ -51455,6 +51454,7 @@ button:has(.badge.corner),
   padding: 12px 24px;
   order: 2;
   font-size: 14px;
+  display: block;
 }
 .dialog-actions {
   border-top: 1px solid var(--dialog-border-color);
