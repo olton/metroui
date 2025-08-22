@@ -44,7 +44,7 @@
     
     window.metroConnectorSetup = {
         deleteButton: true,
-        // type: 'zigzag'
+        type: 'zigzag'
     }
 </script>
 <script src="../lib/metro.js"></script>
@@ -66,8 +66,9 @@
             top: 100,
             left: 100,
             resizable: true,
+            createConnectionType: "zigzag"
         });
-        block1.addPoint('north')
+        block1.addPoint("north")
 
         blockCount++;
         const block2 = Metro.linkedBlock.create({
@@ -77,9 +78,9 @@
             left: 300,
             resizable: true,
         });
-        block2.addPoint('north')
+        block2.addPoint("north")
 
-        block1.connect(block2.element, {
+        block1.connect(block2, {
             type: "zigzag"
         })
     }
@@ -93,7 +94,7 @@
             left: 500,
             resizable: true,
         });
-        block1.addPoint('south')
+        block1.addPoint("south")
 
         blockCount++;
         const block2 = Metro.linkedBlock.create({
@@ -103,7 +104,7 @@
             left: 700,
             resizable: true,
         });
-        block2.addPoint('south')
+        block2.addPoint("south")
 
         block1.connect(block2.element, {
             type: "zigzag"
@@ -119,7 +120,6 @@
             left: 900,
             resizable: true,
         });
-        block1.addPoint('east')
 
         blockCount++;
         const block2 = Metro.linkedBlock.create({
@@ -129,7 +129,6 @@
             left: 1100,
             resizable: true,
         });
-        block2.addPoint('west')
 
         block1.connect(block2.element, {
             type: "zigzag"
@@ -145,7 +144,7 @@
             left: 100,
             resizable: true,
         });
-        block1.addPoint('north')
+        block1.addPoint("north")
 
         blockCount++;
         const block2 = Metro.linkedBlock.create({
@@ -155,7 +154,7 @@
             left: 300,
             resizable: true,
         });
-        block2.addPoint('north')
+        block2.addPoint("north")
 
         block1.connect(block2.element, {
             type: "curve"
@@ -171,7 +170,7 @@
             left: 500,
             resizable: true,
         });
-        block1.addPoint('south')
+        block1.addPoint("south")
 
         blockCount++;
         const block2 = Metro.linkedBlock.create({
@@ -181,7 +180,7 @@
             left: 700,
             resizable: true,
         });
-        block2.addPoint('south')
+        block2.addPoint("south")
 
         block1.connect(block2.element, {
             type: "curve"
@@ -197,7 +196,6 @@
             left: 900,
             resizable: true,
         });
-        block1.addPoint('east')
 
         blockCount++;
         const block2 = Metro.linkedBlock.create({
@@ -207,7 +205,6 @@
             left: 1100,
             resizable: true,
         });
-        block2.addPoint('west')
 
         block1.connect(block2.element, {
             type: "curve"

@@ -502,6 +502,43 @@
                 .appendTo(container);
         },
 
+        // Перевірка, чи точка вже задіяна у будь-якому з'єднанні цього блоку
+        _isPointBusy: function (pointEl) {
+            const pid = $(pointEl).attr("id");
+            let busy = false;
+            this.connections.forEach((connection) => {
+                if (connection.sourcePoint?.attr("id") === pid || connection.targetPoint?.attr("id") === pid) {
+                    busy = true;
+                }
+            });
+            return busy;
+        },
+
+        // Повертає першу вільну точку на стороні або null
+        _findFreePoint: function (side) {
+            const pts = this.getPoints(side);
+            for (let i = 0; i < pts.length; i++) {
+                const p = $(pts[i]);
+                if (!this._isPointBusy(p)) return p;
+            }
+            return null;
+        },
+
+        // Повертає першу вільну точку на будь-якій стороні (DOM-порядок сторін)
+        _findAnyFreePoint: function () {
+            const pts = this.getPoints(); // всі точки: north, east, south, west у DOM-порядку сторін
+            for (let i = 0; i < pts.length; i++) {
+                const p = $(pts[i]);
+                if (!this._isPointBusy(p)) return p;
+            }
+            return null;
+        },
+
+        // Повертає вільну точку на стороні або створює нову
+        _getOrCreatePoint: function (side) {
+            return this._findFreePoint(side) || this.addPoint(side);
+        },
+
         // Публічні методи
         addPoint: function (side) {
             const element = this.element;
@@ -572,25 +609,174 @@
         connect: function (targetBlock, options = {}) {
             const element = this.element;
             const o = this.options;
-            const target = $(targetBlock);
+            const target = targetBlock.element ? targetBlock.element : $(targetBlock);
 
             if (target.length === 0) {
                 console.warn("LinkedBlock: цільовий блок не знайдено");
                 return null;
             }
 
-            // Знаходимо точки для з'єднання
-            const sourcePoints = this.getPoints();
-            const targetPoints = target.find(".link-point");
-
-            if (sourcePoints.length === 0 || targetPoints.length === 0) {
-                console.warn("LinkedBlock: не знайдено точок для з'єднання");
+            // Визначаємо інстанс цільового блоку
+            const targetInst = Metro.getPlugin(target[0], "linked-block");
+            if (!targetInst) {
+                console.warn("LinkedBlock: інстанс цільового блоку не знайдено");
                 return null;
             }
 
-            // Беремо перші доступні точки або створюємо нові
-            const sourcePoint = options.sourcePoint ? $(options.sourcePoint) : sourcePoints.first();
-            const targetPoint = options.targetPoint ? $(options.targetPoint) : targetPoints.first();
+            // Якщо користувач явно передав точки - використати їх без зміни логіки
+            if (options.sourcePoint && options.targetPoint) {
+                const sourcePoint = $(options.sourcePoint);
+                const targetPoint = $(options.targetPoint);
+
+                if (Metro.connector?.create) {
+                    const connector = Metro.connector.create(sourcePoint, targetPoint, {
+                        type: options.type || "curve",
+                        container: options.container || element.parent(),
+                    });
+
+                    const connectionId = `${element.attr("id")}-${target.attr("id")}-${Date.now()}`;
+
+                    this.connections.set(connectionId, {
+                        target: target,
+                        sourcePoint: sourcePoint,
+                        targetPoint: targetPoint,
+                        connector: connector,
+                        options: options,
+                    });
+
+                    targetInst.connections.set(connectionId, {
+                        target: element,
+                        sourcePoint: sourcePoint,
+                        targetPoint: targetPoint,
+                        connector: connector,
+                        options: options,
+                    });
+
+                    Metro.utils.exec(
+                        o.onConnect,
+                        [target[0], sourcePoint[0], targetPoint[0], connector.element[0]],
+                        element[0],
+                    );
+
+                    this._fireEvent("connect", {
+                        element: element[0],
+                        target: target[0],
+                        sourcePoint: sourcePoint[0],
+                        targetPoint: targetPoint[0],
+                        connector: connector.element[0],
+                        connectionId: connectionId,
+                    });
+
+                    this._updateConnections();
+
+                    return {
+                        id: connectionId,
+                        connector: connector.element[0],
+                        sourcePoint: sourcePoint[0],
+                        targetPoint: targetPoint[0],
+                    };
+                }
+
+                this._updateConnections();
+                return [this, targetInst];
+            }
+
+            // 0) Спочатку шукаємо вільні точки на обох блоках
+            const freeSrc = this._findAnyFreePoint();
+            const freeTgt = targetInst._findAnyFreePoint();
+
+            if (freeSrc && freeTgt) {
+                // Якщо є вільні точки на обох — з'єднуємо їх без створення нових
+                if (Metro.connector?.create) {
+                    const connector = Metro.connector.create(freeSrc, freeTgt, {
+                        type: options.type || "curve",
+                        container: options.container || element.parent(),
+                    });
+
+                    const connectionId = `${element.attr("id")}-${target.attr("id")}-${Date.now()}`;
+
+                    this.connections.set(connectionId, {
+                        target: target,
+                        sourcePoint: freeSrc,
+                        targetPoint: freeTgt,
+                        connector: connector,
+                        options: options,
+                    });
+
+                    targetInst.connections.set(connectionId, {
+                        target: element,
+                        sourcePoint: freeSrc,
+                        targetPoint: freeTgt,
+                        connector: connector,
+                        options: options,
+                    });
+
+                    Metro.utils.exec(
+                        o.onConnect,
+                        [target[0], freeSrc[0], freeTgt[0], connector.element[0]],
+                        element[0],
+                    );
+
+                    this._fireEvent("connect", {
+                        element: element[0],
+                        target: target[0],
+                        sourcePoint: freeSrc[0],
+                        targetPoint: freeTgt[0],
+                        connector: connector.element[0],
+                        connectionId: connectionId,
+                    });
+
+                    this._updateConnections();
+
+                    return {
+                        id: connectionId,
+                        connector: connector.element[0],
+                        sourcePoint: freeSrc[0],
+                        targetPoint: freeTgt[0],
+                    };
+                }
+
+                this._updateConnections();
+                return [this, targetInst];
+            }
+
+            // Отримуємо геометрію блоків
+            const srcRect = element.rect();
+            const tgtRect = target.rect();
+
+            // Визначаємо сторони за правилами:
+            // 1) Якщо північний бік першого блоку вище за другий блок => north(first) -> south(second)
+            // 2) Якщо північний бік другого блоку вище за перший блок => north(second) -> south(first)
+            // 3) Якщо перший блок зліва від другого => east(first) -> west(second)
+            // 4) Якщо перший блок справа від другого => west(first) -> east(second)
+            let sourceSide = null;
+            let targetSide = null;
+
+            if (srcRect.top + srcRect.height < tgtRect.top) {
+                // перший блок вище другого
+                console.log("перший блок вище другого");
+                sourceSide = "north";
+                targetSide = "south";
+            } else if (tgtRect.top + tgtRect.height < srcRect.top) {
+                // другий блок вище першого
+                console.log("другий блок вище першого");
+                sourceSide = "south";
+                targetSide = "north";
+            } else if (srcRect.left < tgtRect.left) {
+                // перший зліва від другого
+                console.log("перший зліва від другого");
+                sourceSide = "east";
+                targetSide = "west";
+            } else if (tgtRect.left < srcRect.left) {
+                // перший справа від другого (або рівно)
+                console.log("перший справа від другого");
+                sourceSide = "west";
+                targetSide = "east";
+            }
+
+            // Підбираємо або створюємо точки згідно сторін, віддаючи перевагу вільним
+            const sourcePoint = options.sourcePoint ? $(options.sourcePoint) : this._getOrCreatePoint(sourceSide);
+            const targetPoint = options.targetPoint ? $(options.targetPoint) : targetInst._getOrCreatePoint(targetSide);
 
             // Створюємо з'єднання через connector
             if (Metro.connector?.create) {
@@ -609,7 +795,7 @@
                     options: options,
                 });
 
-                Metro.getPlugin(target[0], "linked-block").connections.set(connectionId, {
+                targetInst.connections.set(connectionId, {
                     target: element,
                     sourcePoint: sourcePoint,
                     targetPoint: targetPoint,
@@ -644,7 +830,7 @@
 
             this._updateConnections();
 
-            return null;
+            return [this, targetInst];
         },
 
         disconnect: function (connectionId) {

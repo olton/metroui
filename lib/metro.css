@@ -66595,16 +66595,19 @@ label:has(input) {
 }
 @media (hover: hover) {
   .linked-block .add-point-btn:hover {
-    border-color: #28a745;
+    background-color: #28a745;
+    color: #fff;
   }
 }
 @media (hover: none) {
   .linked-block .add-point-btn:active {
-    border-color: #28a745;
+    background-color: #28a745;
+    color: #fff;
   }
 }
 .linked-block .add-point-btn.connecting {
-  border-color: #007bff !important;
+  background-color: #007bff !important;
+  color: #fff;
   display: block !important;
 }
 .linked-block .add-point-btn.add-point-north {
