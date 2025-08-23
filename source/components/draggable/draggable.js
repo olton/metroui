@@ -57,7 +57,7 @@
             const offset = element.offset();
             const dragElement = o.dragElement !== "self" ? element.find(o.dragElement) : element;
 
-            element.data("canDrag", true);
+            element.attr("data-can-drag", o.canDrag);
 
             this.dragElement = dragElement;
 

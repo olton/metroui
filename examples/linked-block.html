@@ -84,7 +84,6 @@
             container,
             top: 100,
             left: 100,
-            resizable: true,
             createConnectionType: "zigzag"
         });
         block1.addPoint("north")
@@ -95,7 +94,6 @@
             container,
             top: 100,
             left: 300,
-            resizable: true,
         });
         block2.addPoint("north")
 
@@ -111,7 +109,6 @@
             container,
             top: 100,
             left: 500,
-            resizable: true,
         });
         block1.addPoint("south")
 
@@ -121,7 +118,6 @@
             container,
             top: 100,
             left: 700,
-            resizable: true,
         });
         block2.addPoint("south")
 
@@ -137,7 +133,6 @@
             container,
             top: 100,
             left: 900,
-            resizable: true,
         });
 
         blockCount++;
@@ -146,7 +141,6 @@
             container,
             top: 50,
             left: 1100,
-            resizable: true,
         });
 
         block1.connect(block2.element, {
@@ -161,7 +155,6 @@
             container,
             top: 300,
             left: 100,
-            resizable: true,
         });
         block1.addPoint("north")
 
@@ -171,7 +164,6 @@
             container,
             top: 300,
             left: 300,
-            resizable: true,
         });
         block2.addPoint("north")
 
@@ -187,7 +179,6 @@
             container,
             top: 300,
             left: 500,
-            resizable: true,
         });
         block1.addPoint("south")
 
@@ -197,7 +188,6 @@
             container,
             top: 300,
             left: 700,
-            resizable: true,
         });
         block2.addPoint("south")
 
@@ -213,7 +203,8 @@
             container,
             top: 300,
             left: 900,
-            resizable: true,
+            canResize: false,
+            canDrag: false,
         });
 
         blockCount++;
@@ -222,7 +213,8 @@
             container,
             top: 350,
             left: 1100,
-            resizable: true,
+            canResize: true,
+            canDrag: true,
             onePoint: true,
         });
 

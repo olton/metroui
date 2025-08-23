@@ -66647,6 +66647,21 @@ label:has(input) {
 .linked-block[data-can-resize=false] .resize-element {
   display: none;
 }
+.linked-block .can-drag-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  object-fit: cover;
+}
+.linked-block[data-can-drag=false] .can-drag-icon {
+  display: none;
+}
 .connection-area {
   position: absolute;
   top: 0;

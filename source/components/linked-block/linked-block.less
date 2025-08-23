@@ -162,6 +162,25 @@
             display: none;
         }
     }
+    
+    .can-drag-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 12px;
+        height: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: default;
+        object-fit: cover;
+    }
+    
+    &[data-can-drag=false] {
+        .can-drag-icon {
+            display: none;
+        }
+    }
 }
 
 .connection-area {

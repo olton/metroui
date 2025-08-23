@@ -49,6 +49,7 @@
             const o = this.options;
 
             element.addClass("resizable-element");
+            element.attr("data-can-resize", o.canResize);
 
             if (Metro.utils.isValue(o.resizeElement) && element.find(o.resizeElement).length > 0) {
                 this.resizer = element.find(o.resizeElement);
