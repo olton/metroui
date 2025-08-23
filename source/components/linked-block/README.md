@@ -6,10 +6,13 @@ The Linked Block component provides draggable/resizable blocks with link points 
 
 This component relies on the following Metro UI modules (imported via its index.js):
 - draggable
-- resizable-container (resizer UI used when resizing is enabled)
-- linked-connector (Connector engine used to draw/update connections)
+- resizable
+- linked-connector
 
-Note: The connection drawing functionality is provided by the Connector component (Metro.connector). You can configure it globally via `Metro.connectorSetup` or `window.metroConnectorSetup`.
+:::note
+The connection drawing functionality is provided by the Connector component. 
+You can configure it globally via `window.metroConnectorSetup` object, or pass it as an option to the `connect()` method.
+:::
 
 ## Usage
 
@@ -36,8 +39,8 @@ const block = Metro.linkedBlock.create({
     top: 100,
     left: 100,
     content: "Block 1",
-    draggable: true,
-    resizable: true
+    canDrag: true,
+    canResize: true
 });
 
 // Add a link point to a specific side
@@ -50,7 +53,7 @@ const block2 = Metro.linkedBlock.create({
     top: 100,
     left: 300,
     content: "Block 2",
-    resizable: true
+    canResize: true
 });
 block2.addPoint("north");
 
@@ -62,7 +65,7 @@ block.connect(block2.element, { type: "zigzag" });
 
 ```javascript
 Metro.makePlugin("#myBlock", "linked-block", {
-    resizable: true,
+    canResize: true,
     showAddButtons: true
 });
 
@@ -90,32 +93,45 @@ const inst = Metro.getPlugin("#myBlock", "linked-block");
 
 | Parameter | Type | Default | Description |
 | --------- | ---- | ------- | ----------- |
-| `draggable` | boolean | true | Enables dragging for the block (uses Metro draggable). |
-| `resizable` | boolean | false | Enables resizing for the block (uses Metro resizable). |
 | `width` | string\|number\|null | null | Initial width (CSS value). |
 | `height` | string\|number\|null | null | Initial height (CSS value). |
-| `minWidth` | number | 100 | Minimum block width when resizing. |
-| `minHeight` | number | 100 | Minimum block height when resizing. |
+| `minWidth` | number | 0 | Minimum block width when resizing. |
+| `minHeight` | number | 0 | Minimum block height when resizing. |
 | `maxWidth` | number\|null | null | Maximum block width when resizing. |
 | `maxHeight` | number\|null | null | Maximum block height when resizing. |
 | `content` | string | "" | HTML content for the block body. If the element already has innerHTML, it will be used instead. |
 | `showAddButtons` | boolean | true | Shows "+" hover buttons on block sides to add points and start connections. |
-| `resizeHotkey` | string\|null | null | Hotkey to toggle the resizer availability on the currently active block (e.g., `"alt+t"`). |
-| `onAddPoint` | function | Metro.noop | Callback when a point is added: `(pointEl, side, pointId, blockEl)`. |
-| `onRemovePoint` | function | Metro.noop | Callback when a point is removed: `(pointEl, side, pointId, blockEl)`. |
-| `onConnect` | function | Metro.noop | Callback when a connection is created. In interactive connect: `(sourceBlock, targetBlock, sourcePoint, targetPoint, connectorInstance)`. In direct `connect()` API: `(targetEl, sourcePoint, targetPoint, connectorEl)`. |
-| `onDisconnect` | function | Metro.noop | Callback when a connection is removed: `(blockEl, connectionId)`. |
-| `onDragStart` | function | Metro.noop | Called on drag start: `({top, left}, blockEl)`. |
-| `onDragMove` | function | Metro.noop | Called during dragging: `({top, left}, blockEl)`. |
-| `onDragEnd` | function | Metro.noop | Called after dragging: `({top, left}, blockEl)`. |
-| `onResize` | function | Metro.noop | Called on resize when `resizable` is enabled: `({width, height}, blockEl)`. |
-| `onLinkedBlockCreate` | function | Metro.noop | Called when the component is created: `({element})`. |
+| `addButtons` | string | "north east south west" | Sides where add buttons appear (space-separated): any of `north`, `east`, `south`, `west`. |
+| `resizeHotkey` | string\|null | null | Hotkey to toggle resize availability on the active block (e.g., `"alt+t"`). |
+| `dragHotkey` | string\|null | null | Hotkey to toggle drag availability on the active block (e.g., `"alt+d"`). |
+| `connectionType` | "line"\|"curve"\|"zigzag" | "curve" | Default connector type when connecting interactively. |
+| `connectionStyle` | "solid"\|"dashed"\|"dotted" | "solid" | Default line style for interactive connections. |
+| `onePoint` | boolean | false | If true, points are centered (useful for single-point blocks). |
+| `canDrag` | boolean | true | Enables dragging for the block. |
+| `canResize` | boolean | true | Enables resizing for the block. |
+| `onAddPoint` | function | Metro.noop | `(pointEl, side, pointId, blockEl)` — called when a point is added. |
+| `onRemovePoint` | function | Metro.noop | `(pointEl, side, pointId, blockEl)` — called when a point is removed. |
+| `onStartConnection` | function | Metro.noop | `(buttonEl, side)` — called when interactive connecting starts. |
+| `onCancelConnection` | function | Metro.noop | `()` — called if an interactive connect is canceled. |
+| `onConnect` | function | Metro.noop | See Events section for signatures (interactive vs direct API). |
+| `onDisconnect` | function | Metro.noop | `(connectionId)` — called when a connection is removed. |
+| `onDragStart` | function | Metro.noop | `({top, left}, element)` — when dragging starts. |
+| `onDragMove` | function | Metro.noop | `({top, left}, element)` — while dragging. |
+| `onDragEnd` | function | Metro.noop | `({top, left}, element)` — when dragging stops. |
+| `onResize` | function | Metro.noop | `({width, height}, element)` — when block is resized. |
+| `onLinkedBlockCreate` | function | Metro.noop | `(element)` — when the component is created. |
 
-Data attribute usage follows dashed format, for example:
+Data attribute usage (dashed format) examples:
 - `data-role="linked-block"`
-- `data-resizable="true"`
+- `data-can-resize="true"`
+- `data-can-drag="true"`
 - `data-show-add-buttons="false"`
+- `data-add-buttons="north east"`
+- `data-connection-type="curve"`
+- `data-connection-style="dashed"`
+- `data-one-point="true"`
 - `data-resize-hotkey="alt+t"`
+- `data-drag-hotkey="alt+d"`
 - `data-on-add-point="onAddPointHandler"`
 
 ## Events
@@ -124,15 +140,17 @@ You can handle events using options (callbacks) or `data-on-*` attributes.
 
 | Event | Description |
 | ----- | ----------- |
-| `onLinkedBlockCreate` | Fired when the linked block is created. |
-| `onAddPoint` | Fired after a new link point has been added. |
-| `onRemovePoint` | Fired after a link point has been removed. |
-| `onConnect` | Fired when a connection between two points is created. |
-| `onDisconnect` | Fired when an existing connection is removed. |
-| `onDragStart` | When dragging starts. |
-| `onDragMove` | While dragging, with updated position. |
-| `onDragEnd` | When dragging stops. |
-| `onResize` | When block is resized (if `resizable: true`). |
+| `onLinkedBlockCreate` | Fired when the linked block is created. Signature: `(element)`. |
+| `onAddPoint` | Fired after a new link point has been added. Signature: `(pointEl, side, pointId, blockEl)`. |
+| `onRemovePoint` | Fired after a link point has been removed. Signature: `(pointEl, side, pointId, blockEl)`. |
+| `onStartConnection` | Fired when interactive connection starts. Signature: `(buttonEl, side)`. |
+| `onCancelConnection` | Fired when an interactive connection is canceled. Signature: `()`. |
+| `onConnect` | Fired when a connection is created. Interactive: `(connectionId, sourceBlockEl, targetBlockEl, sourcePointEl, targetPointEl, connectorInst)`. Direct `connect()` API: `(targetEl, sourcePointEl, targetPointEl, connectorEl)`. |
+| `onDisconnect` | Fired when an existing connection is removed. Signature: `(connectionId)`. |
+| `onDragStart` | When dragging starts. Signature: `({top, left}, element)`. |
+| `onDragMove` | While dragging, with updated position. Signature: `({top, left}, element)`. |
+| `onDragEnd` | When dragging stops. Signature: `({top, left}, element)`. |
+| `onResize` | When block is resized (if `canResize: true`). Signature: `({width, height}, element)`. |
 
 Example (with data attributes):
 
@@ -229,10 +247,136 @@ console.log(c.id);
 - `.active-block` — Applied to a block when clicked; highlights its border.
 - `[data-can-resize=true]` — When true, shows resizer handles (together with `resizable: true`).
 
-Connector-related (from linked-connector):
-- `.connection-area` — Shared SVG container styling.
-- `.cl-line`, `.cl-curve` — Path/line classes (hover/selection styles applied).
-- `.connector-delete` — Delete button icon for a selected path (visible when configured and selected).
+## Linked Block Connector
+
+The Linked Connector component renders SVG connectors (lines, curves, zigzags) between two link points. It is used internally by Linked Block, but can also be used independently to connect any two DOM points/elements and keep the connection updated while blocks move.
+
+### Dependencies
+
+None.
+
+:::note
+You can configure global defaults via a global `window.metroConnectorSetup` object.
+:::
+
+### Usage
+
+#### Programmatic (recommended)
+
+```javascript
+// Suppose you have two link-point elements (e.g., created by Linked Block)
+const pA = document.querySelector('#block-1 .link-point');
+const pB = document.querySelector('#block-2 .link-point');
+
+// Create a connector between them
+const conn = Metro.connector.create(pA, pB, {
+    type: 'curve',            // 'line' | 'curve' | 'zigzag'
+    lineStyle: 'solid',       // 'solid' | 'dashed' | 'dotted'
+    deleteButton: true,       // show delete icon when a connector is selected
+    arrow: false              // draw an arrowhead at the end
+});
+
+// Access instance methods
+conn.setType('zigzag');
+conn.setLineStyle('dashed');
+conn.update(); // manually update if needed
+```
+
+#### As a plugin on an element
+
+```html
+<div id="myConnector"></div>
+<script>
+  const pA = document.querySelector('#block-1 .link-point');
+  const pB = document.querySelector('#block-2 .link-point');
+
+  Metro.makePlugin('#myConnector', 'connector', {
+      pointA: pA,
+      pointB: pB,
+      type: 'line',
+      lineStyle: 'dotted'
+  });
+
+  const inst = Metro.getPlugin('#myConnector', 'connector');
+</script>
+```
+
+#### Global Setup (optional)
+
+```html
+<script>
+  window.metroConnectorSetup = {
+      deleteButton: true,
+      lineStyle: 'solid'
+  };
+</script>
+```
+
+### Plugin Parameters
+
+| Parameter | Type | Default | Description |
+| --------- | ---- | ------- | ----------- |
+| `pointA` | Element\|Dom\|null | null | First endpoint element (e.g., a `.link-point`). |
+| `pointB` | Element\|Dom\|null | null | Second endpoint element. |
+| `type` | 'line'\|'curve'\|'zigzag' | 'curve' | Connector shape type. |
+| `container` | Element\|Dom\|Selector\|null | null | SVG container parent. If not set, the connector will use the parent of the plugin element. |
+| `autoUpdate` | boolean | true | Automatically update the connector on block moves/resizes. |
+| `id` | string\|null | auto | Connection id. Generated if not provided (`connector-<uid>`). |
+| `deleteButton` | boolean | false | Show delete icon near the selected path. |
+| `arrow` | boolean | false | Add an arrowhead marker to the end of the connector. |
+| `lineStyle` | 'solid'\|'dashed'\|'dotted' | 'solid' | Stroke style of the connector. |
+| `onConnectorCreate` | function | Metro.noop | Called on create. Receives detail object (see Events). |
+| `onConnectorUpdate` | function | Metro.noop | Called on update. Receives detail object (see Events). |
+| `onConnectorDestroy` | function | Metro.noop | Called on destroy. Receives detail object (see Events). |
+
+Data-attribute mapping (for live changes):
+- `data-type` — handled by `changeAttribute()`; updates connector type.
+- `data-line-style` — handled by `changeAttribute()`; updates line style.
+
+### Events
+
+Events can be handled either via options (`onConnectorCreate`, etc.) or by listening to Metro’s internal event system. The component fires:
+
+| Event | Detail |
+| ----- | ------ |
+| `connector-create` | `{ element, options }` — fired after structure and connection are created. |
+| `connector-update` | `{ connection, type }` — fired whenever the connector is re-rendered/updated. |
+| `connector-destroy` | `{ id }` — fired when the connector is destroyed. |
+
+Selection and delete:
+- Clicking on a connector path (`.cl-line`, `.cl-curve`) toggles `selected-path` class.
+- If `deleteButton: true`, a `.connector-delete` icon appears for the selected connection; clicking it removes that connection.
+
+### API Methods
+
+- `setType(type)` — Change connector type: `'line'|'curve'|'zigzag'`.
+- `setPoints(pointA, pointB)` — Change endpoints and re-bind auto-updates.
+- `setLineStyle(style)` — Set line style: `'solid'|'dashed'|'dotted'`.
+- `update()` — Force re-calc and redraw of the connector.
+- `changeAttribute(attr, newValue)` — Reacts to `data-type` and `data-line-style`.
+- `destroy()` — Remove the connector, delete button, observers; may remove temporary points.
+
+Static helper:
+- `Metro.connector.create(pointA, pointB, options)` — Programmatically create a connector instance on a dummy element appended to `options.container` (default `body`). Returns the plugin instance.
+
+### Styling with CSS Variables
+
+The connector uses the same variables as Linked Block for line appearance:
+
+| Variable | Default (Light) | Dark Mode | Description |
+| -------- | --------------- | --------- | ----------- |
+| `--linked-block-line-width` | `1px` | `1px` | Stroke width for connector shapes. |
+| `--linked-block-line-color` | `#b1b1b1` | `#656a70` | Stroke color for connector shapes and delete icon. |
+
+You can also style via the `.cl-line` / `.cl-curve` classes (stroke, stroke-width) and `.selected-path` state.
+
+### Available CSS Classes
+
+- `.connection-area` — Shared SVG container created inside the provided container.
+- `.cl-line` — SVG `<line>` for `'line'` type connectors.
+- `.cl-curve` — SVG `<path>` for `'curve'` and `'zigzag'` connectors.
+- `.selected-path` — Applied when a connector is selected (click); can be styled for focus.
+- `.connector-delete` — Delete button group appended to the SVG; visible when the path is selected and `deleteButton` is true.
 
 ## Additional Notes
 

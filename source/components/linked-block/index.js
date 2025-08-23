@@ -1,6 +1,6 @@
 // Dependencies
 import "../draggable/index.js";
-import "../resizable-container/index.js";
+import "../resizable/index.js";
 
 // Component
 import "./linked-block.less";
