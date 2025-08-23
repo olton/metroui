@@ -886,6 +886,10 @@
             return Array.from(this.connections.values());
         },
 
+        update: function () {
+            this._updateConnections();
+        },
+
         changeAttribute: function (attr, val) {
             const o = this.options;
         },

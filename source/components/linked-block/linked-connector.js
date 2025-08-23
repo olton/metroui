@@ -248,6 +248,9 @@
             // Обробник кліку — видалення конкретного конектора
             $(g).on("click", (e) => {
                 e.stopPropagation();
+                const b1 = $(this.options.pointA).closest(".linked-block");
+                const b2 = $(this.options.pointB).closest(".linked-block");
+
                 // Знайдемо інстанс плагіну за елементом, на якому він створений
                 const plugin = Metro.getPlugin(this.element, "connector");
                 if (plugin && plugin.options.id === id) {
@@ -259,6 +262,9 @@
                         this.destroy();
                     }
                 }
+
+                Metro.getPlugin(b1, "linked-block")?.update();
+                Metro.getPlugin(b2, "linked-block")?.update();
             });
 
             return $(g);
