@@ -26,7 +26,7 @@
         addButtons: "north east south west",
         resizeHotkey: null,
         dragHotkey: null,
-        connectionType: "curve", // line, curve, zigzag
+        connectionType: "curve", // line, curve, step
         connectionStyle: "solid", // solid, dashed, dotted
         onePoint: false,
         canDrag: true,

@@ -22,9 +22,9 @@
         <div class="text-bold ml-2" id="mouse-position">0:0</div>
     </div>
     <div class="app-bar-container gap-2" style="position: absolute; left: 50%; transform: translateX(-50%);">
-        <button onclick="createBlocksZTop()">Z Top</button>
-        <button onclick="createBlocksZBottom()">Z Bottom</button>
-        <button onclick="createBlocksZSide()">Z Side</button>
+        <button onclick="createBlocksSTop()">S Top</button>
+        <button onclick="createBlocksSBottom()">S Bottom</button>
+        <button onclick="createBlocksSSide()">S Side</button>
         <button onclick="createBlocksCTop()">C Top</button>
         <button onclick="createBlocksCBottom()">C Bottom</button>
         <button onclick="createBlocksCSide()">C Side</button>
@@ -34,7 +34,7 @@
     </div>
 </nav>
 
-<main id="container" class="h-100 pos-relative" style="--linked-block-point-color: #ff0000; --linked-block-line-width: 2px"></main>
+<main id="container" class="h-100 pos-relative" style="--linked-block-point-color: #f00;"></main>
 
 <script>
     window.metroLinkedBlockSetup = {
@@ -50,7 +50,7 @@
     
     window.metroConnectorSetup = {
         deleteButton: true,
-        // arrow: true,
+        arrow: "end",
         // lineStyle: "dotted",
         // type: 'zigzag'
     }
@@ -77,14 +77,13 @@
     var blockCount = 0;
     var container = $('#container');
     
-    function createBlocksZTop () {
+    function createBlocksSTop () {
         blockCount++;
         const block1 = Metro.linkedBlock.create({
             content: `Block ${blockCount}`,
             container,
             top: 100,
             left: 100,
-            createConnectionType: "zigzag"
         });
         block1.addPoint("north")
 
@@ -98,11 +97,11 @@
         block2.addPoint("north")
 
         block1.connect(block2, {
-            type: "zigzag"
+            type: "step"
         })
     }
     
-    function createBlocksZBottom () {
+    function createBlocksSBottom () {
         blockCount++;
         const block1 = Metro.linkedBlock.create({
             content: `Block ${blockCount}`,
@@ -122,11 +121,11 @@
         block2.addPoint("south")
 
         block1.connect(block2.element, {
-            type: "zigzag"
+            type: "step"
         })
     }
     
-    function createBlocksZSide () {
+    function createBlocksSSide () {
         blockCount++;
         const block1 = Metro.linkedBlock.create({
             content: `Block ${blockCount}`,
@@ -144,7 +143,7 @@
         });
 
         block1.connect(block2.element, {
-            type: "zigzag"
+            type: "step"
         })
     }
     
@@ -203,8 +202,6 @@
             container,
             top: 300,
             left: 900,
-            canResize: false,
-            canDrag: false,
         });
 
         blockCount++;
@@ -213,9 +210,6 @@
             container,
             top: 350,
             left: 1100,
-            canResize: true,
-            canDrag: true,
-            onePoint: true,
         });
 
         block1.connect(block2.element, {

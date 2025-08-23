@@ -4,12 +4,12 @@
     let ConnectorDefaultConfig = {
         pointA: null,
         pointB: null,
-        type: "curve", // line, curve, zigzag
+        type: "curve", // line, curve, step
         container: null, // контейнер для SVG
         autoUpdate: true, // автоматичне оновлення при переміщенні блоків
         id: null, // унікальний ID для з'єднання
         deleteButton: false,
-        arrow: false,
+        arrow: "none", // none, end, start, both
         lineStyle: "solid", // solid, dashed, dotted
         onConnectorCreate: Metro.noop,
         onConnectorUpdate: Metro.noop,
@@ -82,10 +82,8 @@
             const shape = this._createShape(o.id, o.type, sharedSvg);
             const deleteBtn = this._createDeleteButton(sharedSvg, o.id);
 
-            if (o.arrow) {
-                const markerId = this._ensureArrowMarker(sharedSvg);
-                shape.attr("marker-end", `url(#${markerId})`);
-            }
+            // Стрілки (за потреби)
+            this._applyArrows(shape, sharedSvg);
 
             // Застосувати стиль лінії
             this._applyLineStyle(shape, o.lineStyle);
@@ -201,51 +199,59 @@
             return svg;
         },
 
+        // Маркер-стрілка з вашого SVG, зменшений у 2 рази
         _ensureArrowMarker: (svg) => {
             const ns = "http://www.w3.org/2000/svg";
-            const markerId = "connector-arrow";
+            const markerId = Hooks.useId("connector-arrow");
             let defs = svg.find("defs");
             if (!defs.length) {
                 const d = document.createElementNS(ns, "defs");
                 svg[0].appendChild(d);
                 defs = $(d);
             }
-            let marker = defs.find(`#${markerId}`);
+            const marker = defs.find(`#${markerId}`);
             if (!marker.length) {
                 const m = document.createElementNS(ns, "marker");
                 m.setAttribute("id", markerId);
-                m.setAttribute("markerWidth", "6");
-                m.setAttribute("markerHeight", "6");
-                m.setAttribute("refX", "5");
-                m.setAttribute("refY", "3");
-                m.setAttribute("orient", "auto");
-                // Шкала від товщини штриха лінії
-                m.setAttribute("markerUnits", "strokeWidth");
+                m.setAttribute("markerWidth", "12"); // збільшуємо область
+                m.setAttribute("markerHeight", "12");
+                m.setAttribute("viewBox", "0 0 8 8"); // встановлюємо viewBox на оригінальний розмір
+                m.setAttribute("refX", "6"); // скориговано для центрування
+                m.setAttribute("refY", "4"); // скориговано для центрування
+                m.setAttribute("orient", "auto-start-reverse");
+                m.setAttribute("markerUnits", "userSpaceOnUse"); // змінено з strokeWidth на userSpaceOnUse
 
-                // Дві лінії (половинний розмір)
-                const line1 = document.createElementNS(ns, "line");
-                line1.setAttribute("x1", "1");
-                line1.setAttribute("y1", "1");
-                line1.setAttribute("x2", "5");
-                line1.setAttribute("y2", "3");
-                line1.setAttribute("stroke", "context-stroke");
-                line1.setAttribute("stroke-linecap", "round");
+                // Ваш точний SVG-шлях, трохи збільшений для кращої видимості
+                const path = document.createElementNS(ns, "path");
+                path.setAttribute(
+                    "d",
+                    "M1,8 c-0.04,0-0.08-0.016-0.11-0.045 c-0.048-0.05-0.055-0.125-0.018-0.185 L3.45,4 L0.87,0.23 c-0.038-0.058-0.03-0.135,0.018-0.185 c0.048-0.05,0.125-0.06,0.185-0.026 L7.4,3.54 c0.046,0.026,0.075,0.076,0.075,0.13 s-0.029,0.103-0.075,0.13 L1.06,7.32 C0.96,7.38,0.93,7.96,1,8z",
+                );
+                path.setAttribute("fill", "var(--linked-block-line-color)"); // використовуємо CSS змінну замість context-stroke
+                path.setAttribute("stroke", "none");
 
-                const line2 = document.createElementNS(ns, "line");
-                line2.setAttribute("x1", "1");
-                line2.setAttribute("y1", "5");
-                line2.setAttribute("x2", "5");
-                line2.setAttribute("y2", "3");
-                line2.setAttribute("stroke", "context-stroke");
-                line2.setAttribute("stroke-linecap", "round");
-
-                m.appendChild(line1);
-                m.appendChild(line2);
-
+                m.appendChild(path);
                 defs[0].appendChild(m);
-                marker = $(m);
+                // marker = $(m);
             }
             return markerId;
+        },
+
+        _applyArrows: function (shape, svg) {
+            const o = this.options;
+            const value = o.arrow === true ? "end" : o.arrow || "none";
+            // Спершу прибираємо існуючі атрибути
+            shape.removeAttr("marker-start").removeAttr("marker-end");
+
+            if (value === "none" || value === false) return;
+
+            const markerId = this._ensureArrowMarker(svg);
+            if (value === "start" || value === "both") {
+                shape.attr("marker-start", `url(#${markerId})`);
+            }
+            if (value === "end" || value === "both") {
+                shape.attr("marker-end", `url(#${markerId})`);
+            }
         },
 
         _createShape: (id, type, svg) => {
@@ -467,7 +473,7 @@
             path.attr("d", pathData);
         },
 
-        _updateZigzag: function (pointA, pointB, shape) {
+        _updateStep: function (pointA, pointB, shape) {
             const point1 = $(pointA);
             const point2 = $(pointB);
             const parent1 = point1.parent();
@@ -694,7 +700,7 @@
 
         // Публічні методи
         setType: function (type) {
-            if (["line", "curve", "zigzag"].indexOf(type) === -1) {
+            if (["line", "curve", "step"].indexOf(type) === -1) {
                 console.warn("Connector: невідомий тип з'єднання:", type);
                 return;
             }
@@ -709,10 +715,8 @@
             const svg = connection?.svg || this.svgElement || this._getOrCreateSharedSVG(o.container);
             const newShape = this._createShape(o.id, type, svg);
 
-            if (o.arrow) {
-                const markerId = this._ensureArrowMarker(svg);
-                newShape.attr("marker-end", `url(#${markerId})`);
-            }
+            // Стрілки згідно з опцією
+            this._applyArrows(newShape, svg);
 
             // застосувати поточний стиль лінії
             this._applyLineStyle(newShape, o.lineStyle);
@@ -769,8 +773,8 @@
                 case "curve":
                     this._updateCurve(connection.pointA, connection.pointB, connection.shape);
                     break;
-                case "zigzag":
-                    this._updateZigzag(connection.pointA, connection.pointB, connection.shape);
+                case "step":
+                    this._updateStep(connection.pointA, connection.pointB, connection.shape);
                     break;
             }
 
@@ -799,12 +803,31 @@
             this.update();
         },
 
+        setArrow: function (value) {
+            // Підтримка true/false/"none"/"start"/"end"/"both"
+            const map = { true: "end", false: "none" };
+            const v = typeof value === "boolean" ? map[String(value)] : String(value || "none").toLowerCase();
+            if (!["none", "start", "end", "both"].includes(v)) {
+                console.warn("Connector: невідоме значення для arrow:", value);
+                return;
+            }
+            this.options.arrow = v;
+            const connection = this.connections.get(this.options.id);
+            if (connection?.shape && connection?.svg) {
+                this._applyArrows(connection.shape, connection.svg);
+                this.update();
+            }
+        },
+
         changeAttribute: function (attr, newValue) {
             if (attr === "data-type") {
                 this.setType(newValue);
             }
             if (attr === "data-line-style") {
                 this.setLineStyle(newValue);
+            }
+            if (attr === "data-arrow") {
+                this.setArrow(newValue);
             }
         },
 
