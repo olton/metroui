@@ -66543,7 +66543,7 @@ label:has(input) {
   align-items: center;
   justify-content: center;
   overflow: visible;
-  gap: 2px;
+  gap: 4px;
 }
 .linked-block .north-side,
 .linked-block .south-side {
@@ -66595,19 +66595,17 @@ label:has(input) {
 }
 @media (hover: hover) {
   .linked-block .add-point-btn:hover {
-    background-color: #28a745;
-    color: #fff;
+    border-color: #28a745;
   }
 }
 @media (hover: none) {
   .linked-block .add-point-btn:active {
-    background-color: #28a745;
-    color: #fff;
+    border-color: #28a745;
   }
 }
 .linked-block .add-point-btn.connecting {
-  background-color: #007bff !important;
-  color: #fff;
+  border-color: #007bff !important;
+  border-radius: 50%;
   display: block !important;
 }
 .linked-block .add-point-btn.add-point-north {

@@ -38,7 +38,7 @@
         align-items: center;
         justify-content: center;
         overflow: visible;
-        gap: 2px;
+        gap: 4px;
     }
 
     .north-side, .south-side {
@@ -96,21 +96,19 @@
 
         @media (hover: hover) {
             &:hover {
-                background-color: #28a745;
-                color: #fff;
+                border-color: #28a745;
             }
         }
         
         @media (hover: none) {
             &:active {
-                background-color: #28a745;
-                color: #fff;
+                border-color: #28a745;
             }
         }
         
         &.connecting {
-            background-color: #007bff!important;
-            color: #fff;
+            border-color: #007bff!important;
+            border-radius: 50%;
             display: block!important;
         }
 

@@ -28,7 +28,6 @@
         <button onclick="createBlocksCTop()">C Top</button>
         <button onclick="createBlocksCBottom()">C Bottom</button>
         <button onclick="createBlocksCSide()">C Side</button>
-        <button onclick="Metro.getPlugin('.linked-block.active-block', 'linked-block')?.destroy()">Destroy</button>
     </div>
     <div class="app-bar-item-static no-hover ml-auto">
         <input type="checkbox" data-role="theme-switcher"/>
@@ -53,6 +52,18 @@
     setInterval(() => {
         mousePosition.html(`${Metro.globalMousePosition.x}:${Metro.globalMousePosition.y}`)
     }, 100)
+    
+    $("main").hotkey("del", () => {
+        const activeBlock = $('.linked-block.active-block')
+        if (activeBlock.length > 0) {
+            Metro.linkedBlock.destroy(activeBlock)
+            return 
+        }
+        const activeConnector = $('.cl-curve.selected-path')
+        if (activeConnector.length > 0) {
+            Metro.connector.destroy(activeConnector)
+        }
+    })
     
     
     var blockCount = 0;

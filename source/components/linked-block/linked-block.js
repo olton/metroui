@@ -678,7 +678,7 @@
                 }
 
                 this._updateConnections();
-                return [this, targetInst];
+                return null;
             }
 
             // 0) Спочатку шукаємо вільні точки на обох блоках
@@ -737,7 +737,7 @@
                 }
 
                 this._updateConnections();
-                return [this, targetInst];
+                return null;
             }
 
             // Отримуємо геометрію блоків
@@ -754,22 +754,18 @@
 
             if (srcRect.top + srcRect.height < tgtRect.top) {
                 // перший блок вище другого
-                console.log("перший блок вище другого");
                 sourceSide = "north";
                 targetSide = "south";
             } else if (tgtRect.top + tgtRect.height < srcRect.top) {
                 // другий блок вище першого
-                console.log("другий блок вище першого");
                 sourceSide = "south";
                 targetSide = "north";
             } else if (srcRect.left < tgtRect.left) {
                 // перший зліва від другого
-                console.log("перший зліва від другого");
                 sourceSide = "east";
                 targetSide = "west";
             } else if (tgtRect.left < srcRect.left) {
                 // перший справа від другого (або рівно)
-                console.log("перший справа від другого");
                 sourceSide = "west";
                 targetSide = "east";
             }
@@ -829,8 +825,7 @@
             }
 
             this._updateConnections();
-
-            return [this, targetInst];
+            return null;
         },
 
         disconnect: function (connectionId) {
@@ -944,6 +939,38 @@
             }
 
             return Metro.makePlugin(element, "linked-block", config);
+        },
+
+        destroy: (element) => {
+            const inst = Metro.getPlugin(element, "linked-block");
+            if (inst) {
+                inst.destroy();
+            }
+        },
+
+        destroyAll: () => {
+            $(".linked-block").each(function () {
+                const inst = Metro.getPlugin(this, "linked-block");
+                if (inst) {
+                    inst.destroy();
+                }
+            });
+        },
+
+        connect: (source, target, options = {}) => {
+            const sourceInst = Metro.getPlugin(source, "linked-block");
+            if (sourceInst) {
+                return sourceInst.connect(target, options);
+            }
+            return null;
+        },
+
+        disconnect: (connectionId) => {
+            const inst = Metro.getPlugin(connectionId, "linked-block");
+            if (inst) {
+                return inst.disconnect(connectionId);
+            }
+            return null;
         },
     };
 })(Metro, Dom);

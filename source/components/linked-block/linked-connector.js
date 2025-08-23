@@ -60,6 +60,8 @@
             if (!o.id) {
                 o.id = `connector-${Hooks.useId(element[0])}`;
             }
+
+            element.id(o.id);
         },
 
         _createConnection: function () {
@@ -745,20 +747,27 @@
             return Metro.makePlugin(element, "connector", config);
         },
 
-        connect: function (blockA, blockB, options = {}) {
+        connect: (blockA, blockB, options = {}) => {
             const $blockA = $(blockA);
             const $blockB = $(blockB);
 
-            // Знаходимо найближчі точки з'єднання
-            const pointA = $blockA.find(".link-point").first();
-            const pointB = $blockB.find(".link-point").first();
-
-            if (pointA.length === 0 || pointB.length === 0) {
-                console.warn("Connector: не знайдено точок з'єднання на блоках");
+            const block = Metro.getPlugin($blockA, "linked-block");
+            if (!block) {
+                console.warn("Connector: hasn't role linked-block");
                 return null;
             }
 
-            return this.create(pointA, pointB, options);
+            block.connect($blockB, options);
+        },
+
+        destroy: (shape) => {
+            const connector = $(shape);
+            const connectorId = connector.attr("data-conn-id");
+            const connectorComponent = Metro.getPlugin($(`#${connectorId}`), "connector");
+            if (!connectorComponent) {
+                console.warn(`Connector with id ${connectorId} not found`);
+            }
+            connectorComponent.destroy();
         },
     };
 })(Metro, Dom);
