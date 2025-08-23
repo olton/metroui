@@ -883,12 +883,22 @@
             block.connect($blockB, options);
         },
 
-        destroy: (shape) => {
-            const connector = $(shape);
-            const connectorId = connector.attr("data-conn-id");
-            const connectorComponent = Metro.getPlugin($(`#${connectorId}`), "connector");
+        setType: (id, type) => {
+            if (!type) {
+                console.warn(`Unknown connector type!`);
+                return;
+            }
+            const connectorComponent = Metro.getPlugin($(`#${id}`), "connector");
             if (!connectorComponent) {
-                console.warn(`Connector with id ${connectorId} not found`);
+                console.warn(`Connector with id ${id} not found`);
+            }
+            connectorComponent.setType(type);
+        },
+
+        destroy: (id) => {
+            const connectorComponent = Metro.getPlugin($(`#${id}`), "connector");
+            if (!connectorComponent) {
+                console.warn(`Connector with id ${id} not found`);
             }
             connectorComponent.destroy();
         },

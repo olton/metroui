@@ -9,8 +9,6 @@
     };
 
     let LinkedBlockDefaultConfig = {
-        draggable: true,
-        resizable: false,
         width: null,
         height: null,
         minWidth: 0,
@@ -19,9 +17,14 @@
         maxHeight: null,
         content: "",
         showAddButtons: true,
+        addButtons: "north east south west",
         resizeHotkey: null,
+        dragHotkey: null,
         connectionType: "curve", // line, curve, zigzag
         connectionStyle: "solid", // solid, dashed, dotted
+        onePoint: false,
+        canDrag: true,
+        canResize: true,
         onAddPoint: Metro.noop,
         onRemovePoint: Metro.noop,
         onStartConnection: Metro.noop,
@@ -77,6 +80,9 @@
 
             // Додаємо основні класи
             element.addClass("linked-block");
+            if (o.onePoint) {
+                element.addClass("one-point");
+            }
 
             // Встановлюємо розміри
             if (o.width) element.css("width", o.width);
@@ -122,8 +128,8 @@
 
         _createAddButtons: function () {
             const element = this.element;
-
-            const sides = ["north", "east", "south", "west"];
+            const o = this.options;
+            const sides = o.addButtons.toArray(" ");
 
             sides.forEach((side) => {
                 const button = $("<button>")
@@ -185,8 +191,18 @@
                     const activeBlock = $(".linked-block.active-block");
                     const canResize = activeBlock.attr("data-can-resize")
                         ? JSON.parse(activeBlock.attr("data-can-resize"))
-                        : false;
+                        : o.canResize;
                     activeBlock.attr("data-can-resize", !canResize);
+                });
+            }
+
+            if (o.dragHotkey) {
+                $("body").hotkey(o.dragHotkey, () => {
+                    const activeBlock = $(".linked-block.active-block");
+                    const canDrag = activeBlock.attr("data-can-drag")
+                        ? JSON.parse(activeBlock.attr("data-can-drag"))
+                        : o.canDrag;
+                    activeBlock.attr("data-can-drag", !canDrag);
                 });
             }
         },
@@ -195,47 +211,43 @@
             const element = this.element;
             const o = this.options;
 
-            if (o.draggable) {
-                // Додаємо draggable через Metro UI
-                Metro.makePlugin(element, "draggable", {
-                    onDragStart: () => {
-                        const { top, left } = element.rect();
-                        Metro.utils.exec(o.onDragStart, [{ top, left }, element]);
-                    },
-                    onDragMove: () => {
-                        this.hoverButtons.forEach((btn) => btn.hide());
-                        this._updateConnections();
-                        const { top, left } = element.rect();
-                        Metro.utils.exec(o.onDragMove, [{ top, left }, element]);
-                    },
-                    onDragStop: () => {
-                        this.hoverButtons.forEach((btn) => btn.show());
-                        this._updateConnections();
-                        const { top, left } = element.rect();
-                        Metro.utils.exec(o.onDragEnd, [{ top, left }, element]);
-                    },
-                });
-            }
+            Metro.makePlugin(element, "draggable", {
+                canDrag: o.canDrag,
+                onDragStart: () => {
+                    const { top, left } = element.rect();
+                    Metro.utils.exec(o.onDragStart, [{ top, left }, element]);
+                },
+                onDragMove: () => {
+                    this.hoverButtons.forEach((btn) => btn.hide());
+                    this._updateConnections();
+                    const { top, left } = element.rect();
+                    Metro.utils.exec(o.onDragMove, [{ top, left }, element]);
+                },
+                onDragStop: () => {
+                    this.hoverButtons.forEach((btn) => btn.show());
+                    this._updateConnections();
+                    const { top, left } = element.rect();
+                    Metro.utils.exec(o.onDragEnd, [{ top, left }, element]);
+                },
+            });
         },
 
         _setupResizable: function () {
             const element = this.element;
             const o = this.options;
 
-            if (o.resizable) {
-                Metro.makePlugin(element, "resizable", {
-                    canResize: false,
-                    minWidth: o.minWidth,
-                    minHeight: o.minHeight,
-                    maxWidth: o.maxWidth,
-                    maxHeight: o.maxHeight,
-                    onResize: () => {
-                        const { width, height } = element.rect();
-                        this._updateConnections();
-                        Metro.utils.exec(o.onResize, [{ width, height }, element]);
-                    },
-                });
-            }
+            Metro.makePlugin(element, "resizable", {
+                canResize: o.canResize,
+                minWidth: o.minWidth,
+                minHeight: o.minHeight,
+                maxWidth: o.maxWidth,
+                maxHeight: o.maxHeight,
+                onResize: () => {
+                    const { width, height } = element.rect();
+                    this._updateConnections();
+                    Metro.utils.exec(o.onResize, [{ width, height }, element]);
+                },
+            });
         },
 
         _updateConnections: function () {

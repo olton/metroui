@@ -39,6 +39,7 @@
 <script>
     window.metroLinkedBlockSetup = {
         resizeHotkey: "alt+t",
+        dragHotkey: "alt+d",
         width: 100,
         height: 100,
         minWidth: 100,
@@ -49,8 +50,8 @@
     
     window.metroConnectorSetup = {
         deleteButton: true,
-        arrow: true,
-        lineStyle: "dotted",
+        // arrow: true,
+        // lineStyle: "dotted",
         // type: 'zigzag'
     }
 </script>
@@ -69,10 +70,9 @@
         }
         const activeConnector = $('.cl-curve.selected-path')
         if (activeConnector.length > 0) {
-            Metro.connector.destroy(activeConnector)
+            Metro.connector.destroy(activeConnector.attr("data-conn-id"))
         }
     })
-    
     
     var blockCount = 0;
     var container = $('#container');
@@ -223,6 +223,7 @@
             top: 350,
             left: 1100,
             resizable: true,
+            onePoint: true,
         });
 
         block1.connect(block2.element, {

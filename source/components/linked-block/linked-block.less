@@ -5,11 +5,12 @@
     --linked-block-min-width: 100px;
     --linked-block-min-height: 20px;
     --linked-block-border-radius: 4px;
+    --linked-block-points-gap: 4px;
     --linked-block-background: var(--default-background);
     --linked-block-color: #191919;
     --linked-block-border-color: #b1b1b1;
     --linked-block-line-color: #b1b1b1;
-    --linked-block-border-color-active: #007bff;
+    --linked-block-border-color-active: #676767;
 }
 
 .dark-side {
@@ -18,7 +19,7 @@
     --linked-block-border-color: #656a70;
     --linked-block-line-color: #656a70;
     --linked-block-point-color: #656a70;
-    --linked-block-border-color-active: #007bff;
+    --linked-block-border-color-active: #ffffff;
 }
 
 .linked-block {
@@ -37,7 +38,7 @@
         align-items: center;
         justify-content: center;
         overflow: visible;
-        gap: 4px;
+        gap: var( --linked-block-points-gap);
     }
 
     .north-side, .south-side {
@@ -78,6 +79,15 @@
         border-radius: 50%;
         background-color: var(--linked-block-point-color);
         flex: 0 0 var(--linked-block-point-size);
+    }
+    
+    &.one-point {
+        .link-point {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     }
     
     .add-point-btn {
@@ -145,16 +155,11 @@
         border-color: var( --linked-block-border-color-active);
     }
     
-    --resizer-color: var( --linked-block-border-color-active);
+    --resizer-color: var( --linked-block-border-color);
     
-    .resize-element {
-        display: none;
-    }
-    
-    &[data-can-resize=true] {
-        border-style: dashed!important;
+    &[data-can-resize=false] {
         .resize-element {
-            display: block;
+            display: none;
         }
     }
 }

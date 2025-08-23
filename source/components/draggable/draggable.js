@@ -3,6 +3,7 @@
     "use strict";
 
     let DraggableDefaultConfig = {
+        canDrag: true,
         dragContext: null,
         draggableDeferred: 0,
         dragElement: "self",
@@ -96,6 +97,10 @@
             };
 
             this.dragElement.on(Metro.events.startAll, (e) => {
+                if (o.canDrag !== true) {
+                    return;
+                }
+
                 const coord = element.position();
                 const shiftX = Metro.utils.pageXY(e).x - coord.left;
                 const shiftY = Metro.utils.pageXY(e).y - coord.top;
@@ -176,7 +181,13 @@
             this.element.data("canDrag", true);
         },
 
-        changeAttribute: (attr, val) => {},
+        changeAttribute: function (attr, val) {
+            const o = this.options;
+
+            if (attr === "data-can-drag") {
+                o.canDrag = JSON.parse(val);
+            }
+        },
 
         destroy: function () {
             const element = this.element;
