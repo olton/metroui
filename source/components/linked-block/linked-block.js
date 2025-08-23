@@ -20,6 +20,8 @@
         content: "",
         showAddButtons: true,
         resizeHotkey: null,
+        connectionType: "curve", // line, curve, zigzag
+        connectionStyle: "solid", // solid, dashed, dotted
         onAddPoint: Metro.noop,
         onRemovePoint: Metro.noop,
         onStartConnection: Metro.noop,
@@ -368,7 +370,8 @@
             // Створюємо постійне з'єднання типу curve
             const connectionId = `connection-${Date.now()}`;
             const connector = Metro.connector.create(globalConnectionState.sourcePoint[0], targetPoint[0], {
-                // type: connector.options.type || "curve",
+                type: o.connectionType,
+                lineStyle: o.connectionStyle,
                 container: globalConnectionState.sourceBlock.element.parent(),
                 id: connectionId,
                 autoUpdate: true,

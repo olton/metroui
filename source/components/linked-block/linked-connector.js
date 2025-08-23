@@ -9,6 +9,8 @@
         autoUpdate: true, // автоматичне оновлення при переміщенні блоків
         id: null, // унікальний ID для з'єднання
         deleteButton: false,
+        arrow: false,
+        lineStyle: "solid", // solid, dashed, dotted
         onConnectorCreate: Metro.noop,
         onConnectorUpdate: Metro.noop,
         onConnectorDestroy: Metro.noop,
@@ -79,6 +81,14 @@
             // Створюємо елемент шляху/лінії для поточного конектора у спільному SVG
             const shape = this._createShape(o.id, o.type, sharedSvg);
             const deleteBtn = this._createDeleteButton(sharedSvg, o.id);
+
+            if (o.arrow) {
+                const markerId = this._ensureArrowMarker(sharedSvg);
+                shape.attr("marker-end", `url(#${markerId})`);
+            }
+
+            // Застосувати стиль лінії
+            this._applyLineStyle(shape, o.lineStyle);
 
             // Зберігаємо з'єднання
             this.connections.set(o.id, {
@@ -191,6 +201,53 @@
             return svg;
         },
 
+        _ensureArrowMarker: (svg) => {
+            const ns = "http://www.w3.org/2000/svg";
+            const markerId = "connector-arrow";
+            let defs = svg.find("defs");
+            if (!defs.length) {
+                const d = document.createElementNS(ns, "defs");
+                svg[0].appendChild(d);
+                defs = $(d);
+            }
+            let marker = defs.find(`#${markerId}`);
+            if (!marker.length) {
+                const m = document.createElementNS(ns, "marker");
+                m.setAttribute("id", markerId);
+                m.setAttribute("markerWidth", "6");
+                m.setAttribute("markerHeight", "6");
+                m.setAttribute("refX", "5");
+                m.setAttribute("refY", "3");
+                m.setAttribute("orient", "auto");
+                // Шкала від товщини штриха лінії
+                m.setAttribute("markerUnits", "strokeWidth");
+
+                // Дві лінії (половинний розмір)
+                const line1 = document.createElementNS(ns, "line");
+                line1.setAttribute("x1", "1");
+                line1.setAttribute("y1", "1");
+                line1.setAttribute("x2", "5");
+                line1.setAttribute("y2", "3");
+                line1.setAttribute("stroke", "context-stroke");
+                line1.setAttribute("stroke-linecap", "round");
+
+                const line2 = document.createElementNS(ns, "line");
+                line2.setAttribute("x1", "1");
+                line2.setAttribute("y1", "5");
+                line2.setAttribute("x2", "5");
+                line2.setAttribute("y2", "3");
+                line2.setAttribute("stroke", "context-stroke");
+                line2.setAttribute("stroke-linecap", "round");
+
+                m.appendChild(line1);
+                m.appendChild(line2);
+
+                defs[0].appendChild(m);
+                marker = $(m);
+            }
+            return markerId;
+        },
+
         _createShape: (id, type, svg) => {
             const ns = "http://www.w3.org/2000/svg";
             let el;
@@ -270,34 +327,6 @@
             return $(g);
         },
 
-        // Публічні методи
-        update: function () {
-            const o = this.options;
-            const connection = this.connections.get(o.id);
-
-            if (!connection) return;
-
-            switch (o.type) {
-                case "line":
-                    this._updateLine(connection.pointA, connection.pointB, connection.shape);
-                    break;
-                case "curve":
-                    this._updateCurve(connection.pointA, connection.pointB, connection.shape);
-                    break;
-                case "zigzag":
-                    this._updateZigzag(connection.pointA, connection.pointB, connection.shape);
-                    break;
-            }
-
-            // Позиціюємо кнопку видалення у центрі лінії/шляху
-            this._positionDeleteButton(connection);
-
-            this._fireEvent("connector-update", {
-                connection: connection,
-                type: o.type,
-            });
-        },
-
         _positionDeleteButton: (connection) => {
             const { type, shape, deleteBtn } = connection;
             if (!deleteBtn || !deleteBtn.length || !shape || !shape.length) return;
@@ -331,61 +360,6 @@
             const offsetX = 10; // половина діаметра bg кола
             const offsetY = 10;
             deleteBtn.attr("transform", `translate(${cx - offsetX}, ${cy - offsetY})`);
-        },
-
-        setType: function (type) {
-            if (["line", "curve", "zigzag"].indexOf(type) === -1) {
-                console.warn("Connector: невідомий тип з'єднання:", type);
-                return;
-            }
-
-            const o = this.options;
-            const oldType = o.type;
-            o.type = type;
-
-            // Створюємо новий shape-елемент у спільному SVG
-            const connection = this.connections.get(o.id);
-            const oldShape = connection?.shape;
-            const svg = connection?.svg || this.svgElement || this._getOrCreateSharedSVG(o.container);
-            const newShape = this._createShape(o.id, type, svg);
-
-            if (oldShape?.length) {
-                oldShape.remove();
-            }
-
-            // Оновлюємо з'єднання
-            this.connections.set(o.id, {
-                ...connection,
-                type: type,
-                old: oldType,
-                svg: svg,
-                shape: newShape,
-                deleteBtn: connection?.deleteBtn,
-            });
-
-            this.update();
-        },
-
-        setPoints: function (pointA, pointB) {
-            const o = this.options;
-
-            o.pointA = pointA;
-            o.pointB = pointB;
-
-            // Оновлюємо з'єднання
-            this.connections.set(o.id, {
-                ...this.connections.get(o.id),
-                pointA: pointA,
-                pointB: pointB,
-            });
-
-            // Переналаштовуємо автоновлення
-            if (o.autoUpdate) {
-                this._cleanupAutoUpdate();
-                this._setupAutoUpdate();
-            }
-
-            this.update();
         },
 
         // Приватні методи оновлення
@@ -438,6 +412,8 @@
             const side1 = parent1.attr("class").match(/(north|south|east|west)-side/)?.[1] || "north";
             const side2 = parent2.attr("class").match(/(north|south|east|west)-side/)?.[1] || "north";
 
+            const magic = 20;
+
             // Спеціальна логіка для точок на одній стороні
             if (side1 === side2) {
                 const controlOffset = Math.max(60, distance * 0.3);
@@ -445,26 +421,26 @@
                 switch (side1) {
                     case "north":
                         cp1x = x1;
-                        cp1y = y1 - controlOffset;
+                        cp1y = y1 - controlOffset - magic;
                         cp2x = x2;
-                        cp2y = y2 - controlOffset;
+                        cp2y = y2 - controlOffset - magic;
                         break;
                     case "south":
                         cp1x = x1;
-                        cp1y = y1 + controlOffset;
+                        cp1y = y1 + controlOffset + magic;
                         cp2x = x2;
-                        cp2y = y2 + controlOffset;
+                        cp2y = y2 + controlOffset + magic;
                         break;
                     case "east":
-                        cp1x = x1 + controlOffset;
+                        cp1x = x1 + controlOffset - magic;
                         cp1y = y1;
-                        cp2x = x2 + controlOffset;
+                        cp2x = x2 + controlOffset - magic;
                         cp2y = y2;
                         break;
                     case "west":
-                        cp1x = x1 - controlOffset;
+                        cp1x = x1 - controlOffset + magic;
                         cp1y = y1;
-                        cp2x = x2 - controlOffset;
+                        cp2x = x2 - controlOffset + magic;
                         cp2y = y2;
                         break;
                 }
@@ -473,13 +449,13 @@
                 const direction = this._getDirection(parent1, parent2);
 
                 if (direction === "horizontal") {
-                    const controlDistance = Math.abs(dx) * 0.4;
+                    const controlDistance = Math.abs(dx) * 0.4 + magic;
                     cp1x = x1 + (dx > 0 ? controlDistance : -controlDistance);
                     cp1y = y1;
                     cp2x = x2 - (dx > 0 ? controlDistance : -controlDistance);
                     cp2y = y2;
                 } else {
-                    const controlDistance = Math.abs(dy) * 0.4;
+                    const controlDistance = Math.abs(dy) * 0.4 + magic;
                     cp1x = x1;
                     cp1y = y1 + (dy > 0 ? controlDistance : -controlDistance);
                     cp2x = x2;
@@ -685,9 +661,150 @@
             $(document).off(".connector." + o.id);
         },
 
+        _getStrokeWidth: (shape) => {
+            const sw = parseFloat(getComputedStyle(shape[0]).strokeWidth || "1");
+            return isFinite(sw) ? sw : 1;
+        },
+
+        _getDashArray: function (style, shape) {
+            const sw = this._getStrokeWidth(shape);
+            switch ((style || "").toLowerCase()) {
+                case "dashed":
+                    // довжина штриха ~6*sw, проміжок ~4*sw
+                    return `${Math.max(4, 6 * sw)} ${Math.max(3, 4 * sw)}`;
+                case "dotted":
+                    // крапки: короткий штрих і довший проміжок
+                    return `${Math.max(1, 1.5 * sw)} ${Math.max(2, 3 * sw)}`;
+                case "solid":
+                default:
+                    return null;
+            }
+        },
+
+        _applyLineStyle: function (shape, style) {
+            const dash = this._getDashArray(style, shape);
+            if (dash) {
+                shape.attr("stroke-dasharray", dash);
+                shape.attr("data-line-style", style);
+            } else {
+                shape.removeAttr("stroke-dasharray");
+                shape.attr("data-line-style", "solid");
+            }
+        },
+
+        // Публічні методи
+        setType: function (type) {
+            if (["line", "curve", "zigzag"].indexOf(type) === -1) {
+                console.warn("Connector: невідомий тип з'єднання:", type);
+                return;
+            }
+
+            const o = this.options;
+            const oldType = o.type;
+            o.type = type;
+
+            // Створюємо новий shape-елемент у спільному SVG
+            const connection = this.connections.get(o.id);
+            const oldShape = connection?.shape;
+            const svg = connection?.svg || this.svgElement || this._getOrCreateSharedSVG(o.container);
+            const newShape = this._createShape(o.id, type, svg);
+
+            if (o.arrow) {
+                const markerId = this._ensureArrowMarker(svg);
+                newShape.attr("marker-end", `url(#${markerId})`);
+            }
+
+            // застосувати поточний стиль лінії
+            this._applyLineStyle(newShape, o.lineStyle);
+
+            if (oldShape?.length) {
+                oldShape.remove();
+            }
+
+            // Оновлюємо з'єднання
+            this.connections.set(o.id, {
+                ...connection,
+                type: type,
+                old: oldType,
+                svg: svg,
+                shape: newShape,
+                deleteBtn: connection?.deleteBtn,
+            });
+
+            this.update();
+        },
+
+        setPoints: function (pointA, pointB) {
+            const o = this.options;
+
+            o.pointA = pointA;
+            o.pointB = pointB;
+
+            // Оновлюємо з'єднання
+            this.connections.set(o.id, {
+                ...this.connections.get(o.id),
+                pointA: pointA,
+                pointB: pointB,
+            });
+
+            // Переналаштовуємо автоновлення
+            if (o.autoUpdate) {
+                this._cleanupAutoUpdate();
+                this._setupAutoUpdate();
+            }
+
+            this.update();
+        },
+
+        update: function () {
+            const o = this.options;
+            const connection = this.connections.get(o.id);
+
+            if (!connection) return;
+
+            switch (o.type) {
+                case "line":
+                    this._updateLine(connection.pointA, connection.pointB, connection.shape);
+                    break;
+                case "curve":
+                    this._updateCurve(connection.pointA, connection.pointB, connection.shape);
+                    break;
+                case "zigzag":
+                    this._updateZigzag(connection.pointA, connection.pointB, connection.shape);
+                    break;
+            }
+
+            // Позиціюємо кнопку видалення у центрі лінії/шляху
+            this._positionDeleteButton(connection);
+
+            this._fireEvent("connector-update", {
+                connection: connection,
+                type: o.type,
+            });
+        },
+
+        setLineStyle: function (style) {
+            const allowed = ["solid", "dashed", "dotted"];
+            if (allowed.indexOf((style || "").toLowerCase()) === -1) {
+                console.warn("Connector: невідомий стиль лінії:", style);
+                return;
+            }
+            const o = this.options;
+            o.lineStyle = style.toLowerCase();
+
+            const connection = this.connections.get(o.id);
+            if (!connection?.shape) return;
+
+            this._applyLineStyle(connection.shape, o.lineStyle);
+            this.update();
+        },
+
         changeAttribute: function (attr, newValue) {
             if (attr === "data-type") {
                 this.setType(newValue);
+            }
+            if (attr === "data-line-style") {
+                this.setLineStyle(newValue);
             }
         },
 
