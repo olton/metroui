@@ -81,8 +81,8 @@
             const element = this.element;
             const o = this.options;
 
-            this.id = element.attr("id") || Hooks.useId(this.elem)
-            
+            this.id = element.attr("id") || Hooks.useId(this.elem);
+
             if (Metro.fullScreenEnabled === false) {
                 o.fullScreenMode = Metro.fullScreenMode.WINDOW;
             }

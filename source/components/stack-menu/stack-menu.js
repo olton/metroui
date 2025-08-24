@@ -66,10 +66,8 @@
             element.on(Metro.events.click, "li", function (e) {
                 e.preventDefault();
                 e.stopPropagation();
-
-                const el = this;
-                const key = $(el).attr("data-menu-id");
-                const title = that._getText($(el).children("a")[0]);
+                const key = $(this).attr("data-menu-id");
+                const title = that._getText($(this).children("a")[0]);
 
                 if (key && that.menus.has(key)) {
                     // Додаємо поточний стан до стеку

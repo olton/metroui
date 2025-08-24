@@ -168,15 +168,12 @@
 
                 this.observers.set(o.id, observer);
             }
-
-            // Також підписуємось на події drag
-            const self = this;
             $(document).on("drag-move.connector." + o.id, () => {
-                setTimeout(() => self.update(), 10);
+                setTimeout(() => this.update(), 10);
             });
 
             $(document).on("drag-stop.connector." + o.id, () => {
-                setTimeout(() => self.update(), 10);
+                setTimeout(() => this.update(), 10);
             });
         },
 

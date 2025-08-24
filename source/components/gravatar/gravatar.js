@@ -48,9 +48,9 @@
             element.css({
                 height: o.size + "px",
                 width: o.size + "px",
-            })
+            });
         },
-        
+
         getImage: function (email, size, def, is_object) {
             const image = $("<img>").attr("alt", email);
 

@@ -1,4 +1,4 @@
-import { HTML, CSS, cssLoader, info, jsLoader, render } from "@olton/html";
+import { CSS, cssLoader, HTML, info, jsLoader, render } from "@olton/html";
 
 globalThis.HTML = {
     cssLoader,

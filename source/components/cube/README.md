@@ -1,247 +1,244 @@
 # Cube
 
-A 3D cube visualization component with animated cells that can be used for decorative or interactive purposes. The cube displays a three-sided 3D object with cells that can flash according to predefined or custom rules.
+A 3D-styled cube visualization composed of three visible sides (left, right, top), each divided into a grid of cells. Cells can "flash" (light up) over time according to configurable rules, making the component useful for status dashboards, activity indicators, or decorative effects. Optional axis lines can be shown for orientation.
 
 ## Dependencies
 
-- Metro UI Core
-- Dom
-- Farbe (for color manipulation)
+- Farbe (color utilities)
 
 ## Usage
 
 ### Basic Usage
 
+Include the Metro build outputs (make sure you ran `npm run dev` or `npm run build`):
+
 ```html
-<!-- Basic cube with default settings -->
+<link rel="stylesheet" href="./lib/metro.css">
+<script src="./lib/metro.js"></script>
+
 <div data-role="cube"></div>
 ```
 
-### With Custom Flash Color
+By default, the cube uses built-in flashing rules and hides axis lines.
+
+### Show Axis and Choose Axis Style
 
 ```html
-<!-- Cube with orange flash color -->
-<div data-role="cube" data-flash-color="orange"></div>
-```
-
-### With Custom Cell Count and Margin
-
-```html
-<!-- Cube with 5x5 cells grid and smaller margins -->
-<div data-role="cube" data-cells="5" data-margin="4"></div>
-```
-
-### With Visible Axes
-
-```html
-<!-- Cube with visible axes -->
 <div data-role="cube" data-show-axis="true" data-axis-style="arrow"></div>
 ```
 
-### With Custom Rules
+Available axis styles: `arrow` (default), `line`, `no-style`.
+
+### Grid Size and Cell Numbers
 
 ```html
-<!-- Cube with custom animation rules -->
-<div data-role="cube" data-rules='[
-  {
-    "on": { "top": [1, 5, 9], "left": [4, 8, 12], "right": [3, 7, 11] },
-    "off": { "top": [13, 16], "left": [1, 2], "right": [14, 15] }
-  }
-]'></div>
+<div data-role="cube" data-cells="5" data-numbers="true"></div>
 ```
 
-### With Cell Numbers
+- `data-cells` controls the N×N grid for each side. Default is 4.
+- `data-numbers` renders cell numbers for development or demonstration.
+
+### Custom Colors
 
 ```html
-<!-- Cube with numbered cells -->
-<div data-role="cube" data-numbers="true"></div>
+<div
+  data-role="cube"
+  data-color="#222831"
+  data-flash-color="#00bcd4"
+></div>
+```
+
+- `data-color` sets the base cell background color.
+- `data-flash-color` sets the flashing (active) color.
+
+### Custom Flashing Rules
+
+Rules define which cells on which side turn on/off at each tick. Provide as JSON via `data-rules` or set programmatically. Each rule step can specify `on` and/or `off` per side (`left`, `right`, `top`) with arrays of 1-based cell ids.
+
+```html
+<div
+  id="cube1"
+  data-role="cube"
+  data-rules='[
+    { "on":  { "top": [1,2],   "left": [3],     "right": [4] } },
+    { "off": { "top": [2],     "left": [3],     "right": [4] },
+      "on":  { "top": [5,6] } },
+    { "on":  { "left": [7,8],  "right": [9] } }
+  ]'
+></div>
+```
+
+If `data-rules` is omitted, a built-in pattern (`Metro.cubeDefaultRules`) is used.
+
+### Programmatic Initialization
+
+```html
+<div id="myCube"></div>
+<script>
+  // Create the plugin
+  const el = Metro.makePlugin("#myCube", "cube", {
+    showAxis: true,
+    axisStyle: "line",
+    cells: 4,
+    numbers: false,
+  });
+
+  // Access the API
+  const cube = Metro.getPlugin("#myCube", "cube");
+  cube.toRule(2); // move to rule #2 (0-based index) and hold, then auto-restart if configured
+</script>
 ```
 
 ## Plugin Parameters
 
-| Parameter | Type | Default | Description |
-| --------- | ---- | ------- | ----------- |
-| `cubeDeferred` | number | 0 | Delay in milliseconds before the cube initialization |
-| `rules` | object/array | null | Custom rules for cell animation. If null, default rules are used |
-| `color` | string | null | Custom color for cells (CSS color or class name) |
-| `flashColor` | string | null | Custom color for flashing cells |
-| `flashInterval` | number | 1000 | Interval in milliseconds between flashes |
-| `numbers` | boolean | false | When true, displays numbers in cells |
-| `offBefore` | boolean | true | When true, turns off all cells before starting a new animation |
-| `attenuation` | number | 0.3 | Attenuation factor for the pulsing effect (0-1) |
-| `stopOnBlur` | boolean | false | When true, stops animation when window loses focus |
-| `cells` | number | 4 | Number of cells per side (creates a cells×cells grid) |
-| `margin` | number | 8 | Margin between cells in pixels |
-| `showAxis` | boolean | false | When true, displays coordinate axes |
-| `axisStyle` | string | "arrow" | Style of the axes ("arrow", "line", or "no-style") |
-| `cellClick` | boolean | false | When true, allows toggling cell state by clicking |
-| `autoRestart` | number | 5000 | Time in milliseconds before auto-restarting animation after toRule() |
-| `clsCube` | string | "" | Additional CSS class for the cube container |
-| `clsCell` | string | "" | Additional CSS class for cells |
-| `clsSide` | string | "" | Additional CSS class for cube sides |
-| `clsSideLeft` | string | "" | Additional CSS class for the left side |
-| `clsSideRight` | string | "" | Additional CSS class for the right side |
-| `clsSideTop` | string | "" | Additional CSS class for the top side |
-| `clsSideLeftCell` | string | "" | Additional CSS class for cells on the left side |
-| `clsSideRightCell` | string | "" | Additional CSS class for cells on the right side |
-| `clsSideTopCell` | string | "" | Additional CSS class for cells on the top side |
-| `clsAxis` | string | "" | Additional CSS class for axes |
-| `clsAxisX` | string | "" | Additional CSS class for X axis |
-| `clsAxisY` | string | "" | Additional CSS class for Y axis |
-| `clsAxisZ` | string | "" | Additional CSS class for Z axis |
-| `custom` | function | Metro.noop | Custom function for animation instead of default rules |
-| `onTick` | function | Metro.noop | Callback function triggered on each animation step |
-| `onCubeCreate` | function | Metro.noop | Callback function triggered when cube is created |
+Parameter | Type | Default | Description
+--------- | ---- | ------- | -----------
+`cubeDeferred` | number | 0 | Optional deferred initialization time (ms) handled by Metro’s core (common across components).
+`rules` | object|string|null | `null` | Flashing rules. Object or JSON string. If null, uses `Metro.cubeDefaultRules`.
+`color` | string|null | `null` | Base cell background color. If a valid color, sets CSS var `--cube-background`.
+`flashColor` | string|null | `null` | Flash color for active cells. If valid, sets CSS var `--cube-background-flash`.
+`flashInterval` | number | 1000 | Interval in ms used as a base for ticks and rule step timing.
+`numbers` | boolean | false | If true, displays 1-based indices inside cells.
+`cells` | number | 4 | Number of cells per side edge (N). Each side contains N×N cells.
+`showAxis` | boolean | false | Show/hide axis guides over the cube.
+`axisStyle` | string | "arrow" | Axis rendering style: `arrow`, `line`, or `no-style`.
+`cellClick` | boolean | false | If true, clicking a cell toggles its light state.
+`autoRestart` | number | 5000 | After calling `toRule(index, ...)`, automatically restart the autoplay after this timeout (ms). Use `0` or non-integer to disable.
+`clsCube` | string | "" | Extra class(es) for the root cube element.
+`clsCell` | string | "" | Extra class(es) added to each cell.
+`clsSide` | string | "" | Extra class(es) for every side.
+`clsSideLeft` | string | "" | Extra class(es) for the left side.
+`clsSideRight` | string | "" | Extra class(es) for the right side.
+`clsSideTop` | string | "" | Extra class(es) for the top side.
+`clsAxis` | string | "" | Extra class(es) for each axis element.
+`clsAxisX` | string | "" | Extra class(es) for X axis.
+`clsAxisY` | string | "" | Extra class(es) for Y axis.
+`clsAxisZ` | string | "" | Extra class(es) for Z axis.
+`onTick` | function | `Metro.noop` | Callback executed on every rule tick. Receives the tick index.
+`onCubeCreate` | function | `Metro.noop` | Callback when cube is created (also emitted as `cube-create` event).
 
-## API Methods
+Notes:
+- The options `clsSideLeftCell`, `clsSideRightCell`, `clsSideTopCell` are present in defaults for potential styling, but are not applied in the current implementation.
 
-+ `start()` - Starts the cube animation.
-+ `stop()` - Stops the cube animation.
-+ `toRule(index, speed)` - Executes rules up to the specified index. Optional `speed` parameter controls animation speed.
-+ `rule(r)` - Gets current rules when called without arguments, or sets new rules when provided with rules object/array.
-+ `axis(show)` - Shows or hides the coordinate axes based on the boolean `show` parameter.
-+ `changeRules()` - Updates rules from the `data-rules` attribute.
-+ `changeAxisVisibility()` - Updates axis visibility from the `data-show-axis` attribute.
-+ `changeAxisStyle()` - Updates axis style from the `data-axis-style` attribute.
-+ `changeAttribute(attributeName)` - Updates component based on changed attribute.
-+ `destroy()` - Removes the cube component and cleans up event handlers.
+#### Example of Parameter Usage
 
-### Example of Method Usage
-
-```javascript
-// Get the cube component
-const cube = Metro.getPlugin('#myCube', 'cube');
-
-// Start the animation
-cube.start();
-
-// Stop the animation
-cube.stop();
-
-// Execute rules up to index 2
-cube.toRule(2);
-
-// Show the axes
-cube.axis(true);
-
-// Set custom rules
-cube.rule([
-  {
-    on: { top: [1, 5, 9], left: [4, 8, 12], right: [3, 7, 11] },
-    off: { top: [13, 16], left: [1, 2], right: [14, 15] }
-  }
-]);
+```html
+<div
+  data-role="cube"
+  data-show-axis="true"
+  data-axis-style="line"
+  data-cells="6"
+  data-numbers="true"
+  data-color="#0f172a"
+  data-flash-color="#22d3ee"
+></div>
 ```
 
 ## Events
 
-| Event | Description |
-| ----- | ----------- |
-| `onTick` | Triggered on each animation step with the current rule index |
-| `onCubeCreate` | Triggered when the cube is created |
+Event | Description
+----- | -----------
+`cube-create` | Fired when the cube structure and events are initialized.
+`tick` | Fired on each rule step tick; includes `{ index }` in event detail.
+
+#### Example of Event Usage
+
+```html
+<div id="cube2" data-role="cube" data-on-cube-create="onCreated" data-on-tick="onTick"></div>
+<script>
+  function onCreated(e) {
+    console.log("cube created", e.detail);
+  }
+  function onTick(e) {
+    console.log("tick", e.detail.index);
+  }
+</script>
+```
+
+## API Methods
+
+- `start()` — Start/restart the flashing sequence from the beginning of the rules.
+- `stop()` — Stop any ongoing flashing and clear timers.
+- `toRule(index, speed)` — Show the cumulative result up to the rule at `index` (0-based). Optional `speed` overrides the default step timing for this call. If `autoRestart` is a positive integer, the autoplay restarts after that timeout.
+- `rule()` — Getter; returns the currently active rules object.
+- `rule(rules)` — Setter; accepts object or JSON string rules, applies them, and restarts the sequence.
+- `axis(show)` — Show/hide axis programmatically (`true` to show, `false` to hide).
+- `changeRules()` — Re-read `data-rules` from the element, apply, and restart.
+- `changeAxisVisibility()` — Re-read `data-show-axis` from the element and apply visibility.
+- `changeAxisStyle()` — Re-read `data-axis-style` from the element and apply style (`arrow`, `line`, `no-style`).
+- `changeAttribute(name)` — Internal helper used by Metro when `data-*` attributes change; routes to the corresponding change method.
+- `destroy()` — Remove event handlers and timers. Returns the element.
+
+#### Example of Method Usage
+
+```javascript
+const cube = Metro.getPlugin('#cube1', 'cube');
+
+cube.stop();
+
+// Jump to a specific rule step (0-based). Optionally pass a custom speed for tick spacing.
+cube.toRule(3, 300);
+
+// Update rules programmatically
+cube.rule([
+  { on: { left: [1,2,3] } },
+  { on: { right: [4,5,6] }, off: { left: [2] } },
+]);
+
+// Toggle axis programmatically
+cube.axis(true);
+```
 
 ## Styling with CSS Variables
 
-The Cube component uses several LESS variables for styling that can be customized:
-
-| Variable | Default | Description |
-| -------- | ------- | ----------- |
-| `@cubeCellBackground` | #231F20 | Background color of cube cells |
-| `@cubeCellBorder` | #303030 | Border color of cube cells |
-| `@cubeCellColor` | #767676 | Color for cube cell shadows |
-| `@cubeCellFlash` | #c4122f | Color for flashing cells and axes |
+Variable | Default (Light) | Dark Mode | Description
+-------- | ---------------- | --------- | -----------
+`--cube-size` | 24px | 24px | Cell size (width/height). Computed at runtime to fill the side but can be overridden.
+`--cube-gap` | 4px | 4px | Gap between cells within a side.
+`--cube-border-color` | #767676 | #767676 | Cell border color.
+`--cube-background` | var(--default-background) | var(--default-background) | Base cell background color.
+`--cube-color` | var(--default-color) | var(--default-color) | Cell text color (used with `numbers`).
+`--cube-background-flash` | var(--color-primary) | var(--color-primary) | Flashing background color for active cells.
+`--cube-color-flash` | #ffffff | #ffffff | Text color when a cell is lit.
+`--cube-axis-color` | #191919 | #ffffff | Axis color.
+`--cube-side-border-color` | transparent | transparent | Border color for each side container.
 
 ### Example of Custom Styling
 
 ```css
-/* Custom styling for a cube */
 #myCube {
-    --cube-cell-background: #1a1a1a;
-    --cube-cell-border: #2a2a2a;
-    --cube-cell-color: #555555;
-    --cube-cell-flash: #00a1e4;
+  --cube-size: 18px;           /* make cells smaller */
+  --cube-gap: 2px;             /* tighter grid */
+  --cube-background: #111827;  /* slate-900 */
+  --cube-background-flash: #22c55e; /* emerald-500 */
+  --cube-axis-color: #94a3b8;  /* slate-400 */
 }
 ```
 
 ## Available CSS Classes
 
 ### Base Classes
-- `.cube` - Main container class
-- `.side` - Class for cube sides
-- `.cube-cell` - Class for individual cells
-- `.axis` - Class for coordinate axes
+- `.cube` — Root element of the component.
+- `.side` — A cube face container. Specific side classes are added together with this base class.
+- `.left-side`, `.right-side`, `.top-side` — Specific faces of the cube.
+- `.cube-cell` — Individual cell inside a side grid.
+- `.axis` — Axis guide element.
 
-### Side Classes
-- `.left-side` - Left side of the cube
-- `.right-side` - Right side of the cube
-- `.top-side` - Top side of the cube
+### Modifiers
+- `.light` — Applied to cells that are lit; enables animation and flash colors.
+- `.axis-x`, `.axis-y`, `.axis-z` — X/Y/Z axes.
+- `.arrow`, `.line`, `.no-style` — Axis styles.
 
-### State Classes
-- `.light` - Applied to cells when they are illuminated
+## Additional Notes
 
-### Axis Style Classes
-- `.arrow` - Arrow style for axes
-- `.line` - Line style for axes
-- `.no-style` - No decorations for axes
-- `.axis-x` - X axis
-- `.axis-y` - Y axis
-- `.axis-z` - Z axis
+- The component auto-generates the required DOM structure (sides, cells, axes). You only need a container element with `data-role="cube"` or initialize via `Metro.makePlugin()`.
+- The cube uses built-in rules if none are provided. When you provide custom rules, validate your JSON; malformed JSON is ignored and a warning is logged.
+- Cell IDs are 1-based within each side and go from 1 to `cells*cells`.
+- When `cellClick` is true, manual toggles do not affect the automated schedule; subsequent ticks may override cell states.
 
-## Global Configuration
+## Best Practices
 
-You can set global defaults for all cube components:
-
-```javascript
-Metro.cubeSetup({
-    cells: 5,
-    margin: 4,
-    flashInterval: 800,
-    showAxis: true
-});
-```
-
-## Complete Example
-
-```html
-<div id="animatedCube"
-     data-role="cube"
-     data-cells="5"
-     data-margin="4"
-     data-flash-color="#00a1e4"
-     data-show-axis="true"
-     data-axis-style="arrow"
-     data-numbers="true"
-     data-stop-on-blur="true">
-</div>
-
-<script>
-    // Access the cube component
-    const cube = Metro.getPlugin('#animatedCube', 'cube');
-    
-    // Add a custom event handler
-    cube.element.on(Metro.events.click, function() {
-        cube.stop();
-        setTimeout(function() {
-            cube.start();
-        }, 1000);
-    });
-</script>
-```
-
-## JavaScript Initialization
-
-You can also initialize the cube component via JavaScript:
-
-```javascript
-Metro.makePlugin('#myCube', 'cube', {
-    cells: 5,
-    margin: 4,
-    flashColor: '#00a1e4',
-    showAxis: true,
-    axisStyle: 'arrow',
-    numbers: true,
-    onTick: function(index) {
-        console.log('Animation step:', index);
-    }
-});
-```
+- Keep `flashInterval` reasonable; very small values can create a large number of timers.
+- If you jump to a rule using `toRule`, consider `autoRestart` to resume playback automatically.
+- Prefer programmatic rule updates via `cube.rule(newRules)` during dynamic interactions; it validates and restarts safely.
+- Override CSS variables on the root cube element or a wrapper for scoped theming.

@@ -9,6 +9,7 @@
 :root {
     --cube-size: 24px;
     --cube-gap: 4px;
+    --cube-cell-border-radius: 4px;
     --cube-border-color: #767676;
     --cube-background: var(--default-background);
     --cube-color: var(--default-color);
@@ -51,6 +52,7 @@
         bottom: 38px;
         left: 0;
         border: 1px solid var(--cube-side-border-color);
+        border-radius: calc(var(--cube-cell-border-radius) * 2);
     }
 
     .side {
@@ -79,12 +81,12 @@
             position: relative;
             width: var(--cube-size);
             height: var(--cube-size);
-            //margin: calc(var(--cube-size) / 3);
             flex-grow: 0;
             flex-shrink: 0;
             background-color: var(--cube-background);
             color: var(--cube-color);
             border: 1px solid var(--cube-border-color);
+            border-radius: var(--cube-cell-border-radius);
             transition: @transition-base;
             line-height: var(--cube-size);
             text-align: center;

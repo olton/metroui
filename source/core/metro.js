@@ -1,9 +1,7 @@
-import { Props } from "./props.js";
 import { Component } from "./component.js";
+import { Props } from "./props.js";
 
 (($) => {
-    "use strict";
-
     if (typeof Dom === "undefined") {
         throw new Error("Metro UI requires Dom library!");
     }

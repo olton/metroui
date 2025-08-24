@@ -373,7 +373,7 @@
             }
 
             for (const key in this.params) {
-                if (this.params.hasOwnProperty(key)) {
+                if (Object.hasOwn(this.params, key)) {
                     url += `&${key}=${encodeURIComponent(this.params[key])}`;
                 }
             }
@@ -402,7 +402,7 @@
                 this.params = {};
             }
             for (const key in params) {
-                if (params.hasOwnProperty(key)) {
+                if (Object.hasOwn(params, key)) {
                     this.params[key] = params[key];
                 }
             }

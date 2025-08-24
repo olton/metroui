@@ -1,4 +1,4 @@
-import { Farbe, MetroColorPalette, Palette, Primitives, Routines, StandardColorPalette, info } from "@olton/farbe";
+import { Farbe, info, MetroColorPalette, Palette, Primitives, Routines, StandardColorPalette } from "@olton/farbe";
 
 globalThis.Farbe = Farbe;
 globalThis.farbe = (c) => new Farbe(c);

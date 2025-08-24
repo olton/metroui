@@ -35,7 +35,7 @@
             const element = this.element;
 
             this.id = Hooks.useId(this.elem);
-            
+
             this.size = {
                 width: element.width(),
                 height: element.height(),

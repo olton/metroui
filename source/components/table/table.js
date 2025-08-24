@@ -19,8 +19,6 @@ const TABLE_COL_OPTIONS = {
 };
 
 ((Metro, $) => {
-    "use strict";
-
     let TableDefaultConfig = {
         caption: "",
         // cardMode: "",

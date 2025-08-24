@@ -1,84 +1,84 @@
 ((Metro, $) => {
-	// biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
-	"use strict";
+    // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
+    "use strict";
 
-	const TOAST_TIMEOUT = 3000;
-	const TOAST_DISTANCE = 20;
-	const TOAST_DURATION = 200;
+    const TOAST_TIMEOUT = 3000;
+    const TOAST_DISTANCE = 20;
+    const TOAST_DURATION = 200;
 
-	Metro.TOAST_POSITION = {
-		TOP: "top",
-		BOTTOM: "bottom",
-		CENTER: "center",
-	};
+    Metro.TOAST_POSITION = {
+        TOP: "top",
+        BOTTOM: "bottom",
+        CENTER: "center",
+    };
 
-	let ToastDefaultConfig = {
-		callback: Metro.noop,
-		timeout: TOAST_TIMEOUT,
-		distance: TOAST_DISTANCE,
-		position: Metro.TOAST_POSITION.BOTTOM, // top, bottom, center
-		clsToast: "",
-	};
+    let ToastDefaultConfig = {
+        callback: Metro.noop,
+        timeout: TOAST_TIMEOUT,
+        distance: TOAST_DISTANCE,
+        position: Metro.TOAST_POSITION.BOTTOM, // top, bottom, center
+        clsToast: "",
+    };
 
-	Metro.toastSetup = (options) => {
-		ToastDefaultConfig = $.extend({}, ToastDefaultConfig, options);
-	};
+    Metro.toastSetup = (options) => {
+        ToastDefaultConfig = $.extend({}, ToastDefaultConfig, options);
+    };
 
-	if (typeof globalThis.metroToastSetup !== "undefined") {
-		Metro.toastSetup(globalThis.metroToastSetup);
-	}
+    if (typeof globalThis.metroToastSetup !== "undefined") {
+        Metro.toastSetup(globalThis.metroToastSetup);
+    }
 
-	/**
-	 * @param {string} message
-	 * @param {object || function} options {callback, timeout, distance, position, clsToast}
-	 */
-	const Toast = {
-		create: (message, opt) => {
-			let o;
-			let toast;
+    /**
+     * @param {string} message
+     * @param {object || function} options {callback, timeout, distance, position, clsToast}
+     */
+    const Toast = {
+        create: (message, opt) => {
+            let o;
+            let toast;
 
-			if (typeof opt === "function") {
-				opt = $.extend({}, ToastDefaultConfig, { callback: opt });
-			}
+            if (typeof opt === "function") {
+                opt = $.extend({}, ToastDefaultConfig, { callback: opt });
+            }
 
-			o = $.extend({}, ToastDefaultConfig, opt);
+            o = $.extend({}, ToastDefaultConfig, opt);
 
-			toast = $("<div>").addClass("toast").html(message).appendTo($("body"));
-			const width = toast.outerWidth();
-			if (o.position === "top") {
-				toast.addClass("show-top").css({
-					top: o.distance,
-				});
-			} else if (o.position === "center") {
-				toast.addClass("show-center");
-			} else {
-				toast.css({
-					bottom: o.distance,
-				});
-			}
+            toast = $("<div>").addClass("toast").html(message).appendTo($("body"));
+            const width = toast.outerWidth();
+            if (o.position === "top") {
+                toast.addClass("show-top").css({
+                    top: o.distance,
+                });
+            } else if (o.position === "center") {
+                toast.addClass("show-center");
+            } else {
+                toast.css({
+                    bottom: o.distance,
+                });
+            }
 
-			toast
-				.css({
-					left: "50%",
-					"margin-left": -(width / 2),
-				})
-				.addClass(o.clsToast)
-				.fadeIn(TOAST_DURATION, () => {
-					setTimeout(() => {
-						Toast.remove(toast, o.callback);
-					}, o.timeout);
-				});
-		},
+            toast
+                .css({
+                    left: "50%",
+                    "margin-left": -(width / 2),
+                })
+                .addClass(o.clsToast)
+                .fadeIn(TOAST_DURATION, () => {
+                    setTimeout(() => {
+                        Toast.remove(toast, o.callback);
+                    }, o.timeout);
+                });
+        },
 
-		remove: (toast, cb) => {
-			if (!toast.length) return;
-			toast.fadeOut(TOAST_DURATION, () => {
-				toast.remove();
-				Metro.utils.exec(cb, null, toast[0]);
-			});
-		},
-	};
+        remove: (toast, cb) => {
+            if (!toast.length) return;
+            toast.fadeOut(TOAST_DURATION, () => {
+                toast.remove();
+                Metro.utils.exec(cb, null, toast[0]);
+            });
+        },
+    };
 
-	Metro.toast = Toast;
-	Metro.createToast = Toast.create;
+    Metro.toast = Toast;
+    Metro.createToast = Toast.create;
 })(Metro, Dom);

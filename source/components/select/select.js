@@ -656,7 +656,6 @@
         },
 
         val: function (val) {
-            const that = this;
             const element = this.element;
             const o = this.options;
             const input = element.siblings(".select-input");
@@ -714,7 +713,7 @@
 
                         if (element[0].multiple) {
                             list_item.addClass("d-none");
-                            input.append(that._addTag(html, list_item));
+                            input.append(this._addTag(html, list_item));
                         } else {
                             list_item.addClass("active").addClass(o.clsOptionActive);
                             input.html(html);

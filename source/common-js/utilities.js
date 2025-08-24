@@ -71,9 +71,9 @@
         },
 
         isUrl: (val) =>
-            /^(\.\/|\.\.\/|ftp|http|https):\/\/(\w+:?\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@\-\/]))?/.test(val),
+            /^(\.\/|\.\.\/|ftp|http|https):\/\/(\w+:?\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@\-/]))?/.test(val),
 
-        isTag: (val) => /^<\/?[\w\s="\/.':;#-\/?]+>/gi.test(val),
+        isTag: (val) => /^<\/?[\w\s="/.':;#-/?]+>/gi.test(val),
 
         isEmbedObject: (val) => {
             const embed = ["iframe", "object", "embed", "video"];
@@ -495,7 +495,7 @@
         },
 
         getURIParameter: (url = globalThis.location.href, name = "") => {
-            const _name = name.replace(/[\[\]]/g, "\\$&");
+            const _name = name.replace(/[[\]]/g, "\\$&");
             const regex = new RegExp(`[?&]${_name}(=([^&#]*)|&|#|$)`);
             const results = regex.exec(url);
             if (!results) return null;

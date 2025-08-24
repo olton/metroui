@@ -1,4 +1,4 @@
- ((Metro, $) => {
+((Metro, $) => {
     // biome-ignore lint/suspicious/noRedundantUseStrict: <explanation>
     "use strict";
     let AccordionDefaultConfig = {
@@ -219,7 +219,7 @@
             frame.removeClass("active").removeClass(o.clsActiveFrame);
             frame.children(".heading").removeClass(o.clsActiveFrameHeading);
             frame.children(".content").removeClass(o.clsActiveFrameContent).slideUp(o.duration);
-            
+
             this._fireEvent("frameClose", {
                 frame: frame[0],
             });

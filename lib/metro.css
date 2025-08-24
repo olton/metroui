@@ -61039,6 +61039,7 @@ aside::after {
 :root {
   --cube-size: 24px;
   --cube-gap: 4px;
+  --cube-cell-border-radius: 4px;
   --cube-border-color: #767676;
   --cube-background: var(--default-background);
   --cube-color: var(--default-color);
@@ -61077,6 +61078,7 @@ aside::after {
   bottom: 38px;
   left: 0;
   border: 1px solid var(--cube-side-border-color);
+  border-radius: calc(var(--cube-cell-border-radius) * 2);
 }
 .cube .side.left-side {
   transform: skewY(23deg) rotateX(10deg);
@@ -61101,6 +61103,7 @@ aside::after {
   background-color: var(--cube-background);
   color: var(--cube-color);
   border: 1px solid var(--cube-border-color);
+  border-radius: var(--cube-cell-border-radius);
   transition: all 0.3s ease-in-out;
   line-height: var(--cube-size);
   text-align: center;

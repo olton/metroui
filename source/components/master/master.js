@@ -54,7 +54,7 @@
             const o = this.options;
 
             this.id = Hooks.useId(this.elem);
-            
+
             element.addClass("master").addClass(o.clsMaster);
             element.css({
                 backgroundImage: `url(${o.backgroundImage})`,

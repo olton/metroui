@@ -42,7 +42,7 @@
             const element = this.element;
 
             this.id = Hooks.useId(this.elem);
-            
+
             this._createStructure();
             this._createEvents();
 
@@ -56,9 +56,9 @@
             const o = this.options;
 
             if (!element.id()) {
-                element.id(this.id)
+                element.id(this.id);
             }
-            
+
             element.addClass("drag-items-target");
 
             if (o.drawDragMarker === true) {

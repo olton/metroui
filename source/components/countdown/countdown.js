@@ -67,7 +67,7 @@
         _create: function () {
             const o = this.options;
 
-            this.id = Hooks.useId(this.element)
+            this.id = Hooks.useId(this.element);
             this.duration = +o.duration <= 0 || +o.duration >= 1000 ? 1000 : +o.duration;
 
             this._build();

@@ -80,8 +80,7 @@
             $.each(customButtons, function () {
                 const btn = $("<span>");
 
-                btn
-                    .addClass("button btn-custom")
+                btn.addClass("button btn-custom")
                     .addClass(o.clsCustomButton)
                     .addClass(this.cls)
                     .attr("tabindex", -1)

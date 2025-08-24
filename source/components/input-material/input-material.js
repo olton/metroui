@@ -128,7 +128,7 @@
                         .html(this.text || this.html || "");
 
                     that._setAttributes(btn, this.attr);
-                    
+
                     if (this.onclick)
                         btn.on("click", (e) => {
                             if (Metro.utils.isRightMouse(e)) return;

@@ -199,7 +199,7 @@
         _findTabByTarget: function (target) {
             const element = this.element;
             const tabs = element.find("li");
-            let tab = undefined;
+            let tab;
 
             tabs.each((i, el) => {
                 if (!tab && $(el).children("a").attr("href") === target) {
