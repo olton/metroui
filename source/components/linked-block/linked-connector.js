@@ -221,7 +221,6 @@
                 m.setAttribute("orient", "auto-start-reverse");
                 m.setAttribute("markerUnits", "userSpaceOnUse"); // змінено з strokeWidth на userSpaceOnUse
 
-                // Ваш точний SVG-шлях, трохи збільшений для кращої видимості
                 const path = document.createElementNS(ns, "path");
                 path.setAttribute(
                     "d",
@@ -823,7 +822,7 @@
         setLineStyle: function (style) {
             const allowed = ["solid", "dashed", "dotted"];
             if (allowed.indexOf((style || "").toLowerCase()) === -1) {
-                console.warn("Connector: невідомий стиль лінії:", style);
+                console.warn("Connector: unknown line style:", style);
                 return;
             }
             const o = this.options;
@@ -841,7 +840,7 @@
             const map = { true: "end", false: "none" };
             const v = typeof value === "boolean" ? map[String(value)] : String(value || "none").toLowerCase();
             if (!["none", "start", "end", "both"].includes(v)) {
-                console.warn("Connector: невідоме значення для arrow:", value);
+                console.warn(`Connector: unknown value for arrow: ${value}! Use one of: none, start, end, both.`);
                 return;
             }
             this.options.arrow = v;

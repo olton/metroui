@@ -534,7 +534,7 @@
             const validSides = ["north", "east", "south", "west"];
 
             if (validSides.indexOf(side) === -1) {
-                console.warn("LinkedBlock: невірна сторона. Доступні: north, east, south, west");
+                console.warn("LinkedBlock: the wrong side. Use: north, east, south, west");
                 return null;
             }
 
@@ -600,14 +600,14 @@
             const target = targetBlock.element ? targetBlock.element : $(targetBlock);
 
             if (target.length === 0) {
-                console.warn("LinkedBlock: цільовий блок не знайдено");
+                console.warn("LinkedBlock: target block not found");
                 return null;
             }
 
             // Визначаємо інстанс цільового блоку
             const targetInst = Metro.getPlugin(target[0], "linked-block");
             if (!targetInst) {
-                console.warn("LinkedBlock: інстанс цільового блоку не знайдено");
+                console.warn("LinkedBlock: target block hasn't role linked-block");
                 return null;
             }
 
