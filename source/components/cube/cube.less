@@ -6,6 +6,28 @@
 @cubeCellColor: #767676;
 @cubeCellFlash: #c4122f;
 
+:root {
+    --cube-size: 24px;
+    --cube-gap: 4px;
+    --cube-border-color: #767676;
+    --cube-background: var(--default-background);
+    --cube-color: var(--default-color);
+    --cube-background-flash: var(--color-primary);
+    --cube-color-flash: #ffffff;
+    --cube-axis-color: #191919;
+    --cube-side-border-color: transparent;
+}
+
+.dark-side {
+    --cube-border-color: #767676;
+    --cube-background: var(--default-background);
+    --cube-color: var(--default-color);
+    --cube-background-flash: var(--color-primary);
+    --cube-color-flash: #ffffff;
+    --cube-axis-color: #ffffff;
+    --cube-side-border-color: transparent;
+}
+
 .cube {
     display: block;
     position: relative;
@@ -19,13 +41,16 @@
     .side {
         display: flex;
         flex-flow: row wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
+        padding: var(--cube-gap);
+        gap: var(--cube-gap);
         position: absolute;
         overflow: hidden;
         width: 162px;
         height: 162px;
         bottom: 38px;
         left: 0;
+        border: 1px solid var(--cube-side-border-color);
     }
 
     .side {
@@ -52,29 +77,24 @@
         .cube-cell {
             display: block;
             position: relative;
-            width: 24px;
-            height: 24px;
-            margin: 8px;
+            width: var(--cube-size);
+            height: var(--cube-size);
+            //margin: calc(var(--cube-size) / 3);
             flex-grow: 0;
             flex-shrink: 0;
-            background-color: @cubeCellBackground;
-            border: 1px solid @cubeCellBorder;
-            box-shadow: 0 0 5px rgba(red(@cubeCellColor), green(@cubeCellColor), blue(@cubeCellColor), .8);
+            background-color: var(--cube-background);
+            color: var(--cube-color);
+            border: 1px solid var(--cube-border-color);
             transition: @transition-base;
-            line-height: 24px;
+            line-height: var(--cube-size);
             text-align: center;
-            color: @white;
-            font-size: 12px;
+            font-size: calc(var(--cube-size) / 2);
 
             &.light {
                 animation: pulsar-cell 2.5s 0s ease-out infinite;
-                background-color: @cubeCellFlash;
-                border-color: @cubeCellFlash;
-                color: @dark;
-                box-shadow:
-                        0 0 10px rgba(red(@cubeCellFlash), green(@cubeCellFlash), blue(@cubeCellFlash), 1),
-                        0 0 10px rgba(red(@cubeCellFlash), green(@cubeCellFlash), blue(@cubeCellFlash), 1),
-                        0 0 10px rgba(red(@cubeCellFlash), green(@cubeCellFlash), blue(@cubeCellFlash), 1);
+                background-color: var(--cube-background-flash)!important;
+                border-color: var(--cube-background-flash)!important;
+                color: var(--cube-color-flash)!important;
             }
         }
     }
@@ -83,15 +103,15 @@
 @keyframes pulsar-cell {
     0%, 100% {
         box-shadow:
-                0 0 10px rgba(red(@cubeCellFlash), green(@cubeCellFlash), blue(@cubeCellFlash), 1),
-                0 0 10px rgba(red(@cubeCellFlash), green(@cubeCellFlash), blue(@cubeCellFlash), 1),
-                0 0 10px rgba(red(@cubeCellFlash), green(@cubeCellFlash), blue(@cubeCellFlash), 1);
+                0 0 10px var(--cube-background-flash),
+                0 0 10px var(--cube-background-flash),
+                0 0 10px var(--cube-background-flash);
     }
     50% {
         box-shadow:
-                0 0 10px rgba(red(@cubeCellFlash), green(@cubeCellFlash), blue(@cubeCellFlash), .3),
-                0 0 10px rgba(red(@cubeCellFlash), green(@cubeCellFlash), blue(@cubeCellFlash), .3),
-                0 0 10px rgba(red(@cubeCellFlash), green(@cubeCellFlash), blue(@cubeCellFlash), .3);
+                0 0 10px hsl(from var(--cube-background-flash) h s l / .3),
+                0 0 10px hsl(from var(--cube-background-flash) h s l / .3),
+                0 0 10px hsl(from var(--cube-background-flash) h s l / .3);
     }
 }
 
@@ -100,7 +120,7 @@
         height: 2px;
         width: 200px;
         position: absolute;
-        background-color: @cubeCellFlash;
+        background-color: var(--cube-axis-color);
         bottom: 162px;
         left: 162px;
         transform-origin: 0 0 0;

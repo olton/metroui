@@ -8,16 +8,21 @@
     <title>Test Cube - Metro UI :: Popular HTML, CSS and JS library</title>
 
 </head>
-<body class="m4-cloak">
-<div class="container">
-    <h1>Cube test page</h1>
-
-    <div class="example">
-        <div data-role="cube" data-flash-color="orange"></div>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Cube</div>
     </div>
+    <div class="app-bar-item-static no-hover ml-auto">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
 
+<div class="container h-100 d-flex flex-center">
+    <div data-role="cube" data-show-axis="true"></div>
 </div>
 
+</body>
 <script src="../lib/metro.js"></script>
 <script>
 </script>

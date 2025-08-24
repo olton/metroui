@@ -9,11 +9,7 @@
         flashColor: null,
         flashInterval: 1000,
         numbers: false,
-        offBefore: true,
-        attenuation: 0.3,
-        stopOnBlur: false,
         cells: 4,
-        margin: 8,
         showAxis: false,
         axisStyle: "arrow", //line
         cellClick: false,
@@ -33,7 +29,6 @@
         clsAxisY: "",
         clsAxisZ: "",
 
-        custom: Metro.noop,
         onTick: Metro.noop,
         onCubeCreate: Metro.noop,
     };
@@ -49,35 +44,27 @@
     Metro.cubeDefaultRules = [
         {
             on: { top: [16], left: [4], right: [1] },
-            off: { top: [13, 4], left: [1, 16], right: [13, 4] },
         },
         {
             on: { top: [12, 15], left: [3, 8], right: [2, 5] },
-            off: { top: [9, 6, 3], left: [5, 10, 15], right: [14, 11, 8] },
         },
         {
             on: { top: [11], left: [7], right: [6] },
-            off: { top: [1, 2, 5], left: [9, 13, 14], right: [15, 12, 16] },
         },
         {
             on: { top: [8, 14], left: [2, 12], right: [9, 3] },
-            off: { top: [16], left: [4], right: [1] },
         },
         {
             on: { top: [10, 7], left: [6, 11], right: [10, 7] },
-            off: { top: [12, 15], left: [3, 8], right: [2, 5] },
         },
         {
             on: { top: [13, 4], left: [1, 16], right: [13, 4] },
-            off: { top: [11], left: [7], right: [6] },
         },
         {
             on: { top: [9, 6, 3], left: [5, 10, 15], right: [14, 11, 8] },
-            off: { top: [8, 14], left: [2, 12], right: [9, 3] },
         },
         {
             on: { top: [1, 2, 5], left: [9, 13, 14], right: [15, 12, 16] },
-            off: { top: [10, 7], left: [6, 11], right: [10, 7] },
         },
     ];
 
@@ -126,7 +113,7 @@
                 this.rules = JSON.parse(rules);
                 return true;
             } catch (err) {
-                console.warn("Unknown or empty rules for cell flashing!");
+                console.warn(`Unknown or empty rules for cell flashing!\n${err.message}`);
                 return false;
             }
         },
@@ -145,8 +132,12 @@
 
             this.id = element.attr("id");
 
-            this._createCssForFlashColor();
-            this._createCssForCellSize();
+            if (o.color && Farbe.Routines.isColor(o.color)) {
+                element.cssVar("--cube-background", o.color);
+            }
+            if (o.flashColor && Farbe.Routines.isColor(o.flashColor)) {
+                element.cssVar("cube-background-flash", o.flashColor);
+            }
 
             $.each(sides, function () {
                 let side;
@@ -176,17 +167,7 @@
                 }
             });
 
-            const cells = element.find(".cube-cell");
-            if (o.color !== null) {
-                if (Farbe.Routines.isColor(o.color)) {
-                    cells.css({
-                        backgroundColor: o.color,
-                        borderColor: o.color,
-                    });
-                } else {
-                    cells.addClass(o.color);
-                }
-            }
+            this._createCssForCellSize();
 
             const axis = ["x", "y", "z"];
             $.each(axis, function () {
@@ -212,96 +193,33 @@
             clearInterval(this.interval);
             element.find(".cube-cell").removeClass("light");
 
-            if (o.custom !== Metro.noop) {
-                Metro.utils.exec(o.custom, [element]);
-            } else {
-                element.find(".cube-cell").removeClass("light");
+            element.find(".cube-cell").removeClass("light");
 
+            this._start();
+
+            interval = Metro.utils.isObject(this.rules) ? Metro.utils.objectLength(this.rules) : 0;
+
+            this.interval = setInterval(() => {
                 this._start();
-
-                interval = Metro.utils.isObject(this.rules) ? Metro.utils.objectLength(this.rules) : 0;
-
-                this.interval = setInterval(() => {
-                    this._start();
-                }, interval * o.flashInterval);
-            }
+            }, interval * o.flashInterval);
         },
 
         _createCssForCellSize: function () {
             const element = this.element;
             const o = this.options;
-            const sheet = Metro.sheet;
+            const side = element.find(".right-side");
 
-            if (o.margin === 8 && o.cells === 4) {
-                return;
-            }
+            const width = Number.parseInt(Metro.utils.getStyleOne(side, "width"));
+            const gap = Number.parseInt(Metro.utils.getStyleOne(side, "gap"));
+            const cells = +o.cells;
 
-            const width = Number.parseInt(Metro.utils.getStyleOne(element, "width"));
-            const cell_size = Math.ceil((width / 2 - o.margin * o.cells * 2) / o.cells);
-            Metro.utils.addCssRule(
-                sheet,
-                `#${element.attr("id")} .side .cube-cell`,
-                `width: ${cell_size}px!important; height: ${cell_size}px!important; margin: ${o.margin}px!important;`,
-            );
-        },
-
-        _createCssForFlashColor: function () {
-            const element = this.element;
-            const o = this.options;
-            const sheet = Metro.sheet;
-            let rule1;
-            let rule2;
-            const rules1 = [];
-            const rules2 = [];
-            let i;
-
-            if (o.flashColor === null) {
-                return;
-            }
-
-            rule1 = `0 0 10px ${Farbe.Routines.toRGBA(Farbe.Routines.parse(o.flashColor), 1)}`;
-            rule2 = `0 0 10px ${Farbe.Routines.toRGBA(Farbe.Routines.parse(o.flashColor), o.attenuation)}`;
-
-            for (i = 0; i < 3; i++) {
-                rules1.push(rule1);
-                rules2.push(rule2);
-            }
-
-            Metro.utils.addCssRule(
-                sheet,
-                `@keyframes pulsar-cell-${element.attr("id")}`,
-                `0%, 100% { box-shadow: ${rules1.join(",")}} 50% { box-shadow: ${rules2.join(",")} }`,
-            );
-            Metro.utils.addCssRule(
-                sheet,
-                `#${element.attr("id")} .side .cube-cell.light`,
-                `animation: pulsar-cell-${element.attr("id")} 2.5s 0s ease-out infinite; background-color: ${o.flashColor}!important; border-color: ${o.flashColor}!important;`,
-            );
+            const cell_size = Math.floor((width - (cells - 1) * gap - gap * 2) / cells);
+            element.cssVar("cube-size", `${cell_size}px`);
         },
 
         _createEvents: function () {
             const element = this.element;
             const o = this.options;
-
-            $(globalThis).on(
-                Metro.events.blur,
-                () => {
-                    if (o.stopOnBlur === true && this.running === true) {
-                        this._stop();
-                    }
-                },
-                { ns: element.attr("id") },
-            );
-
-            $(globalThis).on(
-                Metro.events.focus,
-                () => {
-                    if (o.stopOnBlur === true && this.running === false) {
-                        this._start();
-                    }
-                },
-                { ns: element.attr("id") },
-            );
 
             element.on(Metro.events.click, ".cube-cell", function () {
                 if (o.cellClick === true) {
@@ -335,6 +253,7 @@
             const _speed = speed || o.flashInterval * index;
 
             const interval = setTimeout(() => {
+                Metro.utils.exec(o.onTick, [index]);
                 this._fireEvent("tick", {
                     index: index,
                 });
@@ -478,9 +397,6 @@
 
             clearInterval(this.interval);
             this.interval = null;
-
-            $(globalThis).off(Metro.events.blur, { ns: element.attr("id") });
-            $(globalThis).off(Metro.events.focus, { ns: element.attr("id") });
 
             element.off(Metro.events.click, ".cube-cell");
 
