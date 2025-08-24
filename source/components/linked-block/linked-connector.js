@@ -438,15 +438,15 @@
                         cp2y = y2 + controlOffset + magic;
                         break;
                     case "east":
-                        cp1x = x1 + controlOffset - magic;
+                        cp1x = x1 + controlOffset + magic;
                         cp1y = y1;
-                        cp2x = x2 + controlOffset - magic;
+                        cp2x = x2 + controlOffset + magic;
                         cp2y = y2;
                         break;
                     case "west":
-                        cp1x = x1 - controlOffset + magic;
+                        cp1x = x1 - controlOffset - magic;
                         cp1y = y1;
-                        cp2x = x2 - controlOffset + magic;
+                        cp2x = x2 - controlOffset - magic;
                         cp2y = y2;
                         break;
                 }
