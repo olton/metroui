@@ -451,20 +451,63 @@
                 }
             } else {
                 // Стандартна логіка для точок на різних сторонах
-                const direction = this._getDirection(parent1, parent2);
+                // const direction = this._getDirection(parent1, parent2);
+                //
+                // if (direction === "horizontal") {
+                //     const controlDistance = Math.abs(dx) * 0.4 + magic;
+                //     cp1x = x1 + (dx > 0 ? controlDistance : -controlDistance);
+                //     cp1y = y1;
+                //     cp2x = x2 - (dx > 0 ? controlDistance : -controlDistance);
+                //     cp2y = y2;
+                // } else {
+                //     const controlDistance = Math.abs(dy) * 0.4 + magic;
+                //     cp1x = x1;
+                //     cp1y = y1 + (dy > 0 ? controlDistance : -controlDistance);
+                //     cp2x = x2;
+                //     cp2y = y2 - (dy > 0 ? controlDistance : -controlDistance);
+                // }
 
-                if (direction === "horizontal") {
-                    const controlDistance = Math.abs(dx) * 0.4 + magic;
-                    cp1x = x1 + (dx > 0 ? controlDistance : -controlDistance);
-                    cp1y = y1;
-                    cp2x = x2 - (dx > 0 ? controlDistance : -controlDistance);
-                    cp2y = y2;
-                } else {
-                    const controlDistance = Math.abs(dy) * 0.4 + magic;
-                    cp1x = x1;
-                    cp1y = y1 + (dy > 0 ? controlDistance : -controlDistance);
-                    cp2x = x2;
-                    cp2y = y2 - (dy > 0 ? controlDistance : -controlDistance);
+                const controlDistance = Math.max(60, distance * 0.3);
+
+                // Контрольні точки базуються на сторонах точок, а не на загальному напрямку
+                // Перша контрольна точка (від першої точки)
+                switch (side1) {
+                    case "north":
+                        cp1x = x1;
+                        cp1y = y1 - controlDistance;
+                        break;
+                    case "south":
+                        cp1x = x1;
+                        cp1y = y1 + controlDistance;
+                        break;
+                    case "east":
+                        cp1x = x1 + controlDistance;
+                        cp1y = y1;
+                        break;
+                    case "west":
+                        cp1x = x1 - controlDistance;
+                        cp1y = y1;
+                        break;
+                }
+
+                // Друга контрольна точка (до другої точки)
+                switch (side2) {
+                    case "north":
+                        cp2x = x2;
+                        cp2y = y2 - controlDistance;
+                        break;
+                    case "south":
+                        cp2x = x2;
+                        cp2y = y2 + controlDistance;
+                        break;
+                    case "east":
+                        cp2x = x2 + controlDistance;
+                        cp2y = y2;
+                        break;
+                    case "west":
+                        cp2x = x2 - controlDistance;
+                        cp2y = y2;
+                        break;
                 }
             }
 
