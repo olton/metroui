@@ -31,6 +31,7 @@
         onePoint: false,
         canDrag: true,
         canResize: true,
+        showPoints: true,
         onAddPoint: Metro.noop,
         onRemovePoint: Metro.noop,
         onStartConnection: Metro.noop,
@@ -86,8 +87,12 @@
 
             // Додаємо основні класи
             element.addClass("linked-block");
+
             if (o.onePoint) {
                 element.addClass("one-point");
+            }
+            if (o.showPoints === false) {
+                element.addClass("no-points");
             }
 
             // Встановлюємо розміри

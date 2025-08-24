@@ -494,6 +494,15 @@
             const side1 = parent1.attr("class").match(/(north|south|east|west)-side/)?.[1] || "north";
             const side2 = parent2.attr("class").match(/(north|south|east|west)-side/)?.[1] || "north";
 
+            // Отримуємо розміри контейнера для обмеження шляху
+            const svgRect = svg[0].getBoundingClientRect();
+            const containerHeight = svgRect.height || $(svg).height() || 1000; // fallback
+            const containerWidth = svgRect.width || $(svg).width() || 1000; // fallback
+            const minY = 20; // мінімальний відступ від верхнього краю
+            const maxY = containerHeight - 20; // максимальний відступ від нижнього краю
+            const minX = 20; // мінімальний відступ від лівого краю
+            const maxX = containerWidth - 20; // максимальний відступ від правого краю
+
             // Спеціальна логіка для точок на одній стороні
             if (side1 === side2) {
                 const offset = Math.max(40, distance * 0.25);
@@ -504,13 +513,19 @@
                         if (Math.abs(x1 - x2) <= tolerance) {
                             pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
                         } else {
-                            const topY = Math.min(y1, y2) - offset;
+                            let topY = Math.min(y1, y2) - offset;
+                            // Обмежуємо topY мінімальною межею контейнера
+                            if (topY < minY) {
+                                topY = minY;
+                            }
                             pathData = `M ${x1} ${y1}
                                 L ${x1} ${topY + cornerRadius}
                                 Q ${x1} ${topY} ${x1 + (x2 > x1 ? cornerRadius : -cornerRadius)} ${topY}
                                 L ${x2 - (x2 > x1 ? cornerRadius : -cornerRadius)} ${topY}
                                 Q ${x2} ${topY} ${x2} ${topY + cornerRadius}
                                 L ${x2} ${y2}`;
+
+                            console.log(x1, y1, x2, y2, topY, cornerRadius);
                         }
                         break;
 
@@ -518,7 +533,13 @@
                         if (Math.abs(x1 - x2) <= tolerance) {
                             pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
                         } else {
-                            const bottomY = Math.max(y1, y2) + offset;
+                            let bottomY = Math.max(y1, y2) + offset;
+
+                            // Обмежуємо bottomY максимальною межею контейнера
+                            if (bottomY > maxY) {
+                                bottomY = maxY;
+                            }
+
                             pathData = `M ${x1} ${y1}
                                 L ${x1} ${bottomY - cornerRadius}
                                 Q ${x1} ${bottomY} ${x1 + (x2 > x1 ? cornerRadius : -cornerRadius)} ${bottomY}
@@ -532,7 +553,13 @@
                         if (Math.abs(y1 - y2) <= tolerance) {
                             pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
                         } else {
-                            const rightX = Math.max(x1, x2) + offset;
+                            let rightX = Math.max(x1, x2) + offset;
+
+                            // Обмежуємо rightX максимальною межею контейнера
+                            if (rightX > maxX) {
+                                rightX = maxX;
+                            }
+
                             pathData = `M ${x1} ${y1}
                                 L ${rightX - cornerRadius} ${y1}
                                 Q ${rightX} ${y1} ${rightX} ${y1 + (y2 > y1 ? cornerRadius : -cornerRadius)}
@@ -546,7 +573,13 @@
                         if (Math.abs(y1 - y2) <= tolerance) {
                             pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
                         } else {
-                            const leftX = Math.min(x1, x2) - offset;
+                            let leftX = Math.min(x1, x2) - offset;
+
+                            // Обмежуємо leftX мінімальною межею контейнера
+                            if (leftX < minX) {
+                                leftX = minX;
+                            }
+
                             pathData = `M ${x1} ${y1}
                                 L ${leftX + cornerRadius} ${y1}
                                 Q ${leftX} ${y1} ${leftX} ${y1 + (y2 > y1 ? cornerRadius : -cornerRadius)}

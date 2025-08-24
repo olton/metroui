@@ -66458,7 +66458,7 @@ label:has(input) {
 
 /* source/components/linked-block/linked-block.less */
 :root {
-  --linked-block-point-size: 5px;
+  --linked-block-point-size: 6px;
   --linked-block-link-color: #b1b1b1;
   --linked-block-line-width: 1px;
   --linked-block-border-radius: 4px;
@@ -66541,6 +66541,9 @@ label:has(input) {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.linked-block.no-points .link-point {
+  visibility: hidden;
 }
 .linked-block .add-point-btn {
   position: absolute;

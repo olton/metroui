@@ -1,5 +1,5 @@
 :root {
-    --linked-block-point-size: 5px;
+    --linked-block-point-size: 6px;
     --linked-block-link-color: #b1b1b1;
     --linked-block-line-width: 1px;
     --linked-block-border-radius: 4px;
@@ -87,6 +87,12 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+        }
+    }
+    
+    &.no-points {
+        .link-point {
+            visibility: hidden;
         }
     }
     
