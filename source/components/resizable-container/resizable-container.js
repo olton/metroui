@@ -1,4 +1,6 @@
 ((Metro, $) => {
+    "use strict";
+
     let ResizableContainerDefaultConfig = {
         canResize: true,
         resizePointers: "nw, n, ne, e, se, s, sw, w",
@@ -36,7 +38,7 @@
 
         _create: function () {
             this.id = Hooks.useId(this.elem);
-            this.pointers = this.options.resizePointers.toArray(",");
+            this.pointers = this.options.resizePointers.toArray(this.options.resizePointers.includes(",") ? "," : " ");
 
             this._createStructure();
             this._createEvents();
@@ -87,6 +89,14 @@
                     .attr("data-resize-direction", p)
                     .appendTo(contour);
             }
+
+            const { top, left, width, height } = element.rect();
+            element.css({
+                top,
+                left,
+                width,
+                height,
+            });
 
             if (o.canResize === false) {
                 this.disable();
@@ -304,6 +314,7 @@
         },
 
         changeAttribute: function (attr, val) {
+            console.log(attr, val);
             switch (attr) {
                 case "data-can-resize": {
                     if (val === "true") {

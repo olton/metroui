@@ -1,4 +1,6 @@
 ((Metro, $) => {
+    "use strict";
+
     let SidenavDefaultConfig = {
         compacted: false,
         toggle: null,

@@ -14,7 +14,7 @@
         searchButton: false,
         clearButton: true,
         revealButton: true,
-        clearButtonIcon: "❌",
+        clearButtonIcon: "✖",
         revealButtonIcon: "👀",
         searchButtonIcon: "🔍",
         customButtons: [],

@@ -1,4 +1,6 @@
 ((Metro, $) => {
+    "use strict";
+
     let CatalogMenuDefaultConfig = {
         toggle: null, // Selector for toggle element
         onCatalogCreate: Metro.noop,

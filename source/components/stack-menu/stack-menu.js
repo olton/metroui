@@ -1,4 +1,6 @@
 ((Metro, $) => {
+    "use strict";
+
     let StackMenuDefaultConfig = {
         rootTitle: "Root Menu",
         backButtonIcon: "←",

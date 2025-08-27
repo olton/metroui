@@ -1,4 +1,6 @@
 ((Metro, $) => {
+    "use strict";
+
     let WizardClassicDefaultConfig = {
         buttons: "next, prev, finish, cancel, help",
         startPage: 1,

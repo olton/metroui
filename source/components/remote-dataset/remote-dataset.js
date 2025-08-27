@@ -1,4 +1,6 @@
 ((Metro, $) => {
+    "use strict";
+
     let RemoteDatasetDefaultConfig = {
         caption: "",
         url: "",

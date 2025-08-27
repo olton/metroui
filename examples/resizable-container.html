@@ -30,12 +30,12 @@
     </div>
 </nav>
 
-<div class="container h-100">
+<div class="container d-flex flex-center h-100">
     <div class="demo-box" 
          data-role="resizable-container, draggable" 
-         data-can-resize="false"
          data-min-width="100"
          data-min-height="100"
+         data-can-resize="false"
          data-on-resize="onResize"
          data-on-resize-stop="onResizeStop"
          >
@@ -58,17 +58,12 @@
     function onResizeStop(size, element, point) {
         $("#size").clear()
     }
+
+    $("body").hotkey("alt+t", toggleResizeMode)
+
+    const cRect = $(".container").rect()
+    const box = $(".demo-box").centerTo(cRect.width / 2, cRect.height / 2);
     
-    (() => {
-        $("body").hotkey("alt+t", toggleResizeMode)
-        
-        const container = $(".demo-box");
-        const parentRect = container.parent()[0].getBoundingClientRect();
-        container.css({
-            top: parentRect.height / 2 - container.height() / 2,
-            left: parentRect.width / 2 - container.width() / 2,
-        })
-    })()
 </script>
 </body>
 </html>

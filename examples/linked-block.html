@@ -13,6 +13,10 @@
             justify-content: center;
             align-items: center;
         }
+        
+        .data-flow.speed-1 {
+            stroke: #f00;
+        }
     </style>
 </head>
 <body class="cloak h-100-vh">
@@ -34,7 +38,7 @@
     </div>
 </nav>
 
-<main id="container" class="h-100 pos-relative" style="--linked-block-point-color: #f00;"></main>
+<main id="container" class="h-100 pos-relative" style="--linked-block-point-color: #f00; --linked-block-line-color: #191919;"></main>
 
 <script>
     window.metroLinkedBlockSetup = {
@@ -52,8 +56,9 @@
     window.metroConnectorSetup = {
         deleteButton: true,
         arrow: "end",
-        // lineStyle: "dotted",
-        // type: 'zigzag'
+        lineStyle: "dotted",
+        animated: true,
+        animationSpeed: 100,
     }
 </script>
 <script src="../lib/metro.js"></script>

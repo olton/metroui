@@ -10,7 +10,7 @@
         append: "",
         label: "",
         clearButton: false,
-        clearButtonIcon: "❌",
+        clearButtonIcon: "✖",
         pickerButtonIcon: "🎨",
         defaultValue: "rgba(0, 0, 0, 0)",
         openMode: "auto",

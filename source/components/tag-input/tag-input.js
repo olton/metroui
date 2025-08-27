@@ -16,7 +16,7 @@
         tagInputDeferred: 0,
         static: false,
         clearButton: true,
-        clearButtonIcon: "❌",
+        clearButtonIcon: "✖",
 
         randomColor: false,
         maxTags: 0,

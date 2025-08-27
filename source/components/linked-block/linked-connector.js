@@ -1,4 +1,6 @@
 ((Metro, $) => {
+    "use strict";
+
     const deleteIcon = `<?xml version="1.0" encoding="utf-8"?><svg fill="var(--linked-block-line-color)" width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.755,20.283,4,8H20L18.245,20.283A2,2,0,0,1,16.265,22H7.735A2,2,0,0,1,5.755,20.283ZM21,4H16V3a1,1,0,0,0-1-1H9A1,1,0,0,0,8,3V4H3A1,1,0,0,0,3,6H21a1,1,0,0,0,0-2Z"/></svg>`;
 
     let ConnectorDefaultConfig = {
@@ -11,6 +13,9 @@
         deleteButton: false,
         arrow: "none", // none, end, start, both
         lineStyle: "solid", // solid, dashed, dotted
+        animated: false, // анімація потоку даних
+        animationSpeed: 500, // швидкість анімації (1-5)
+        animationDirection: "forward", // forward, reverse
         onConnectorCreate: Metro.noop,
         onConnectorUpdate: Metro.noop,
         onConnectorDestroy: Metro.noop,
@@ -88,6 +93,11 @@
             // Застосувати стиль лінії
             this._applyLineStyle(shape, o.lineStyle);
 
+            // Додаємо анімацію потоку даних
+            if (o.animated) {
+                this._applyAnimation(shape, o.animationSpeed, o.animationDirection);
+            }
+
             // Зберігаємо з'єднання
             this.connections.set(o.id, {
                 pointA: o.pointA,
@@ -118,6 +128,67 @@
                 $(".cl-line, .cl-curve").removeClass("selected-path");
                 $(`.connector-delete`).hide();
             });
+        },
+
+        _applyAnimation: (shape, speed = 2, direction = "forward") => {
+            const animationClass = direction === "reverse" ? "data-flow-reverse" : "data-flow";
+            let speedClass;
+
+            if (speed <= 500) {
+                speedClass = "speed-1";
+            } else if (speed > 500 && speed <= 1000) {
+                speedClass = "speed-2";
+            } else if (speed > 1000 && speed <= 3000) {
+                speedClass = "speed-3";
+            } else if (speed > 3000 && speed <= 5000) {
+                speedClass = "speed-4";
+            } else {
+                speedClass = "speed-5";
+            }
+
+            shape.addClass(`${animationClass} ${speedClass}`);
+
+            // Додаємо CSS-анімацію через style атрибут для більшої гнучкості
+            const dashLength = 6;
+            const gapLength = 4;
+            const totalLength = dashLength + gapLength;
+
+            shape.attr("stroke-dasharray", `${dashLength} ${gapLength}`);
+
+            // Створюємо CSS анімацію динамічно
+            const animationDuration = speed; //6 - speed; // чим більше speed, тим швидше анімація
+            const animationName = `data-flow-${shape.attr("data-conn-id")}`;
+
+            const keyframes =
+                direction === "reverse"
+                    ? `@keyframes ${animationName} { 0% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: ${totalLength}px; } }`
+                    : `@keyframes ${animationName} { 0% { stroke-dashoffset: ${totalLength}px; } 100% { stroke-dashoffset: 0; } }`;
+
+            // Додаємо стилі до head, якщо їх ще немає
+            const styleId = `connector-animation-${shape.attr("data-conn-id")}`;
+            if (!$(`#${styleId}`).length) {
+                $("<style>")
+                    .attr("id", styleId)
+                    .text(`
+                        ${keyframes}
+                        [data-conn-id="${shape.attr("data-conn-id")}"].animated {
+                            animation: ${animationName} ${animationDuration}ms linear infinite;
+                        }
+                    `)
+                    .appendTo("head");
+            }
+
+            shape.addClass("animated");
+        },
+
+        _removeAnimation: (shape) => {
+            shape.removeClass("data-flow data-flow-reverse animated");
+            shape.removeClass("speed-1 speed-2 speed-3 speed-4 speed-5");
+            shape.removeAttr("stroke-dasharray");
+
+            // Видаляємо відповідні CSS стилі
+            const styleId = `connector-animation-${shape.attr("data-conn-id")}`;
+            $(`#${styleId}`).remove();
         },
 
         _selectPath: function (path) {
@@ -210,10 +281,10 @@
             if (!marker.length) {
                 const m = document.createElementNS(ns, "marker");
                 m.setAttribute("id", markerId);
-                m.setAttribute("markerWidth", "12"); // збільшуємо область
-                m.setAttribute("markerHeight", "12");
+                m.setAttribute("markerWidth", "10"); // збільшуємо область
+                m.setAttribute("markerHeight", "8");
                 m.setAttribute("viewBox", "0 0 8 8"); // встановлюємо viewBox на оригінальний розмір
-                m.setAttribute("refX", "6"); // скориговано для центрування
+                m.setAttribute("refX", "8"); // скориговано для центрування
                 m.setAttribute("refY", "4"); // скориговано для центрування
                 m.setAttribute("orient", "auto-start-reverse");
                 m.setAttribute("markerUnits", "userSpaceOnUse"); // змінено з strokeWidth на userSpaceOnUse
@@ -891,6 +962,46 @@
             }
         },
 
+        setAnimation: function (enabled, speed = 2, direction = "forward") {
+            const o = this.options;
+            o.animated = enabled;
+            o.animationSpeed = speed;
+            o.animationDirection = direction;
+
+            const connection = this.connections.get(o.id);
+            if (!connection?.shape) return;
+
+            if (enabled) {
+                this._applyAnimation(connection.shape, speed, direction);
+            } else {
+                this._removeAnimation(connection.shape);
+            }
+        },
+
+        startAnimation: function () {
+            this.setAnimation(true, this.options.animationSpeed, this.options.animationDirection);
+        },
+
+        stopAnimation: function () {
+            this.setAnimation(false);
+        },
+
+        setAnimationSpeed: function (speed) {
+            if (this.options.animated) {
+                this.setAnimation(true, speed, this.options.animationDirection);
+            } else {
+                this.options.animationSpeed = speed;
+            }
+        },
+
+        setAnimationDirection: function (direction) {
+            if (this.options.animated) {
+                this.setAnimation(true, this.options.animationSpeed, direction);
+            } else {
+                this.options.animationDirection = direction;
+            }
+        },
+
         changeAttribute: function (attr, newValue) {
             if (attr === "data-type") {
                 this.setType(newValue);
@@ -900,6 +1011,15 @@
             }
             if (attr === "data-arrow") {
                 this.setArrow(newValue);
+            }
+            if (attr === "data-animated") {
+                this.setAnimation(newValue === "true" || newValue === true);
+            }
+            if (attr === "data-animation-speed") {
+                this.setAnimationSpeed(parseInt(newValue) || 2);
+            }
+            if (attr === "data-animation-direction") {
+                this.setAnimationDirection(newValue);
             }
         },
 
@@ -920,6 +1040,9 @@
 
             if (connection?.shape) {
                 const svg = connection.svg || this.svgElement;
+
+                this._removeAnimation(connection.shape);
+
                 connection.shape.remove();
 
                 // Видаляємо кнопку видалення
@@ -988,6 +1111,33 @@
                 console.warn(`Connector with id ${id} not found`);
             }
             connectorComponent.setType(type);
+        },
+
+        setAnimation: (id, enabled, speed, direction) => {
+            const connectorComponent = Metro.getPlugin($(`#${id}`), "connector");
+            if (!connectorComponent) {
+                console.warn(`Connector with id ${id} not found`);
+                return;
+            }
+            connectorComponent.setAnimation(enabled, speed, direction);
+        },
+
+        startAnimation: (id) => {
+            const connectorComponent = Metro.getPlugin($(`#${id}`), "connector");
+            if (!connectorComponent) {
+                console.warn(`Connector with id ${id} not found`);
+                return;
+            }
+            connectorComponent.startAnimation();
+        },
+
+        stopAnimation: (id) => {
+            const connectorComponent = Metro.getPlugin($(`#${id}`), "connector");
+            if (!connectorComponent) {
+                console.warn(`Connector with id ${id} not found`);
+                return;
+            }
+            connectorComponent.stopAnimation();
         },
 
         destroy: (id) => {

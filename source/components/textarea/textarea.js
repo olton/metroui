@@ -16,7 +16,7 @@
         prepend: "",
         append: "",
         clearButton: true,
-        clearButtonIcon: "❌",
+        clearButtonIcon: "✖",
         btnSize: "default",
         autoSize: true,
         maxHeight: 0,

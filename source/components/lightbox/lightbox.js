@@ -6,7 +6,7 @@
         loop: true,
         source: "img",
 
-        iconClose: "❌",
+        iconClose: "✖",
         iconPrev: "🡐",
         iconNext: "🡒",
 

@@ -1,4 +1,6 @@
 ((Metro, $) => {
+    "use strict";
+
     let Bar3dDefaultConfig = {
         height: 200,
         barColor: "#22ec1a",

@@ -10,7 +10,7 @@
         filesSelectedTitle: "",
         dropTitle: "",
         dropIcon: "📥",
-        clearButtonIcon: "❌",
+        clearButtonIcon: "✖",
         prepend: "",
         clsComponent: "",
         clsPrepend: "",

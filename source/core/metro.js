@@ -2,6 +2,8 @@ import { Component } from "./component.js";
 import { Props } from "./props.js";
 
 (($) => {
+    "use strict";
+
     if (typeof Dom === "undefined") {
         throw new Error("Metro UI requires Dom library!");
     }
@@ -73,6 +75,7 @@ import { Props } from "./props.js";
                 subtree: true,
             };
             const observerCallback = (mutations) => {
+                // biome-ignore lint/suspicious/useIterableCallbackReturn: <explanation>
                 mutations.map((mutation) => {
                     if (mutation.type === "attributes" && mutation.attributeName !== "data-role") {
                         if (mutation.attributeName === "data-hotkey") {
@@ -244,6 +247,7 @@ import { Props } from "./props.js";
                 }
 
                 const roles = $this.attr("data-role").split(/\s*,\s*/);
+                // biome-ignore lint/suspicious/useIterableCallbackReturn: <explanation>
                 roles.map((func) => {
                     const $$ = Metro.utils.$();
                     const _func = normalizeComponentName(func);

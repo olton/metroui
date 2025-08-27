@@ -19,7 +19,7 @@
         inputFormat: null,
         clearButton: false,
         calendarButtonIcon: "📅",
-        clearButtonIcon: "❌",
+        clearButtonIcon: "✖",
         prevMonthIcon: "⯇",
         nextMonthIcon: "⯈",
         prevYearIcon: "⯇",

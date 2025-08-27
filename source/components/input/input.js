@@ -30,7 +30,7 @@
         clearButton: true,
         revealButton: true,
         randomButton: false,
-        clearButtonIcon: "❌",
+        clearButtonIcon: "✖",
         revealButtonIcon: "👀",
         searchButtonIcon: "🔍",
         randomButtonIcon: "🎲",

@@ -1,4 +1,6 @@
 ((Metro, $) => {
+    "use strict";
+
     let InputMaskDefaultConfig = {
         maskPattern: ".",
         mask: null,

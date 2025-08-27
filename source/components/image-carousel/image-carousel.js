@@ -1,4 +1,6 @@
 ((Metro, $) => {
+    "use strict";
+
     let ImageCarouselDefaultConfig = {
         thumbnailSize: null,
         animationDuration: 300,

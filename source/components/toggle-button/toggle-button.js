@@ -1,4 +1,6 @@
 ((Metro, $) => {
+    "use strict";
+
     let ToggleButtonDefaultConfig = {
         onChange: Metro.noop,
         onButtonClick: Metro.noop,
