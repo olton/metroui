@@ -634,8 +634,6 @@
                                 L ${x2 - (x2 > x1 ? cornerRadius : -cornerRadius)} ${topY}
                                 Q ${x2} ${topY} ${x2} ${topY + cornerRadius}
                                 L ${x2} ${y2}`;
-
-                            console.log(x1, y1, x2, y2, topY, cornerRadius);
                         }
                         break;
 
