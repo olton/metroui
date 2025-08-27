@@ -34,6 +34,7 @@
         canDrag: true,
         canResize: true,
         showPoints: true,
+        showDragIcon: true,
         onAddPoint: Metro.noop,
         onRemovePoint: Metro.noop,
         onStartConnection: Metro.noop,
@@ -95,6 +96,10 @@
             }
             if (o.showPoints === false) {
                 element.addClass("no-points");
+            }
+
+            if (o.showDragIcon === false) {
+                element.addClass("no-drag-icon");
             }
 
             // Встановлюємо розміри

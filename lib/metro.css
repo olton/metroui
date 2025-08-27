@@ -67257,7 +67257,8 @@ label:has(input) {
   cursor: default;
   object-fit: cover;
 }
-.linked-block[data-can-drag=false] .can-drag-icon {
+.linked-block[data-can-drag=false] .can-drag-icon,
+.linked-block.no-drag-icon .can-drag-icon {
   display: none;
 }
 .connection-area {
