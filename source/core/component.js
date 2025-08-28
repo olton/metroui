@@ -4,9 +4,9 @@ const normalizeComponentName = (name) => (typeof name !== "string" ? undefined :
 
 export const Component = (nameName, compObj) => {
     const name = normalizeComponentName(nameName);
-    const Utils = Metro.utils;
+
     const component = $.extend(
-        { name: name },
+        { name: name, instanceOf: "MetroComponent" },
         {
             _super: function (el, options, defaults, setup) {
                 this.elem = el;
@@ -37,7 +37,7 @@ export const Component = (nameName, compObj) => {
                     if (key in o) {
                         try {
                             o[key] = JSON.parse(value);
-                        } catch (e) {
+                        } catch {
                             o[key] = value;
                         }
                     }
@@ -81,7 +81,7 @@ export const Component = (nameName, compObj) => {
                 }
             },
 
-            _fireEvent: function (eventName, data, log, noFire, context = null) {
+            _fireEvent: function (eventName, data = null, log = false, noFire = false, context = null) {
                 const element = this.element;
                 const o = this.options;
                 const event = str(eventName).camelCase().capitalize(false).value;
@@ -97,29 +97,28 @@ export const Component = (nameName, compObj) => {
 
                 if (noFire !== true) element.fire(event.toLowerCase(), data);
 
-                return Utils.exec(o[`on${event}`], Object.values(_data), context ? context : element[0]);
+                return Metro.utils.exec(o[`on${event}`], Object.values(_data), context ? context : element[0]);
             },
 
-            _fireEvents: function (events, data, log, noFire, context) {
+            // _fireEvents: function (events, data, log, noFire, context) {
+            _fireEvents: function (...rest) {
                 const that = this;
 
-                if (arguments.length === 0) {
+                if (rest.length === 0) {
                     return;
                 }
 
-                if (arguments.length === 1) {
-                    $.each(events, function () {
-                        that._fireEvent(this.name, this.data, this.log, this.noFire, context);
+                const [events, data, log, noFire, context] = rest;
+                const _events = Array.isArray(events) ? events : events.toArray(",");
+
+                if (rest.length === 1) {
+                    $.each(_events, (_events, event) => {
+                        that._fireEvent(event);
                     });
 
-                    return Utils.objectLength(events);
+                    return _events.length;
                 }
 
-                if (!Array.isArray(events) && typeof events !== "string") {
-                    return;
-                }
-
-                const _events = Array.isArray(events) ? events : events.toArray(",");
                 $.each(_events, function () {
                     that._fireEvent(this, data, log, noFire, context);
                 });
