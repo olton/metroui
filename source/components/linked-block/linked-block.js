@@ -948,7 +948,7 @@
         },
 
         destroy: (element) => {
-            const inst = Metro.getPlugin(element, "linked-block");
+            const inst = element.element ? element : Metro.getPlugin(element, "linked-block");
             if (inst) {
                 inst.destroy();
             }
@@ -964,7 +964,7 @@
         },
 
         connect: (source, target, options = {}) => {
-            const sourceInst = Metro.getPlugin(source, "linked-block");
+            const sourceInst = source.element ? source : Metro.getPlugin(source, "linked-block");
             if (sourceInst) {
                 return sourceInst.connect(target, options);
             }
@@ -972,7 +972,7 @@
         },
 
         disconnect: (element, connectionId) => {
-            const inst = Metro.getPlugin(element, "linked-block");
+            const inst = element.element ? element : Metro.getPlugin(element, "linked-block");
             if (inst) {
                 return inst.disconnect(connectionId);
             }

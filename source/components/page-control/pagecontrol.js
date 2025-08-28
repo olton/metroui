@@ -146,7 +146,7 @@
                         e.stopPropagation();
                     },
                 },
-            );
+            ).element;
             this.invisibleTabsHolderToggle.hide();
             this.organizeTabs();
 
@@ -426,7 +426,7 @@
             const holder = this.invisibleTabsHolder;
             const addTabButton = element.find(".page-control__tab__append");
 
-            holder.children(".page-control__tab").each((index, el) => {
+            holder.children(".page-control__tab").each((_, el) => {
                 const tab = $(el);
 
                 if (addTabButton.length) {

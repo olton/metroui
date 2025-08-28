@@ -448,7 +448,7 @@
 
             dlg_options._runtime = true;
 
-            return Metro.makePlugin(dlg, "dialog", dlg_options);
+            return Metro.makePlugin(dlg, "dialog", dlg_options).element;
         },
     };
 })(Metro, Dom);

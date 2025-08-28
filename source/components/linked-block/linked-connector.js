@@ -1087,16 +1087,13 @@
         },
 
         connect: (blockA, blockB, options = {}) => {
-            const $blockA = $(blockA);
-            const $blockB = $(blockB);
-
-            const block = Metro.getPlugin($blockA, "linked-block");
+            const block = blockA.element ? blockA : Metro.getPlugin(blockA, "linked-block");
             if (!block) {
                 console.warn("Connector: hasn't role linked-block");
                 return null;
             }
 
-            block.connect($blockB, options);
+            block.connect(blockB, options);
         },
 
         setType: (id, type) => {

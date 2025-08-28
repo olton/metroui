@@ -3,3 +3,5 @@
 + [x] Fixed `bg-*-clown` family colors
 + [x] Corrected saturated and darken colors
 + [x] Added animation to the linked block connector
++ [x] Changed `Metro.makePlugin()`, now return plugin instance instead of an element
++ [x] Fixed page control creating
