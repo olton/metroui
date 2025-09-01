@@ -11,6 +11,8 @@
         timeFormat: "HH:mm",
         divider: "&nbsp;&nbsp;",
         twoLines: false,
+        useUtc: false,
+        timeZone: 0,
         onTick: Metro.noop,
         onSecond: Metro.noop,
         onClockCreate: Metro.noop,
@@ -64,6 +66,11 @@
 
         _second: function () {
             const timestamp = new Date();
+            const o = this.options;
+
+            if (o.useUtc) {
+                timestamp.utc().add(o.timeZone, "hour");
+            }
 
             this._fireEvent("second", {
                 timestamp: timestamp,
@@ -75,6 +82,10 @@
             const o = this.options;
             const timestamp = datetime();
             let result = "";
+
+            if (o.useUtc) {
+                timestamp.utc().add(o.timeZone, "hour");
+            }
 
             const date = timestamp.format(o.dateFormat, this.locale);
             const time = timestamp.format(o.timeFormat, this.locale);
