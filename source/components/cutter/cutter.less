@@ -1,5 +1,4 @@
 :root {
-    --cutter-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMCAxMUw4IDVMMTYgMTEiIHN0cm9rZT0iIzMwMzYzZCIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIC8+Cjwvc3ZnPgo=");
     --cutter-line-width: 2px;
     --cutter-line-color: #3a3b3d;
     --cutter-content-background: var(--default-background);
@@ -9,7 +8,6 @@
 }
 
 .dark-side {
-    --cutter-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMCAxMUw4IDVMMTYgMTEiIHN0cm9rZT0iI2UxZTRlOCIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIC8+Cjwvc3ZnPgo=");
     --cutter-line-color: #e4e5e9;
     --cutter-content-background: var(--default-background);
     --cutter-content-color: var(--default-color);
@@ -18,10 +16,6 @@
 }
 
 .cutter {
-    background-image: var(--cutter-image);
-    background-repeat: repeat-x;
-    background-position: center;
-    background-size: 16px 16px;
     min-height: 16px;
     width: 100%;
     display: flex;
@@ -29,7 +23,11 @@
     justify-content: center;
     margin: 1rem 0;
     cursor: default;
-    
+    background-image: linear-gradient(to right, var(--cutter-line-color), var(--cutter-line-color));
+    background-repeat: no-repeat;
+    background-size: 100% var(--cutter-line-width);
+    background-position: 0 center;
+
     .content {
         display: flex;
         align-items: center;
@@ -43,22 +41,15 @@
         border-radius: 6px;
         padding: 8px 24px;
     }
-    
+
     &.line {
-        background-image: linear-gradient(to right, var(--cutter-line-color), var(--cutter-line-color));
-        background-repeat: no-repeat;
-        background-size: 100% var(--cutter-line-width);
-        background-position: 0 center; 
     }
 
     &.dash {
-        background-image: repeating-linear-gradient(
-                to right,
-                var(--cutter-line-color) 0,
-                var(--cutter-line-color) 10px, /* Dash color and length */
-                transparent 10px,
-                transparent 20px /* Gap color and length */
-        );
+        background-image: repeating-linear-gradient(to right,
+        var(--cutter-line-color) 0,
+        var(--cutter-line-color) 10px, /* Dash color and length */ transparent 10px,
+        transparent 20px /* Gap color and length */);
         background-repeat: no-repeat;
         background-size: 100% var(--cutter-line-width);
         background-position: 0 center;
@@ -69,43 +60,65 @@
     }
 
     &.dot {
-        background-image: repeating-linear-gradient(
-                to right,
-                var(--cutter-line-color) 0,
-                var(--cutter-line-color) var(--cutter-line-width), /* Dash color and length */
-                transparent var(--cutter-line-width),
-                transparent 10px /* Gap color and length */
-        );
+        background-image: repeating-linear-gradient(to right,
+        var(--cutter-line-color) 0,
+        var(--cutter-line-color) var(--cutter-line-width), /* Dash color and length */ transparent var(--cutter-line-width),
+        transparent 10px /* Gap color and length */);
         background-repeat: no-repeat;
         background-size: 100% var(--cutter-line-width);
-        background-position: 0 center; 
-        
+        background-position: 0 center;
+
         .content {
             border-style: dotted;
         }
     }
 
     &.dash-dot {
-        background-image: repeating-linear-gradient(
-                to right,
-                var(--cutter-line-color) 0,
-                var(--cutter-line-color) 10px, /* Довгий штрих */
-                transparent 10px,
-                transparent 15px, /* Проміжок після штриха */
-                var(--cutter-line-color) 15px,
-                var(--cutter-line-color) calc(15px + var(--cutter-line-width)), /* Крапка */
-                transparent calc(15px + var(--cutter-line-width)),
-                transparent 25px /* Проміжок після крапки, повтор на 25px */
-        );
+        background-image: repeating-linear-gradient(to right,
+        var(--cutter-line-color) 0,
+        var(--cutter-line-color) 10px, /* Довгий штрих */ transparent 10px,
+        transparent 15px, /* Проміжок після штриха */ var(--cutter-line-color) 15px,
+        var(--cutter-line-color) calc(15px + var(--cutter-line-width)), /* Крапка */ transparent calc(15px + var(--cutter-line-width)),
+        transparent 25px /* Проміжок після крапки, повтор на 25px */);
         background-repeat: no-repeat;
         background-size: 100% var(--cutter-line-width);
         background-position: 0 center;
 
         .content {
-            border-style: dot-dash;
+            border-style: solid;
         }
     }
-    
+
+    &.wave {
+        background: none;
+        position: relative;
+
+        &::before {
+            --a: 90deg; /* control the angle */
+            --s: 12px; /* size of the zig-zag */
+            --t: -6px; /* translateY */
+
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(var(--t));
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+            background: var(--cutter-line-color);
+            height: ~"calc(var(--cutter-line-width) + var(--s)/(2 * tan(var(--a)/2)))";
+            width: 100%;
+            --_g: var(--s) repeat-x conic-gradient(from calc(var(--a) / -2) at bottom, #0000, #000 1deg calc(var(--a) - 1deg), #0000 var(--a));
+            mask: 50% calc(-1*var(--cutter-line-width))/var(--_g) exclude,50%/var(--_g);
+        }
+
+        .content {
+            border-style: solid;
+        }
+    }
+
     &.hoverable {
         @media (hover: hover) {
             &:hover .content {

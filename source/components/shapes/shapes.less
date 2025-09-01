@@ -1,74 +1,74 @@
-.triangle {
+.shape-triangle {
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
 
-.trapezoid {
+.shape-trapezoid {
     clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
 }
 
-.parallelogram {
+.shape-parallelogram {
     --offset: 25%;
     clip-path: polygon(var(--offset) 0%, 100% 0%, calc(100% - var(--offset)) 100%, 0% 100%);
 }
 
-.rhomb {
+.shape-rhomb {
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 }
 
-.pentagon {
+.shape-pentagon {
     clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
 }
 
-.hexagon {
+.shape-hexagon {
     --offset: 25%;
     clip-path: polygon(var(--offset) 0%, calc(100% - var(--offset)) 0%, 100% 50%, calc(100% - var(--offset)) 100%, var(--offset) 100%, 0% 50%);
 }
 
-.heptagon {
+.shape-heptagon {
     clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
 }
 
-.octagon {
+.shape-octagon {
     clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
 }
 
-.nonagon {
+.shape-nonagon {
     clip-path: polygon(50% 0%, 83% 12%, 100% 43%, 94% 78%, 68% 100%, 32% 100%, 6% 78%, 0% 43%, 17% 12%);
 }
 
-.decagon {
+.shape-decagon {
     clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
 }
 
-.bevel {
+.shape-bevel {
     clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
 }
 
-.rabbet {
+.shape-rabbet {
     clip-path: polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%);
 }
 
-.left-point {
+.shape-left-point {
     clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
 }
 
-.right-point {
+.shape-right-point {
     clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
 }
 
-.left-chevron {
+.shape-left-chevron {
     clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
 }
 
-.right-chevron {
+.shape-right-chevron {
     clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
 }
 
-.message-shape {
+.shape-message {
     clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
 }
 
-.diagonal {
+.shape-diagonal {
     position: relative;
     isolation: isolate;
     --skew-angle: 5deg;
@@ -90,18 +90,18 @@
     }
 }
 
-.concave {
+.shape-concave {
     --deep: 10%;
     clip-path: polygon(0 0, 50% var(--deep), 100% 0, 100% 100%, 50% calc(100% - var(--deep)), 0 100%);
 }
 
-.concave2 {
+.shape-concave2 {
     --deep: 10%;
     --divider: 2;
     clip-path: polygon(0 0, 50% var(--deep), 100% 0, calc(100% - var(--deep) / var(--divider)) 50%, 100% 100%, 50% calc(100% - var(--deep)), 0 100%, calc(var(--deep) / var(--divider)) 50%);
 }
 
-.wavy {
+.shape-wavy {
     --mask: radial-gradient(67.08px at 50% 90px, #000 99%, #0000 101%) calc(50% - 60px) 0/120px 51% repeat-x,
     radial-gradient(67.08px at 50% -60px, #0000 99%, #000 101%) 50% 30px/120px calc(51% - 30px) repeat-x,
     radial-gradient(67.08px at 50% calc(100% - 90px), #000 99%, #0000 101%) calc(50% - 60px) 100%/120px 51% repeat-x,
@@ -109,19 +109,19 @@
     mask: var(--mask);
 }
 
-.wavy-top {
+.shape-wavy-top {
     --mask: radial-gradient(67.08px at 50% 90px, #000 99%, #0000 101%) calc(50% - 60px) 0/120px 100%,
     radial-gradient(67.08px at 50% -60px, #0000 99%, #000 101%) 50% 30px/120px 100% repeat-x;
     mask: var(--mask);
 }
 
-.wavy-bottom {
+.shape-wavy-bottom {
     --mask: radial-gradient(67.08px at 50% calc(100% - 90px), #000 99%, #0000 101%) calc(50% - 60px) 0/120px 100%,
     radial-gradient(67.08px at 50% calc(100% + 60px), #0000 99%, #000 101%) 50% calc(100% - 30px)/120px 100% repeat-x;
     mask: var(--mask);
 }
 
-.wave {
+.shape-wave {
     clip-path: shape(from 0% 20%,
     curve to 100% 20% with 25% 0% / 75% 40%,
     vline to 80%,

@@ -62380,7 +62380,6 @@ aside::after {
 
 /* source/components/cutter/cutter.less */
 :root {
-  --cutter-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMCAxMUw4IDVMMTYgMTEiIHN0cm9rZT0iIzMwMzYzZCIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIC8+Cjwvc3ZnPgo=);
   --cutter-line-width: 2px;
   --cutter-line-color: #3a3b3d;
   --cutter-content-background: var(--default-background);
@@ -62389,7 +62388,6 @@ aside::after {
   --cutter-content-color-hover: #191919;
 }
 .dark-side {
-  --cutter-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMCAxMUw4IDVMMTYgMTEiIHN0cm9rZT0iI2UxZTRlOCIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIC8+Cjwvc3ZnPgo=);
   --cutter-line-color: #e4e5e9;
   --cutter-content-background: var(--default-background);
   --cutter-content-color: var(--default-color);
@@ -62397,10 +62395,6 @@ aside::after {
   --cutter-content-color-hover: #f3fcff;
 }
 .cutter {
-  background-image: var(--cutter-image);
-  background-repeat: repeat-x;
-  background-position: center;
-  background-size: 16px 16px;
   min-height: 16px;
   width: 100%;
   display: flex;
@@ -62408,6 +62402,14 @@ aside::after {
   justify-content: center;
   margin: 1rem 0;
   cursor: default;
+  background-image:
+    linear-gradient(
+      to right,
+      var(--cutter-line-color),
+      var(--cutter-line-color));
+  background-repeat: no-repeat;
+  background-size: 100% var(--cutter-line-width);
+  background-position: 0 center;
 }
 .cutter .content {
   display: flex;
@@ -62421,16 +62423,6 @@ aside::after {
   border: var(--cutter-line-width) solid var(--cutter-line-color);
   border-radius: 6px;
   padding: 8px 24px;
-}
-.cutter.line {
-  background-image:
-    linear-gradient(
-      to right,
-      var(--cutter-line-color),
-      var(--cutter-line-color));
-  background-repeat: no-repeat;
-  background-size: 100% var(--cutter-line-width);
-  background-position: 0 center;
 }
 .cutter.dash {
   background-image:
@@ -62479,7 +62471,38 @@ aside::after {
   background-position: 0 center;
 }
 .cutter.dash-dot .content {
-  border-style: dot-dash;
+  border-style: solid;
+}
+.cutter.wave {
+  background: none;
+  position: relative;
+}
+.cutter.wave::before {
+  --a: 90deg;
+  --s: 12px;
+  --t: -6px;
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(var(--t));
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: var(--cutter-line-color);
+  height: calc(var(--cutter-line-width) + var(--s)/(2 * tan(var(--a)/2)));
+  width: 100%;
+  --_g:
+    var(--s) repeat-x conic-gradient(
+      from calc(var(--a) / -2) at bottom,
+      #0000,
+      #000 1deg calc(var(--a) - 1deg),
+      #0000 var(--a));
+  mask: 50% calc(-1*var(--cutter-line-width))/var(--_g) exclude, 50%/var(--_g);
+}
+.cutter.wave .content {
+  border-style: solid;
 }
 @media (hover: hover) {
   .cutter.hoverable:hover .content {
@@ -74998,66 +75021,66 @@ label:has(input) {
 }
 
 /* source/components/shapes/shapes.less */
-.triangle {
+.shape-triangle {
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
-.trapezoid {
+.shape-trapezoid {
   clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
 }
-.parallelogram {
+.shape-parallelogram {
   --offset: 25%;
   clip-path: polygon(var(--offset) 0%, 100% 0%, calc(100% - var(--offset)) 100%, 0% 100%);
 }
-.rhomb {
+.shape-rhomb {
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 }
-.pentagon {
+.shape-pentagon {
   clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
 }
-.hexagon {
+.shape-hexagon {
   --offset: 25%;
   clip-path: polygon(var(--offset) 0%, calc(100% - var(--offset)) 0%, 100% 50%, calc(100% - var(--offset)) 100%, var(--offset) 100%, 0% 50%);
 }
-.heptagon {
+.shape-heptagon {
   clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
 }
-.octagon {
+.shape-octagon {
   clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
 }
-.nonagon {
+.shape-nonagon {
   clip-path: polygon(50% 0%, 83% 12%, 100% 43%, 94% 78%, 68% 100%, 32% 100%, 6% 78%, 0% 43%, 17% 12%);
 }
-.decagon {
+.shape-decagon {
   clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
 }
-.bevel {
+.shape-bevel {
   clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
 }
-.rabbet {
+.shape-rabbet {
   clip-path: polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%);
 }
-.left-point {
+.shape-left-point {
   clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
 }
-.right-point {
+.shape-right-point {
   clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
 }
-.left-chevron {
+.shape-left-chevron {
   clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
 }
-.right-chevron {
+.shape-right-chevron {
   clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
 }
-.message-shape {
+.shape-message {
   clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
 }
-.diagonal {
+.shape-diagonal {
   position: relative;
   isolation: isolate;
   --skew-angle: 5deg;
   --background: var(--color-primary);
 }
-.diagonal::after {
+.shape-diagonal::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -75065,19 +75088,19 @@ label:has(input) {
   z-index: -1;
   background: var(--background);
 }
-.diagonal.reverse::after {
+.shape-diagonal.reverse::after {
   transform: skewY(calc(1 * var(--skew-angle)));
 }
-.concave {
+.shape-concave {
   --deep: 10%;
   clip-path: polygon(0 0, 50% var(--deep), 100% 0, 100% 100%, 50% calc(100% - var(--deep)), 0 100%);
 }
-.concave2 {
+.shape-concave2 {
   --deep: 10%;
   --divider: 2;
   clip-path: polygon(0 0, 50% var(--deep), 100% 0, calc(100% - var(--deep) / var(--divider)) 50%, 100% 100%, 50% calc(100% - var(--deep)), 0 100%, calc(var(--deep) / var(--divider)) 50%);
 }
-.wavy {
+.shape-wavy {
   --mask:
     radial-gradient(
       67.08px at 50% 90px,
@@ -75097,7 +75120,7 @@ label:has(input) {
       #000 101%) 50% calc(100% - 30px)/120px calc(51% - 30px) repeat-x;
   mask: var(--mask);
 }
-.wavy-top {
+.shape-wavy-top {
   --mask:
     radial-gradient(
       67.08px at 50% 90px,
@@ -75109,7 +75132,7 @@ label:has(input) {
       #000 101%) 50% 30px/120px 100% repeat-x;
   mask: var(--mask);
 }
-.wavy-bottom {
+.shape-wavy-bottom {
   --mask:
     radial-gradient(
       67.08px at 50% calc(100% - 90px),
@@ -75121,7 +75144,7 @@ label:has(input) {
       #000 101%) 50% calc(100% - 30px)/120px 100% repeat-x;
   mask: var(--mask);
 }
-.wave {
+.shape-wave {
   clip-path: shape(from 0% 20%, curve to 100% 20% with 25% 0% / 75% 40%, vline to 80%, curve to 0% 80% with 75% 100% / 25% 60%, close);
 }
 

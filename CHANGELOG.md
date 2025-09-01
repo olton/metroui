@@ -8,3 +8,4 @@
 + [x] Updated `datetime` package with fix for `utc()`, `locale()` methods, and added formatting system, align strategies system
 + [x] Updated `analog-clock`, now you can use attribute `data-time-zone` to set specific utc offset in hours (-/+) and `data-use-utc` to enable it  
 + [x] Updated `clock`, now you can use attribute `data-time-zone` to set specific utc offset in hours (-/+) and `data-use-utc` to enable it  
++ [x] Updated `cutter`, now default style is `line`, added `wave`, wave can have any color
