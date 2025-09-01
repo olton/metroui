@@ -85,6 +85,27 @@
         }
     }
 
+    &.dash-dot {
+        background-image: repeating-linear-gradient(
+                to right,
+                var(--cutter-line-color) 0,
+                var(--cutter-line-color) 10px, /* Довгий штрих */
+                transparent 10px,
+                transparent 15px, /* Проміжок після штриха */
+                var(--cutter-line-color) 15px,
+                var(--cutter-line-color) calc(15px + var(--cutter-line-width)), /* Крапка */
+                transparent calc(15px + var(--cutter-line-width)),
+                transparent 25px /* Проміжок після крапки, повтор на 25px */
+        );
+        background-repeat: no-repeat;
+        background-size: 100% var(--cutter-line-width);
+        background-position: 0 center;
+
+        .content {
+            border-style: dot-dash;
+        }
+    }
+    
     &.hoverable {
         @media (hover: hover) {
             &:hover .content {

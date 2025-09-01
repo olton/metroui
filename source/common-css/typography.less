@@ -108,31 +108,34 @@ h6, .h6 {
 .leader {
     font-weight: var(--base-text-weight-light);
     font-size: clamp(32px, 6vw, 48px);
-
+    line-height: 1.5;
 }
 .sub-leader {
     font-weight: var(--base-text-weight-normal);
     font-size: clamp(24px, 5vw, 38px);
+    line-height: 1.3;
 }
 
 .text-small {
     font-weight: 400;
     font-size: clamp(10px, 1vw, 12px);
+    line-height: 1;
 }
 .text-secondary {
     font-weight: 400;
     font-size: clamp(12px, 1.2vw, 14px);
+    line-height: 1;
 }
 
 .text-leader {
     font-size: clamp(18px, 3vw, 24px);
     font-weight: 300;
-    line-height: 1.2;
+    line-height: 1.5;
 }
 .text-leader2 {
     font-size: clamp(16px, 2.5vw, 20px);
     font-weight: 300;
-    line-height: 1.2;
+    line-height: 1.5;
 }
 
 .text-muted {
@@ -235,6 +238,8 @@ pre {
 
 pre code {
     white-space: inherit;
+    display: block;
+    height: 100%!important;
 }
 
 code, kbd {

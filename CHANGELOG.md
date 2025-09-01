@@ -5,3 +5,5 @@
 + [x] Added animation to the linked block connector
 + [x] Changed `Metro.makePlugin()`, now return plugin instance instead of an element
 + [x] Fixed page control creating
++ [x] Updated `datetime` package with fix for `utc()`, `locale()` methods, and added formatting system, align strategies system
++ [x] Updated `analog-clock`, now you can use attribute `data-time-zone` to set specific utc offset in hours (-/+) and `data-use-utc` to enable it  

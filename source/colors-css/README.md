@@ -98,8 +98,6 @@ All colors are available as CSS variables for custom styling:
 | -------- | ------- | ----------- |
 | `--gradient-direction` | to right | Gradient direction |
 | `--gradient-position` | circle | Radial gradient position |
-| `--gradient-from-color` | #000 | Gradient start color |
-| `--gradient-to-color` | #5c5c5c | Gradient end color |
 
 ### Glassmorphism Variables
 

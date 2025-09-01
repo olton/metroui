@@ -518,23 +518,6 @@
                         break;
                 }
             } else {
-                // Стандартна логіка для точок на різних сторонах
-                // const direction = this._getDirection(parent1, parent2);
-                //
-                // if (direction === "horizontal") {
-                //     const controlDistance = Math.abs(dx) * 0.4 + magic;
-                //     cp1x = x1 + (dx > 0 ? controlDistance : -controlDistance);
-                //     cp1y = y1;
-                //     cp2x = x2 - (dx > 0 ? controlDistance : -controlDistance);
-                //     cp2y = y2;
-                // } else {
-                //     const controlDistance = Math.abs(dy) * 0.4 + magic;
-                //     cp1x = x1;
-                //     cp1y = y1 + (dy > 0 ? controlDistance : -controlDistance);
-                //     cp2x = x2;
-                //     cp2y = y2 - (dy > 0 ? controlDistance : -controlDistance);
-                // }
-
                 const controlDistance = Math.max(60, distance * 0.3);
 
                 // Контрольні точки базуються на сторонах точок, а не на загальному напрямку
@@ -1072,6 +1055,7 @@
     Metro.connector = {
         create: (pointA, pointB, options = {}) => {
             const defaultOptions = {
+                ...ConnectorDefaultConfig,
                 pointA: pointA,
                 pointB: pointB,
                 container: $("body"),

@@ -13,6 +13,11 @@ each(@normalColors, {
     @darkColor: "dark-@{value}";
     @satColor: "sat-@{value}";
     
+    .bd-light-@{value} {border-color: @@lightColor !important;}
+    .bd-minor-@{value} {border-color: @@minorColor !important;}
+    .bd-sat-@{value} {border-color: @@satColor !important;}
+    .bd-dark-@{value} {border-color: @@darkColor !important;}
+    
     .bd-@{value} {border-color: @@value !important;}
     .bd-@{value}-active {&:active {border-color: @@value !important;}}
     .bd-@{value}-hover {&:hover {border-color: @@value !important;}}

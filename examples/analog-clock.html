@@ -10,16 +10,29 @@
 
 </head>
 <body class="cloak h-100-vh">
-<nav data-role="appbar">
-    <span class="app-bar-item">Analog Clock</span>
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
     <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Analog Clock</div>
+    </div>
+    <div class="app-bar-item-static no-hover ml-auto">
         <input type="checkbox" data-role="theme-switcher"/>
     </div>
 </nav>
 
-<div class="h-100 d-flex flex-align-items-center flex-justify-content-center">
-    <div data-role="analog-clock" data-icon="<span class='mif-rocket'>" data-show-moon="true">
-        <div class="text-center text-color-gray">Coming<br/>Soon</div>
+<div class="h-100 container mt-20">
+    <div class="row">
+        <div class="cell-md-3">
+            <div data-role="analog-clock" data-icon="<span>UTC-3</span>" data-use-utc="true" data-time-zone="-3" style="scale: .5"></div>
+        </div>
+        <div class="cell-md-3">
+            <div data-role="analog-clock" data-icon="<span>UTC</span>" data-use-utc="true" style="scale: .5"></div>
+        </div>
+        <div class="cell-md-3">
+            <div data-role="analog-clock" data-icon="<span>UTC+2</span>" data-use-utc="true" data-time-zone="2" style="scale: .5"></div>
+        </div>
+        <div class="cell-md-3">
+            <div data-role="analog-clock" data-icon="<span>Local</span>" style="scale: .5"></div>
+        </div>
     </div>
 </div>
 

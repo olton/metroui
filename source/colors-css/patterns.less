@@ -8,17 +8,10 @@
     --pattern-color: rgba(255, 255, 255, 0.065);
 }
 
-.bg-pattern-grid {
-    background-image: linear-gradient(to right, var(--pattern-color) 1px, transparent 1px),
-                      linear-gradient(to bottom, var(--pattern-color) 1px, transparent 1px);
-    background-size: var(--pattern-grid-size) var(--pattern-grid-size),
-                     var(--pattern-grid-size) var(--pattern-grid-size);
-}
-
-.bg-pattern-grid-top {
+[class*=bg-pattern-] {
     position: relative;
     background-color: transparent!important;
-
+    
     &::before {
         content: '';
         position: absolute;
@@ -26,96 +19,117 @@
         left: 0;
         right: 0;
         bottom: 0;
+        pointer-events: none;
+        z-index: -1;
+    }
+    
+    &.masked {
+        &::before {
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+        }
+    }
+}
+
+.bg-pattern-grid {
+    &::before {
+        background-image: linear-gradient(to right, var(--pattern-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--pattern-color) 1px, transparent 1px);
+        background-size: var(--pattern-grid-size) var(--pattern-grid-size),
+        var(--pattern-grid-size) var(--pattern-grid-size);
+    }
+}
+
+.bg-pattern-grid-top {
+    &::before {
         background-image: linear-gradient(to right, var(--pattern-color) 1px, transparent 1px),
         linear-gradient(to bottom, var(--pattern-color) 1px, transparent 1px);
         background-size: var(--pattern-grid-size) var(--pattern-grid-size);
         mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
-        pointer-events: none;
-        z-index: -1;
     }
 }
 
 .bg-pattern-grid-bottom {
-    position: relative;
-    background-color: transparent!important;
-
     &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
         background-image: linear-gradient(to right, var(--pattern-color) 1px, transparent 1px),
         linear-gradient(to bottom, var(--pattern-color) 1px, transparent 1px);
         background-size: var(--pattern-grid-size) var(--pattern-grid-size);
         mask-image: radial-gradient(ellipse 70% 60% at 50% 100%, #000 60%, transparent 100%);
-        pointer-events: none;
-        z-index: -1;
     }
 }
 
 .bg-pattern-paper {
-    background-image: radial-gradient(circle at 1px 1px, hsla( from var(--pattern-color) h s l / 0.08) 1px, transparent 0),
-                      repeating-linear-gradient(0deg, transparent, transparent 2px, hsla( from var(--pattern-color) h s l / 0.02) 2px, hsla( from var(--pattern-color) h s l / 0.02) 4px),
-                      repeating-linear-gradient(90deg, transparent, transparent 2px, hsla( from var(--pattern-color) h s l / 0.02) 2px, hsla( from var(--pattern-color) h s l / 0.02) 4px);
-    background-size: 8px 8px, 32px 32px, 32px 32px;
+    &::before {
+        background-image: radial-gradient(circle at 1px 1px, hsla( from var(--pattern-color) h s l / 0.08) 1px, transparent 0),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, hsla( from var(--pattern-color) h s l / 0.02) 2px, hsla( from var(--pattern-color) h s l / 0.02) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, hsla( from var(--pattern-color) h s l / 0.02) 2px, hsla( from var(--pattern-color) h s l / 0.02) 4px);
+        background-size: 8px 8px, 32px 32px, 32px 32px;
+    }
 }
 
 .bg-pattern-mountain {
-    background-image: repeating-linear-gradient(45deg, var(--pattern-color) 0, var(--pattern-color) 1px, transparent 1px, transparent 20px),
-                      repeating-linear-gradient(-45deg, var(--pattern-color) 0, var(--pattern-color) 1px, transparent 1px, transparent 20px);
-    background-size: 40px 40px;
+    &::before {
+        background-image: repeating-linear-gradient(45deg, var(--pattern-color) 0, var(--pattern-color) 1px, transparent 1px, transparent 20px),
+        repeating-linear-gradient(-45deg, var(--pattern-color) 0, var(--pattern-color) 1px, transparent 1px, transparent 20px);
+        background-size: 40px 40px;
+    }
 }
 
 .bg-pattern-art {
-    background-image: repeating-linear-gradient(22.5deg, transparent, transparent 2px, var(--pattern-color) 2px, var(--pattern-color) 3px, transparent 3px, transparent 8px),
-                      repeating-linear-gradient(67.5deg, transparent, transparent 2px, var(--pattern-color) 2px, var(--pattern-color) 3px, transparent 3px, transparent 8px),
-                      repeating-linear-gradient(112.5deg, transparent, transparent 2px, var(--pattern-color) 2px, var(--pattern-color) 3px, transparent 3px, transparent 8px),
-                      repeating-linear-gradient(157.5deg, transparent, transparent 2px, var(--pattern-color) 2px, var(--pattern-color) 3px, transparent 3px, transparent 8px);
+    &::before {
+        background-image: repeating-linear-gradient(22.5deg, transparent, transparent 2px, var(--pattern-color) 2px, var(--pattern-color) 3px, transparent 3px, transparent 8px),
+        repeating-linear-gradient(67.5deg, transparent, transparent 2px, var(--pattern-color) 2px, var(--pattern-color) 3px, transparent 3px, transparent 8px),
+        repeating-linear-gradient(112.5deg, transparent, transparent 2px, var(--pattern-color) 2px, var(--pattern-color) 3px, transparent 3px, transparent 8px),
+        repeating-linear-gradient(157.5deg, transparent, transparent 2px, var(--pattern-color) 2px, var(--pattern-color) 3px, transparent 3px, transparent 8px);
+    }
 }
 
 .bg-pattern-grid-dot {
-    background-image: repeating-linear-gradient(
-                        0deg, 
-                        transparent, 
-                        transparent calc(var(--pattern-grid-size) - 1px), 
-                        var(--pattern-color) calc(var(--pattern-grid-size) - 1px), 
-                        var(--pattern-color) var(--pattern-grid-size), 
-                        transparent var(--pattern-grid-size), 
-                        transparent calc(var(--pattern-grid-size) * 2 - 1px), 
-                        var(--pattern-color) calc(var(--pattern-grid-size) * 2 - 1px), 
-                        var(--pattern-color) calc(var(--pattern-grid-size) * 2)
-                      ),
-                      repeating-linear-gradient(
-                        90deg, 
-                        transparent, 
-                        transparent calc(var(--pattern-grid-size) - 1px), 
-                        var(--pattern-color) calc(var(--pattern-grid-size) - 1px), 
-                        var(--pattern-color) var(--pattern-grid-size), 
-                        transparent var(--pattern-grid-size), 
-                        transparent calc(var(--pattern-grid-size) * 2 - 1px), 
-                        var(--pattern-color) calc(var(--pattern-grid-size) * 2 - 1px), 
-                        var(--pattern-color) calc(var(--pattern-grid-size) * 2)
-                      ),
-                      radial-gradient(circle at var(--pattern-grid-size) var(--pattern-grid-size), var(--pattern-color) var(--pattern-dot-size), transparent var(--pattern-dot-size)),
-                      radial-gradient(circle at calc(var(--pattern-grid-size) * 2) calc(var(--pattern-grid-size) * 2), var(--pattern-color) var(--pattern-dot-size), transparent var(--pattern-dot-size));
-    background-size: calc(var(--pattern-grid-size) * 2) calc(var(--pattern-grid-size) * 2),
-                     calc(var(--pattern-grid-size) * 2) calc(var(--pattern-grid-size) * 2),
-                     calc(var(--pattern-grid-size) * 2) calc(var(--pattern-grid-size) * 2);
+    &::before {
+        background-image: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent calc(var(--pattern-grid-size) - 1px),
+                var(--pattern-color) calc(var(--pattern-grid-size) - 1px),
+                var(--pattern-color) var(--pattern-grid-size),
+                transparent var(--pattern-grid-size),
+                transparent calc(var(--pattern-grid-size) * 2 - 1px),
+                var(--pattern-color) calc(var(--pattern-grid-size) * 2 - 1px),
+                var(--pattern-color) calc(var(--pattern-grid-size) * 2)
+        ),
+        repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent calc(var(--pattern-grid-size) - 1px),
+                var(--pattern-color) calc(var(--pattern-grid-size) - 1px),
+                var(--pattern-color) var(--pattern-grid-size),
+                transparent var(--pattern-grid-size),
+                transparent calc(var(--pattern-grid-size) * 2 - 1px),
+                var(--pattern-color) calc(var(--pattern-grid-size) * 2 - 1px),
+                var(--pattern-color) calc(var(--pattern-grid-size) * 2)
+        ),
+        radial-gradient(circle at var(--pattern-grid-size) var(--pattern-grid-size), var(--pattern-color) var(--pattern-dot-size), transparent var(--pattern-dot-size)),
+        radial-gradient(circle at calc(var(--pattern-grid-size) * 2) calc(var(--pattern-grid-size) * 2), var(--pattern-color) var(--pattern-dot-size), transparent var(--pattern-dot-size));
+        background-size: calc(var(--pattern-grid-size) * 2) calc(var(--pattern-grid-size) * 2),
+        calc(var(--pattern-grid-size) * 2) calc(var(--pattern-grid-size) * 2),
+        calc(var(--pattern-grid-size) * 2) calc(var(--pattern-grid-size) * 2);
+    }
 }
 
 .bg-pattern-box-dot {
-    background-image: linear-gradient(to right, var(--pattern-color) calc(var(--pattern-dot-size)/2), transparent calc(var(--pattern-dot-size)/2)),
-                      linear-gradient(to bottom, var(--pattern-color) calc(var(--pattern-dot-size)/2), transparent calc(calc(var(--pattern-dot-size)/2)/2)),
-                      radial-gradient(circle, hsla( from var(--pattern-color) h s l / 0.2) calc(var(--pattern-dot-size)/2), transparent calc(var(--pattern-dot-size)/2));
-    background-size: var(--pattern-grid-size) var(--pattern-grid-size), 
-                     var(--pattern-grid-size) var(--pattern-grid-size), 
-                     var(--pattern-grid-size) var(--pattern-grid-size);
-    background-position: 0 0, 0 0, 0 0;
+    &::before {
+        background-image: linear-gradient(to right, var(--pattern-color) calc(var(--pattern-dot-size)/2), transparent calc(var(--pattern-dot-size)/2)),
+        linear-gradient(to bottom, var(--pattern-color) calc(var(--pattern-dot-size)/2), transparent calc(calc(var(--pattern-dot-size)/2)/2)),
+        radial-gradient(circle, hsla( from var(--pattern-color) h s l / 0.2) calc(var(--pattern-dot-size)/2), transparent calc(var(--pattern-dot-size)/2));
+        background-size: var(--pattern-grid-size) var(--pattern-grid-size),
+        var(--pattern-grid-size) var(--pattern-grid-size),
+        var(--pattern-grid-size) var(--pattern-grid-size);
+        background-position: 0 0, 0 0, 0 0;
+    }
 }
 
 .bg-pattern-diagonal {
-    background-image: repeating-linear-gradient(45deg, var(--pattern-color) 0, var(--pattern-color) 1px, transparent 1px, transparent var(--pattern-grid-size)),
-    repeating-linear-gradient(-45deg, var(--pattern-color) 0, var(--pattern-color) 1px, transparent 1px, transparent var(--pattern-grid-size));
+    &::before {
+        background-image: repeating-linear-gradient(45deg, var(--pattern-color) 0, var(--pattern-color) 1px, transparent 1px, transparent var(--pattern-grid-size)),
+        repeating-linear-gradient(-45deg, var(--pattern-color) 0, var(--pattern-color) 1px, transparent 1px, transparent var(--pattern-grid-size));
+    }
 }

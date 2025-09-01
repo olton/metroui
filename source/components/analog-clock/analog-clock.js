@@ -3,11 +3,13 @@
     "use strict";
     let AnalogClockDefaultConfig = {
         icon: null,
-        showNumbers: false,
+        showNumbers: true,
         showMoon: true,
         showDay: true,
         showDigitalClock: true,
+        useUtc: false,
         timeFormat: 24,
+        timeZone: 0,
         onAnalogClockCreate: Metro.noop,
     };
 
@@ -38,6 +40,10 @@
             const element = this.element;
             const o = this.options;
             const now = datetime();
+
+            if (o.useUtc) {
+                now.utc().add(o.timeZone, "hour");
+            }
 
             element.addClass("analog-clock");
 
@@ -124,6 +130,11 @@
 
             const updateTime = () => {
                 const date = datetime();
+
+                if (o.useUtc) {
+                    date.utc().add(o.timeZone, "hour");
+                }
+
                 const sec = (date.second() / 60) * 360;
                 const min = (date.minute() / 60) * 360;
                 const hr = (date.hour12() / 12) * 360 + min / 12;

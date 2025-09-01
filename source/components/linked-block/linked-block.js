@@ -30,11 +30,17 @@
         dragHotkey: null,
         connectionType: "curve", // line, curve, step
         connectionStyle: "solid", // solid, dashed, dotted
+        connectionAnimate: false,
+        connectionAnimationSpeed: 500, // швидкість анімації (1-5)
+        connectionAnimationDirection: "forward", // forward, reverse
         onePoint: false,
         canDrag: true,
         canResize: true,
         showPoints: true,
         showDragIcon: true,
+        position: "absolute",
+        top: 0,
+        left: 0,
         onAddPoint: Metro.noop,
         onRemovePoint: Metro.noop,
         onStartConnection: Metro.noop,
@@ -67,6 +73,9 @@
 
         _create: function () {
             const element = this.element;
+
+            this.html = element.html();
+            element.clear();
 
             this._createStructure();
             this._createEvents();
@@ -102,6 +111,8 @@
                 element.addClass("no-drag-icon");
             }
 
+            element.css("position", o.position);
+
             // Встановлюємо розміри
             if (o.width) element.css("width", o.width);
             if (o.height) element.css("height", o.height);
@@ -109,6 +120,8 @@
             if (o.minHeight) element.css("min-height", o.minHeight);
             if (o.maxWidth) element.css("max-width", o.maxWidth);
             if (o.maxHeight) element.css("max-height", o.maxHeight);
+            if (o.top) element.css("top", o.top);
+            if (o.left) element.css("left", o.left);
 
             const _content = element.innerHTML;
 
@@ -117,7 +130,7 @@
                 contentContainer = $("<div>").addClass("linked-block-content");
                 element.append(contentContainer);
             }
-            contentContainer.html(_content || o.content);
+            contentContainer.html(this.html || o.content);
 
             // Створюємо структуру сторін
             this._createSides();
@@ -230,6 +243,10 @@
         _setupDraggable: function () {
             const element = this.element;
             const o = this.options;
+
+            if (o.position !== "absolute" && o.position !== "fixed") {
+                return;
+            }
 
             element.append(dragIcon);
 
@@ -411,6 +428,9 @@
                 container: globalConnectionState.sourceBlock.element.parent(),
                 id: connectionId,
                 autoUpdate: true,
+                animated: o.connectionAnimate,
+                animationSpeed: o.connectionAnimationSpeed,
+                animationDirection: o.connectionAnimationDirection,
             });
 
             // Зберігаємо з'єднання в обох блоків
@@ -917,22 +937,9 @@
     // Статичні методи для роботи з блоками
     Metro.linkedBlock = {
         create: (options = {}) => {
-            const defaultOptions = {
-                id: null,
-                container: null,
-                content: options.content || "Block",
-                draggable: true,
-            };
+            const config = $.extend({}, LinkedBlockDefaultConfig, options);
 
-            const config = $.extend({}, defaultOptions, options);
-
-            const element = $("<div>")
-                .attr("data-role", "linked-block")
-                .css({
-                    position: "absolute",
-                    top: config.top || 100,
-                    left: config.left || 100,
-                });
+            const element = $("<div>");
 
             if (config.id) {
                 element.id(config.id);
