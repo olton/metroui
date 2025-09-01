@@ -24,7 +24,7 @@
 
 <div class="container h-100 d-flex flex-column flex-center">
     <div class="example">
-        <input type="text" data-role="input">
+        <input id="input1" type="text" data-role="input">
     </div>
 
     <div class="example mt-4">
@@ -38,5 +38,10 @@
 </div>
 
 <script src="../lib/metro.js"></script>
+<script>
+    $(() => {
+        $("#input1").attr("disabled", true)
+    })
+</script>
 </body>
 </html>

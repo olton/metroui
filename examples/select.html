@@ -20,7 +20,7 @@
     <h1>Select test page</h1>
 
     <div class="example">
-        <select data-role="select" data-filter="false">
+        <select id="select1" data-role="select" data-filter="false">
             <option data-icon="<span class='mif-rocket'>" value="rocket" >Rocket</option>
             <option data-icon="<span class='mif-star-empty'>" value="star" >Star</option>
             <option data-icon="<img src='images/gerb-ukraine.svg' alt=''/>" value="Ukraine" selected>Ukraine</option>
@@ -241,6 +241,10 @@
         $("#CATEGORIES").focus();
 
     });
+    
+    $(() => {
+        $("#select1").attr("disabled", true)
+    })
 </script>
 </body>
 </html>

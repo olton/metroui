@@ -935,9 +935,14 @@
             this._fireEvent("clear");
         },
 
-        changeAttribute: function (attributeName) {
-            if (attributeName === "disabled") {
-                this.toggleState();
+        changeAttribute: function (attr, val) {
+            if (attr === "disabled") {
+                const disable = val === "true";
+                if (disable) {
+                    this.disable();
+                } else {
+                    this.enable();
+                }
             }
         },
 

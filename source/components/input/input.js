@@ -638,11 +638,14 @@
             this.appendOptionsList.val(v);
         },
 
-        changeAttribute: function (attributeName) {
-            switch (attributeName) {
-                case "disabled":
-                    this.toggleState();
-                    break;
+        changeAttribute: function (attr, val) {
+            if (attr === "disabled") {
+                const disable = val === "true";
+                if (disable) {
+                    this.disable();
+                } else {
+                    this.enable();
+                }
             }
         },
 
