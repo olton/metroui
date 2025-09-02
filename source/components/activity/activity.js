@@ -5,7 +5,7 @@
         activityDeferred: 0,
         type: "ring",
         style: "",
-        size: 64,
+        size: 32,
         radius: 20,
         onActivityCreate: Metro.noop,
     };
@@ -34,6 +34,13 @@
                 .html("")
                 .addClass(o.style === "dark" ? "dark-side" : o.style === "color" ? "color-style" : "")
                 .addClass(`activity-${o.type}`);
+
+            if (o.size && ["ring", "square", "cycle", "simple", "atom", "bars"].includes(o.type)) {
+                element.cssVar("activity-size", `${o.size}px`);
+            }
+            if (o.size && ["metro", "bars"].includes(o.type)) {
+                element.cssVar("activity-box-size", `${o.size}px`);
+            }
 
             function _metro() {
                 for (i = 0; i < 5; i++) {
@@ -64,7 +71,7 @@
                         <circle class="path" 
                                 cx="${o.size / 2}" 
                                 cy="${o.size / 2}" 
-                                r="${o.radius}" 
+                                r="${o.size / 3}" 
                                 fill="none" 
                                 stroke-width="2" 
                                 stroke-miterlimit="10"

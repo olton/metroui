@@ -7,11 +7,13 @@
 
     <title>Test Activity - Metro UI :: Popular HTML, CSS and JS library</title>
 </head>
-<body class="cloak">
-<nav data-role="appbar">
-    <span class="app-bar-item">Any</span>
-    <div class="app-bar-item no-hover">
-        <input type="checkbox" data-role="theme-switcher" data-state="dark"/>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader">Activities</div>
+    </div>
+    <div class="app-bar-item-static no-hover ml-auto">
+        <input type="checkbox" data-role="theme-switcher"/>
     </div>
 </nav>
 
@@ -19,85 +21,106 @@
         <h1>Activity test page</h1>
 
         <div class="row">
-            <div class="cell-md-4 text-center">
+            <div class="cell-md-3 text-center">
                 <div class="mx-auto" data-role="activity" data-type="ring"></div>
             </div>
-            <div class="cell-md-4">
+            <div class="cell-md-3">
                 <div class="mx-auto" data-role="activity" data-type="ring" data-style="color"></div>
             </div>
-            <div class="cell-md-4 dark-side bg-dark">
+            <div class="cell-md-3 text-center">
+                <div class="mx-auto" data-role="activity" data-type="ring" data-style="color" data-size="64"></div>
+            </div>
+            <div class="cell-md-3 dark-side bg-dark">
                 <div class="mx-auto" data-role="activity" data-type="ring"></div>
             </div>
         </div>
 
         <div class="row">
-            <div class="cell-md-4 p-2">
-                <div class="mx-auto" data-role="activity" data-type="metro"></div>
+            <div class="cell-md-3 p-2">
+                <div class="mx-auto" data-role="activity" data-type="metro" data-size="10"></div>
             </div>
-            <div class="cell-md-4 p-2">
-                <div class="mx-auto" data-role="activity" data-type="metro" data-style="color"></div>
+            <div class="cell-md-3 p-2">
+                <div class="mx-auto" data-role="activity" data-type="metro" data-style="color" data-size="10"></div>
             </div>
-            <div class="cell-md-4 p-2 dark-side bg-dark">
-                <div class="mx-auto" data-role="activity" data-type="metro"></div>
+            <div class="cell-md-3 p-2">
+                <div class="mx-auto" data-role="activity" data-type="metro" data-style="color" data-size="20"></div>
+            </div>
+            <div class="cell-md-3 p-2 dark-side bg-dark">
+                <div class="mx-auto" data-role="activity" data-type="metro" data-size="10"></div>
             </div>
         </div>
 
         <div class="row">
-            <div class="cell-md-4 p-2">
+            <div class="cell-md-3 p-2">
                 <div class="mx-auto" data-role="activity" data-type="square"></div>
             </div>
-            <div class="cell-md-4 p-2">
+            <div class="cell-md-3 p-2">
                 <div class="mx-auto" data-role="activity" data-type="square" data-style="color"></div>
             </div>
-            <div class="cell-md-4 p-2 dark-side bg-dark">
+            <div class="cell-md-3 p-2">
+                <div class="mx-auto" data-role="activity" data-type="square" data-style="color" data-size="64"></div>
+            </div>
+            <div class="cell-md-3 p-2 dark-side bg-dark">
                 <div class="mx-auto" data-role="activity" data-type="square"></div>
             </div>
         </div>
 
         <div class="row">
-            <div class="cell-md-4 p-2">
+            <div class="cell-md-3 p-2">
                 <div class="mx-auto" data-role="activity" data-type="cycle"></div>
             </div>
-            <div class="cell-md-4 p-2">
+            <div class="cell-md-3 p-2">
                 <div class="mx-auto" data-role="activity" data-type="cycle" data-style="color"></div>
             </div>
-            <div class="cell-md-4 p-2 dark-side bg-dark">
+            <div class="cell-md-3 p-2">
+                <div class="mx-auto" data-role="activity" data-type="cycle" data-style="color" data-size="64"></div>
+            </div>
+            <div class="cell-md-3 p-2 dark-side bg-dark">
                 <div class="mx-auto" data-role="activity" data-type="cycle"></div>
             </div>
         </div>
 
         <div class="row">
-            <div class="cell-md-4 p-2">
+            <div class="cell-md-3 p-2">
                 <div class="mx-auto" data-role="activity" data-type="simple"></div>
             </div>
-            <div class="cell-md-4 p-2">
+            <div class="cell-md-3 p-2">
                 <div class="mx-auto" data-role="activity" data-type="simple" data-style="color"></div>
             </div>
-            <div class="cell-md-4 p-2 dark-side bg-dark">
+            <div class="cell-md-3 p-2">
+                <div class="mx-auto" data-role="activity" data-type="simple" data-style="color" data-size="64"></div>
+            </div>
+            <div class="cell-md-3 p-2 dark-side bg-dark">
                 <div class="mx-auto" data-role="activity" data-type="simple"></div>
             </div>
         </div>
 
         <div class="row">
-            <div class="cell-md-4 p-2">
+            <div class="cell-md-3 p-2">
                 <div class="mx-auto" data-role="activity" data-type="atom"></div>
             </div>
-            <div class="cell-md-4 p-2">
+            <div class="cell-md-3 p-2">
                 <div class="mx-auto" data-role="activity" data-type="atom" data-style="color"></div>
             </div>
-            <div class="cell-md-4 p-2 dark-side bg-dark">
+            <div class="cell-md-3 p-2">
+                <div class="mx-auto" data-role="activity" data-type="atom" data-style="color" data-size="64"></div>
+            </div>
+            <div class="cell-md-3 p-2 dark-side bg-dark">
                 <div class="mx-auto" data-role="activity" data-type="atom"></div>
             </div>
         </div>
 
         <div class="row">
-            <div class="cell-md-4 p-2">
+            <div class="cell-md-3 p-2">
                 <div class="mx-auto" data-role="activity" data-type="bars"></div>
             </div>
-            <div class="cell-md-4 p-2">
+            <div class="cell-md-3 p-2">
                 <div class="mx-auto" data-role="activity" data-type="bars" data-style="color"></div>
             </div>
-            <div class="cell-md-4 p-2 dark-side bg-dark">
+            <div class="cell-md-3 p-2">
+                <div class="mx-auto" data-role="activity" data-type="bars" data-style="color" data-size="64"></div>
+            </div>
+            <div class="cell-md-3 p-2 dark-side bg-dark">
                 <div class="mx-auto" data-role="activity" data-type="bars"></div>
             </div>
         </div>

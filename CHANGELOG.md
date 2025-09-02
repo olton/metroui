@@ -9,4 +9,5 @@
 + [x] Updated `analog-clock`, now you can use attribute `data-time-zone` to set specific utc offset in hours (-/+) and `data-use-utc` to enable it  
 + [x] Updated `clock`, now you can use attribute `data-time-zone` to set specific utc offset in hours (-/+) and `data-use-utc` to enable it  
 + [x] Updated `cutter`, now default style is `line`, added `wave`, wave can have any color
++ [x] Fixed `data-size` attribute in `activity` component
  

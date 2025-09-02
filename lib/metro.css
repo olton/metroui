@@ -50174,7 +50174,7 @@ button.light.outline,
 .accordion.marker-on .heading::before {
   line-height: 1;
   display: flex;
-  content: "\2bc8";
+  content: "\25b6";
   position: absolute;
   left: 0;
   top: 3px;
@@ -52626,93 +52626,98 @@ button:has(.badge.corner),
 
 /* source/components/activity/activity.less */
 :root {
-  --activity-ring-time: 4000ms;
-  --activity-ring-time-mute: 30;
-  --activity-ring-size: 32px;
-  --activity-ring-rotate: -14deg;
+  --activity-time: 4000ms;
+  --activity-speed: 2s;
+  --activity-time-mute: 30;
+  --activity-size: 32px;
+  --activity-rotate: -14deg;
+  --activity-box-size: 10px;
   --activity-color: #191919;
+  --activity-color-1: hsl(221, 100%, 79%);
+  --activity-color-2: hsl(39, 100%, 50%);
+  --activity-color-3: hsl(120, 100%, 35%);
+  --activity-color-4: hsl(0, 100%, 50%);
+  --activity-color-5: hsl(52, 100%, 68%);
 }
 .dark-side {
   --activity-color: #ffffff;
 }
 .activity-ring {
   position: relative;
-  padding-top: 0.22rem;
-  width: 32px;
-  height: 32px;
-  margin: 0.625rem;
+  width: var(--activity-size);
+  height: var(--activity-size);
 }
-.activity-ring > .wrap {
+.activity-ring .wrap,
+.activity-ring .circle {
+  display: block;
   position: absolute;
-  width: 30px;
-  height: 30px;
+  width: calc(var(--activity-size) - 2px);
+  height: calc(var(--activity-size) - 2px);
 }
-.activity-ring > .wrap > .circle {
+.activity-ring .wrap .circle {
   opacity: 0;
-  width: 30px;
-  height: 30px;
-  transform: rotate(225deg);
-  animation: orbit 4000ms infinite;
+  rotate: 225deg;
+  animation: orbit var(--activity-time) infinite;
 }
-.activity-ring > .wrap > .circle:after {
+.activity-ring .wrap .circle:after {
   position: absolute;
   content: "";
-  width: 4px;
-  height: 4px;
-  border-radius: 4px;
+  width: calc(var(--activity-size) / 8);
+  height: calc(var(--activity-size) / 8);
+  border-radius: calc(var(--activity-size) / 8);
   background: var(--activity-color);
 }
-.activity-ring > .wrap:nth-child(2) {
-  transform: rotate(-14deg);
+.activity-ring .wrap:nth-child(2) {
+  rotate: var(--activity-rotate);
 }
-.activity-ring > .wrap:nth-child(2) > .circle {
-  animation-delay: 133.33333333ms;
+.activity-ring .wrap:nth-child(2) > .circle {
+  animation-delay: calc(var(--activity-time) / var(--activity-time-mute));
 }
-.activity-ring > .wrap:nth-child(3) {
-  transform: rotate(-28deg);
+.activity-ring .wrap:nth-child(3) {
+  rotate: calc(var(--activity-rotate) * 2);
 }
-.activity-ring > .wrap:nth-child(3) > .circle {
-  animation-delay: 266.66666667ms;
+.activity-ring .wrap:nth-child(3) > .circle {
+  animation-delay: calc(var(--activity-time) / var(--activity-time-mute) * 2);
 }
-.activity-ring > .wrap:nth-child(4) {
-  transform: rotate(-42deg);
+.activity-ring .wrap:nth-child(4) {
+  rotate: calc(var(--activity-rotate) * 3);
 }
-.activity-ring > .wrap:nth-child(4) > .circle {
-  animation-delay: 400ms;
+.activity-ring .wrap:nth-child(4) > .circle {
+  animation-delay: calc(var(--activity-time) / var(--activity-time-mute) * 3);
 }
-.activity-ring > .wrap:nth-child(5) {
-  transform: rotate(-56deg);
+.activity-ring .wrap:nth-child(5) {
+  rotate: calc(var(--activity-rotate) * 4);
 }
-.activity-ring > .wrap:nth-child(5) > .circle {
-  animation-delay: 533.33333333ms;
+.activity-ring .wrap:nth-child(5) > .circle {
+  animation-delay: calc(var(--activity-time) / var(--activity-time-mute) * 4);
 }
-.activity-ring.color-style > .wrap > .circle:after {
-  background-color: hsl(221, 100%, 79%);
+.activity-ring.color-style .wrap .circle:after {
+  background-color: var(--activity-color-1);
 }
-.activity-ring.color-style > .wrap:nth-child(2) > .circle:after {
-  background-color: hsl(39, 100%, 50%);
+.activity-ring.color-style .wrap:nth-child(2) .circle:after {
+  background-color: var(--activity-color-2);
 }
-.activity-ring.color-style > .wrap:nth-child(3) > .circle:after {
-  background-color: hsl(120, 100%, 35%);
+.activity-ring.color-style .wrap:nth-child(3) .circle:after {
+  background-color: var(--activity-color-3);
 }
-.activity-ring.color-style > .wrap:nth-child(4) > .circle:after {
-  background-color: hsl(0, 100%, 50%);
+.activity-ring.color-style .wrap:nth-child(4) .circle:after {
+  background-color: var(--activity-color-4);
 }
-.activity-ring.color-style > .wrap:nth-child(5) > .circle:after {
-  background-color: hsl(52, 100%, 68%);
+.activity-ring.color-style .wrap:nth-child(5) .circle:after {
+  background-color: var(--activity-color-5);
 }
 .activity-metro {
   overflow: hidden;
   position: relative;
   width: 100%;
-  height: 10px;
+  height: var(--activity-box-size);
   background-color: transparent;
 }
 .activity-metro > .circle {
   display: inline-block;
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: var(--activity-box-size);
+  height: var(--activity-box-size);
   background-color: var(--activity-color);
   opacity: 0;
   margin-left: 5px;
@@ -52731,41 +52736,41 @@ button:has(.badge.corner),
   animation-delay: 0.5s;
 }
 .activity-metro.color-style > .circle {
-  background-color: hsl(221, 100%, 79%);
+  background-color: var(--activity-color-1);
 }
 .activity-metro.color-style > .circle:nth-child(2) {
-  background-color: hsl(39, 100%, 50%);
+  background-color: var(--activity-color-2);
 }
 .activity-metro.color-style > .circle:nth-child(3) {
-  background-color: hsl(120, 100%, 35%);
+  background-color: var(--activity-color-3);
 }
 .activity-metro.color-style > .circle:nth-child(4) {
-  background-color: hsl(0, 100%, 50%);
+  background-color: var(--activity-color-4);
 }
 .activity-metro.color-style > .circle:nth-child(5) {
-  background-color: hsl(52, 100%, 68%);
+  background-color: var(--activity-color-5);
 }
 .activity-square {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: var(--activity-size);
+  height: var(--activity-size);
   overflow: hidden;
   transform-origin: bottom left;
   animation: activity-shrink 1s linear infinite;
 }
 .activity-square .square {
   position: absolute;
-  width: 19px;
-  height: 19px;
+  width: calc(var(--activity-size) / 2 - 1px);
+  height: calc(var(--activity-size) / 2 - 1px);
   background: var(--activity-color);
 }
 .activity-square .square:nth-child(1) {
   left: 0;
-  top: 21px;
+  top: calc(var(--activity-size) / 2 + 1px);
 }
 .activity-square .square:nth-child(2) {
-  left: 21px;
-  top: 21px;
+  left: calc(var(--activity-size) / 2 + 1px);
+  top: calc(var(--activity-size) / 2 + 1px);
   animation: activity-drop 1s linear infinite;
 }
 .activity-square .square:nth-child(3) {
@@ -52774,25 +52779,25 @@ button:has(.badge.corner),
   animation: activity-drop2 1s linear infinite;
 }
 .activity-square .square:nth-child(4) {
-  left: 21px;
+  left: calc(var(--activity-size) / 2 + 1px);
   top: 0;
   animation: activity-drop3 1s linear infinite;
 }
 .activity-square.color-style > .square:nth-child(1) {
-  background-color: hsl(39, 100%, 50%);
+  background-color: var(--activity-color-1);
 }
 .activity-square.color-style > .square:nth-child(2) {
-  background-color: hsl(120, 100%, 35%);
+  background-color: var(--activity-color-2);
 }
 .activity-square.color-style > .square:nth-child(3) {
-  background-color: hsl(221, 100%, 79%);
+  background-color: var(--activity-color-3);
 }
 .activity-square.color-style > .square:nth-child(4) {
-  background-color: hsl(52, 100%, 68%);
+  background-color: var(--activity-color-4);
 }
 .activity-cycle {
-  width: 64px;
-  height: 64px;
+  width: var(--activity-size);
+  height: var(--activity-size);
   position: relative;
   overflow: hidden;
 }
@@ -52801,9 +52806,9 @@ button:has(.badge.corner),
   position: relative;
   left: 50%;
   top: 50%;
-  width: 64px;
-  height: 64px;
-  margin: -32px 0 0 -32px;
+  width: var(--activity-size);
+  height: var(--activity-size);
+  translate: -50% -50%;
   border-radius: 50%;
   border: 3px solid transparent;
   border-top-color: var(--activity-color);
@@ -52819,31 +52824,31 @@ button:has(.badge.corner),
   border-top-color: var(--activity-color);
 }
 .activity-cycle .cycle:before {
-  top: 5px;
-  left: 5px;
-  right: 5px;
-  bottom: 5px;
+  top: calc(var(--activity-size) / 12);
+  left: calc(var(--activity-size) / 12);
+  right: calc(var(--activity-size) / 12);
+  bottom: calc(var(--activity-size) / 12);
   animation: activity-pre-spin 2s linear infinite;
 }
 .activity-cycle .cycle:after {
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
+  top: calc(var(--activity-size) / 4);
+  left: calc(var(--activity-size) / 4);
+  right: calc(var(--activity-size) / 4);
+  bottom: calc(var(--activity-size) / 4);
   animation: activity-spin 1.5s linear infinite;
 }
 .activity-cycle.color-style .cycle {
-  border-top-color: hsl(221, 100%, 79%);
+  border-top-color: var(--activity-color-1);
 }
 .activity-cycle.color-style .cycle:before {
-  border-top-color: hsl(0, 100%, 50%);
+  border-top-color: var(--activity-color-2);
 }
 .activity-cycle.color-style .cycle:after {
-  border-top-color: hsl(52, 100%, 68%);
+  border-top-color: var(--activity-color-3);
 }
 .activity-simple {
-  width: 64px;
-  height: 64px;
+  width: var(--activity-size);
+  height: var(--activity-size);
 }
 .activity-simple .circular {
   animation: activity-rotate 2s linear infinite;
@@ -52861,20 +52866,11 @@ button:has(.badge.corner),
 .activity-simple.color-style .path {
   animation: activity-dash 1.5s ease-in-out infinite, activity-color 6s ease-in-out infinite;
 }
-.activity-simple.small {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-}
-.activity-simple.small .circular {
-  width: 32px;
-  height: 32px;
-}
 .activity-atom {
-  width: 64px;
-  height: 64px;
+  width: var(--activity-size);
+  height: var(--activity-size);
   border-radius: 50%;
-  perspective: 800px;
+  perspective: calc(var(--activity-size) * 12.5);
 }
 .activity-atom span {
   position: absolute;
@@ -52913,12 +52909,12 @@ button:has(.badge.corner),
   border-top-color: hsl(52, 100%, 68%);
 }
 .activity-bars {
-  width: 60px;
-  height: 50px;
+  width: var(--activity-size);
+  height: var(--activity-size);
 }
 .activity-bars span {
   height: 100%;
-  width: 8px;
+  width: calc(var(--activity-size) / 6 - 2px);
   display: inline-block;
   float: left;
   margin-left: 2px;
@@ -52941,22 +52937,22 @@ button:has(.badge.corner),
   animation-delay: -0.3s;
 }
 .activity-bars.color-style span:nth-child(1) {
-  background-color: hsl(300, 76%, 72%);
+  background-color: var(--activity-color-1);
 }
 .activity-bars.color-style span:nth-child(2) {
-  background-color: hsl(221, 100%, 79%);
+  background-color: var(--activity-color-2);
 }
 .activity-bars.color-style span:nth-child(3) {
-  background-color: hsl(120, 100%, 35%);
+  background-color: var(--activity-color-3);
 }
 .activity-bars.color-style span:nth-child(4) {
-  background-color: hsl(52, 100%, 68%);
+  background-color: var(--activity-color-4);
 }
 .activity-bars.color-style span:nth-child(5) {
-  background-color: hsl(39, 100%, 50%);
+  background-color: var(--activity-color-5);
 }
 .activity-bars.color-style span:nth-child(6) {
-  background-color: hsl(350, 100%, 88%);
+  background-color: var(--activity-color-1);
 }
 @keyframes activity-rotate {
   100% {
@@ -52979,16 +52975,16 @@ button:has(.badge.corner),
 }
 @keyframes activity-color {
   100%, 0% {
-    stroke: hsl(0, 100%, 50%);
+    stroke: var(--activity-color-1);
   }
   40% {
-    stroke: hsl(225, 100%, 68%);
+    stroke: var(--activity-color-2);
   }
   66% {
-    stroke: hsl(120, 100%, 35%);
+    stroke: var(--activity-color-3);
   }
   80%, 90% {
-    stroke: hsl(52, 100%, 68%);
+    stroke: var(--activity-color-4);
   }
 }
 @keyframes activity-rotate-one {
