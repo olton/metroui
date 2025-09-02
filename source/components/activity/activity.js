@@ -6,6 +6,7 @@
         type: "ring",
         style: "",
         size: 32,
+        boxSize: 10,
         radius: 20,
         onActivityCreate: Metro.noop,
     };
@@ -38,8 +39,8 @@
             if (o.size && ["ring", "square", "cycle", "simple", "atom", "bars"].includes(o.type)) {
                 element.cssVar("activity-size", `${o.size}px`);
             }
-            if (o.size && ["metro", "bars"].includes(o.type)) {
-                element.cssVar("activity-box-size", `${o.size}px`);
+            if (o.boxSize && ["metro"].includes(o.type)) {
+                element.cssVar("activity-box-size", `${o.boxSize}px`);
             }
 
             function _metro() {
@@ -120,7 +121,7 @@
             });
         },
 
-        changeAttribute: (attributeName) => {},
+        changeAttribute: (attr, val) => {},
 
         destroy: function () {
             this.element.remove();
