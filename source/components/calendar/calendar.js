@@ -21,10 +21,8 @@
         calendarDeferred: 0,
         dayBorder: false,
         excludeDay: null,
-        prevMonthIcon: "◀",
-        nextMonthIcon: "▶",
-        prevYearIcon: "◀",
-        nextYearIcon: "▶",
+        prevIcon: "❮",
+        nextIcon: "❯",
         compact: false,
         wide: false,
         widePoint: null,
@@ -786,16 +784,16 @@
 
             const toolbar = $("<div>").addClass("calendar-toolbar").appendTo(content);
 
-            $("<span>").addClass("prev-month").html(o.prevMonthIcon).appendTo(toolbar);
+            $("<span>").addClass("prev-month").html(o.prevIcon).appendTo(toolbar);
             $("<span>")
                 .addClass("curr-month")
                 .html(Datetime.getLocale(this.locale).months[this.current.month])
                 .appendTo(toolbar);
-            $("<span>").addClass("next-month").html(o.nextMonthIcon).appendTo(toolbar);
+            $("<span>").addClass("next-month").html(o.nextIcon).appendTo(toolbar);
 
-            $("<span>").addClass("prev-year").html(o.prevYearIcon).appendTo(toolbar);
+            $("<span>").addClass("prev-year").html(o.prevIcon).appendTo(toolbar);
             $("<span>").addClass("curr-year").html(this.current.year).appendTo(toolbar);
-            $("<span>").addClass("next-year").html(o.nextYearIcon).appendTo(toolbar);
+            $("<span>").addClass("next-year").html(o.nextIcon).appendTo(toolbar);
 
             weekDays = $("<div>").addClass("week-days").appendTo(content);
             if (o.showWeekNumber) {
