@@ -11,4 +11,5 @@
 + [x] Updated `cutter`, now default style is `line`, added `wave`, wave can have any color
 + [x] Fixed `data-size` attribute in `activity` component, added attribute `data-box-size` for `metro` activity
 + [x] Fixed prev, next icons in calendar for android
++ [x] Fixed accordion fame state marker for android
  
