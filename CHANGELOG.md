@@ -12,4 +12,5 @@
 + [x] Fixed `data-size` attribute in `activity` component, added attribute `data-box-size` for `metro` activity
 + [x] Fixed prev, next icons in calendar for android
 + [x] Fixed accordion fame state marker for android
++ [x] Fixed reaction inputs, select, and textarea components to change disabled property for input, select, textarea elements 
  

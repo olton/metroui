@@ -55812,7 +55812,6 @@ input[type=reset] {
 .select:disabled input,
 .tag-input:disabled input,
 .spinner:disabled input,
-.tag-input:disabled input,
 .rating:disabled input,
 .color-picker:disabled input,
 .file.disabled input,
@@ -55821,7 +55820,6 @@ input[type=reset] {
 .select.disabled input,
 .tag-input.disabled input,
 .spinner.disabled input,
-.tag-input.disabled input,
 .rating.disabled input,
 .color-picker.disabled input,
 .file:disabled textarea,
@@ -55830,7 +55828,6 @@ input[type=reset] {
 .select:disabled textarea,
 .tag-input:disabled textarea,
 .spinner:disabled textarea,
-.tag-input:disabled textarea,
 .rating:disabled textarea,
 .color-picker:disabled textarea,
 .file.disabled textarea,
@@ -55839,7 +55836,6 @@ input[type=reset] {
 .select.disabled textarea,
 .tag-input.disabled textarea,
 .spinner.disabled textarea,
-.tag-input.disabled textarea,
 .rating.disabled textarea,
 .color-picker.disabled textarea,
 .file:disabled select,
@@ -55848,7 +55844,6 @@ input[type=reset] {
 .select:disabled select,
 .tag-input:disabled select,
 .spinner:disabled select,
-.tag-input:disabled select,
 .rating:disabled select,
 .color-picker:disabled select,
 .file.disabled select,
@@ -55857,7 +55852,6 @@ input[type=reset] {
 .select.disabled select,
 .tag-input.disabled select,
 .spinner.disabled select,
-.tag-input.disabled select,
 .rating.disabled select,
 .color-picker.disabled select,
 .file:disabled .select-input,
@@ -55866,7 +55860,6 @@ input[type=reset] {
 .select:disabled .select-input,
 .tag-input:disabled .select-input,
 .spinner:disabled .select-input,
-.tag-input:disabled .select-input,
 .rating:disabled .select-input,
 .color-picker:disabled .select-input,
 .file.disabled .select-input,
@@ -55875,7 +55868,6 @@ input[type=reset] {
 .select.disabled .select-input,
 .tag-input.disabled .select-input,
 .spinner.disabled .select-input,
-.tag-input.disabled .select-input,
 .rating.disabled .select-input,
 .color-picker.disabled .select-input,
 .file:disabled .caption,
@@ -55884,7 +55876,6 @@ input[type=reset] {
 .select:disabled .caption,
 .tag-input:disabled .caption,
 .spinner:disabled .caption,
-.tag-input:disabled .caption,
 .rating:disabled .caption,
 .color-picker:disabled .caption,
 .file.disabled .caption,
@@ -55893,7 +55884,6 @@ input[type=reset] {
 .select.disabled .caption,
 .tag-input.disabled .caption,
 .spinner.disabled .caption,
-.tag-input.disabled .caption,
 .rating.disabled .caption,
 .color-picker.disabled .caption,
 .file:disabled .stars li,
@@ -55902,7 +55892,6 @@ input[type=reset] {
 .select:disabled .stars li,
 .tag-input:disabled .stars li,
 .spinner:disabled .stars li,
-.tag-input:disabled .stars li,
 .rating:disabled .stars li,
 .color-picker:disabled .stars li,
 .file.disabled .stars li,
@@ -55911,7 +55900,6 @@ input[type=reset] {
 .select.disabled .stars li,
 .tag-input.disabled .stars li,
 .spinner.disabled .stars li,
-.tag-input.disabled .stars li,
 .rating.disabled .stars li,
 .color-picker.disabled .stars li {
   background: transparent;
@@ -55923,7 +55911,6 @@ input[type=reset] {
 .select:disabled .button-group,
 .tag-input:disabled .button-group,
 .spinner:disabled .button-group,
-.tag-input:disabled .button-group,
 .rating:disabled .button-group,
 .color-picker:disabled .button-group,
 .file.disabled .button-group,
@@ -55932,9 +55919,22 @@ input[type=reset] {
 .select.disabled .button-group,
 .tag-input.disabled .button-group,
 .spinner.disabled .button-group,
-.tag-input.disabled .button-group,
 .rating.disabled .button-group,
 .color-picker.disabled .button-group {
+  display: none;
+}
+:is(.file, .input, .tag-input, .spinner, .rating, .color-picker):has(input:disabled) .button-group {
+  display: none;
+}
+:is(.select):has(select:disabled) .button-group {
+  display: none;
+}
+:is(.select):has(select:disabled) .dropdown-caret {
+  fill: var(--input-color-disabled);
+}
+:is(.textarea):has(textarea:disabled) button,
+:is(.textarea):has(textarea:disabled) .button,
+:is(.textarea):has(textarea:disabled) .button-group {
   display: none;
 }
 .invalid_feedback {

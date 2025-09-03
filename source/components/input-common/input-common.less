@@ -233,7 +233,7 @@ input[type=button], input[type=submit], input[type=reset] {
     opacity: 0;
 }
 
-.file, .input, .textarea, .select, .tag-input, .spinner, .tag-input, .rating, .color-picker {
+.file, .input, .textarea, .select, .tag-input, .spinner, .rating, .color-picker {
     &:disabled, &.disabled {
         input, textarea, select, .select-input, .caption, .stars li {
             background: transparent;
@@ -243,6 +243,25 @@ input[type=button], input[type=submit], input[type=reset] {
         .button-group {
             display: none;
         }
+    }
+}
+
+:is(.file, .input, .tag-input, .spinner, .rating, .color-picker):has( input:disabled) {
+    .button-group {
+        display: none;
+    }
+}
+:is(.select):has( select:disabled) {
+    .button-group {
+        display: none;
+    }
+    .dropdown-caret {
+        fill: var(--input-color-disabled);
+    }
+}
+:is(.textarea):has( textarea:disabled) {
+    button, .button, .button-group {
+        display: none;
     }
 }
 
