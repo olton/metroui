@@ -13,5 +13,6 @@
 + [x] Fixed prev, next icons in calendar for android
 + [x] Fixed accordion fame state marker for android
 + [x] Fixed reaction inputs, select, and textarea components to change disabled property for input, select, textarea elements
-+ [x] Improved `button` for using colors, now you can use all colors to define button color with classes `button-light-[color]`, `button-minor-[color]`, `button-[color]`, `button-sat-[color]`, and `button-dark-[color]` 
++ [x] Improved `button` for using colors, now you can use all colors to define button color with classes `button-light-[color]`, `button-minor-[color]`, `button-[color]`, `button-sat-[color]`, and `button-dark-[color]`
++ [x] Added classes `glow`, and `glow-hover` to push button
  

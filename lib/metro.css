@@ -50402,7 +50402,7 @@ button,
   overflow: visible;
   border-radius: var(--button-border-radius);
   gap: 8px;
-  transition: background-color 0.2s linear;
+  transition: background-color 0.2s linear, box-shadow 0.2s linear;
 }
 button:first-child,
 .button:first-child {
@@ -54433,6 +54433,22 @@ button:has(.badge.corner),
     --button-pill-radius: 10px;
     --button-size: 20px;
     --button-font-size: 10px;
+  }
+}
+button.glow,
+.button.glow {
+  box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
+}
+@media (hover: hover) {
+  button.glow-hover:hover,
+  .button.glow-hover:hover {
+    box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
+  }
+}
+@media (hover: none) {
+  button.glow-hover:active,
+  .button.glow-hover:active {
+    box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
   }
 }
 

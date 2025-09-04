@@ -40,7 +40,7 @@ button,
     overflow: visible;
     border-radius: var(--button-border-radius);
     gap: 8px;
-    transition: background-color .2s linear;
+    transition: background-color .2s linear, box-shadow .2s linear;
 
     &:first-child {
         margin-left: 0;
@@ -424,3 +424,21 @@ each(@media-rules, {
         }
     }
 })
+
+button, .button {
+    &.glow {
+        box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
+    }
+    &.glow-hover {
+        @media (hover: hover) {
+            &:hover {
+                box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
+            }
+        }
+        @media (hover: none) {
+            &:active {
+                box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
+            }
+        }
+    }
+}
