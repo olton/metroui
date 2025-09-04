@@ -7,25 +7,17 @@
 
     --button-background: #ebebeb;
     --button-color: #191919;
-    --button-background-hover: #dadada;
-    --button-border-color: #ebebeb;
     --button-disabled-opacity: .65;
 }
 
 .dark-side {
     --button-background: #2b2d30;
     --button-color: #f3fcff;
-    --button-background-hover: #333439;
-    --button-border-color: #4e5157;
     --button-disabled-opacity: .25;
 }
 
 button,
-input[type="button"],
-input[type="submit"],
-input[type="reset"],
-.button, 
-.flat-button {
+.button {
     --control-height: var(--control-height-normal);
     --pill-button-radius: calc(var(--control-height) / 2);
     display: inline-flex;
@@ -41,13 +33,14 @@ input[type="reset"],
     height: var(--control-height);
     background-color: var(--button-background);
     color: var(--button-color);
-    border: 1px solid var(--button-border-color);
+    border: 1px solid var(--button-background);
     cursor: pointer;
     outline: none;
     position: relative;
     overflow: visible;
     border-radius: var(--button-border-radius);
     gap: 8px;
+    transition: background-color .2s linear;
 
     &:first-child {
         margin-left: 0;
@@ -79,47 +72,14 @@ input[type="reset"],
     
     @media (hover: hover) {
         &:hover {
-            background-color: var(--button-background-hover);
+            background-color: hsl(from var(--button-background) h s calc(l - 10));
         }
     }
     
     @media (hover: none) {
         &:active {
-            background-color: var(--button-background-hover);
+            background-color: hsl(from var(--button-background) h s calc(l - 10));
         }
-    }
-    
-    &.link {
-        background-color: transparent;
-        border: none;
-        &:hover {
-            background-color: transparent;
-            text-decoration: underline;
-        }
-        &.focus, &:focus {
-            box-shadow: none;
-        }
-    }
-
-    &.mini {
-        --control-height: var(--control-height-mini);
-        --button-font-size: 10px;
-    }
-    &.small {
-        --control-height: var(--control-height-small);
-        --button-font-size: 12px;
-    }
-    &.medium {
-        --control-height: var(--control-height-medium);
-        --button-font-size: 14px;
-    }
-    &.large {
-        --control-height: var(--control-height-large);
-        --button-font-size: 16px;
-    }
-    &.largest {
-        --control-height: var(--control-height-largest);
-        --button-font-size: 18px;
     }
 
     &.square, &.cycle {
@@ -150,8 +110,8 @@ input[type="reset"],
     &.outline {
         background: transparent none;
         border-width: 1px;
-        border-color: var(--button-border-color);
-        color: var(--button-color);
+        border-color: var(--button-background);
+        color: #191919;
         
         @media (hover: hover) {
             &:hover {
@@ -169,36 +129,52 @@ input[type="reset"],
     }
 }
 
-a {
-    &.button,
-    &.flat-button
-    {
-        appearance: none;
-        color: var(--button-color);
-        box-shadow: none;
-        text-decoration: none;
+a.button {
+    appearance: none;
+    color: var(--button-color);
+    box-shadow: none;
+    text-decoration: none;
+}
+
+button, .button, input[type=button], input[type=submit], input[type=reset] {
+    &.mini {
+        --control-height: var(--control-height-mini);
+        --button-font-size: 10px;
+    }
+    &.small {
+        --control-height: var(--control-height-small);
+        --button-font-size: 12px;
+    }
+    &.medium {
+        --control-height: var(--control-height-medium);
+        --button-font-size: 14px;
+    }
+    &.large {
+        --control-height: var(--control-height-large);
+        --button-font-size: 16px;
+    }
+    &.largest {
+        --control-height: var(--control-height-largest);
+        --button-font-size: 18px;
     }
 }
 
 button,
-input[type="button"],
-input[type="submit"],
-input[type="reset"],
 .button {
     .loader {
         transform: scale(0);
         opacity: 0;
-        transition: @transition-base;
+        transition: @transition-short;
         display: flex;
         align-items: center;
         justify-content: center;
     }
     .loader + .caption {
-        transition: @transition-base;
+        transition: @transition-short;
         margin-left: -16px;
     }
     &.loading {
-        transition: @transition-base;
+        transition: @transition-short;
         .loader {
             transform: scale(1);
             opacity: 1;
@@ -209,8 +185,25 @@ input[type="reset"],
     }
 }
 
-button.flat, .button.flat, .flat-button {
-    //min-width: 64px;
+button, .button {
+    &.link {
+        --button-color: #191919;
+        background-color: transparent;
+        border: none;
+
+        &:hover {
+            background-color: transparent;
+            text-decoration: underline;
+        }
+
+        &.focus, &:focus {
+            box-shadow: none;
+        }
+    }
+}
+
+button.flat, .button.flat {
+    --button-color: #191919;
     background-color: transparent;
     border-color: transparent;
     
@@ -229,84 +222,127 @@ button.flat, .button.flat, .flat-button {
     }
 }
 
-each(@media-rules, {
-    @container (min-width: @value) {
-        button,
-        input[type="button"],
-        input[type="submit"],
-        input[type="reset"],
-        .button {
-            &.largest-@{key} {
-                --button-pill-radius: 27px;
-                --button-size: 54px;
-                --button-font-size: 18px;
-            }
-            &.large-@{key} {
-                --button-pill-radius: 20px;
-                --button-size: 40px;
-                --button-font-size: 16px;
-            }
-            &.small-@{key} {
-                --button-pill-radius: 13px;
-                --button-size: 26px;
-                --button-font-size: 12px;
-            }
-            &.mini-@{key} {
-                --button-pill-radius: 10px;
-                --button-size: 20px;
-                --button-font-size: 10px;
-            }
-        }
-    }
-})
-
 each(@normalColors, {
-    @soft-color: "light-@{value}";
-    @soft-text-color: "dark-@{value}";
+    @light-color: "light-@{value}";
+    @minor-color: "minor-@{value}";
+    @sat-color: "sat-@{value}";
+    @dark-color: "dark-@{value}";
     
-    .button-soft-@{value} {
-        background: @@soft-color!important;
-        color: @@soft-text-color!important;
-        border-color: @@value!important;
-
-        @media (hover: hover) {
-            &:hover {
-                background: @@value!important;
-                color: @white!important;
-            }
-        }
-        
-        @media (hover: none) {
-            &:active {
-                background: @@value!important;
-                color: @white!important;
-            }
-        }
-    }
-
-    @normal-color: "@{value}";
-    @normal-text-color: #ffffff;
-    @normal-hover-color: "sat-@{value}";
-
     .button-@{value} {
-        background: @@normal-color!important;
-        color: @normal-text-color!important;
-        border-color: @@normal-hover-color!important;
+        --button-background: @@value;
+        --button-color: #fff;
 
+        &.link {
+            --button-color: @@value!important;
+        }
+        
         @media (hover: hover) {
             &:hover {
-                background: @@normal-hover-color!important;
-                color: @white!important;
+                --button-background: @@value;
+                --button-color: #fff;
             }
         }
         
         @media (hover: none) {
             &:active {
-                background: @@normal-hover-color!important;
-                color: @white!important;
+                --button-background: @@value;
+                --button-color: #fff;
             }
         }
     }
+
+    .button-light-@{value} {
+        --button-background: @@light-color;
+        --button-color: #191919;
+
+        &.link {
+            --button-color: @@light-color!important;
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                --button-background: @@light-color;
+                --button-color: #191919;
+            }
+        }
+        
+        @media (hover: none) {
+            &:active {
+                --button-background: @@light-color;
+                --button-color: #191919;
+            }
+        }
+    }
+
+    .button-minor-@{value} {
+        --button-background: @@minor-color;
+        --button-color: #fff;
+
+        &.link {
+            --button-color: @@minor-color!important;
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                --button-background: @@minor-color;
+                --button-color: #fff;
+            }
+        }
+        
+        @media (hover: none) {
+            &:active {
+                --button-background: @@minor-color;
+                --button-color: #fff;
+            }
+        }
+    }
+
+    .button-sat-@{value} {
+        --button-background: @@sat-color;
+        --button-color: #fff;
+
+        &.link {
+            --button-color: @@sat-color!important;
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                --button-background: @@sat-color;
+                --button-color: #fff;
+            }
+        }
+        
+        @media (hover: none) {
+            &:active {
+                --button-background: @@sat-color;
+                --button-color: #fff;
+            }
+        }
+    }
+
+    .button-dark-@{value} {
+        --button-background: @@dark-color;
+        --button-color: #fff;
+
+        &.link {
+            --button-color: @@dark-color!important;
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                --button-background: @@dark-color;
+                --button-color: #fff;
+            }
+        }
+        
+        @media (hover: none) {
+            &:active {
+                --button-background: @@dark-color;
+                --button-color: #fff;
+            }
+        }
+    }
+
 })
 
 .button-seashell, .button-champagne, .button-yellow, .button-lime {
@@ -360,3 +396,31 @@ button, .button {
         padding-right: 1.5rem;
     }
 }
+
+each(@media-rules, {
+    @container (min-width: @value) {
+        button,
+        .button {
+            &.largest-@{key} {
+                --button-pill-radius: 27px;
+                --button-size: 54px;
+                --button-font-size: 18px;
+            }
+            &.large-@{key} {
+                --button-pill-radius: 20px;
+                --button-size: 40px;
+                --button-font-size: 16px;
+            }
+            &.small-@{key} {
+                --button-pill-radius: 13px;
+                --button-size: 26px;
+                --button-font-size: 12px;
+            }
+            &.mini-@{key} {
+                --button-pill-radius: 10px;
+                --button-size: 20px;
+                --button-font-size: 10px;
+            }
+        }
+    }
+})

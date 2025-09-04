@@ -50371,23 +50371,15 @@ button.light.outline,
   --button-font-size: 14px;
   --button-background: #ebebeb;
   --button-color: #191919;
-  --button-background-hover: #dadada;
-  --button-border-color: #ebebeb;
   --button-disabled-opacity: 0.65;
 }
 .dark-side {
   --button-background: #2b2d30;
   --button-color: #f3fcff;
-  --button-background-hover: #333439;
-  --button-border-color: #4e5157;
   --button-disabled-opacity: 0.25;
 }
 button,
-input[type=button],
-input[type=submit],
-input[type=reset],
-.button,
-.flat-button {
+.button {
   --control-height: var(--control-height-normal);
   --pill-button-radius: calc(var(--control-height) / 2);
   display: inline-flex;
@@ -50403,51 +50395,32 @@ input[type=reset],
   height: var(--control-height);
   background-color: var(--button-background);
   color: var(--button-color);
-  border: 1px solid var(--button-border-color);
+  border: 1px solid var(--button-background);
   cursor: pointer;
   outline: none;
   position: relative;
   overflow: visible;
   border-radius: var(--button-border-radius);
   gap: 8px;
+  transition: background-color 0.2s linear;
 }
 button:first-child,
-input[type=button]:first-child,
-input[type=submit]:first-child,
-input[type=reset]:first-child,
-.button:first-child,
-.flat-button:first-child {
+.button:first-child {
   margin-left: 0;
 }
 button:last-child,
-input[type=button]:last-child,
-input[type=submit]:last-child,
-input[type=reset]:last-child,
-.button:last-child,
-.flat-button:last-child {
+.button:last-child {
   margin-right: 0;
 }
 button.disabled,
-input[type=button].disabled,
-input[type=submit].disabled,
-input[type=reset].disabled,
 .button.disabled,
-.flat-button.disabled,
 button:disabled,
-input[type=button]:disabled,
-input[type=submit]:disabled,
-input[type=reset]:disabled,
-.button:disabled,
-.flat-button:disabled {
+.button:disabled {
   pointer-events: none;
   opacity: var(--button-disabled-opacity);
 }
 button .icon,
-input[type=button] .icon,
-input[type=submit] .icon,
-input[type=reset] .icon,
-.button .icon,
-.flat-button .icon {
+.button .icon {
   height: calc(var(--control-height)/2);
   font-size: calc(var(--button-font-size) * 1.2);
   display: flex;
@@ -50455,142 +50428,33 @@ input[type=reset] .icon,
   justify-content: center;
 }
 button.pill-button,
-input[type=button].pill-button,
-input[type=submit].pill-button,
-input[type=reset].pill-button,
-.button.pill-button,
-.flat-button.pill-button {
+.button.pill-button {
   border-radius: var(--pill-button-radius);
 }
 button:active,
-input[type=button]:active,
-input[type=submit]:active,
-input[type=reset]:active,
 .button:active,
-.flat-button:active,
 button.focus,
-input[type=button].focus,
-input[type=submit].focus,
-input[type=reset].focus,
 .button.focus,
-.flat-button.focus,
 button:focus,
-input[type=button]:focus,
-input[type=submit]:focus,
-input[type=reset]:focus,
-.button:focus,
-.flat-button:focus {
+.button:focus {
   text-decoration: none;
 }
 @media (hover: hover) {
   button:hover,
-  input[type=button]:hover,
-  input[type=submit]:hover,
-  input[type=reset]:hover,
-  .button:hover,
-  .flat-button:hover {
-    background-color: var(--button-background-hover);
+  .button:hover {
+    background-color: hsl(from var(--button-background) h s calc(l - 10));
   }
 }
 @media (hover: none) {
   button:active,
-  input[type=button]:active,
-  input[type=submit]:active,
-  input[type=reset]:active,
-  .button:active,
-  .flat-button:active {
-    background-color: var(--button-background-hover);
+  .button:active {
+    background-color: hsl(from var(--button-background) h s calc(l - 10));
   }
 }
-button.link,
-input[type=button].link,
-input[type=submit].link,
-input[type=reset].link,
-.button.link,
-.flat-button.link {
-  background-color: transparent;
-  border: none;
-}
-button.link:hover,
-input[type=button].link:hover,
-input[type=submit].link:hover,
-input[type=reset].link:hover,
-.button.link:hover,
-.flat-button.link:hover {
-  background-color: transparent;
-  text-decoration: underline;
-}
-button.link.focus,
-input[type=button].link.focus,
-input[type=submit].link.focus,
-input[type=reset].link.focus,
-.button.link.focus,
-.flat-button.link.focus,
-button.link:focus,
-input[type=button].link:focus,
-input[type=submit].link:focus,
-input[type=reset].link:focus,
-.button.link:focus,
-.flat-button.link:focus {
-  box-shadow: none;
-}
-button.mini,
-input[type=button].mini,
-input[type=submit].mini,
-input[type=reset].mini,
-.button.mini,
-.flat-button.mini {
-  --control-height: var(--control-height-mini);
-  --button-font-size: 10px;
-}
-button.small,
-input[type=button].small,
-input[type=submit].small,
-input[type=reset].small,
-.button.small,
-.flat-button.small {
-  --control-height: var(--control-height-small);
-  --button-font-size: 12px;
-}
-button.medium,
-input[type=button].medium,
-input[type=submit].medium,
-input[type=reset].medium,
-.button.medium,
-.flat-button.medium {
-  --control-height: var(--control-height-medium);
-  --button-font-size: 14px;
-}
-button.large,
-input[type=button].large,
-input[type=submit].large,
-input[type=reset].large,
-.button.large,
-.flat-button.large {
-  --control-height: var(--control-height-large);
-  --button-font-size: 16px;
-}
-button.largest,
-input[type=button].largest,
-input[type=submit].largest,
-input[type=reset].largest,
-.button.largest,
-.flat-button.largest {
-  --control-height: var(--control-height-largest);
-  --button-font-size: 18px;
-}
 button.square,
-input[type=button].square,
-input[type=submit].square,
-input[type=reset].square,
 .button.square,
-.flat-button.square,
 button.cycle,
-input[type=button].cycle,
-input[type=submit].cycle,
-input[type=reset].cycle,
-.button.cycle,
-.flat-button.cycle {
+.button.cycle {
   width: var(--control-height);
   height: var(--control-height);
   padding: 0 !important;
@@ -50598,1737 +50462,3663 @@ input[type=reset].cycle,
   flex-grow: 0 !important;
 }
 button.cycle,
-input[type=button].cycle,
-input[type=submit].cycle,
-input[type=reset].cycle,
-.button.cycle,
-.flat-button.cycle {
+.button.cycle {
   border-radius: 50%;
 }
 button.square.dropdown-toggle::before,
-input[type=button].square.dropdown-toggle::before,
-input[type=submit].square.dropdown-toggle::before,
-input[type=reset].square.dropdown-toggle::before,
 .button.square.dropdown-toggle::before,
-.flat-button.square.dropdown-toggle::before,
 button.cycle.dropdown-toggle::before,
-input[type=button].cycle.dropdown-toggle::before,
-input[type=submit].cycle.dropdown-toggle::before,
-input[type=reset].cycle.dropdown-toggle::before,
-.button.cycle.dropdown-toggle::before,
-.flat-button.cycle.dropdown-toggle::before {
+.button.cycle.dropdown-toggle::before {
   display: none;
 }
 button.dropdown-toggle.no-marker,
-input[type=button].dropdown-toggle.no-marker,
-input[type=submit].dropdown-toggle.no-marker,
-input[type=reset].dropdown-toggle.no-marker,
-.button.dropdown-toggle.no-marker,
-.flat-button.dropdown-toggle.no-marker {
+.button.dropdown-toggle.no-marker {
   padding-right: 0.75rem !important;
 }
 button.outline,
-input[type=button].outline,
-input[type=submit].outline,
-input[type=reset].outline,
-.button.outline,
-.flat-button.outline {
+.button.outline {
   background: transparent none;
   border-width: 1px;
-  border-color: var(--button-border-color);
-  color: var(--button-color);
+  border-color: var(--button-background);
+  color: #191919;
 }
 @media (hover: hover) {
   button.outline:hover,
-  input[type=button].outline:hover,
-  input[type=submit].outline:hover,
-  input[type=reset].outline:hover,
-  .button.outline:hover,
-  .flat-button.outline:hover {
+  .button.outline:hover {
     background-color: var(--button-background);
     color: var(--button-color);
   }
 }
 @media (hover: none) {
   button.outline:active,
-  input[type=button].outline:active,
-  input[type=submit].outline:active,
-  input[type=reset].outline:active,
-  .button.outline:active,
-  .flat-button.outline:active {
+  .button.outline:active {
     background-color: var(--button-background);
     color: var(--button-color);
   }
 }
-a.button,
-a.flat-button {
+a.button {
   appearance: none;
   color: var(--button-color);
   box-shadow: none;
   text-decoration: none;
 }
+button.mini,
+.button.mini,
+input[type=button].mini,
+input[type=submit].mini,
+input[type=reset].mini {
+  --control-height: var(--control-height-mini);
+  --button-font-size: 10px;
+}
+button.small,
+.button.small,
+input[type=button].small,
+input[type=submit].small,
+input[type=reset].small {
+  --control-height: var(--control-height-small);
+  --button-font-size: 12px;
+}
+button.medium,
+.button.medium,
+input[type=button].medium,
+input[type=submit].medium,
+input[type=reset].medium {
+  --control-height: var(--control-height-medium);
+  --button-font-size: 14px;
+}
+button.large,
+.button.large,
+input[type=button].large,
+input[type=submit].large,
+input[type=reset].large {
+  --control-height: var(--control-height-large);
+  --button-font-size: 16px;
+}
+button.largest,
+.button.largest,
+input[type=button].largest,
+input[type=submit].largest,
+input[type=reset].largest {
+  --control-height: var(--control-height-largest);
+  --button-font-size: 18px;
+}
 button .loader,
-input[type=button] .loader,
-input[type=submit] .loader,
-input[type=reset] .loader,
 .button .loader {
   transform: scale(0);
   opacity: 0;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.15s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 button .loader + .caption,
-input[type=button] .loader + .caption,
-input[type=submit] .loader + .caption,
-input[type=reset] .loader + .caption,
 .button .loader + .caption {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.15s ease-in-out;
   margin-left: -16px;
 }
 button.loading,
-input[type=button].loading,
-input[type=submit].loading,
-input[type=reset].loading,
 .button.loading {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.15s ease-in-out;
 }
 button.loading .loader,
-input[type=button].loading .loader,
-input[type=submit].loading .loader,
-input[type=reset].loading .loader,
 .button.loading .loader {
   transform: scale(1);
   opacity: 1;
 }
 button.loading .caption,
-input[type=button].loading .caption,
-input[type=submit].loading .caption,
-input[type=reset].loading .caption,
 .button.loading .caption {
   margin-left: 0.3rem;
 }
+button.link,
+.button.link {
+  --button-color: #191919;
+  background-color: transparent;
+  border: none;
+}
+button.link:hover,
+.button.link:hover {
+  background-color: transparent;
+  text-decoration: underline;
+}
+button.link.focus,
+.button.link.focus,
+button.link:focus,
+.button.link:focus {
+  box-shadow: none;
+}
 button.flat,
-.button.flat,
-.flat-button {
+.button.flat {
+  --button-color: #191919;
   background-color: transparent;
   border-color: transparent;
 }
 @media (hover: hover) {
   button.flat:hover,
-  .button.flat:hover,
-  .flat-button:hover {
+  .button.flat:hover {
     background-color: var(--button-background);
     color: var(--button-color);
   }
 }
 @media (hover: none) {
   button.flat:active,
-  .button.flat:active,
-  .flat-button:active {
+  .button.flat:active {
     background-color: var(--button-background);
     color: var(--button-color);
   }
 }
-@container (min-width: 0) {
-  button.largest-fs,
-  input[type=button].largest-fs,
-  input[type=submit].largest-fs,
-  input[type=reset].largest-fs,
-  .button.largest-fs {
-    --button-pill-radius: 27px;
-    --button-size: 54px;
-    --button-font-size: 18px;
-  }
-  button.large-fs,
-  input[type=button].large-fs,
-  input[type=submit].large-fs,
-  input[type=reset].large-fs,
-  .button.large-fs {
-    --button-pill-radius: 20px;
-    --button-size: 40px;
-    --button-font-size: 16px;
-  }
-  button.small-fs,
-  input[type=button].small-fs,
-  input[type=submit].small-fs,
-  input[type=reset].small-fs,
-  .button.small-fs {
-    --button-pill-radius: 13px;
-    --button-size: 26px;
-    --button-font-size: 12px;
-  }
-  button.mini-fs,
-  input[type=button].mini-fs,
-  input[type=submit].mini-fs,
-  input[type=reset].mini-fs,
-  .button.mini-fs {
-    --button-pill-radius: 10px;
-    --button-size: 20px;
-    --button-font-size: 10px;
-  }
-}
-@container (min-width: 360px) {
-  button.largest-xs,
-  input[type=button].largest-xs,
-  input[type=submit].largest-xs,
-  input[type=reset].largest-xs,
-  .button.largest-xs {
-    --button-pill-radius: 27px;
-    --button-size: 54px;
-    --button-font-size: 18px;
-  }
-  button.large-xs,
-  input[type=button].large-xs,
-  input[type=submit].large-xs,
-  input[type=reset].large-xs,
-  .button.large-xs {
-    --button-pill-radius: 20px;
-    --button-size: 40px;
-    --button-font-size: 16px;
-  }
-  button.small-xs,
-  input[type=button].small-xs,
-  input[type=submit].small-xs,
-  input[type=reset].small-xs,
-  .button.small-xs {
-    --button-pill-radius: 13px;
-    --button-size: 26px;
-    --button-font-size: 12px;
-  }
-  button.mini-xs,
-  input[type=button].mini-xs,
-  input[type=submit].mini-xs,
-  input[type=reset].mini-xs,
-  .button.mini-xs {
-    --button-pill-radius: 10px;
-    --button-size: 20px;
-    --button-font-size: 10px;
-  }
-}
-@container (min-width: 576px) {
-  button.largest-sm,
-  input[type=button].largest-sm,
-  input[type=submit].largest-sm,
-  input[type=reset].largest-sm,
-  .button.largest-sm {
-    --button-pill-radius: 27px;
-    --button-size: 54px;
-    --button-font-size: 18px;
-  }
-  button.large-sm,
-  input[type=button].large-sm,
-  input[type=submit].large-sm,
-  input[type=reset].large-sm,
-  .button.large-sm {
-    --button-pill-radius: 20px;
-    --button-size: 40px;
-    --button-font-size: 16px;
-  }
-  button.small-sm,
-  input[type=button].small-sm,
-  input[type=submit].small-sm,
-  input[type=reset].small-sm,
-  .button.small-sm {
-    --button-pill-radius: 13px;
-    --button-size: 26px;
-    --button-font-size: 12px;
-  }
-  button.mini-sm,
-  input[type=button].mini-sm,
-  input[type=submit].mini-sm,
-  input[type=reset].mini-sm,
-  .button.mini-sm {
-    --button-pill-radius: 10px;
-    --button-size: 20px;
-    --button-font-size: 10px;
-  }
-}
-@container (min-width: 640px) {
-  button.largest-ld,
-  input[type=button].largest-ld,
-  input[type=submit].largest-ld,
-  input[type=reset].largest-ld,
-  .button.largest-ld {
-    --button-pill-radius: 27px;
-    --button-size: 54px;
-    --button-font-size: 18px;
-  }
-  button.large-ld,
-  input[type=button].large-ld,
-  input[type=submit].large-ld,
-  input[type=reset].large-ld,
-  .button.large-ld {
-    --button-pill-radius: 20px;
-    --button-size: 40px;
-    --button-font-size: 16px;
-  }
-  button.small-ld,
-  input[type=button].small-ld,
-  input[type=submit].small-ld,
-  input[type=reset].small-ld,
-  .button.small-ld {
-    --button-pill-radius: 13px;
-    --button-size: 26px;
-    --button-font-size: 12px;
-  }
-  button.mini-ld,
-  input[type=button].mini-ld,
-  input[type=submit].mini-ld,
-  input[type=reset].mini-ld,
-  .button.mini-ld {
-    --button-pill-radius: 10px;
-    --button-size: 20px;
-    --button-font-size: 10px;
-  }
-}
-@container (min-width: 768px) {
-  button.largest-md,
-  input[type=button].largest-md,
-  input[type=submit].largest-md,
-  input[type=reset].largest-md,
-  .button.largest-md {
-    --button-pill-radius: 27px;
-    --button-size: 54px;
-    --button-font-size: 18px;
-  }
-  button.large-md,
-  input[type=button].large-md,
-  input[type=submit].large-md,
-  input[type=reset].large-md,
-  .button.large-md {
-    --button-pill-radius: 20px;
-    --button-size: 40px;
-    --button-font-size: 16px;
-  }
-  button.small-md,
-  input[type=button].small-md,
-  input[type=submit].small-md,
-  input[type=reset].small-md,
-  .button.small-md {
-    --button-pill-radius: 13px;
-    --button-size: 26px;
-    --button-font-size: 12px;
-  }
-  button.mini-md,
-  input[type=button].mini-md,
-  input[type=submit].mini-md,
-  input[type=reset].mini-md,
-  .button.mini-md {
-    --button-pill-radius: 10px;
-    --button-size: 20px;
-    --button-font-size: 10px;
-  }
-}
-@container (min-width: 992px) {
-  button.largest-lg,
-  input[type=button].largest-lg,
-  input[type=submit].largest-lg,
-  input[type=reset].largest-lg,
-  .button.largest-lg {
-    --button-pill-radius: 27px;
-    --button-size: 54px;
-    --button-font-size: 18px;
-  }
-  button.large-lg,
-  input[type=button].large-lg,
-  input[type=submit].large-lg,
-  input[type=reset].large-lg,
-  .button.large-lg {
-    --button-pill-radius: 20px;
-    --button-size: 40px;
-    --button-font-size: 16px;
-  }
-  button.small-lg,
-  input[type=button].small-lg,
-  input[type=submit].small-lg,
-  input[type=reset].small-lg,
-  .button.small-lg {
-    --button-pill-radius: 13px;
-    --button-size: 26px;
-    --button-font-size: 12px;
-  }
-  button.mini-lg,
-  input[type=button].mini-lg,
-  input[type=submit].mini-lg,
-  input[type=reset].mini-lg,
-  .button.mini-lg {
-    --button-pill-radius: 10px;
-    --button-size: 20px;
-    --button-font-size: 10px;
-  }
-}
-@container (min-width: 1200px) {
-  button.largest-xl,
-  input[type=button].largest-xl,
-  input[type=submit].largest-xl,
-  input[type=reset].largest-xl,
-  .button.largest-xl {
-    --button-pill-radius: 27px;
-    --button-size: 54px;
-    --button-font-size: 18px;
-  }
-  button.large-xl,
-  input[type=button].large-xl,
-  input[type=submit].large-xl,
-  input[type=reset].large-xl,
-  .button.large-xl {
-    --button-pill-radius: 20px;
-    --button-size: 40px;
-    --button-font-size: 16px;
-  }
-  button.small-xl,
-  input[type=button].small-xl,
-  input[type=submit].small-xl,
-  input[type=reset].small-xl,
-  .button.small-xl {
-    --button-pill-radius: 13px;
-    --button-size: 26px;
-    --button-font-size: 12px;
-  }
-  button.mini-xl,
-  input[type=button].mini-xl,
-  input[type=submit].mini-xl,
-  input[type=reset].mini-xl,
-  .button.mini-xl {
-    --button-pill-radius: 10px;
-    --button-size: 20px;
-    --button-font-size: 10px;
-  }
-}
-@container (min-width: 1400px) {
-  button.largest-xxl,
-  input[type=button].largest-xxl,
-  input[type=submit].largest-xxl,
-  input[type=reset].largest-xxl,
-  .button.largest-xxl {
-    --button-pill-radius: 27px;
-    --button-size: 54px;
-    --button-font-size: 18px;
-  }
-  button.large-xxl,
-  input[type=button].large-xxl,
-  input[type=submit].large-xxl,
-  input[type=reset].large-xxl,
-  .button.large-xxl {
-    --button-pill-radius: 20px;
-    --button-size: 40px;
-    --button-font-size: 16px;
-  }
-  button.small-xxl,
-  input[type=button].small-xxl,
-  input[type=submit].small-xxl,
-  input[type=reset].small-xxl,
-  .button.small-xxl {
-    --button-pill-radius: 13px;
-    --button-size: 26px;
-    --button-font-size: 12px;
-  }
-  button.mini-xxl,
-  input[type=button].mini-xxl,
-  input[type=submit].mini-xxl,
-  input[type=reset].mini-xxl,
-  .button.mini-xxl {
-    --button-pill-radius: 10px;
-    --button-size: 20px;
-    --button-font-size: 10px;
-  }
-}
-@container (min-width: 2000px) {
-  button.largest-xxxl,
-  input[type=button].largest-xxxl,
-  input[type=submit].largest-xxxl,
-  input[type=reset].largest-xxxl,
-  .button.largest-xxxl {
-    --button-pill-radius: 27px;
-    --button-size: 54px;
-    --button-font-size: 18px;
-  }
-  button.large-xxxl,
-  input[type=button].large-xxxl,
-  input[type=submit].large-xxxl,
-  input[type=reset].large-xxxl,
-  .button.large-xxxl {
-    --button-pill-radius: 20px;
-    --button-size: 40px;
-    --button-font-size: 16px;
-  }
-  button.small-xxxl,
-  input[type=button].small-xxxl,
-  input[type=submit].small-xxxl,
-  input[type=reset].small-xxxl,
-  .button.small-xxxl {
-    --button-pill-radius: 13px;
-    --button-size: 26px;
-    --button-font-size: 12px;
-  }
-  button.mini-xxxl,
-  input[type=button].mini-xxxl,
-  input[type=submit].mini-xxxl,
-  input[type=reset].mini-xxxl,
-  .button.mini-xxxl {
-    --button-pill-radius: 10px;
-    --button-size: 20px;
-    --button-font-size: 10px;
-  }
-}
-.button-soft-gray {
-  background: hsl(0, 0%, 95%) !important;
-  color: hsl(0, 0%, 55%) !important;
-  border-color: hsl(0, 0%, 80%) !important;
-}
-@media (hover: hover) {
-  .button-soft-gray:hover {
-    background: hsl(0, 0%, 80%) !important;
-    color: #ffffff !important;
-  }
-}
-@media (hover: none) {
-  .button-soft-gray:active {
-    background: hsl(0, 0%, 80%) !important;
-    color: #ffffff !important;
-  }
-}
 .button-gray {
-  background: hsl(0, 0%, 80%) !important;
-  color: #ffffff !important;
-  border-color: hsl(0, 0%, 65%) !important;
+  --button-background: hsl(0, 0%, 80%);
+  --button-color: #fff;
+}
+.button-gray.link {
+  --button-color: hsl(0, 0%, 80%) !important;
 }
 @media (hover: hover) {
   .button-gray:hover {
-    background: hsl(0, 0%, 65%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(0, 0%, 80%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-gray:active {
-    background: hsl(0, 0%, 65%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(0, 0%, 80%);
+    --button-color: #fff;
   }
 }
-.button-soft-gray-blue {
-  background: hsl(210, 26%, 84%) !important;
-  color: hsl(210, 26%, 29%) !important;
-  border-color: hsl(210, 26%, 54%) !important;
+.button-light-gray {
+  --button-background: hsl(0, 0%, 95%);
+  --button-color: #191919;
+}
+.button-light-gray.link {
+  --button-color: hsl(0, 0%, 95%) !important;
 }
 @media (hover: hover) {
-  .button-soft-gray-blue:hover {
-    background: hsl(210, 26%, 54%) !important;
-    color: #ffffff !important;
+  .button-light-gray:hover {
+    --button-background: hsl(0, 0%, 95%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-gray-blue:active {
-    background: hsl(210, 26%, 54%) !important;
-    color: #ffffff !important;
+  .button-light-gray:active {
+    --button-background: hsl(0, 0%, 95%);
+    --button-color: #191919;
+  }
+}
+.button-minor-gray {
+  --button-background: hsl(0, 0%, 87%);
+  --button-color: #fff;
+}
+.button-minor-gray.link {
+  --button-color: hsl(0, 0%, 87%) !important;
+}
+@media (hover: hover) {
+  .button-minor-gray:hover {
+    --button-background: hsl(0, 0%, 87%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-gray:active {
+    --button-background: hsl(0, 0%, 87%);
+    --button-color: #fff;
+  }
+}
+.button-sat-gray {
+  --button-background: hsl(0, 0%, 65%);
+  --button-color: #fff;
+}
+.button-sat-gray.link {
+  --button-color: hsl(0, 0%, 65%) !important;
+}
+@media (hover: hover) {
+  .button-sat-gray:hover {
+    --button-background: hsl(0, 0%, 65%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-gray:active {
+    --button-background: hsl(0, 0%, 65%);
+    --button-color: #fff;
+  }
+}
+.button-dark-gray {
+  --button-background: hsl(0, 0%, 55%);
+  --button-color: #fff;
+}
+.button-dark-gray.link {
+  --button-color: hsl(0, 0%, 55%) !important;
+}
+@media (hover: hover) {
+  .button-dark-gray:hover {
+    --button-background: hsl(0, 0%, 55%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-gray:active {
+    --button-background: hsl(0, 0%, 55%);
+    --button-color: #fff;
   }
 }
 .button-gray-blue {
-  background: hsl(210, 26%, 54%) !important;
-  color: #ffffff !important;
-  border-color: hsl(210, 26%, 39%) !important;
+  --button-background: hsl(210, 26%, 54%);
+  --button-color: #fff;
+}
+.button-gray-blue.link {
+  --button-color: hsl(210, 26%, 54%) !important;
 }
 @media (hover: hover) {
   .button-gray-blue:hover {
-    background: hsl(210, 26%, 39%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(210, 26%, 54%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-gray-blue:active {
-    background: hsl(210, 26%, 39%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(210, 26%, 54%);
+    --button-color: #fff;
   }
 }
-.button-soft-gray-mouse {
-  background: hsl(199, 15%, 70%) !important;
-  color: hsl(199, 15%, 15%) !important;
-  border-color: hsl(199, 15%, 40%) !important;
+.button-light-gray-blue {
+  --button-background: hsl(210, 26%, 84%);
+  --button-color: #191919;
+}
+.button-light-gray-blue.link {
+  --button-color: hsl(210, 26%, 84%) !important;
 }
 @media (hover: hover) {
-  .button-soft-gray-mouse:hover {
-    background: hsl(199, 15%, 40%) !important;
-    color: #ffffff !important;
+  .button-light-gray-blue:hover {
+    --button-background: hsl(210, 26%, 84%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-gray-mouse:active {
-    background: hsl(199, 15%, 40%) !important;
-    color: #ffffff !important;
+  .button-light-gray-blue:active {
+    --button-background: hsl(210, 26%, 84%);
+    --button-color: #191919;
+  }
+}
+.button-minor-gray-blue {
+  --button-background: hsl(210, 26%, 69%);
+  --button-color: #fff;
+}
+.button-minor-gray-blue.link {
+  --button-color: hsl(210, 26%, 69%) !important;
+}
+@media (hover: hover) {
+  .button-minor-gray-blue:hover {
+    --button-background: hsl(210, 26%, 69%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-gray-blue:active {
+    --button-background: hsl(210, 26%, 69%);
+    --button-color: #fff;
+  }
+}
+.button-sat-gray-blue {
+  --button-background: hsl(210, 26%, 39%);
+  --button-color: #fff;
+}
+.button-sat-gray-blue.link {
+  --button-color: hsl(210, 26%, 39%) !important;
+}
+@media (hover: hover) {
+  .button-sat-gray-blue:hover {
+    --button-background: hsl(210, 26%, 39%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-gray-blue:active {
+    --button-background: hsl(210, 26%, 39%);
+    --button-color: #fff;
+  }
+}
+.button-dark-gray-blue {
+  --button-background: hsl(210, 26%, 29%);
+  --button-color: #fff;
+}
+.button-dark-gray-blue.link {
+  --button-color: hsl(210, 26%, 29%) !important;
+}
+@media (hover: hover) {
+  .button-dark-gray-blue:hover {
+    --button-background: hsl(210, 26%, 29%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-gray-blue:active {
+    --button-background: hsl(210, 26%, 29%);
+    --button-color: #fff;
   }
 }
 .button-gray-mouse {
-  background: hsl(199, 15%, 40%) !important;
-  color: #ffffff !important;
-  border-color: hsl(199, 15%, 25%) !important;
+  --button-background: hsl(199, 15%, 40%);
+  --button-color: #fff;
+}
+.button-gray-mouse.link {
+  --button-color: hsl(199, 15%, 40%) !important;
 }
 @media (hover: hover) {
   .button-gray-mouse:hover {
-    background: hsl(199, 15%, 25%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(199, 15%, 40%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-gray-mouse:active {
-    background: hsl(199, 15%, 25%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(199, 15%, 40%);
+    --button-color: #fff;
   }
 }
-.button-soft-lime {
-  background: hsl(93, 97%, 91%) !important;
-  color: hsl(93, 97%, 46%) !important;
-  border-color: hsl(93, 97%, 71%) !important;
+.button-light-gray-mouse {
+  --button-background: hsl(199, 15%, 70%);
+  --button-color: #191919;
+}
+.button-light-gray-mouse.link {
+  --button-color: hsl(199, 15%, 70%) !important;
 }
 @media (hover: hover) {
-  .button-soft-lime:hover {
-    background: hsl(93, 97%, 71%) !important;
-    color: #ffffff !important;
+  .button-light-gray-mouse:hover {
+    --button-background: hsl(199, 15%, 70%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-lime:active {
-    background: hsl(93, 97%, 71%) !important;
-    color: #ffffff !important;
+  .button-light-gray-mouse:active {
+    --button-background: hsl(199, 15%, 70%);
+    --button-color: #191919;
+  }
+}
+.button-minor-gray-mouse {
+  --button-background: hsl(199, 15%, 55%);
+  --button-color: #fff;
+}
+.button-minor-gray-mouse.link {
+  --button-color: hsl(199, 15%, 55%) !important;
+}
+@media (hover: hover) {
+  .button-minor-gray-mouse:hover {
+    --button-background: hsl(199, 15%, 55%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-gray-mouse:active {
+    --button-background: hsl(199, 15%, 55%);
+    --button-color: #fff;
+  }
+}
+.button-sat-gray-mouse {
+  --button-background: hsl(199, 15%, 25%);
+  --button-color: #fff;
+}
+.button-sat-gray-mouse.link {
+  --button-color: hsl(199, 15%, 25%) !important;
+}
+@media (hover: hover) {
+  .button-sat-gray-mouse:hover {
+    --button-background: hsl(199, 15%, 25%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-gray-mouse:active {
+    --button-background: hsl(199, 15%, 25%);
+    --button-color: #fff;
+  }
+}
+.button-dark-gray-mouse {
+  --button-background: hsl(199, 15%, 15%);
+  --button-color: #fff;
+}
+.button-dark-gray-mouse.link {
+  --button-color: hsl(199, 15%, 15%) !important;
+}
+@media (hover: hover) {
+  .button-dark-gray-mouse:hover {
+    --button-background: hsl(199, 15%, 15%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-gray-mouse:active {
+    --button-background: hsl(199, 15%, 15%);
+    --button-color: #fff;
   }
 }
 .button-lime {
-  background: hsl(93, 97%, 71%) !important;
-  color: #ffffff !important;
-  border-color: hsl(93, 97%, 56%) !important;
+  --button-background: hsl(93, 97%, 71%);
+  --button-color: #fff;
+}
+.button-lime.link {
+  --button-color: hsl(93, 97%, 71%) !important;
 }
 @media (hover: hover) {
   .button-lime:hover {
-    background: hsl(93, 97%, 56%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(93, 97%, 71%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-lime:active {
-    background: hsl(93, 97%, 56%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(93, 97%, 71%);
+    --button-color: #fff;
   }
 }
-.button-soft-green {
-  background: hsl(120, 100%, 80%) !important;
-  color: hsl(120, 100%, 10%) !important;
-  border-color: hsl(120, 100%, 35%) !important;
+.button-light-lime {
+  --button-background: hsl(93, 97%, 91%);
+  --button-color: #191919;
+}
+.button-light-lime.link {
+  --button-color: hsl(93, 97%, 91%) !important;
 }
 @media (hover: hover) {
-  .button-soft-green:hover {
-    background: hsl(120, 100%, 35%) !important;
-    color: #ffffff !important;
+  .button-light-lime:hover {
+    --button-background: hsl(93, 97%, 91%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-green:active {
-    background: hsl(120, 100%, 35%) !important;
-    color: #ffffff !important;
+  .button-light-lime:active {
+    --button-background: hsl(93, 97%, 91%);
+    --button-color: #191919;
+  }
+}
+.button-minor-lime {
+  --button-background: hsl(93, 97%, 81%);
+  --button-color: #fff;
+}
+.button-minor-lime.link {
+  --button-color: hsl(93, 97%, 81%) !important;
+}
+@media (hover: hover) {
+  .button-minor-lime:hover {
+    --button-background: hsl(93, 97%, 81%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-lime:active {
+    --button-background: hsl(93, 97%, 81%);
+    --button-color: #fff;
+  }
+}
+.button-sat-lime {
+  --button-background: hsl(93, 97%, 56%);
+  --button-color: #fff;
+}
+.button-sat-lime.link {
+  --button-color: hsl(93, 97%, 56%) !important;
+}
+@media (hover: hover) {
+  .button-sat-lime:hover {
+    --button-background: hsl(93, 97%, 56%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-lime:active {
+    --button-background: hsl(93, 97%, 56%);
+    --button-color: #fff;
+  }
+}
+.button-dark-lime {
+  --button-background: hsl(93, 97%, 46%);
+  --button-color: #fff;
+}
+.button-dark-lime.link {
+  --button-color: hsl(93, 97%, 46%) !important;
+}
+@media (hover: hover) {
+  .button-dark-lime:hover {
+    --button-background: hsl(93, 97%, 46%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-lime:active {
+    --button-background: hsl(93, 97%, 46%);
+    --button-color: #fff;
   }
 }
 .button-green {
-  background: hsl(120, 100%, 35%) !important;
-  color: #ffffff !important;
-  border-color: hsl(120, 100%, 20%) !important;
+  --button-background: hsl(120, 100%, 35%);
+  --button-color: #fff;
+}
+.button-green.link {
+  --button-color: hsl(120, 100%, 35%) !important;
 }
 @media (hover: hover) {
   .button-green:hover {
-    background: hsl(120, 100%, 20%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(120, 100%, 35%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-green:active {
-    background: hsl(120, 100%, 20%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(120, 100%, 35%);
+    --button-color: #fff;
   }
 }
-.button-soft-emerald {
-  background: hsl(140, 52%, 85%) !important;
-  color: hsl(140, 52%, 30%) !important;
-  border-color: hsl(140, 52%, 55%) !important;
+.button-light-green {
+  --button-background: hsl(120, 100%, 80%);
+  --button-color: #191919;
+}
+.button-light-green.link {
+  --button-color: hsl(120, 100%, 80%) !important;
 }
 @media (hover: hover) {
-  .button-soft-emerald:hover {
-    background: hsl(140, 52%, 55%) !important;
-    color: #ffffff !important;
+  .button-light-green:hover {
+    --button-background: hsl(120, 100%, 80%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-emerald:active {
-    background: hsl(140, 52%, 55%) !important;
-    color: #ffffff !important;
+  .button-light-green:active {
+    --button-background: hsl(120, 100%, 80%);
+    --button-color: #191919;
+  }
+}
+.button-minor-green {
+  --button-background: hsl(120, 100%, 45%);
+  --button-color: #fff;
+}
+.button-minor-green.link {
+  --button-color: hsl(120, 100%, 45%) !important;
+}
+@media (hover: hover) {
+  .button-minor-green:hover {
+    --button-background: hsl(120, 100%, 45%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-green:active {
+    --button-background: hsl(120, 100%, 45%);
+    --button-color: #fff;
+  }
+}
+.button-sat-green {
+  --button-background: hsl(120, 100%, 20%);
+  --button-color: #fff;
+}
+.button-sat-green.link {
+  --button-color: hsl(120, 100%, 20%) !important;
+}
+@media (hover: hover) {
+  .button-sat-green:hover {
+    --button-background: hsl(120, 100%, 20%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-green:active {
+    --button-background: hsl(120, 100%, 20%);
+    --button-color: #fff;
+  }
+}
+.button-dark-green {
+  --button-background: hsl(120, 100%, 10%);
+  --button-color: #fff;
+}
+.button-dark-green.link {
+  --button-color: hsl(120, 100%, 10%) !important;
+}
+@media (hover: hover) {
+  .button-dark-green:hover {
+    --button-background: hsl(120, 100%, 10%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-green:active {
+    --button-background: hsl(120, 100%, 10%);
+    --button-color: #fff;
   }
 }
 .button-emerald {
-  background: hsl(140, 52%, 55%) !important;
-  color: #ffffff !important;
-  border-color: hsl(140, 52%, 40%) !important;
+  --button-background: hsl(140, 52%, 55%);
+  --button-color: #fff;
+}
+.button-emerald.link {
+  --button-color: hsl(140, 52%, 55%) !important;
 }
 @media (hover: hover) {
   .button-emerald:hover {
-    background: hsl(140, 52%, 40%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(140, 52%, 55%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-emerald:active {
-    background: hsl(140, 52%, 40%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(140, 52%, 55%);
+    --button-color: #fff;
   }
 }
-.button-soft-blue {
-  background: hsl(225, 100%, 93%) !important;
-  color: hsl(225, 100%, 43%) !important;
-  border-color: hsl(225, 100%, 68%) !important;
+.button-light-emerald {
+  --button-background: hsl(140, 52%, 85%);
+  --button-color: #191919;
+}
+.button-light-emerald.link {
+  --button-color: hsl(140, 52%, 85%) !important;
 }
 @media (hover: hover) {
-  .button-soft-blue:hover {
-    background: hsl(225, 100%, 68%) !important;
-    color: #ffffff !important;
+  .button-light-emerald:hover {
+    --button-background: hsl(140, 52%, 85%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-blue:active {
-    background: hsl(225, 100%, 68%) !important;
-    color: #ffffff !important;
+  .button-light-emerald:active {
+    --button-background: hsl(140, 52%, 85%);
+    --button-color: #191919;
+  }
+}
+.button-minor-emerald {
+  --button-background: hsl(140, 52%, 65%);
+  --button-color: #fff;
+}
+.button-minor-emerald.link {
+  --button-color: hsl(140, 52%, 65%) !important;
+}
+@media (hover: hover) {
+  .button-minor-emerald:hover {
+    --button-background: hsl(140, 52%, 65%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-emerald:active {
+    --button-background: hsl(140, 52%, 65%);
+    --button-color: #fff;
+  }
+}
+.button-sat-emerald {
+  --button-background: hsl(140, 52%, 40%);
+  --button-color: #fff;
+}
+.button-sat-emerald.link {
+  --button-color: hsl(140, 52%, 40%) !important;
+}
+@media (hover: hover) {
+  .button-sat-emerald:hover {
+    --button-background: hsl(140, 52%, 40%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-emerald:active {
+    --button-background: hsl(140, 52%, 40%);
+    --button-color: #fff;
+  }
+}
+.button-dark-emerald {
+  --button-background: hsl(140, 52%, 30%);
+  --button-color: #fff;
+}
+.button-dark-emerald.link {
+  --button-color: hsl(140, 52%, 30%) !important;
+}
+@media (hover: hover) {
+  .button-dark-emerald:hover {
+    --button-background: hsl(140, 52%, 30%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-emerald:active {
+    --button-background: hsl(140, 52%, 30%);
+    --button-color: #fff;
   }
 }
 .button-blue {
-  background: hsl(225, 100%, 68%) !important;
-  color: #ffffff !important;
-  border-color: hsl(225, 100%, 53%) !important;
+  --button-background: hsl(225, 100%, 68%);
+  --button-color: #fff;
+}
+.button-blue.link {
+  --button-color: hsl(225, 100%, 68%) !important;
 }
 @media (hover: hover) {
   .button-blue:hover {
-    background: hsl(225, 100%, 53%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(225, 100%, 68%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-blue:active {
-    background: hsl(225, 100%, 53%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(225, 100%, 68%);
+    --button-color: #fff;
   }
 }
-.button-soft-teal {
-  background: hsl(180, 77%, 79%) !important;
-  color: hsl(180, 77%, 19%) !important;
-  border-color: hsl(180, 77%, 44%) !important;
+.button-light-blue {
+  --button-background: hsl(225, 100%, 93%);
+  --button-color: #191919;
+}
+.button-light-blue.link {
+  --button-color: hsl(225, 100%, 93%) !important;
 }
 @media (hover: hover) {
-  .button-soft-teal:hover {
-    background: hsl(180, 77%, 44%) !important;
-    color: #ffffff !important;
+  .button-light-blue:hover {
+    --button-background: hsl(225, 100%, 93%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-teal:active {
-    background: hsl(180, 77%, 44%) !important;
-    color: #ffffff !important;
+  .button-light-blue:active {
+    --button-background: hsl(225, 100%, 93%);
+    --button-color: #191919;
+  }
+}
+.button-minor-blue {
+  --button-background: hsl(225, 100%, 78%);
+  --button-color: #fff;
+}
+.button-minor-blue.link {
+  --button-color: hsl(225, 100%, 78%) !important;
+}
+@media (hover: hover) {
+  .button-minor-blue:hover {
+    --button-background: hsl(225, 100%, 78%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-blue:active {
+    --button-background: hsl(225, 100%, 78%);
+    --button-color: #fff;
+  }
+}
+.button-sat-blue {
+  --button-background: hsl(225, 100%, 53%);
+  --button-color: #fff;
+}
+.button-sat-blue.link {
+  --button-color: hsl(225, 100%, 53%) !important;
+}
+@media (hover: hover) {
+  .button-sat-blue:hover {
+    --button-background: hsl(225, 100%, 53%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-blue:active {
+    --button-background: hsl(225, 100%, 53%);
+    --button-color: #fff;
+  }
+}
+.button-dark-blue {
+  --button-background: hsl(225, 100%, 43%);
+  --button-color: #fff;
+}
+.button-dark-blue.link {
+  --button-color: hsl(225, 100%, 43%) !important;
+}
+@media (hover: hover) {
+  .button-dark-blue:hover {
+    --button-background: hsl(225, 100%, 43%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-blue:active {
+    --button-background: hsl(225, 100%, 43%);
+    --button-color: #fff;
   }
 }
 .button-teal {
-  background: hsl(180, 77%, 44%) !important;
-  color: #ffffff !important;
-  border-color: hsl(180, 77%, 29%) !important;
+  --button-background: hsl(180, 77%, 44%);
+  --button-color: #fff;
+}
+.button-teal.link {
+  --button-color: hsl(180, 77%, 44%) !important;
 }
 @media (hover: hover) {
   .button-teal:hover {
-    background: hsl(180, 77%, 29%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(180, 77%, 44%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-teal:active {
-    background: hsl(180, 77%, 29%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(180, 77%, 44%);
+    --button-color: #fff;
   }
 }
-.button-soft-cyan {
-  background: hsl(221, 100%, 94%) !important;
-  color: hsl(221, 100%, 54%) !important;
-  border-color: hsl(221, 100%, 79%) !important;
+.button-light-teal {
+  --button-background: hsl(180, 77%, 79%);
+  --button-color: #191919;
+}
+.button-light-teal.link {
+  --button-color: hsl(180, 77%, 79%) !important;
 }
 @media (hover: hover) {
-  .button-soft-cyan:hover {
-    background: hsl(221, 100%, 79%) !important;
-    color: #ffffff !important;
+  .button-light-teal:hover {
+    --button-background: hsl(180, 77%, 79%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-cyan:active {
-    background: hsl(221, 100%, 79%) !important;
-    color: #ffffff !important;
+  .button-light-teal:active {
+    --button-background: hsl(180, 77%, 79%);
+    --button-color: #191919;
+  }
+}
+.button-minor-teal {
+  --button-background: hsl(180, 77%, 54%);
+  --button-color: #fff;
+}
+.button-minor-teal.link {
+  --button-color: hsl(180, 77%, 54%) !important;
+}
+@media (hover: hover) {
+  .button-minor-teal:hover {
+    --button-background: hsl(180, 77%, 54%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-teal:active {
+    --button-background: hsl(180, 77%, 54%);
+    --button-color: #fff;
+  }
+}
+.button-sat-teal {
+  --button-background: hsl(180, 77%, 29%);
+  --button-color: #fff;
+}
+.button-sat-teal.link {
+  --button-color: hsl(180, 77%, 29%) !important;
+}
+@media (hover: hover) {
+  .button-sat-teal:hover {
+    --button-background: hsl(180, 77%, 29%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-teal:active {
+    --button-background: hsl(180, 77%, 29%);
+    --button-color: #fff;
+  }
+}
+.button-dark-teal {
+  --button-background: hsl(180, 77%, 19%);
+  --button-color: #fff;
+}
+.button-dark-teal.link {
+  --button-color: hsl(180, 77%, 19%) !important;
+}
+@media (hover: hover) {
+  .button-dark-teal:hover {
+    --button-background: hsl(180, 77%, 19%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-teal:active {
+    --button-background: hsl(180, 77%, 19%);
+    --button-color: #fff;
   }
 }
 .button-cyan {
-  background: hsl(221, 100%, 79%) !important;
-  color: #ffffff !important;
-  border-color: hsl(221, 100%, 64%) !important;
+  --button-background: hsl(221, 100%, 79%);
+  --button-color: #fff;
+}
+.button-cyan.link {
+  --button-color: hsl(221, 100%, 79%) !important;
 }
 @media (hover: hover) {
   .button-cyan:hover {
-    background: hsl(221, 100%, 64%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(221, 100%, 79%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-cyan:active {
-    background: hsl(221, 100%, 64%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(221, 100%, 79%);
+    --button-color: #fff;
   }
 }
-.button-soft-cobalt {
-  background: hsl(215, 100%, 79%) !important;
-  color: hsl(215, 100%, 9%) !important;
-  border-color: hsl(215, 100%, 34%) !important;
+.button-light-cyan {
+  --button-background: hsl(221, 100%, 94%);
+  --button-color: #191919;
+}
+.button-light-cyan.link {
+  --button-color: hsl(221, 100%, 94%) !important;
 }
 @media (hover: hover) {
-  .button-soft-cobalt:hover {
-    background: hsl(215, 100%, 34%) !important;
-    color: #ffffff !important;
+  .button-light-cyan:hover {
+    --button-background: hsl(221, 100%, 94%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-cobalt:active {
-    background: hsl(215, 100%, 34%) !important;
-    color: #ffffff !important;
+  .button-light-cyan:active {
+    --button-background: hsl(221, 100%, 94%);
+    --button-color: #191919;
+  }
+}
+.button-minor-cyan {
+  --button-background: hsl(221, 100%, 89%);
+  --button-color: #fff;
+}
+.button-minor-cyan.link {
+  --button-color: hsl(221, 100%, 89%) !important;
+}
+@media (hover: hover) {
+  .button-minor-cyan:hover {
+    --button-background: hsl(221, 100%, 89%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-cyan:active {
+    --button-background: hsl(221, 100%, 89%);
+    --button-color: #fff;
+  }
+}
+.button-sat-cyan {
+  --button-background: hsl(221, 100%, 64%);
+  --button-color: #fff;
+}
+.button-sat-cyan.link {
+  --button-color: hsl(221, 100%, 64%) !important;
+}
+@media (hover: hover) {
+  .button-sat-cyan:hover {
+    --button-background: hsl(221, 100%, 64%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-cyan:active {
+    --button-background: hsl(221, 100%, 64%);
+    --button-color: #fff;
+  }
+}
+.button-dark-cyan {
+  --button-background: hsl(221, 100%, 54%);
+  --button-color: #fff;
+}
+.button-dark-cyan.link {
+  --button-color: hsl(221, 100%, 54%) !important;
+}
+@media (hover: hover) {
+  .button-dark-cyan:hover {
+    --button-background: hsl(221, 100%, 54%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-cyan:active {
+    --button-background: hsl(221, 100%, 54%);
+    --button-color: #fff;
   }
 }
 .button-cobalt {
-  background: hsl(215, 100%, 34%) !important;
-  color: #ffffff !important;
-  border-color: hsl(215, 100%, 19%) !important;
+  --button-background: hsl(215, 100%, 34%);
+  --button-color: #fff;
+}
+.button-cobalt.link {
+  --button-color: hsl(215, 100%, 34%) !important;
 }
 @media (hover: hover) {
   .button-cobalt:hover {
-    background: hsl(215, 100%, 19%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(215, 100%, 34%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-cobalt:active {
-    background: hsl(215, 100%, 19%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(215, 100%, 34%);
+    --button-color: #fff;
   }
 }
-.button-soft-indigo {
-  background: hsl(276, 100%, 78%) !important;
-  color: hsl(276, 100%, 8%) !important;
-  border-color: hsl(276, 100%, 33%) !important;
+.button-light-cobalt {
+  --button-background: hsl(215, 100%, 79%);
+  --button-color: #191919;
+}
+.button-light-cobalt.link {
+  --button-color: hsl(215, 100%, 79%) !important;
 }
 @media (hover: hover) {
-  .button-soft-indigo:hover {
-    background: hsl(276, 100%, 33%) !important;
-    color: #ffffff !important;
+  .button-light-cobalt:hover {
+    --button-background: hsl(215, 100%, 79%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-indigo:active {
-    background: hsl(276, 100%, 33%) !important;
-    color: #ffffff !important;
+  .button-light-cobalt:active {
+    --button-background: hsl(215, 100%, 79%);
+    --button-color: #191919;
+  }
+}
+.button-minor-cobalt {
+  --button-background: hsl(215, 100%, 49%);
+  --button-color: #fff;
+}
+.button-minor-cobalt.link {
+  --button-color: hsl(215, 100%, 49%) !important;
+}
+@media (hover: hover) {
+  .button-minor-cobalt:hover {
+    --button-background: hsl(215, 100%, 49%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-cobalt:active {
+    --button-background: hsl(215, 100%, 49%);
+    --button-color: #fff;
+  }
+}
+.button-sat-cobalt {
+  --button-background: hsl(215, 100%, 19%);
+  --button-color: #fff;
+}
+.button-sat-cobalt.link {
+  --button-color: hsl(215, 100%, 19%) !important;
+}
+@media (hover: hover) {
+  .button-sat-cobalt:hover {
+    --button-background: hsl(215, 100%, 19%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-cobalt:active {
+    --button-background: hsl(215, 100%, 19%);
+    --button-color: #fff;
+  }
+}
+.button-dark-cobalt {
+  --button-background: hsl(215, 100%, 9%);
+  --button-color: #fff;
+}
+.button-dark-cobalt.link {
+  --button-color: hsl(215, 100%, 9%) !important;
+}
+@media (hover: hover) {
+  .button-dark-cobalt:hover {
+    --button-background: hsl(215, 100%, 9%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-cobalt:active {
+    --button-background: hsl(215, 100%, 9%);
+    --button-color: #fff;
   }
 }
 .button-indigo {
-  background: hsl(276, 100%, 33%) !important;
-  color: #ffffff !important;
-  border-color: hsl(276, 100%, 18%) !important;
+  --button-background: hsl(276, 100%, 33%);
+  --button-color: #fff;
+}
+.button-indigo.link {
+  --button-color: hsl(276, 100%, 33%) !important;
 }
 @media (hover: hover) {
   .button-indigo:hover {
-    background: hsl(276, 100%, 18%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(276, 100%, 33%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-indigo:active {
-    background: hsl(276, 100%, 18%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(276, 100%, 33%);
+    --button-color: #fff;
   }
 }
-.button-soft-almost {
-  background: hsl(259, 84%, 85%) !important;
-  color: hsl(259, 84%, 30%) !important;
-  border-color: hsl(259, 84%, 55%) !important;
+.button-light-indigo {
+  --button-background: hsl(276, 100%, 78%);
+  --button-color: #191919;
+}
+.button-light-indigo.link {
+  --button-color: hsl(276, 100%, 78%) !important;
 }
 @media (hover: hover) {
-  .button-soft-almost:hover {
-    background: hsl(259, 84%, 55%) !important;
-    color: #ffffff !important;
+  .button-light-indigo:hover {
+    --button-background: hsl(276, 100%, 78%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-almost:active {
-    background: hsl(259, 84%, 55%) !important;
-    color: #ffffff !important;
+  .button-light-indigo:active {
+    --button-background: hsl(276, 100%, 78%);
+    --button-color: #191919;
+  }
+}
+.button-minor-indigo {
+  --button-background: hsl(276, 100%, 48%);
+  --button-color: #fff;
+}
+.button-minor-indigo.link {
+  --button-color: hsl(276, 100%, 48%) !important;
+}
+@media (hover: hover) {
+  .button-minor-indigo:hover {
+    --button-background: hsl(276, 100%, 48%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-indigo:active {
+    --button-background: hsl(276, 100%, 48%);
+    --button-color: #fff;
+  }
+}
+.button-sat-indigo {
+  --button-background: hsl(276, 100%, 18%);
+  --button-color: #fff;
+}
+.button-sat-indigo.link {
+  --button-color: hsl(276, 100%, 18%) !important;
+}
+@media (hover: hover) {
+  .button-sat-indigo:hover {
+    --button-background: hsl(276, 100%, 18%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-indigo:active {
+    --button-background: hsl(276, 100%, 18%);
+    --button-color: #fff;
+  }
+}
+.button-dark-indigo {
+  --button-background: hsl(276, 100%, 8%);
+  --button-color: #fff;
+}
+.button-dark-indigo.link {
+  --button-color: hsl(276, 100%, 8%) !important;
+}
+@media (hover: hover) {
+  .button-dark-indigo:hover {
+    --button-background: hsl(276, 100%, 8%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-indigo:active {
+    --button-background: hsl(276, 100%, 8%);
+    --button-color: #fff;
   }
 }
 .button-almost {
-  background: hsl(259, 84%, 55%) !important;
-  color: #ffffff !important;
-  border-color: hsl(259, 84%, 40%) !important;
+  --button-background: hsl(259, 84%, 55%);
+  --button-color: #fff;
+}
+.button-almost.link {
+  --button-color: hsl(259, 84%, 55%) !important;
 }
 @media (hover: hover) {
   .button-almost:hover {
-    background: hsl(259, 84%, 40%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(259, 84%, 55%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-almost:active {
-    background: hsl(259, 84%, 40%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(259, 84%, 55%);
+    --button-color: #fff;
   }
 }
-.button-soft-violet {
-  background: hsl(300, 76%, 92%) !important;
-  color: hsl(300, 76%, 47%) !important;
-  border-color: hsl(300, 76%, 72%) !important;
+.button-light-almost {
+  --button-background: hsl(259, 84%, 85%);
+  --button-color: #191919;
+}
+.button-light-almost.link {
+  --button-color: hsl(259, 84%, 85%) !important;
 }
 @media (hover: hover) {
-  .button-soft-violet:hover {
-    background: hsl(300, 76%, 72%) !important;
-    color: #ffffff !important;
+  .button-light-almost:hover {
+    --button-background: hsl(259, 84%, 85%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-violet:active {
-    background: hsl(300, 76%, 72%) !important;
-    color: #ffffff !important;
+  .button-light-almost:active {
+    --button-background: hsl(259, 84%, 85%);
+    --button-color: #191919;
+  }
+}
+.button-minor-almost {
+  --button-background: hsl(259, 84%, 70%);
+  --button-color: #fff;
+}
+.button-minor-almost.link {
+  --button-color: hsl(259, 84%, 70%) !important;
+}
+@media (hover: hover) {
+  .button-minor-almost:hover {
+    --button-background: hsl(259, 84%, 70%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-almost:active {
+    --button-background: hsl(259, 84%, 70%);
+    --button-color: #fff;
+  }
+}
+.button-sat-almost {
+  --button-background: hsl(259, 84%, 40%);
+  --button-color: #fff;
+}
+.button-sat-almost.link {
+  --button-color: hsl(259, 84%, 40%) !important;
+}
+@media (hover: hover) {
+  .button-sat-almost:hover {
+    --button-background: hsl(259, 84%, 40%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-almost:active {
+    --button-background: hsl(259, 84%, 40%);
+    --button-color: #fff;
+  }
+}
+.button-dark-almost {
+  --button-background: hsl(259, 84%, 30%);
+  --button-color: #fff;
+}
+.button-dark-almost.link {
+  --button-color: hsl(259, 84%, 30%) !important;
+}
+@media (hover: hover) {
+  .button-dark-almost:hover {
+    --button-background: hsl(259, 84%, 30%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-almost:active {
+    --button-background: hsl(259, 84%, 30%);
+    --button-color: #fff;
   }
 }
 .button-violet {
-  background: hsl(300, 76%, 72%) !important;
-  color: #ffffff !important;
-  border-color: hsl(300, 76%, 57%) !important;
+  --button-background: hsl(300, 76%, 72%);
+  --button-color: #fff;
+}
+.button-violet.link {
+  --button-color: hsl(300, 76%, 72%) !important;
 }
 @media (hover: hover) {
   .button-violet:hover {
-    background: hsl(300, 76%, 57%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(300, 76%, 72%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-violet:active {
-    background: hsl(300, 76%, 57%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(300, 76%, 72%);
+    --button-color: #fff;
   }
 }
-.button-soft-pink {
-  background: hsl(350, 100%, 98%) !important;
-  color: hsl(350, 100%, 63%) !important;
-  border-color: hsl(350, 100%, 88%) !important;
+.button-light-violet {
+  --button-background: hsl(300, 76%, 92%);
+  --button-color: #191919;
+}
+.button-light-violet.link {
+  --button-color: hsl(300, 76%, 92%) !important;
 }
 @media (hover: hover) {
-  .button-soft-pink:hover {
-    background: hsl(350, 100%, 88%) !important;
-    color: #ffffff !important;
+  .button-light-violet:hover {
+    --button-background: hsl(300, 76%, 92%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-pink:active {
-    background: hsl(350, 100%, 88%) !important;
-    color: #ffffff !important;
+  .button-light-violet:active {
+    --button-background: hsl(300, 76%, 92%);
+    --button-color: #191919;
+  }
+}
+.button-minor-violet {
+  --button-background: hsl(300, 76%, 82%);
+  --button-color: #fff;
+}
+.button-minor-violet.link {
+  --button-color: hsl(300, 76%, 82%) !important;
+}
+@media (hover: hover) {
+  .button-minor-violet:hover {
+    --button-background: hsl(300, 76%, 82%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-violet:active {
+    --button-background: hsl(300, 76%, 82%);
+    --button-color: #fff;
+  }
+}
+.button-sat-violet {
+  --button-background: hsl(300, 76%, 57%);
+  --button-color: #fff;
+}
+.button-sat-violet.link {
+  --button-color: hsl(300, 76%, 57%) !important;
+}
+@media (hover: hover) {
+  .button-sat-violet:hover {
+    --button-background: hsl(300, 76%, 57%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-violet:active {
+    --button-background: hsl(300, 76%, 57%);
+    --button-color: #fff;
+  }
+}
+.button-dark-violet {
+  --button-background: hsl(300, 76%, 47%);
+  --button-color: #fff;
+}
+.button-dark-violet.link {
+  --button-color: hsl(300, 76%, 47%) !important;
+}
+@media (hover: hover) {
+  .button-dark-violet:hover {
+    --button-background: hsl(300, 76%, 47%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-violet:active {
+    --button-background: hsl(300, 76%, 47%);
+    --button-color: #fff;
   }
 }
 .button-pink {
-  background: hsl(350, 100%, 88%) !important;
-  color: #ffffff !important;
-  border-color: hsl(350, 100%, 73%) !important;
+  --button-background: hsl(350, 100%, 88%);
+  --button-color: #fff;
+}
+.button-pink.link {
+  --button-color: hsl(350, 100%, 88%) !important;
 }
 @media (hover: hover) {
   .button-pink:hover {
-    background: hsl(350, 100%, 73%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(350, 100%, 88%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-pink:active {
-    background: hsl(350, 100%, 73%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(350, 100%, 88%);
+    --button-color: #fff;
   }
 }
-.button-soft-magenta {
-  background: hsl(300, 100%, 90%) !important;
-  color: hsl(300, 100%, 25%) !important;
-  border-color: hsl(300, 100%, 50%) !important;
+.button-light-pink {
+  --button-background: hsl(350, 100%, 98%);
+  --button-color: #191919;
+}
+.button-light-pink.link {
+  --button-color: hsl(350, 100%, 98%) !important;
 }
 @media (hover: hover) {
-  .button-soft-magenta:hover {
-    background: hsl(300, 100%, 50%) !important;
-    color: #ffffff !important;
+  .button-light-pink:hover {
+    --button-background: hsl(350, 100%, 98%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-magenta:active {
-    background: hsl(300, 100%, 50%) !important;
-    color: #ffffff !important;
+  .button-light-pink:active {
+    --button-background: hsl(350, 100%, 98%);
+    --button-color: #191919;
+  }
+}
+.button-minor-pink {
+  --button-background: hsl(350, 100%, 93%);
+  --button-color: #fff;
+}
+.button-minor-pink.link {
+  --button-color: hsl(350, 100%, 93%) !important;
+}
+@media (hover: hover) {
+  .button-minor-pink:hover {
+    --button-background: hsl(350, 100%, 93%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-pink:active {
+    --button-background: hsl(350, 100%, 93%);
+    --button-color: #fff;
+  }
+}
+.button-sat-pink {
+  --button-background: hsl(350, 100%, 73%);
+  --button-color: #fff;
+}
+.button-sat-pink.link {
+  --button-color: hsl(350, 100%, 73%) !important;
+}
+@media (hover: hover) {
+  .button-sat-pink:hover {
+    --button-background: hsl(350, 100%, 73%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-pink:active {
+    --button-background: hsl(350, 100%, 73%);
+    --button-color: #fff;
+  }
+}
+.button-dark-pink {
+  --button-background: hsl(350, 100%, 63%);
+  --button-color: #fff;
+}
+.button-dark-pink.link {
+  --button-color: hsl(350, 100%, 63%) !important;
+}
+@media (hover: hover) {
+  .button-dark-pink:hover {
+    --button-background: hsl(350, 100%, 63%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-pink:active {
+    --button-background: hsl(350, 100%, 63%);
+    --button-color: #fff;
   }
 }
 .button-magenta {
-  background: hsl(300, 100%, 50%) !important;
-  color: #ffffff !important;
-  border-color: hsl(300, 100%, 35%) !important;
+  --button-background: hsl(300, 100%, 50%);
+  --button-color: #fff;
+}
+.button-magenta.link {
+  --button-color: hsl(300, 100%, 50%) !important;
 }
 @media (hover: hover) {
   .button-magenta:hover {
-    background: hsl(300, 100%, 35%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(300, 100%, 50%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-magenta:active {
-    background: hsl(300, 100%, 35%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(300, 100%, 50%);
+    --button-color: #fff;
   }
 }
-.button-soft-crimson {
-  background: hsl(348, 88%, 91%) !important;
-  color: hsl(348, 88%, 21%) !important;
-  border-color: hsl(348, 88%, 46%) !important;
+.button-light-magenta {
+  --button-background: hsl(300, 100%, 90%);
+  --button-color: #191919;
+}
+.button-light-magenta.link {
+  --button-color: hsl(300, 100%, 90%) !important;
 }
 @media (hover: hover) {
-  .button-soft-crimson:hover {
-    background: hsl(348, 88%, 46%) !important;
-    color: #ffffff !important;
+  .button-light-magenta:hover {
+    --button-background: hsl(300, 100%, 90%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-crimson:active {
-    background: hsl(348, 88%, 46%) !important;
-    color: #ffffff !important;
+  .button-light-magenta:active {
+    --button-background: hsl(300, 100%, 90%);
+    --button-color: #191919;
+  }
+}
+.button-minor-magenta {
+  --button-background: hsl(300, 100%, 75%);
+  --button-color: #fff;
+}
+.button-minor-magenta.link {
+  --button-color: hsl(300, 100%, 75%) !important;
+}
+@media (hover: hover) {
+  .button-minor-magenta:hover {
+    --button-background: hsl(300, 100%, 75%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-magenta:active {
+    --button-background: hsl(300, 100%, 75%);
+    --button-color: #fff;
+  }
+}
+.button-sat-magenta {
+  --button-background: hsl(300, 100%, 35%);
+  --button-color: #fff;
+}
+.button-sat-magenta.link {
+  --button-color: hsl(300, 100%, 35%) !important;
+}
+@media (hover: hover) {
+  .button-sat-magenta:hover {
+    --button-background: hsl(300, 100%, 35%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-magenta:active {
+    --button-background: hsl(300, 100%, 35%);
+    --button-color: #fff;
+  }
+}
+.button-dark-magenta {
+  --button-background: hsl(300, 100%, 25%);
+  --button-color: #fff;
+}
+.button-dark-magenta.link {
+  --button-color: hsl(300, 100%, 25%) !important;
+}
+@media (hover: hover) {
+  .button-dark-magenta:hover {
+    --button-background: hsl(300, 100%, 25%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-magenta:active {
+    --button-background: hsl(300, 100%, 25%);
+    --button-color: #fff;
   }
 }
 .button-crimson {
-  background: hsl(348, 88%, 46%) !important;
-  color: #ffffff !important;
-  border-color: hsl(348, 88%, 31%) !important;
+  --button-background: hsl(348, 88%, 46%);
+  --button-color: #fff;
+}
+.button-crimson.link {
+  --button-color: hsl(348, 88%, 46%) !important;
 }
 @media (hover: hover) {
   .button-crimson:hover {
-    background: hsl(348, 88%, 31%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(348, 88%, 46%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-crimson:active {
-    background: hsl(348, 88%, 31%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(348, 88%, 46%);
+    --button-color: #fff;
   }
 }
-.button-soft-red {
-  background: hsl(0, 100%, 85%) !important;
-  color: hsl(0, 100%, 25%) !important;
-  border-color: hsl(0, 100%, 50%) !important;
+.button-light-crimson {
+  --button-background: hsl(348, 88%, 91%);
+  --button-color: #191919;
+}
+.button-light-crimson.link {
+  --button-color: hsl(348, 88%, 91%) !important;
 }
 @media (hover: hover) {
-  .button-soft-red:hover {
-    background: hsl(0, 100%, 50%) !important;
-    color: #ffffff !important;
+  .button-light-crimson:hover {
+    --button-background: hsl(348, 88%, 91%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-red:active {
-    background: hsl(0, 100%, 50%) !important;
-    color: #ffffff !important;
+  .button-light-crimson:active {
+    --button-background: hsl(348, 88%, 91%);
+    --button-color: #191919;
+  }
+}
+.button-minor-crimson {
+  --button-background: hsl(348, 88%, 66%);
+  --button-color: #fff;
+}
+.button-minor-crimson.link {
+  --button-color: hsl(348, 88%, 66%) !important;
+}
+@media (hover: hover) {
+  .button-minor-crimson:hover {
+    --button-background: hsl(348, 88%, 66%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-crimson:active {
+    --button-background: hsl(348, 88%, 66%);
+    --button-color: #fff;
+  }
+}
+.button-sat-crimson {
+  --button-background: hsl(348, 88%, 31%);
+  --button-color: #fff;
+}
+.button-sat-crimson.link {
+  --button-color: hsl(348, 88%, 31%) !important;
+}
+@media (hover: hover) {
+  .button-sat-crimson:hover {
+    --button-background: hsl(348, 88%, 31%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-crimson:active {
+    --button-background: hsl(348, 88%, 31%);
+    --button-color: #fff;
+  }
+}
+.button-dark-crimson {
+  --button-background: hsl(348, 88%, 21%);
+  --button-color: #fff;
+}
+.button-dark-crimson.link {
+  --button-color: hsl(348, 88%, 21%) !important;
+}
+@media (hover: hover) {
+  .button-dark-crimson:hover {
+    --button-background: hsl(348, 88%, 21%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-crimson:active {
+    --button-background: hsl(348, 88%, 21%);
+    --button-color: #fff;
   }
 }
 .button-red {
-  background: hsl(0, 100%, 50%) !important;
-  color: #ffffff !important;
-  border-color: hsl(0, 100%, 35%) !important;
+  --button-background: hsl(0, 100%, 50%);
+  --button-color: #fff;
+}
+.button-red.link {
+  --button-color: hsl(0, 100%, 50%) !important;
 }
 @media (hover: hover) {
   .button-red:hover {
-    background: hsl(0, 100%, 35%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(0, 100%, 50%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-red:active {
-    background: hsl(0, 100%, 35%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(0, 100%, 50%);
+    --button-color: #fff;
   }
 }
-.button-soft-clown {
-  background: hsl(3, 100%, 95%) !important;
-  color: hsl(3, 100%, 45%) !important;
-  border-color: hsl(3, 100%, 70%) !important;
+.button-light-red {
+  --button-background: hsl(0, 100%, 85%);
+  --button-color: #191919;
+}
+.button-light-red.link {
+  --button-color: hsl(0, 100%, 85%) !important;
 }
 @media (hover: hover) {
-  .button-soft-clown:hover {
-    background: hsl(3, 100%, 70%) !important;
-    color: #ffffff !important;
+  .button-light-red:hover {
+    --button-background: hsl(0, 100%, 85%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-clown:active {
-    background: hsl(3, 100%, 70%) !important;
-    color: #ffffff !important;
+  .button-light-red:active {
+    --button-background: hsl(0, 100%, 85%);
+    --button-color: #191919;
+  }
+}
+.button-minor-red {
+  --button-background: hsl(0, 100%, 70%);
+  --button-color: #fff;
+}
+.button-minor-red.link {
+  --button-color: hsl(0, 100%, 70%) !important;
+}
+@media (hover: hover) {
+  .button-minor-red:hover {
+    --button-background: hsl(0, 100%, 70%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-red:active {
+    --button-background: hsl(0, 100%, 70%);
+    --button-color: #fff;
+  }
+}
+.button-sat-red {
+  --button-background: hsl(0, 100%, 35%);
+  --button-color: #fff;
+}
+.button-sat-red.link {
+  --button-color: hsl(0, 100%, 35%) !important;
+}
+@media (hover: hover) {
+  .button-sat-red:hover {
+    --button-background: hsl(0, 100%, 35%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-red:active {
+    --button-background: hsl(0, 100%, 35%);
+    --button-color: #fff;
+  }
+}
+.button-dark-red {
+  --button-background: hsl(0, 100%, 25%);
+  --button-color: #fff;
+}
+.button-dark-red.link {
+  --button-color: hsl(0, 100%, 25%) !important;
+}
+@media (hover: hover) {
+  .button-dark-red:hover {
+    --button-background: hsl(0, 100%, 25%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-red:active {
+    --button-background: hsl(0, 100%, 25%);
+    --button-color: #fff;
   }
 }
 .button-clown {
-  background: hsl(3, 100%, 70%) !important;
-  color: #ffffff !important;
-  border-color: hsl(3, 100%, 55%) !important;
+  --button-background: hsl(3, 100%, 70%);
+  --button-color: #fff;
+}
+.button-clown.link {
+  --button-color: hsl(3, 100%, 70%) !important;
 }
 @media (hover: hover) {
   .button-clown:hover {
-    background: hsl(3, 100%, 55%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(3, 100%, 70%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-clown:active {
-    background: hsl(3, 100%, 55%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(3, 100%, 70%);
+    --button-color: #fff;
   }
 }
-.button-soft-orange {
-  background: hsl(39, 100%, 90%) !important;
-  color: hsl(39, 100%, 25%) !important;
-  border-color: hsl(39, 100%, 50%) !important;
+.button-light-clown {
+  --button-background: hsl(3, 100%, 95%);
+  --button-color: #191919;
+}
+.button-light-clown.link {
+  --button-color: hsl(3, 100%, 95%) !important;
 }
 @media (hover: hover) {
-  .button-soft-orange:hover {
-    background: hsl(39, 100%, 50%) !important;
-    color: #ffffff !important;
+  .button-light-clown:hover {
+    --button-background: hsl(3, 100%, 95%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-orange:active {
-    background: hsl(39, 100%, 50%) !important;
-    color: #ffffff !important;
+  .button-light-clown:active {
+    --button-background: hsl(3, 100%, 95%);
+    --button-color: #191919;
+  }
+}
+.button-minor-clown {
+  --button-background: hsl(3, 100%, 85%);
+  --button-color: #fff;
+}
+.button-minor-clown.link {
+  --button-color: hsl(3, 100%, 85%) !important;
+}
+@media (hover: hover) {
+  .button-minor-clown:hover {
+    --button-background: hsl(3, 100%, 85%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-clown:active {
+    --button-background: hsl(3, 100%, 85%);
+    --button-color: #fff;
+  }
+}
+.button-sat-clown {
+  --button-background: hsl(3, 100%, 55%);
+  --button-color: #fff;
+}
+.button-sat-clown.link {
+  --button-color: hsl(3, 100%, 55%) !important;
+}
+@media (hover: hover) {
+  .button-sat-clown:hover {
+    --button-background: hsl(3, 100%, 55%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-clown:active {
+    --button-background: hsl(3, 100%, 55%);
+    --button-color: #fff;
+  }
+}
+.button-dark-clown {
+  --button-background: hsl(3, 100%, 45%);
+  --button-color: #fff;
+}
+.button-dark-clown.link {
+  --button-color: hsl(3, 100%, 45%) !important;
+}
+@media (hover: hover) {
+  .button-dark-clown:hover {
+    --button-background: hsl(3, 100%, 45%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-clown:active {
+    --button-background: hsl(3, 100%, 45%);
+    --button-color: #fff;
   }
 }
 .button-orange {
-  background: hsl(39, 100%, 50%) !important;
-  color: #ffffff !important;
-  border-color: hsl(39, 100%, 35%) !important;
+  --button-background: hsl(39, 100%, 50%);
+  --button-color: #fff;
+}
+.button-orange.link {
+  --button-color: hsl(39, 100%, 50%) !important;
 }
 @media (hover: hover) {
   .button-orange:hover {
-    background: hsl(39, 100%, 35%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(39, 100%, 50%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-orange:active {
-    background: hsl(39, 100%, 35%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(39, 100%, 50%);
+    --button-color: #fff;
   }
 }
-.button-soft-amber {
-  background: hsl(45, 100%, 78%) !important;
-  color: hsl(45, 100%, 33%) !important;
-  border-color: hsl(45, 100%, 58%) !important;
+.button-light-orange {
+  --button-background: hsl(39, 100%, 90%);
+  --button-color: #191919;
+}
+.button-light-orange.link {
+  --button-color: hsl(39, 100%, 90%) !important;
 }
 @media (hover: hover) {
-  .button-soft-amber:hover {
-    background: hsl(45, 100%, 58%) !important;
-    color: #ffffff !important;
+  .button-light-orange:hover {
+    --button-background: hsl(39, 100%, 90%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-amber:active {
-    background: hsl(45, 100%, 58%) !important;
-    color: #ffffff !important;
+  .button-light-orange:active {
+    --button-background: hsl(39, 100%, 90%);
+    --button-color: #191919;
+  }
+}
+.button-minor-orange {
+  --button-background: hsl(39, 100%, 75%);
+  --button-color: #fff;
+}
+.button-minor-orange.link {
+  --button-color: hsl(39, 100%, 75%) !important;
+}
+@media (hover: hover) {
+  .button-minor-orange:hover {
+    --button-background: hsl(39, 100%, 75%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-orange:active {
+    --button-background: hsl(39, 100%, 75%);
+    --button-color: #fff;
+  }
+}
+.button-sat-orange {
+  --button-background: hsl(39, 100%, 35%);
+  --button-color: #fff;
+}
+.button-sat-orange.link {
+  --button-color: hsl(39, 100%, 35%) !important;
+}
+@media (hover: hover) {
+  .button-sat-orange:hover {
+    --button-background: hsl(39, 100%, 35%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-orange:active {
+    --button-background: hsl(39, 100%, 35%);
+    --button-color: #fff;
+  }
+}
+.button-dark-orange {
+  --button-background: hsl(39, 100%, 25%);
+  --button-color: #fff;
+}
+.button-dark-orange.link {
+  --button-color: hsl(39, 100%, 25%) !important;
+}
+@media (hover: hover) {
+  .button-dark-orange:hover {
+    --button-background: hsl(39, 100%, 25%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-orange:active {
+    --button-background: hsl(39, 100%, 25%);
+    --button-color: #fff;
   }
 }
 .button-amber {
-  background: hsl(45, 100%, 58%) !important;
-  color: #ffffff !important;
-  border-color: hsl(45, 100%, 43%) !important;
+  --button-background: hsl(45, 100%, 58%);
+  --button-color: #fff;
+}
+.button-amber.link {
+  --button-color: hsl(45, 100%, 58%) !important;
 }
 @media (hover: hover) {
   .button-amber:hover {
-    background: hsl(45, 100%, 43%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(45, 100%, 58%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-amber:active {
-    background: hsl(45, 100%, 43%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(45, 100%, 58%);
+    --button-color: #fff;
   }
 }
-.button-soft-yellow {
-  background: hsl(52, 100%, 93%) !important;
-  color: hsl(52, 100%, 43%) !important;
-  border-color: hsl(52, 100%, 68%) !important;
+.button-light-amber {
+  --button-background: hsl(45, 100%, 78%);
+  --button-color: #191919;
+}
+.button-light-amber.link {
+  --button-color: hsl(45, 100%, 78%) !important;
 }
 @media (hover: hover) {
-  .button-soft-yellow:hover {
-    background: hsl(52, 100%, 68%) !important;
-    color: #ffffff !important;
+  .button-light-amber:hover {
+    --button-background: hsl(45, 100%, 78%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-yellow:active {
-    background: hsl(52, 100%, 68%) !important;
-    color: #ffffff !important;
+  .button-light-amber:active {
+    --button-background: hsl(45, 100%, 78%);
+    --button-color: #191919;
+  }
+}
+.button-minor-amber {
+  --button-background: hsl(45, 100%, 68%);
+  --button-color: #fff;
+}
+.button-minor-amber.link {
+  --button-color: hsl(45, 100%, 68%) !important;
+}
+@media (hover: hover) {
+  .button-minor-amber:hover {
+    --button-background: hsl(45, 100%, 68%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-amber:active {
+    --button-background: hsl(45, 100%, 68%);
+    --button-color: #fff;
+  }
+}
+.button-sat-amber {
+  --button-background: hsl(45, 100%, 43%);
+  --button-color: #fff;
+}
+.button-sat-amber.link {
+  --button-color: hsl(45, 100%, 43%) !important;
+}
+@media (hover: hover) {
+  .button-sat-amber:hover {
+    --button-background: hsl(45, 100%, 43%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-amber:active {
+    --button-background: hsl(45, 100%, 43%);
+    --button-color: #fff;
+  }
+}
+.button-dark-amber {
+  --button-background: hsl(45, 100%, 33%);
+  --button-color: #fff;
+}
+.button-dark-amber.link {
+  --button-color: hsl(45, 100%, 33%) !important;
+}
+@media (hover: hover) {
+  .button-dark-amber:hover {
+    --button-background: hsl(45, 100%, 33%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-amber:active {
+    --button-background: hsl(45, 100%, 33%);
+    --button-color: #fff;
   }
 }
 .button-yellow {
-  background: hsl(52, 100%, 68%) !important;
-  color: #ffffff !important;
-  border-color: hsl(52, 100%, 53%) !important;
+  --button-background: hsl(52, 100%, 68%);
+  --button-color: #fff;
+}
+.button-yellow.link {
+  --button-color: hsl(52, 100%, 68%) !important;
 }
 @media (hover: hover) {
   .button-yellow:hover {
-    background: hsl(52, 100%, 53%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(52, 100%, 68%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-yellow:active {
-    background: hsl(52, 100%, 53%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(52, 100%, 68%);
+    --button-color: #fff;
   }
 }
-.button-soft-brown {
-  background: hsl(25, 57%, 81%) !important;
-  color: hsl(25, 57%, 26%) !important;
-  border-color: hsl(25, 57%, 51%) !important;
+.button-light-yellow {
+  --button-background: hsl(52, 100%, 93%);
+  --button-color: #191919;
+}
+.button-light-yellow.link {
+  --button-color: hsl(52, 100%, 93%) !important;
 }
 @media (hover: hover) {
-  .button-soft-brown:hover {
-    background: hsl(25, 57%, 51%) !important;
-    color: #ffffff !important;
+  .button-light-yellow:hover {
+    --button-background: hsl(52, 100%, 93%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-brown:active {
-    background: hsl(25, 57%, 51%) !important;
-    color: #ffffff !important;
+  .button-light-yellow:active {
+    --button-background: hsl(52, 100%, 93%);
+    --button-color: #191919;
+  }
+}
+.button-minor-yellow {
+  --button-background: hsl(52, 100%, 83%);
+  --button-color: #fff;
+}
+.button-minor-yellow.link {
+  --button-color: hsl(52, 100%, 83%) !important;
+}
+@media (hover: hover) {
+  .button-minor-yellow:hover {
+    --button-background: hsl(52, 100%, 83%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-yellow:active {
+    --button-background: hsl(52, 100%, 83%);
+    --button-color: #fff;
+  }
+}
+.button-sat-yellow {
+  --button-background: hsl(52, 100%, 53%);
+  --button-color: #fff;
+}
+.button-sat-yellow.link {
+  --button-color: hsl(52, 100%, 53%) !important;
+}
+@media (hover: hover) {
+  .button-sat-yellow:hover {
+    --button-background: hsl(52, 100%, 53%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-yellow:active {
+    --button-background: hsl(52, 100%, 53%);
+    --button-color: #fff;
+  }
+}
+.button-dark-yellow {
+  --button-background: hsl(52, 100%, 43%);
+  --button-color: #fff;
+}
+.button-dark-yellow.link {
+  --button-color: hsl(52, 100%, 43%) !important;
+}
+@media (hover: hover) {
+  .button-dark-yellow:hover {
+    --button-background: hsl(52, 100%, 43%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-yellow:active {
+    --button-background: hsl(52, 100%, 43%);
+    --button-color: #fff;
   }
 }
 .button-brown {
-  background: hsl(25, 57%, 51%) !important;
-  color: #ffffff !important;
-  border-color: hsl(25, 57%, 36%) !important;
+  --button-background: hsl(25, 57%, 51%);
+  --button-color: #fff;
+}
+.button-brown.link {
+  --button-color: hsl(25, 57%, 51%) !important;
 }
 @media (hover: hover) {
   .button-brown:hover {
-    background: hsl(25, 57%, 36%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(25, 57%, 51%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-brown:active {
-    background: hsl(25, 57%, 36%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(25, 57%, 51%);
+    --button-color: #fff;
   }
 }
-.button-soft-olive {
-  background: hsl(60, 100%, 72%) !important;
-  color: hsl(60, 100%, 7%) !important;
-  border-color: hsl(60, 100%, 32%) !important;
+.button-light-brown {
+  --button-background: hsl(25, 57%, 81%);
+  --button-color: #191919;
+}
+.button-light-brown.link {
+  --button-color: hsl(25, 57%, 81%) !important;
 }
 @media (hover: hover) {
-  .button-soft-olive:hover {
-    background: hsl(60, 100%, 32%) !important;
-    color: #ffffff !important;
+  .button-light-brown:hover {
+    --button-background: hsl(25, 57%, 81%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-olive:active {
-    background: hsl(60, 100%, 32%) !important;
-    color: #ffffff !important;
+  .button-light-brown:active {
+    --button-background: hsl(25, 57%, 81%);
+    --button-color: #191919;
+  }
+}
+.button-minor-brown {
+  --button-background: hsl(25, 57%, 66%);
+  --button-color: #fff;
+}
+.button-minor-brown.link {
+  --button-color: hsl(25, 57%, 66%) !important;
+}
+@media (hover: hover) {
+  .button-minor-brown:hover {
+    --button-background: hsl(25, 57%, 66%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-brown:active {
+    --button-background: hsl(25, 57%, 66%);
+    --button-color: #fff;
+  }
+}
+.button-sat-brown {
+  --button-background: hsl(25, 57%, 36%);
+  --button-color: #fff;
+}
+.button-sat-brown.link {
+  --button-color: hsl(25, 57%, 36%) !important;
+}
+@media (hover: hover) {
+  .button-sat-brown:hover {
+    --button-background: hsl(25, 57%, 36%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-brown:active {
+    --button-background: hsl(25, 57%, 36%);
+    --button-color: #fff;
+  }
+}
+.button-dark-brown {
+  --button-background: hsl(25, 57%, 26%);
+  --button-color: #fff;
+}
+.button-dark-brown.link {
+  --button-color: hsl(25, 57%, 26%) !important;
+}
+@media (hover: hover) {
+  .button-dark-brown:hover {
+    --button-background: hsl(25, 57%, 26%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-brown:active {
+    --button-background: hsl(25, 57%, 26%);
+    --button-color: #fff;
   }
 }
 .button-olive {
-  background: hsl(60, 100%, 32%) !important;
-  color: #ffffff !important;
-  border-color: hsl(60, 100%, 17%) !important;
+  --button-background: hsl(60, 100%, 32%);
+  --button-color: #fff;
+}
+.button-olive.link {
+  --button-color: hsl(60, 100%, 32%) !important;
 }
 @media (hover: hover) {
   .button-olive:hover {
-    background: hsl(60, 100%, 17%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(60, 100%, 32%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-olive:active {
-    background: hsl(60, 100%, 17%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(60, 100%, 32%);
+    --button-color: #fff;
   }
 }
-.button-soft-steel {
-  background: hsl(209, 19%, 87%) !important;
-  color: hsl(209, 19%, 32%) !important;
-  border-color: hsl(209, 19%, 57%) !important;
+.button-light-olive {
+  --button-background: hsl(60, 100%, 72%);
+  --button-color: #191919;
+}
+.button-light-olive.link {
+  --button-color: hsl(60, 100%, 72%) !important;
 }
 @media (hover: hover) {
-  .button-soft-steel:hover {
-    background: hsl(209, 19%, 57%) !important;
-    color: #ffffff !important;
+  .button-light-olive:hover {
+    --button-background: hsl(60, 100%, 72%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-steel:active {
-    background: hsl(209, 19%, 57%) !important;
-    color: #ffffff !important;
+  .button-light-olive:active {
+    --button-background: hsl(60, 100%, 72%);
+    --button-color: #191919;
+  }
+}
+.button-minor-olive {
+  --button-background: hsl(60, 100%, 42%);
+  --button-color: #fff;
+}
+.button-minor-olive.link {
+  --button-color: hsl(60, 100%, 42%) !important;
+}
+@media (hover: hover) {
+  .button-minor-olive:hover {
+    --button-background: hsl(60, 100%, 42%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-olive:active {
+    --button-background: hsl(60, 100%, 42%);
+    --button-color: #fff;
+  }
+}
+.button-sat-olive {
+  --button-background: hsl(60, 100%, 17%);
+  --button-color: #fff;
+}
+.button-sat-olive.link {
+  --button-color: hsl(60, 100%, 17%) !important;
+}
+@media (hover: hover) {
+  .button-sat-olive:hover {
+    --button-background: hsl(60, 100%, 17%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-olive:active {
+    --button-background: hsl(60, 100%, 17%);
+    --button-color: #fff;
+  }
+}
+.button-dark-olive {
+  --button-background: hsl(60, 100%, 7%);
+  --button-color: #fff;
+}
+.button-dark-olive.link {
+  --button-color: hsl(60, 100%, 7%) !important;
+}
+@media (hover: hover) {
+  .button-dark-olive:hover {
+    --button-background: hsl(60, 100%, 7%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-olive:active {
+    --button-background: hsl(60, 100%, 7%);
+    --button-color: #fff;
   }
 }
 .button-steel {
-  background: hsl(209, 19%, 57%) !important;
-  color: #ffffff !important;
-  border-color: hsl(209, 19%, 42%) !important;
+  --button-background: hsl(209, 19%, 57%);
+  --button-color: #fff;
+}
+.button-steel.link {
+  --button-color: hsl(209, 19%, 57%) !important;
 }
 @media (hover: hover) {
   .button-steel:hover {
-    background: hsl(209, 19%, 42%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(209, 19%, 57%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-steel:active {
-    background: hsl(209, 19%, 42%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(209, 19%, 57%);
+    --button-color: #fff;
   }
 }
-.button-soft-mauve {
-  background: hsl(277, 100%, 96%) !important;
-  color: hsl(277, 100%, 59%) !important;
-  border-color: hsl(277, 100%, 84%) !important;
+.button-light-steel {
+  --button-background: hsl(209, 19%, 87%);
+  --button-color: #191919;
+}
+.button-light-steel.link {
+  --button-color: hsl(209, 19%, 87%) !important;
 }
 @media (hover: hover) {
-  .button-soft-mauve:hover {
-    background: hsl(277, 100%, 84%) !important;
-    color: #ffffff !important;
+  .button-light-steel:hover {
+    --button-background: hsl(209, 19%, 87%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-mauve:active {
-    background: hsl(277, 100%, 84%) !important;
-    color: #ffffff !important;
+  .button-light-steel:active {
+    --button-background: hsl(209, 19%, 87%);
+    --button-color: #191919;
+  }
+}
+.button-minor-steel {
+  --button-background: hsl(209, 19%, 77%);
+  --button-color: #fff;
+}
+.button-minor-steel.link {
+  --button-color: hsl(209, 19%, 77%) !important;
+}
+@media (hover: hover) {
+  .button-minor-steel:hover {
+    --button-background: hsl(209, 19%, 77%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-steel:active {
+    --button-background: hsl(209, 19%, 77%);
+    --button-color: #fff;
+  }
+}
+.button-sat-steel {
+  --button-background: hsl(209, 19%, 42%);
+  --button-color: #fff;
+}
+.button-sat-steel.link {
+  --button-color: hsl(209, 19%, 42%) !important;
+}
+@media (hover: hover) {
+  .button-sat-steel:hover {
+    --button-background: hsl(209, 19%, 42%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-steel:active {
+    --button-background: hsl(209, 19%, 42%);
+    --button-color: #fff;
+  }
+}
+.button-dark-steel {
+  --button-background: hsl(209, 19%, 32%);
+  --button-color: #fff;
+}
+.button-dark-steel.link {
+  --button-color: hsl(209, 19%, 32%) !important;
+}
+@media (hover: hover) {
+  .button-dark-steel:hover {
+    --button-background: hsl(209, 19%, 32%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-steel:active {
+    --button-background: hsl(209, 19%, 32%);
+    --button-color: #fff;
   }
 }
 .button-mauve {
-  background: hsl(277, 100%, 84%) !important;
-  color: #ffffff !important;
-  border-color: hsl(277, 100%, 69%) !important;
+  --button-background: hsl(277, 100%, 84%);
+  --button-color: #fff;
+}
+.button-mauve.link {
+  --button-color: hsl(277, 100%, 84%) !important;
 }
 @media (hover: hover) {
   .button-mauve:hover {
-    background: hsl(277, 100%, 69%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(277, 100%, 84%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-mauve:active {
-    background: hsl(277, 100%, 69%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(277, 100%, 84%);
+    --button-color: #fff;
   }
 }
-.button-soft-taupe {
-  background: hsl(29, 19%, 80%) !important;
-  color: hsl(29, 19%, 25%) !important;
-  border-color: hsl(29, 19%, 50%) !important;
+.button-light-mauve {
+  --button-background: hsl(277, 100%, 96%);
+  --button-color: #191919;
+}
+.button-light-mauve.link {
+  --button-color: hsl(277, 100%, 96%) !important;
 }
 @media (hover: hover) {
-  .button-soft-taupe:hover {
-    background: hsl(29, 19%, 50%) !important;
-    color: #ffffff !important;
+  .button-light-mauve:hover {
+    --button-background: hsl(277, 100%, 96%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-taupe:active {
-    background: hsl(29, 19%, 50%) !important;
-    color: #ffffff !important;
+  .button-light-mauve:active {
+    --button-background: hsl(277, 100%, 96%);
+    --button-color: #191919;
+  }
+}
+.button-minor-mauve {
+  --button-background: hsl(277, 100%, 90%);
+  --button-color: #fff;
+}
+.button-minor-mauve.link {
+  --button-color: hsl(277, 100%, 90%) !important;
+}
+@media (hover: hover) {
+  .button-minor-mauve:hover {
+    --button-background: hsl(277, 100%, 90%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-mauve:active {
+    --button-background: hsl(277, 100%, 90%);
+    --button-color: #fff;
+  }
+}
+.button-sat-mauve {
+  --button-background: hsl(277, 100%, 69%);
+  --button-color: #fff;
+}
+.button-sat-mauve.link {
+  --button-color: hsl(277, 100%, 69%) !important;
+}
+@media (hover: hover) {
+  .button-sat-mauve:hover {
+    --button-background: hsl(277, 100%, 69%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-mauve:active {
+    --button-background: hsl(277, 100%, 69%);
+    --button-color: #fff;
+  }
+}
+.button-dark-mauve {
+  --button-background: hsl(277, 100%, 59%);
+  --button-color: #fff;
+}
+.button-dark-mauve.link {
+  --button-color: hsl(277, 100%, 59%) !important;
+}
+@media (hover: hover) {
+  .button-dark-mauve:hover {
+    --button-background: hsl(277, 100%, 59%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-mauve:active {
+    --button-background: hsl(277, 100%, 59%);
+    --button-color: #fff;
   }
 }
 .button-taupe {
-  background: hsl(29, 19%, 50%) !important;
-  color: #ffffff !important;
-  border-color: hsl(29, 19%, 35%) !important;
+  --button-background: hsl(29, 19%, 50%);
+  --button-color: #fff;
+}
+.button-taupe.link {
+  --button-color: hsl(29, 19%, 50%) !important;
 }
 @media (hover: hover) {
   .button-taupe:hover {
-    background: hsl(29, 19%, 35%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(29, 19%, 50%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-taupe:active {
-    background: hsl(29, 19%, 35%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(29, 19%, 50%);
+    --button-color: #fff;
   }
 }
-.button-soft-champagne {
-  background: hsl(37, 74%, 98%) !important;
-  color: hsl(37, 74%, 63%) !important;
-  border-color: hsl(37, 74%, 88%) !important;
+.button-light-taupe {
+  --button-background: hsl(29, 19%, 80%);
+  --button-color: #191919;
+}
+.button-light-taupe.link {
+  --button-color: hsl(29, 19%, 80%) !important;
 }
 @media (hover: hover) {
-  .button-soft-champagne:hover {
-    background: hsl(37, 74%, 88%) !important;
-    color: #ffffff !important;
+  .button-light-taupe:hover {
+    --button-background: hsl(29, 19%, 80%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-champagne:active {
-    background: hsl(37, 74%, 88%) !important;
-    color: #ffffff !important;
+  .button-light-taupe:active {
+    --button-background: hsl(29, 19%, 80%);
+    --button-color: #191919;
+  }
+}
+.button-minor-taupe {
+  --button-background: hsl(29, 19%, 67%);
+  --button-color: #fff;
+}
+.button-minor-taupe.link {
+  --button-color: hsl(29, 19%, 67%) !important;
+}
+@media (hover: hover) {
+  .button-minor-taupe:hover {
+    --button-background: hsl(29, 19%, 67%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-taupe:active {
+    --button-background: hsl(29, 19%, 67%);
+    --button-color: #fff;
+  }
+}
+.button-sat-taupe {
+  --button-background: hsl(29, 19%, 35%);
+  --button-color: #fff;
+}
+.button-sat-taupe.link {
+  --button-color: hsl(29, 19%, 35%) !important;
+}
+@media (hover: hover) {
+  .button-sat-taupe:hover {
+    --button-background: hsl(29, 19%, 35%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-taupe:active {
+    --button-background: hsl(29, 19%, 35%);
+    --button-color: #fff;
+  }
+}
+.button-dark-taupe {
+  --button-background: hsl(29, 19%, 25%);
+  --button-color: #fff;
+}
+.button-dark-taupe.link {
+  --button-color: hsl(29, 19%, 25%) !important;
+}
+@media (hover: hover) {
+  .button-dark-taupe:hover {
+    --button-background: hsl(29, 19%, 25%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-taupe:active {
+    --button-background: hsl(29, 19%, 25%);
+    --button-color: #fff;
   }
 }
 .button-champagne {
-  background: hsl(37, 74%, 88%) !important;
-  color: #ffffff !important;
-  border-color: hsl(37, 74%, 73%) !important;
+  --button-background: hsl(37, 74%, 88%);
+  --button-color: #fff;
+}
+.button-champagne.link {
+  --button-color: hsl(37, 74%, 88%) !important;
 }
 @media (hover: hover) {
   .button-champagne:hover {
-    background: hsl(37, 74%, 73%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(37, 74%, 88%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-champagne:active {
-    background: hsl(37, 74%, 73%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(37, 74%, 88%);
+    --button-color: #fff;
   }
 }
-.button-soft-khaki {
-  background: hsl(47, 47%, 94%) !important;
-  color: hsl(47, 47%, 44%) !important;
-  border-color: hsl(47, 47%, 69%) !important;
+.button-light-champagne {
+  --button-background: hsl(37, 74%, 98%);
+  --button-color: #191919;
+}
+.button-light-champagne.link {
+  --button-color: hsl(37, 74%, 98%) !important;
 }
 @media (hover: hover) {
-  .button-soft-khaki:hover {
-    background: hsl(47, 47%, 69%) !important;
-    color: #ffffff !important;
+  .button-light-champagne:hover {
+    --button-background: hsl(37, 74%, 98%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-khaki:active {
-    background: hsl(47, 47%, 69%) !important;
-    color: #ffffff !important;
+  .button-light-champagne:active {
+    --button-background: hsl(37, 74%, 98%);
+    --button-color: #191919;
+  }
+}
+.button-minor-champagne {
+  --button-background: hsl(37, 74%, 93%);
+  --button-color: #fff;
+}
+.button-minor-champagne.link {
+  --button-color: hsl(37, 74%, 93%) !important;
+}
+@media (hover: hover) {
+  .button-minor-champagne:hover {
+    --button-background: hsl(37, 74%, 93%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-champagne:active {
+    --button-background: hsl(37, 74%, 93%);
+    --button-color: #fff;
+  }
+}
+.button-sat-champagne {
+  --button-background: hsl(37, 74%, 73%);
+  --button-color: #fff;
+}
+.button-sat-champagne.link {
+  --button-color: hsl(37, 74%, 73%) !important;
+}
+@media (hover: hover) {
+  .button-sat-champagne:hover {
+    --button-background: hsl(37, 74%, 73%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-champagne:active {
+    --button-background: hsl(37, 74%, 73%);
+    --button-color: #fff;
+  }
+}
+.button-dark-champagne {
+  --button-background: hsl(37, 74%, 63%);
+  --button-color: #fff;
+}
+.button-dark-champagne.link {
+  --button-color: hsl(37, 74%, 63%) !important;
+}
+@media (hover: hover) {
+  .button-dark-champagne:hover {
+    --button-background: hsl(37, 74%, 63%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-champagne:active {
+    --button-background: hsl(37, 74%, 63%);
+    --button-color: #fff;
   }
 }
 .button-khaki {
-  background: hsl(47, 47%, 69%) !important;
-  color: #ffffff !important;
-  border-color: hsl(47, 47%, 54%) !important;
+  --button-background: hsl(47, 47%, 69%);
+  --button-color: #fff;
+}
+.button-khaki.link {
+  --button-color: hsl(47, 47%, 69%) !important;
 }
 @media (hover: hover) {
   .button-khaki:hover {
-    background: hsl(47, 47%, 54%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(47, 47%, 69%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-khaki:active {
-    background: hsl(47, 47%, 54%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(47, 47%, 69%);
+    --button-color: #fff;
   }
 }
-.button-soft-charcoal {
-  background: hsl(0, 0%, 90%) !important;
-  color: hsl(0, 0%, 35%) !important;
-  border-color: hsl(0, 0%, 60%) !important;
+.button-light-khaki {
+  --button-background: hsl(47, 47%, 94%);
+  --button-color: #191919;
+}
+.button-light-khaki.link {
+  --button-color: hsl(47, 47%, 94%) !important;
 }
 @media (hover: hover) {
-  .button-soft-charcoal:hover {
-    background: hsl(0, 0%, 60%) !important;
-    color: #ffffff !important;
+  .button-light-khaki:hover {
+    --button-background: hsl(47, 47%, 94%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-charcoal:active {
-    background: hsl(0, 0%, 60%) !important;
-    color: #ffffff !important;
+  .button-light-khaki:active {
+    --button-background: hsl(47, 47%, 94%);
+    --button-color: #191919;
+  }
+}
+.button-minor-khaki {
+  --button-background: hsl(47, 47%, 84%);
+  --button-color: #fff;
+}
+.button-minor-khaki.link {
+  --button-color: hsl(47, 47%, 84%) !important;
+}
+@media (hover: hover) {
+  .button-minor-khaki:hover {
+    --button-background: hsl(47, 47%, 84%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-khaki:active {
+    --button-background: hsl(47, 47%, 84%);
+    --button-color: #fff;
+  }
+}
+.button-sat-khaki {
+  --button-background: hsl(47, 47%, 54%);
+  --button-color: #fff;
+}
+.button-sat-khaki.link {
+  --button-color: hsl(47, 47%, 54%) !important;
+}
+@media (hover: hover) {
+  .button-sat-khaki:hover {
+    --button-background: hsl(47, 47%, 54%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-khaki:active {
+    --button-background: hsl(47, 47%, 54%);
+    --button-color: #fff;
+  }
+}
+.button-dark-khaki {
+  --button-background: hsl(47, 47%, 44%);
+  --button-color: #fff;
+}
+.button-dark-khaki.link {
+  --button-color: hsl(47, 47%, 44%) !important;
+}
+@media (hover: hover) {
+  .button-dark-khaki:hover {
+    --button-background: hsl(47, 47%, 44%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-khaki:active {
+    --button-background: hsl(47, 47%, 44%);
+    --button-color: #fff;
   }
 }
 .button-charcoal {
-  background: hsl(0, 0%, 60%) !important;
-  color: #ffffff !important;
-  border-color: hsl(0, 0%, 45%) !important;
+  --button-background: hsl(0, 0%, 60%);
+  --button-color: #fff;
+}
+.button-charcoal.link {
+  --button-color: hsl(0, 0%, 60%) !important;
 }
 @media (hover: hover) {
   .button-charcoal:hover {
-    background: hsl(0, 0%, 45%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(0, 0%, 60%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-charcoal:active {
-    background: hsl(0, 0%, 45%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(0, 0%, 60%);
+    --button-color: #fff;
   }
 }
-.button-soft-bronze {
-  background: hsl(29, 75%, 87%) !important;
-  color: hsl(29, 75%, 32%) !important;
-  border-color: hsl(29, 75%, 57%) !important;
+.button-light-charcoal {
+  --button-background: hsl(0, 0%, 90%);
+  --button-color: #191919;
+}
+.button-light-charcoal.link {
+  --button-color: hsl(0, 0%, 90%) !important;
 }
 @media (hover: hover) {
-  .button-soft-bronze:hover {
-    background: hsl(29, 75%, 57%) !important;
-    color: #ffffff !important;
+  .button-light-charcoal:hover {
+    --button-background: hsl(0, 0%, 90%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-bronze:active {
-    background: hsl(29, 75%, 57%) !important;
-    color: #ffffff !important;
+  .button-light-charcoal:active {
+    --button-background: hsl(0, 0%, 90%);
+    --button-color: #191919;
+  }
+}
+.button-minor-charcoal {
+  --button-background: hsl(0, 0%, 80%);
+  --button-color: #fff;
+}
+.button-minor-charcoal.link {
+  --button-color: hsl(0, 0%, 80%) !important;
+}
+@media (hover: hover) {
+  .button-minor-charcoal:hover {
+    --button-background: hsl(0, 0%, 80%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-charcoal:active {
+    --button-background: hsl(0, 0%, 80%);
+    --button-color: #fff;
+  }
+}
+.button-sat-charcoal {
+  --button-background: hsl(0, 0%, 45%);
+  --button-color: #fff;
+}
+.button-sat-charcoal.link {
+  --button-color: hsl(0, 0%, 45%) !important;
+}
+@media (hover: hover) {
+  .button-sat-charcoal:hover {
+    --button-background: hsl(0, 0%, 45%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-charcoal:active {
+    --button-background: hsl(0, 0%, 45%);
+    --button-color: #fff;
+  }
+}
+.button-dark-charcoal {
+  --button-background: hsl(0, 0%, 35%);
+  --button-color: #fff;
+}
+.button-dark-charcoal.link {
+  --button-color: hsl(0, 0%, 35%) !important;
+}
+@media (hover: hover) {
+  .button-dark-charcoal:hover {
+    --button-background: hsl(0, 0%, 35%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-charcoal:active {
+    --button-background: hsl(0, 0%, 35%);
+    --button-color: #fff;
   }
 }
 .button-bronze {
-  background: hsl(29, 75%, 57%) !important;
-  color: #ffffff !important;
-  border-color: hsl(29, 75%, 42%) !important;
+  --button-background: hsl(29, 75%, 57%);
+  --button-color: #fff;
+}
+.button-bronze.link {
+  --button-color: hsl(29, 75%, 57%) !important;
 }
 @media (hover: hover) {
   .button-bronze:hover {
-    background: hsl(29, 75%, 42%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(29, 75%, 57%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-bronze:active {
-    background: hsl(29, 75%, 42%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(29, 75%, 57%);
+    --button-color: #fff;
   }
 }
-.button-soft-windstorm {
-  background: hsl(216, 53%, 93%) !important;
-  color: hsl(216, 53%, 41%) !important;
-  border-color: hsl(216, 53%, 66%) !important;
+.button-light-bronze {
+  --button-background: hsl(29, 75%, 87%);
+  --button-color: #191919;
+}
+.button-light-bronze.link {
+  --button-color: hsl(29, 75%, 87%) !important;
 }
 @media (hover: hover) {
-  .button-soft-windstorm:hover {
-    background: hsl(216, 53%, 66%) !important;
-    color: #ffffff !important;
+  .button-light-bronze:hover {
+    --button-background: hsl(29, 75%, 87%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-windstorm:active {
-    background: hsl(216, 53%, 66%) !important;
-    color: #ffffff !important;
+  .button-light-bronze:active {
+    --button-background: hsl(29, 75%, 87%);
+    --button-color: #191919;
+  }
+}
+.button-minor-bronze {
+  --button-background: hsl(29, 75%, 72%);
+  --button-color: #fff;
+}
+.button-minor-bronze.link {
+  --button-color: hsl(29, 75%, 72%) !important;
+}
+@media (hover: hover) {
+  .button-minor-bronze:hover {
+    --button-background: hsl(29, 75%, 72%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-bronze:active {
+    --button-background: hsl(29, 75%, 72%);
+    --button-color: #fff;
+  }
+}
+.button-sat-bronze {
+  --button-background: hsl(29, 75%, 42%);
+  --button-color: #fff;
+}
+.button-sat-bronze.link {
+  --button-color: hsl(29, 75%, 42%) !important;
+}
+@media (hover: hover) {
+  .button-sat-bronze:hover {
+    --button-background: hsl(29, 75%, 42%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-bronze:active {
+    --button-background: hsl(29, 75%, 42%);
+    --button-color: #fff;
+  }
+}
+.button-dark-bronze {
+  --button-background: hsl(29, 75%, 32%);
+  --button-color: #fff;
+}
+.button-dark-bronze.link {
+  --button-color: hsl(29, 75%, 32%) !important;
+}
+@media (hover: hover) {
+  .button-dark-bronze:hover {
+    --button-background: hsl(29, 75%, 32%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-bronze:active {
+    --button-background: hsl(29, 75%, 32%);
+    --button-color: #fff;
   }
 }
 .button-windstorm {
-  background: hsl(216, 53%, 66%) !important;
-  color: #ffffff !important;
-  border-color: hsl(216, 53%, 51%) !important;
+  --button-background: hsl(216, 53%, 66%);
+  --button-color: #fff;
+}
+.button-windstorm.link {
+  --button-color: hsl(216, 53%, 66%) !important;
 }
 @media (hover: hover) {
   .button-windstorm:hover {
-    background: hsl(216, 53%, 51%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(216, 53%, 66%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-windstorm:active {
-    background: hsl(216, 53%, 51%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(216, 53%, 66%);
+    --button-color: #fff;
   }
 }
-.button-soft-nude {
-  background: hsl(29, 79%, 97%) !important;
-  color: hsl(29, 79%, 60%) !important;
-  border-color: hsl(29, 79%, 85%) !important;
+.button-light-windstorm {
+  --button-background: hsl(216, 53%, 93%);
+  --button-color: #191919;
+}
+.button-light-windstorm.link {
+  --button-color: hsl(216, 53%, 93%) !important;
 }
 @media (hover: hover) {
-  .button-soft-nude:hover {
-    background: hsl(29, 79%, 85%) !important;
-    color: #ffffff !important;
+  .button-light-windstorm:hover {
+    --button-background: hsl(216, 53%, 93%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-nude:active {
-    background: hsl(29, 79%, 85%) !important;
-    color: #ffffff !important;
+  .button-light-windstorm:active {
+    --button-background: hsl(216, 53%, 93%);
+    --button-color: #191919;
+  }
+}
+.button-minor-windstorm {
+  --button-background: hsl(216, 53%, 81%);
+  --button-color: #fff;
+}
+.button-minor-windstorm.link {
+  --button-color: hsl(216, 53%, 81%) !important;
+}
+@media (hover: hover) {
+  .button-minor-windstorm:hover {
+    --button-background: hsl(216, 53%, 81%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-windstorm:active {
+    --button-background: hsl(216, 53%, 81%);
+    --button-color: #fff;
+  }
+}
+.button-sat-windstorm {
+  --button-background: hsl(216, 53%, 51%);
+  --button-color: #fff;
+}
+.button-sat-windstorm.link {
+  --button-color: hsl(216, 53%, 51%) !important;
+}
+@media (hover: hover) {
+  .button-sat-windstorm:hover {
+    --button-background: hsl(216, 53%, 51%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-windstorm:active {
+    --button-background: hsl(216, 53%, 51%);
+    --button-color: #fff;
+  }
+}
+.button-dark-windstorm {
+  --button-background: hsl(216, 53%, 41%);
+  --button-color: #fff;
+}
+.button-dark-windstorm.link {
+  --button-color: hsl(216, 53%, 41%) !important;
+}
+@media (hover: hover) {
+  .button-dark-windstorm:hover {
+    --button-background: hsl(216, 53%, 41%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-windstorm:active {
+    --button-background: hsl(216, 53%, 41%);
+    --button-color: #fff;
   }
 }
 .button-nude {
-  background: hsl(29, 79%, 85%) !important;
-  color: #ffffff !important;
-  border-color: hsl(29, 79%, 70%) !important;
+  --button-background: hsl(29, 79%, 85%);
+  --button-color: #fff;
+}
+.button-nude.link {
+  --button-color: hsl(29, 79%, 85%) !important;
 }
 @media (hover: hover) {
   .button-nude:hover {
-    background: hsl(29, 79%, 70%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(29, 79%, 85%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-nude:active {
-    background: hsl(29, 79%, 70%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(29, 79%, 85%);
+    --button-color: #fff;
   }
 }
-.button-soft-terracotta {
-  background: hsl(10, 76%, 85%) !important;
-  color: hsl(10, 76%, 30%) !important;
-  border-color: hsl(10, 76%, 55%) !important;
+.button-light-nude {
+  --button-background: hsl(29, 79%, 97%);
+  --button-color: #191919;
+}
+.button-light-nude.link {
+  --button-color: hsl(29, 79%, 97%) !important;
 }
 @media (hover: hover) {
-  .button-soft-terracotta:hover {
-    background: hsl(10, 76%, 55%) !important;
-    color: #ffffff !important;
+  .button-light-nude:hover {
+    --button-background: hsl(29, 79%, 97%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-terracotta:active {
-    background: hsl(10, 76%, 55%) !important;
-    color: #ffffff !important;
+  .button-light-nude:active {
+    --button-background: hsl(29, 79%, 97%);
+    --button-color: #191919;
+  }
+}
+.button-minor-nude {
+  --button-background: hsl(29, 79%, 92%);
+  --button-color: #fff;
+}
+.button-minor-nude.link {
+  --button-color: hsl(29, 79%, 92%) !important;
+}
+@media (hover: hover) {
+  .button-minor-nude:hover {
+    --button-background: hsl(29, 79%, 92%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-nude:active {
+    --button-background: hsl(29, 79%, 92%);
+    --button-color: #fff;
+  }
+}
+.button-sat-nude {
+  --button-background: hsl(29, 79%, 70%);
+  --button-color: #fff;
+}
+.button-sat-nude.link {
+  --button-color: hsl(29, 79%, 70%) !important;
+}
+@media (hover: hover) {
+  .button-sat-nude:hover {
+    --button-background: hsl(29, 79%, 70%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-nude:active {
+    --button-background: hsl(29, 79%, 70%);
+    --button-color: #fff;
+  }
+}
+.button-dark-nude {
+  --button-background: hsl(29, 79%, 60%);
+  --button-color: #fff;
+}
+.button-dark-nude.link {
+  --button-color: hsl(29, 79%, 60%) !important;
+}
+@media (hover: hover) {
+  .button-dark-nude:hover {
+    --button-background: hsl(29, 79%, 60%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-nude:active {
+    --button-background: hsl(29, 79%, 60%);
+    --button-color: #fff;
   }
 }
 .button-terracotta {
-  background: hsl(10, 76%, 55%) !important;
-  color: #ffffff !important;
-  border-color: hsl(10, 76%, 40%) !important;
+  --button-background: hsl(10, 76%, 55%);
+  --button-color: #fff;
+}
+.button-terracotta.link {
+  --button-color: hsl(10, 76%, 55%) !important;
 }
 @media (hover: hover) {
   .button-terracotta:hover {
-    background: hsl(10, 76%, 40%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(10, 76%, 55%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-terracotta:active {
-    background: hsl(10, 76%, 40%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(10, 76%, 55%);
+    --button-color: #fff;
   }
 }
-.button-soft-coral {
-  background: hsl(16, 100%, 92%) !important;
-  color: hsl(16, 100%, 42%) !important;
-  border-color: hsl(16, 100%, 67%) !important;
+.button-light-terracotta {
+  --button-background: hsl(10, 76%, 85%);
+  --button-color: #191919;
+}
+.button-light-terracotta.link {
+  --button-color: hsl(10, 76%, 85%) !important;
 }
 @media (hover: hover) {
-  .button-soft-coral:hover {
-    background: hsl(16, 100%, 67%) !important;
-    color: #ffffff !important;
+  .button-light-terracotta:hover {
+    --button-background: hsl(10, 76%, 85%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-coral:active {
-    background: hsl(16, 100%, 67%) !important;
-    color: #ffffff !important;
+  .button-light-terracotta:active {
+    --button-background: hsl(10, 76%, 85%);
+    --button-color: #191919;
+  }
+}
+.button-minor-terracotta {
+  --button-background: hsl(10, 76%, 70%);
+  --button-color: #fff;
+}
+.button-minor-terracotta.link {
+  --button-color: hsl(10, 76%, 70%) !important;
+}
+@media (hover: hover) {
+  .button-minor-terracotta:hover {
+    --button-background: hsl(10, 76%, 70%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-terracotta:active {
+    --button-background: hsl(10, 76%, 70%);
+    --button-color: #fff;
+  }
+}
+.button-sat-terracotta {
+  --button-background: hsl(10, 76%, 40%);
+  --button-color: #fff;
+}
+.button-sat-terracotta.link {
+  --button-color: hsl(10, 76%, 40%) !important;
+}
+@media (hover: hover) {
+  .button-sat-terracotta:hover {
+    --button-background: hsl(10, 76%, 40%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-terracotta:active {
+    --button-background: hsl(10, 76%, 40%);
+    --button-color: #fff;
+  }
+}
+.button-dark-terracotta {
+  --button-background: hsl(10, 76%, 30%);
+  --button-color: #fff;
+}
+.button-dark-terracotta.link {
+  --button-color: hsl(10, 76%, 30%) !important;
+}
+@media (hover: hover) {
+  .button-dark-terracotta:hover {
+    --button-background: hsl(10, 76%, 30%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-terracotta:active {
+    --button-background: hsl(10, 76%, 30%);
+    --button-color: #fff;
   }
 }
 .button-coral {
-  background: hsl(16, 100%, 67%) !important;
-  color: #ffffff !important;
-  border-color: hsl(16, 100%, 52%) !important;
+  --button-background: hsl(16, 100%, 67%);
+  --button-color: #fff;
+}
+.button-coral.link {
+  --button-color: hsl(16, 100%, 67%) !important;
 }
 @media (hover: hover) {
   .button-coral:hover {
-    background: hsl(16, 100%, 52%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(16, 100%, 67%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-coral:active {
-    background: hsl(16, 100%, 52%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(16, 100%, 67%);
+    --button-color: #fff;
   }
 }
-.button-soft-army {
-  background: hsl(69, 34%, 75%) !important;
-  color: hsl(69, 34%, 5%) !important;
-  border-color: hsl(69, 34%, 30%) !important;
+.button-light-coral {
+  --button-background: hsl(16, 100%, 92%);
+  --button-color: #191919;
+}
+.button-light-coral.link {
+  --button-color: hsl(16, 100%, 92%) !important;
 }
 @media (hover: hover) {
-  .button-soft-army:hover {
-    background: hsl(69, 34%, 30%) !important;
-    color: #ffffff !important;
+  .button-light-coral:hover {
+    --button-background: hsl(16, 100%, 92%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-army:active {
-    background: hsl(69, 34%, 30%) !important;
-    color: #ffffff !important;
+  .button-light-coral:active {
+    --button-background: hsl(16, 100%, 92%);
+    --button-color: #191919;
+  }
+}
+.button-minor-coral {
+  --button-background: hsl(16, 100%, 82%);
+  --button-color: #fff;
+}
+.button-minor-coral.link {
+  --button-color: hsl(16, 100%, 82%) !important;
+}
+@media (hover: hover) {
+  .button-minor-coral:hover {
+    --button-background: hsl(16, 100%, 82%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-coral:active {
+    --button-background: hsl(16, 100%, 82%);
+    --button-color: #fff;
+  }
+}
+.button-sat-coral {
+  --button-background: hsl(16, 100%, 52%);
+  --button-color: #fff;
+}
+.button-sat-coral.link {
+  --button-color: hsl(16, 100%, 52%) !important;
+}
+@media (hover: hover) {
+  .button-sat-coral:hover {
+    --button-background: hsl(16, 100%, 52%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-coral:active {
+    --button-background: hsl(16, 100%, 52%);
+    --button-color: #fff;
+  }
+}
+.button-dark-coral {
+  --button-background: hsl(16, 100%, 42%);
+  --button-color: #fff;
+}
+.button-dark-coral.link {
+  --button-color: hsl(16, 100%, 42%) !important;
+}
+@media (hover: hover) {
+  .button-dark-coral:hover {
+    --button-background: hsl(16, 100%, 42%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-coral:active {
+    --button-background: hsl(16, 100%, 42%);
+    --button-color: #fff;
   }
 }
 .button-army {
-  background: hsl(69, 34%, 30%) !important;
-  color: #ffffff !important;
-  border-color: hsl(69, 34%, 15%) !important;
+  --button-background: hsl(69, 34%, 30%);
+  --button-color: #fff;
+}
+.button-army.link {
+  --button-color: hsl(69, 34%, 30%) !important;
 }
 @media (hover: hover) {
   .button-army:hover {
-    background: hsl(69, 34%, 15%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(69, 34%, 30%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-army:active {
-    background: hsl(69, 34%, 15%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(69, 34%, 30%);
+    --button-color: #fff;
   }
 }
-.button-soft-seashell {
-  background: hsl(25, 100%, 98%) !important;
-  color: hsl(25, 100%, 70%) !important;
-  border-color: hsl(25, 100%, 95%) !important;
+.button-light-army {
+  --button-background: hsl(69, 34%, 75%);
+  --button-color: #191919;
+}
+.button-light-army.link {
+  --button-color: hsl(69, 34%, 75%) !important;
 }
 @media (hover: hover) {
-  .button-soft-seashell:hover {
-    background: hsl(25, 100%, 95%) !important;
-    color: #ffffff !important;
+  .button-light-army:hover {
+    --button-background: hsl(69, 34%, 75%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-seashell:active {
-    background: hsl(25, 100%, 95%) !important;
-    color: #ffffff !important;
+  .button-light-army:active {
+    --button-background: hsl(69, 34%, 75%);
+    --button-color: #191919;
+  }
+}
+.button-minor-army {
+  --button-background: hsl(69, 34%, 47%);
+  --button-color: #fff;
+}
+.button-minor-army.link {
+  --button-color: hsl(69, 34%, 47%) !important;
+}
+@media (hover: hover) {
+  .button-minor-army:hover {
+    --button-background: hsl(69, 34%, 47%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-army:active {
+    --button-background: hsl(69, 34%, 47%);
+    --button-color: #fff;
+  }
+}
+.button-sat-army {
+  --button-background: hsl(69, 34%, 15%);
+  --button-color: #fff;
+}
+.button-sat-army.link {
+  --button-color: hsl(69, 34%, 15%) !important;
+}
+@media (hover: hover) {
+  .button-sat-army:hover {
+    --button-background: hsl(69, 34%, 15%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-army:active {
+    --button-background: hsl(69, 34%, 15%);
+    --button-color: #fff;
+  }
+}
+.button-dark-army {
+  --button-background: hsl(69, 34%, 5%);
+  --button-color: #fff;
+}
+.button-dark-army.link {
+  --button-color: hsl(69, 34%, 5%) !important;
+}
+@media (hover: hover) {
+  .button-dark-army:hover {
+    --button-background: hsl(69, 34%, 5%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-army:active {
+    --button-background: hsl(69, 34%, 5%);
+    --button-color: #fff;
   }
 }
 .button-seashell {
-  background: hsl(25, 100%, 95%) !important;
-  color: #ffffff !important;
-  border-color: hsl(25, 100%, 80%) !important;
+  --button-background: hsl(25, 100%, 95%);
+  --button-color: #fff;
+}
+.button-seashell.link {
+  --button-color: hsl(25, 100%, 95%) !important;
 }
 @media (hover: hover) {
   .button-seashell:hover {
-    background: hsl(25, 100%, 80%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(25, 100%, 95%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-seashell:active {
-    background: hsl(25, 100%, 80%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(25, 100%, 95%);
+    --button-color: #fff;
   }
 }
-.button-soft-sand {
-  background: hsl(45, 71%, 96%) !important;
-  color: hsl(45, 71%, 56%) !important;
-  border-color: hsl(45, 71%, 81%) !important;
+.button-light-seashell {
+  --button-background: hsl(25, 100%, 98%);
+  --button-color: #191919;
+}
+.button-light-seashell.link {
+  --button-color: hsl(25, 100%, 98%) !important;
 }
 @media (hover: hover) {
-  .button-soft-sand:hover {
-    background: hsl(45, 71%, 81%) !important;
-    color: #ffffff !important;
+  .button-light-seashell:hover {
+    --button-background: hsl(25, 100%, 98%);
+    --button-color: #191919;
   }
 }
 @media (hover: none) {
-  .button-soft-sand:active {
-    background: hsl(45, 71%, 81%) !important;
-    color: #ffffff !important;
+  .button-light-seashell:active {
+    --button-background: hsl(25, 100%, 98%);
+    --button-color: #191919;
+  }
+}
+.button-minor-seashell {
+  --button-background: hsl(25, 100%, 97%);
+  --button-color: #fff;
+}
+.button-minor-seashell.link {
+  --button-color: hsl(25, 100%, 97%) !important;
+}
+@media (hover: hover) {
+  .button-minor-seashell:hover {
+    --button-background: hsl(25, 100%, 97%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-seashell:active {
+    --button-background: hsl(25, 100%, 97%);
+    --button-color: #fff;
+  }
+}
+.button-sat-seashell {
+  --button-background: hsl(25, 100%, 80%);
+  --button-color: #fff;
+}
+.button-sat-seashell.link {
+  --button-color: hsl(25, 100%, 80%) !important;
+}
+@media (hover: hover) {
+  .button-sat-seashell:hover {
+    --button-background: hsl(25, 100%, 80%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-seashell:active {
+    --button-background: hsl(25, 100%, 80%);
+    --button-color: #fff;
+  }
+}
+.button-dark-seashell {
+  --button-background: hsl(25, 100%, 70%);
+  --button-color: #fff;
+}
+.button-dark-seashell.link {
+  --button-color: hsl(25, 100%, 70%) !important;
+}
+@media (hover: hover) {
+  .button-dark-seashell:hover {
+    --button-background: hsl(25, 100%, 70%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-seashell:active {
+    --button-background: hsl(25, 100%, 70%);
+    --button-color: #fff;
   }
 }
 .button-sand {
-  background: hsl(45, 71%, 81%) !important;
-  color: #ffffff !important;
-  border-color: hsl(45, 71%, 66%) !important;
+  --button-background: hsl(45, 71%, 81%);
+  --button-color: #fff;
+}
+.button-sand.link {
+  --button-color: hsl(45, 71%, 81%) !important;
 }
 @media (hover: hover) {
   .button-sand:hover {
-    background: hsl(45, 71%, 66%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(45, 71%, 81%);
+    --button-color: #fff;
   }
 }
 @media (hover: none) {
   .button-sand:active {
-    background: hsl(45, 71%, 66%) !important;
-    color: #ffffff !important;
+    --button-background: hsl(45, 71%, 81%);
+    --button-color: #fff;
+  }
+}
+.button-light-sand {
+  --button-background: hsl(45, 71%, 96%);
+  --button-color: #191919;
+}
+.button-light-sand.link {
+  --button-color: hsl(45, 71%, 96%) !important;
+}
+@media (hover: hover) {
+  .button-light-sand:hover {
+    --button-background: hsl(45, 71%, 96%);
+    --button-color: #191919;
+  }
+}
+@media (hover: none) {
+  .button-light-sand:active {
+    --button-background: hsl(45, 71%, 96%);
+    --button-color: #191919;
+  }
+}
+.button-minor-sand {
+  --button-background: hsl(45, 71%, 88%);
+  --button-color: #fff;
+}
+.button-minor-sand.link {
+  --button-color: hsl(45, 71%, 88%) !important;
+}
+@media (hover: hover) {
+  .button-minor-sand:hover {
+    --button-background: hsl(45, 71%, 88%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-minor-sand:active {
+    --button-background: hsl(45, 71%, 88%);
+    --button-color: #fff;
+  }
+}
+.button-sat-sand {
+  --button-background: hsl(45, 71%, 66%);
+  --button-color: #fff;
+}
+.button-sat-sand.link {
+  --button-color: hsl(45, 71%, 66%) !important;
+}
+@media (hover: hover) {
+  .button-sat-sand:hover {
+    --button-background: hsl(45, 71%, 66%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-sat-sand:active {
+    --button-background: hsl(45, 71%, 66%);
+    --button-color: #fff;
+  }
+}
+.button-dark-sand {
+  --button-background: hsl(45, 71%, 56%);
+  --button-color: #fff;
+}
+.button-dark-sand.link {
+  --button-color: hsl(45, 71%, 56%) !important;
+}
+@media (hover: hover) {
+  .button-dark-sand:hover {
+    --button-background: hsl(45, 71%, 56%);
+    --button-color: #fff;
+  }
+}
+@media (hover: none) {
+  .button-dark-sand:active {
+    --button-background: hsl(45, 71%, 56%);
+    --button-color: #fff;
   }
 }
 .button-seashell,
@@ -52410,6 +54200,240 @@ button .badge,
 button:has(.badge.corner),
 .button:has(.badge.corner) {
   padding-right: 1.5rem;
+}
+@container (min-width: 0) {
+  button.largest-fs,
+  .button.largest-fs {
+    --button-pill-radius: 27px;
+    --button-size: 54px;
+    --button-font-size: 18px;
+  }
+  button.large-fs,
+  .button.large-fs {
+    --button-pill-radius: 20px;
+    --button-size: 40px;
+    --button-font-size: 16px;
+  }
+  button.small-fs,
+  .button.small-fs {
+    --button-pill-radius: 13px;
+    --button-size: 26px;
+    --button-font-size: 12px;
+  }
+  button.mini-fs,
+  .button.mini-fs {
+    --button-pill-radius: 10px;
+    --button-size: 20px;
+    --button-font-size: 10px;
+  }
+}
+@container (min-width: 360px) {
+  button.largest-xs,
+  .button.largest-xs {
+    --button-pill-radius: 27px;
+    --button-size: 54px;
+    --button-font-size: 18px;
+  }
+  button.large-xs,
+  .button.large-xs {
+    --button-pill-radius: 20px;
+    --button-size: 40px;
+    --button-font-size: 16px;
+  }
+  button.small-xs,
+  .button.small-xs {
+    --button-pill-radius: 13px;
+    --button-size: 26px;
+    --button-font-size: 12px;
+  }
+  button.mini-xs,
+  .button.mini-xs {
+    --button-pill-radius: 10px;
+    --button-size: 20px;
+    --button-font-size: 10px;
+  }
+}
+@container (min-width: 576px) {
+  button.largest-sm,
+  .button.largest-sm {
+    --button-pill-radius: 27px;
+    --button-size: 54px;
+    --button-font-size: 18px;
+  }
+  button.large-sm,
+  .button.large-sm {
+    --button-pill-radius: 20px;
+    --button-size: 40px;
+    --button-font-size: 16px;
+  }
+  button.small-sm,
+  .button.small-sm {
+    --button-pill-radius: 13px;
+    --button-size: 26px;
+    --button-font-size: 12px;
+  }
+  button.mini-sm,
+  .button.mini-sm {
+    --button-pill-radius: 10px;
+    --button-size: 20px;
+    --button-font-size: 10px;
+  }
+}
+@container (min-width: 640px) {
+  button.largest-ld,
+  .button.largest-ld {
+    --button-pill-radius: 27px;
+    --button-size: 54px;
+    --button-font-size: 18px;
+  }
+  button.large-ld,
+  .button.large-ld {
+    --button-pill-radius: 20px;
+    --button-size: 40px;
+    --button-font-size: 16px;
+  }
+  button.small-ld,
+  .button.small-ld {
+    --button-pill-radius: 13px;
+    --button-size: 26px;
+    --button-font-size: 12px;
+  }
+  button.mini-ld,
+  .button.mini-ld {
+    --button-pill-radius: 10px;
+    --button-size: 20px;
+    --button-font-size: 10px;
+  }
+}
+@container (min-width: 768px) {
+  button.largest-md,
+  .button.largest-md {
+    --button-pill-radius: 27px;
+    --button-size: 54px;
+    --button-font-size: 18px;
+  }
+  button.large-md,
+  .button.large-md {
+    --button-pill-radius: 20px;
+    --button-size: 40px;
+    --button-font-size: 16px;
+  }
+  button.small-md,
+  .button.small-md {
+    --button-pill-radius: 13px;
+    --button-size: 26px;
+    --button-font-size: 12px;
+  }
+  button.mini-md,
+  .button.mini-md {
+    --button-pill-radius: 10px;
+    --button-size: 20px;
+    --button-font-size: 10px;
+  }
+}
+@container (min-width: 992px) {
+  button.largest-lg,
+  .button.largest-lg {
+    --button-pill-radius: 27px;
+    --button-size: 54px;
+    --button-font-size: 18px;
+  }
+  button.large-lg,
+  .button.large-lg {
+    --button-pill-radius: 20px;
+    --button-size: 40px;
+    --button-font-size: 16px;
+  }
+  button.small-lg,
+  .button.small-lg {
+    --button-pill-radius: 13px;
+    --button-size: 26px;
+    --button-font-size: 12px;
+  }
+  button.mini-lg,
+  .button.mini-lg {
+    --button-pill-radius: 10px;
+    --button-size: 20px;
+    --button-font-size: 10px;
+  }
+}
+@container (min-width: 1200px) {
+  button.largest-xl,
+  .button.largest-xl {
+    --button-pill-radius: 27px;
+    --button-size: 54px;
+    --button-font-size: 18px;
+  }
+  button.large-xl,
+  .button.large-xl {
+    --button-pill-radius: 20px;
+    --button-size: 40px;
+    --button-font-size: 16px;
+  }
+  button.small-xl,
+  .button.small-xl {
+    --button-pill-radius: 13px;
+    --button-size: 26px;
+    --button-font-size: 12px;
+  }
+  button.mini-xl,
+  .button.mini-xl {
+    --button-pill-radius: 10px;
+    --button-size: 20px;
+    --button-font-size: 10px;
+  }
+}
+@container (min-width: 1400px) {
+  button.largest-xxl,
+  .button.largest-xxl {
+    --button-pill-radius: 27px;
+    --button-size: 54px;
+    --button-font-size: 18px;
+  }
+  button.large-xxl,
+  .button.large-xxl {
+    --button-pill-radius: 20px;
+    --button-size: 40px;
+    --button-font-size: 16px;
+  }
+  button.small-xxl,
+  .button.small-xxl {
+    --button-pill-radius: 13px;
+    --button-size: 26px;
+    --button-font-size: 12px;
+  }
+  button.mini-xxl,
+  .button.mini-xxl {
+    --button-pill-radius: 10px;
+    --button-size: 20px;
+    --button-font-size: 10px;
+  }
+}
+@container (min-width: 2000px) {
+  button.largest-xxxl,
+  .button.largest-xxxl {
+    --button-pill-radius: 27px;
+    --button-size: 54px;
+    --button-font-size: 18px;
+  }
+  button.large-xxxl,
+  .button.large-xxxl {
+    --button-pill-radius: 20px;
+    --button-size: 40px;
+    --button-font-size: 16px;
+  }
+  button.small-xxxl,
+  .button.small-xxxl {
+    --button-pill-radius: 13px;
+    --button-size: 26px;
+    --button-font-size: 12px;
+  }
+  button.mini-xxxl,
+  .button.mini-xxxl {
+    --button-pill-radius: 10px;
+    --button-size: 20px;
+    --button-font-size: 10px;
+  }
 }
 
 /* source/components/dialog/dialog.less */
