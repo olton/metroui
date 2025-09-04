@@ -54451,6 +54451,38 @@ button.glow,
     box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
   }
 }
+button.glow-animated,
+.button.glow-animated {
+  --glow-speed: 1s;
+  animation: button-glow var(--glow-speed) ease-in-out infinite alternate;
+  box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
+}
+button.glow-animated-hover,
+.button.glow-animated-hover {
+  --glow-speed: 1s;
+}
+@media (hover: hover) {
+  button.glow-animated-hover:hover,
+  .button.glow-animated-hover:hover {
+    animation: button-glow var(--glow-speed) ease-in-out infinite alternate;
+    box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
+  }
+}
+@media (hover: none) {
+  button.glow-animated-hover:active,
+  .button.glow-animated-hover:active {
+    animation: button-glow var(--glow-speed) ease-in-out infinite alternate;
+    box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
+  }
+}
+@keyframes button-glow {
+  from {
+    box-shadow: 0 0 5px hsl(from var(--button-background) h s calc(l + 5));
+  }
+  to {
+    box-shadow: 0 0 20px hsl(from var(--button-background) h s calc(l + 5));
+  }
+}
 
 /* source/components/dialog/dialog.less */
 :root {

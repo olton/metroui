@@ -429,6 +429,7 @@ button, .button {
     &.glow {
         box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
     }
+    
     &.glow-hover {
         @media (hover: hover) {
             &:hover {
@@ -439,6 +440,37 @@ button, .button {
             &:active {
                 box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
             }
+        }
+    }
+    
+    &.glow-animated {
+        --glow-speed: 1s;
+        animation: button-glow var(--glow-speed) ease-in-out infinite alternate;
+        box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
+    }
+
+    &.glow-animated-hover {
+        --glow-speed: 1s;
+        @media (hover: hover) {
+            &:hover {
+                animation: button-glow var(--glow-speed) ease-in-out infinite alternate;
+                box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
+            }
+        }
+        @media (hover: none) {
+            &:active {
+                animation: button-glow var(--glow-speed) ease-in-out infinite alternate;
+                box-shadow: 0 0 10px hsl(from var(--button-background) h s calc(l + 5));
+            }
+        }
+    }
+    
+    @keyframes button-glow {
+        from {
+            box-shadow: 0 0 5px hsl(from var(--button-background) h s calc(l + 5));
+        }
+        to {
+            box-shadow: 0 0 20px hsl(from var(--button-background) h s calc(l + 5));
         }
     }
 }
