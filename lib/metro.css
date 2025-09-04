@@ -50402,7 +50402,7 @@ button,
   overflow: visible;
   border-radius: var(--button-border-radius);
   gap: 8px;
-  transition: background-color 0.2s linear, box-shadow 0.2s linear;
+  transition: all 0.2s linear;
 }
 button:first-child,
 .button:first-child {
@@ -61494,6 +61494,12 @@ input[type=checkbox].checkbox-sand::before {
 }
 
 /* source/components/dropdown/dropdown.less */
+:root {
+  --dropdown-caret-color: #191919;
+}
+.dark-side {
+  --dropdown-caret-color: #ffffff;
+}
 .dropdown {
   position: fixed !important;
   z-index: 1030 !important;
@@ -61505,12 +61511,15 @@ ul ul .dropdown-caret {
   margin-left: auto;
 }
 .dropdown-toggle svg {
-  fill: var(--drop-menu-toggle-color);
+  fill: var(--dropdown-caret-color);
   transform: rotate(90deg);
   transition: transform 0.3s;
 }
 .dropdown-toggle.active-toggle svg {
   transform: rotate(270deg);
+}
+.dropdown-toggle.light-toggle {
+  --dropdown-caret-color: #fff !important;
 }
 .no-dropdown-caret .dropdown-caret {
   display: none !important;
@@ -63785,7 +63794,6 @@ aside::after {
   --d-menu-item-color-disabled: #ccc;
   --d-menu-item-color-hover: #000000;
   --d-menu-item-background-hover: #e8e8e8;
-  --d-menu-dropdown-toogle-color: #191919;
   --d-menu-shadow-color: #e1e1e1;
   --d-menu-border-radius: 4px;
 }
@@ -63799,7 +63807,6 @@ aside::after {
   --d-menu-item-color-disabled: #a8a8a8;
   --d-menu-item-color-hover: #ffffff;
   --d-menu-item-background-hover: #1e1f22;
-  --d-menu-dropdown-toogle-color: #ffffff;
   --d-menu-shadow-color: #191919;
   --d-menu-border-radius: 4px;
 }

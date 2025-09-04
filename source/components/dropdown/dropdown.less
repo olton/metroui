@@ -1,8 +1,15 @@
 @import (once) "../../include/vars";
 @import (once) "../../include/mixins";
 
-[data-role*=dropdown] {
-    //display: block;
+:root {
+    --dropdown-caret-color: #191919;
+}
+
+.dark-side {
+    --dropdown-caret-color: #ffffff;
+}
+
+[data-role-dropdown] {
 }
 
 .dropdown {
@@ -22,7 +29,7 @@ ul ul {
 
 .dropdown-toggle {
     svg {
-        fill: var(--drop-menu-toggle-color);
+        fill: var(--dropdown-caret-color);
         transform: rotate(90deg);
         transition: transform .3s;
     }
@@ -31,6 +38,10 @@ ul ul {
         svg {
             transform: rotate(270deg);
         }
+    }
+    
+    &.light-toggle {
+        --dropdown-caret-color: #fff!important;
     }
 }
 
