@@ -10,8 +10,8 @@ each(@accentColors, {
         border-color: @@color!important;
         color: @white!important;
 
-        &.dropdown-toggle::before {
-            border-color: @white!important;
+        .dropdown-caret{
+            fill: @white!important;
         }
     }
 })
@@ -30,8 +30,8 @@ button,
                 border-color: @@color!important;
                 background-color: transparent!important;
 
-                &.dropdown-toggle::before {
-                    border-color: @@color!important;
+                .dropdown-caret{
+                    fill: @@color!important;
                 }
 
                 @media (hover: hover) {
@@ -92,6 +92,10 @@ button,
     &.yellow, &.yellow.outline, &.light, &.light.outline {
         color: @dark!important;
 
+        .dropdown-caret {
+            fill: @dark!important;
+        }
+        
         @media (hover: hover) {
             &:hover, &.outline:hover {
                 color: @dark!important;

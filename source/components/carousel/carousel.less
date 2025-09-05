@@ -5,6 +5,7 @@
     --carousel-background: var(--default-background);
     --carousel-switch-background: hsla(0, 0%, 57.3%, .8);
     --carousel-switch-color: #fff;
+    --carousel-switch-color-hover: #50a8ff;
     --carousel-bullet-color: #f5f8fe;
     --carousel-bullet-color-active: #50a8ff;
 }
@@ -13,6 +14,7 @@
     --carousel-background: var(--default-background);
     --carousel-switch-background: hsla(0, 0%, 57.3%, .8);
     --carousel-switch-color: #fff;
+    --carousel-switch-color-hover: #50a8ff;
     --carousel-bullet-color: #26282e;
     --carousel-bullet-color-active: #50a8ff;
 }
@@ -92,8 +94,16 @@
         opacity: 0;
         transition: all .3s;
 
-        &:hover {
-            color: var(--carousel-switch-color-hover);
+        @media (hover: hover) {
+            &:hover {
+                color: var(--carousel-switch-color-hover);
+            }
+        }
+
+        @media (hover: none) {
+            &:active {
+                color: var(--carousel-switch-color-hover);
+            }
         }
 
         & > * {

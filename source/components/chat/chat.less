@@ -7,7 +7,8 @@
     --chat-color: #191919;
     --chat-message-background: #f5f5f5;
     --chat-message-color: #191919;
-    --chat-attach-link-background: #ffffff;   
+    --chat-attach-link-background: #ffffff;
+    --chat-button-background: #ebebeb;
 }
 
 .dark-side {
@@ -16,6 +17,7 @@
     --chat-message-background: #4a4d51;
     --chat-message-color: #dbdfe7;
     --chat-attach-link-background: #343637;
+    --chat-button-background: #2b2d30;
 }
 
 .chat {
@@ -256,7 +258,7 @@
             
             @media (hover: hover) {
                 &:hover {
-                    background: var(--button-background-hover);
+                    background: hsl(from var(--chat-button-background) h s calc(l - 10));
                     border-color: var(--chat-border-color);
                 }
             }

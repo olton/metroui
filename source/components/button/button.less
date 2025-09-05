@@ -6,6 +6,7 @@
     --button-font-size: 14px;
 
     --button-background: #ebebeb;
+    --button-background-hover: hsl(from var(--button-background) h s calc(l - 10));
     --button-color: #191919;
     --button-disabled-opacity: .65;
 }
@@ -107,6 +108,10 @@ button,
         padding-right: .75rem!important;
     }
 
+    .dropdown-caret {
+        fill: var(--button-color);
+    }
+    
     &.outline {
         background: transparent none;
         border-width: 1px;

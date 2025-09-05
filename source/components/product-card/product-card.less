@@ -62,11 +62,12 @@
 
     .product-title {
         --ratio: calc(19 / 14);
+        --line-clamp: 2;
 
         font-size: calc(var( --product-card-font-size) * 1.14);
         font-weight: 400;
         display: -webkit-box;
-        -webkit-line-clamp: var(--line-clamp, 2);
+        -webkit-line-clamp: var(--line-clamp);
         -webkit-box-orient: vertical;
         line-height: var(--ratio);
         overflow: hidden;

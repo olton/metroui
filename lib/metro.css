@@ -26124,192 +26124,7 @@ hr.fat {
 :root {
   --color-dark: #1d1d1d;
   --color-light: #f8f8f8;
-  --color-gray: hsl(0, 0%, 80%);
-  --color-gray-blue: hsl(210, 26%, 54%);
   --color-gray-white: hsl(0, 0%, 96%);
-  --color-gray-mouse: hsl(199, 15%, 40%);
-  --color-lime: hsl(93, 97%, 71%);
-  --color-green: hsl(120, 100%, 35%);
-  --color-emerald: hsl(140, 52%, 55%);
-  --color-blue: hsl(225, 100%, 68%);
-  --color-teal: hsl(180, 77%, 44%);
-  --color-cyan: hsl(221, 100%, 79%);
-  --color-cobalt: hsl(215, 100%, 34%);
-  --color-indigo: hsl(276, 100%, 33%);
-  --color-almost: hsl(259, 84%, 55%);
-  --color-violet: hsl(300, 76%, 72%);
-  --color-pink: hsl(350, 100%, 88%);
-  --color-magenta: hsl(300, 100%, 50%);
-  --color-crimson: hsl(348, 88%, 46%);
-  --color-red: hsl(0, 100%, 50%);
-  --color-clown: hsl(3, 100%, 70%);
-  --color-orange: hsl(39, 100%, 50%);
-  --color-amber: hsl(45, 100%, 58%);
-  --color-yellow: hsl(52, 100%, 68%);
-  --color-brown: hsl(25, 57%, 51%);
-  --color-olive: hsl(60, 100%, 32%);
-  --color-steel: hsl(209, 19%, 57%);
-  --color-mauve: hsl(277, 100%, 84%);
-  --color-taupe: hsl(29, 19%, 50%);
-  --color-champagne: hsl(37, 74%, 88%);
-  --color-khaki: hsl(47, 47%, 69%);
-  --color-charcoal: hsl(0, 0%, 60%);
-  --color-bronze: hsl(29, 75%, 57%);
-  --color-windstorm: hsl(216, 53%, 66%);
-  --color-nude: hsl(29, 79%, 85%);
-  --color-terracotta: hsl(10, 76%, 55%);
-  --color-coral: hsl(16, 100%, 67%);
-  --color-army: hsl(69, 34%, 30%);
-  --color-seashell: hsl(25, 100%, 95%);
-  --color-sand: hsl(45, 71%, 81%);
-  --color-dark-lime: hsl(93, 97%, 46%);
-  --color-dark-green: hsl(120, 100%, 10%);
-  --color-dark-emerald: hsl(140, 52%, 30%);
-  --color-dark-blue: hsl(225, 100%, 43%);
-  --color-dark-teal: hsl(180, 77%, 19%);
-  --color-dark-cyan: hsl(221, 100%, 54%);
-  --color-dark-cobalt: hsl(215, 100%, 9%);
-  --color-dark-indigo: hsl(276, 100%, 8%);
-  --color-dark-almost: hsl(259, 84%, 30%);
-  --color-dark-violet: hsl(300, 76%, 47%);
-  --color-dark-pink: hsl(350, 100%, 63%);
-  --color-dark-magenta: hsl(300, 100%, 25%);
-  --color-dark-crimson: hsl(348, 88%, 21%);
-  --color-dark-red: hsl(0, 100%, 25%);
-  --color-dark-clown: hsl(3, 100%, 45%);
-  --color-dark-orange: hsl(39, 100%, 25%);
-  --color-dark-amber: hsl(45, 100%, 33%);
-  --color-dark-yellow: hsl(52, 100%, 43%);
-  --color-dark-brown: hsl(25, 57%, 26%);
-  --color-dark-olive: hsl(60, 100%, 7%);
-  --color-dark-steel: hsl(209, 19%, 32%);
-  --color-dark-mauve: hsl(277, 100%, 59%);
-  --color-dark-taupe: hsl(29, 19%, 25%);
-  --color-dark-champagne: hsl(37, 74%, 63%);
-  --color-dark-khaki: hsl(47, 47%, 44%);
-  --color-dark-charcoal: hsl(0, 0%, 35%);
-  --color-dark-bronze: hsl(29, 75%, 32%);
-  --color-dark-windstorm: hsl(216, 53%, 41%);
-  --color-dark-nude: hsl(29, 79%, 60%);
-  --color-dark-terracotta: hsl(10, 76%, 30%);
-  --color-dark-coral: hsl(16, 100%, 42%);
-  --color-dark-army: hsl(69, 34%, 5%);
-  --color-dark-seashell: hsl(25, 100%, 70%);
-  --color-dark-sand: hsl(45, 71%, 56%);
-  --color-dark-gray: hsl(0, 0%, 55%);
-  --color-dark-gray-blue: hsl(210, 26%, 29%);
-  --color-dark-gray-mouse: hsl(199, 15%, 15%);
-  --color-sat-lime: hsl(93, 97%, 56%);
-  --color-sat-green: hsl(120, 100%, 20%);
-  --color-sat-emerald: hsl(140, 52%, 40%);
-  --color-sat-blue: hsl(225, 100%, 53%);
-  --color-sat-teal: hsl(180, 77%, 29%);
-  --color-sat-cyan: hsl(221, 100%, 64%);
-  --color-sat-cobalt: hsl(215, 100%, 19%);
-  --color-sat-indigo: hsl(276, 100%, 18%);
-  --color-sat-almost: hsl(259, 84%, 40%);
-  --color-sat-violet: hsl(300, 76%, 57%);
-  --color-sat-pink: hsl(350, 100%, 73%);
-  --color-sat-magenta: hsl(300, 100%, 35%);
-  --color-sat-crimson: hsl(348, 88%, 31%);
-  --color-sat-red: hsl(0, 100%, 35%);
-  --color-sat-clown: hsl(3, 100%, 55%);
-  --color-sat-orange: hsl(39, 100%, 35%);
-  --color-sat-amber: hsl(45, 100%, 43%);
-  --color-sat-yellow: hsl(52, 100%, 53%);
-  --color-sat-brown: hsl(25, 57%, 36%);
-  --color-sat-olive: hsl(60, 100%, 17%);
-  --color-sat-steel: hsl(209, 19%, 42%);
-  --color-sat-mauve: hsl(277, 100%, 69%);
-  --color-sat-taupe: hsl(29, 19%, 35%);
-  --color-sat-champagne: hsl(37, 74%, 73%);
-  --color-sat-khaki: hsl(47, 47%, 54%);
-  --color-sat-charcoal: hsl(0, 0%, 45%);
-  --color-sat-bronze: hsl(29, 75%, 42%);
-  --color-sat-windstorm: hsl(216, 53%, 51%);
-  --color-sat-nude: hsl(29, 79%, 70%);
-  --color-sat-terracotta: hsl(10, 76%, 40%);
-  --color-sat-coral: hsl(16, 100%, 52%);
-  --color-sat-army: hsl(69, 34%, 15%);
-  --color-sat-seashell: hsl(25, 100%, 80%);
-  --color-sat-sand: hsl(45, 71%, 66%);
-  --color-sat-gray: hsl(0, 0%, 65%);
-  --color-sat-gray-blue: hsl(210, 26%, 39%);
-  --color-sat-gray-mouse: hsl(199, 15%, 25%);
-  --color-light-lime: hsl(93, 97%, 91%);
-  --color-light-green: hsl(120, 100%, 80%);
-  --color-light-emerald: hsl(140, 52%, 85%);
-  --color-light-blue: hsl(225, 100%, 93%);
-  --color-light-teal: hsl(180, 77%, 79%);
-  --color-light-cyan: hsl(221, 100%, 94%);
-  --color-light-cobalt: hsl(215, 100%, 79%);
-  --color-light-indigo: hsl(276, 100%, 78%);
-  --color-light-almost: hsl(259, 84%, 85%);
-  --color-light-violet: hsl(300, 76%, 92%);
-  --color-light-pink: hsl(350, 100%, 98%);
-  --color-light-magenta: hsl(300, 100%, 90%);
-  --color-light-crimson: hsl(348, 88%, 91%);
-  --color-light-red: hsl(0, 100%, 85%);
-  --color-light-clown: hsl(3, 100%, 95%);
-  --color-light-orange: hsl(39, 100%, 90%);
-  --color-light-amber: hsl(45, 100%, 78%);
-  --color-light-yellow: hsl(52, 100%, 93%);
-  --color-light-brown: hsl(25, 57%, 81%);
-  --color-light-olive: hsl(60, 100%, 72%);
-  --color-light-steel: hsl(209, 19%, 87%);
-  --color-light-mauve: hsl(277, 100%, 96%);
-  --color-light-taupe: hsl(29, 19%, 80%);
-  --color-light-champagne: hsl(37, 74%, 98%);
-  --color-light-khaki: hsl(47, 47%, 94%);
-  --color-light-charcoal: hsl(0, 0%, 90%);
-  --color-light-bronze: hsl(29, 75%, 87%);
-  --color-light-windstorm: hsl(216, 53%, 93%);
-  --color-light-nude: hsl(29, 79%, 97%);
-  --color-light-terracotta: hsl(10, 76%, 85%);
-  --color-light-coral: hsl(16, 100%, 92%);
-  --color-light-army: hsl(69, 34%, 75%);
-  --color-light-seashell: hsl(25, 100%, 98%);
-  --color-light-sand: hsl(45, 71%, 96%);
-  --color-light-gray: hsl(0, 0%, 95%);
-  --color-light-gray-blue: hsl(210, 26%, 84%);
-  --color-light-gray-mouse: hsl(199, 15%, 70%);
-  --color-minor-lime: hsl(93, 97%, 81%);
-  --color-minor-green: hsl(120, 100%, 45%);
-  --color-minor-emerald: hsl(140, 52%, 65%);
-  --color-minor-blue: hsl(225, 100%, 78%);
-  --color-minor-teal: hsl(180, 77%, 54%);
-  --color-minor-cyan: hsl(221, 100%, 89%);
-  --color-minor-cobalt: hsl(215, 100%, 49%);
-  --color-minor-indigo: hsl(276, 100%, 48%);
-  --color-minor-almost: hsl(259, 84%, 70%);
-  --color-minor-violet: hsl(300, 76%, 82%);
-  --color-minor-pink: hsl(350, 100%, 93%);
-  --color-minor-magenta: hsl(300, 100%, 75%);
-  --color-minor-crimson: hsl(348, 88%, 66%);
-  --color-minor-red: hsl(0, 100%, 70%);
-  --color-minor-clown: hsl(3, 100%, 85%);
-  --color-minor-orange: hsl(39, 100%, 75%);
-  --color-minor-amber: hsl(45, 100%, 68%);
-  --color-minor-yellow: hsl(52, 100%, 83%);
-  --color-minor-brown: hsl(25, 57%, 66%);
-  --color-minor-olive: hsl(60, 100%, 42%);
-  --color-minor-steel: hsl(209, 19%, 77%);
-  --color-minor-mauve: hsl(277, 100%, 90%);
-  --color-minor-taupe: hsl(29, 19%, 67%);
-  --color-minor-champagne: hsl(37, 74%, 93%);
-  --color-minor-khaki: hsl(47, 47%, 84%);
-  --color-minor-charcoal: hsl(0, 0%, 80%);
-  --color-minor-bronze: hsl(29, 75%, 72%);
-  --color-minor-windstorm: hsl(216, 53%, 81%);
-  --color-minor-nude: hsl(29, 79%, 92%);
-  --color-minor-terracotta: hsl(10, 76%, 70%);
-  --color-minor-coral: hsl(16, 100%, 82%);
-  --color-minor-army: hsl(69, 34%, 47%);
-  --color-minor-seashell: hsl(25, 100%, 97%);
-  --color-minor-sand: hsl(45, 71%, 88%);
-  --color-minor-gray: hsl(0, 0%, 87%);
-  --color-minor-gray-blue: hsl(210, 26%, 69%);
-  --color-minor-gray-mouse: hsl(199, 15%, 55%);
   --color-hover-default: rgba(29, 29, 29, 0.1);
   --color-success: green;
   --color-alert: #c10000;
@@ -26318,6 +26133,193 @@ hr.fat {
   --color-primary: #f75553;
   --color-secondary: #74290a;
   --color-tertiary: #ffbebd;
+}
+:root {
+  --color-light-gray: hsl(0, 0%, 95%);
+  --color-minor-gray: hsl(0, 0%, 87%);
+  --color-gray: hsl(0, 0%, 80%);
+  --color-sat-gray: hsl(0, 0%, 65%);
+  --color-dark-gray: hsl(0, 0%, 55%);
+  --color-light-gray-blue: hsl(210, 26%, 84%);
+  --color-minor-gray-blue: hsl(210, 26%, 69%);
+  --color-gray-blue: hsl(210, 26%, 54%);
+  --color-sat-gray-blue: hsl(210, 26%, 39%);
+  --color-dark-gray-blue: hsl(210, 26%, 29%);
+  --color-light-gray-mouse: hsl(199, 15%, 70%);
+  --color-minor-gray-mouse: hsl(199, 15%, 55%);
+  --color-gray-mouse: hsl(199, 15%, 40%);
+  --color-sat-gray-mouse: hsl(199, 15%, 25%);
+  --color-dark-gray-mouse: hsl(199, 15%, 15%);
+  --color-light-lime: hsl(93, 97%, 91%);
+  --color-minor-lime: hsl(93, 97%, 81%);
+  --color-lime: hsl(93, 97%, 71%);
+  --color-sat-lime: hsl(93, 97%, 56%);
+  --color-dark-lime: hsl(93, 97%, 46%);
+  --color-light-green: hsl(120, 100%, 80%);
+  --color-minor-green: hsl(120, 100%, 45%);
+  --color-green: hsl(120, 100%, 35%);
+  --color-sat-green: hsl(120, 100%, 20%);
+  --color-dark-green: hsl(120, 100%, 10%);
+  --color-light-emerald: hsl(140, 52%, 85%);
+  --color-minor-emerald: hsl(140, 52%, 65%);
+  --color-emerald: hsl(140, 52%, 55%);
+  --color-sat-emerald: hsl(140, 52%, 40%);
+  --color-dark-emerald: hsl(140, 52%, 30%);
+  --color-light-blue: hsl(225, 100%, 93%);
+  --color-minor-blue: hsl(225, 100%, 78%);
+  --color-blue: hsl(225, 100%, 68%);
+  --color-sat-blue: hsl(225, 100%, 53%);
+  --color-dark-blue: hsl(225, 100%, 43%);
+  --color-light-teal: hsl(180, 77%, 79%);
+  --color-minor-teal: hsl(180, 77%, 54%);
+  --color-teal: hsl(180, 77%, 44%);
+  --color-sat-teal: hsl(180, 77%, 29%);
+  --color-dark-teal: hsl(180, 77%, 19%);
+  --color-light-cyan: hsl(221, 100%, 94%);
+  --color-minor-cyan: hsl(221, 100%, 89%);
+  --color-cyan: hsl(221, 100%, 79%);
+  --color-sat-cyan: hsl(221, 100%, 64%);
+  --color-dark-cyan: hsl(221, 100%, 54%);
+  --color-light-cobalt: hsl(215, 100%, 79%);
+  --color-minor-cobalt: hsl(215, 100%, 49%);
+  --color-cobalt: hsl(215, 100%, 34%);
+  --color-sat-cobalt: hsl(215, 100%, 19%);
+  --color-dark-cobalt: hsl(215, 100%, 9%);
+  --color-light-indigo: hsl(276, 100%, 78%);
+  --color-minor-indigo: hsl(276, 100%, 48%);
+  --color-indigo: hsl(276, 100%, 33%);
+  --color-sat-indigo: hsl(276, 100%, 18%);
+  --color-dark-indigo: hsl(276, 100%, 8%);
+  --color-light-almost: hsl(259, 84%, 85%);
+  --color-minor-almost: hsl(259, 84%, 70%);
+  --color-almost: hsl(259, 84%, 55%);
+  --color-sat-almost: hsl(259, 84%, 40%);
+  --color-dark-almost: hsl(259, 84%, 30%);
+  --color-light-violet: hsl(300, 76%, 92%);
+  --color-minor-violet: hsl(300, 76%, 82%);
+  --color-violet: hsl(300, 76%, 72%);
+  --color-sat-violet: hsl(300, 76%, 57%);
+  --color-dark-violet: hsl(300, 76%, 47%);
+  --color-light-pink: hsl(350, 100%, 98%);
+  --color-minor-pink: hsl(350, 100%, 93%);
+  --color-pink: hsl(350, 100%, 88%);
+  --color-sat-pink: hsl(350, 100%, 73%);
+  --color-dark-pink: hsl(350, 100%, 63%);
+  --color-light-magenta: hsl(300, 100%, 90%);
+  --color-minor-magenta: hsl(300, 100%, 75%);
+  --color-magenta: hsl(300, 100%, 50%);
+  --color-sat-magenta: hsl(300, 100%, 35%);
+  --color-dark-magenta: hsl(300, 100%, 25%);
+  --color-light-crimson: hsl(348, 88%, 91%);
+  --color-minor-crimson: hsl(348, 88%, 66%);
+  --color-crimson: hsl(348, 88%, 46%);
+  --color-sat-crimson: hsl(348, 88%, 31%);
+  --color-dark-crimson: hsl(348, 88%, 21%);
+  --color-light-red: hsl(0, 100%, 85%);
+  --color-minor-red: hsl(0, 100%, 70%);
+  --color-red: hsl(0, 100%, 50%);
+  --color-sat-red: hsl(0, 100%, 35%);
+  --color-dark-red: hsl(0, 100%, 25%);
+  --color-light-clown: hsl(3, 100%, 95%);
+  --color-minor-clown: hsl(3, 100%, 85%);
+  --color-clown: hsl(3, 100%, 70%);
+  --color-sat-clown: hsl(3, 100%, 55%);
+  --color-dark-clown: hsl(3, 100%, 45%);
+  --color-light-orange: hsl(39, 100%, 90%);
+  --color-minor-orange: hsl(39, 100%, 75%);
+  --color-orange: hsl(39, 100%, 50%);
+  --color-sat-orange: hsl(39, 100%, 35%);
+  --color-dark-orange: hsl(39, 100%, 25%);
+  --color-light-amber: hsl(45, 100%, 78%);
+  --color-minor-amber: hsl(45, 100%, 68%);
+  --color-amber: hsl(45, 100%, 58%);
+  --color-sat-amber: hsl(45, 100%, 43%);
+  --color-dark-amber: hsl(45, 100%, 33%);
+  --color-light-yellow: hsl(52, 100%, 93%);
+  --color-minor-yellow: hsl(52, 100%, 83%);
+  --color-yellow: hsl(52, 100%, 68%);
+  --color-sat-yellow: hsl(52, 100%, 53%);
+  --color-dark-yellow: hsl(52, 100%, 43%);
+  --color-light-brown: hsl(25, 57%, 81%);
+  --color-minor-brown: hsl(25, 57%, 66%);
+  --color-brown: hsl(25, 57%, 51%);
+  --color-sat-brown: hsl(25, 57%, 36%);
+  --color-dark-brown: hsl(25, 57%, 26%);
+  --color-light-olive: hsl(60, 100%, 72%);
+  --color-minor-olive: hsl(60, 100%, 42%);
+  --color-olive: hsl(60, 100%, 32%);
+  --color-sat-olive: hsl(60, 100%, 17%);
+  --color-dark-olive: hsl(60, 100%, 7%);
+  --color-light-steel: hsl(209, 19%, 87%);
+  --color-minor-steel: hsl(209, 19%, 77%);
+  --color-steel: hsl(209, 19%, 57%);
+  --color-sat-steel: hsl(209, 19%, 42%);
+  --color-dark-steel: hsl(209, 19%, 32%);
+  --color-light-mauve: hsl(277, 100%, 96%);
+  --color-minor-mauve: hsl(277, 100%, 90%);
+  --color-mauve: hsl(277, 100%, 84%);
+  --color-sat-mauve: hsl(277, 100%, 69%);
+  --color-dark-mauve: hsl(277, 100%, 59%);
+  --color-light-taupe: hsl(29, 19%, 80%);
+  --color-minor-taupe: hsl(29, 19%, 67%);
+  --color-taupe: hsl(29, 19%, 50%);
+  --color-sat-taupe: hsl(29, 19%, 35%);
+  --color-dark-taupe: hsl(29, 19%, 25%);
+  --color-light-champagne: hsl(37, 74%, 98%);
+  --color-minor-champagne: hsl(37, 74%, 93%);
+  --color-champagne: hsl(37, 74%, 88%);
+  --color-sat-champagne: hsl(37, 74%, 73%);
+  --color-dark-champagne: hsl(37, 74%, 63%);
+  --color-light-khaki: hsl(47, 47%, 94%);
+  --color-minor-khaki: hsl(47, 47%, 84%);
+  --color-khaki: hsl(47, 47%, 69%);
+  --color-sat-khaki: hsl(47, 47%, 54%);
+  --color-dark-khaki: hsl(47, 47%, 44%);
+  --color-light-charcoal: hsl(0, 0%, 90%);
+  --color-minor-charcoal: hsl(0, 0%, 80%);
+  --color-charcoal: hsl(0, 0%, 60%);
+  --color-sat-charcoal: hsl(0, 0%, 45%);
+  --color-dark-charcoal: hsl(0, 0%, 35%);
+  --color-light-bronze: hsl(29, 75%, 87%);
+  --color-minor-bronze: hsl(29, 75%, 72%);
+  --color-bronze: hsl(29, 75%, 57%);
+  --color-sat-bronze: hsl(29, 75%, 42%);
+  --color-dark-bronze: hsl(29, 75%, 32%);
+  --color-light-windstorm: hsl(216, 53%, 93%);
+  --color-minor-windstorm: hsl(216, 53%, 81%);
+  --color-windstorm: hsl(216, 53%, 66%);
+  --color-sat-windstorm: hsl(216, 53%, 51%);
+  --color-dark-windstorm: hsl(216, 53%, 41%);
+  --color-light-nude: hsl(29, 79%, 97%);
+  --color-minor-nude: hsl(29, 79%, 92%);
+  --color-nude: hsl(29, 79%, 85%);
+  --color-sat-nude: hsl(29, 79%, 70%);
+  --color-dark-nude: hsl(29, 79%, 60%);
+  --color-light-terracotta: hsl(10, 76%, 85%);
+  --color-minor-terracotta: hsl(10, 76%, 70%);
+  --color-terracotta: hsl(10, 76%, 55%);
+  --color-sat-terracotta: hsl(10, 76%, 40%);
+  --color-dark-terracotta: hsl(10, 76%, 30%);
+  --color-light-coral: hsl(16, 100%, 92%);
+  --color-minor-coral: hsl(16, 100%, 82%);
+  --color-coral: hsl(16, 100%, 67%);
+  --color-sat-coral: hsl(16, 100%, 52%);
+  --color-dark-coral: hsl(16, 100%, 42%);
+  --color-light-army: hsl(69, 34%, 75%);
+  --color-minor-army: hsl(69, 34%, 47%);
+  --color-army: hsl(69, 34%, 30%);
+  --color-sat-army: hsl(69, 34%, 15%);
+  --color-dark-army: hsl(69, 34%, 5%);
+  --color-light-seashell: hsl(25, 100%, 98%);
+  --color-minor-seashell: hsl(25, 100%, 97%);
+  --color-seashell: hsl(25, 100%, 95%);
+  --color-sat-seashell: hsl(25, 100%, 80%);
+  --color-dark-seashell: hsl(25, 100%, 70%);
+  --color-light-sand: hsl(45, 71%, 96%);
+  --color-minor-sand: hsl(45, 71%, 88%);
+  --color-sand: hsl(45, 71%, 81%);
+  --color-sat-sand: hsl(45, 71%, 66%);
+  --color-dark-sand: hsl(45, 71%, 56%);
 }
 
 /* source/colors-css/background.less */
@@ -46317,8 +46319,8 @@ hr.fat {
   border-color: #f75553 !important;
   color: #ffffff !important;
 }
-.primary.dropdown-toggle::before {
-  border-color: #ffffff !important;
+.primary .dropdown-caret {
+  fill: #ffffff !important;
 }
 .secondary {
   outline-color: #ed632a !important;
@@ -46326,8 +46328,8 @@ hr.fat {
   border-color: #74290a !important;
   color: #ffffff !important;
 }
-.secondary.dropdown-toggle::before {
-  border-color: #ffffff !important;
+.secondary .dropdown-caret {
+  fill: #ffffff !important;
 }
 .tertiary {
   outline-color: #ffffff !important;
@@ -46335,8 +46337,8 @@ hr.fat {
   border-color: #ffbebd !important;
   color: #ffffff !important;
 }
-.tertiary.dropdown-toggle::before {
-  border-color: #ffffff !important;
+.tertiary .dropdown-caret {
+  fill: #ffffff !important;
 }
 .success {
   outline-color: hsl(140, 52%, 85%) !important;
@@ -46344,8 +46346,8 @@ hr.fat {
   border-color: hsl(140, 52%, 55%) !important;
   color: #ffffff !important;
 }
-.success.dropdown-toggle::before {
-  border-color: #ffffff !important;
+.success .dropdown-caret {
+  fill: #ffffff !important;
 }
 .alert {
   outline-color: hsl(348, 88%, 76%) !important;
@@ -46353,8 +46355,8 @@ hr.fat {
   border-color: hsl(348, 88%, 46%) !important;
   color: #ffffff !important;
 }
-.alert.dropdown-toggle::before {
-  border-color: #ffffff !important;
+.alert .dropdown-caret {
+  fill: #ffffff !important;
 }
 .warning {
   outline-color: hsl(39, 100%, 80%) !important;
@@ -46362,8 +46364,8 @@ hr.fat {
   border-color: hsl(39, 100%, 50%) !important;
   color: #ffffff !important;
 }
-.warning.dropdown-toggle::before {
-  border-color: #ffffff !important;
+.warning .dropdown-caret {
+  fill: #ffffff !important;
 }
 .info {
   outline-color: #dfebff !important;
@@ -46371,8 +46373,8 @@ hr.fat {
   border-color: #468cff !important;
   color: #ffffff !important;
 }
-.info.dropdown-toggle::before {
-  border-color: #ffffff !important;
+.info .dropdown-caret {
+  fill: #ffffff !important;
 }
 .dark {
   outline-color: #9d9d9d !important;
@@ -46380,8 +46382,8 @@ hr.fat {
   border-color: #505050 !important;
   color: #ffffff !important;
 }
-.dark.dropdown-toggle::before {
-  border-color: #ffffff !important;
+.dark .dropdown-caret {
+  fill: #ffffff !important;
 }
 .light {
   outline-color: #ffffff !important;
@@ -46389,8 +46391,8 @@ hr.fat {
   border-color: #f8f8f8 !important;
   color: #ffffff !important;
 }
-.light.dropdown-toggle::before {
-  border-color: #ffffff !important;
+.light .dropdown-caret {
+  fill: #ffffff !important;
 }
 button.primary.outline,
 .button.primary.outline,
@@ -46401,12 +46403,12 @@ button.primary.outline,
   border-color: #f75553 !important;
   background-color: transparent !important;
 }
-button.primary.outline.dropdown-toggle::before,
-.button.primary.outline.dropdown-toggle::before,
-.command-button.primary.outline.dropdown-toggle::before,
-.shortcut.primary.outline.dropdown-toggle::before,
-.action-button.primary.outline.dropdown-toggle::before {
-  border-color: #f75553 !important;
+button.primary.outline .dropdown-caret,
+.button.primary.outline .dropdown-caret,
+.command-button.primary.outline .dropdown-caret,
+.shortcut.primary.outline .dropdown-caret,
+.action-button.primary.outline .dropdown-caret {
+  fill: #f75553 !important;
 }
 @media (hover: hover) {
   button.primary.outline:hover,
@@ -46491,12 +46493,12 @@ button.secondary.outline,
   border-color: #74290a !important;
   background-color: transparent !important;
 }
-button.secondary.outline.dropdown-toggle::before,
-.button.secondary.outline.dropdown-toggle::before,
-.command-button.secondary.outline.dropdown-toggle::before,
-.shortcut.secondary.outline.dropdown-toggle::before,
-.action-button.secondary.outline.dropdown-toggle::before {
-  border-color: #74290a !important;
+button.secondary.outline .dropdown-caret,
+.button.secondary.outline .dropdown-caret,
+.command-button.secondary.outline .dropdown-caret,
+.shortcut.secondary.outline .dropdown-caret,
+.action-button.secondary.outline .dropdown-caret {
+  fill: #74290a !important;
 }
 @media (hover: hover) {
   button.secondary.outline:hover,
@@ -46581,12 +46583,12 @@ button.tertiary.outline,
   border-color: #ffbebd !important;
   background-color: transparent !important;
 }
-button.tertiary.outline.dropdown-toggle::before,
-.button.tertiary.outline.dropdown-toggle::before,
-.command-button.tertiary.outline.dropdown-toggle::before,
-.shortcut.tertiary.outline.dropdown-toggle::before,
-.action-button.tertiary.outline.dropdown-toggle::before {
-  border-color: #ffbebd !important;
+button.tertiary.outline .dropdown-caret,
+.button.tertiary.outline .dropdown-caret,
+.command-button.tertiary.outline .dropdown-caret,
+.shortcut.tertiary.outline .dropdown-caret,
+.action-button.tertiary.outline .dropdown-caret {
+  fill: #ffbebd !important;
 }
 @media (hover: hover) {
   button.tertiary.outline:hover,
@@ -46671,12 +46673,12 @@ button.success.outline,
   border-color: hsl(140, 52%, 55%) !important;
   background-color: transparent !important;
 }
-button.success.outline.dropdown-toggle::before,
-.button.success.outline.dropdown-toggle::before,
-.command-button.success.outline.dropdown-toggle::before,
-.shortcut.success.outline.dropdown-toggle::before,
-.action-button.success.outline.dropdown-toggle::before {
-  border-color: hsl(140, 52%, 55%) !important;
+button.success.outline .dropdown-caret,
+.button.success.outline .dropdown-caret,
+.command-button.success.outline .dropdown-caret,
+.shortcut.success.outline .dropdown-caret,
+.action-button.success.outline .dropdown-caret {
+  fill: hsl(140, 52%, 55%) !important;
 }
 @media (hover: hover) {
   button.success.outline:hover,
@@ -46761,12 +46763,12 @@ button.alert.outline,
   border-color: hsl(348, 88%, 46%) !important;
   background-color: transparent !important;
 }
-button.alert.outline.dropdown-toggle::before,
-.button.alert.outline.dropdown-toggle::before,
-.command-button.alert.outline.dropdown-toggle::before,
-.shortcut.alert.outline.dropdown-toggle::before,
-.action-button.alert.outline.dropdown-toggle::before {
-  border-color: hsl(348, 88%, 46%) !important;
+button.alert.outline .dropdown-caret,
+.button.alert.outline .dropdown-caret,
+.command-button.alert.outline .dropdown-caret,
+.shortcut.alert.outline .dropdown-caret,
+.action-button.alert.outline .dropdown-caret {
+  fill: hsl(348, 88%, 46%) !important;
 }
 @media (hover: hover) {
   button.alert.outline:hover,
@@ -46851,12 +46853,12 @@ button.warning.outline,
   border-color: hsl(39, 100%, 50%) !important;
   background-color: transparent !important;
 }
-button.warning.outline.dropdown-toggle::before,
-.button.warning.outline.dropdown-toggle::before,
-.command-button.warning.outline.dropdown-toggle::before,
-.shortcut.warning.outline.dropdown-toggle::before,
-.action-button.warning.outline.dropdown-toggle::before {
-  border-color: hsl(39, 100%, 50%) !important;
+button.warning.outline .dropdown-caret,
+.button.warning.outline .dropdown-caret,
+.command-button.warning.outline .dropdown-caret,
+.shortcut.warning.outline .dropdown-caret,
+.action-button.warning.outline .dropdown-caret {
+  fill: hsl(39, 100%, 50%) !important;
 }
 @media (hover: hover) {
   button.warning.outline:hover,
@@ -46941,12 +46943,12 @@ button.info.outline,
   border-color: #468cff !important;
   background-color: transparent !important;
 }
-button.info.outline.dropdown-toggle::before,
-.button.info.outline.dropdown-toggle::before,
-.command-button.info.outline.dropdown-toggle::before,
-.shortcut.info.outline.dropdown-toggle::before,
-.action-button.info.outline.dropdown-toggle::before {
-  border-color: #468cff !important;
+button.info.outline .dropdown-caret,
+.button.info.outline .dropdown-caret,
+.command-button.info.outline .dropdown-caret,
+.shortcut.info.outline .dropdown-caret,
+.action-button.info.outline .dropdown-caret {
+  fill: #468cff !important;
 }
 @media (hover: hover) {
   button.info.outline:hover,
@@ -47031,12 +47033,12 @@ button.dark.outline,
   border-color: #505050 !important;
   background-color: transparent !important;
 }
-button.dark.outline.dropdown-toggle::before,
-.button.dark.outline.dropdown-toggle::before,
-.command-button.dark.outline.dropdown-toggle::before,
-.shortcut.dark.outline.dropdown-toggle::before,
-.action-button.dark.outline.dropdown-toggle::before {
-  border-color: #505050 !important;
+button.dark.outline .dropdown-caret,
+.button.dark.outline .dropdown-caret,
+.command-button.dark.outline .dropdown-caret,
+.shortcut.dark.outline .dropdown-caret,
+.action-button.dark.outline .dropdown-caret {
+  fill: #505050 !important;
 }
 @media (hover: hover) {
   button.dark.outline:hover,
@@ -47121,12 +47123,12 @@ button.light.outline,
   border-color: #f8f8f8 !important;
   background-color: transparent !important;
 }
-button.light.outline.dropdown-toggle::before,
-.button.light.outline.dropdown-toggle::before,
-.command-button.light.outline.dropdown-toggle::before,
-.shortcut.light.outline.dropdown-toggle::before,
-.action-button.light.outline.dropdown-toggle::before {
-  border-color: #f8f8f8 !important;
+button.light.outline .dropdown-caret,
+.button.light.outline .dropdown-caret,
+.command-button.light.outline .dropdown-caret,
+.shortcut.light.outline .dropdown-caret,
+.action-button.light.outline .dropdown-caret {
+  fill: #f8f8f8 !important;
 }
 @media (hover: hover) {
   button.light.outline:hover,
@@ -47223,6 +47225,28 @@ button.light.outline,
 .shortcut.light.outline,
 .action-button.light.outline {
   color: #1d1d1d !important;
+}
+button.yellow .dropdown-caret,
+.button.yellow .dropdown-caret,
+.command-button.yellow .dropdown-caret,
+.shortcut.yellow .dropdown-caret,
+.action-button.yellow .dropdown-caret,
+button.yellow.outline .dropdown-caret,
+.button.yellow.outline .dropdown-caret,
+.command-button.yellow.outline .dropdown-caret,
+.shortcut.yellow.outline .dropdown-caret,
+.action-button.yellow.outline .dropdown-caret,
+button.light .dropdown-caret,
+.button.light .dropdown-caret,
+.command-button.light .dropdown-caret,
+.shortcut.light .dropdown-caret,
+.action-button.light .dropdown-caret,
+button.light.outline .dropdown-caret,
+.button.light.outline .dropdown-caret,
+.command-button.light.outline .dropdown-caret,
+.shortcut.light.outline .dropdown-caret,
+.action-button.light.outline .dropdown-caret {
+  fill: #1d1d1d !important;
 }
 @media (hover: hover) {
   button.yellow:hover,
@@ -50148,6 +50172,7 @@ button.light.outline,
   --button-border-radius: 4px;
   --button-font-size: 14px;
   --button-background: #ebebeb;
+  --button-background-hover: hsl(from var(--button-background) h s calc(l - 10));
   --button-color: #191919;
   --button-disabled-opacity: 0.65;
 }
@@ -50252,6 +50277,10 @@ button.cycle.dropdown-toggle::before,
 button.dropdown-toggle.no-marker,
 .button.dropdown-toggle.no-marker {
   padding-right: 0.75rem !important;
+}
+button .dropdown-caret,
+.button .dropdown-caret {
+  fill: var(--button-color);
 }
 button.outline,
 .button.outline {
@@ -58551,6 +58580,7 @@ input::placeholder {
   --carousel-background: var(--default-background);
   --carousel-switch-background: hsla(0, 0%, 57.3%, 0.8);
   --carousel-switch-color: #fff;
+  --carousel-switch-color-hover: #50a8ff;
   --carousel-bullet-color: #f5f8fe;
   --carousel-bullet-color-active: #50a8ff;
 }
@@ -58558,6 +58588,7 @@ input::placeholder {
   --carousel-background: var(--default-background);
   --carousel-switch-background: hsla(0, 0%, 57.3%, 0.8);
   --carousel-switch-color: #fff;
+  --carousel-switch-color-hover: #50a8ff;
   --carousel-bullet-color: #26282e;
   --carousel-bullet-color-active: #50a8ff;
 }
@@ -58627,9 +58658,17 @@ input::placeholder {
   opacity: 0;
   transition: all 0.3s;
 }
-.carousel .carousel-switch-next:hover,
-.carousel .carousel-switch-prev:hover {
-  color: var(--carousel-switch-color-hover);
+@media (hover: hover) {
+  .carousel .carousel-switch-next:hover,
+  .carousel .carousel-switch-prev:hover {
+    color: var(--carousel-switch-color-hover);
+  }
+}
+@media (hover: none) {
+  .carousel .carousel-switch-next:active,
+  .carousel .carousel-switch-prev:active {
+    color: var(--carousel-switch-color-hover);
+  }
 }
 .carousel .carousel-switch-next > *,
 .carousel .carousel-switch-prev > * {
@@ -59099,7 +59138,6 @@ textarea {
   height: 32px;
 }
 .textarea .input-clear-button {
-  font-family: var(--font-family-icon);
   position: absolute;
   top: 2px;
   right: 2px;
@@ -59167,6 +59205,7 @@ textarea {
   --chat-message-background: #f5f5f5;
   --chat-message-color: #191919;
   --chat-attach-link-background: #ffffff;
+  --chat-button-background: #ebebeb;
 }
 .dark-side {
   --chat-background: #343637;
@@ -59174,6 +59213,7 @@ textarea {
   --chat-message-background: #4a4d51;
   --chat-message-color: #dbdfe7;
   --chat-attach-link-background: #343637;
+  --chat-button-background: #2b2d30;
 }
 .chat {
   display: flex;
@@ -59380,7 +59420,7 @@ textarea {
   .chat .message-input .js-chat-attach-button:hover,
   .chat .message-input .js-chat-send-button:hover,
   .chat .message-input .js-chat-smile-button:hover {
-    background: var(--button-background-hover);
+    background: hsl(from var(--chat-button-background) h s calc(l - 10));
     border-color: var(--chat-border-color);
   }
 }
@@ -72544,10 +72584,11 @@ label:has(input) {
 }
 .product-card .product-title {
   --ratio: calc(19 / 14);
+  --line-clamp: 2;
   font-size: calc(var(--product-card-font-size) * 1.14);
   font-weight: 400;
   display: -webkit-box;
-  -webkit-line-clamp: var(--line-clamp, 2);
+  -webkit-line-clamp: var(--line-clamp);
   -webkit-box-orient: vertical;
   line-height: var(--ratio);
   overflow: hidden;
@@ -78198,7 +78239,6 @@ label:has(input) {
 .split-button .split {
   background: var(--split-button-background);
   color: var(--split-button-color);
-  border: 1px var(--button-border-color) solid;
   border-radius: var(--split-button-border-radius);
   cursor: pointer;
   outline: none;
