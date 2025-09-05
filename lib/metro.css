@@ -28674,12 +28674,6 @@ hr.fat {
 .bd-gray-focus:focus {
   border-color: hsl(0, 0%, 80%) !important;
 }
-.bd-before-gray::before {
-  border-color: hsl(0, 0%, 80%) !important;
-}
-.bd-after-gray::after {
-  border-color: hsl(0, 0%, 80%) !important;
-}
 .bd-light-gray-blue {
   border-color: hsl(210, 26%, 84%) !important;
 }
@@ -28702,12 +28696,6 @@ hr.fat {
   border-color: hsl(210, 26%, 54%) !important;
 }
 .bd-gray-blue-focus:focus {
-  border-color: hsl(210, 26%, 54%) !important;
-}
-.bd-before-gray-blue::before {
-  border-color: hsl(210, 26%, 54%) !important;
-}
-.bd-after-gray-blue::after {
   border-color: hsl(210, 26%, 54%) !important;
 }
 .bd-light-gray-mouse {
@@ -28734,12 +28722,6 @@ hr.fat {
 .bd-gray-mouse-focus:focus {
   border-color: hsl(199, 15%, 40%) !important;
 }
-.bd-before-gray-mouse::before {
-  border-color: hsl(199, 15%, 40%) !important;
-}
-.bd-after-gray-mouse::after {
-  border-color: hsl(199, 15%, 40%) !important;
-}
 .bd-light-lime {
   border-color: hsl(93, 97%, 91%) !important;
 }
@@ -28762,12 +28744,6 @@ hr.fat {
   border-color: hsl(93, 97%, 71%) !important;
 }
 .bd-lime-focus:focus {
-  border-color: hsl(93, 97%, 71%) !important;
-}
-.bd-before-lime::before {
-  border-color: hsl(93, 97%, 71%) !important;
-}
-.bd-after-lime::after {
   border-color: hsl(93, 97%, 71%) !important;
 }
 .bd-light-green {
@@ -28794,12 +28770,6 @@ hr.fat {
 .bd-green-focus:focus {
   border-color: hsl(120, 100%, 35%) !important;
 }
-.bd-before-green::before {
-  border-color: hsl(120, 100%, 35%) !important;
-}
-.bd-after-green::after {
-  border-color: hsl(120, 100%, 35%) !important;
-}
 .bd-light-emerald {
   border-color: hsl(140, 52%, 85%) !important;
 }
@@ -28822,12 +28792,6 @@ hr.fat {
   border-color: hsl(140, 52%, 55%) !important;
 }
 .bd-emerald-focus:focus {
-  border-color: hsl(140, 52%, 55%) !important;
-}
-.bd-before-emerald::before {
-  border-color: hsl(140, 52%, 55%) !important;
-}
-.bd-after-emerald::after {
   border-color: hsl(140, 52%, 55%) !important;
 }
 .bd-light-blue {
@@ -28854,12 +28818,6 @@ hr.fat {
 .bd-blue-focus:focus {
   border-color: hsl(225, 100%, 68%) !important;
 }
-.bd-before-blue::before {
-  border-color: hsl(225, 100%, 68%) !important;
-}
-.bd-after-blue::after {
-  border-color: hsl(225, 100%, 68%) !important;
-}
 .bd-light-teal {
   border-color: hsl(180, 77%, 79%) !important;
 }
@@ -28882,12 +28840,6 @@ hr.fat {
   border-color: hsl(180, 77%, 44%) !important;
 }
 .bd-teal-focus:focus {
-  border-color: hsl(180, 77%, 44%) !important;
-}
-.bd-before-teal::before {
-  border-color: hsl(180, 77%, 44%) !important;
-}
-.bd-after-teal::after {
   border-color: hsl(180, 77%, 44%) !important;
 }
 .bd-light-cyan {
@@ -28914,12 +28866,6 @@ hr.fat {
 .bd-cyan-focus:focus {
   border-color: hsl(221, 100%, 79%) !important;
 }
-.bd-before-cyan::before {
-  border-color: hsl(221, 100%, 79%) !important;
-}
-.bd-after-cyan::after {
-  border-color: hsl(221, 100%, 79%) !important;
-}
 .bd-light-cobalt {
   border-color: hsl(215, 100%, 79%) !important;
 }
@@ -28942,12 +28888,6 @@ hr.fat {
   border-color: hsl(215, 100%, 34%) !important;
 }
 .bd-cobalt-focus:focus {
-  border-color: hsl(215, 100%, 34%) !important;
-}
-.bd-before-cobalt::before {
-  border-color: hsl(215, 100%, 34%) !important;
-}
-.bd-after-cobalt::after {
   border-color: hsl(215, 100%, 34%) !important;
 }
 .bd-light-indigo {
@@ -28974,12 +28914,6 @@ hr.fat {
 .bd-indigo-focus:focus {
   border-color: hsl(276, 100%, 33%) !important;
 }
-.bd-before-indigo::before {
-  border-color: hsl(276, 100%, 33%) !important;
-}
-.bd-after-indigo::after {
-  border-color: hsl(276, 100%, 33%) !important;
-}
 .bd-light-almost {
   border-color: hsl(259, 84%, 85%) !important;
 }
@@ -29002,12 +28936,6 @@ hr.fat {
   border-color: hsl(259, 84%, 55%) !important;
 }
 .bd-almost-focus:focus {
-  border-color: hsl(259, 84%, 55%) !important;
-}
-.bd-before-almost::before {
-  border-color: hsl(259, 84%, 55%) !important;
-}
-.bd-after-almost::after {
   border-color: hsl(259, 84%, 55%) !important;
 }
 .bd-light-violet {
@@ -29034,12 +28962,6 @@ hr.fat {
 .bd-violet-focus:focus {
   border-color: hsl(300, 76%, 72%) !important;
 }
-.bd-before-violet::before {
-  border-color: hsl(300, 76%, 72%) !important;
-}
-.bd-after-violet::after {
-  border-color: hsl(300, 76%, 72%) !important;
-}
 .bd-light-pink {
   border-color: hsl(350, 100%, 98%) !important;
 }
@@ -29062,12 +28984,6 @@ hr.fat {
   border-color: hsl(350, 100%, 88%) !important;
 }
 .bd-pink-focus:focus {
-  border-color: hsl(350, 100%, 88%) !important;
-}
-.bd-before-pink::before {
-  border-color: hsl(350, 100%, 88%) !important;
-}
-.bd-after-pink::after {
   border-color: hsl(350, 100%, 88%) !important;
 }
 .bd-light-magenta {
@@ -29094,12 +29010,6 @@ hr.fat {
 .bd-magenta-focus:focus {
   border-color: hsl(300, 100%, 50%) !important;
 }
-.bd-before-magenta::before {
-  border-color: hsl(300, 100%, 50%) !important;
-}
-.bd-after-magenta::after {
-  border-color: hsl(300, 100%, 50%) !important;
-}
 .bd-light-crimson {
   border-color: hsl(348, 88%, 91%) !important;
 }
@@ -29122,12 +29032,6 @@ hr.fat {
   border-color: hsl(348, 88%, 46%) !important;
 }
 .bd-crimson-focus:focus {
-  border-color: hsl(348, 88%, 46%) !important;
-}
-.bd-before-crimson::before {
-  border-color: hsl(348, 88%, 46%) !important;
-}
-.bd-after-crimson::after {
   border-color: hsl(348, 88%, 46%) !important;
 }
 .bd-light-red {
@@ -29154,12 +29058,6 @@ hr.fat {
 .bd-red-focus:focus {
   border-color: hsl(0, 100%, 50%) !important;
 }
-.bd-before-red::before {
-  border-color: hsl(0, 100%, 50%) !important;
-}
-.bd-after-red::after {
-  border-color: hsl(0, 100%, 50%) !important;
-}
 .bd-light-clown {
   border-color: hsl(3, 100%, 95%) !important;
 }
@@ -29182,12 +29080,6 @@ hr.fat {
   border-color: hsl(3, 100%, 70%) !important;
 }
 .bd-clown-focus:focus {
-  border-color: hsl(3, 100%, 70%) !important;
-}
-.bd-before-clown::before {
-  border-color: hsl(3, 100%, 70%) !important;
-}
-.bd-after-clown::after {
   border-color: hsl(3, 100%, 70%) !important;
 }
 .bd-light-orange {
@@ -29214,12 +29106,6 @@ hr.fat {
 .bd-orange-focus:focus {
   border-color: hsl(39, 100%, 50%) !important;
 }
-.bd-before-orange::before {
-  border-color: hsl(39, 100%, 50%) !important;
-}
-.bd-after-orange::after {
-  border-color: hsl(39, 100%, 50%) !important;
-}
 .bd-light-amber {
   border-color: hsl(45, 100%, 78%) !important;
 }
@@ -29242,12 +29128,6 @@ hr.fat {
   border-color: hsl(45, 100%, 58%) !important;
 }
 .bd-amber-focus:focus {
-  border-color: hsl(45, 100%, 58%) !important;
-}
-.bd-before-amber::before {
-  border-color: hsl(45, 100%, 58%) !important;
-}
-.bd-after-amber::after {
   border-color: hsl(45, 100%, 58%) !important;
 }
 .bd-light-yellow {
@@ -29274,12 +29154,6 @@ hr.fat {
 .bd-yellow-focus:focus {
   border-color: hsl(52, 100%, 68%) !important;
 }
-.bd-before-yellow::before {
-  border-color: hsl(52, 100%, 68%) !important;
-}
-.bd-after-yellow::after {
-  border-color: hsl(52, 100%, 68%) !important;
-}
 .bd-light-brown {
   border-color: hsl(25, 57%, 81%) !important;
 }
@@ -29302,12 +29176,6 @@ hr.fat {
   border-color: hsl(25, 57%, 51%) !important;
 }
 .bd-brown-focus:focus {
-  border-color: hsl(25, 57%, 51%) !important;
-}
-.bd-before-brown::before {
-  border-color: hsl(25, 57%, 51%) !important;
-}
-.bd-after-brown::after {
   border-color: hsl(25, 57%, 51%) !important;
 }
 .bd-light-olive {
@@ -29334,12 +29202,6 @@ hr.fat {
 .bd-olive-focus:focus {
   border-color: hsl(60, 100%, 32%) !important;
 }
-.bd-before-olive::before {
-  border-color: hsl(60, 100%, 32%) !important;
-}
-.bd-after-olive::after {
-  border-color: hsl(60, 100%, 32%) !important;
-}
 .bd-light-steel {
   border-color: hsl(209, 19%, 87%) !important;
 }
@@ -29362,12 +29224,6 @@ hr.fat {
   border-color: hsl(209, 19%, 57%) !important;
 }
 .bd-steel-focus:focus {
-  border-color: hsl(209, 19%, 57%) !important;
-}
-.bd-before-steel::before {
-  border-color: hsl(209, 19%, 57%) !important;
-}
-.bd-after-steel::after {
   border-color: hsl(209, 19%, 57%) !important;
 }
 .bd-light-mauve {
@@ -29394,12 +29250,6 @@ hr.fat {
 .bd-mauve-focus:focus {
   border-color: hsl(277, 100%, 84%) !important;
 }
-.bd-before-mauve::before {
-  border-color: hsl(277, 100%, 84%) !important;
-}
-.bd-after-mauve::after {
-  border-color: hsl(277, 100%, 84%) !important;
-}
 .bd-light-taupe {
   border-color: hsl(29, 19%, 80%) !important;
 }
@@ -29422,12 +29272,6 @@ hr.fat {
   border-color: hsl(29, 19%, 50%) !important;
 }
 .bd-taupe-focus:focus {
-  border-color: hsl(29, 19%, 50%) !important;
-}
-.bd-before-taupe::before {
-  border-color: hsl(29, 19%, 50%) !important;
-}
-.bd-after-taupe::after {
   border-color: hsl(29, 19%, 50%) !important;
 }
 .bd-light-champagne {
@@ -29454,12 +29298,6 @@ hr.fat {
 .bd-champagne-focus:focus {
   border-color: hsl(37, 74%, 88%) !important;
 }
-.bd-before-champagne::before {
-  border-color: hsl(37, 74%, 88%) !important;
-}
-.bd-after-champagne::after {
-  border-color: hsl(37, 74%, 88%) !important;
-}
 .bd-light-khaki {
   border-color: hsl(47, 47%, 94%) !important;
 }
@@ -29482,12 +29320,6 @@ hr.fat {
   border-color: hsl(47, 47%, 69%) !important;
 }
 .bd-khaki-focus:focus {
-  border-color: hsl(47, 47%, 69%) !important;
-}
-.bd-before-khaki::before {
-  border-color: hsl(47, 47%, 69%) !important;
-}
-.bd-after-khaki::after {
   border-color: hsl(47, 47%, 69%) !important;
 }
 .bd-light-charcoal {
@@ -29514,12 +29346,6 @@ hr.fat {
 .bd-charcoal-focus:focus {
   border-color: hsl(0, 0%, 60%) !important;
 }
-.bd-before-charcoal::before {
-  border-color: hsl(0, 0%, 60%) !important;
-}
-.bd-after-charcoal::after {
-  border-color: hsl(0, 0%, 60%) !important;
-}
 .bd-light-bronze {
   border-color: hsl(29, 75%, 87%) !important;
 }
@@ -29542,12 +29368,6 @@ hr.fat {
   border-color: hsl(29, 75%, 57%) !important;
 }
 .bd-bronze-focus:focus {
-  border-color: hsl(29, 75%, 57%) !important;
-}
-.bd-before-bronze::before {
-  border-color: hsl(29, 75%, 57%) !important;
-}
-.bd-after-bronze::after {
   border-color: hsl(29, 75%, 57%) !important;
 }
 .bd-light-windstorm {
@@ -29574,12 +29394,6 @@ hr.fat {
 .bd-windstorm-focus:focus {
   border-color: hsl(216, 53%, 66%) !important;
 }
-.bd-before-windstorm::before {
-  border-color: hsl(216, 53%, 66%) !important;
-}
-.bd-after-windstorm::after {
-  border-color: hsl(216, 53%, 66%) !important;
-}
 .bd-light-nude {
   border-color: hsl(29, 79%, 97%) !important;
 }
@@ -29602,12 +29416,6 @@ hr.fat {
   border-color: hsl(29, 79%, 85%) !important;
 }
 .bd-nude-focus:focus {
-  border-color: hsl(29, 79%, 85%) !important;
-}
-.bd-before-nude::before {
-  border-color: hsl(29, 79%, 85%) !important;
-}
-.bd-after-nude::after {
   border-color: hsl(29, 79%, 85%) !important;
 }
 .bd-light-terracotta {
@@ -29634,12 +29442,6 @@ hr.fat {
 .bd-terracotta-focus:focus {
   border-color: hsl(10, 76%, 55%) !important;
 }
-.bd-before-terracotta::before {
-  border-color: hsl(10, 76%, 55%) !important;
-}
-.bd-after-terracotta::after {
-  border-color: hsl(10, 76%, 55%) !important;
-}
 .bd-light-coral {
   border-color: hsl(16, 100%, 92%) !important;
 }
@@ -29662,12 +29464,6 @@ hr.fat {
   border-color: hsl(16, 100%, 67%) !important;
 }
 .bd-coral-focus:focus {
-  border-color: hsl(16, 100%, 67%) !important;
-}
-.bd-before-coral::before {
-  border-color: hsl(16, 100%, 67%) !important;
-}
-.bd-after-coral::after {
   border-color: hsl(16, 100%, 67%) !important;
 }
 .bd-light-army {
@@ -29694,12 +29490,6 @@ hr.fat {
 .bd-army-focus:focus {
   border-color: hsl(69, 34%, 30%) !important;
 }
-.bd-before-army::before {
-  border-color: hsl(69, 34%, 30%) !important;
-}
-.bd-after-army::after {
-  border-color: hsl(69, 34%, 30%) !important;
-}
 .bd-light-seashell {
   border-color: hsl(25, 100%, 98%) !important;
 }
@@ -29724,12 +29514,6 @@ hr.fat {
 .bd-seashell-focus:focus {
   border-color: hsl(25, 100%, 95%) !important;
 }
-.bd-before-seashell::before {
-  border-color: hsl(25, 100%, 95%) !important;
-}
-.bd-after-seashell::after {
-  border-color: hsl(25, 100%, 95%) !important;
-}
 .bd-light-sand {
   border-color: hsl(45, 71%, 96%) !important;
 }
@@ -29752,12 +29536,6 @@ hr.fat {
   border-color: hsl(45, 71%, 81%) !important;
 }
 .bd-sand-focus:focus {
-  border-color: hsl(45, 71%, 81%) !important;
-}
-.bd-before-sand::before {
-  border-color: hsl(45, 71%, 81%) !important;
-}
-.bd-after-sand::after {
   border-color: hsl(45, 71%, 81%) !important;
 }
 @property --border-angle { syntax: "<angle>"; initial-value: 0deg; inherits: true; }
