@@ -15,7 +15,6 @@
         keySeparator: "",
         trimSeparator: false,
         keyDelimiter: ",",
-        copyInlineStyles: false,
         target: null,
         keyLength: 0,
         shuffle: false,
@@ -115,13 +114,6 @@
             }
 
             element[0].className = "";
-            if (o.copyInlineStyles === true) {
-                let i = 0;
-                const l = element[0].style.length;
-                for (; i < l; i++) {
-                    keypad.css(element[0].style[i], element.css(element[0].style[i]));
-                }
-            }
 
             element.addClass(o.clsInput);
             keypad.addClass(o.clsKeypad);
@@ -210,6 +202,7 @@
                         .html(this);
                     if (this === "&larr;") {
                         key.addClass(o.clsBackspace);
+                        key.addClass("ml-auto");
                     }
                     if (this === "&times;") {
                         key.addClass(o.clsClear);
@@ -299,6 +292,10 @@
                 if (o.open === true) {
                     return;
                 }
+
+                $("[data-role-keypad=true]").each(function () {
+                    Metro.getPlugin(this, "keypad").close();
+                });
 
                 if (keys.hasClass("open") === true) {
                     keys.removeClass("open").removeClass("top-left");

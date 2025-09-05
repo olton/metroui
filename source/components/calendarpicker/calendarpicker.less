@@ -29,7 +29,7 @@
     top: 100%;
     left: 0;
     display: none;
-    z-index: @zindex-absolute;
+    z-index: @z-index-absolute;
 
     &.open {
         display: block!important;
@@ -45,7 +45,7 @@
         top: 50%!important;
         left: 50%!important;
         .translate3d(-50%, -50%, 0);
-        z-index: @zindex-modal;
+        z-index: @z-index-modal;
 
         &.open-up {
             top: auto;

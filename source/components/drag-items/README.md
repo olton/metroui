@@ -127,14 +127,14 @@ function myDropFunction(e, data) {
 
 The component uses the following CSS variables from the Metro UI framework:
 
-| Variable | Default (Light) | Dark Mode | Description |
-| -------- | --------------- | --------- | ----------- |
-| `@transparent` | transparent | transparent | Used for background color |
-| `@white` | #ffffff | #ffffff | Used for marker color |
-| `@dark` | #1d1d1d | #1d1d1d | Used for dark theme marker |
-| `@blue` | #4390df | #4390df | Used for avatar background |
-| `@zindex-absolute` | 2000 | 2000 | Used for z-index |
-| `@primaryColor` | #5c92fa | #5c92fa | Used for box-shadow |
+| Variable            | Default (Light) | Dark Mode | Description |
+|---------------------| --------------- | --------- | ----------- |
+| `@transparent`      | transparent | transparent | Used for background color |
+| `@white`            | #ffffff | #ffffff | Used for marker color |
+| `@dark`             | #1d1d1d | #1d1d1d | Used for dark theme marker |
+| `@blue`             | #4390df | #4390df | Used for avatar background |
+| `@z-index-absolute` | 2000 | 2000 | Used for z-index |
+| `@primaryColor`     | #5c92fa | #5c92fa | Used for box-shadow |
 
 ### Example of Custom Styling
 

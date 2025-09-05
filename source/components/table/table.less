@@ -400,7 +400,7 @@
     //.translateX(-50%);
     background-color: var(--table-inspector-background);
     color: var(--table-inspector-color);
-    z-index: @zindex-absolute;
+    z-index: @z-index-absolute;
     border: 1px double var(--table-inspector-border-color);
     border-radius: var(--table-inspector-border-radius);
     width: auto;
@@ -464,7 +464,7 @@
 .table-form {
     display: block;
     position: absolute;
-    z-index: @zindex-absolute;
+    z-index: @z-index-absolute;
     height: auto;
     max-height: calc(100vh - 40px);
     width: auto;
@@ -515,7 +515,7 @@ each(@media-rules, {
     position: absolute!important;
     top: 0;
     left: 0;
-    z-index: @zindex-absolute;
+    z-index: @z-index-absolute;
 }
 
 .table-skip {

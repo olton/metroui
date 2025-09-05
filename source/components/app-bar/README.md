@@ -83,17 +83,17 @@ appBar.open();
 
 ## Styling with CSS Variables
 
-| Variable | Default (Light) | Dark Mode | Description |
-| -------- | --------------- | --------- | ----------- |
-| `--appbar-border-radius` | 4px | 4px | Border radius of app bar items |
-| `--appbar-z-index` | @zindex-fixed | @zindex-fixed | Z-index of the app bar |
-| `--appbar-background` | #ffffff | #1e1f22 | Background color of the app bar |
-| `--appbar-color` | #191919 | #dbdfe7 | Text color of the app bar |
-| `--appbar-item-background` | transparent | transparent | Background color of app bar items |
-| `--appbar-item-color` | #191919 | #dbdfe7 | Text color of app bar items |
-| `--appbar-item-color-disabled` | #ccc | #a8a8a8 | Text color of disabled app bar items |
-| `--appbar-item-color-hover` | #000000 | #ffffff | Text color of app bar items on hover |
-| `--appbar-item-background-hover` | #e8e8e8 | #2b2d30 | Background color of app bar items on hover |
+| Variable | Default (Light) | Dark Mode      | Description |
+| -------- |-----------------|----------------| ----------- |
+| `--appbar-border-radius` | 4px             | 4px            | Border radius of app bar items |
+| `--appbar-z-index` | @z-index-fixed  | @z-index-fixed | Z-index of the app bar |
+| `--appbar-background` | #ffffff         | #1e1f22        | Background color of the app bar |
+| `--appbar-color` | #191919         | #dbdfe7        | Text color of the app bar |
+| `--appbar-item-background` | transparent     | transparent    | Background color of app bar items |
+| `--appbar-item-color` | #191919         | #dbdfe7        | Text color of app bar items |
+| `--appbar-item-color-disabled` | #ccc            | #a8a8a8        | Text color of disabled app bar items |
+| `--appbar-item-color-hover` | #000000         | #ffffff        | Text color of app bar items on hover |
+| `--appbar-item-background-hover` | #e8e8e8         | #2b2d30        | Background color of app bar items on hover |
 
 ### Example of Custom Styling
 

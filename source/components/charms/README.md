@@ -124,11 +124,11 @@ These methods can be called directly from the Metro.charms object:
 
 The Charms component uses the following LESS variables for styling:
 
-| Variable | Default (Light) | Dark Mode | Description |
-| -------- | --------------- | --------- | ----------- |
-| @zindex-charms | 1090 | - | Z-index of the charms component |
-| @dark | #1d1d1d | - | Default background color |
-| @white | #ffffff | - | Default text color |
+| Variable              | Default (Light) | Dark Mode | Description |
+|-----------------------| --------------- | --------- | ----------- |
+| @z-index-charms       | 1090 | - | Z-index of the charms component |
+| @dark                 | #1d1d1d | - | Default background color |
+| @white                | #ffffff | - | Default text color |
 | @transition-transform | .3s ease | - | Transition effect for opening/closing |
 
 ### Example of Custom Styling

@@ -18,7 +18,7 @@
     right: 0;
     bottom: 0;
     background-color: var(--overlay-color);
-    z-index: @zindex-modal-backdrop;
+    z-index: @z-index-modal-backdrop;
 
     &.transparent {
         background-color: rgba(255,255,255, 0) !important;
@@ -26,11 +26,11 @@
 }
 
 .global-overlay {
-    z-index: @zindex-overlay!important;
+    z-index: @z-index-overlay!important;
 }
 
 .global-dialog {
-    z-index: @zindex-overlay + 1!important;
+    z-index: @z-index-overlay + 1!important;
 }
 
 .splashscreen {
@@ -38,7 +38,7 @@
     flex-flow: column;
     justify-content: center;
     align-items: center;
-    z-index: @zindex-fullscreen;
+    z-index: @z-index-fullscreen;
     background: var(--splash-color);
     position: fixed;
     top: 0;

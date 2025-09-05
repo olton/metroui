@@ -68,9 +68,10 @@
         border: none;
         padding: 0;
         user-select: none;
-        z-index: @zindex-dropdown;
+        z-index: @z-index-dropdown;
         flex-wrap: wrap;
-        justify-content: flex-start;
+        justify-content: space-around;
+        align-items: center;
         box-shadow: 0 1px 3px 0 var(--shadow-color-normal), 0 1px 2px -1px var(--shadow-color-normal);
 
         &::before {
@@ -83,11 +84,10 @@
             z-index: 2;
             left: -5px;
             top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-50%) rotate(45deg);
             margin-top: -5px;
             border-top-color: transparent;
             border-right-color: transparent;
-            .rotate(45deg);
         }
 
         &.open {
@@ -134,8 +134,7 @@
             &::before {
                 top: 0;
                 left: 50%;
-                transform: translateX(-50%);
-                .rotate(135deg);
+                transform: translateX(-50%) rotate(135deg);
             }
         }
 
@@ -148,8 +147,7 @@
             &::before {
                 top: 100%;
                 left: 50%;
-                transform: translateX(-50%);
-                .rotate(-45deg);
+                transform: translateX(-50%) rotate(-45deg);
             }
         }
 

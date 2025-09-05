@@ -70,7 +70,7 @@
         margin-top: 2px;
         left: 0;
         top: 0;
-        z-index: @zindex-absolute;
+        z-index: @z-index-absolute;
     }
 
     .streamer-actions {
@@ -84,7 +84,7 @@
         justify-content: flex-start;
         align-items: center;
         background-color: inherit;
-        z-index: @zindex-selectedCheck + 1;
+        z-index: @z-index-selectedCheck + 1;
         gap: 2px;
         padding: 2px 4px;
     }
@@ -340,7 +340,7 @@
 
         .state-icon {
             position: absolute;
-            z-index: @zindex-selectedCheck - 1;
+            z-index: @z-index-selectedCheck - 1;
             top: 4px;
             right: 8px;
             color: @dark-gray;

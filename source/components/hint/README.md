@@ -89,12 +89,12 @@ Metro.hintSetup({
 
 ## Styling with CSS Variables
 
-| Variable | Default (Light) | Dark Mode | Description |
-| -------- | --------------- | --------- | ----------- |
-| --hint-z-index | @zindex-tooltip | @zindex-tooltip | Z-index of the hint element |
-| --hint-border-radius | 6px | 6px | Border radius of the hint |
-| --hint-background | #FFFCC0 | #26282e | Background color of the hint |
-| --hint-color | #1d1d1d | #ffffff | Text color of the hint |
+| Variable | Default (Light)  | Dark Mode        | Description |
+| -------- |------------------|------------------| ----------- |
+| --hint-z-index | @z-index-tooltip | @z-index-tooltip | Z-index of the hint element |
+| --hint-border-radius | 6px              | 6px              | Border radius of the hint |
+| --hint-background | #FFFCC0          | #26282e          | Background color of the hint |
+| --hint-color | #1d1d1d          | #ffffff          | Text color of the hint |
 
 ### Example of Custom Styling
 

@@ -30,7 +30,7 @@
     overflow: auto;
     overflow-y: hidden;
     width: 100%;
-    z-index: @zindex-fixed;
+    z-index: @z-index-fixed;
     background-color: var(--tabs-material-background);
     color: var(--tabs-material-color);
     white-space: nowrap;
@@ -120,7 +120,7 @@
 
 .tabs-material {
     &.deep {
-        z-index: @zindex-fixed - 1;
+        z-index: @z-index-fixed - 1;
     }
 
     &.fixed-tabs {

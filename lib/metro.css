@@ -64499,7 +64499,6 @@ aside::after {
   z-index: 1;
   flex: 1;
   border: 1px solid var(--border-color);
-  overflow-y: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   overflow: hidden;
 }
@@ -65377,7 +65376,7 @@ aside::after {
   background-color: hsl(225, 100%, 68%);
   opacity: 0.3;
   z-index: 500;
-  box-shadow: inset -1px 0px 10px -4px #f75553;
+  box-shadow: inset -1px 0 10px -4px #f75553;
 }
 
 /* source/components/draggable/draggable.less */
@@ -69235,7 +69234,8 @@ label:has(input) {
   user-select: none;
   z-index: 1000;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-around;
+  align-items: center;
   box-shadow: 0 1px 3px 0 var(--shadow-color-normal), 0 1px 2px -1px var(--shadow-color-normal);
 }
 .keypad .keys::before {
@@ -69248,11 +69248,10 @@ label:has(input) {
   z-index: 2;
   left: -5px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) rotate(45deg);
   margin-top: -5px;
   border-top-color: transparent;
   border-right-color: transparent;
-  transform: rotate(45deg);
 }
 .keypad .keys.open {
   display: flex;
@@ -69291,8 +69290,7 @@ label:has(input) {
 .keypad .keys.bottom::before {
   top: 0;
   left: 50%;
-  transform: translateX(-50%);
-  transform: rotate(135deg);
+  transform: translateX(-50%) rotate(135deg);
 }
 .keypad .keys.top {
   top: 0;
@@ -69303,8 +69301,7 @@ label:has(input) {
 .keypad .keys.top::before {
   top: 100%;
   left: 50%;
-  transform: translateX(-50%);
-  transform: rotate(-45deg);
+  transform: translateX(-50%) rotate(-45deg);
 }
 .keypad .keys.left {
   left: 0;
