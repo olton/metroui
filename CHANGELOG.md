@@ -18,4 +18,5 @@
 + [x] Fixed passing classes to the parent element for `custom-checkbox`, remove border by default
 + [x] Remove duplicate border definition for before and after pseudo elements
 + [x] Improved color correction for `dropdown-caret` in colored parents
++ [x] Improved `analog-clock` - changed element sizes and positions
  
