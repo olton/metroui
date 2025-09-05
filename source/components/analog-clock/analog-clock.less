@@ -55,7 +55,7 @@
         justify-content: center;
         height: var(--analog-clock-icon-size);
         width: var(--analog-clock-icon-size);
-        top: 30px;
+        top: 50px;
         left: 50%;
         transform: translateX(-50%);
         font-size: 10px;
@@ -86,7 +86,7 @@
         right: 35px;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 8px;
+        font-size: 14px;
         color: var(--analog-clock-color);
         background: var(--analog-clock-background);
         font-weight: 600;
@@ -213,15 +213,15 @@
     }
     
     .digital-clock {
-        width: 66px;
+        width: 86px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         position: absolute;
-        bottom: 50px;
+        bottom: 60px;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 10px;
+        font-size: 18px;
         border-radius: 2px;
         background: var(--analog-clock-background);
         font-weight: 700;
@@ -244,8 +244,8 @@
                 content: ':';
                 display: block;
                 color: #c6c6c6;
-                top: 4px;
-                font-size: 10px; 
+                top: 50%;
+                transform: translateY(-50%);
                 font-weight: 900;
             }
             &::before {
