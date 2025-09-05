@@ -64388,7 +64388,6 @@ aside::after {
   line-height: var(--custom-checkbox-size);
   cursor: pointer;
   user-select: none;
-  border: 1px solid var(--border-color);
 }
 .custom-checkbox input {
   width: 1px;

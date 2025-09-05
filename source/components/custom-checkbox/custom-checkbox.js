@@ -81,6 +81,7 @@
                 container.addClass("caption-left");
             }
 
+            container.addClass(element[0].className);
             element[0].className = "";
 
             if (element.is(":disabled")) {

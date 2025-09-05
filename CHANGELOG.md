@@ -15,4 +15,5 @@
 + [x] Fixed reaction inputs, select, and textarea components to change disabled property for input, select, textarea elements
 + [x] Improved `button` for using colors, now you can use all colors to define button color with classes `button-light-[color]`, `button-minor-[color]`, `button-[color]`, `button-sat-[color]`, and `button-dark-[color]`
 + [x] Added classes `glow`, `glow-hover`, `glow-animated`, and `glow-animated-hover` to push button
++ [x] Fixed passing classes to the parent element for `custom-checkbox`, remove border by default
  
