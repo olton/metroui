@@ -7086,8 +7086,7 @@ body {
     "Segoe UI",
     "Roboto",
     "Ubuntu",
-    "Helvetica Neue",
-    sans-serif;
+    "Helvetica Neue";
   --font-symbol:
     ui-sans-serif,
     system-ui,
@@ -7102,11 +7101,11 @@ body {
   --font-weight: 400;
 }
 html {
-  font-family: var(--font-name);
+  font-family: var(--font-name), sans-serif;
   font-size: 100%;
 }
 body {
-  font-family: var(--font-name);
+  font-family: var(--font-name), sans-serif;
   font-size: var(--font-size);
   line-height: var(--line-height);
   font-style: var(--font-style);
@@ -57802,14 +57801,23 @@ input[type=reset] {
 .color-picker.disabled .button-group {
   display: none;
 }
+:is(.file, .input, .tag-input, .spinner, .rating, .color-picker):has(input:disabled) {
+  pointer-events: none !important;
+}
 :is(.file, .input, .tag-input, .spinner, .rating, .color-picker):has(input:disabled) .button-group {
   display: none;
+}
+:is(.select):has(select:disabled) {
+  pointer-events: none !important;
 }
 :is(.select):has(select:disabled) .button-group {
   display: none;
 }
 :is(.select):has(select:disabled) .dropdown-caret {
   fill: var(--input-color-disabled);
+}
+:is(.textarea):has(textarea:disabled) {
+  pointer-events: none !important;
 }
 :is(.textarea):has(textarea:disabled) button,
 :is(.textarea):has(textarea:disabled) .button,
@@ -62347,7 +62355,7 @@ ul ul .dropdown-caret {
   width: calc(100% - 0.1rem);
   height: calc(var(--select-height, 36px) - 2px);
   font-size: var(--select-font-size);
-  padding-left: 10px;
+  padding: 0 10px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -62588,7 +62596,6 @@ ul ul .dropdown-caret {
 .input .input-reveal-button,
 .input .input-search-button {
   background-color: transparent;
-  font-family: var(--font-symbol);
 }
 .input .input-clear-button:hover,
 .input .input-reveal-button:hover,
@@ -62609,10 +62616,10 @@ ul ul .dropdown-caret {
   order: 3;
 }
 .input .append-options {
-  order: 4;
+  order: 5;
 }
 .input .button-group {
-  order: 5;
+  order: 4;
 }
 .input .append {
   order: 6;
@@ -76346,7 +76353,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(0, 0%, 80%), 8px 8px 0 0 hsl(0, 0%, 80%);
 }
 .shadow-glow-gray {
-  box-shadow: 0 0px 30px hsl(0, 0%, 80%);
+  box-shadow: 0 0 30px hsl(0, 0%, 80%);
 }
 .shadow-glow-soft-gray {
   box-shadow: 0 9px 30px hsl(0, 0%, 95%);
@@ -76358,7 +76365,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(210, 26%, 54%), 8px 8px 0 0 hsl(210, 26%, 54%);
 }
 .shadow-glow-gray-blue {
-  box-shadow: 0 0px 30px hsl(210, 26%, 54%);
+  box-shadow: 0 0 30px hsl(210, 26%, 54%);
 }
 .shadow-glow-soft-gray-blue {
   box-shadow: 0 9px 30px hsl(210, 26%, 84%);
@@ -76370,7 +76377,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(199, 15%, 40%), 8px 8px 0 0 hsl(199, 15%, 40%);
 }
 .shadow-glow-gray-mouse {
-  box-shadow: 0 0px 30px hsl(199, 15%, 40%);
+  box-shadow: 0 0 30px hsl(199, 15%, 40%);
 }
 .shadow-glow-soft-gray-mouse {
   box-shadow: 0 9px 30px hsl(199, 15%, 70%);
@@ -76382,7 +76389,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(93, 97%, 71%), 8px 8px 0 0 hsl(93, 97%, 71%);
 }
 .shadow-glow-lime {
-  box-shadow: 0 0px 30px hsl(93, 97%, 71%);
+  box-shadow: 0 0 30px hsl(93, 97%, 71%);
 }
 .shadow-glow-soft-lime {
   box-shadow: 0 9px 30px hsl(93, 97%, 91%);
@@ -76394,7 +76401,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(120, 100%, 35%), 8px 8px 0 0 hsl(120, 100%, 35%);
 }
 .shadow-glow-green {
-  box-shadow: 0 0px 30px hsl(120, 100%, 35%);
+  box-shadow: 0 0 30px hsl(120, 100%, 35%);
 }
 .shadow-glow-soft-green {
   box-shadow: 0 9px 30px hsl(120, 100%, 80%);
@@ -76406,7 +76413,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(140, 52%, 55%), 8px 8px 0 0 hsl(140, 52%, 55%);
 }
 .shadow-glow-emerald {
-  box-shadow: 0 0px 30px hsl(140, 52%, 55%);
+  box-shadow: 0 0 30px hsl(140, 52%, 55%);
 }
 .shadow-glow-soft-emerald {
   box-shadow: 0 9px 30px hsl(140, 52%, 85%);
@@ -76418,7 +76425,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(225, 100%, 68%), 8px 8px 0 0 hsl(225, 100%, 68%);
 }
 .shadow-glow-blue {
-  box-shadow: 0 0px 30px hsl(225, 100%, 68%);
+  box-shadow: 0 0 30px hsl(225, 100%, 68%);
 }
 .shadow-glow-soft-blue {
   box-shadow: 0 9px 30px hsl(225, 100%, 93%);
@@ -76430,7 +76437,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(180, 77%, 44%), 8px 8px 0 0 hsl(180, 77%, 44%);
 }
 .shadow-glow-teal {
-  box-shadow: 0 0px 30px hsl(180, 77%, 44%);
+  box-shadow: 0 0 30px hsl(180, 77%, 44%);
 }
 .shadow-glow-soft-teal {
   box-shadow: 0 9px 30px hsl(180, 77%, 79%);
@@ -76442,7 +76449,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(221, 100%, 79%), 8px 8px 0 0 hsl(221, 100%, 79%);
 }
 .shadow-glow-cyan {
-  box-shadow: 0 0px 30px hsl(221, 100%, 79%);
+  box-shadow: 0 0 30px hsl(221, 100%, 79%);
 }
 .shadow-glow-soft-cyan {
   box-shadow: 0 9px 30px hsl(221, 100%, 94%);
@@ -76454,7 +76461,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(215, 100%, 34%), 8px 8px 0 0 hsl(215, 100%, 34%);
 }
 .shadow-glow-cobalt {
-  box-shadow: 0 0px 30px hsl(215, 100%, 34%);
+  box-shadow: 0 0 30px hsl(215, 100%, 34%);
 }
 .shadow-glow-soft-cobalt {
   box-shadow: 0 9px 30px hsl(215, 100%, 79%);
@@ -76466,7 +76473,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(276, 100%, 33%), 8px 8px 0 0 hsl(276, 100%, 33%);
 }
 .shadow-glow-indigo {
-  box-shadow: 0 0px 30px hsl(276, 100%, 33%);
+  box-shadow: 0 0 30px hsl(276, 100%, 33%);
 }
 .shadow-glow-soft-indigo {
   box-shadow: 0 9px 30px hsl(276, 100%, 78%);
@@ -76478,7 +76485,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(259, 84%, 55%), 8px 8px 0 0 hsl(259, 84%, 55%);
 }
 .shadow-glow-almost {
-  box-shadow: 0 0px 30px hsl(259, 84%, 55%);
+  box-shadow: 0 0 30px hsl(259, 84%, 55%);
 }
 .shadow-glow-soft-almost {
   box-shadow: 0 9px 30px hsl(259, 84%, 85%);
@@ -76490,7 +76497,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(300, 76%, 72%), 8px 8px 0 0 hsl(300, 76%, 72%);
 }
 .shadow-glow-violet {
-  box-shadow: 0 0px 30px hsl(300, 76%, 72%);
+  box-shadow: 0 0 30px hsl(300, 76%, 72%);
 }
 .shadow-glow-soft-violet {
   box-shadow: 0 9px 30px hsl(300, 76%, 92%);
@@ -76502,7 +76509,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(350, 100%, 88%), 8px 8px 0 0 hsl(350, 100%, 88%);
 }
 .shadow-glow-pink {
-  box-shadow: 0 0px 30px hsl(350, 100%, 88%);
+  box-shadow: 0 0 30px hsl(350, 100%, 88%);
 }
 .shadow-glow-soft-pink {
   box-shadow: 0 9px 30px hsl(350, 100%, 98%);
@@ -76514,7 +76521,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(300, 100%, 50%), 8px 8px 0 0 hsl(300, 100%, 50%);
 }
 .shadow-glow-magenta {
-  box-shadow: 0 0px 30px hsl(300, 100%, 50%);
+  box-shadow: 0 0 30px hsl(300, 100%, 50%);
 }
 .shadow-glow-soft-magenta {
   box-shadow: 0 9px 30px hsl(300, 100%, 90%);
@@ -76526,7 +76533,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(348, 88%, 46%), 8px 8px 0 0 hsl(348, 88%, 46%);
 }
 .shadow-glow-crimson {
-  box-shadow: 0 0px 30px hsl(348, 88%, 46%);
+  box-shadow: 0 0 30px hsl(348, 88%, 46%);
 }
 .shadow-glow-soft-crimson {
   box-shadow: 0 9px 30px hsl(348, 88%, 91%);
@@ -76538,7 +76545,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(0, 100%, 50%), 8px 8px 0 0 hsl(0, 100%, 50%);
 }
 .shadow-glow-red {
-  box-shadow: 0 0px 30px hsl(0, 100%, 50%);
+  box-shadow: 0 0 30px hsl(0, 100%, 50%);
 }
 .shadow-glow-soft-red {
   box-shadow: 0 9px 30px hsl(0, 100%, 85%);
@@ -76550,7 +76557,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(3, 100%, 70%), 8px 8px 0 0 hsl(3, 100%, 70%);
 }
 .shadow-glow-clown {
-  box-shadow: 0 0px 30px hsl(3, 100%, 70%);
+  box-shadow: 0 0 30px hsl(3, 100%, 70%);
 }
 .shadow-glow-soft-clown {
   box-shadow: 0 9px 30px hsl(3, 100%, 95%);
@@ -76562,7 +76569,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(39, 100%, 50%), 8px 8px 0 0 hsl(39, 100%, 50%);
 }
 .shadow-glow-orange {
-  box-shadow: 0 0px 30px hsl(39, 100%, 50%);
+  box-shadow: 0 0 30px hsl(39, 100%, 50%);
 }
 .shadow-glow-soft-orange {
   box-shadow: 0 9px 30px hsl(39, 100%, 90%);
@@ -76574,7 +76581,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(45, 100%, 58%), 8px 8px 0 0 hsl(45, 100%, 58%);
 }
 .shadow-glow-amber {
-  box-shadow: 0 0px 30px hsl(45, 100%, 58%);
+  box-shadow: 0 0 30px hsl(45, 100%, 58%);
 }
 .shadow-glow-soft-amber {
   box-shadow: 0 9px 30px hsl(45, 100%, 78%);
@@ -76586,7 +76593,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(52, 100%, 68%), 8px 8px 0 0 hsl(52, 100%, 68%);
 }
 .shadow-glow-yellow {
-  box-shadow: 0 0px 30px hsl(52, 100%, 68%);
+  box-shadow: 0 0 30px hsl(52, 100%, 68%);
 }
 .shadow-glow-soft-yellow {
   box-shadow: 0 9px 30px hsl(52, 100%, 93%);
@@ -76598,7 +76605,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(25, 57%, 51%), 8px 8px 0 0 hsl(25, 57%, 51%);
 }
 .shadow-glow-brown {
-  box-shadow: 0 0px 30px hsl(25, 57%, 51%);
+  box-shadow: 0 0 30px hsl(25, 57%, 51%);
 }
 .shadow-glow-soft-brown {
   box-shadow: 0 9px 30px hsl(25, 57%, 81%);
@@ -76610,7 +76617,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(60, 100%, 32%), 8px 8px 0 0 hsl(60, 100%, 32%);
 }
 .shadow-glow-olive {
-  box-shadow: 0 0px 30px hsl(60, 100%, 32%);
+  box-shadow: 0 0 30px hsl(60, 100%, 32%);
 }
 .shadow-glow-soft-olive {
   box-shadow: 0 9px 30px hsl(60, 100%, 72%);
@@ -76622,7 +76629,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(209, 19%, 57%), 8px 8px 0 0 hsl(209, 19%, 57%);
 }
 .shadow-glow-steel {
-  box-shadow: 0 0px 30px hsl(209, 19%, 57%);
+  box-shadow: 0 0 30px hsl(209, 19%, 57%);
 }
 .shadow-glow-soft-steel {
   box-shadow: 0 9px 30px hsl(209, 19%, 87%);
@@ -76634,7 +76641,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(277, 100%, 84%), 8px 8px 0 0 hsl(277, 100%, 84%);
 }
 .shadow-glow-mauve {
-  box-shadow: 0 0px 30px hsl(277, 100%, 84%);
+  box-shadow: 0 0 30px hsl(277, 100%, 84%);
 }
 .shadow-glow-soft-mauve {
   box-shadow: 0 9px 30px hsl(277, 100%, 96%);
@@ -76646,7 +76653,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(29, 19%, 50%), 8px 8px 0 0 hsl(29, 19%, 50%);
 }
 .shadow-glow-taupe {
-  box-shadow: 0 0px 30px hsl(29, 19%, 50%);
+  box-shadow: 0 0 30px hsl(29, 19%, 50%);
 }
 .shadow-glow-soft-taupe {
   box-shadow: 0 9px 30px hsl(29, 19%, 80%);
@@ -76658,7 +76665,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(37, 74%, 88%), 8px 8px 0 0 hsl(37, 74%, 88%);
 }
 .shadow-glow-champagne {
-  box-shadow: 0 0px 30px hsl(37, 74%, 88%);
+  box-shadow: 0 0 30px hsl(37, 74%, 88%);
 }
 .shadow-glow-soft-champagne {
   box-shadow: 0 9px 30px hsl(37, 74%, 98%);
@@ -76670,7 +76677,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(47, 47%, 69%), 8px 8px 0 0 hsl(47, 47%, 69%);
 }
 .shadow-glow-khaki {
-  box-shadow: 0 0px 30px hsl(47, 47%, 69%);
+  box-shadow: 0 0 30px hsl(47, 47%, 69%);
 }
 .shadow-glow-soft-khaki {
   box-shadow: 0 9px 30px hsl(47, 47%, 94%);
@@ -76682,7 +76689,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(0, 0%, 60%), 8px 8px 0 0 hsl(0, 0%, 60%);
 }
 .shadow-glow-charcoal {
-  box-shadow: 0 0px 30px hsl(0, 0%, 60%);
+  box-shadow: 0 0 30px hsl(0, 0%, 60%);
 }
 .shadow-glow-soft-charcoal {
   box-shadow: 0 9px 30px hsl(0, 0%, 90%);
@@ -76694,7 +76701,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(29, 75%, 57%), 8px 8px 0 0 hsl(29, 75%, 57%);
 }
 .shadow-glow-bronze {
-  box-shadow: 0 0px 30px hsl(29, 75%, 57%);
+  box-shadow: 0 0 30px hsl(29, 75%, 57%);
 }
 .shadow-glow-soft-bronze {
   box-shadow: 0 9px 30px hsl(29, 75%, 87%);
@@ -76706,7 +76713,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(216, 53%, 66%), 8px 8px 0 0 hsl(216, 53%, 66%);
 }
 .shadow-glow-windstorm {
-  box-shadow: 0 0px 30px hsl(216, 53%, 66%);
+  box-shadow: 0 0 30px hsl(216, 53%, 66%);
 }
 .shadow-glow-soft-windstorm {
   box-shadow: 0 9px 30px hsl(216, 53%, 93%);
@@ -76718,7 +76725,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(29, 79%, 85%), 8px 8px 0 0 hsl(29, 79%, 85%);
 }
 .shadow-glow-nude {
-  box-shadow: 0 0px 30px hsl(29, 79%, 85%);
+  box-shadow: 0 0 30px hsl(29, 79%, 85%);
 }
 .shadow-glow-soft-nude {
   box-shadow: 0 9px 30px hsl(29, 79%, 97%);
@@ -76730,7 +76737,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(10, 76%, 55%), 8px 8px 0 0 hsl(10, 76%, 55%);
 }
 .shadow-glow-terracotta {
-  box-shadow: 0 0px 30px hsl(10, 76%, 55%);
+  box-shadow: 0 0 30px hsl(10, 76%, 55%);
 }
 .shadow-glow-soft-terracotta {
   box-shadow: 0 9px 30px hsl(10, 76%, 85%);
@@ -76742,7 +76749,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(16, 100%, 67%), 8px 8px 0 0 hsl(16, 100%, 67%);
 }
 .shadow-glow-coral {
-  box-shadow: 0 0px 30px hsl(16, 100%, 67%);
+  box-shadow: 0 0 30px hsl(16, 100%, 67%);
 }
 .shadow-glow-soft-coral {
   box-shadow: 0 9px 30px hsl(16, 100%, 92%);
@@ -76754,7 +76761,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(69, 34%, 30%), 8px 8px 0 0 hsl(69, 34%, 30%);
 }
 .shadow-glow-army {
-  box-shadow: 0 0px 30px hsl(69, 34%, 30%);
+  box-shadow: 0 0 30px hsl(69, 34%, 30%);
 }
 .shadow-glow-soft-army {
   box-shadow: 0 9px 30px hsl(69, 34%, 75%);
@@ -76766,7 +76773,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(25, 100%, 95%), 8px 8px 0 0 hsl(25, 100%, 95%);
 }
 .shadow-glow-seashell {
-  box-shadow: 0 0px 30px hsl(25, 100%, 95%);
+  box-shadow: 0 0 30px hsl(25, 100%, 95%);
 }
 .shadow-glow-soft-seashell {
   box-shadow: 0 9px 30px hsl(25, 100%, 98%);
@@ -76778,7 +76785,7 @@ label:has(input) {
   box-shadow: 0 0 0 2px hsl(45, 71%, 81%), 8px 8px 0 0 hsl(45, 71%, 81%);
 }
 .shadow-glow-sand {
-  box-shadow: 0 0px 30px hsl(45, 71%, 81%);
+  box-shadow: 0 0 30px hsl(45, 71%, 81%);
 }
 .shadow-glow-soft-sand {
   box-shadow: 0 9px 30px hsl(45, 71%, 96%);
@@ -83003,7 +83010,6 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
   justify-content: center;
 }
 .treeview .node-toggle {
-  position: relative;
   cursor: pointer;
   padding-right: 1.5rem !important;
   user-select: none;

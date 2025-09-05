@@ -247,11 +247,13 @@ input[type=button], input[type=submit], input[type=reset] {
 }
 
 :is(.file, .input, .tag-input, .spinner, .rating, .color-picker):has( input:disabled) {
+    pointer-events: none!important;
     .button-group {
         display: none;
     }
 }
 :is(.select):has( select:disabled) {
+    pointer-events: none!important;
     .button-group {
         display: none;
     }
@@ -260,6 +262,7 @@ input[type=button], input[type=submit], input[type=reset] {
     }
 }
 :is(.textarea):has( textarea:disabled) {
+    pointer-events: none!important;
     button, .button, .button-group {
         display: none;
     }
