@@ -273,7 +273,6 @@
         top: 50%;
         transform: translate(0, -50%);
         font-size: 24px;
-        //font-family: "Segoe UI Symbol", serif;
         
         &.new-moon { &::before { content: '🌑'; } }
         &.waxing-crescent { &::before { content: '🌒'; } }
@@ -286,13 +285,3 @@
     }
 }
 
-.analog-clock {
-    each(@media-scale, {
-        @container (min-width: @@key) {
-            transform: scale(@value);
-        }
-        &.size-@{key} {
-            transform: scale(@value);
-        }
-    })
-}

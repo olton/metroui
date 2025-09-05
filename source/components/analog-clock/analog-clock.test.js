@@ -39,7 +39,7 @@ suite("Analog Clock Component Tests", () => {
         expect(document.querySelector("#test-clock .moon")).not.toBeNull(); // showMoon is true by default
         expect(document.querySelector("#test-clock .day-month")).not.toBeNull(); // showDay is true by default
         expect(document.querySelector("#test-clock .digital-clock")).not.toBeNull(); // showDigitalClock is true by default
-        expect(document.querySelector("#test-clock").classList.contains("show-numbers")).toBe(true); // showNumbers is false by default
+        expect(document.querySelector("#test-clock").classList.contains("show-numbers")).toBe(true); // showNumbers is true by default
     });
 
     // Test initialization with custom options
