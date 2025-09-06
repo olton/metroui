@@ -19,4 +19,5 @@
 + [x] Remove duplicate border definition for before and after pseudo elements
 + [x] Improved color correction for `dropdown-caret` in colored parents
 + [x] Improved `analog-clock` - changed element sizes and positions
++ [x] Fixed minor issues for `dropdown` component
  
