@@ -61287,7 +61287,7 @@ input[type=checkbox].checkbox-sand::before {
   --dropdown-caret-color: #ffffff;
 }
 .dropdown {
-  position: fixed !important;
+  position: absolute !important;
   z-index: 1030 !important;
 }
 .dropdown-caret {

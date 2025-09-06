@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Test Any - Metro UI :: Popular HTML, CSS and JS library</title>
+    <style>
+        .dropdown {
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--default-background);
+            color: var(--default-color);
+        }
+    </style>
+</head>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader" id="component-name">Dropdown</div>
+    </div>
+    <div class="app-bar-item-static no-hover ml-auto">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="container mt-20">
+    <div class="row">
+        <div class="cell-md-4">
+            <div class="box">
+                <div>
+                    <button class="dropdown-toggle">Default</button>
+                    <div data-role="dropdown">
+                        <div>Content appears below the parent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cell-md-4">
+            <div class="box">
+                <div class="pos-relative">
+                    <button class="dropdown-toggle">Drop Up</button>
+                    <div data-role="dropdown" data-open-mode="up">
+                        <div>Content appears above the parent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cell-md-4">
+            <div class="box">
+                <div class="pos-relative d-inline-block">
+                    <button class="dropdown-toggle">Drop Right</button>
+                    <div data-role="dropdown" data-open-mode="right">
+                        <div>Content appears right the parent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cell-md-4">
+            <div class="box">
+                <div class="pos-relative d-inline-block">
+                    <button class="dropdown-toggle">Drop Left</button>
+                    <div data-role="dropdown" data-open-mode="left">
+                        <div>Content appears left the parent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cell-md-4">
+            <div class="box">
+                <button class="dropdown-toggle">Keep Open</button>
+                <div class="keep-open" data-role="dropdown">
+                    <div>This dropdown can't be closed</div>
+                </div>
+            </div>
+        </div>
+        <div class="cell-md-4">
+            <div class="box">
+                <div class="pos-relative">
+                    <button class="dropdown-toggle">No Close</button>
+                    <div data-role="dropdown" data-no-close="true">
+                        <div>This dropdown can't be closed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cell-md-4">
+            <div class="box">
+                <button class="dropdown-toggle">Fixed Height</button>
+                <div data-role="dropdown" data-height="200">
+                    <div>Content appears above the toggle</div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, vel.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, vel.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, vel.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, vel.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, vel.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, vel.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, vel.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, vel.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, vel.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, vel.</p>
+                </div>
+            </div>
+        </div>
+        <div class="cell-md-4">
+            <div class="box">
+                <div class="pos-relative">
+                    <button class="dropdown-toggle">Deferred</button>
+                    <div data-role="dropdown" data-dropdown-deferred="3000">
+                        <div>This dropdown can be created after 3sec</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../lib/metro.js"></script>
+<script>
+</script>
+</body>
+</html>

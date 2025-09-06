@@ -184,7 +184,7 @@
     });
 
     $(document).on("click", () => {
-        $(participants).each((i, el) => {
+        $(participants).each((_, el) => {
             const $el = $(el);
 
             if ($el.hasClass("keep-open") || $el.hasClass("stay-open") || $el.hasClass("ignore-document-click")) return;

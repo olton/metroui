@@ -9,9 +9,7 @@
         dropdownDeferred: 0,
         dropFilter: null,
         toggleElement: null,
-        align: "left",
         noClose: false,
-        duration: 50,
         openMode: "auto",
         openFunc: "show",
         closeFunc: "hide",
@@ -37,27 +35,32 @@
                 displayOrigin: null,
                 isOpen: false,
                 level: 0,
+                ready: false,
             });
 
             return this;
         },
 
         _create: function () {
-            const element = this.element;
+            setTimeout(() => {
+                const element = this.element;
 
-            this._createStructure();
-            this._createEvents();
+                this._createStructure();
+                this._createEvents();
 
-            this._fireEvent("dropdown-create", {
-                element: element,
-            });
+                this._fireEvent("dropdown-create", {
+                    element: element,
+                });
 
-            if (element.hasClass("open")) {
-                element.removeClass("open");
-                setTimeout(() => {
-                    this.open(true);
-                }, 0);
-            }
+                if (element.hasClass("open")) {
+                    element.removeClass("open");
+                    setTimeout(() => {
+                        this.open(true);
+                    }, 0);
+                }
+
+                this.ready = true;
+            }, this.options.dropdownDeferred);
         },
 
         _toggle: function () {
@@ -78,8 +81,19 @@
             const level = element.parents("[data-role-dropdown]").length;
             let toggle;
 
+            element.addClass("dropdown");
+
             if (o.openMode === "up") {
                 element.addClass("drop-up");
+            }
+            if (o.openMode === "right") {
+                element.addClass("drop-right");
+            }
+            if (o.openMode === "left") {
+                element.addClass("drop-left");
+            }
+            if (o.openMode === "down") {
+                element.addClass("drop-down");
             }
 
             toggle = o.toggleElement ? $(o.toggleElement) : $(this._toggle());
@@ -179,18 +193,23 @@
             const _el = $(el);
 
             const dropdown = Metro.getPlugin(_el, "dropdown");
+
+            if (!dropdown.ready) {
+                return;
+            }
+
             const toggle = dropdown.toggle;
             const options = dropdown.options;
             let func = options.closeFunc;
 
-            toggle.removeClass("active-toggle").removeClass("active-control");
+            if (toggle?.length) toggle.removeClass("active-toggle").removeClass("active-control");
             dropdown.element.parent().removeClass("active-container");
 
             if (immediate) {
                 func = "hide";
             }
 
-            _el[func](immediate ? 0 : options.duration, () => {
+            _el[func](immediate ? 0 : 100, () => {
                 dropdown._fireEvent("close");
                 dropdown._fireEvent("up");
 
@@ -210,7 +229,7 @@
             dropdown.toggle.addClass("active-toggle").addClass("active-control");
             dropdown.element.parent().addClass("active-container");
 
-            dropdown.element[func](immediate ? 0 : options.duration, function () {
+            dropdown.element[func](immediate ? 0 : 100, function () {
                 const $el = $(this);
                 const wOut = Metro.utils.viewportOutByWidth(this);
                 const hOut = Metro.utils.viewportOutByHeight(this);
