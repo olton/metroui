@@ -54984,6 +54984,7 @@ button.glow-animated-hover,
   display: flex;
   height: var(--analog-clock-size);
   width: var(--analog-clock-size);
+  aspect-ratio: 1;
   border-radius: 50%;
   align-items: center;
   justify-content: center;

@@ -20,4 +20,5 @@
 + [x] Improved color correction for `dropdown-caret` in colored parents
 + [x] Improved `analog-clock` - changed element sizes and positions
 + [x] Fixed minor issues for `dropdown` component
++ [x] Fixed `analog-clock` style
  

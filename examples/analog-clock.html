@@ -7,7 +7,21 @@
     <link href="../lib/icons.css" rel="stylesheet">
 
     <title>Analog Clock - Metro UI :: Popular HTML, CSS and JS library</title>
-
+    <style>
+        .analog-clock {
+            width: 300px;
+            height: 300px;
+            scale: .5;
+        }
+        [class*=cell-md-] {
+            height: 170px;
+            width: 170px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body class="cloak h-100-vh">
 <nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
@@ -20,21 +34,81 @@
 </nav>
 
 <div class="h-100 container mt-20">
-    <div class="d-flex flex-center">
-        <div data-role="analog-clock" data-icon="<span>UTC-3</span>"></div>
-    </div>
     <div class="row">
-        <div class="cell-md-3">
-            <div data-role="analog-clock" data-icon="<span>UTC-3</span>" data-use-utc="true" data-time-zone="-3" style="scale: .5"></div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC-12</span>" data-use-utc="true" data-time-zone="-12"></div>
         </div>
-        <div class="cell-md-3">
-            <div data-role="analog-clock" data-icon="<span>UTC</span>" data-use-utc="true" style="scale: .5"></div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC-11</span>" data-use-utc="true" data-time-zone="-11"></div>
         </div>
-        <div class="cell-md-3">
-            <div data-role="analog-clock" data-icon="<span>UTC+2</span>" data-use-utc="true" data-time-zone="2" style="scale: .5"></div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC-10</span>" data-use-utc="true" data-time-zone="-10"></div>
         </div>
-        <div class="cell-md-3">
-            <div data-role="analog-clock" data-icon="<span>Local</span>" style="scale: .5"></div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC-9</span>" data-use-utc="true" data-time-zone="-9"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC-8</span>" data-use-utc="true" data-time-zone="-8"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC-7</span>" data-use-utc="true" data-time-zone="-7"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC-6</span>" data-use-utc="true" data-time-zone="-6"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC-5</span>" data-use-utc="true" data-time-zone="-5"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC-4</span>" data-use-utc="true" data-time-zone="-4"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC-3</span>" data-use-utc="true" data-time-zone="-3"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC-2</span>" data-use-utc="true" data-time-zone="-2"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC-1</span>" data-use-utc="true" data-time-zone="-1"></div>
+        </div>
+        <div class="cell-md-one-fifth border bd-default">
+            <div data-role="analog-clock" data-icon="<span>UTC</span>" data-use-utc="true"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC+1</span>" data-use-utc="true" data-time-zone="1"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC+2</span>" data-use-utc="true" data-time-zone="2"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC+3</span>" data-use-utc="true" data-time-zone="3"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC+4</span>" data-use-utc="true" data-time-zone="4"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC+5</span>" data-use-utc="true" data-time-zone="5"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC+6</span>" data-use-utc="true" data-time-zone="6"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC+7</span>" data-use-utc="true" data-time-zone="7"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC+8</span>" data-use-utc="true" data-time-zone="8"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC+9</span>" data-use-utc="true" data-time-zone="9"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC+10</span>" data-use-utc="true" data-time-zone="10"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC+11</span>" data-use-utc="true" data-time-zone="11"></div>
+        </div>
+        <div class="cell-md-one-fifth">
+            <div data-role="analog-clock" data-icon="<span>UTC+12</span>" data-use-utc="true" data-time-zone="12"></div>
         </div>
     </div>
 </div>
