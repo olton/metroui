@@ -10,6 +10,7 @@
         useUtc: false,
         timeFormat: 24,
         timeZone: 0,
+        size: 0,
         onAnalogClockCreate: Metro.noop,
     };
 
@@ -40,6 +41,10 @@
             const element = this.element;
             const o = this.options;
             const now = datetime();
+
+            if (o.size !== 0) {
+                element.cssVar("analog-clock-size", `${o.size}px`);
+            }
 
             if (o.useUtc) {
                 now.utc().add(o.timeZone, "hour");

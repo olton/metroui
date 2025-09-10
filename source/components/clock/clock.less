@@ -16,7 +16,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    gap: 4px;
+    gap: 10px;
     background: var(--clock-background);
     color: var(--clock-color);
     
@@ -26,7 +26,37 @@
         gap: 0;
     }
     
+    .clock-time {
+        display: inline-flex;
+        flex-flow: row nowrap;
+        gap: 4px;
+        line-height: 1;
+    }
+    
     .clock-time, .clock-date {
         white-space: nowrap;
     }
+
+    .clock-hour, .clock-minutes {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--clock-font-size);
+    } 
+    
+    .clock-divider {
+        width: calc(var(--clock-font-size) / 6.4);
+    }
+    
+    .clock-ampm {
+        font-size: calc(var(--clock-font-size) / 2);
+        display: flex;
+        align-items: flex-end;
+        padding-bottom: 6px;
+    }
+    
+    &.digital {
+        font-family: digital, monospace;
+    }    
 }
+

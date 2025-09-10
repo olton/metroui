@@ -54989,7 +54989,7 @@ button.glow-animated-hover,
   align-items: center;
   justify-content: center;
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1), 0 25px 45px rgba(0, 0, 0, 0.1);
-  font-size: 32px;
+  font-size: calc(var(--analog-clock-size) / 9);
   line-height: 1;
   text-align: center;
   color: var(--analog-clock-color);
@@ -55004,22 +55004,22 @@ button.glow-animated-hover,
   justify-content: center;
   height: var(--analog-clock-icon-size);
   width: var(--analog-clock-icon-size);
-  top: 50px;
+  top: calc(var(--analog-clock-size) / 6);
   left: 50%;
   transform: translateX(-50%);
-  font-size: 10px;
+  font-size: calc(var(--analog-clock-size) / 12.5);
 }
 .analog-clock .icon *,
 .analog-clock .moon * {
-  font-size: 24px;
+  font-size: calc(var(--analog-clock-size) / 12.5);
   font-weight: 600;
   color: var(--analog-clock-color);
   width: 100%;
   height: 100%;
 }
 .analog-clock .moon {
-  width: 32px;
-  height: 32px;
+  width: calc(var(--analog-clock-size) / 9);
+  height: calc(var(--analog-clock-size) / 9);
 }
 .analog-clock .day-month {
   position: absolute;
@@ -55030,10 +55030,10 @@ button.glow-animated-hover,
   border-radius: 2px;
   height: auto;
   width: auto;
-  right: 35px;
+  right: calc(var(--analog-clock-size) / 8.5);
   top: 50%;
   transform: translateY(-50%);
-  font-size: 14px;
+  font-size: calc(var(--analog-clock-size) / 21.4);
   color: var(--analog-clock-color);
   background: var(--analog-clock-background);
   font-weight: 600;
@@ -55066,10 +55066,10 @@ button.glow-animated-hover,
 }
 .analog-clock .dash {
   position: absolute;
-  inset: 10px;
+  inset: calc(var(--analog-clock-size) / 30);
   text-align: center;
   transform: rotate(calc(var(--i) * (360deg / 12)));
-  font-size: 20px;
+  font-size: calc(var(--analog-clock-size) / 15);
 }
 .analog-clock .dash span {
   display: inline-block;
@@ -55085,10 +55085,10 @@ button.glow-animated-hover,
 }
 .analog-clock .secondary-dash {
   position: absolute;
-  inset: 10px;
+  inset: calc(var(--analog-clock-size) / 30);
   text-align: center;
   transform: rotate(calc(var(--i2) * 6 * 1deg));
-  font-size: 10px;
+  font-size: calc(var(--analog-clock-size) / 30);
 }
 .analog-clock .secondary-dash span {
   display: inline-block;
@@ -55097,8 +55097,8 @@ button.glow-animated-hover,
 }
 .analog-clock .hands {
   position: absolute;
-  height: 10px;
-  width: 10px;
+  height: calc(var(--analog-clock-size) / 30);
+  width: calc(var(--analog-clock-size) / 30);
   display: flex;
   justify-content: center;
   z-index: 2;
@@ -55122,10 +55122,10 @@ button.glow-animated-hover,
 .analog-clock .hands .hour,
 .analog-clock .hands .second {
   position: absolute;
-  height: 110px;
-  width: 4px;
-  bottom: 5px;
-  border-radius: 25px;
+  height: calc(var(--analog-clock-size) / 2.7);
+  width: calc(var(--analog-clock-size) / 75);
+  bottom: calc(var(--analog-clock-size) / 60);
+  border-radius: calc(var(--analog-clock-size) / 12);
   transform-origin: bottom;
 }
 .analog-clock .hands .minute,
@@ -55137,25 +55137,25 @@ button.glow-animated-hover,
   width: 2px;
 }
 .analog-clock .hands .hour {
-  height: 80px;
-  width: 8px;
+  height: calc(var(--analog-clock-size) / 3.75);
+  width: calc(var(--analog-clock-size) / 37.5);
   background: var(--analog-clock-hour-color);
 }
 .analog-clock .hands .minute {
-  height: 100px;
-  width: 5px;
+  height: calc(var(--analog-clock-size) / 3);
+  width: calc(var(--analog-clock-size) / 60);
   background: var(--analog-clock-minute-color);
 }
 .analog-clock .digital-clock {
-  width: 86px;
+  width: calc(var(--analog-clock-size) / 3.5);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  bottom: 60px;
+  bottom: calc(var(--analog-clock-size) / 5);
   left: 50%;
   transform: translateX(-50%);
-  font-size: 18px;
+  font-size: calc(var(--analog-clock-size) / 16);
   border-radius: 2px;
   background: var(--analog-clock-background);
   font-weight: 700;
@@ -55167,9 +55167,9 @@ button.glow-animated-hover,
 .analog-clock .digital-clock .dc-hour,
 .analog-clock .digital-clock .dc-minute,
 .analog-clock .digital-clock .dc-second {
-  width: 30px;
+  width: calc(var(--analog-clock-size) / 10);
   display: inline-flex;
-  padding: 4px 4px;
+  padding: calc(var(--analog-clock-size) / 75) calc(var(--analog-clock-size) / 75);
   position: relative;
   font-family: digital, monospace;
 }
@@ -55194,10 +55194,9 @@ button.glow-animated-hover,
   display: none;
 }
 .analog-clock .moon {
-  left: 40px;
+  left: calc(var(--analog-clock-size) / 7.5);
   top: 50%;
   transform: translate(0, -50%);
-  font-size: 24px;
 }
 .analog-clock .moon.new-moon::before {
   content: "\1f311";
@@ -61266,7 +61265,7 @@ input[type=checkbox].checkbox-sand::before {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  gap: 4px;
+  gap: 10px;
   background: var(--clock-background);
   color: var(--clock-color);
 }
@@ -61275,9 +61274,34 @@ input[type=checkbox].checkbox-sand::before {
   flex-direction: column;
   gap: 0;
 }
+.clock .clock-time {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  gap: 4px;
+  line-height: 1;
+}
 .clock .clock-time,
 .clock .clock-date {
   white-space: nowrap;
+}
+.clock .clock-hour,
+.clock .clock-minutes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--clock-font-size);
+}
+.clock .clock-divider {
+  width: calc(var(--clock-font-size) / 6.4);
+}
+.clock .clock-ampm {
+  font-size: calc(var(--clock-font-size) / 2);
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 6px;
+}
+.clock.digital {
+  font-family: digital, monospace;
 }
 
 /* source/components/dropdown/dropdown.less */

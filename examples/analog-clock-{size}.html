@@ -4,26 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
 
-    <title>Test Clock - Metro UI :: Popular HTML, CSS and JS library</title>
+    <title>Test Analog Clock Size - Metro UI :: Popular HTML, CSS and JS library</title>
 
 </head>
 <body class="cloak h-100-vh">
 <nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
     <div class="app-bar-item-static no-hover">
-        <div class="text-leader" id="component-name">Component Name</div>
+        <div class="text-leader" id="component-name">Analog Clock</div>
     </div>
     <div class="app-bar-item-static no-hover ml-auto">
         <input type="checkbox" data-role="theme-switcher"/>
     </div>
 </nav>
 
-<div class="container h-100 d-flex flex-center flex-column">
-    <div data-role="clock" data-date-format="dddd, D MMMM YYYY" lang="uk"></div>
-    <div data-role="clock" data-show-date="false" lang="en" data-digital="true" data-size="64"></div>
-    <div data-role="clock" data-show-date="false" lang="en" data-digital="true" data-size="64" data-hour-format="12"></div>
+<div class="container h-100 d-flex flex-center gap-10">
+    <div data-role="analog-clock" data-icon="<span>Local Time</span>" data-size="300"></div>
 </div>
 
 <script src="../lib/metro.js"></script>
+<script>
+</script>
 </body>
 </html>
