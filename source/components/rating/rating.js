@@ -48,8 +48,15 @@
 
         _create: function () {
             const element = this.element;
+            const elem = this.elem;
             const o = this.options;
             let i;
+
+            if (isNaN(elem.value)) {
+                o.value = 0;
+            } else {
+                o.value = Number.parseFloat(elem.value).toFixed(1);
+            }
 
             if (isNaN(o.value)) {
                 o.value = 0;
@@ -61,7 +68,9 @@
                 if (Array.isArray(o.values)) {
                     this.values = o.values;
                 } else if (typeof o.values === "string") {
-                    this.values = o.values.toArray();
+                    this.values = o.values.toArray(",");
+                } else {
+                    throw new Error("Invalid values format. Expected array or comma-separated string.");
                 }
             } else {
                 for (i = 1; i <= o.stars; i++) {
@@ -69,7 +78,7 @@
                 }
             }
 
-            this.originValue = o.value;
+            this.originValue = o.value || elem.value;
             this.value = o.value > 0 && o.roundFunc !== "none" ? Math[o.roundFunc](o.value) : Math.abs(o.value);
 
             this._createRating();
@@ -87,7 +96,6 @@
             let i;
             let stars;
             let li;
-            const sheet = Metro.sheet;
             const value = o.static ? Math.floor(this.originValue) : this.value;
 
             const rating = element.wrap("<div>").addClass(`rating ${element[0].className}`).addClass(o.clsRating);
@@ -95,7 +103,7 @@
 
             element.val(this.value);
 
-            rating.attr("id", element.id() ? `rating--${element.id()}` : id);
+            rating.attr("id", id);
 
             stars = $("<ul>").addClass("stars").addClass(o.clsStars).appendTo(rating);
 
@@ -142,21 +150,11 @@
             element[0].className = "";
 
             if (o.label) {
-                const label = $("<label>")
-                    .addClass("label-for-input")
-                    .addClass(o.clsLabel)
-                    .html(o.label)
-                    .insertBefore(rating);
-                if (element.attr("id")) {
-                    label.attr("for", element.attr("id"));
-                } else {
-                    const id = Hooks.useId(element[0]);
-                    label.attr("for", id);
-                    element.attr("id", id);
-                }
-                if (element.attr("dir") === "rtl") {
-                    label.addClass("rtl");
-                }
+                this._addLabel(o.label, rating, {
+                    id: element.attr("id"),
+                    dir: element.attr("dir"),
+                    className: o.clsLabel,
+                });
             }
 
             if (element.is(":disabled")) {
@@ -203,8 +201,8 @@
             const o = this.options;
             const rating = this.rating;
 
-            if (v === undefined) {
-                return this.value;
+            if (typeof v === "undefined" || v === null) {
+                return isNaN(this.value) ? 0 : +this.value;
             }
 
             this.value = v > 0 ? Math[o.roundFunc](v) : 0;

@@ -16,15 +16,29 @@
 <div class="container">
     <h1>Rating test page</h1>
 
-    <div class="example">
-        <input data-role="rating">
-        <input data-role="rating" data-label="Rating:">
-        <input data-role="rating" data-stars="10">
-        <input data-role="rating" data-value="3">
-        <input data-role="rating" data-value="3" data-message="(3856)">
-        <input data-role="rating" data-value="3" data-off-color="var(--color-light-red)" data-on-color="red">
-    </div>
+<!--    <div class="example">-->
+<!--        <input data-role="rating">-->
+<!--        <input data-role="rating" data-label="Rating:">-->
+<!--        <input data-role="rating" data-stars="10">-->
+<!--        <input data-role="rating" data-value="3">-->
+<!--        <input data-role="rating" data-value="3.5" data-message="(3856)" data-half="true" data-static="true">-->
+<!--        <input data-role="rating" data-value="3" data-off-color="var(&#45;&#45;color-light-red)" data-on-color="red">-->
+<!--    </div>-->
 
+    <div class="mt-10">
+        <h2>Get Value Example</h2>
+        <form action="javascript:">
+            <input id="VOTO" name="voto"
+                   data-role="rating" data-stars="5" data-value=""
+                   data-label="Voto"
+                   data-cls-label="text-bold text-small text-upper"
+                   value="1" />
+            <div class="form-actions">
+                <button type="button" onclick="alert($('#VOTO').val())">Get Value</button>
+                <button type="reset">Reset</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script src="../lib/metro.js"></script>
