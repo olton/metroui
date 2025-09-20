@@ -112,14 +112,12 @@
             const result = $("<span>").addClass("result").addClass(o.clsResult).appendTo(rating);
             result.html(o.message);
 
-            if (o.offColor !== null && (o.offColor.includes("var(") || Farbe.Routines.isColor(o.offColor))) {
-                // nothing current
+            if (o.offColor) {
+                rating.cssVar("rating-off-color", o.offColor);
             }
 
-            if (o.onColor !== null && (o.onColor.includes("var(") || Farbe.Routines.isColor(o.onColor))) {
-                Metro.utils.addCssRule(sheet, `#${id} .stars:hover li`, `color: ${o.onColor};`);
-                Metro.utils.addCssRule(sheet, `#${id} .stars li.on`, `color: ${o.onColor};`);
-                Metro.utils.addCssRule(sheet, `#${id} .stars li.half::after`, `color: ${o.onColor};`);
+            if (o.onColor) {
+                rating.cssVar("rating-on-color", o.onColor);
             }
 
             if (o.title !== null) {
