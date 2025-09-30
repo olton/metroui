@@ -78,9 +78,9 @@
             </DIV>
 
             <DIV class="row no-gap border-top bd-blue border-size-2 mt-2 py-2">
-                <DIV class="cell-2 pl-7">
+                <DIV class="form-actions border-none">
                     <BUTTON id="SUBMIT" type="button" onClick="onBeforeSubmit(this.form);"
-                            class="button medium bg-sat-cyan bg-cyan-hover fg-white"><SPAN class="icon mif-checkmark" ></SPAN>Conferma</BUTTON>
+                            class="bg-sat-cyan bg-cyan-hover fg-white"><SPAN class="icon mif-checkmark" ></SPAN>Conferma</BUTTON>
                     <button>Submit</button>
                 </DIV>
             </DIV>
@@ -91,28 +91,28 @@
 <script src="../lib/metro.js"></script>
 <script>
     function onBeforeSubmit(pForm) {
-
-        Metro.dialog.create({
-            title: "INSERT",
-            content: "Confermi l'inserimento nel DB?",
-            defaultActions: false,
-            customButtons: [{
-                text: "Si",
-                cls: "js-dialog-close alert medium",
-                onclick: function() {
-                    if ($(pForm).data('validator').validate()) {
+        const validator = $(pForm).data('validator');
+        if (validator?.validate()) {
+            Metro.dialog.create({
+                title: "INSERT",
+                content: "Confermi l'inserimento nel DB?",
+                defaultActions: false,
+                customButtons: [{
+                    text: "Si",
+                    cls: "js-dialog-close alert medium",
+                    onclick: function () {
                         pForm.submit();
                     }
-                }},
-                {
-                    text: "No",
-                    cls: "js-dialog-close medium",
-                    onclick: function() {
-                        return false;
-                    }
-                }]
-        });
-
+                },
+                    {
+                        text: "No",
+                        cls: "js-dialog-close medium",
+                        onclick: function () {
+                            return false;
+                        }
+                    }]
+            });
+        }
     }
 </script>
 </body>

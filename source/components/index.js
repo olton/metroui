@@ -88,6 +88,7 @@ import "./lightbox/index.js";
 import "./linked-block/index.js";
 import "./list/index.js";
 import "./listview/index.js";
+import "./log/index.js";
 import "./marquee/index.js";
 import "./master/index.js";
 import "./media-player/index.js";
