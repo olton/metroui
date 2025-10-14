@@ -357,6 +357,10 @@
             return result.val === 0;
         },
 
+        validate: function () {
+            return this._submit();
+        },
+
         changeAttribute: () => {},
     });
 })(Metro, Dom);

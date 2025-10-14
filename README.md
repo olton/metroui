@@ -1,4 +1,5 @@
 <div align="center">
+  <h1 align="center">Welcome to Metro UI!</h1>  
   <h1 align="center"><img src="banner.png" alt="Metro UI"/></h1>  
   <h3>A progressive front-end framework for creating high-performance responsive web applications</h3>
 

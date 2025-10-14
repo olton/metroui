@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+
+    <title>Validator - Form Submit - Metro UI :: Popular HTML, CSS and JS library</title>
+
+</head>
+<body class="cloak h-100-vh">
+<nav data-role="appbar" class="border-bottom bd-default" data-expand="true">
+    <div class="app-bar-item-static no-hover">
+        <div class="text-leader" id="component-name">Validator - Form Submit</div>
+    </div>
+    <div class="app-bar-item-static no-hover ml-auto">
+        <input type="checkbox" data-role="theme-switcher"/>
+    </div>
+</nav>
+
+<div class="container h-100 d-flex flex-center">
+    <FORM data-role="validator" action="" method="post" class="w-75">
+
+        <DIV class="mt-10">
+
+            <DIV class="row">
+                <DIV class="cell-2">
+                    <input id="MACHINE" name="machine" data-role="input"
+                           data-label="Machine" data-validate="required"
+                           data-cls-label="text-bold fg-black" value="mrdorunrun" />
+                </DIV>
+                <DIV class="cell-2">
+                    <input id="SIZE" name="size" data-role="input"
+                           data-label="Size kb" data-validate="number required min=1 max=100000"
+                           data-cls-label="text-bold fg-black" value="" />
+                </DIV>
+            </DIV>
+
+            <DIV class="row">
+                <DIV class="cell-4">
+                    <select id="CATEGORIES" name="categories" data-role="select" data-validate="required" data-filter="true" data-show-group-name="true" data-cls-option-group="text-bold bg-white fg-terracotta" data-label="Category" data-cls-label="text-bold fg-black" size="1">
+                        <OPTION value="|">&nbsp;</OPTION>
+                        <OPTGROUP label="Arcade">
+                            <OPTION class="pl-7" value="QXJjYWRl|Kg==">*</OPTION>
+                            <OPTION class="pl-7" value="QXJjYWRl|Rm9ydHVuZSBUZWxsZXI=">Fortune Teller</OPTION>
+                            <OPTION class="pl-7" value="QXJjYWRl|UGh5c2ljYWwgQWJpbGl0eQ==">Physical Ability</OPTION>
+                            <OPTION class="pl-7" value="QXJjYWRl|UGluYmFsbA==">Pinball</OPTION>
+                            <OPTION class="pl-7" value="QXJjYWRl|U2tpbGwgRHJvcA==">Skill Drop</OPTION>
+                            <OPTION class="pl-7" value="QXJjYWRl|U3RyZW5ndGggVGVzdGVy">Strength Tester</OPTION>
+                            <OPTION class="pl-7" value="QXJjYWRl|VW5rbm93bg==">Unknown</OPTION>
+                        </OPTGROUP>
+                        <OPTGROUP label="Ball & Paddle">
+                            <OPTION class="pl-7" value="QmFsbCAmIFBhZGRsZQ==|Kg==">*</OPTION>
+                            <OPTION class="pl-7" value="QmFsbCAmIFBhZGRsZQ==|QnJlYWtvdXQ=">Breakout</OPTION>
+                            <OPTION class="pl-7" value="QmFsbCAmIFBhZGRsZQ==|SnVtcCBhbmQgVG91Y2g=">Jump and Touch</OPTION>
+                            <OPTION class="pl-7" value="QmFsbCAmIFBhZGRsZQ==|TWlzYy4=">Misc.</OPTION>
+                            <OPTION class="pl-7" value="QmFsbCAmIFBhZGRsZQ==|UG9uZw==">Pong</OPTION>
+                        </OPTGROUP>
+                        <OPTGROUP label="Bartop">
+                            <OPTION class="pl-7" value="QmFydG9w|Kg==">*</OPTION>
+                            <OPTION class="pl-7" value="QmFydG9w|TXVsdGktR2FtZXM=">Multi-Games</OPTION>
+                        </OPTGROUP>
+                        <OPTGROUP label="Board Game">
+                            <OPTION class="pl-7" value="Qm9hcmQgR2FtZQ==|Kg==">*</OPTION>
+                            <OPTION class="pl-7" value="Qm9hcmQgR2FtZQ==|QmFja2dhbW1vbiBNYWNoaW5l">Backgammon Machine</OPTION>
+                            <OPTION class="pl-7" value="Qm9hcmQgR2FtZQ==|QnJpZGdlIE1hY2hpbmU=">Bridge Machine</OPTION>
+                            <OPTION class="pl-7" value="Qm9hcmQgR2FtZQ==|Q2FyZHM=">Cards</OPTION>
+                            <OPTION class="pl-7" value="Qm9hcmQgR2FtZQ==|Q2hlY2tlciBNYWNoaW5l">Checker Machine</OPTION>
+                            <OPTION class="pl-7" value="Qm9hcmQgR2FtZQ==|Q2hlc3MgQ29uc29sZQ==">Chess Console</OPTION>
+                            <OPTION class="pl-7" value="Qm9hcmQgR2FtZQ==|Q2hlc3MgTWFjaGluZQ==">Chess Machine</OPTION>
+                            <OPTION class="pl-7" value="Qm9hcmQgR2FtZQ==|Q2hpbmVzZSdzIENoZXNzIE1hY2hpbmU=">Chinese's Chess Machine</OPTION>
+                            <OPTION class="pl-7" value="Qm9hcmQgR2FtZQ==|RGFtZSBNYWNoaW5l">Dame Machine</OPTION>
+                            <OPTION class="pl-7" value="Qm9hcmQgR2FtZQ==|TXVsdGktR2FtZXMgTWFjaGluZQ==">Multi-Games Machine</OPTION>
+                        </OPTGROUP>
+                    </select>
+                </DIV>
+            </DIV>
+
+            <DIV class="row no-gap border-top bd-blue border-size-2 mt-2 py-2">
+                <DIV class="form-actions border-none">
+                    <BUTTON id="SUBMIT" type="button" onClick="onBeforeSubmit(this.form);"
+                            class="bg-sat-cyan bg-cyan-hover fg-white"><SPAN class="icon mif-checkmark" ></SPAN>Conferma</BUTTON>
+                    <button>Submit</button>
+                </DIV>
+            </DIV>
+        </DIV>
+    </FORM>
+</div>
+
+<script src="../lib/metro.js"></script>
+<script>
+    function onBeforeSubmit(pForm) {
+        const validator = $(pForm).data('validator');
+        if (validator?.validate()) {
+            Metro.dialog.create({
+                title: "INSERT",
+                content: "Confermi l'inserimento nel DB?",
+                defaultActions: false,
+                customButtons: [{
+                    text: "Si",
+                    cls: "js-dialog-close alert medium",
+                    onclick: function () {
+                        pForm.submit();
+                    }
+                },
+                    {
+                        text: "No",
+                        cls: "js-dialog-close medium",
+                        onclick: function () {
+                            return false;
+                        }
+                    }]
+            });
+        }
+    }
+</script>
+</body>
+</html>

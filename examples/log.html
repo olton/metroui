@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="../lib/metro.css" rel="stylesheet">
+    <link href="../lib/icons.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
 
-    <title>Test Clock - Metro UI :: Popular HTML, CSS and JS library</title>
+    <title>Test Any - Metro UI :: Popular HTML, CSS and JS library</title>
 
 </head>
 <body class="cloak h-100-vh">
@@ -18,12 +20,16 @@
     </div>
 </nav>
 
-<div class="container h-100 d-flex flex-center flex-column">
-    <div data-role="clock" data-date-format="dddd, D MMMM YYYY" lang="uk"></div>
-    <div data-role="clock" data-show-date="false" lang="en" data-digital="true" data-size="64"></div>
-    <div data-role="clock" data-show-date="false" lang="en" data-digital="true" data-size="64" data-hour-format="12"></div>
+<div class="container h-100 d-flex flex-center">
 </div>
 
 <script src="../lib/metro.js"></script>
+<script>
+    window.DEBUG_PAGE = true
+    Metro.log('Page loaded')
+    Metro.log('Others', 1, 2, 3)
+    Metro.warn('warning')
+    Metro.error('error')
+</script>
 </body>
 </html>

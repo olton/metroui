@@ -40,7 +40,7 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1), 0 25px 45px rgba(0, 0, 0, 0.1);
-    font-size: 32px;
+    font-size: calc(var(--analog-clock-size) / 9);
     line-height: 1;
     text-align: center;
     color: var(--analog-clock-color);
@@ -56,13 +56,13 @@
         justify-content: center;
         height: var(--analog-clock-icon-size);
         width: var(--analog-clock-icon-size);
-        top: 50px;
+        top: calc(var(--analog-clock-size) / 6);
         left: 50%;
         transform: translateX(-50%);
-        font-size: 10px;
+        font-size: calc(var(--analog-clock-size) / 12.5);
         
         * {
-            font-size: 24px;
+            font-size: calc(var(--analog-clock-size) / 12.5);
             font-weight: 600;
             color: var(--analog-clock-color);
             width: 100%;
@@ -71,8 +71,8 @@
     }
     
     .moon {
-        width: 32px;
-        height: 32px;
+        width: calc(var(--analog-clock-size) / 9);
+        height: calc(var(--analog-clock-size) / 9);
     }
     
     .day-month {
@@ -84,10 +84,10 @@
         border-radius: 2px;
         height: auto;
         width: auto;
-        right: 35px;
+        right: calc(var(--analog-clock-size) / 8.5);
         top: 50%;
         transform: translateY(-50%);
-        font-size: 14px;
+        font-size: calc(var(--analog-clock-size) / 21.4);
         color: var(--analog-clock-color);
         background: var(--analog-clock-background);
         font-weight: 600;
@@ -123,10 +123,10 @@
     
     .dash {
         position: absolute;
-        inset: 10px;
+        inset: calc(var(--analog-clock-size) / 30);
         text-align: center;
         transform: rotate(calc(var(--i) * (360deg / 12)));
-        font-size: 20px;
+        font-size: calc(var(--analog-clock-size) / 15);
         
         span {
             display: inline-block;
@@ -147,10 +147,10 @@
     
     .secondary-dash {
         position: absolute;
-        inset: 10px;
+        inset: calc(var(--analog-clock-size) / 30);
         text-align: center;
         transform: rotate(calc(var(--i2) * 6 * 1deg));
-        font-size: 10px;
+        font-size: calc(var(--analog-clock-size) / 30);
 
         span {
             display: inline-block;
@@ -161,8 +161,8 @@
     
     .hands {
         position: absolute;
-        height: 10px;
-        width: 10px;
+        height: calc(var(--analog-clock-size) / 30);
+        width: calc(var(--analog-clock-size) / 30);
         display: flex;
         justify-content: center;
         z-index: 2;
@@ -184,10 +184,10 @@
         
         .minute, .hour, .second {
             position: absolute;
-            height: 110px;
-            width: 4px;
-            bottom: 5px;
-            border-radius: 25px;
+            height: calc(var(--analog-clock-size) / 2.7);
+            width: calc(var(--analog-clock-size) / 75);
+            bottom: calc(var(--analog-clock-size) / 60);
+            border-radius: calc(var(--analog-clock-size) / 12);
             transform-origin: bottom;
         }
         
@@ -201,28 +201,28 @@
         }
         
         .hour {
-            height: 80px;
-            width: 8px;
+            height: calc(var(--analog-clock-size) / 3.75);
+            width: calc(var(--analog-clock-size) / 37.5);
             background: var(--analog-clock-hour-color);
         }
         
         .minute {
-            height: 100px;
-            width: 5px;
+            height: calc(var(--analog-clock-size) / 3);
+            width: calc(var(--analog-clock-size) / 60);
             background: var(--analog-clock-minute-color);
         }
     }
     
     .digital-clock {
-        width: 86px;
+        width: calc(var(--analog-clock-size) / 3.5);
         display: inline-flex;
         align-items: center;
         justify-content: center;
         position: absolute;
-        bottom: 60px;
+        bottom: calc(var(--analog-clock-size) / 5);
         left: 50%;
         transform: translateX(-50%);
-        font-size: 18px;
+        font-size: calc(var(--analog-clock-size) / 16);
         border-radius: 2px;
         background: var(--analog-clock-background);
         font-weight: 700;
@@ -232,9 +232,9 @@
         letter-spacing: 2px;
 
         .dc-hour, .dc-minute, .dc-second {
-            width: 30px;
+            width: calc(var(--analog-clock-size) / 10);
             display: inline-flex;
-            padding: 4px 4px;
+            padding: calc(var(--analog-clock-size) / 75) calc(var(--analog-clock-size) / 75);
             position: relative;
             font-family: digital, monospace;
         }
@@ -270,10 +270,9 @@
 
 .analog-clock {
     .moon {
-        left: 40px;
+        left: calc(var(--analog-clock-size) / 7.5);
         top: 50%;
         transform: translate(0, -50%);
-        font-size: 24px;
         
         &.new-moon { &::before { content: '🌑'; } }
         &.waxing-crescent { &::before { content: '🌒'; } }

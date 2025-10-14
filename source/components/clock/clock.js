@@ -8,11 +8,11 @@
         showTime: true,
         showDate: true,
         dateFormat: "DD.MM.YYYY",
-        timeFormat: "HH:mm",
-        divider: "&nbsp;&nbsp;",
-        twoLines: false,
         useUtc: false,
         timeZone: 0,
+        digital: false,
+        size: 0,
+        hourFormat: 24,
         onTick: Metro.noop,
         onSecond: Metro.noop,
         onClockCreate: Metro.noop,
@@ -29,7 +29,8 @@
     Metro.Component("clock", {
         init: function (options, elem) {
             this._super(elem, options, ClockDefaultConfig, {
-                _clockInterval: null,
+                _tickInterval: null,
+                _secondInterval: null,
                 locale: "en",
             });
 
@@ -50,28 +51,62 @@
                 element.addClass("show-column");
             }
 
+            if (o.digital) {
+                element.addClass("digital");
+            }
+
+            if (o.size) {
+                element.cssVar("clock-font-size", `${o.size}px`);
+            }
+
+            element.html(`
+                <span class="clock-time">
+                    <span class="clock-hours">00</span>
+                    <span class="clock-divider">:</span>
+                    <span class="clock-minutes">00</span>
+                    <span class="clock-ampm"></span>
+                </span> 
+                <span class="clock-date"></span> 
+            `);
+
+            if (o.showTime === false) {
+                element.find(".clock-time").hide();
+            }
+            if (o.showDate === false) {
+                element.find(".clock-date").hide();
+            }
+
+            this._draw();
+
             this._fireEvent("clock-create", {
                 element: element,
             });
 
-            this._tick();
-
-            this._clockInterval = setInterval(() => {
-                this._tick();
-            }, 500);
-            this._secondInterval = setInterval(() => {
-                this._second();
-            }, 1000);
+            this.start();
         },
 
-        _second: function () {
-            const timestamp = new Date();
+        _draw: function () {
+            const element = this.element;
             const o = this.options;
+            const timestamp = datetime();
 
             if (o.useUtc) {
                 timestamp.utc().add(o.timeZone, "hour");
             }
 
+            const date = timestamp.format(o.dateFormat, this.locale);
+            const time_h = o.hourFormat === 24 ? timestamp.hour() : timestamp.hour12();
+            const time_m = timestamp.second();
+
+            element.find(".clock-hours").html((time_h < 10 ? "0" : "") + time_h);
+            element.find(".clock-minutes").html((time_m < 10 ? "0" : "") + time_m);
+            element.find(".clock-date").html(date);
+            element.find(".clock-ampm").html(o.hourFormat === 12 ? (timestamp.hour() >= 12 ? "PM" : "AM") : "");
+        },
+
+        _second: function () {
+            const timestamp = datetime();
+            this._draw();
             this._fireEvent("second", {
                 timestamp: timestamp,
             });
@@ -79,54 +114,48 @@
 
         _tick: function () {
             const element = this.element;
-            const o = this.options;
             const timestamp = datetime();
-            let result = "";
 
-            if (o.useUtc) {
-                timestamp.utc().add(o.timeZone, "hour");
-            }
-
-            const date = timestamp.format(o.dateFormat, this.locale);
-            const time = timestamp.format(o.timeFormat, this.locale);
-
-            if (o.showTime) {
-                result = `<span class="clock-time">${time}</span>`;
-            }
-
-            if (o.showDate) {
-                result += `<span class="clock-date">${date}</span>`;
-            }
-
-            element.html(result);
+            element.find(".clock-divider").toggleClass("no-visible");
 
             this._fireEvent("tick", {
                 timestamp: timestamp,
             });
         },
 
+        start: function () {
+            this._tickInterval = setInterval(() => {
+                this._tick();
+            }, 500);
+            this._secondInterval = setInterval(() => {
+                this._second();
+            }, 1000);
+        },
+
+        stop: function () {
+            clearInterval(this._tickInterval);
+            clearInterval(this._secondInterval);
+        },
+
         changeAttribute: function (attr, val) {
+            const element = this.element;
+            const o = this.options;
+
             switch (attr) {
                 case "data-date-format":
-                    this.options.dateFormat = val;
-                    break;
-                case "data-time-format":
-                    this.options.timeFormat = val;
+                    o.dateFormat = val;
                     break;
                 case "data-show-date":
-                    this.options.showDate = JSON.parse(val);
+                    o.showDate = JSON.parse(val);
                     break;
                 case "data-show-time":
-                    this.options.showTime = JSON.parse(val);
+                    o.showTime = JSON.parse(val);
                     break;
-                case "data-divider":
-                    this.options.divider = val;
-                    break;
-                case "data-two-lines":
-                    this.options.twoLines = JSON.parse(val);
+                case "data-show":
+                    o.show = ["row", "column"].includes(val) ? val : "row";
+                    element.removeClass("show-row show-column").addClass(`show-${o.show}`);
                     break;
             }
-            this._tick();
         },
 
         destroy: function () {
