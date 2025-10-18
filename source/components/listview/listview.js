@@ -95,6 +95,8 @@
                     node.addClass("node-group");
                     node.append(that._createToggle());
                     if (node.data("collapsed") !== true) node.addClass("expanded");
+                } else if (node.children().length > 0) {
+                    // Do nothing, assume it's a custom node with content
                 } else {
                     node.clear().addClass("node");
                     node.append($("<input type='checkbox' data-role='checkbox'>").data("node", node));
