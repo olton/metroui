@@ -287,6 +287,8 @@
                         },
                         el,
                     );
+                } else if (el.children().length > 0) {
+                    // Do nothing, custom node data
                 } else {
                     this._createNode(
                         {
