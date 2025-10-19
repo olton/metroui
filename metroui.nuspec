@@ -16,7 +16,9 @@
     <tags>Metro UI CSS Framework LESS CSS JS HTML</tags>
     <readme>README.md</readme>
     <releaseNotes>
-
+    + [x] Fixed `parsePhone()` utility function
+    + [x] Added support for custom nodes in ListView
+    + [x] Fixed `addOptions()` method is `select` component 
     </releaseNotes>
     <repository type="git" url="https://github.com/olton/metroui" branch="master"/>
   </metadata>
