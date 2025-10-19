@@ -52,6 +52,8 @@
         info: info_icon,
         warning: warning_icon,
         caution: caution_icon,
+        alert: caution_icon,
+        error: caution_icon,
         tip: tip_icon,
         success: success_icon,
     };

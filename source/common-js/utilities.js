@@ -572,7 +572,7 @@
 
         parseCard: (val) => val.replace(/[^0-9]/g, ""),
 
-        parsePhone: (val) => this.parseCard(val),
+        parsePhone: (val) => val.replace(/[^0-9+]/g, ""),
 
         parseNumber: (val, thousand, decimal) =>
             val.replace(new RegExp(`\\${thousand}`, "g"), "").replace(new RegExp(`\\${decimal}`, "g"), "."),
