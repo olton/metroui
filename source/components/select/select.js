@@ -802,6 +802,7 @@
         },
 
         addOptions: function (values) {
+            const element = this.element;
             const that = this;
 
             if (!values) {

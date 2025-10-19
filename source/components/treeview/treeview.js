@@ -257,7 +257,7 @@
 
             element.addClass("treeview");
 
-            $.each(nodes, (i, _el) => {
+            $.each(nodes, (_, _el) => {
                 const el = $(_el);
 
                 if (el.data("type") === "checkbox" || el.data("type") === "radio") {
@@ -287,8 +287,6 @@
                         },
                         el,
                     );
-                } else if (el.children().length > 0) {
-                    // Do nothing, custom node data
                 } else {
                     this._createNode(
                         {
