@@ -1,7 +1,7 @@
 {
 	"author": "Serhii Pimenov <serhii@pimenov.com.ua>",
 	"name": "@olton/metroui",
-	"version": "5.1.20",
+	"version": "5.1.21",
 	"description": "A progressive front-end framework for creating high-performance responsive web applications!",
 	"keywords": [
 		"metro",
