@@ -66,7 +66,7 @@
 
             let activeTabExists = false;
 
-            items.each((index, el) => {
+            items.each((_, el) => {
                 const $el = $(el);
                 const html = $el.html();
                 const active = $el.hasClass("active");
@@ -75,6 +75,7 @@
                     icon: $el.attr("data-icon"),
                     image: $el.attr("data-image"),
                     canClose: $el.attr("data-close") !== "false",
+                    hasMenu: $el.attr("data-menu") !== "false",
                     data: $el.attr("data-data"),
                     ref: $el.attr("data-ref"),
                 });
@@ -493,7 +494,8 @@
             }
             const tabs = this.component.find(".page-control__tab");
             for (const tab of tabs) {
-                if ($(tab).find(".caption").text() === caption) {
+                const _caption = $(tab).find(".page-control__tab__caption").text();
+                if (_caption.includes(caption)) {
                     return tab;
                 }
             }
