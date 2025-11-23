@@ -18,7 +18,7 @@ each(range(12), {
 
 each(range(24), {
     .order-@{value} {
-        order: @value;
+        order: @value!important;
     }
 })
 
@@ -36,136 +36,136 @@ each(range(24), {
 .flex-row {flex-direction: row !important;}
 .flex-row-reverse {flex-direction: row-reverse !important;}
 
-.flex-align-normal {align-items: normal !important;}
-.flex-align-stretch {align-items: stretch !important;}
-.flex-align-start {align-items: flex-start !important;}
-.flex-align-end {align-items: flex-end !important;}
-.flex-align-baseline {align-items: baseline !important;}
-.flex-align-baseline-first {align-items: first baseline !important;}
-.flex-align-baseline-last {align-items: last baseline !important;}
-.flex-align-center {align-items: center !important;}
-.flex-align-center-safe {align-items: safe center !important;}
-.flex-align-center-unsafe {align-items: unsafe center !important;}
-.flex-align-inherit {align-items: inherit !important;}
-.flex-align-initial {align-items: initial !important;}
-.flex-align-revert {align-items: revert !important;}
-.flex-align-unset {align-items: unset !important;}
+.align-normal, .flex-align-normal { align-items: normal !important;}
+.align-stretch, .flex-align-stretch { align-items: stretch !important;}
+.align-start, .flex-align-start { align-items: flex-start !important;}
+.align-end, .flex-align-end { align-items: flex-end !important;}
+.align-baseline, .flex-align-baseline { align-items: baseline !important;}
+.align-baseline-first, .flex-align-baseline-first { align-items: first baseline !important;}
+.align-baseline-last, .flex-align-baseline-last { align-items: last baseline !important;} 
+.align-center, .flex-align-center { align-items: center !important;}
+.align-center-safe, .flex-align-center-safe { align-items: safe center !important;}
+.align-center-unsafe, .flex-align-center-unsafe { align-items: unsafe center !important;}
+.align-inherit, .flex-align-inherit { align-items: inherit !important;}
+.align-initial, .flex-align-initial { align-items: initial !important;}
+.align-revert, .flex-align-revert { align-items: revert !important;}
+.align-unset, .flex-align-unset { align-items: unset !important;}
 
-.flex-align-items-normal {align-items: normal !important;}
-.flex-align-items-stretch {align-items: stretch !important;}
-.flex-align-items-start {align-items: flex-start !important;}
-.flex-align-items-end {align-items: flex-end !important;}
-.flex-align-items-baseline {align-items: baseline !important;}
-.flex-align-items-baseline-first {align-items: first baseline !important;}
-.flex-align-items-baseline-last {align-items: last baseline !important;}
-.flex-align-items-center {align-items: center !important;}
-.flex-align-items-center-safe {align-items: safe center !important;}
-.flex-align-items-center-unsafe {align-items: unsafe center !important;}
-.flex-align-items-inherit {align-items: inherit !important;}
-.flex-align-items-initial {align-items: initial !important;}
-.flex-align-items-revert {align-items: revert !important;}
-.flex-align-items-unset {align-items: unset !important;}
+.align-items-normal, .flex-align-items-normal {align-items: normal !important;}
+.align-items-stretch, .flex-align-items-stretch {align-items: stretch !important;}
+.align-items-start, .flex-align-items-start {align-items: flex-start !important;}
+.align-items-end, .flex-align-items-end {align-items: flex-end !important;}
+.align-items-baseline, .flex-align-items-baseline {align-items: baseline !important;}
+.align-items-baseline-first, .flex-align-items-baseline-first {align-items: first baseline !important;}
+.align-items-baseline-last, .flex-align-items-baseline-last {align-items: last baseline !important;}
+.align-items-center, .flex-align-items-center {align-items: center !important;}
+.align-items-center-safe, .flex-align-items-center-safe {align-items: safe center !important;}
+.align-items-center-unsafe, .flex-align-items-center-unsafe {align-items: unsafe center !important;}
+.align-items-inherit, .flex-align-items-inherit {align-items: inherit !important;}
+.align-items-initial, .flex-align-items-initial {align-items: initial !important;}
+.align-items-revert, .flex-align-items-revert {align-items: revert !important;}
+.align-items-unset, .flex-align-items-unset {align-items: unset !important;}
 
-.flex-align-self-auto {align-self: auto !important;}
-.flex-align-self-normal {align-self: normal !important;}
-.flex-align-self-start {align-self: flex-start !important;}
-.flex-align-self-end {align-self: flex-end !important;}
-.flex-align-self-center {align-self: center !important;}
-.flex-align-self-center-safe {align-self: safe center !important;}
-.flex-align-self-center-unsafe {align-self: unsafe center !important;}
-.flex-align-self-baseline {align-self: baseline !important;}
-.flex-align-self-baseline-first {align-self: first baseline !important;}
-.flex-align-self-baseline-last {align-self: last baseline !important;}
-.flex-align-self-stretch {align-self: stretch !important;}
-.flex-align-self-inherit {align-self: inherit !important;}
-.flex-align-self-initial {align-self: initial !important;}
-.flex-align-self-revert {align-self: revert !important;}
-.flex-align-self-unset {align-self: unset !important;}
+.align-self-auto, .flex-align-self-auto {align-self: auto !important;}
+.align-self-normal, .flex-align-self-normal {align-self: normal !important;}
+.align-self-start, .flex-align-self-start {align-self: flex-start !important;}
+.align-self-end, .flex-align-self-end {align-self: flex-end !important;}
+.align-self-center, .flex-align-self-center {align-self: center !important;}
+.align-self-center-safe, .flex-align-self-center-safe {align-self: safe center !important;}
+.align-self-center-unsafe, .flex-align-self-center-unsafe {align-self: unsafe center !important;}
+.align-self-baseline, .flex-align-self-baseline {align-self: baseline !important;}
+.align-self-baseline-first, .flex-align-self-baseline-first {align-self: first baseline !important;}
+.align-self-baseline-last, .flex-align-self-baseline-last {align-self: last baseline !important;}
+.align-self-stretch, .flex-align-self-stretch {align-self: stretch !important;}
+.align-self-inherit, .flex-align-self-inherit {align-self: inherit !important;}
+.align-self-initial, .flex-align-self-initial {align-self: initial !important;}
+.align-self-revert, .flex-align-self-revert {align-self: revert !important;}
+.align-self-unset, .flex-align-self-unset {align-self: unset !important;}
 
-.flex-align-content-normal {align-content: normal !important;}
-.flex-align-content-start {align-content: flex-start !important;}
-.flex-align-content-end {align-content: flex-end !important;}
-.flex-align-content-baseline {align-content: baseline !important;}
-.flex-align-content-baseline-first {align-content: first baseline !important;}
-.flex-align-content-baseline-last {align-content: last baseline !important;}
-.flex-align-content-between {align-content: space-between !important;}
-.flex-align-content-around {align-content: space-around !important;}
-.flex-align-content-evenly {align-content: space-evenly !important;}
-.flex-align-content-stretch {align-content: stretch !important;}
-.flex-align-content-center {align-content: center !important;}
-.flex-align-content-center-safe {align-content: safe center !important;}
-.flex-align-content-center-unsafe {align-content: unsafe center !important;}
-.flex-align-content-inherit {align-content: inherit !important;}
-.flex-align-content-initial {align-content: initial !important;}
-.flex-align-content-revert {align-content: revert !important;}
-.flex-align-content-unset {align-content: unset !important;}
+.align-content-normal, .flex-align-content-normal {align-content: normal !important;}
+.align-content-start, .flex-align-content-start {align-content: flex-start !important;}
+.align-content-end, .flex-align-content-end {align-content: flex-end !important;}
+.align-content-baseline, .flex-align-content-baseline {align-content: baseline !important;}
+.align-content-baseline-first, .flex-align-content-baseline-first {align-content: first baseline !important;}
+.align-content-baseline-last, .flex-align-content-baseline-last {align-content: last baseline !important;}
+.align-content-between, .flex-align-content-between {align-content: space-between !important;}
+.align-content-around, .flex-align-content-around {align-content: space-around !important;}
+.align-content-evenly, .flex-align-content-evenly {align-content: space-evenly !important;}
+.align-content-stretch, .flex-align-content-stretch {align-content: stretch !important;}
+.align-content-center, .flex-align-content-center {align-content: center !important;}
+.align-content-center-safe, .flex-align-content-center-safe {align-content: safe center !important;}
+.align-content-center-unsafe, .flex-align-content-center-unsafe {align-content: unsafe center !important;}
+.align-content-inherit, .flex-align-content-inherit {align-content: inherit !important;}
+.align-content-initial, .flex-align-content-initial {align-content: initial !important;}
+.align-content-revert, .flex-align-content-revert {align-content: revert !important;}
+.align-content-unset, .flex-align-content-unset {align-content: unset !important;}
 
-.flex-justify-items-normal {justify-items: normal !important;}
-.flex-justify-items-stretch {justify-items: stretch !important;}
-.flex-justify-items-start {justify-items: flex-start !important;}
-.flex-justify-items-end {justify-items: flex-end !important;}
-.flex-justify-items-left {justify-items: left !important;}
-.flex-justify-items-right {justify-items: right !important;}
-.flex-justify-items-baseline {justify-items: baseline !important;}
-.flex-justify-items-baseline-first {justify-items: first baseline !important;}
-.flex-justify-items-baseline-last {justify-items: last baseline !important;}
-.flex-justify-items-center {justify-items: center !important;}
-.flex-justify-items-center-safe {justify-items: safe center !important;}
-.flex-justify-items-center-unsafe {justify-items: unsafe center !important;}
-.flex-justify-items-inherit {justify-items: inherit !important;}
-.flex-justify-items-initial {justify-items: initial !important;}
-.flex-justify-items-revert {justify-items: revert !important;}
-.flex-justify-items-unset {justify-items: unset !important;}
+.justify-items-normal, .flex-justify-items-normal {justify-items: normal !important;}
+.justify-items-stretch, .flex-justify-items-stretch {justify-items: stretch !important;}
+.justify-items-start, .flex-justify-items-start {justify-items: flex-start !important;}
+.justify-items-end, .flex-justify-items-end {justify-items: flex-end !important;}
+.justify-items-left, .flex-justify-items-left {justify-items: left !important;}
+.justify-items-right, .flex-justify-items-right {justify-items: right !important;}
+.justify-items-baseline, .flex-justify-items-baseline {justify-items: baseline !important;}
+.justify-items-baseline-first, .flex-justify-items-baseline-first {justify-items: first baseline !important;}
+.justify-items-baseline-last, .flex-justify-items-baseline-last {justify-items: last baseline !important;}
+.justify-items-center, .flex-justify-items-center {justify-items: center !important;}
+.justify-items-center-safe, .flex-justify-items-center-safe {justify-items: safe center !important;}
+.justify-items-center-unsafe, .flex-justify-items-center-unsafe {justify-items: unsafe center !important;}
+.justify-items-inherit, .flex-justify-items-inherit {justify-items: inherit !important;}
+.justify-items-initial, .flex-justify-items-initial {justify-items: initial !important;}
+.justify-items-revert, .flex-justify-items-revert {justify-items: revert !important;}
+.justify-items-unset, .flex-justify-items-unset {justify-items: unset !important;}
 
-.flex-justify-self-inherit {justify-self: inherit !important;}
-.flex-justify-self-initial {justify-self: initial !important;}
-.flex-justify-self-revert {justify-self: revert !important;}
-.flex-justify-self-unset {justify-self: unset !important;}
-.flex-justify-self-auto {justify-self: auto !important;}
-.flex-justify-self-normal {justify-self: normal !important;}
-.flex-justify-self-start {justify-self: flex-start !important;}
-.flex-justify-self-end {justify-self: flex-end !important;}
-.flex-justify-self-center {justify-self: center !important;}
-.flex-justify-self-stretch {justify-self: stretch !important;}
-.flex-justify-self-baseline {justify-self: baseline !important;}
-.flex-justify-self-baseline-first {justify-self: first baseline !important;}
-.flex-justify-self-baseline-last {justify-self: last baseline !important;}
-.flex-justify-self-left {justify-self: left !important;}
-.flex-justify-self-right {justify-self: right !important;}
+.justify-self-inherit, .flex-justify-self-inherit {justify-self: inherit !important;}
+.justify-self-initial, .flex-justify-self-initial {justify-self: initial !important;}
+.justify-self-revert, .flex-justify-self-revert {justify-self: revert !important;}
+.justify-self-unset, .flex-justify-self-unset {justify-self: unset !important;}
+.justify-self-auto, .flex-justify-self-auto {justify-self: auto !important;}
+.justify-self-normal, .flex-justify-self-normal {justify-self: normal !important;}
+.justify-self-start, .flex-justify-self-start {justify-self: flex-start !important;}
+.justify-self-end, .flex-justify-self-end {justify-self: flex-end !important;}
+.justify-self-center, .flex-justify-self-center {justify-self: center !important;}
+.justify-self-stretch, .flex-justify-self-stretch {justify-self: stretch !important;}
+.justify-self-baseline, .flex-justify-self-baseline {justify-self: baseline !important;}
+.justify-self-baseline-first, .flex-justify-self-baseline-first {justify-self: first baseline !important;}
+.justify-self-baseline-last, .flex-justify-self-baseline-last {justify-self: last baseline !important;}
+.justify-self-left, .flex-justify-self-left {justify-self: left !important;}
+.justify-self-right, .flex-justify-self-right {justify-self: right !important;}
 
-.flex-justify-content-center {justify-content: center !important;}
-.flex-justify-content-center-safe {justify-content: safe center !important;}
-.flex-justify-content-center-unsafe {justify-content: unsafe center !important;}
-.flex-justify-content-start {justify-content: flex-start !important;}
-.flex-justify-content-end {justify-content: flex-end !important;}
-.flex-justify-content-left {justify-content: left !important;}
-.flex-justify-content-right {justify-content: right !important;}
-.flex-justify-content-normal {justify-content: normal !important;}
-.flex-justify-content-between {justify-content: space-between !important;}
-.flex-justify-content-around {justify-content: space-around !important;}
-.flex-justify-content-evenly {justify-content: space-evenly !important;}
-.flex-justify-content-stretch {justify-content: stretch !important;}
-.flex-justify-content-inherit {justify-content: inherit !important;}
-.flex-justify-content-initial {justify-content: initial !important;}
-.flex-justify-content-revert {justify-content: revert !important;}
-.flex-justify-content-unset {justify-content: unset !important;}
+.justify-content-center, .flex-justify-content-center {justify-content: center !important;}
+.justify-content-center-safe, .flex-justify-content-center-safe {justify-content: safe center !important;}
+.justify-content-center-unsafe, .flex-justify-content-center-unsafe {justify-content: unsafe center !important;}
+.justify-content-start, .flex-justify-content-start {justify-content: flex-start !important;}
+.justify-content-end, .flex-justify-content-end {justify-content: flex-end !important;}
+.justify-content-left, .flex-justify-content-left {justify-content: left !important;}
+.justify-content-right, .flex-justify-content-right {justify-content: right !important;}
+.justify-content-normal, .flex-justify-content-normal {justify-content: normal !important;}
+.justify-content-between, .flex-justify-content-between {justify-content: space-between !important;}
+.justify-content-around, .flex-justify-content-around {justify-content: space-around !important;}
+.justify-content-evenly, .flex-justify-content-evenly {justify-content: space-evenly !important;}
+.justify-content-stretch, .flex-justify-content-stretch {justify-content: stretch !important;}
+.justify-content-inherit, .flex-justify-content-inherit {justify-content: inherit !important;}
+.justify-content-initial, .flex-justify-content-initial {justify-content: initial !important;}
+.justify-content-revert, .flex-justify-content-revert {justify-content: revert !important;}
+.justify-content-unset, .flex-justify-content-unset {justify-content: unset !important;}
 
-.flex-justify-center {justify-content: center !important;}
-.flex-justify-center-safe {justify-content: safe center !important;}
-.flex-justify-center-unsafe {justify-content: unsafe center !important;}
-.flex-justify-start {justify-content: flex-start !important;}
-.flex-justify-end {justify-content: flex-end !important;}
-.flex-justify-left {justify-content: left !important;}
-.flex-justify-right {justify-content: right !important;}
-.flex-justify-normal {justify-content: normal !important;}
-.flex-justify-between {justify-content: space-between !important;}
-.flex-justify-around {justify-content: space-around !important;}
-.flex-justify-evenly {justify-content: space-evenly !important;}
-.flex-justify-stretch {justify-content: stretch !important;}
-.flex-justify-inherit {justify-content: inherit !important;}
-.flex-justify-initial {justify-content: initial !important;}
-.flex-justify-revert {justify-content: revert !important;}
-.flex-justify-unset {justify-content: unset !important;}
+.justify-center, .flex-justify-center {justify-content: center !important;}
+.justify-center-safe, .flex-justify-center-safe {justify-content: safe center !important;}
+.justify-center-unsafe, .flex-justify-center-unsafe {justify-content: unsafe center !important;}
+.justify-start, .flex-justify-start {justify-content: flex-start !important;}
+.justify-end, .flex-justify-end {justify-content: flex-end !important;}
+.justify-left, .flex-justify-left {justify-content: left !important;}
+.justify-right, .flex-justify-right {justify-content: right !important;}
+.justify-normal, .flex-justify-normal {justify-content: normal !important;}
+.justify-between, .flex-justify-between {justify-content: space-between !important;}
+.justify-around, .flex-justify-around {justify-content: space-around !important;}
+.justify-evenly, .flex-justify-evenly {justify-content: space-evenly !important;}
+.justify-stretch, .flex-justify-stretch {justify-content: stretch !important;}
+.justify-inherit, .flex-justify-inherit {justify-content: inherit !important;}
+.justify-initial, .flex-justify-initial {justify-content: initial !important;}
+.justify-revert, .flex-justify-revert {justify-content: revert !important;}
+.justify-unset, .flex-justify-unset {justify-content: unset !important;}
 
 .flex-no-shrink > * {flex-shrink: 0!important;}
 .flex-shrink > * {flex-shrink: 1!important;}
@@ -218,136 +218,136 @@ each(@media-rules, {
             justify-content: center!important;
         }
 
-        .flex-align-normal-@{key} {align-items: normal !important;}
-        .flex-align-stretch-@{key} {align-items: stretch !important;}
-        .flex-align-start-@{key} {align-items: flex-start !important;}
-        .flex-align-end-@{key} {align-items: flex-end !important;}
-        .flex-align-baseline-@{key} {align-items: baseline !important;}
-        .flex-align-baseline-first-@{key} {align-items: first baseline !important;}
-        .flex-align-baseline-last-@{key} {align-items: last baseline !important;}
-        .flex-align-center-@{key} {align-items: center !important;}
-        .flex-align-center-safe-@{key} {align-items: safe center !important;}
-        .flex-align-center-unsafe-@{key} {align-items: unsafe center !important;}
-        .flex-align-inherit-@{key} {align-items: inherit !important;}
-        .flex-align-initial-@{key} {align-items: initial !important;}
-        .flex-align-revert-@{key} {align-items: revert !important;}
-        .flex-align-unset-@{key} {align-items: unset !important;}
+        .align-normal-@{key}, .flex-align-normal-@{key} {align-items: normal !important;}
+        .align-stretch-@{key}, .flex-align-stretch-@{key} {align-items: stretch !important;}
+        .align-start-@{key}, .flex-align-start-@{key} {align-items: flex-start !important;}
+        .align-end-@{key}, .flex-align-end-@{key} {align-items: flex-end !important;}
+        .align-baseline-@{key}, .flex-align-baseline-@{key} {align-items: baseline !important;}
+        .align-baseline-first-@{key}, .flex-align-baseline-first-@{key} {align-items: first baseline !important;}
+        .align-baseline-last-@{key}, .flex-align-baseline-last-@{key} {align-items: last baseline !important;}
+        .align-center-@{key}, .flex-align-center-@{key} {align-items: center !important;}
+        .align-center-safe-@{key}, .flex-align-center-safe-@{key} {align-items: safe center !important;}
+        .align-center-unsafe-@{key}, .flex-align-center-unsafe-@{key} {align-items: unsafe center !important;}
+        .align-inherit-@{key}, .flex-align-inherit-@{key} {align-items: inherit !important;}
+        .align-initial-@{key}, .flex-align-initial-@{key} {align-items: initial !important;}
+        .align-revert-@{key}, .flex-align-revert-@{key} {align-items: revert !important;}
+        .align-unset-@{key}, .flex-align-unset-@{key} {align-items: unset !important;}
 
-        .flex-align-items-normal-@{key} {align-items: normal !important;}
-        .flex-align-items-stretch-@{key} {align-items: stretch !important;}
-        .flex-align-items-start-@{key} {align-items: flex-start !important;}
-        .flex-align-items-end-@{key} {align-items: flex-end !important;}
-        .flex-align-items-baseline-@{key} {align-items: baseline !important;}
-        .flex-align-items-baseline-first-@{key} {align-items: first baseline !important;}
-        .flex-align-items-baseline-last-@{key} {align-items: last baseline !important;}
-        .flex-align-items-center-@{key} {align-items: center !important;}
-        .flex-align-items-center-safe-@{key} {align-items: safe center !important;}
-        .flex-align-items-center-unsafe-@{key} {align-items: unsafe center !important;}
-        .flex-align-items-inherit-@{key} {align-items: inherit !important;}
-        .flex-align-items-initial-@{key} {align-items: initial !important;}
-        .flex-align-items-revert-@{key} {align-items: revert !important;}
-        .flex-align-items-unset-@{key} {align-items: unset !important;}
+        .align-items-normal-@{key}, .flex-align-items-normal-@{key} {align-items: normal !important;}
+        .align-items-stretch-@{key}, .flex-align-items-stretch-@{key} {align-items: stretch !important;}
+        .align-items-start-@{key}, .flex-align-items-start-@{key} {align-items: flex-start !important;}
+        .align-items-end-@{key}, .flex-align-items-end-@{key} {align-items: flex-end !important;}
+        .align-items-baseline-@{key}, .flex-align-items-baseline-@{key} {align-items: baseline !important;}
+        .align-items-baseline-first-@{key}, .flex-align-items-baseline-first-@{key} {align-items: first baseline !important;}
+        .align-items-baseline-last-@{key}, .flex-align-items-baseline-last-@{key} {align-items: last baseline !important;}
+        .align-items-center-@{key}, .flex-align-items-center-@{key} {align-items: center !important;}
+        .align-items-center-safe-@{key}, .flex-align-items-center-safe-@{key} {align-items: safe center !important;}
+        .align-items-center-unsafe-@{key}, .flex-align-items-center-unsafe-@{key} {align-items: unsafe center !important;}
+        .align-items-inherit-@{key}, .flex-align-items-inherit-@{key} {align-items: inherit !important;}
+        .align-items-initial-@{key}, .flex-align-items-initial-@{key} {align-items: initial !important;}
+        .align-items-revert-@{key}, .flex-align-items-revert-@{key} {align-items: revert !important;}
+        .align-items-unset-@{key}, .flex-align-items-unset-@{key} {align-items: unset !important;}
 
-        .flex-align-self-auto-@{key} {align-self: auto !important;}
-        .flex-align-self-normal-@{key} {align-self: normal !important;}
-        .flex-align-self-start-@{key} {align-self: flex-start !important;}
-        .flex-align-self-end-@{key} {align-self: flex-end !important;}
-        .flex-align-self-center-@{key} {align-self: center !important;}
-        .flex-align-self-center-safe-@{key} {align-self: safe center !important;}
-        .flex-align-self-center-unsafe-@{key} {align-self: unsafe center !important;}
-        .flex-align-self-baseline-@{key} {align-self: baseline !important;}
-        .flex-align-self-baseline-first-@{key} {align-self: first baseline !important;}
-        .flex-align-self-baseline-last-@{key} {align-self: last baseline !important;}
-        .flex-align-self-stretch-@{key} {align-self: stretch !important;}
-        .flex-align-self-inherit-@{key} {align-self: inherit !important;}
-        .flex-align-self-initial-@{key} {align-self: initial !important;}
-        .flex-align-self-revert-@{key} {align-self: revert !important;}
-        .flex-align-self-unset-@{key} {align-self: unset !important;}
+        .align-self-auto-@{key}, .flex-align-self-auto-@{key} {align-self: auto !important;}
+        .align-self-normal-@{key}, .flex-align-self-normal-@{key} {align-self: normal !important;}
+        .align-self-start-@{key}, .flex-align-self-start-@{key} {align-self: flex-start !important;}
+        .align-self-end-@{key}, .flex-align-self-end-@{key} {align-self: flex-end !important;}
+        .align-self-center-@{key}, .flex-align-self-center-@{key} {align-self: center !important;}
+        .align-self-center-safe-@{key}, .flex-align-self-center-safe-@{key} {align-self: safe center !important;}
+        .align-self-center-unsafe-@{key}, .flex-align-self-center-unsafe-@{key} {align-self: unsafe center !important;}
+        .align-self-baseline-@{key}, .flex-align-self-baseline-@{key} {align-self: baseline !important;}
+        .align-self-baseline-first-@{key}, .flex-align-self-baseline-first-@{key} {align-self: first baseline !important;}
+        .align-self-baseline-last-@{key}, .flex-align-self-baseline-last-@{key} {align-self: last baseline !important;}
+        .align-self-stretch-@{key}, .flex-align-self-stretch-@{key} {align-self: stretch !important;}
+        .align-self-inherit-@{key}, .flex-align-self-inherit-@{key} {align-self: inherit !important;}
+        .align-self-initial-@{key}, .flex-align-self-initial-@{key} {align-self: initial !important;}
+        .align-self-revert-@{key}, .flex-align-self-revert-@{key} {align-self: revert !important;}
+        .align-self-unset-@{key}, .flex-align-self-unset-@{key} {align-self: unset !important;}
 
-        .flex-align-content-normal-@{key} {align-content: normal !important;}
-        .flex-align-content-start-@{key} {align-content: flex-start !important;}
-        .flex-align-content-end-@{key} {align-content: flex-end !important;}
-        .flex-align-content-baseline-@{key} {align-content: baseline !important;}
-        .flex-align-content-baseline-first-@{key} {align-content: first baseline !important;}
-        .flex-align-content-baseline-last-@{key} {align-content: last baseline !important;}
-        .flex-align-content-between-@{key} {align-content: space-between !important;}
-        .flex-align-content-around-@{key} {align-content: space-around !important;}
-        .flex-align-content-evenly-@{key} {align-content: space-evenly !important;}
-        .flex-align-content-stretch-@{key} {align-content: stretch !important;}
-        .flex-align-content-center-@{key} {align-content: center !important;}
-        .flex-align-content-center-safe-@{key} {align-content: safe center !important;}
-        .flex-align-content-center-unsafe-@{key} {align-content: unsafe center !important;}
-        .flex-align-content-inherit-@{key} {align-content: inherit !important;}
-        .flex-align-content-initial-@{key} {align-content: initial !important;}
-        .flex-align-content-revert-@{key} {align-content: revert !important;}
-        .flex-align-content-unset-@{key} {align-content: unset !important;}
+        .align-content-normal-@{key}, .flex-align-content-normal-@{key} {align-content: normal !important;}
+        .align-content-start-@{key}, .flex-align-content-start-@{key} {align-content: flex-start !important;}
+        .align-content-end-@{key}, .flex-align-content-end-@{key} {align-content: flex-end !important;}
+        .align-content-baseline-@{key}, .flex-align-content-baseline-@{key} {align-content: baseline !important;}
+        .align-content-baseline-first-@{key}, .flex-align-content-baseline-first-@{key} {align-content: first baseline !important;}
+        .align-content-baseline-last-@{key}, .flex-align-content-baseline-last-@{key} {align-content: last baseline !important;}
+        .align-content-between-@{key}, .flex-align-content-between-@{key} {align-content: space-between !important;}
+        .align-content-around-@{key}, .flex-align-content-around-@{key} {align-content: space-around !important;}
+        .align-content-evenly-@{key}, .flex-align-content-evenly-@{key} {align-content: space-evenly !important;}
+        .align-content-stretch-@{key}, .flex-align-content-stretch-@{key} {align-content: stretch !important;}
+        .align-content-center-@{key}, .flex-align-content-center-@{key} {align-content: center !important;}
+        .align-content-center-safe-@{key}, .flex-align-content-center-safe-@{key} {align-content: safe center !important;}
+        .align-content-center-unsafe-@{key}, .flex-align-content-center-unsafe-@{key} {align-content: unsafe center !important;}
+        .align-content-inherit-@{key}, .flex-align-content-inherit-@{key} {align-content: inherit !important;}
+        .align-content-initial-@{key}, .flex-align-content-initial-@{key} {align-content: initial !important;}
+        .align-content-revert-@{key}, .flex-align-content-revert-@{key} {align-content: revert !important;}
+        .align-content-unset-@{key}, .flex-align-content-unset-@{key} {align-content: unset !important;}
 
-        .flex-justify-items-normal-@{key} {justify-items: normal !important;}
-        .flex-justify-items-stretch-@{key} {justify-items: stretch !important;}
-        .flex-justify-items-start-@{key} {justify-items: flex-start !important;}
-        .flex-justify-items-end-@{key} {justify-items: flex-end !important;}
-        .flex-justify-items-left-@{key} {justify-items: left !important;}
-        .flex-justify-items-right-@{key} {justify-items: right !important;}
-        .flex-justify-items-baseline-@{key} {justify-items: baseline !important;}
-        .flex-justify-items-baseline-first-@{key} {justify-items: first baseline !important;}
-        .flex-justify-items-baseline-last-@{key} {justify-items: last baseline !important;}
-        .flex-justify-items-center-@{key} {justify-items: center !important;}
-        .flex-justify-items-center-safe-@{key} {justify-items: safe center !important;}
-        .flex-justify-items-center-unsafe-@{key} {justify-items: unsafe center !important;}
-        .flex-justify-items-inherit-@{key} {justify-items: inherit !important;}
-        .flex-justify-items-initial-@{key} {justify-items: initial !important;}
-        .flex-justify-items-revert-@{key} {justify-items: revert !important;}
-        .flex-justify-items-unset-@{key} {justify-items: unset !important;}
+        .justify-items-normal-@{key}, .flex-justify-items-normal-@{key} {justify-items: normal !important;}
+        .justify-items-stretch-@{key}, .flex-justify-items-stretch-@{key} {justify-items: stretch !important;}
+        .justify-items-start-@{key}, .flex-justify-items-start-@{key} {justify-items: flex-start !important;}
+        .justify-items-end-@{key}, .flex-justify-items-end-@{key} {justify-items: flex-end !important;}
+        .justify-items-left-@{key}, .flex-justify-items-left-@{key} {justify-items: left !important;}
+        .justify-items-right-@{key}, .flex-justify-items-right-@{key} {justify-items: right !important;}
+        .justify-items-baseline-@{key}, .flex-justify-items-baseline-@{key} {justify-items: baseline !important;}
+        .justify-items-baseline-first-@{key}, .flex-justify-items-baseline-first-@{key} {justify-items: first baseline !important;}
+        .justify-items-baseline-last-@{key}, .flex-justify-items-baseline-last-@{key} {justify-items: last baseline !important;}
+        .justify-items-center-@{key}, .flex-justify-items-center-@{key} {justify-items: center !important;}
+        .justify-items-center-safe-@{key}, .flex-justify-items-center-safe-@{key} {justify-items: safe center !important;}
+        .justify-items-center-unsafe-@{key}, .flex-justify-items-center-unsafe-@{key} {justify-items: unsafe center !important;}
+        .justify-items-inherit-@{key}, .flex-justify-items-inherit-@{key} {justify-items: inherit !important;}
+        .justify-items-initial-@{key}, .flex-justify-items-initial-@{key} {justify-items: initial !important;}
+        .justify-items-revert-@{key}, .flex-justify-items-revert-@{key} {justify-items: revert !important;}
+        .justify-items-unset-@{key}, .flex-justify-items-unset-@{key} {justify-items: unset !important;}
 
-        .flex-justify-self-inherit-@{key} {justify-self: inherit !important;}
-        .flex-justify-self-initial-@{key} {justify-self: initial !important;}
-        .flex-justify-self-revert-@{key} {justify-self: revert !important;}
-        .flex-justify-self-unset-@{key} {justify-self: unset !important;}
-        .flex-justify-self-auto-@{key} {justify-self: auto !important;}
-        .flex-justify-self-normal-@{key} {justify-self: normal !important;}
-        .flex-justify-self-start-@{key} {justify-self: flex-start !important;}
-        .flex-justify-self-end-@{key} {justify-self: flex-end !important;}
-        .flex-justify-self-center-@{key} {justify-self: center !important;}
-        .flex-justify-self-stretch-@{key} {justify-self: stretch !important;}
-        .flex-justify-self-baseline-@{key} {justify-self: baseline !important;}
-        .flex-justify-self-baseline-first-@{key} {justify-self: first baseline !important;}
-        .flex-justify-self-baseline-last-@{key} {justify-self: last baseline !important;}
-        .flex-justify-self-left-@{key} {justify-self: left !important;}
-        .flex-justify-self-right-@{key} {justify-self: right !important;}
+        .justify-self-inherit-@{key}, .flex-justify-self-inherit-@{key} {justify-self: inherit !important;}
+        .justify-self-initial-@{key}, .flex-justify-self-initial-@{key} {justify-self: initial !important;}
+        .justify-self-revert-@{key}, .flex-justify-self-revert-@{key} {justify-self: revert !important;}
+        .justify-self-unset-@{key}, .flex-justify-self-unset-@{key} {justify-self: unset !important;}
+        .justify-self-auto-@{key}, .flex-justify-self-auto-@{key} {justify-self: auto !important;}
+        .justify-self-normal-@{key}, .flex-justify-self-normal-@{key} {justify-self: normal !important;}
+        .justify-self-start-@{key}, .flex-justify-self-start-@{key} {justify-self: flex-start !important;}
+        .justify-self-end-@{key}, .flex-justify-self-end-@{key} {justify-self: flex-end !important;}
+        .justify-self-center-@{key}, .flex-justify-self-center-@{key} {justify-self: center !important;}
+        .justify-self-stretch-@{key}, .flex-justify-self-stretch-@{key} {justify-self: stretch !important;}
+        .justify-self-baseline-@{key}, .flex-justify-self-baseline-@{key} {justify-self: baseline !important;}
+        .justify-self-baseline-first-@{key}, .flex-justify-self-baseline-first-@{key} {justify-self: first baseline !important;}
+        .justify-self-baseline-last-@{key}, .flex-justify-self-baseline-last-@{key} {justify-self: last baseline !important;}
+        .justify-self-left-@{key}, .flex-justify-self-left-@{key} {justify-self: left !important;}
+        .justify-self-right-@{key}, .flex-justify-self-right-@{key} {justify-self: right !important;}
 
-        .flex-justify-content-center-@{key} {justify-content: center !important;}
-        .flex-justify-content-center-safe-@{key} {justify-content: safe center !important;}
-        .flex-justify-content-center-unsafe-@{key} {justify-content: unsafe center !important;}
-        .flex-justify-content-start-@{key} {justify-content: flex-start !important;}
-        .flex-justify-content-end-@{key} {justify-content: flex-end !important;}
-        .flex-justify-content-left-@{key} {justify-content: left !important;}
-        .flex-justify-content-right-@{key} {justify-content: right !important;}
-        .flex-justify-content-normal-@{key} {justify-content: normal !important;}
-        .flex-justify-content-between-@{key} {justify-content: space-between !important;}
-        .flex-justify-content-around-@{key} {justify-content: space-around !important;}
-        .flex-justify-content-evenly-@{key} {justify-content: space-evenly !important;}
-        .flex-justify-content-stretch-@{key} {justify-content: stretch !important;}
-        .flex-justify-content-inherit-@{key} {justify-content: inherit !important;}
-        .flex-justify-content-initial-@{key} {justify-content: initial !important;}
-        .flex-justify-content-revert-@{key} {justify-content: revert !important;}
-        .flex-justify-content-unset-@{key} {justify-content: unset !important;}
+        .justify-content-center-@{key}, .flex-justify-content-center-@{key} {justify-content: center !important;}
+        .justify-content-center-safe-@{key}, .flex-justify-content-center-safe-@{key} {justify-content: safe center !important;}
+        .justify-content-center-unsafe-@{key}, .flex-justify-content-center-unsafe-@{key} {justify-content: unsafe center !important;}
+        .justify-content-start-@{key}, .flex-justify-content-start-@{key} {justify-content: flex-start !important;}
+        .justify-content-end-@{key}, .flex-justify-content-end-@{key} {justify-content: flex-end !important;}
+        .justify-content-left-@{key}, .flex-justify-content-left-@{key} {justify-content: left !important;}
+        .justify-content-right-@{key}, .flex-justify-content-right-@{key} {justify-content: right !important;}
+        .justify-content-normal-@{key}, .flex-justify-content-normal-@{key} {justify-content: normal !important;}
+        .justify-content-between-@{key}, .flex-justify-content-between-@{key} {justify-content: space-between !important;}
+        .justify-content-around-@{key}, .flex-justify-content-around-@{key} {justify-content: space-around !important;}
+        .justify-content-evenly-@{key}, .flex-justify-content-evenly-@{key} {justify-content: space-evenly !important;}
+        .justify-content-stretch-@{key}, .flex-justify-content-stretch-@{key} {justify-content: stretch !important;}
+        .justify-content-inherit-@{key}, .flex-justify-content-inherit-@{key} {justify-content: inherit !important;}
+        .justify-content-initial-@{key}, .flex-justify-content-initial-@{key} {justify-content: initial !important;}
+        .justify-content-revert-@{key}, .flex-justify-content-revert-@{key} {justify-content: revert !important;}
+        .justify-content-unset-@{key}, .flex-justify-content-unset-@{key} {justify-content: unset !important;}
 
-        .flex-justify-center-@{key} {justify-content: center !important;}
-        .flex-justify-center-safe-@{key} {justify-content: safe center !important;}
-        .flex-justify-center-unsafe-@{key} {justify-content: unsafe center !important;}
-        .flex-justify-start-@{key} {justify-content: flex-start !important;}
-        .flex-justify-end-@{key} {justify-content: flex-end !important;}
-        .flex-justify-left-@{key} {justify-content: left !important;}
-        .flex-justify-right-@{key} {justify-content: right !important;}
-        .flex-justify-normal-@{key} {justify-content: normal !important;}
-        .flex-justify-between-@{key} {justify-content: space-between !important;}
-        .flex-justify-around-@{key} {justify-content: space-around !important;}
-        .flex-justify-evenly-@{key} {justify-content: space-evenly !important;}
-        .flex-justify-stretch-@{key} {justify-content: stretch !important;}
-        .flex-justify-inherit-@{key} {justify-content: inherit !important;}
-        .flex-justify-initial-@{key} {justify-content: initial !important;}
-        .flex-justify-revert-@{key} {justify-content: revert !important;}
-        .flex-justify-unset-@{key} {justify-content: unset !important;}
+        .justify-center-@{key}, .flex-justify-center-@{key} {justify-content: center !important;}
+        .justify-center-safe-@{key}, .flex-justify-center-safe-@{key} {justify-content: safe center !important;}
+        .justify-center-unsafe-@{key}, .flex-justify-center-unsafe-@{key} {justify-content: unsafe center !important;}
+        .justify-start-@{key}, .flex-justify-start-@{key} {justify-content: flex-start !important;}
+        .justify-end-@{key}, .flex-justify-end-@{key} {justify-content: flex-end !important;}
+        .justify-left-@{key}, .flex-justify-left-@{key} {justify-content: left !important;}
+        .justify-right-@{key}, .flex-justify-right-@{key} {justify-content: right !important;}
+        .justify-normal-@{key}, .flex-justify-normal-@{key} {justify-content: normal !important;}
+        .justify-between-@{key}, .flex-justify-between-@{key} {justify-content: space-between !important;}
+        .justify-around-@{key}, .flex-justify-around-@{key} {justify-content: space-around !important;}
+        .justify-evenly-@{key}, .flex-justify-evenly-@{key} {justify-content: space-evenly !important;}
+        .justify-stretch-@{key}, .flex-justify-stretch-@{key} {justify-content: stretch !important;}
+        .justify-inherit-@{key}, .flex-justify-inherit-@{key} {justify-content: inherit !important;}
+        .justify-initial-@{key}, .flex-justify-initial-@{key} {justify-content: initial !important;}
+        .justify-revert-@{key}, .flex-justify-revert-@{key} {justify-content: revert !important;}
+        .justify-unset-@{key}, .flex-justify-unset-@{key} {justify-content: unset !important;}
 
         each(range(24), .(@v) {
             .order-@{v}-@{key} {
