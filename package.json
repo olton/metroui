@@ -38,7 +38,7 @@
 		"test:components": "latte --dom --include=source/components/**/*.test.js",
 		"test:ci": "latte --dom --progress=none",
 		"test:trace": "latte --dom --progress=dots --show-stack --verbose",
-		"check": "oxlint . --fix",
+		"lint": "oxlint .",
 		"format": "oxfmt . --write",
 		"commit": "node -e \"const mssg = process.argv[1]; require('child_process').execSync('npm run build && git add . && git commit -m \\\"' + mssg + '\\\"', { stdio:[0, 1, 2] })\"",
 		"upd": "ncu -u && npm cache clean --force && npm install",
@@ -48,7 +48,6 @@
 		"last 2 versions"
 	],
 	"devDependencies": {
-		"@biomejs/biome": "2.3.13",
 		"@olton/esbuild-plugin-autoprefixer": "^0.2.2",
 		"@olton/esbuild-plugin-progress": "^0.4.0",
 		"@olton/esbuild-plugin-unlink": "^0.2.2",

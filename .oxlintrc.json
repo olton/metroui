@@ -17,7 +17,9 @@
     "eqeqeq": "warn",
     "no-var": "warn",
     "prefer-const": "warn",
-    "no-eval": "error"
+    "no-eval": "error",
+    "import/no-unused-vars": "off",
+    "import/no-unassigned-import": "off"
   },
   "settings": {
     "jsx-a11y": {

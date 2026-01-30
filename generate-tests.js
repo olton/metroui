@@ -34,7 +34,7 @@ afterAll(async () => {
 
 describe("$file tests", () => {
     it("$file", async () => {
-        await B.visit(\`\$\{getFileUrl(\`./examples/$file\`\)\}\`)
+        await B.visit(\`$\{getFileUrl(\`./examples/$file\`)}\`)
         expect(B.error).toBeNull(B.error)
     })
 })
