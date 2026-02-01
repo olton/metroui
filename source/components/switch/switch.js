@@ -44,6 +44,7 @@
                 .addClass(o.clsSwitch);
 
             element.attr("type", "checkbox");
+            element.addClass(o.clsCheck);
 
             if (element.attr("readonly")) {
                 element.on("click", (e) => {
